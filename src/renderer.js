@@ -66,7 +66,9 @@ export class SpaceRenderer {
       const light = new THREE.PointLight(0xffe2c3, i < 3 ? 5 : 0, 12, 1.3); group.add(light);
       const label = document.createElement('div'); label.className = `body-label body-${i}`; label.innerHTML = `<span>${['α', 'β', 'γ', '○'][i]}</span><small></small>`; this.labels.append(label);
       this.nodes.push({ group, mesh, material, glow, light, label, target: new THREE.Vector3() });
-      const geo = new LineGeometry(); geo.setPositions([0,0,0,0,0,0]); geo.setColors([0,0,0,0,0,0]);
+      // Keep one fixed GPU capacity: Three caches an instanced geometry's first capacity.
+      // Growing a one-segment LineGeometry later silently clips rendering to that segment.
+      const geo = new LineGeometry(); geo.setPositions(new Float32Array(2000 * 3)); geo.setColors(new Float32Array(2000 * 3)); geo.instanceCount = 0;
       const line = new Line2(geo, new LineMaterial({ linewidth: 2.2, vertexColors: true, transparent: true, opacity: .8, blending: THREE.AdditiveBlending, depthWrite: false }));
       line.frustumCulled = false; this.world.add(line); this.trails.push(line); this.trailBuffers.push([]);
     }
@@ -138,7 +140,7 @@ export class SpaceRenderer {
   }
   clearTrails() {
     this.trailBuffers.forEach(b => b.length = 0);
-    this.trails.forEach(line => { line.geometry.setPositions([0,0,0,0,0,0]); line.geometry.setColors([0,0,0,0,0,0]); });
+    this.trails.forEach(line => { line.geometry.instanceCount = 0; });
   }
   ingest(state) {
     if (this.snap && state.revision !== this.snap.revision) { this.clearTrails(); this.firstPosition = true; }
@@ -153,9 +155,16 @@ export class SpaceRenderer {
         const samples = this.firstPosition ? 1 : Math.max(1, Math.min(15, state.tick - (this.lastTrailTick || state.tick)));
         for (let j = 1; j <= samples; j++) trail.push((this.firstPosition ? n.target : previous).clone().lerp(n.target, j / samples));
         if (trail.length > this.settings.trailsLength) trail.splice(0, trail.length - this.settings.trailsLength);
-        const positions = [], colors = [], color = C(this.settings[keys[i]]);
-        trail.forEach((v, j) => { positions.push(v.x, v.y, v.z); const fade = Math.pow(j / Math.max(1, trail.length - 1), 1.6); colors.push(color.r * fade, color.g * fade, color.b * fade); });
-        if (trail.length >= 2) { this.trails[i].geometry.setPositions(positions); this.trails[i].geometry.setColors(colors); }
+        const geometry = this.trails[i].geometry, positions = geometry.attributes.instanceStart.data, colors = geometry.attributes.instanceColorStart.data;
+        const color = C(this.settings[keys[i]]);
+        for (let j = 0; j < trail.length - 1; j++) {
+          const a = trail[j], b = trail[j + 1], offset = j * 6;
+          positions.array.set([a.x,a.y,a.z,b.x,b.y,b.z],offset);
+          const fadeA = Math.pow(j / (trail.length - 1),1.6), fadeB = Math.pow((j+1)/(trail.length-1),1.6);
+          colors.array.set([color.r*fadeA,color.g*fadeA,color.b*fadeA,color.r*fadeB,color.g*fadeB,color.b*fadeB],offset);
+        }
+        positions.needsUpdate = colors.needsUpdate = true;
+        geometry.instanceCount = Math.max(0,trail.length-1);
       }
     });
     this.lastTrailTick = state.tick;
