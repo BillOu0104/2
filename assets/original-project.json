@@ -1,0 +1,2315 @@
+{
+  "contentrating": "Everyone",
+  "description": "////////////////////////////// v1.0  2025/06/27 ////////////////////////////// \r\n伟大的造物者为他的作品做出了如下说明，请务必仔细聆听祂的圣谕（笑） \r\n1.三体运动的初速度为随机值，初始位置为固定值；\r\n2.数值模拟方法采用了四阶龙格库塔法；\r\n\r\n////////////////////////////// v2.0  2025/07/05 ////////////////////////////// \r\n大更新\r\na.如有任何bug请优先尝试：重置-取消订阅-重启wallpaper及steam-重新订阅；\r\nb.帧率请根据自己的硬件情况尽量拉高；\r\n\r\n更新内容：\r\n1.采用4阶辛算法代替了原本的RK4，模拟精度更高，系统的能量和动量误差更小；\r\n2.采用Aarseth的分段线性软化方法，以避免引力奇点；\r\n3.重写了代码结构，轨迹支持鼠标跟随旋转；\r\n4.新增文明排行榜，需在设置中手动打开；\r\n5.支持界面语言 中文/English 切换；\r\n6.大部分组件支持缩放和平移；\r\n7.新增当天体超过设置的距离极限时，屏幕中央显示“重启/restart”单击后重置天体位置和初速度\r\n\r\n//////////////////////////////  v3.0  2025/08/09 ////////////////////////////// \r\nTo fully utilize this wallpaper, please carefully read the following:\r\n1.The wallpaper simulates the orbital motion of three stars and one planet in real-time; it is not a static video. Version 3.0 includes major updates over 2.0: performance optimizations, visual enhancements, and feature improvements. If you previously subscribed and find these changes undesirable, please revert to the older version.\r\n2.The wallpaper UI supports both Chinese and English. Switch languages via \"Language 语言\" under \"Quick Sets\".\r\n3.If you encounter a BUG, please try the following steps in order of severity: Reset Wallpaper -> Resubscribe -> Delete local files and restart Wallpaper Engine.\r\n4.Most basic functions are found in Quick Sets. More detailed settings are available in the subsequent categories – feel free to explore!\r\n5.For optimal mouse interaction, disable other wallpaper software. Desktop organization and enhancement tools may cause conflicts.\r\n6.The wallpaper is 3D. Click, hold, and drag the mouse to rotate the view.\r\n7.Click the clock to show/hide the menu. You can also set the default visibility of the menu, civilization log, civilization leaderboard, clock, and other components in \"Quick Sets\".\r\n8.Simulation uses a 4th-order Symplectic Integrator (Yoshida, 1990). Gravitational softening is applied at close range. The system strives to conserve energy and momentum.\r\n9.If one celestial body exceeds the \"Escape Dist\" (Restart Escape Distance) from the system's center of mass, you can manually reset all positions and velocities by clicking the \"Restart\" text in the center of the screen. Alternatively, choose automatic reset in \"Quick Sets\".\r\n10.\"Civ Seed\" gameplay is offered: When you enable \"Custom\" under \"Civ Seed\":\r\n    a.You can set the initial mass, spatial position, and velocity vector for each celestial body.\r\n    b.In theory, with identical initial conditions, orbital paths will be similar within a certain timeframe.\r\n    c.This enables sharing seed parameters. Share interesting seeds with others, use others' seeds, or compete!\r\n11.If you are unsure about specific parameters (e.g., those governing orbital mechanics), modify them with caution. If you make changes that render the system unrecognizable, reset the wallpaper to the provided \"Factory Settings\".\r\n12.Besides the default background, solid colors and custom background images are supported. Ensure your custom image is suitable for spherical UV mapping (like a skybox) to avoid seams and distortion.\r\n13.There are 192 customizable user properties. This wallpaper is a massive project, and my individual ability is limited. Errors and oversights are inevitable – please point them out and discuss! However, due to the overwhelming number of comments and messages, I cannot reply to every single one. Apologies if some are missed!\r\n\r\n如果你想玩转此壁纸，请务必仔细阅读下面的文字：\r\n1.壁纸是实时解算模拟三个恒星和一个行星的天体运动的，不是固定视频；3.0版在2.0版本上做了重大更新：包括性能优化，画面升级，功能完善等方面的工作；如果你之前订阅了并对这些变化感到不适应，请回退旧版本使用；\r\n2.壁纸UI界面支持中文和英文，在“快捷设置/Quick Sets”中的\"Language 语言”处切换；\r\n3.出现BUG请根据严重情况依次尝试: 重置壁纸-->重新订阅-->删除本地文件后重启壁纸引擎；\r\n4.大部分简易功能都集中在快捷设置Quick Sets中，更具体详尽的设置则在后面的分类里，请尽情尝试；\r\n5.鼠标交互应关闭其他壁纸软件，桌面整理和美化软件可能会有冲突；\r\n6.壁纸是三维的，按住鼠标并拖动可以旋转视角；\r\n7.单击时钟可以显示和隐藏菜单，也可以在“快捷设置/Quick Sets”中选择菜单、文明日志、文明排行榜、时钟等组件的默认显示状态；\r\n8.采用4阶辛积分器(Yoshida1990)进行模拟解算，并在近距离处做了引力软化处理，系统尽可能满足能量动量守恒；\r\n9.当其中一个天体距质心距离大于“D重启逃逸距离/Escape Dist”时，可以按屏幕中心的“重启文明/Restart”文字对天体位置和速度进行手动重置，当然你也可以在“快捷设置/Quick Sets”选择自动重置；\r\n10.提供了“文明种子”玩法，当你在“文明种子/Civ Seed”中勾选自定义时：你可以自己设置每一个天体的初始质量、空间位置、以及速度矢量，理论上初始条件确定时，在一定时间范围内，天体运行会近似一致，这个功能提供了分享种子参数的玩法；当然你也可以把你认为有趣的种子参数分享给其他人，或者照抄别人的种子，并进行比赛；\r\n11.如果你不清楚诸如天体运行的某些参数，请谨慎修改他们，如果修改的面目全非则可以重置壁纸回到我提供的“出厂设置”；\r\n12.背景除了默认外，还支持纯色和自定义背景图案，不过请确保你的自定义图案能贴合球面展开uv(类似于天空盒)，否则可能出现接缝和扭曲；\r\n13.共有192+条可自定义的用户属性，该壁纸工程量庞大，我个人能力也有限，难免会出现错误和纰漏，请指正并讨论。不过由于评论聊天信息太多无法做到每一条消息都回复，可能有遗漏还请见谅！\r\n\r\n2025.08.10 /v3.1/v3.2\r\n修复了部分bug；支持了光标跟随；新增了引力牢笼\r\n\r\n2025.08.13 /v3.3\r\n新增了单位换算说明，微缩系统的量纲换算和基于现实物理的时间尺度，方便有需要的人更“真实”的仿真；优化了文明日志；\r\n\r\n2025.08.25 /v3.8.0/v3.8.1\r\n重写了类地行星表面平均温度计算公式，使之更符合现实物理规律，支持调整恒星光度；重写了时间倍速功能，尽量不同设备上保持物理一致性(但很难)；新增了登录和重新加载画面可关闭选项; 新增了物理作弊检查；\r\n\r\n2025.08.31/v3.8.2\r\n允许关闭物理作弊检查信息；修改了部分bug;",
+  "file": "scene.json",
+  "general": {
+    "properties": {
+      "_1": {
+        "condition": "",
+        "index": 0,
+        "order": 100,
+        "text": "<big><font color='#33CCFF'>感谢订阅！喜欢点个赞吧~",
+        "value": "1"
+      },
+      "_11": {
+        "index": 1,
+        "order": 101,
+        "text": "<big><font color=#BBBBBB><h5>Thanks for subscribing!<br/>v3.8.2-31/08/23",
+        "value": "2"
+      },
+      "_110": {
+        "fraction": true,
+        "index": 45,
+        "max": 100000000,
+        "min": 0,
+        "order": 145,
+        "precision": 2,
+        "step": 0.1,
+        "text": "<<br/><font color='#AAAAAA'>M1 恒星质量 Star Mass",
+        "type": "slider",
+        "value": 5000000
+      },
+      "_111lum_sun": {
+        "fraction": true,
+        "index": 67,
+        "max": 10,
+        "min": 0.001,
+        "order": 167,
+        "precision": 4,
+        "step": 0.001,
+        "text": "恒星1光度(1=1Lum_sun)",
+        "type": "slider",
+        "value": 1.5
+      },
+      "_12": {
+        "index": 2,
+        "order": 102,
+        "text": "<big><font color='#33CCFF'>制作：SYKM <br/>Music: Melodysheep - Ether<br/>关注：有问题可以<a href='https://space.bilibili.com/1552133264?spm_id_from=333.1007.0.0' style='color: inherit; text-decoration: none;'>B站留言</a></font></big>",
+        "value": "3"
+      },
+      "_13": {
+        "fraction": true,
+        "index": 153,
+        "max": 0.1,
+        "min": 0,
+        "order": 253,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#33CCFF'>恒星1 半径 Star1 R",
+        "type": "slider",
+        "value": 0.03
+      },
+      "_14": {
+        "index": 155,
+        "order": 255,
+        "text": "<br/><font color='#AAAAAA'>恒星颜色 Primary",
+        "type": "color",
+        "value": "1 1 1"
+      },
+      "_15": {
+        "index": 156,
+        "order": 256,
+        "text": "<br/><font color='#AAAAAA'>发射颜色 Emission",
+        "type": "color",
+        "value": "1 1 1"
+      },
+      "_16": {
+        "index": 157,
+        "order": 257,
+        "text": "<br/><font color='#AAAAAA'>星芒颜色 Spike",
+        "type": "color",
+        "value": "1 0.796078431372549 0.6941176470588235"
+      },
+      "_17": {
+        "index": 231,
+        "order": 331,
+        "text": "<big><font color='#2288BB'>非常谢谢您的支持.^◡^.~ <br><img src='http://m.qpic.cn/psc?/V53dVxNF0vmt6r2QyJCF3zK81F3ezMuw/TmEUgtj9EK6.7V8ajmQrEJW*8W4eA1gNnS8GAVhr5MITLZDKC9rSy13hWr3kkMB6RzrhUv8lesslv2xCO*NqVade5wSNxntdccKiz*32b8g!/b&bo=gACAAAAAAAADFzI!&rf=viewer_4&t=5' style='width: 200px; height: auto; border: none;'></a></font></big>",
+        "value": ""
+      },
+      "_18": {
+        "index": 229,
+        "order": 329,
+        "text": "<br/><font color='#FF2222'>资产声明：未经许可，请勿商用！Resource Notice: Unauthorized commercial use prohibited!",
+        "value": ""
+      },
+      "_19": {
+        "fraction": true,
+        "index": 215,
+        "max": 1,
+        "min": 0,
+        "order": 315,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>状态1 Opacity",
+        "type": "slider",
+        "value": 1
+      },
+      "_1dust1quantity": {
+        "fraction": true,
+        "index": 129,
+        "max": 2,
+        "min": 0,
+        "order": 229,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>尘埃1计数 Dust1 Quantity",
+        "type": "slider",
+        "value": 0.5
+      },
+      "_1dust1size": {
+        "fraction": true,
+        "index": 127,
+        "max": 1,
+        "min": 0,
+        "order": 227,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>尘埃1大小 Dust1 Size",
+        "type": "slider",
+        "value": 0.1
+      },
+      "_2": {
+        "condition": "cnen1.value==true",
+        "index": 7,
+        "order": 107,
+        "text": "<font color=#AAAAAA><h25><br/>如果你想玩转此壁纸，请务必仔细阅读下面的文字：<br/><br/>1.壁纸是实时解算模拟三个恒星和一个行星的天体运动的，不是固定视频；3.0版在2.0版本上做了重大更新：包括性能优化，画面升级，功能完善等方面的工作；如果你之前订阅了并对这些变化感到不适应，请回退旧版本使用;<br/>2.壁纸UI界面支持中文和英文，在“快捷设置/Quick Sets”中的“Language_语言”处切换;<br/>3.出现BUG请根据严重情况依次尝试: 重置壁纸-->重新订阅-->删除本地文件后重启壁纸引擎;<br/>4.大部分简易功能都集中在快捷设置Quick Sets中，更具体详尽的设置则在后面的分类里，请尽情尝试;<br/>5.鼠标交互应关闭其他壁纸软件，桌面整理和美化软件可能会有冲突；<br/>6.壁纸是三维的，按住鼠标并拖动可以旋转视角；<br/>7.单击时钟可以显示和隐藏菜单，也可以在“快捷设置/Quick Sets”中选择菜单、文明日志、文明排行榜、时钟等组件的默认显示状态；<br/>8.采用4阶辛积分器(Yoshida1990)进行模拟解算，并在近距离处做了引力软化处理，系统尽可能满足能量动量守恒；<br/>9.当其中一个天体距质心距离大于“D重启逃逸距离/Escape Dist”时，可以按屏幕中心的“重启文明/Restart”文字对天体位置和速度进行手动重置，当然你也可以在“快捷设置/Quick Sets”选择自动重置；<br/>10.提供了“文明种子”玩法，当你在“文明种子/Civ Seed”中勾选自定义时：你可以自己设置每一个天体的初始质量、空间位置、以及速度矢量，理论上初始条件确定时，在一定时间范围内，天体运行会近似一致，这个功能提供了分享种子参数的玩法；当然你也可以把你认为有趣的种子参数分享给其他人，或者照抄别人的种子，并进行比赛；<br/>11.如果你不清楚诸如天体运行的某些参数，请谨慎修改他们，如果修改的面目全非则可以重置壁纸回到我提供的“出厂设置”；<br/>12.背景除了默认外，还支持纯色和自定义背景图案，不过请确保你的自定义图案能贴合球面展开uv(类似于天空盒)，否则可能出现接缝和扭曲；<br/>13.共有192条可自定义的用户属性，该壁纸工程量庞大，我个人能力也有限，难免会出现错误和纰漏，请指正并讨论。不过由于评论聊天信息太多无法做到每一条消息都回复，可能有遗漏还请见谅！",
+        "value": "1"
+      },
+      "_21": {
+        "fraction": true,
+        "index": 158,
+        "max": 0.1,
+        "min": 0,
+        "order": 258,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#33CCFF'>恒星2半径 Star2 R",
+        "type": "slider",
+        "value": 0.023
+      },
+      "_211lum_sun": {
+        "fraction": true,
+        "index": 68,
+        "max": 10,
+        "min": 0.001,
+        "order": 168,
+        "precision": 4,
+        "step": 0.001,
+        "text": "恒星2光度(1=1Lum_sun)",
+        "type": "slider",
+        "value": 0.5
+      },
+      "_22": {
+        "index": 159,
+        "order": 259,
+        "text": "<br/><font color='#AAAAAA'>恒星颜色 Primary",
+        "type": "color",
+        "value": "1 0.6 0.6"
+      },
+      "_23": {
+        "index": 160,
+        "order": 260,
+        "text": "<br/><font color='#AAAAAA'>发射颜色 Emission",
+        "type": "color",
+        "value": "1 0.7333333333333333 0.6078431372549019"
+      },
+      "_24": {
+        "index": 161,
+        "order": 261,
+        "text": "<br/><font color='#AAAAAA'>星芒颜色 Spike",
+        "type": "color",
+        "value": "1 0.796078431372549 0.6941176470588235"
+      },
+      "_25": {
+        "fraction": true,
+        "index": 216,
+        "max": 1,
+        "min": 0,
+        "order": 316,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>状态2 Opacity",
+        "type": "slider",
+        "value": 0.4
+      },
+      "_26": {
+        "fraction": true,
+        "index": 46,
+        "max": 100000000,
+        "min": 0,
+        "order": 146,
+        "precision": 2,
+        "step": 0.1,
+        "text": "<br/><font color='#AAAAAA'>M2 恒星质量 Star Mass",
+        "type": "slider",
+        "value": 5000000
+      },
+      "_2dust1size": {
+        "fraction": true,
+        "index": 128,
+        "max": 1,
+        "min": 0,
+        "order": 228,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>尘埃2大小 Dust1 Size",
+        "type": "slider",
+        "value": 0.07
+      },
+      "_2dust2quantity": {
+        "fraction": true,
+        "index": 130,
+        "max": 4,
+        "min": 0,
+        "order": 230,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>尘埃2计数 Dust2 Quantity",
+        "type": "slider",
+        "value": 1
+      },
+      "_3": {
+        "fraction": true,
+        "index": 162,
+        "max": 0.1,
+        "min": 0,
+        "order": 262,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#33CCFF'>恒星3半径 Star3 R",
+        "type": "slider",
+        "value": 0.016
+      },
+      "_31": {
+        "index": 163,
+        "order": 263,
+        "text": "<br/><font color='#AAAAAA'>恒星颜色 Primary",
+        "type": "color",
+        "value": "1 0.49411764705882355 0.43137254901960786"
+      },
+      "_311lum_sun": {
+        "fraction": true,
+        "index": 69,
+        "max": 10,
+        "min": 0.001,
+        "order": 169,
+        "precision": 4,
+        "step": 0.001,
+        "text": "恒星3光度(1=1Lum_sun)",
+        "type": "slider",
+        "value": 0.1
+      },
+      "_32": {
+        "index": 164,
+        "order": 264,
+        "text": "<br/><font color='#AAAAAA'>发射颜色 Emission",
+        "type": "color",
+        "value": "1 0.5137254901960784 0.37254901960784315"
+      },
+      "_33": {
+        "index": 165,
+        "order": 265,
+        "text": "<br/><font color='#AAAAAA'>星芒颜色 Spike",
+        "type": "color",
+        "value": "1 0.796078431372549 0.6941176470588235"
+      },
+      "_34": {
+        "fraction": true,
+        "index": 47,
+        "max": 100000000,
+        "min": 0,
+        "order": 147,
+        "precision": 2,
+        "step": 0.1,
+        "text": "<br/><font color='#AAAAAA'>M3 恒星质量 Star Mass",
+        "type": "slider",
+        "value": 5000000
+      },
+      "_3d": {
+        "condition": "cnen1.value==false",
+        "index": 8,
+        "order": 108,
+        "text": "<font color=#AAAAAA><h25>To fully utilize this wallpaper, please carefully read the following:<br/>1.The wallpaper simulates the orbital motion of three stars and one planet in real-time; it is not a static video. Version 3.0 includes major updates over 2.0: performance optimizations, visual enhancements, and feature improvements. If you previously subscribed and find these changes undesirable, please revert to the older version.<br/>2.The wallpaper UI supports both Chinese and English. Switch languages via 'Language 语言'under 'Quick Sets'.<br/>3.If you encounter a BUG, please try the following steps in order of severity: Reset Wallpaper -> Resubscribe -> Delete local files and restart Wallpaper Engine.<br/>4.Most basic functions are found in Quick Sets. More detailed settings are available in the subsequent categories – feel free to explore!<br/>5.For optimal mouse interaction, disable other wallpaper software. Desktop organization and enhancement tools may cause conflicts.<br/>6.The wallpaper is 3D. Click, hold, and drag the mouse to rotate the view.<br/>7.Click the clock to show/hide the menu. You can also set the default visibility of the menu, civilization log, civilization leaderboard, clock, and other components in 'Quick Sets'.<br/>8.Simulation uses a 4th-order Symplectic Integrator (Yoshida, 1990). Gravitational softening is applied at close range. The system strives to conserve energy and momentum.<br/>9.If one celestial body exceeds the 'Escape Dist' (Restart Escape Distance) from the system's center of mass, you can manually reset all positions and velocities by clicking the 'Restart' text in the center of the screen. Alternatively, choose automatic reset in 'Quick Sets'.<br/>10.'Civ Seed'gameplay is offered: When you enable 'Custom' under 'Civ Seed':You can set the initial mass, spatial position, and velocity vector for each celestial body.In theory, with identical initial conditions, orbital paths will be similar within a certain timeframe.This enables sharing seed parameters. Share interesting seeds with others, use others' seeds, or compete!<br/>11.If you are unsure about specific parameters (e.g., those governing orbital mechanics), modify them with caution. If you make changes that render the system unrecognizable, reset the wallpaper to the provided 'Factory Settings'.<br/>12.Besides the default background, solid colors and custom background images are supported. Ensure your custom image is suitable for spherical UV mapping (like a skybox) to avoid seams and distortion.<br/>13.There are 192 customizable user properties. This wallpaper is a massive project, and my individual ability is limited. Errors and oversights are inevitable – please point them out and discuss! However, due to the overwhelming number of comments and messages, I cannot reply to every single one. Apologies if some are missed!",
+        "value": ""
+      },
+      "adjustmentofsolarsystem": {
+        "index": 131,
+        "order": 231,
+        "text": "镜头调度 Lens Control",
+        "type": "group",
+        "value": ""
+      },
+      "applyafterrestart": {
+        "index": 167,
+        "order": 267,
+        "text": "<br/><font color='#FF2222'>重启后生效 Apply After Restart",
+        "value": ""
+      },
+      "audiobar": {
+        "index": 205,
+        "order": 305,
+        "text": "<br/><font color='#33CCFF'>距离映射Menu R",
+        "type": "bool",
+        "value": true
+      },
+      "audioresponse": {
+        "index": 37,
+        "order": 137,
+        "text": "<br/><font color='#AAAAAA'>音频响应 Audio Response​​",
+        "type": "bool",
+        "value": true
+      },
+      "audioresponse1": {
+        "index": 218,
+        "order": 318,
+        "text": "音频响应 Audio Response​​",
+        "type": "group",
+        "value": ""
+      },
+      "autorestart": {
+        "index": 22,
+        "order": 122,
+        "text": "<br/><font color='#FF2222'>自动重启 Auto Restart",
+        "type": "bool",
+        "value": true
+      },
+      "backgroundcolor": {
+        "index": 118,
+        "order": 218,
+        "text": "<br/><font color='#AAAAAA'>BG颜色 Color",
+        "type": "color",
+        "value": "1 1 1"
+      },
+      "backgrounf": {
+        "index": 116,
+        "order": 216,
+        "text": "背景设定 BG Settings",
+        "type": "group",
+        "value": ""
+      },
+      "bigfontcolorffbbbbbr60": {
+        "index": 4,
+        "order": 104,
+        "text": "<big><font color='#FF1111'><br/>!!!此壁纸需设置超高品质，帧率大于60<br/>!!! NOTE: This wallpaper must be set to Ultra High Quality",
+        "value": ""
+      },
+      "brfontcolor2288bb": {
+        "index": 136,
+        "order": 236,
+        "text": "<br/><font color='#2288BB'>鼠标跟随模式参数",
+        "value": ""
+      },
+      "brfontcolor2288bb0": {
+        "index": 132,
+        "order": 232,
+        "text": "<br/><font color='#2288BB'> 0 鼠标拖动模式参数",
+        "value": ""
+      },
+      "brfontcolor2288bb1": {
+        "index": 140,
+        "order": 240,
+        "text": "<br/><font color='#2288BB'>自旋设置",
+        "value": ""
+      },
+      "brfontcolor2288bb2": {
+        "index": 23,
+        "order": 123,
+        "text": "<br/><font color='#2288BB'>引力牢笼打开后会丧失物理真实性<br/>Disables Physical Realism When Gravity Cage Active",
+        "value": ""
+      },
+      "brfontcolor2288bbbr0br1br2": {
+        "index": 15,
+        "order": 115,
+        "text": "<br/><font color='#2288BB'>鼠标旋转响应三种模式:<br/>Mouse Rotation Behavior Modes:<br/>0.按下鼠标拖动Press and Drag<br/>1.跟随鼠标 Follow<br/>2.不响应off",
+        "value": ""
+      },
+      "brfontcolor2288bbrabrr0reak1gmc1rre22brrrerca0brrrcak2gmcrrcexpc": {
+        "index": 49,
+        "order": 149,
+        "text": "<br/><font color='#2288BB'>引力牢笼打开后生效：r为距质心距离，a为牢笼场加速度<br>r在[0,re]区间：a=-k1*G*Mc*(1 - (r/re)^2)^2<br/>r在[re,rc]区间：a=0<br/>r大于rc：a=k2*G*Mc*(r-rc)^expc",
+        "value": ""
+      },
+      "brfontcolor33ccff1": {
+        "index": 75,
+        "order": 175,
+        "text": "<br/><font color='#33CCFF'>恒星1/Star1",
+        "value": ""
+      },
+      "brfontcolor33ccff2star2": {
+        "index": 82,
+        "order": 182,
+        "text": "<br/><font color='#33CCFF'>恒星2/Star2",
+        "value": ""
+      },
+      "brfontcolor33ccff3star3": {
+        "index": 89,
+        "order": 189,
+        "text": "<br/><font color='#33CCFF'>恒星3/Star3",
+        "value": ""
+      },
+      "brfontcolor33ccff8kbr8kbg": {
+        "index": 117,
+        "order": 217,
+        "text": "<br/><font color='#33CCFF'>默认8K背景 8K BG",
+        "value": ""
+      },
+      "brfontcolor33ccffbrcustombg": {
+        "index": 123,
+        "order": 223,
+        "text": "<br/><font color='#33CCFF'>自定义背景 Custom BG",
+        "value": ""
+      },
+      "brfontcolor33ccffbrpurecolorbg": {
+        "index": 120,
+        "order": 220,
+        "text": "<br/><font color='#33CCFF'>纯色背景 Pure Color BG",
+        "value": ""
+      },
+      "brfontcolor33ccffplanet": {
+        "index": 96,
+        "order": 196,
+        "text": "<br/><font color='#33CCFF'>行星/Planet",
+        "value": ""
+      },
+      "brfontcoloraaaaaabrnebularequirespostprocessingultrahighquality": {
+        "index": 34,
+        "order": 134,
+        "text": "<br/><font color='#AAAAAA'>星云(需后处理品质超高) <br/>Nebula (requires post-processing, ultra-high quality)",
+        "type": "bool",
+        "value": false
+      },
+      "brfontcoloraaaaaarandomposrange": {
+        "fraction": true,
+        "index": 72,
+        "max": 4,
+        "min": 0,
+        "order": 172,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>随机位置范围 Random Pos Range",
+        "type": "slider",
+        "value": 2
+      },
+      "brfontcoloraaaaaarochelimitt": {
+        "fraction": true,
+        "index": 115,
+        "max": 1,
+        "min": 0.001,
+        "order": 215,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>洛希极限RocheLimitt",
+        "type": "slider",
+        "value": 0.21
+      },
+      "brfontcoloraaaaaatrail1color": {
+        "index": 168,
+        "order": 268,
+        "text": "<br/><font color='#AAAAAA'>轨迹 Trail1 Color",
+        "type": "color",
+        "value": "1 1 1"
+      },
+      "brfontcoloraaaaaatrail2color": {
+        "index": 169,
+        "order": 269,
+        "text": "<br/><font color='#AAAAAA'>轨迹 Trail2 Color",
+        "type": "color",
+        "value": "1 0.8392156862745098 0.5176470588235295"
+      },
+      "brfontcoloraaaaaatrail3color": {
+        "index": 170,
+        "order": 270,
+        "text": "<br/><font color='#AAAAAA'>轨迹 Trail3 Color",
+        "type": "color",
+        "value": "1 0.6196078431372549 0.5490196078431373"
+      },
+      "brfontcoloraaaaaatrail4color": {
+        "index": 171,
+        "order": 271,
+        "text": "<br/><font color='#AAAAAA'>轨迹 Trail4 Color",
+        "type": "color",
+        "value": "0.28627450980392155 0.6039215686274509 1"
+      },
+      "brfontcoloraaaaaaxspinangle": {
+        "fraction": true,
+        "index": 142,
+        "max": 5,
+        "min": 0,
+        "order": 242,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>X自旋角度 Spin Angle",
+        "type": "slider",
+        "value": 0
+      },
+      "cheatingcheck": {
+        "index": 41,
+        "order": 141,
+        "text": "物理真实性检查 Cheating check",
+        "type": "bool",
+        "value": false
+      },
+      "clock": {
+        "index": 36,
+        "order": 136,
+        "text": "<br/><font color='#AAAAAA'>时钟组件 clock widget",
+        "type": "bool",
+        "value": true
+      },
+      "clock1": {
+        "index": 194,
+        "order": 294,
+        "text": "时钟组件 clock widget",
+        "type": "group",
+        "value": ""
+      },
+      "clock2": {
+        "index": 198,
+        "order": 298,
+        "text": "<br/><font color='#33CCFF'>时钟 Clock",
+        "type": "bool",
+        "value": true
+      },
+      "clockcolor": {
+        "index": 199,
+        "order": 299,
+        "text": "<br/><font color='#AAAAAA'>时钟颜色 Color",
+        "type": "color",
+        "value": "0.611764705882353 0.611764705882353 0.611764705882353"
+      },
+      "clocksize": {
+        "fraction": true,
+        "index": 197,
+        "max": 2,
+        "min": 0,
+        "order": 297,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>组件大小 Size",
+        "type": "slider",
+        "value": 0.9
+      },
+      "clx": {
+        "fraction": true,
+        "index": 195,
+        "max": 1.5,
+        "min": -1.5,
+        "order": 295,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>水平位置 X Pos",
+        "type": "slider",
+        "value": 0
+      },
+      "cly": {
+        "fraction": true,
+        "index": 196,
+        "max": 0.8,
+        "min": -1.2,
+        "order": 296,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>竖直位置 Y Pos",
+        "type": "slider",
+        "value": 0.14
+      },
+      "cnen1": {
+        "index": 6,
+        "order": 106,
+        "text": "CN/EN",
+        "type": "bool",
+        "value": true
+      },
+      "cnen2": {
+        "index": 14,
+        "order": 114,
+        "text": "<br/><font color='#33CCFF'>语言 Language: EN ☑ / 中文 ☐",
+        "type": "bool",
+        "value": false
+      },
+      "compass": {
+        "index": 29,
+        "order": 129,
+        "text": "<br/><font color='#33CCFF'>导航罗盘 Compass",
+        "type": "bool",
+        "value": true
+      },
+      "custombg": {
+        "index": 20,
+        "order": 120,
+        "text": "<br/><font color='#AAAAAA'>自定义贴图 Custom BG",
+        "type": "scenetexture",
+        "value": ""
+      },
+      "customtex1": {
+        "index": 10,
+        "order": 110,
+        "text": "<br/><font color='#AAAAAA'>T1：",
+        "type": "textinput",
+        "value": "<Body,3>"
+      },
+      "datacolor": {
+        "index": 17,
+        "order": 117,
+        "text": "<br/><font color='#AAAAAA'>主题颜色 Theme Color",
+        "type": "color",
+        "value": "0.592156862745098 0.7647058823529411 1"
+      },
+      "date": {
+        "index": 202,
+        "order": 302,
+        "text": "<br/><font color='#33CCFF'>日期 Date",
+        "type": "bool",
+        "value": true
+      },
+      "day": {
+        "index": 200,
+        "order": 300,
+        "text": "<br/><font color='#33CCFF'>星期 Day",
+        "type": "bool",
+        "value": true
+      },
+      "daycolor": {
+        "index": 201,
+        "order": 301,
+        "text": "<br/><font color='#AAAAAA'>星期颜色 Color",
+        "type": "color",
+        "value": "1 1 1"
+      },
+      "distance": {
+        "fraction": true,
+        "index": 25,
+        "max": 4,
+        "min": -4,
+        "order": 125,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>镜头距离  Cam Distance",
+        "type": "slider",
+        "value": 0
+      },
+      "dust": {
+        "index": 35,
+        "order": 135,
+        "text": "<br/><font color='#AAAAAA'>尘埃粒子 Dust",
+        "type": "bool",
+        "value": true
+      },
+      "dustsettings": {
+        "index": 126,
+        "order": 226,
+        "text": "尘埃粒子 Dust Settings",
+        "type": "group",
+        "value": ""
+      },
+      "expc": {
+        "fraction": true,
+        "index": 57,
+        "max": 10,
+        "min": 1,
+        "order": 157,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>expc约束指数(软牢笼生效)",
+        "type": "slider",
+        "value": 2
+      },
+      "hdr": {
+        "fraction": true,
+        "index": 144,
+        "max": 4,
+        "min": 0,
+        "order": 244,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>HDR强度 HDR Intensity",
+        "type": "slider",
+        "value": 4
+      },
+      "hdr1": {
+        "fraction": true,
+        "index": 145,
+        "max": 4,
+        "min": 0,
+        "order": 245,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>HDR散射 HDR Scatter",
+        "type": "slider",
+        "value": 2
+      },
+      "k1": {
+        "fraction": true,
+        "index": 52,
+        "max": 1,
+        "min": 0,
+        "order": 152,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>k1内区斥力强度",
+        "type": "slider",
+        "value": 0
+      },
+      "k2": {
+        "fraction": true,
+        "index": 54,
+        "max": 10,
+        "min": 0,
+        "order": 154,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>k2外区约束强度",
+        "type": "slider",
+        "value": 0.5
+      },
+      "loadlogininterface": {
+        "index": 224,
+        "order": 324,
+        "text": "加载 / 登录界面Load / login interface",
+        "type": "group",
+        "value": ""
+      },
+      "logininterface": {
+        "index": 9,
+        "order": 109,
+        "text": "登录界面  Login Interface",
+        "type": "group",
+        "value": ""
+      },
+      "mc": {
+        "fraction": true,
+        "index": 51,
+        "max": 100000000,
+        "min": 100000,
+        "order": 151,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>Mc引力牢笼等效质量",
+        "type": "slider",
+        "value": 15000000
+      },
+      "menu": {
+        "index": 203,
+        "order": 303,
+        "text": "菜单组件 Menu Parts",
+        "type": "group",
+        "value": ""
+      },
+      "menuinit": {
+        "index": 28,
+        "order": 128,
+        "text": "<br/><font color='#FF2222'>菜单默认打开 Menu init",
+        "type": "bool",
+        "value": false
+      },
+      "menul": {
+        "index": 211,
+        "order": 311,
+        "text": "<br/><font color='#33CCFF'>状态栏Menu L",
+        "type": "bool",
+        "value": true
+      },
+      "mlx": {
+        "fraction": true,
+        "index": 212,
+        "max": 3,
+        "min": -3,
+        "order": 312,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>水平位置 X",
+        "type": "slider",
+        "value": -0.48
+      },
+      "mly": {
+        "fraction": true,
+        "index": 213,
+        "max": 1,
+        "min": -1,
+        "order": 313,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>竖直位置 Y",
+        "type": "slider",
+        "value": -0.22
+      },
+      "mrx": {
+        "fraction": true,
+        "index": 206,
+        "max": 3,
+        "min": -3,
+        "order": 306,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>水平位置 X Pos",
+        "type": "slider",
+        "value": 0.48
+      },
+      "mry": {
+        "fraction": true,
+        "index": 207,
+        "max": 1,
+        "min": -1,
+        "order": 307,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>竖直位置 Y Pos",
+        "type": "slider",
+        "value": -0.22
+      },
+      "newproperty": {
+        "index": 3,
+        "order": 103,
+        "text": "<big><font color='#2288BB'><br/>您的认可是我最大的动力！",
+        "value": "3"
+      },
+      "newproperty1": {
+        "index": 143,
+        "order": 243,
+        "text": "超后处理 Post Process",
+        "type": "group",
+        "value": ""
+      },
+      "newproperty10": {
+        "fraction": true,
+        "index": 104,
+        "max": 10,
+        "min": 1,
+        "order": 204,
+        "precision": 2,
+        "step": 0.1,
+        "text": "<br/><font color='#AAAAAA'>dt 记录间隔 Log Int",
+        "type": "slider",
+        "value": 5
+      },
+      "newproperty11": {
+        "index": 70,
+        "order": 170,
+        "text": "文明种子 Civ Seed",
+        "type": "group",
+        "value": ""
+      },
+      "newproperty12": {
+        "index": 183,
+        "order": 283,
+        "text": "文明排行 Civ Rank",
+        "type": "group",
+        "value": ""
+      },
+      "newproperty13": {
+        "fraction": true,
+        "index": 26,
+        "max": 20,
+        "min": 4,
+        "order": 126,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>D 逃逸重启距离 Escape Dist",
+        "type": "slider",
+        "value": 6
+      },
+      "newproperty14": {
+        "index": 27,
+        "order": 127,
+        "text": "<br/><font color='#FF2222'>轨迹开关 Trail On/Off",
+        "type": "bool",
+        "value": false
+      },
+      "newproperty15": {
+        "fraction": true,
+        "index": 227,
+        "max": 1,
+        "min": 0,
+        "order": 327,
+        "precision": 4,
+        "step": 0.001,
+        "text": "加载/重启黑屏不透明度 Load/restart black screen opacity",
+        "type": "slider",
+        "value": 1
+      },
+      "newproperty16": {
+        "index": 33,
+        "order": 133,
+        "text": "<br/><font color='#AAAAAA'>镜头自转 Auto Rotate",
+        "type": "bool",
+        "value": true
+      },
+      "newproperty17": {
+        "condition": "",
+        "index": 19,
+        "options": [
+          {
+            "label": "默认 6K",
+            "value": "1"
+          },
+          {
+            "label": "纯色 Pure color",
+            "value": "2"
+          },
+          {
+            "label": "自定义 Custom",
+            "value": "3"
+          },
+          {
+            "label": "默认 8k",
+            "value": "4"
+          }
+        ],
+        "order": 119,
+        "text": "<br/><font color='#FF2222'>背景选择<br/> BG Settings",
+        "type": "combo",
+        "value": "4"
+      },
+      "newproperty18": {
+        "index": 154,
+        "order": 254,
+        "text": "<br/><font color='#AAAAAA'>恒星星芒 Stellar Spike",
+        "type": "bool",
+        "value": true
+      },
+      "newproperty19": {
+        "index": 151,
+        "order": 251,
+        "text": "天体外观 Orbit Appearance",
+        "type": "group",
+        "value": ""
+      },
+      "newproperty2": {
+        "index": 32,
+        "order": 132,
+        "text": "<br/><font color='#33CCFF'>超后处理 Post Process",
+        "type": "bool",
+        "value": true
+      },
+      "newproperty20": {
+        "fraction": true,
+        "index": 152,
+        "max": 0.1,
+        "min": 0,
+        "order": 252,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#33CCFF'>行星半径 Planet R",
+        "type": "slider",
+        "value": 0.01
+      },
+      "newproperty21": {
+        "fraction": true,
+        "index": 217,
+        "max": 1,
+        "min": 0,
+        "order": 317,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>温度 Temp Opacity",
+        "type": "slider",
+        "value": 0.5
+      },
+      "newproperty22": {
+        "fraction": true,
+        "index": 223,
+        "max": 1,
+        "min": 0,
+        "order": 323,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>运行时间 Opacity",
+        "type": "slider",
+        "value": 0.5
+      },
+      "newproperty23": {
+        "fraction": true,
+        "index": 147,
+        "max": 0.3,
+        "min": 0,
+        "order": 247,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>Blur模糊 Intensity 2",
+        "type": "slider",
+        "value": 0
+      },
+      "newproperty24": {
+        "fraction": true,
+        "index": 210,
+        "max": 1,
+        "min": 0,
+        "order": 310,
+        "precision": 2,
+        "step": 0.1,
+        "text": "<br/><font color='#AAAAAA'>距离条 Opacity",
+        "type": "slider",
+        "value": 0.2
+      },
+      "newproperty25": {
+        "fraction": true,
+        "index": 209,
+        "max": 3,
+        "min": 0,
+        "order": 309,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>右侧文字 Opacity",
+        "type": "slider",
+        "value": 1
+      },
+      "newproperty26": {
+        "fraction": true,
+        "index": 105,
+        "max": 100,
+        "min": 1,
+        "order": 205,
+        "precision": 2,
+        "step": 0.1,
+        "text": "<br/><font color='#AAAAAA'>Kt 时间倍数 Time Factor<br/>k=10时：1second=1year",
+        "type": "slider",
+        "value": 10
+      },
+      "newproperty27": {
+        "index": 13,
+        "order": 113,
+        "text": "快捷设定 Quick Sets",
+        "type": "group",
+        "value": ""
+      },
+      "newproperty28": {
+        "fraction": true,
+        "index": 59,
+        "max": 1,
+        "min": 0,
+        "order": 159,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>rs软化距离 Soften Distr",
+        "type": "slider",
+        "value": 0.1
+      },
+      "newproperty29": {
+        "fraction": true,
+        "index": 60,
+        "max": 5,
+        "min": 1.5,
+        "order": 160,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>k软化扩展  Soften Factor",
+        "type": "slider",
+        "value": 2.8
+      },
+      "newproperty3": {
+        "fraction": true,
+        "index": 146,
+        "max": 1,
+        "min": 0,
+        "order": 246,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>CRT滤镜 Intensity 1",
+        "type": "slider",
+        "value": 0.03
+      },
+      "newproperty30": {
+        "fraction": true,
+        "index": 112,
+        "max": 0.7,
+        "min": 0.05,
+        "order": 212,
+        "precision": 3,
+        "step": 0.01,
+        "text": "<br/><font color='#AAAAAA'>凌空距离阈值 Giant Sun Dist",
+        "type": "slider",
+        "value": 0.3
+      },
+      "newproperty31": {
+        "fraction": true,
+        "index": 113,
+        "max": 4,
+        "min": 1,
+        "order": 213,
+        "precision": 2,
+        "step": 0.1,
+        "text": "<br/><font color='#AAAAAA'>飞星距离阈值 Flying Star Dist",
+        "type": "slider",
+        "value": 2
+      },
+      "newproperty32": {
+        "index": 43,
+        "order": 143,
+        "text": "<br/><font color='#33CCFF'>注意：以下可以修改<br/><br/><font color='#2288BB'>经b站@Cha0s_MnK指点<br/>已经采用4阶辛积分器(Yoshida1990)替代了原来rk4<br/>相对更好的模拟系统的动量能量守恒<br/><font color='#2288BB'>天体距质心距离大于D时，可以按屏幕中心文字重置位置速度<br/>注意：<br/>1(m单位质量)=2×10^23kg",
+        "value": ""
+      },
+      "newproperty33": {
+        "index": 58,
+        "order": 158,
+        "text": "<br/><font color='#33CCFF'>注意：以下慎重修改！<br/><br/><font color='#2288BB'>引力软化方法采用Aarseth分段线性软化方法<br/>r小于ras时，G*m*r/(ras^3)<br/>r在rs和k*ras之间时，[α+β*(r/ras)]*G*m/(r^2)<br/>r大于k*ras时，恢复为G*m*/(r^2)<br/>",
+        "value": ""
+      },
+      "newproperty34": {
+        "index": 63,
+        "order": 163,
+        "text": "<br/><font color='#33CCFF'>以下为固定项，暂不支持修改<br/>",
+        "value": ""
+      },
+      "newproperty35": {
+        "index": 204,
+        "order": 304,
+        "text": "<br/><font color='#33CCFF'>注意，透明度调整后或异常，切其他壁纸回来即可<br/>",
+        "value": ""
+      },
+      "newproperty36": {
+        "index": 5,
+        "order": 105,
+        "text": "使用说明 Guide",
+        "type": "group",
+        "value": ""
+      },
+      "newproperty37": {
+        "index": 172,
+        "order": 272,
+        "text": "文明日志 Civ Log",
+        "type": "group",
+        "value": ""
+      },
+      "newproperty38": {
+        "index": 30,
+        "order": 130,
+        "text": "<br/><font color='#33CCFF'>文明状态 Civ Status",
+        "type": "bool",
+        "value": true
+      },
+      "newproperty39": {
+        "index": 31,
+        "order": 131,
+        "text": "<br/><font color='#33CCFF'>文明排行 Civ Rank",
+        "type": "bool",
+        "value": false
+      },
+      "newproperty4": {
+        "index": 39,
+        "options": [
+          {
+            "label": "装饰线1",
+            "value": "1"
+          },
+          {
+            "label": "装饰线2",
+            "value": "2"
+          },
+          {
+            "label": "无",
+            "value": "4"
+          }
+        ],
+        "order": 139,
+        "text": "<br/><font color='#AAAAAA'>UI 装饰线 Decor2",
+        "type": "combo",
+        "value": "4"
+      },
+      "newproperty40": {
+        "index": 121,
+        "order": 221,
+        "text": "<br/><font color='#AAAAAA'>颜色 Color",
+        "type": "color",
+        "value": "0.09803921568627451 0.15294117647058825 0.2"
+      },
+      "newproperty41": {
+        "fraction": true,
+        "index": 114,
+        "max": -30,
+        "min": -120,
+        "order": 214,
+        "precision": 2,
+        "step": 0.1,
+        "text": "<br/><font color='#AAAAAA'>飞星温度阈值 Flying Star Temp ℃",
+        "type": "slider",
+        "value": -70
+      },
+      "newproperty42": {
+        "fraction": true,
+        "index": 111,
+        "max": 0.2,
+        "min": 0.001,
+        "order": 211,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>相撞距离阈值 Collision Dist",
+        "type": "slider",
+        "value": 0.2
+      },
+      "newproperty43": {
+        "fraction": true,
+        "index": 108,
+        "max": -40,
+        "min": -170,
+        "order": 208,
+        "precision": 2,
+        "step": 0.1,
+        "text": "<br/><font color='#AAAAAA'>低温耐受Cold Tol ℃",
+        "type": "slider",
+        "value": -100
+      },
+      "newproperty44": {
+        "fraction": true,
+        "index": 107,
+        "max": 500,
+        "min": 100,
+        "order": 207,
+        "precision": 2,
+        "step": 0.1,
+        "text": "<br/><font color='#AAAAAA'>高温耐受Heat Tol ℃",
+        "type": "slider",
+        "value": 200
+      },
+      "newproperty45": {
+        "fraction": true,
+        "index": 110,
+        "max": -10,
+        "min": -70,
+        "order": 210,
+        "precision": 2,
+        "step": 0.1,
+        "text": "<br/><font color='#AAAAAA'>恒纪元低温边界 Stable Low ℃",
+        "type": "slider",
+        "value": -55
+      },
+      "newproperty46": {
+        "fraction": true,
+        "index": 109,
+        "max": 100,
+        "min": 40,
+        "order": 209,
+        "precision": 2,
+        "step": 0.1,
+        "text": "<br/><font color='#AAAAAA'>恒纪元高温边界 Stable High ℃",
+        "type": "slider",
+        "value": 70
+      },
+      "newproperty47": {
+        "index": 103,
+        "order": 203,
+        "text": "文明设定 Civ Settings",
+        "type": "group",
+        "value": ""
+      },
+      "newproperty48": {
+        "fraction": true,
+        "index": 73,
+        "max": 4,
+        "min": 0,
+        "order": 173,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>随机速度范围 Random Speed Range",
+        "type": "slider",
+        "value": 0.1
+      },
+      "newproperty49": {
+        "fraction": true,
+        "index": 148,
+        "max": 2,
+        "min": 0,
+        "order": 248,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>Light光效 Intensity 3",
+        "type": "slider",
+        "value": 0.3
+      },
+      "newproperty5": {
+        "index": 42,
+        "order": 142,
+        "text": "天体运动 Orbit Settings",
+        "type": "group",
+        "value": ""
+      },
+      "newproperty50": {
+        "index": 21,
+        "order": 121,
+        "text": "<br/><font color='#FF2222'>自定义☑ / 随机☐ - 种子<br/>Custom☑ /Random☐ - SEED",
+        "type": "bool",
+        "value": false
+      },
+      "newproperty51": {
+        "fraction": true,
+        "index": 141,
+        "max": 6,
+        "min": -6,
+        "order": 241,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>Y自旋速度 Spin Speed",
+        "type": "slider",
+        "value": 3
+      },
+      "newproperty52": {
+        "fraction": true,
+        "index": 61,
+        "max": 1000000,
+        "min": 1,
+        "order": 161,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>K 引力系数 Gravity Const<br/>注意：<br/>G_sim=G_real*kg/1000<br/>不建议修改",
+        "type": "slider",
+        "value": 1000
+      },
+      "newproperty53": {
+        "fraction": true,
+        "index": 62,
+        "max": 10,
+        "min": 0.01,
+        "order": 162,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>计算步长 Step Size (ms)",
+        "type": "slider",
+        "value": 0.75
+      },
+      "newproperty54": {
+        "fraction": true,
+        "index": 149,
+        "max": 1,
+        "min": 0,
+        "order": 249,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>Pulse脉冲 Intensity 5",
+        "type": "slider",
+        "value": 0
+      },
+      "newproperty55": {
+        "index": 124,
+        "order": 224,
+        "text": "<br/><font color='#AAAAAA'>颜色 Color",
+        "type": "color",
+        "value": "1 1 1"
+      },
+      "newproperty56": {
+        "fraction": true,
+        "index": 125,
+        "max": 2,
+        "min": 0,
+        "order": 225,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>亮度 Brightness",
+        "type": "slider",
+        "value": 1
+      },
+      "newproperty57": {
+        "fraction": true,
+        "index": 122,
+        "max": 2,
+        "min": 0,
+        "order": 222,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>亮度 Brightness",
+        "type": "slider",
+        "value": 1
+      },
+      "newproperty58": {
+        "index": 11,
+        "order": 111,
+        "text": "<br/><font color='#AAAAAA'>T2：",
+        "type": "textinput",
+        "value": "哥白尼"
+      },
+      "newproperty59": {
+        "index": 12,
+        "order": 112,
+        "text": "<br/><font color='#AAAAAA'>T3：",
+        "type": "textinput",
+        "value": "* * * * * * * *"
+      },
+      "newproperty6": {
+        "index": 38,
+        "options": [
+          {
+            "label": "圆 Round",
+            "value": "1"
+          },
+          {
+            "label": "方 Square",
+            "value": "2"
+          },
+          {
+            "label": "无 None",
+            "value": "3"
+          }
+        ],
+        "order": 138,
+        "text": "<br/><font color='#AAAAAA'>UI 装饰形状 Decor1",
+        "type": "combo",
+        "value": "1"
+      },
+      "newproperty60": {
+        "index": 24,
+        "order": 124,
+        "text": "<br/><font color='#33CCFF'>引力牢笼Gravity Cage",
+        "type": "bool",
+        "value": true
+      },
+      "newproperty61": {
+        "fraction": false,
+        "index": 16,
+        "max": 2,
+        "min": 0,
+        "order": 116,
+        "text": "<br/><font color='#33CCFF'>视角模式Rotate Modes",
+        "type": "slider",
+        "value": 1
+      },
+      "newproperty62": {
+        "fraction": true,
+        "index": 137,
+        "max": 0.2,
+        "min": 0.01,
+        "order": 237,
+        "precision": 3,
+        "step": 0.01,
+        "text": "<br/><font color='#AAAAAA'>鼠标跟随速度",
+        "type": "slider",
+        "value": 0.1
+      },
+      "newproperty63": {
+        "index": 225,
+        "order": 325,
+        "text": "登录界面Login interface",
+        "type": "bool",
+        "value": true
+      },
+      "newproperty64": {
+        "index": 226,
+        "order": 326,
+        "text": "加载界面Load interface",
+        "type": "bool",
+        "value": true
+      },
+      "newproperty65": {
+        "index": 40,
+        "order": 140,
+        "text": "天体位置信息 Celestial information",
+        "type": "bool",
+        "value": true
+      },
+      "newproperty66": {
+        "index": 50,
+        "order": 150,
+        "text": "硬牢笼",
+        "type": "bool",
+        "value": false
+      },
+      "newproperty67": {
+        "fraction": true,
+        "index": 56,
+        "max": 10,
+        "min": 2.1,
+        "order": 156,
+        "precision": 4,
+        "step": 0.001,
+        "text": "硬牢笼约束半径(硬牢笼生效)",
+        "type": "slider",
+        "value": 2.1
+      },
+      "newproperty68": {
+        "fraction": true,
+        "index": 150,
+        "max": 1,
+        "min": 0,
+        "order": 250,
+        "precision": 4,
+        "step": 0.001,
+        "text": "胶片颗粒",
+        "type": "slider",
+        "value": 0.15
+      },
+      "newproperty69": {
+        "fraction": true,
+        "index": 66,
+        "max": 10,
+        "min": 1,
+        "order": 166,
+        "precision": 4,
+        "step": 0.001,
+        "text": "温度距离倍数(1时拟真)",
+        "type": "slider",
+        "value": 7
+      },
+      "newproperty7": {
+        "fraction": true,
+        "index": 64,
+        "max": 3,
+        "min": 1,
+        "order": 164,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>ex 引力指数 Gravity Exp",
+        "type": "slider",
+        "value": 2
+      },
+      "newproperty70": {
+        "index": 65,
+        "order": 165,
+        "text": "温度计算 Temperature calculation",
+        "type": "group",
+        "value": ""
+      },
+      "newproperty71": {
+        "fraction": true,
+        "index": 18,
+        "max": 65,
+        "min": 40,
+        "order": 118,
+        "precision": 2,
+        "step": 0.1,
+        "text": "视场",
+        "type": "slider",
+        "value": 50
+      },
+      "newproperty8": {
+        "fraction": true,
+        "index": 48,
+        "max": 100000,
+        "min": 0,
+        "order": 148,
+        "precision": 2,
+        "step": 0.1,
+        "text": "<br/><font color='#AAAAAA'>m 行星质量 Planet Mass",
+        "type": "slider",
+        "value": 5000
+      },
+      "newproperty9": {
+        "fraction": true,
+        "index": 119,
+        "max": 2,
+        "min": 0,
+        "order": 219,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>亮度 Brightness",
+        "type": "slider",
+        "value": 1
+      },
+      "note": {
+        "index": 71,
+        "order": 171,
+        "text": "<br/><font color='#2288BB'>以下设定随机种子模式生效 <br/>Random Seed Mode",
+        "value": ""
+      },
+      "note1": {
+        "index": 74,
+        "order": 174,
+        "text": "<br/><font color='#2288BB'>以下设定自定义种子模式生效 <br/>Custom Seed Mode<br/>1(D单位距离)=10^12m<br/>1(v单位速度)=3.17×10^4m/s",
+        "value": ""
+      },
+      "rc": {
+        "fraction": true,
+        "index": 55,
+        "max": 6,
+        "min": 0,
+        "order": 155,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>rc约束生效距离",
+        "type": "slider",
+        "value": 0.2
+      },
+      "re": {
+        "fraction": true,
+        "index": 53,
+        "max": 0.2,
+        "min": 0.01,
+        "order": 153,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>re斥力生效半径",
+        "type": "slider",
+        "value": 0.1
+      },
+      "schemecolor": {
+        "index": 2,
+        "order": 102,
+        "text": "ui_browse_properties_scheme_color",
+        "type": "color",
+        "value": "0 0 0"
+      },
+      "size": {
+        "fraction": true,
+        "index": 208,
+        "max": 2,
+        "min": 0.5,
+        "order": 308,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>大小Size",
+        "type": "slider",
+        "value": 1
+      },
+      "size1": {
+        "fraction": true,
+        "index": 175,
+        "max": 2,
+        "min": 0,
+        "order": 275,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>大小 size",
+        "type": "slider",
+        "value": 0.9
+      },
+      "size2": {
+        "fraction": true,
+        "index": 214,
+        "max": 2,
+        "min": 0.5,
+        "order": 314,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>大小Size",
+        "type": "slider",
+        "value": 1
+      },
+      "size3": {
+        "fraction": true,
+        "index": 186,
+        "max": 3,
+        "min": 0,
+        "order": 286,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>大小 Size",
+        "type": "slider",
+        "value": 1
+      },
+      "sizex": {
+        "fraction": true,
+        "index": 221,
+        "max": 1.2,
+        "min": 0.3,
+        "order": 321,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>大小 Size x",
+        "type": "slider",
+        "value": 0.6
+      },
+      "sizey": {
+        "fraction": true,
+        "index": 222,
+        "max": 1,
+        "min": 0.1,
+        "order": 322,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>大小 Size y",
+        "type": "slider",
+        "value": 0.4
+      },
+      "statement": {
+        "index": 228,
+        "order": 328,
+        "text": "资产声明 Statement：",
+        "type": "group",
+        "value": ""
+      },
+      "support": {
+        "index": 230,
+        "order": 330,
+        "text": "投喂 Support",
+        "type": "group",
+        "value": ""
+      },
+      "t": {
+        "fraction": true,
+        "index": 106,
+        "max": 100,
+        "min": 1,
+        "order": 206,
+        "precision": 2,
+        "step": 0.1,
+        "text": "<br/><font color='#AAAAAA'>T诞生时间Birth Time (dt*Kt*n )",
+        "type": "slider",
+        "value": 50
+      },
+      "t1": {
+        "fraction": true,
+        "index": 176,
+        "max": 1,
+        "min": 0,
+        "order": 276,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>CIV S 不透明度 Opacity",
+        "type": "slider",
+        "value": 0.3
+      },
+      "t10": {
+        "fraction": true,
+        "index": 189,
+        "max": 1,
+        "min": 0,
+        "order": 289,
+        "precision": 2,
+        "step": 0.1,
+        "text": "<br/><font color='#AAAAAA'>Rank2 不透明度 Opacity",
+        "type": "slider",
+        "value": 0.24
+      },
+      "t2": {
+        "fraction": true,
+        "index": 177,
+        "max": 1,
+        "min": 0,
+        "order": 277,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>Lifetime 不透明度 Opacity",
+        "type": "slider",
+        "value": 0.24
+      },
+      "t3": {
+        "fraction": true,
+        "index": 178,
+        "max": 1,
+        "min": 0,
+        "order": 278,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>n1 不透明度 Opacity",
+        "type": "slider",
+        "value": 0.16
+      },
+      "t4": {
+        "fraction": true,
+        "index": 179,
+        "max": 1,
+        "min": 0,
+        "order": 279,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>n2 不透明度 Opacity",
+        "type": "slider",
+        "value": 0.1
+      },
+      "t5": {
+        "fraction": true,
+        "index": 180,
+        "max": 1,
+        "min": 0,
+        "order": 280,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>n3 不透明度 Opacity",
+        "type": "slider",
+        "value": 0.07
+      },
+      "t6": {
+        "fraction": true,
+        "index": 181,
+        "max": 1,
+        "min": 0,
+        "order": 281,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>n4 不透明度 Opacity",
+        "type": "slider",
+        "value": 0.04
+      },
+      "t7": {
+        "fraction": true,
+        "index": 182,
+        "max": 1,
+        "min": 0,
+        "order": 282,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>n5 不透明度 Opacity",
+        "type": "slider",
+        "value": 0
+      },
+      "t8": {
+        "fraction": true,
+        "index": 187,
+        "max": 1,
+        "min": 0,
+        "order": 287,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>RANK 不透明度 Opacity",
+        "type": "slider",
+        "value": 0.4
+      },
+      "t9": {
+        "fraction": true,
+        "index": 188,
+        "max": 1,
+        "min": 0,
+        "order": 288,
+        "precision": 2,
+        "step": 0.1,
+        "text": "<br/><font color='#AAAAAA'>Rank1 不透明度 Opacity",
+        "type": "slider",
+        "value": 0.32
+      },
+      "tex4opacity": {
+        "fraction": true,
+        "index": 190,
+        "max": 1,
+        "min": 0,
+        "order": 290,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>Rank3 不透明度 Opacity",
+        "type": "slider",
+        "value": 0.16
+      },
+      "tex5opacity": {
+        "fraction": true,
+        "index": 191,
+        "max": 1,
+        "min": 0,
+        "order": 291,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>Rank4 不透明度 Opacity",
+        "type": "slider",
+        "value": 0.08
+      },
+      "tex6opacity": {
+        "fraction": true,
+        "index": 192,
+        "max": 1,
+        "min": 0,
+        "order": 292,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>Rank5 不透明度 Opacity",
+        "type": "slider",
+        "value": 0.04
+      },
+      "tex7opacity": {
+        "fraction": true,
+        "index": 193,
+        "max": 1,
+        "min": 0,
+        "order": 293,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>Rank6 不透明度 Opacity",
+        "type": "slider",
+        "value": 0
+      },
+      "timespeed": {
+        "fraction": true,
+        "index": 44,
+        "max": 3,
+        "min": 0.1,
+        "order": 144,
+        "precision": 2,
+        "step": 0.1,
+        "text": "时间倍速 time speed",
+        "type": "slider",
+        "value": 1
+      },
+      "trailsettings": {
+        "index": 166,
+        "order": 266,
+        "text": "轨迹设定 Trail Settings",
+        "type": "group",
+        "value": ""
+      },
+      "v1": {
+        "fraction": true,
+        "index": 79,
+        "max": 2,
+        "min": -2,
+        "order": 179,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>vx1 速度 Star Vel",
+        "type": "slider",
+        "value": 0.05
+      },
+      "vx2": {
+        "fraction": true,
+        "index": 86,
+        "max": 2,
+        "min": -2,
+        "order": 186,
+        "precision": 2,
+        "step": 0.1,
+        "text": "<br/><font color='#AAAAAA'>vx2 速度 Star Vel",
+        "type": "slider",
+        "value": 0
+      },
+      "vx3": {
+        "fraction": true,
+        "index": 93,
+        "max": 2,
+        "min": -2,
+        "order": 193,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>vx3 速度 Star Vel",
+        "type": "slider",
+        "value": 0.05
+      },
+      "vx4": {
+        "fraction": true,
+        "index": 100,
+        "max": 2,
+        "min": -2,
+        "order": 200,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>vx4 速度 Planet Vel",
+        "type": "slider",
+        "value": 0
+      },
+      "vy1": {
+        "fraction": true,
+        "index": 80,
+        "max": 2,
+        "min": -2,
+        "order": 180,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>vy1 速度 Star Vel",
+        "type": "slider",
+        "value": -0.1
+      },
+      "vy2": {
+        "fraction": true,
+        "index": 87,
+        "max": 2,
+        "min": -2,
+        "order": 187,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>vy2 速度 Star Vel",
+        "type": "slider",
+        "value": -0.05
+      },
+      "vy3": {
+        "fraction": true,
+        "index": 94,
+        "max": 2,
+        "min": -2,
+        "order": 194,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>vy3 速度 Star Vel",
+        "type": "slider",
+        "value": 0
+      },
+      "vy4": {
+        "fraction": true,
+        "index": 101,
+        "max": 2,
+        "min": -2,
+        "order": 201,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>vy4 速度 Planet Vel",
+        "type": "slider",
+        "value": 0
+      },
+      "vz1": {
+        "fraction": true,
+        "index": 81,
+        "max": 2,
+        "min": -2,
+        "order": 181,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>vz1 速度 Star Vel",
+        "type": "slider",
+        "value": 0
+      },
+      "vz2": {
+        "fraction": true,
+        "index": 88,
+        "max": 2,
+        "min": -2,
+        "order": 188,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>vz2 速度 Star Vel",
+        "type": "slider",
+        "value": 0.1
+      },
+      "vz3": {
+        "fraction": true,
+        "index": 95,
+        "max": 2,
+        "min": -2,
+        "order": 195,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>vz3 速度 Star Vel",
+        "type": "slider",
+        "value": -0.05
+      },
+      "vz4": {
+        "fraction": true,
+        "index": 102,
+        "max": 2,
+        "min": -2,
+        "order": 202,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>vz4 速度 Planet Vel",
+        "type": "slider",
+        "value": 0
+      },
+      "x": {
+        "fraction": true,
+        "index": 219,
+        "max": 5,
+        "min": -5,
+        "order": 319,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>水平位置 X Pos",
+        "type": "slider",
+        "value": 0
+      },
+      "x1": {
+        "fraction": true,
+        "index": 174,
+        "max": 4,
+        "min": -4,
+        "order": 274,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>位置 x",
+        "type": "slider",
+        "value": 0
+      },
+      "x11": {
+        "fraction": true,
+        "index": 76,
+        "max": 2,
+        "min": -2,
+        "order": 176,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>x1 恒星位置 Star Pos",
+        "type": "slider",
+        "value": 0
+      },
+      "x2": {
+        "fraction": true,
+        "index": 184,
+        "max": 5,
+        "min": -5,
+        "order": 284,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>水平位置 x Pos",
+        "type": "slider",
+        "value": 0
+      },
+      "x21": {
+        "fraction": true,
+        "index": 83,
+        "max": 2,
+        "min": -2,
+        "order": 183,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>x2 位置 Star Pos",
+        "type": "slider",
+        "value": -0.866
+      },
+      "x3": {
+        "fraction": true,
+        "index": 90,
+        "max": 2,
+        "min": -2,
+        "order": 190,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>x3 位置 Star Pos",
+        "type": "slider",
+        "value": 0.866
+      },
+      "x4": {
+        "fraction": true,
+        "index": 97,
+        "max": 2,
+        "min": -2,
+        "order": 197,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>x4 位置 Planet Pos",
+        "type": "slider",
+        "value": 0.05
+      },
+      "x5": {
+        "fraction": true,
+        "index": 135,
+        "max": 10,
+        "min": 0,
+        "order": 235,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>x轴灵敏度 X Sens",
+        "type": "slider",
+        "value": 1
+      },
+      "x6": {
+        "fraction": false,
+        "index": 138,
+        "max": 180,
+        "min": 0,
+        "order": 238,
+        "text": "<br/><font color='#AAAAAA'>X轴跟随角度范围",
+        "type": "slider",
+        "value": 90
+      },
+      "y": {
+        "fraction": true,
+        "index": 220,
+        "max": 4,
+        "min": -4,
+        "order": 320,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>竖直位置 Y Pos",
+        "type": "slider",
+        "value": -1.3
+      },
+      "y1": {
+        "fraction": true,
+        "index": 173,
+        "max": 3,
+        "min": -3,
+        "order": 273,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>位置 y",
+        "type": "slider",
+        "value": 0.36
+      },
+      "y11": {
+        "fraction": true,
+        "index": 77,
+        "max": 2,
+        "min": -2,
+        "order": 177,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>y1 恒星位置 Star Pos",
+        "type": "slider",
+        "value": 1
+      },
+      "y2": {
+        "fraction": true,
+        "index": 185,
+        "max": 3,
+        "min": -3,
+        "order": 285,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>水平位置 y Pos",
+        "type": "slider",
+        "value": 1.8
+      },
+      "y21": {
+        "fraction": true,
+        "index": 84,
+        "max": 2,
+        "min": -2,
+        "order": 184,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>y2 位置 Star Pos",
+        "type": "slider",
+        "value": -0.5
+      },
+      "y3": {
+        "fraction": true,
+        "index": 91,
+        "max": 2,
+        "min": -2,
+        "order": 191,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>y3 位置 Star Pos",
+        "type": "slider",
+        "value": -0.5
+      },
+      "y4": {
+        "fraction": true,
+        "index": 98,
+        "max": 2,
+        "min": -2,
+        "order": 198,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>y4 位置 Planet Pos",
+        "type": "slider",
+        "value": -0.05
+      },
+      "y5": {
+        "fraction": true,
+        "index": 133,
+        "max": 10,
+        "min": 0,
+        "order": 233,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>y轴灵敏度 Y Sens",
+        "type": "slider",
+        "value": 1
+      },
+      "y6": {
+        "fraction": true,
+        "index": 134,
+        "max": 1,
+        "min": 0.98,
+        "order": 234,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>y轴阻尼 Y Damp",
+        "type": "slider",
+        "value": 0.985
+      },
+      "y7": {
+        "fraction": false,
+        "index": 139,
+        "max": 30,
+        "min": 0,
+        "order": 239,
+        "text": "<br/><font color='#AAAAAA'>Y轴跟随角度范围",
+        "type": "slider",
+        "value": 17
+      },
+      "z1": {
+        "fraction": true,
+        "index": 78,
+        "max": 2,
+        "min": -2,
+        "order": 178,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>z1 恒星位置 Star Pos",
+        "type": "slider",
+        "value": 0
+      },
+      "z2": {
+        "fraction": true,
+        "index": 85,
+        "max": 2,
+        "min": -2,
+        "order": 185,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>z2 位置 Star Pos",
+        "type": "slider",
+        "value": 0
+      },
+      "z3": {
+        "fraction": true,
+        "index": 92,
+        "max": 2,
+        "min": -2,
+        "order": 192,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>z3 位置 Star Pos",
+        "type": "slider",
+        "value": 0
+      },
+      "z4": {
+        "fraction": true,
+        "index": 99,
+        "max": 2,
+        "min": -2,
+        "order": 199,
+        "precision": 4,
+        "step": 0.001,
+        "text": "<br/><font color='#AAAAAA'>z4 位置 Planet Pos",
+        "type": "slider",
+        "value": 0
+      }
+    },
+    "supportsaudioprocessing": true,
+    "supportsvideo": true,
+    "supportsvideoflags": 2
+  },
+  "preview": "preview.gif",
+  "ratingsex": "none",
+  "ratingviolence": "none",
+  "tags": [
+    "Sci-Fi"
+  ],
+  "title": "三体实时演算 | Three-Body problem - SYKM",
+  "type": "scene",
+  "version": 113,
+  "visibility": "public",
+  "workshopid": "3509243656",
+  "workshopurl": "steam://url/CommunityFilePage/3509243656"
+}
