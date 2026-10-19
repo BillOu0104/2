@@ -5,7 +5,8 @@ import eraFactory from './legacy/072.js';
 import temperatureFactory from './legacy/079.js';
 import loadingFactory from './legacy/156.js';
 import { moduleBindings } from './original-data.js';
-import { normalizeSettings, seededRandom } from './settings.js';
+import { normalizeSettings, seededRandom, algorithmId } from './settings.js';
+import { Habitability } from './habitability.js';
 
 class Vec3 { constructor(x = 0, y = x, z = x) { this.x = x; this.y = y; this.z = z; } }
 const plain = v => v && typeof v === 'object' ? structuredClone(v) : v;
@@ -18,6 +19,7 @@ export class Simulation {
     this.engine = { runtime: 0, frametime: 1 / 60, screenResolution: new Vec3(1920, 1080, 0) };
     this.input = { cursorScreenPosition: new Vec3(960, 540, 0) };
     this.generation = 1; this.tickCount = 0; this.revision = 0; this.events = []; this.eventSeq = 0;
+    this.habitability = new Habitability();
     this.setRandom();
     this.modules = {};
     for (const [id, factory] of Object.entries({ '008': physicsFactory, '010': timeFactory, '042': civilizationFactory, '072': eraFactory, '079': temperatureFactory, '156': loadingFactory })) this.modules[id] = this.createModule(id, factory);
@@ -37,12 +39,13 @@ export class Simulation {
     builder.values = {};
     builder.finish = function() { return Object.assign(this.values, overrides); };
     const math = Object.create(Math); math.random = () => self.random();
-    return factory({ shared: this.shared, engine: this.engine, input: this.input, thisScene: { createLayer: data => data }, Vec3, Math: math, createScriptProperties: () => builder, onInitialize: bodies => { self.initialBodies = plain(bodies); } });
+    return factory({ shared: this.shared, engine: this.engine, input: this.input, thisScene: { createLayer: data => data }, Vec3, Math: math, createScriptProperties: () => builder, getHabitability: () => self.settings.civilizationMode === 'balanced' ? self.habitability.result : null, onInitialize: bodies => { self.initialBodies = plain(bodies); self.habitability.reset(); } });
   }
   configure(patch) {
     const next = normalizeSettings({ ...this.settings, ...patch });
     const changed = Object.keys(next).filter(k => next[k] !== this.settings[k]);
     this.settings = next;
+    if (changed.includes('civilizationMode')) { this.habitability.reset(); this.shared.suitablePeriodCount = 0; }
     const resetKeys = new Set(['seed', 'physicsMode', 'newproperty53']);
     const mapped = {};
     for (const [id, module] of Object.entries(this.modules)) {
@@ -54,6 +57,7 @@ export class Simulation {
     }
     // Render trails are sampled from physical coordinates; no WE layer allocation in the backend.
     this.modules['008'].scriptProperties.trailen = false;
+    for (const key of ['trailen', 'trailLength', 'trailStartSize', 'trailEndSize', 'color1', 'color2', 'color3', 'color4']) delete mapped[key];
     if (changed.some(k => resetKeys.has(k))) {
       this.modules['008'] = this.createModule('008', physicsFactory); this.modules['008'].init(); this.revision++;
       if (changed.includes('seed')) this.setRandom();
@@ -86,6 +90,7 @@ export class Simulation {
     }
     this.modules['010'].update('');
     this.modules['079'].update('');
+    this.habitability.update(this.shared, this.settings);
     this.era = this.modules['072'].update('');
     const previousAlive = this.shared.civilizationAlive;
     const before = this.shared.civilizationRecords.length;
@@ -99,16 +104,17 @@ export class Simulation {
     if (this.shared.civilizationRecords.length > 1000) this.shared.civilizationRecords.splice(0, this.shared.civilizationRecords.length - 1000);
     return state;
   }
-  recordDeath(record) { this.emit('civilization:death', { ...plain(record), seed: this.settings.seed, generation: this.generation, settings: plain(this.settings), initialBodies: plain(this.initialBodies) }); }
+  recordDeath(record) { this.emit('civilization:death', { ...plain(record), seed: this.settings.seed, generation: this.generation, settings: plain(this.settings), initialBodies: plain(this.initialBodies), algorithm: algorithmId(this.settings) }); }
   emit(type, detail) {
     this.events.push({ id: ++this.eventSeq, type, year: this.shared.xntime || 0, detail });
     if (this.events.length > 100) this.events.shift();
   }
   snapshot({ afterEvent = 0, compact = false } = {}) {
     const p = this.modules['008'].state(); const s = this.shared;
-    return { tick: this.tickCount, revision: this.revision, runtime: this.engine.runtime, generation: this.generation,
+    return { tick: this.tickCount, revision: this.revision, runtime: this.engine.runtime, generation: this.generation, algorithm: algorithmId(this.settings),
       seed: this.settings.seed, bodies: p.bodies, com: p.com, G: p.G, temperature: Number(s.tem || 0), year: s.xntime || 0,
       era: this.era || '', escaped: s.tj === 1, alive: !!s.civilizationAlive, civilization: s.civilizationCount,
+      habitability: plain(this.habitability.result),
       lifespan: s.civilizationAlive ? Math.floor(s.xntime) - s.civilizationStartTime : s.lastCivilizationLifespan,
       initialBodies: plain(this.initialBodies),
       log: [...(s.logEntries || [])], records: plain(compact ? [...(s.civilizationRecords || [])].sort((a,b) => b.lifespan-a.lifespan).slice(0,6) : s.civilizationRecords || []), events: plain(this.events.filter(e => e.id > afterEvent)),

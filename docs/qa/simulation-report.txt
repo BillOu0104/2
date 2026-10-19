@@ -1,18 +1,18 @@
-✔ ported trajectories match independently executed original SceneScript reference (50.178866ms)
-✔ all 183 original controls retain their actual project defaults (7.906913ms)
-✔ same Seed and configuration produce identical trajectories, civilizations and events (633.29906ms)
-✔ manual initial conditions override random Seed (18.67093ms)
-✔ exported actual initial conditions replay the same random orbit across generations (24.085483ms)
-✔ pairwise force conserves linear momentum when the cage is off (166.335686ms)
-✔ Yoshida integration is time reversible in a smooth far-field trajectory (2.538097ms)
-✔ step-size changes recreate the integrator with the requested step (1.712804ms)
-✔ all six measured distances are available independently of UI visibility (14.503701ms)
-✔ temperature matches radiative equilibrium including snow feedback and oscillation (0.731042ms)
-✔ civilization birth, thermal death and Roche priority match the original state machine (1.943884ms)
-✔ manual restart records one death and does not secretly reinitialize 120 ticks later (12.019026ms)
-✔ zero masses, coincident initial bodies and zero softening remain finite (56.932453ms)
-✔ long reference run remains finite and has bounded in-memory event buffers (1591.601081ms)
-✔ settings clamp malformed numeric values and reject invalid combo/color data (0.643527ms)
+✔ ported trajectories match independently executed original SceneScript reference (120.990617ms)
+✔ 183 original controls retain definitions, with the requested trails enabled by default (2.095273ms)
+✔ same Seed and configuration produce identical trajectories, civilizations and events (952.107233ms)
+✔ manual initial conditions override random Seed (35.339539ms)
+✔ exported actual initial conditions replay the same random orbit across generations (25.822711ms)
+✔ pairwise force conserves linear momentum when the cage is off (293.907019ms)
+✔ Yoshida integration is time reversible in a smooth far-field trajectory (4.405227ms)
+✔ step-size changes recreate the integrator with the requested step (2.222391ms)
+✔ all six measured distances are available independently of UI visibility (26.816621ms)
+✔ temperature matches radiative equilibrium including snow feedback and oscillation (0.596654ms)
+✔ legacy mode preserves original birth, thermal death and Roche priority (34.778031ms)
+✔ manual restart records one death and does not secretly reinitialize 120 ticks later (16.667505ms)
+✔ zero masses, coincident initial bodies and zero softening remain finite (132.297567ms)
+✔ long reference run remains finite and has bounded in-memory event buffers (2597.544905ms)
+✔ settings clamp malformed numeric values and reject invalid combo/color data (0.786485ms)
 ℹ tests 15
 ℹ suites 0
 ℹ pass 15
@@ -20,4 +20,4 @@
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 2606.594962
+ℹ duration_ms 4351.321557

@@ -14,11 +14,11 @@ test('ported trajectories match independently executed original SceneScript refe
   for (let i = 0; i < 4; i++) for (const key of ['x','y','z','vx','vy','vz','mass']) assert.equal(state.bodies[i][key], fixture.bodies[i][key], `body ${i} ${key}`);
 });
 
-test('all 183 original controls retain their actual project defaults', () => {
+test('183 original controls retain definitions, with the requested trails enabled by default', () => {
   const controls = Object.entries(propertySchema).filter(([, p]) => p.type && p.type !== 'group');
   assert.equal(controls.length, 183);
   const config = normalizeSettings();
-  for (const [key, def] of controls) assert.deepEqual(config[key], def.value, key);
+  for (const [key, def] of controls) assert.deepEqual(config[key], key === 'newproperty14' ? true : def.value, key);
   const sim = new Simulation();
   assert.equal(sim.modules['008'].scriptProperties.fourthMass, 5000);
   assert.equal(sim.modules['008'].scriptProperties.constraint_M, 15000000);
@@ -86,8 +86,8 @@ test('temperature matches radiative equilibrium including snow feedback and osci
   s.shared.d14=s.shared.d24=s.shared.d34=100;s.modules['079'].update('');assert.ok(s.shared.tem<0);assert.ok(s.shared.tem>=-270);
 });
 
-test('civilization birth, thermal death and Roche priority match the original state machine', () => {
-  const s=new Simulation();const module=s.modules['042'];
+test('legacy mode preserves original birth, thermal death and Roche priority', () => {
+  const s=new Simulation({civilizationMode:'legacy'});const module=s.modules['042'];
   Object.assign(s.shared,{tem:20,d14:1,d24:1,d34:1,d12:1,d13:1,d23:1,xntime:0,ktime:1,rst:0});
   for(let i=0;i<49;i++)module.update('');assert.equal(s.shared.civilizationAlive,false);
   module.update('');assert.equal(s.shared.civilizationAlive,true);

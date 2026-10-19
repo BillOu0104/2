@@ -2,7 +2,9 @@ import { propertySchema } from './original-data.js';
 
 export const defaults = Object.fromEntries(Object.entries(propertySchema)
   .filter(([, d]) => d.type && d.type !== 'group').map(([k, d]) => [k, d.value]));
-export const extraDefaults = { seed: 'TRISOLARIS', music: false, volume: 0.35, trailsLength: 400, physicsMode: 'reference', pixelRatio: 1.5, bodyLabels: true };
+export const extraDefaults = { seed: 'TRISOLARIS', music: false, volume: 0.35, trailsLength: 400, physicsMode: 'reference', pixelRatio: 1.5, bodyLabels: true, civilizationMode: 'balanced', thermalGrace: 8 };
+// New installs show the requested tails; explicitly saved off/on preferences still win.
+defaults.newproperty14 = true;
 export function normalizeSettings(source = {}, includeExtras = true) {
   const out = { ...defaults, ...(includeExtras ? extraDefaults : {}) };
   for (const [key, value] of Object.entries(source)) {
@@ -21,6 +23,8 @@ export function normalizeSettings(source = {}, includeExtras = true) {
     else if (key === 'physicsMode' && ['reference', 'realtime'].includes(value)) out.physicsMode = value;
     else if (key === 'pixelRatio' && Number.isFinite(+value)) out.pixelRatio = Math.min(2, Math.max(0.5, +value));
     else if (key === 'bodyLabels') out.bodyLabels = value === true;
+    else if (key === 'civilizationMode' && ['balanced', 'legacy'].includes(value)) out.civilizationMode = value;
+    else if (key === 'thermalGrace' && Number.isFinite(+value)) out.thermalGrace = Math.min(60, Math.max(1, +value));
   }
   return out;
 }
@@ -28,6 +32,7 @@ export function colorRGB(s = '1 1 1') { return s.split(/\s+/).map(Number); }
 export function colorHex(s) { return '#' + colorRGB(s).map(x => Math.round(x * 255).toString(16).padStart(2, '0')).join(''); }
 export function fromHex(s) { return [1, 3, 5].map(i => parseInt(s.slice(i, i + 2), 16) / 255).join(' '); }
 export function plainText(s = '') { return s.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' '); }
+export function algorithmId(s) { return `sykm-scene-v3-${s.physicsMode}60-civ-${s.civilizationMode}-v2`; }
 export function seededRandom(seed) {
   let h = 2166136261;
   for (const c of String(seed)) h = Math.imul(h ^ c.charCodeAt(0), 16777619);

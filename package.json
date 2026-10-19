@@ -1,6 +1,6 @@
 {
   "name": "three-body-reconstruction",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -9,6 +9,11 @@
     "test": "node --test tests/*.test.js",
     "start": "node tools/serve.mjs --dist"
   },
-  "dependencies": { "three": "0.180.0" },
-  "devDependencies": { "esbuild": "0.25.11", "playwright-core": "1.56.1" }
+  "dependencies": {
+    "three": "0.180.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.11",
+    "playwright-core": "1.56.1"
+  }
 }

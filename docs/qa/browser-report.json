@@ -1,7 +1,10 @@
 {
-  "passed": 13,
+  "passed": 17,
   "checks": [
-    "183 original + 7 extension controls and worker ready",
+    "183 original + 9 extension controls and worker ready",
+    "fading tails are enabled and populated for all four bodies",
+    "all bodies use round sphere geometry and circular glow",
+    "habitability and resilience are visible in optimized mode",
     "single settings button opens accessible full panel",
     "settings search filters original controls",
     "language control updates the interface",
@@ -12,20 +15,49 @@
     "manual restart generates exactly one next universe",
     "closing settings restores uncluttered wallpaper",
     "settings survive reload",
+    "skybox follows the actual interactive view rotation",
     "mobile panel fits 390px viewport",
     "no browser JavaScript errors"
   ],
   "skipped": [
-    "This environment blocks file:// navigation by browser administration policy; actual Wallpaper Engine local-file loading remains unverified."
+    "Actual Wallpaper Engine file entry is not available in this environment; the existing browser policy blocks file:// navigation."
   ],
   "errors": [],
   "diagnostics": {
     "ready": true,
-    "tick": 623,
-    "fps": 5,
+    "tick": 573,
+    "fps": 8,
     "paused": false,
-    "controls": 190,
-    "history": 4,
-    "worker": true
+    "controls": 192,
+    "history": 3,
+    "worker": true,
+    "scene": {
+      "backgroundFollowsView": true,
+      "viewRotation": [
+        0.14835298641951802,
+        0.8835729338221292,
+        0
+      ],
+      "skyRotation": [
+        0.0669932816661846,
+        0.4263793960635767,
+        0.03168546244947107,
+        0.901503489895307
+      ],
+      "bodyShapes": [
+        "SphereGeometry",
+        "SphereGeometry",
+        "SphereGeometry",
+        "SphereGeometry"
+      ],
+      "glowShape": "radial-circle",
+      "trailSamples": [
+        400,
+        400,
+        400,
+        400
+      ],
+      "trailsVisible": true
+    }
   }
 }

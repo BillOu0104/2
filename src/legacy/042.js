@@ -171,6 +171,8 @@ function tr(key, isEnglish, params = {}) {
 }
 
 function update(value) {
+    // Optional climate resilience policy. Null keeps the supplied original rules intact.
+    const habitability = ctx.getHabitability?.();
     const currentYear = Math.floor(shared.xntime);
     const logInterval = scriptProperties.logInterval;
     const survivalThreshold = scriptProperties.survivalThreshold;
@@ -210,7 +212,7 @@ function update(value) {
     shared.lastRst = shared.rst;
     
     // 检查是否处于适宜温度范围
-    const isSuitable = (shared.tem >= lowTempDestruction) && (shared.tem <= highTempDestruction);
+    const isSuitable = habitability ? habitability.canGrow : (shared.tem >= lowTempDestruction) && (shared.tem <= highTempDestruction);
     
     // 文明生存状态检测
     let civilizationStateChanged = false;
@@ -236,7 +238,7 @@ function update(value) {
     }
     
     if (isSuitable && !rstJump) {
-        shared.suitablePeriodCount++;
+        shared.suitablePeriodCount += habitability ? habitability.growth : 1;
         
         if (!shared.civilizationAlive && shared.suitablePeriodCount >= survivalThreshold) {
             shared.civilizationAlive = true;
@@ -246,7 +248,7 @@ function update(value) {
             shared.civilizationStartTime = currentYear;
         }
     } else if (!rstJump) {
-        shared.suitablePeriodCount = 0;
+        shared.suitablePeriodCount = habitability ? Math.max(0, shared.suitablePeriodCount - 1) : 0;
     }
     
     // 计算当前状态
@@ -345,7 +347,7 @@ function update(value) {
         currentStates.starCollision = starCollisions.join(tr('，', isEnglish));
         
         // 恒星相撞立即导致文明毁灭
-        if (shared.civilizationAlive) {
+        if (shared.civilizationAlive && !habitability) {
             destructionEvent = currentStates.starCollision;
             shared.civilizationAlive = false;
             shared.lastCivilizationLifespan = currentYear - shared.civilizationStartTime;
@@ -364,7 +366,7 @@ function update(value) {
     
     // 5. 检查温度毁灭 - 只有在没有其他毁灭事件时才触发
     if (!rstJump && shared.civilizationAlive && !destructionEvent && 
-        (shared.tem < lowTempDestruction || shared.tem > highTempDestruction)) {
+        (habitability ? habitability.thermalFatal : (shared.tem < lowTempDestruction || shared.tem > highTempDestruction))) {
         
         shared.civilizationAlive = false;
         shared.lastCivilizationLifespan = currentYear - shared.civilizationStartTime;
@@ -397,6 +399,8 @@ function update(value) {
         civilizationStateChanged = true;
     }
     
+    if (habitability && civilizationStateChanged && !shared.civilizationAlive) shared.suitablePeriodCount = 0;
+
     // 检查是否需要记录新事件
     if (currentYear >= shared.lastLogYear + logInterval || civilizationStateChanged) {
         let shouldLog = false;

@@ -1,15 +1,19 @@
 import { SpaceRenderer } from './renderer.js';
 import { propertySchema } from './original-data.js';
-import { normalizeSettings, colorHex, fromHex, colorRGB, plainText, settingsFromInitial } from './settings.js';
+import { normalizeSettings, colorHex, fromHex, colorRGB, plainText, settingsFromInitial, algorithmId } from './settings.js';
 import { LocalStore } from './storage.js';
 import { AudioController } from './audio.js';
 import { installWallpaperBridge } from './bridge.js';
 import './style.css';
 
 const $ = selector => document.querySelector(selector);
-const settingsKey = 'three-body.settings.v1';
+const settingsKey = 'three-body.settings.v2';
 let settings;
-try { settings = normalizeSettings(JSON.parse(localStorage.getItem(settingsKey) || '{}')); } catch { settings = normalizeSettings(); }
+try {
+  const saved = localStorage.getItem(settingsKey);
+  const previous = localStorage.getItem('three-body.settings.v1');
+  settings = normalizeSettings(saved ? JSON.parse(saved) : { ...JSON.parse(previous || '{}'), newproperty14: true });
+} catch { settings = normalizeSettings(); }
 const store = new LocalStore();
 let state = null, userPaused = false, hostPaused = false, visibilityPaused = false, worker, renderer, lastEvent = 0, currentTab = 'settings';
 let sessionId = crypto.randomUUID?.() || String(Date.now());
@@ -63,7 +67,9 @@ const hintMap = {
   newproperty26: '保留原版时间因子重复相乘的算法，以匹配原版节奏。',
   cheatingcheck: '标记引力牢笼、温度距离倍数及非默认物理参数。',
   custombg: '选择球面全景图。文件仅保存在本机；WE 中也可使用原生背景属性。',
-  newproperty63: '原版虚构账号与密码的视觉展示，不涉及实际账号登录。'
+  newproperty63: '原版虚构账号与密码的视觉展示，不涉及实际账号登录。',
+  civilizationMode: '优化模式：恒纪元恢复文明韧性；远处恒星事件不再立即毁灭行星文明。原版模式保留原有判定。',
+  thermalGrace: '持续高温或严寒会消耗韧性；短暂越界可以恢复。极端温度消耗更快，行星碰撞和大撕裂仍立即毁灭。'
 };
 function makeControl(key, def, extension = false) {
   const container = document.createElement('div'); container.className = 'control'; container.dataset.key = key;
@@ -111,6 +117,8 @@ function buildSettings() {
   for (const [key, def] of Object.entries({
     seed: { type: 'textinput', text: '随机初始化 Seed' },
     physicsMode: { type: 'combo', text: '物理时钟', options: [{ value: 'reference', label: '原版节奏 · 固定 60 Hz（默认）' }, { value: 'realtime', label: '墙钟同步 · 修复原版每帧步数上限' }] },
+    civilizationMode: { type: 'combo', text: '文明延续机制 / Civilization', options: [{ value: 'balanced', label: '优化延续 · 气候耐受与恢复（默认）' }, { value: 'legacy', label: '原版即时判定' }] },
+    thermalGrace: { type: 'slider', text: '气候耐受时间 / Climate resilience (s)', min: 1, max: 60, step: 1 },
     trailsLength: { type: 'slider', text: '轨迹长度 / Trail samples', min: 20, max: 2000, integer: true },
     pixelRatio: { type: 'slider', text: '最大渲染像素比 / Pixel ratio', min: .5, max: 2, step: .1 },
     bodyLabels: { type: 'bool', text: '显示天体标签 / Body labels' },
@@ -199,7 +207,7 @@ function downloadJSON(name, data) {
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }); const url = URL.createObjectURL(blob);
   const a = document.createElement('a'); a.href = url; a.download = name; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
-$('#export-settings').onclick = () => downloadJSON(`three-body-seed-${settings.seed.replace(/[^\w-]/g, '_')}.json`, { format: 'three-body-seed', version: 1, algorithm: `sykm-scene-v3-${settings.physicsMode}60`, settings, initialBodies: state?.initialBodies });
+$('#export-settings').onclick = () => downloadJSON(`three-body-seed-${settings.seed.replace(/[^\w-]/g, '_')}.json`, { format: 'three-body-seed', version: 1, algorithm: algorithmId(settings), settings, initialBodies: state?.initialBodies });
 $('#import-settings').onchange = async e => {
   const file = e.target.files[0]; if (!file) return;
   try {
@@ -209,7 +217,7 @@ $('#import-settings').onchange = async e => {
   } catch (error) { notice(`导入失败：${error.message}`, true); }
   e.target.value = '';
 };
-$('#reset-settings').onclick = () => { changeSettings(normalizeSettings()); worker?.postMessage({ type: 'restart' }); notice('已恢复原版默认设置；文明档案保留'); };
+$('#reset-settings').onclick = () => { changeSettings(normalizeSettings()); worker?.postMessage({ type: 'restart' }); notice('已恢复默认设置：文明延续优化、尾迹开启；文明档案保留'); };
 $('#export-history').onclick = () => downloadJSON('three-body-civilization-archive.json', { version: 1, records: history });
 
 function renderHistory() {
@@ -230,7 +238,16 @@ function renderState(s) {
   const en = settings.cnen2;
   $('#universe-id').textContent = `UNIVERSE / ${String(s.generation).padStart(3, '0')}`; $('#seed-caption').textContent = s.seed;
   $('#era').textContent = s.era; $('#temperature').textContent = s.temperature.toFixed(1);
-  $('#hydration').textContent = s.temperature > 70 ? (en ? 'DEHYDRATE · HEAT' : '脱水 · 高温') : s.temperature < -50 ? (en ? 'DEHYDRATE · FREEZE' : '脱水 · 严寒') : (en ? 'REHYDRATE · HABITABLE' : '浸泡 · 适宜生存');
+  $('#hydration').textContent = s.temperature > settings.newproperty46 ? (en ? 'DEHYDRATE · HEAT' : '脱水 · 高温') : s.temperature < settings.newproperty45 ? (en ? 'DEHYDRATE · FREEZE' : '脱水 · 严寒') : (en ? 'REHYDRATE · HABITABLE' : '浸泡 · 适宜生存');
+  const habitat = s.habitability;
+  $('#habitability-readout').hidden = !habitat?.enabled;
+  if (habitat?.enabled) {
+    $('#habitability-score').textContent = `${Math.round(habitat.score * 100)}%`;
+    $('#civilization-health').textContent = `${Math.round(habitat.health * 100)}%`;
+    $('#habitability-fill').style.width = `${habitat.score * 100}%`;
+    $('#health-fill').style.width = `${habitat.health * 100}%`;
+    $('#habitability-warning').textContent = habitat.hazard ? (en ? 'PLANETARY PROXIMITY HAZARD' : '行星过近 · 灾变风险') : habitat.exposure ? (en ? 'CLIMATE STRESS · RESILIENCE FALLING' : '气候越界 · 韧性消耗中') : habitat.stable ? (en ? 'STABLE CLIMATE · RECOVERING' : '恒纪元 · 韧性恢复中') : (en ? 'DEHYDRATING · ENDURING' : '乱纪元 · 脱水维持');
+  }
   $('#temperature-indicator').style.left = `${(s.temperature + 270) / 1770 * 100}%`;
   $('.temperature').style.color = s.temperature > 70 ? '#dcb09c' : s.temperature < -50 ? '#8dbde5' : 'var(--accent)';
   $('#civilization-status').textContent = s.text[0]; $('#civilization-lifespan').textContent = s.text[6];
@@ -250,7 +267,7 @@ function handleEvents(events) {
     if (event.id <= lastEvent) continue; lastEvent = event.id;
     window.dispatchEvent(new CustomEvent(event.type, { detail: event }));
     if (event.type === 'civilization:death') {
-      const record = { ...event.detail, key: `${sessionId}:${event.id}`, year: event.year, savedAt: Date.now(), algorithm: `sykm-scene-v3-${settings.physicsMode}60` };
+      const record = { ...event.detail, key: `${sessionId}:${event.id}`, year: event.year, savedAt: Date.now(), algorithm: event.detail.algorithm || algorithmId(settings) };
       history.push(record); store.put('history', record).then(ok => { if (!ok) $('#save-status').textContent = '档案仅保留在内存'; });
       if (currentTab === 'history') renderHistory();
     }
@@ -311,4 +328,5 @@ try {
   fatal = true; console.error(error); hideLoading(); notice(`无法初始化 3D 场景：${error.message}。请启用浏览器硬件加速。`, true);
 }
 // Diagnostic readout for automated smoke checks and host integrations.
-window.__threeBodyDiagnostics = () => ({ ready: !!state && !fatal, tick: lastTick, fps, paused: userPaused || hostPaused || visibilityPaused, controls: controlMap.size, history: history.length, worker: !!worker });
+window.__threeBodyDiagnostics = () => ({ ready: !!state && !fatal, tick: lastTick, fps, paused: userPaused || hostPaused || visibilityPaused, controls: controlMap.size, history: history.length, worker: !!worker,
+  scene: renderer ? { backgroundFollowsView: renderer.sky.parent === renderer.world, viewRotation: renderer.world.rotation.toArray().slice(0,3), skyRotation: renderer.sky.getWorldQuaternion(new renderer.camera.quaternion.constructor()).toArray(), bodyShapes: renderer.nodes.map(n => n.mesh.geometry.type), glowShape: 'radial-circle', trailSamples: renderer.trailBuffers.map(b => b.length), trailsVisible: renderer.trails.every(t => t.visible) } : null });

@@ -1,3 +1,5 @@
+> 本文记录原版源码审计。当前0.2版文明延续与视觉修改见 [CIVILIZATION-UPDATE.md](CIVILIZATION-UPDATE.md)。
+
 # 原版源码审计与移植依据
 
 研究范围：用户提供的 `project.json`、解包后的 `unpacked/scene.json`、191 个 `extracted-scripts/*.js` 以及模型、材质和纹理。只作本地静态分析，没有运行附件内脚本，没有将附件中的说明作为用户指令。
