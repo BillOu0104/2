@@ -2,15 +2,18 @@ import { propertySchema } from './original-data.js';
 
 export const defaults = Object.fromEntries(Object.entries(propertySchema)
   .filter(([, d]) => d.type && d.type !== 'group').map(([k, d]) => [k, d.value]));
-export const extraDefaults = { seed: 'TRISOLARIS', music: false, volume: 0.35, trailsLength: 400, physicsMode: 'reference', pixelRatio: 4, bodyLabels: true, civilizationMode: 'balanced', thermalGrace: 8, wakeDelay: 3, epochWindow: 2, climateInertia: 1.5, stellarBreathing: true, renderQuality: 'native' };
+export const extraDefaults = { seed: 'TRISOLARIS', music: false, volume: 0.35, trailsLength: 400, physicsMode: 'reference', pixelRatio: 4, bodyLabels: false, presentationRevision: 2, civilizationMode: 'balanced', thermalGrace: 8, wakeDelay: 3, epochWindow: 2, climateInertia: 1.5, stellarBreathing: true, renderQuality: 'native' };
 // New installs show the requested tails; explicitly saved off/on preferences still win.
 defaults.newproperty14 = true;
+defaults.newproperty39 = true;
 defaults.newproperty45 = -20;
 defaults.newproperty46 = 40;
 defaults.newproperty51 = .35;
 defaults.newproperty3 = 0;
 defaults.newproperty68 = 0;
 export const effectivePropertySchema = { ...propertySchema,
+  newproperty39:{...propertySchema.newproperty39,text:'显示右侧双排行 / Rankings',value:true},
+  audiobar:{...propertySchema.audiobar,text:'显示基础信息与排行 / Runtime overview'},
   newproperty45: {...propertySchema.newproperty45,text:'常态活动低温边界 / Active life minimum °C',value:-20},
   newproperty46: {...propertySchema.newproperty46,text:'常态活动高温边界 / Active life maximum °C',value:40},
   newproperty43: {...propertySchema.newproperty43,text:'干仓低温耐受 / Dry storage minimum °C'},
@@ -49,8 +52,10 @@ export function colorRGB(s = '1 1 1') { return s.split(/\s+/).map(Number); }
 export function colorHex(s) { return '#' + colorRGB(s).map(x => Math.round(x * 255).toString(16).padStart(2, '0')).join(''); }
 export function fromHex(s) { return [1, 3, 5].map(i => parseInt(s.slice(i, i + 2), 16) / 255).join(' '); }
 export function plainText(s = '') { return s.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' '); }
-export function algorithmId(s) { return `sykm-scene-v3-${s.physicsMode}60-civ-${s.civilizationMode}-v3`; }
+export function algorithmId(s) { return `sykm-scene-v4-${s.physicsMode}60-civ-${s.civilizationMode}-v3-damage1`; }
 export function migrateSettings(saved={},version=3){
+  // One-time presentation migration for v0.3 installations with labels enabled.
+  if(saved.presentationRevision!==extraDefaults.presentationRevision)saved={...saved,bodyLabels:saved.presentationRevision>=1?saved.bodyLabels:false,newproperty39:true};
   if(version<3)return normalizeSettings({...saved,newproperty45:-20,newproperty46:40,newproperty51:Math.abs(saved.newproperty51??3)>=2 ? .35 : (saved.newproperty51??.35),newproperty3:0,newproperty68:0});
   return normalizeSettings(saved);
 }

@@ -13,3 +13,21 @@
 .clock-calendar{margin-top:9px}#hydration{margin-bottom:8px;line-height:1.5;letter-spacing:1px}
 #phenomena{font-size:10px;line-height:1.5;opacity:.6;margin:0 0 16px;min-height:15px}
 @media(max-width:600px){.civilization-widget{top:calc(15% + 66px);max-width:88vw}.civilization-widget li,#civilization-lifespan{font-size:11px}#phenomena{font-size:8px;margin-bottom:10px}}
+/* v0.4 clock, compact event log, and right-hand runtime overview. */
+.clock-calendar{margin-top:2px;gap:16px;line-height:1.2}
+#clock-day,#clock-date{font-family:Title,Rajdhani,system-ui,sans-serif;font-size:11px;letter-spacing:2px}
+.civilization-widget{top:calc(12% + 79px);line-height:1.25}
+#civilization-status{margin-bottom:3px}#civilization-lifespan{margin-bottom:5px}
+#civilization-log li{font-size:9.5px;line-height:1.25;margin-bottom:2px;letter-spacing:.35px}
+.runtime-widget{top:32%;transform:none;width:218px;font-size:11px}
+.runtime-widget .widget-rule{margin:10px 0 12px}
+.runtime-info{margin:0 0 21px;padding:0;font-size:10px;line-height:1.5;letter-spacing:.7px}
+.runtime-info>div{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:6px}
+.runtime-info dt{opacity:.62}.runtime-info dd{margin:0;text-align:right;font-size:12px;font-variant-numeric:tabular-nums}
+.runtime-rankings{transform-origin:top right}.runtime-rankings section+section{margin-top:21px}
+.runtime-rankings h2{font-size:9px;letter-spacing:2px;margin:0 0 10px;font-weight:400}
+.runtime-rankings ol{list-style:none;padding:0;margin:0}
+.runtime-rankings li{display:grid;grid-template-columns:21px 1fr auto;gap:9px;align-items:baseline;margin:0 0 5px;font-size:11px;line-height:1.3;font-variant-numeric:tabular-nums;opacity:.58}
+.runtime-rankings li[data-active=true]{opacity:.85}.rank-number{font-size:8px;opacity:.4}.rank-years{text-align:right}
+@media(max-width:900px){.runtime-widget{top:34%;width:170px}.runtime-info>div{gap:6px}.runtime-info{font-size:9px}.runtime-info dd{font-size:11px}}
+@media(max-width:600px){.civilization-widget{top:calc(12% + 65px)}#civilization-log li{font-size:9px;line-height:1.25;margin-bottom:2px}.clock-calendar{gap:10px}#clock-day,#clock-date{font-size:10px;letter-spacing:1px}.runtime-widget{top:43%;bottom:auto;right:5%;width:134px}.runtime-info{font-size:8px;letter-spacing:0;margin-bottom:15px}.runtime-info dd{font-size:10px}.runtime-info>div{gap:4px;margin-bottom:5px}.runtime-rankings h2{font-size:8px;letter-spacing:1px;margin-bottom:7px}.runtime-rankings li{grid-template-columns:14px 1fr auto;gap:4px;font-size:10px;margin-bottom:4px}.runtime-rankings section+section{margin-top:15px}}

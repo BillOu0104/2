@@ -25,7 +25,7 @@
   "errors": [],
   "diagnostics": {
     "ready": true,
-    "tick": 930,
+    "tick": 1090,
     "fps": 3,
     "paused": false,
     "controls": 197,
@@ -40,7 +40,12 @@
         390,
         844
       ],
-      "renderedFrames": 36,
+      "renderedFrames": 43,
+      "viewVelocity": [
+        0,
+        0
+      ],
+      "maxAngularSpeed": 0.55,
       "compassVisible": false,
       "maxTextureSize": 8192,
       "backgroundSizes": {
@@ -55,15 +60,15 @@
       },
       "backgroundFollowsView": true,
       "viewRotation": [
-        0.14835298641917133,
-        0.8835729338200645,
+        0.14835298641951802,
+        0.8798930816272243,
         0
       ],
       "skyRotation": [
-        0.06699328166606104,
-        0.42637939606265146,
-        0.03168546244932799,
-        0.9015034898957589
+        0.06705146714547615,
+        0.42471997548458773,
+        0.031562146198899715,
+        0.9022864700888126
       ],
       "bodyShapes": [
         "SphereGeometry",
@@ -72,11 +77,39 @@
         "SphereGeometry"
       ],
       "glowShape": "radial-circle",
+      "bodyLabelsVisible": false,
       "trailSamples": [
-        319,
-        319,
-        319,
-        319
+        102,
+        102,
+        102,
+        102
+      ],
+      "trailComplexity": 0,
+      "trailMetrics": [
+        {
+          "arcPixels": 14.673208799702936,
+          "seconds": 3.5166666666666657,
+          "budget": 429.00000000000006,
+          "segments": 11
+        },
+        {
+          "arcPixels": 36.13695614895116,
+          "seconds": 3.4000000000000004,
+          "budget": 429.00000000000006,
+          "segments": 24
+        },
+        {
+          "arcPixels": 15.678440107022935,
+          "seconds": 2.3166666666666664,
+          "budget": 429.00000000000006,
+          "segments": 11
+        },
+        {
+          "arcPixels": 29.962631367949474,
+          "seconds": 3.549999999999999,
+          "budget": 429.00000000000006,
+          "segments": 21
+        }
       ],
       "trailsVisible": true
     }

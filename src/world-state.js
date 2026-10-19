@@ -57,10 +57,11 @@ export class WorldState{
     if(aligned)add('alignment','三日连珠','Three-sun alignment',tideRatio>.5?'warning':'observation');
     if(tideRatio>.5)add('tidal','潮汐应力上升','Rising tidal stress','warning');
     if(this.terminal)add(this.terminal.kind,this.terminal.zh,this.terminal.en,'fatal');
-    const condition=this.terminal?.kind||(tideRatio>1?'tidal-stress':this.temperature>1000?'molten':this.integrity<.98?'damaged':this.temperature>settings.newproperty46?'hot':this.temperature<settings.newproperty45?'frozen':'temperate');
+    const damaged=this.integrity<.98;
+    const condition=this.terminal?.kind||(damaged?'damaged':tideRatio>1?'tidal-stress':this.temperature>1000?'molten':this.temperature>settings.newproperty46?'hot':this.temperature<settings.newproperty45?'frozen':'temperate');
     this.state={epoch:{kind:this.epoch,primary:this.primary,stableFor:this.stableTime,bound,dominance,perturbation},phenomena,
-      planet:{condition,intact:!this.terminal,terminal:this.terminal,integrity:this.integrity,tideRatio,temperature:this.temperature,equilibriumTemperature:equilibrium},
+      planet:{condition,damaged,restartRequired:damaged||!!this.terminal,intact:!this.terminal,terminal:this.terminal,integrity:this.integrity,tideRatio,temperature:this.temperature,equilibriumTemperature:equilibrium},
       stars:stars.map(s=>({index:s.i,distance:s.distance,angularRate:s.angularRate,radialSpeed:s.radial,visibleFraction:s.visibleFraction,radius:s.radius,flying:s.distance>settings.newproperty31})),
-      fluxChange:this.fluxChange,safeToWake:!this.terminal&&tideRatio<.5&&(this.epoch==='stable'||this.fluxChange<.15)};return this.state;
+      fluxChange:this.fluxChange,safeToWake:!this.terminal&&!damaged&&tideRatio<.5&&(this.epoch==='stable'||this.fluxChange<.15)};return this.state;
   }
 }

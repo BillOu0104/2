@@ -8,7 +8,7 @@ function sendState() {
 }
 self.onmessage = ({ data }) => {
   try {
-    if (data.type === 'init') { simulation = new Simulation(data.settings); simulation.tick(); sendState(); }
+    if (data.type === 'init') { simulation = new Simulation(data.settings,data.statistics); simulation.tick(); sendState(); }
     if (data.type === 'settings') simulation?.configure(data.patch);
     if (data.type === 'restart') simulation?.restart();
     if (data.type === 'pause') { paused = data.value; remainder = 0; lastTime = performance.now(); }

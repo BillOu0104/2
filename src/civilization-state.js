@@ -1,7 +1,7 @@
 export class CivilizationState{
   constructor(shared){this.shared=shared;this.logs=[];this.serial=0;this.reset();}
   reset(){this.phase=this.shared.civilizationAlive?'active':'empty';this.progress=0;this.safeTime=0;this.lastPhenomena='';this.lastEpoch=null;this.result=null;}
-  log(kind,zh,en,year,runtime){this.logs.unshift({id:++this.serial,kind,zh,en,year,at:runtime});this.logs.length=Math.min(5,this.logs.length);}
+  log(kind,zh,en,year,runtime){this.logs.unshift({id:++this.serial,kind,zh,en,year,at:runtime});this.logs.length=Math.min(12,this.logs.length);}
   destroy(cause,year,runtime,settings){
     const s=this.shared;if(s.civilizationAlive){const number=s.civilizationCount,life=Math.max(0,Math.floor(year)-s.civilizationStartTime);s.lastCivilizationLifespan=life;s.civilizationAlive=false;
       s.civilizationRecords.push({number,lifespan:life,destructionEvent:settings.cnen2?cause.en:cause.zh,text:s.text});

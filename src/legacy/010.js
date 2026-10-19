@@ -15,7 +15,7 @@ var scriptProperties = createScriptProperties()
 	.finish()
 
 const TIME_PER_FRAME = 1;
-let xntime = 0;
+let xntime = Number(shared.xntime) || 0;
 
 function update(value) {
     shared.kt= scriptProperties.kt;
@@ -26,12 +26,12 @@ function update(value) {
     }
     
     // 计算每帧增加的时间量
-    const frameTime = TIME_PER_FRAME * shared.kt/10 * shared.ktime;
+    const frameTime = TIME_PER_FRAME * Math.pow(shared.kt / 10 * shared.ktime, 2) / 60;
     
     // 累积时间
     xntime += frameTime;
     //shared.xntime = 2.422209 * Math.sqrt(shared.kg/1000) * xntime / 60;
-    shared.xntime = shared.kt/10 * xntime * shared.ktime / 60;
+    shared.xntime = xntime; // Keep elapsed years continuous when time factors change.
     // 根据数值大小选择显示格式
     let displayTime;
     if (shared.xntime < 1e8) {  // 小于100,000,000

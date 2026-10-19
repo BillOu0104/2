@@ -8,6 +8,12 @@ import './style.css';
 
 const $ = selector => document.querySelector(selector);
 const settingsKey = 'three-body.settings.v3';
+const statisticsKey='three-body.statistics.v1';let lastStatisticsSave=0;
+function persistStatistics(force=false){
+  if(!state?.statisticsCheckpoint||(!force&&performance.now()-lastStatisticsSave<1000))return;
+  try{localStorage.setItem(statisticsKey,JSON.stringify(state.statisticsCheckpoint));lastStatisticsSave=performance.now();}catch{}
+}
+function savedStatistics(){try{return JSON.parse(localStorage.getItem(statisticsKey)||'null');}catch{return null;}}
 let settings;
 try {
   const saved=localStorage.getItem(settingsKey),v2=localStorage.getItem('three-body.settings.v2'),v1=localStorage.getItem('three-body.settings.v1');
@@ -123,7 +129,7 @@ function buildSettings() {
     climateInertia: { type: 'slider', text: '气候热惯性 / Thermal inertia (s)', min: .05, max: 30, step: .05 },
     stellarBreathing: { type: 'bool', text: '恒星半径缓慢呼吸 / Stellar breathing' },
     renderQuality: { type: 'combo', text: '渲染清晰度 / Render resolution', options: [{value:'native',label:'原生屏幕分辨率 · 8K 原图（默认）'},{value:'8k',label:'8K 超采样 · 最高 7680×4320'}] },
-    trailsLength: { type: 'slider', text: '轨迹长度 / Trail samples', min: 20, max: 2000, integer: true },
+    trailsLength: { type: 'slider', text: '自适应尾迹长度基准 / Trail length', min: 20, max: 2000, integer: true },
     pixelRatio: { type: 'slider', text: '最大渲染像素比 / Pixel ratio', min: .5, max: 4, step: .1 },
     bodyLabels: { type: 'bool', text: '显示天体标签 / Body labels' },
     music: { type: 'bool', text: '播放原版音乐 · Ether' },
@@ -179,18 +185,17 @@ function applyAppearance() {
   $('#clock-widget').hidden = !s.clock;
   $('#clock-time').hidden = !s.clock2; $('#clock-time').style.color = colorHex(s.clockcolor);
   $('#clock-day').hidden = !s.day; $('#clock-day').style.color = colorHex(s.daycolor); $('#clock-date').hidden = !s.date;
-  $('#clock-widget').style.top = `${15 - s.cly * 15}%`; $('#clock-widget').style.left = `${50 + s.clx * 16}%`; $('#clock-widget').style.scale = s.clocksize / .9;
+  $('#clock-widget').style.top = `${12 - s.cly * 15}%`; $('#clock-widget').style.left = `${50 + s.clx * 16}%`; $('#clock-widget').style.scale = s.clocksize / .9;
   $('#era-widget').hidden = !s.menul; $('#era-widget').style.left = `${50 + s.mlx * 88}%`; $('#era-widget').style.marginTop = `${-(s.mly + .22) * 100}px`; $('#era-widget').style.scale = s.size2;
   $('#era').style.opacity = s._19; $('#hydration').style.opacity = s._25; $('.temperature').style.opacity = s.newproperty21;
   $('#distance-widget').hidden = !s.audiobar; $('#distance-widget').style.right = `${50 - s.mrx * 88}%`; $('#distance-widget').style.marginTop = `${-(s.mry + .22) * 100}px`; $('#distance-widget').style.scale = s.size;
-  document.querySelectorAll('.distance-row b,.distance-row small,.distance-row>span').forEach(el => el.style.opacity = s.newproperty25);
-  document.querySelectorAll('.distance-bar').forEach(el => el.style.opacity = s.newproperty24 * 3);
+  $('.runtime-info').style.opacity=s.newproperty25;
+  $('#distance-widget .widget-rule').style.opacity=Math.min(1,s.newproperty24*3);
   $('#civilization-widget').hidden = !s.newproperty38; $('#civilization-widget').style.left = `${50 + s.x1 * 12}%`; $('#civilization-widget').style.marginTop = `${-(s.y1 - .36) * 90}px`; $('#civilization-widget').style.scale = s.size1 / .9;
   $('#civilization-status').style.opacity = s.t1; $('#civilization-lifespan').style.opacity = s.t2;
-  $('#ranking-widget').hidden = !s.newproperty39; $('#ranking-widget').style.left = `${50 + s.x2 * 12}%`; $('#ranking-widget').style.marginTop = `${-(s.y2 - 1.8) * 90}px`; $('#ranking-widget').style.scale = s.size3;
-  $('#ranking-widget .eyebrow').style.opacity = s.t8;
-  $('#audio-bars').hidden = !s.audioresponse; $('#audio-bars').style.scale = `${s.sizex / .6} ${s.sizey / .4}`;
-  $('.simulation-time').style.left = `${50 + s.x * 12}%`; $('.simulation-time').style.marginBottom = `${(s.y + 1.3) * 70}px`; $('.simulation-time>div:nth-child(2)').style.opacity = s.newproperty22;
+  $('#ranking-widget').hidden = !s.newproperty39; $('#ranking-widget').style.transform=`translate(${s.x2*12}px,${-(s.y2-1.8)*90}px)`; $('#ranking-widget').style.scale=s.size3;
+  $('#ranking-widget').querySelectorAll('.eyebrow').forEach(el=>el.style.opacity=s.t8);
+  $('.simulation-time').style.left = `${50 + s.x * 12}%`; $('.simulation-time').style.marginBottom = `${(s.y + 1.3) * 70}px`; $('.simulation-time>div').style.opacity = s.newproperty22;
   $('#decor').className = `${s.newproperty6 === '2' ? 'square' : s.newproperty6 === '3' ? 'none' : ''} ${s.newproperty4 !== '4' ? 'lines' : ''}`;
   $('#physics-check').hidden = !s.cheatingcheck;
   $('#login-title').textContent = s.newproperty58; $('#login-password').textContent = s.newproperty59; $('.loading-card>.eyebrow').textContent = s.customtex1;
@@ -205,7 +210,7 @@ $('#pause-button').onclick = () => { userPaused = !userPaused; applyPause(); app
 function restart() { worker?.postMessage({ type: 'restart' }); if (settings.newproperty64) showLoading(true); }
 $('#restart-button').onclick = restart; $('#restart-prompt').onclick = restart;
 $('#fullscreen-button').onclick = async () => { try { if (document.fullscreenElement) await document.exitFullscreen(); else await document.documentElement.requestFullscreen(); } catch { notice('当前宿主不支持网页全屏。'); } };
-document.addEventListener('visibilitychange', () => { visibilityPaused = document.hidden; applyPause(); });
+document.addEventListener('visibilitychange', () => { persistStatistics(true);visibilityPaused = document.hidden; applyPause(); });
 
 function downloadJSON(name, data) {
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }); const url = URL.createObjectURL(blob);
@@ -238,10 +243,22 @@ function renderHistory() {
     li.append(title, sub, button); list.append(li);
   }
 }
+function renderStatistics(s){
+  const stats=s.statistics;if(!stats)return;const en=settings.cnen2;
+  const years=n=>`${n>=1e7?n.toExponential(1):n.toFixed(1)}${en?' yr':'年'}`;
+  $('#total-years').textContent=years(stats.totalYears);$('#current-universe').textContent=`#${stats.universe.number}`;
+  $('#universe-years').textContent=years(stats.universe.lifespan);
+  $('#current-civilization').textContent=stats.civilization?`#${stats.civilization.number}`:(en?'Awaiting birth':'等待诞生');
+  $('#civilization-years').textContent=stats.civilization?years(stats.civilization.lifespan):'—';
+  for(const [id,records]of[['civilization-ranking',stats.civilizationRanking],['universe-ranking',stats.universeRanking]]){
+    const list=$(`#${id}`);if(list.children.length!==5){list.replaceChildren();for(let i=0;i<5;i++){const li=document.createElement('li');li.innerHTML='<span class="rank-number"></span><span class="rank-id"></span><span class="rank-years"></span>';list.append(li);}}
+    [...list.children].forEach((li,i)=>{const entry=records[i];li.dataset.active=String(!!entry?.active);li.querySelector('.rank-number').textContent=String(i+1).padStart(2,'0');li.querySelector('.rank-id').textContent=entry?`#${entry.number}${entry.active?' ·':''}`:'—';li.querySelector('.rank-years').textContent=entry?years(entry.lifespan):'—';const opacityKey=['t9','t10','tex4opacity','tex5opacity','tex6opacity'][i];li.style.opacity=Math.min(1,(entry?.active ? .85 : .58)*settings[opacityKey]/propertySchema[opacityKey].value);li.title=entry?.active?(en?'Still running':'仍在运行'):'';});
+  }
+}
 function renderState(s) {
   const en = settings.cnen2;
   $('#era').textContent = s.era; $('#temperature').textContent = s.temperature.toFixed(1);
-  const condition=s.world?.planet.condition,planetLabels={temperate:['温带行星','Temperate'],hot:['高温行星','Overheated'],frozen:['冰封行星','Frozen'],molten:['熔融行星','Molten'],damaged:['行星结构受损','Planetary damage'],'tidal-stress':['行星结构受损','Tidal damage'],engulfed:['行星已被吞噬','Planet engulfed'],disrupted:['行星已被撕裂','Planet disrupted']};
+  const condition=s.world?.planet.condition,planetLabels={temperate:['温带行星','Temperate'],hot:['高温行星','Overheated'],frozen:['冰封行星','Frozen'],molten:['熔融行星','Molten'],damaged:['行星结构受损','Planetary damage'],'tidal-stress':['潮汐应力过高','High tidal stress'],engulfed:['行星已被吞噬','Planet engulfed'],disrupted:['行星已被撕裂','Planet disrupted']};
   $('#hydration').textContent=planetLabels[condition]?.[en?1:0]||'';
   $('#phenomena').textContent=(s.world?.phenomena||[]).map(p=>en?p.en:p.zh).join(' · ');
   const habitat = s.habitability;
@@ -251,27 +268,26 @@ function renderState(s) {
     $('#civilization-health').textContent = `${Math.round(habitat.health * 100)}%`;
     $('#habitability-fill').style.width = `${habitat.score * 100}%`;
     $('#health-fill').style.width = `${habitat.health * 100}%`;
-    $('#habitability-warning').textContent = s.world?.planet.terminal ? (en?'PLANET LOST · RESTART REQUIRED':'行星毁坏 · 需重建宇宙') : habitat.hazard ? (en?'TIDAL STRESS':'潮汐应力损伤') : (en?`Active range: ${habitat.low} to ${habitat.high} °C`:`活动适温：${habitat.low}～${habitat.high}°C`);
   }
   $('#temperature-indicator').style.left = `${(s.temperature + 270) / 1770 * 100}%`;
   $('.temperature').style.color = s.temperature > settings.newproperty46 ? '#dcb09c' : s.temperature < settings.newproperty45 ? '#8dbde5' : 'var(--accent)';
   $('#civilization-status').textContent = s.text[0]; $('#civilization-lifespan').textContent = s.text[6];
   const log=$('#civilization-log'),items=s.logItems?.length?s.logItems:s.log.map((text,i)=>({id:text,zh:text,en:text,at:s.runtime-i*5,legacy:true}));
   const retained=new Set();
-  items.forEach((entry,i)=>{
+  items.slice(0,10).forEach((entry,i)=>{
     const id=String(entry.id);retained.add(id);let li=[...log.children].find(el=>el.dataset.id===id);
     if(!li){li=document.createElement('li');li.dataset.id=id;log.append(li);}
     li.textContent=entry.legacy?entry.zh:(en?`Year ${Math.floor(entry.year)} · ${entry.en}`:`第${Math.floor(entry.year)}年，${entry.zh}`);
-    li.style.opacity=(settings[`t${i+3}`]??.4)*Math.max(0,1-(s.runtime-entry.at)/45);
+    li.style.opacity=Math.min(1,settings.t3*1.8)*Math.pow(.94,i)*Math.max(0,1-(s.runtime-entry.at)/120);
     log.append(li);
   });
   [...log.children].forEach(li=>{if(!retained.has(li.dataset.id))li.remove();});
-  const rank = $('#ranking-list'); rank.replaceChildren();
-  for (let i = 0; i < 6; i++) { if (!s.text[8 + i]) continue; const li = document.createElement('li'); li.textContent = s.text[8 + i]; li.style.opacity = settings[['t9', 't10', 'tex4opacity', 'tex5opacity', 'tex6opacity', 'tex7opacity'][i]]; rank.append(li); }
+  renderStatistics(s);
   $('#simulation-year').textContent = s.year >= 1e8 ? s.year.toExponential(2) : s.year.toFixed(2);
-  $('#restart-prompt').hidden = !(s.escaped||s.world?.planet.terminal) || settings.autorestart;
-  $('#restart-prompt span').textContent=s.world?.planet.terminal?(en?s.world.planet.terminal.en:s.world.planet.terminal.zh):(en?'CELESTIAL ESCAPE':'天体已逃逸');
-  document.querySelectorAll('.distance-row').forEach((row, i) => { const d = s.distances[i] || 0; row.querySelector('b').textContent = d.toFixed(3); row.querySelector('i').style.width = `${Math.min(100, d / settings.newproperty13 * 100)}%`; });
+  $('#restart-prompt').hidden = !(s.escaped||s.world?.planet.restartRequired) || settings.autorestart;
+  $('#restart-prompt span').textContent=s.world?.planet.terminal?(en?s.world.planet.terminal.en:s.world.planet.terminal.zh):s.world?.planet.damaged?(en?'PLANETARY DAMAGE':'行星结构受损'):(en?'CELESTIAL ESCAPE':'天体已逃逸');
+  $('#restart-prompt strong').textContent=en?`Start universe ${s.generation+1} ↻`:`开启第${s.generation+1}号宇宙 ↻`;
+
   if (settings.cheatingcheck) $('#physics-check').textContent = `${settings.newproperty60 ? 'CAGE ON / ' : ''}G × ${settings.newproperty52 / 1000} / T DIST × ${settings.newproperty69}\n${settings.physicsMode === 'reference' ? 'REFERENCE 60 Hz' : 'REAL TIME'}`;
   $('#runtime-diagnostics').textContent = `Three.js WebGL · ${fps} FPS · Worker 60 Hz · Tick ${s.tick} · ${s.bodies.length} bodies · 宇宙 ${s.generation} · Seed ${s.seed} · ${renderer.canvas.width}×${renderer.canvas.height}`;
 }
@@ -300,10 +316,9 @@ function hideLoading() { clearTimeout(loadingTimer); $('#loading-overlay').class
 $('#enter-universe').onclick = hideLoading;
 
 buildSettings(); applyAppearance();
-const bands = $('#audio-bars'); for (let i = 0; i < 48; i++) bands.append(document.createElement('i'));
 const audio = new AudioController((values, average) => {
   if (renderer) renderer.audioLevel = settings.audioresponse ? average : 0;
-  if (settings.audioresponse) [...bands.children].forEach((bar, i) => { bar.style.height = `${1 + values[Math.min(15, Math.floor(Math.abs(i - 23.5) / 1.5))] * 25}px`; });
+
 });
 
 try {
@@ -311,20 +326,19 @@ try {
   const blob = new Blob([__WORKER_SOURCE__], { type: 'text/javascript' }); const workerURL = URL.createObjectURL(blob);
   worker = new Worker(workerURL); worker.onmessage = ({ data }) => {
     if (data.type === 'error') { fatal = true; console.error('Simulation worker:', data); notice(`模拟异常：${data.message}。请恢复默认设置后重试。`, true); return; }
-    if (data.type === 'state') { state = data.state; lastTick = state.tick; window.__threeBodyState = state; renderer.ingest(state); renderState(state); handleEvents(state.events); }
+    if (data.type === 'state') { state = data.state; lastTick = state.tick; window.__threeBodyState = state; renderer.ingest(state); renderState(state); handleEvents(state.events);persistStatistics(); }
   };
   worker.onerror = event => { fatal = true; console.error(event); notice('后台模拟无法启动。请通过本地服务器或 Wallpaper Engine 打开此项目。', true); };
-  worker.postMessage({ type: 'init', settings });
+  store.getAll('history').then(records=>{history=records.sort((a,b)=>a.savedAt-b.savedAt);worker.postMessage({type:'init',settings,statistics:savedStatistics()||{legacyRecords:history}});});
   installWallpaperBridge({ changeSettings, renderer, audio, setHostPaused: value => { hostPaused = value; applyPause(); } });
   store.getAsset('background').then(file => { if (file) { customURL = URL.createObjectURL(file); renderer.setCustomBackground(customURL); } });
-  store.getAll('history').then(records => { history = [...records, ...history].sort((a, b) => a.savedAt - b.savedAt); });
   let lastFrame = performance.now(), startTime = lastFrame, fpsStart = lastFrame, frames = 0, lastDraw = 0;
   const animate = now => {
     requestAnimationFrame(animate);
     const cap = window.__wallpaperFPS || 60; if (now - lastDraw < 1000 / cap - 1) return;
-    lastDraw = now; const dt = Math.min(.1, (now - lastFrame) / 1000); lastFrame = now;
+    lastDraw = now; const frameDt=(now-lastFrame)/1000,dt=Math.min(.1,frameDt); lastFrame = now;
     if (hostPaused || visibilityPaused) return;
-    audio.tick(); renderer.render(userPaused ? 0 : dt, (now - startTime) / 1000);
+    audio.tick(); renderer.render(userPaused ? 0 : dt, (now - startTime) / 1000,userPaused?0:Math.min(1,frameDt));
     frames++; if (now - fpsStart > 1000) { fps = Math.round(frames * 1000 / (now - fpsStart)); frames = 0; fpsStart = now; }
   };
   requestAnimationFrame(animate);
@@ -336,10 +350,11 @@ try {
   }, 1000);
   if (settings.newproperty64 || settings.newproperty63) showLoading(); else $('#loading-overlay').hidden = true;
   if (settings.menuinit) setPanel(true);
-  addEventListener('beforeunload', () => { worker.terminate(); URL.revokeObjectURL(workerURL); if (customURL) URL.revokeObjectURL(customURL); });
+  addEventListener('pagehide',()=>persistStatistics(true));
+  addEventListener('beforeunload', () => { persistStatistics(true);worker.terminate(); URL.revokeObjectURL(workerURL); if (customURL) URL.revokeObjectURL(customURL); });
 } catch (error) {
   fatal = true; console.error(error); hideLoading(); notice(`无法初始化 3D 场景：${error.message}。请启用浏览器硬件加速。`, true);
 }
 // Diagnostic readout for automated smoke checks and host integrations.
 window.__threeBodyDiagnostics = () => ({ ready: !!state && !fatal, tick: lastTick, fps, paused: userPaused || hostPaused || visibilityPaused, controls: controlMap.size, history: history.length, worker: !!worker,
-  scene: renderer ? { canvas:[renderer.canvas.width,renderer.canvas.height], drawingBuffer:[renderer.renderer.getContext().drawingBufferWidth,renderer.renderer.getContext().drawingBufferHeight], renderedFrames:renderer.renderer.info.render.frame, compassVisible:renderer.compass.visible, maxTextureSize:renderer.renderer.capabilities.maxTextureSize, backgroundSizes:Object.fromEntries(Object.entries(renderer.bgTextures).map(([k,t])=>[k,[t.image?.width||0,t.image?.height||0]])), backgroundFollowsView: renderer.sky.parent === renderer.world, viewRotation: renderer.world.rotation.toArray().slice(0,3), skyRotation: renderer.sky.getWorldQuaternion(new renderer.camera.quaternion.constructor()).toArray(), bodyShapes: renderer.nodes.map(n => n.mesh.geometry.type), glowShape: 'radial-circle', trailSamples: renderer.trailBuffers.map(b => b.length), trailsVisible: renderer.trails.every(t => t.visible) } : null });
+  scene: renderer ? { canvas:[renderer.canvas.width,renderer.canvas.height], drawingBuffer:[renderer.renderer.getContext().drawingBufferWidth,renderer.renderer.getContext().drawingBufferHeight], renderedFrames:renderer.renderer.info.render.frame, viewVelocity:[renderer.rot.vx,renderer.rot.vy], maxAngularSpeed:renderer.rot.maxSpeed, compassVisible:renderer.compass.visible, maxTextureSize:renderer.renderer.capabilities.maxTextureSize, backgroundSizes:Object.fromEntries(Object.entries(renderer.bgTextures).map(([k,t])=>[k,[t.image?.width||0,t.image?.height||0]])), backgroundFollowsView: renderer.sky.parent === renderer.world, viewRotation: renderer.world.rotation.toArray().slice(0,3), skyRotation: renderer.sky.getWorldQuaternion(new renderer.camera.quaternion.constructor()).toArray(), bodyShapes: renderer.nodes.map(n => n.mesh.geometry.type), glowShape: 'radial-circle', bodyLabelsVisible:renderer.nodes.some(n=>!n.label.hidden), trailSamples: renderer.trailBuffers.map(b => b.length), trailComplexity:renderer.trailComplexity||0, trailMetrics:renderer.trailMetrics||[], trailsVisible: renderer.trails.every(t => t.visible) } : null });

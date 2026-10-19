@@ -17,6 +17,7 @@ const properties = structuredClone(original.general.properties);
 // Scene texture pickers are represented by Web wallpaper file pickers, retaining the original key.
 properties.custombg = { ...properties.custombg, type: 'file', value: '' };
 for(const [key,value] of Object.entries(defaults))if(properties[key])properties[key].value=value;
+properties.audiobar.text='基础信息与排行';properties.newproperty39.text='显示文明与宇宙排行';
 properties.newproperty45.text='常态活动低温边界 °C';properties.newproperty46.text='常态活动高温边界 °C';
 const project = { title: '三体实时演算 · Web 重建', type: 'web', file: 'index.html', description: '基于用户提供的 SYKM 原版场景移植。Three.js + Worker，原版设置兼容。', version: 0, contentrating: 'Everyone', general: { ...original.general, supportsaudioprocessing: true, properties } };
 await writeFile(path.join(dist, 'project.json'), JSON.stringify(project, null, 2));

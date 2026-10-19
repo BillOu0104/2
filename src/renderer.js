@@ -7,6 +7,8 @@ import { Line2 } from 'three/addons/lines/Line2.js';
 import { LineGeometry } from 'three/addons/lines/LineGeometry.js';
 import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
 import { colorRGB, seededRandom } from './settings.js';
+import { ViewMotion } from './view-motion.js';
+import { TrailHistory, trailComplexity, selectTrail } from './adaptive-trails.js';
 
 const C = v => new THREE.Color(...colorRGB(v));
 const sphere = new THREE.SphereGeometry(1, 96, 64);
@@ -70,7 +72,7 @@ export class SpaceRenderer {
       // Growing a one-segment LineGeometry later silently clips rendering to that segment.
       const geo = new LineGeometry(); geo.setPositions(new Float32Array(2000 * 3)); geo.setColors(new Float32Array(2000 * 3)); geo.instanceCount = 0;
       const line = new Line2(geo, new LineMaterial({ linewidth: 2.2, vertexColors: true, transparent: true, opacity: .8, blending: THREE.AdditiveBlending, depthWrite: false }));
-      line.frustumCulled = false; this.world.add(line); this.trails.push(line); this.trailBuffers.push([]);
+      line.frustumCulled = false; this.world.add(line); this.trails.push(line); this.trailBuffers.push(new TrailHistory());
     }
     this.dustLayers = [];
     const rng = seededRandom('original-dust');
@@ -85,14 +87,13 @@ export class SpaceRenderer {
     // Small bright spheres become square impulses in a downsampled bloom pyramid.
     // Explicit radial sprites provide the HDR halo without changing circular silhouettes.
     this.post = new ShaderPass(postShader);
-    this.mouse = { x: 0, y: 0, down: false, dragging: false, startX: 0, startY: 0, lastX: 0, lastY: 0 }; this.rot = { x: 0, y: 0, vx: 0, vy: 0 }; this.follow = { x: 0, y: 0 };
+    this.mouse = { x: 0, y: 0, down: false, dragging: false, startX: 0, startY: 0, lastX: 0, lastY: 0 }; this.rot = new ViewMotion();this.autoAngle=0;
     canvas.addEventListener('pointerdown', e => { if(e.button!==0)return; this.mouse.down = true; this.mouse.dragging=false; this.mouse.startX=this.mouse.lastX = e.clientX; this.mouse.startY=this.mouse.lastY = e.clientY; canvas.setPointerCapture(e.pointerId); });
     canvas.addEventListener('pointermove', e => {
       this.mouse.x = e.clientX / innerWidth * 2 - 1; this.mouse.y = e.clientY / innerHeight * 2 - 1;
       if (this.mouse.down && +this.settings.newproperty61 === 0) {
         if(Math.hypot(e.clientX-this.mouse.startX,e.clientY-this.mouse.startY)>3)this.mouse.dragging=true;
-        this.rot.vy += (e.clientX - this.mouse.lastX) / innerWidth * this.settings.y5 * 10;
-        this.rot.x += (e.clientY - this.mouse.lastY) / innerHeight * this.settings.x5 * 2;
+        this.rot.drag((e.clientX-this.mouse.lastX)/innerWidth,(e.clientY-this.mouse.lastY)/innerHeight,this.settings.x5,this.settings.y5);
       }
       this.mouse.lastX = e.clientX; this.mouse.lastY = e.clientY;
     });
@@ -151,33 +152,18 @@ export class SpaceRenderer {
     this.resize();
   }
   clearTrails() {
-    this.trailBuffers.forEach(b => b.length = 0);
+    this.trailBuffers.forEach(b => b.clear());
+    this.trailComplexity=0;this.trailMetrics=[];
     this.trails.forEach(line => { line.geometry.instanceCount = 0; });
   }
   ingest(state) {
     if (this.snap && state.revision !== this.snap.revision) { this.clearTrails(); this.firstPosition = true; }
     if (!this.snap) this.firstPosition = true;
     this.snap = state;
-    const keys = ['brfontcoloraaaaaatrail1color', 'brfontcoloraaaaaatrail2color', 'brfontcoloraaaaaatrail3color', 'brfontcoloraaaaaatrail4color'];
     state.bodies.forEach((b, i) => {
-      const n = this.nodes[i]; const previous = n.target.clone(); n.target.set(b.x - state.com.x, b.y - state.com.y, b.z - state.com.z);
+      const n = this.nodes[i]; n.target.set(b.x - state.com.x, b.y - state.com.y, b.z - state.com.z);
       if (this.firstPosition) n.group.position.copy(n.target);
-      if (this.settings.newproperty14) {
-        const trail = this.trailBuffers[i];
-        const samples = this.firstPosition ? 1 : Math.max(1, Math.min(15, state.tick - (this.lastTrailTick || state.tick)));
-        for (let j = 1; j <= samples; j++) trail.push((this.firstPosition ? n.target : previous).clone().lerp(n.target, j / samples));
-        if (trail.length > this.settings.trailsLength) trail.splice(0, trail.length - this.settings.trailsLength);
-        const geometry = this.trails[i].geometry, positions = geometry.attributes.instanceStart.data, colors = geometry.attributes.instanceColorStart.data;
-        const color = C(this.settings[keys[i]]);
-        for (let j = 0; j < trail.length - 1; j++) {
-          const a = trail[j], b = trail[j + 1], offset = j * 6;
-          positions.array.set([a.x,a.y,a.z,b.x,b.y,b.z],offset);
-          const fadeA = Math.pow(j / (trail.length - 1),1.6), fadeB = Math.pow((j+1)/(trail.length-1),1.6);
-          colors.array.set([color.r*fadeA,color.g*fadeA,color.b*fadeA,color.r*fadeB,color.g*fadeB,color.b*fadeB],offset);
-        }
-        positions.needsUpdate = colors.needsUpdate = true;
-        geometry.instanceCount = Math.max(0,trail.length-1);
-      }
+      if (this.settings.newproperty14)this.trailBuffers[i].push(n.target,state.runtime);
     });
     this.lastTrailTick = state.tick;
     this.firstPosition = false;
@@ -189,20 +175,37 @@ export class SpaceRenderer {
     this.nodes[3].label.hidden=!this.settings.newproperty65||!this.settings.bodyLabels||!!state.world?.planet.terminal;
     this.nodes.slice(0,3).forEach((n,i)=>{const radius=state.world?.stars[i]?.radius;if(radius)n.mesh.scale.setScalar(radius);});
   }
-  render(dt, elapsed) {
+  updateTrails(dt) {
+    this.world.updateWorldMatrix(true,false);this.camera.updateMatrixWorld();
+    const project=point=>{
+      vec.set(point.x,point.y,point.z).applyMatrix4(this.world.matrixWorld).project(this.camera);
+      return{x:(vec.x*.5+.5)*innerWidth,y:(-.5*vec.y+.5)*innerHeight,z:vec.z};
+    };
+    const raw=trailComplexity(this.trailBuffers,project,this.snap.runtime);
+    this.trailComplexity=(this.trailComplexity||0)+(raw-(this.trailComplexity||0))*(1-Math.exp(-dt/.7));
+    const keys=['brfontcoloraaaaaatrail1color','brfontcoloraaaaaatrail2color','brfontcoloraaaaaatrail3color','brfontcoloraaaaaatrail4color'];
+    this.trailMetrics=this.trailBuffers.map((history,i)=>{
+      const selection=selectTrail(history,project,{now:this.snap.runtime,viewport:Math.min(innerWidth,innerHeight),baseLength:this.settings.trailsLength,complexity:this.trailComplexity,dt});
+      const {points,fractions}=selection,geometry=this.trails[i].geometry,positions=geometry.attributes.instanceStart.data,colors=geometry.attributes.instanceColorStart.data,color=C(this.settings[keys[i]]);
+      for(let j=0;j<points.length-1;j++){
+        const a=points[j],b=points[j+1],offset=j*6,fadeA=Math.pow(fractions[j],1.4),fadeB=Math.pow(fractions[j+1],1.4);
+        positions.array.set([a.x,a.y,a.z,b.x,b.y,b.z],offset);
+        colors.array.set([color.r*fadeA,color.g*fadeA,color.b*fadeA,color.r*fadeB,color.g*fadeB,color.b*fadeB],offset);
+      }
+      positions.needsUpdate=colors.needsUpdate=true;geometry.instanceCount=Math.max(0,points.length-1);
+      this.trails[i].material.opacity=.8-.25*this.trailComplexity;
+      this.trails[i].material.linewidth=2.2-.5*this.trailComplexity;
+      return{arcPixels:selection.arcPixels,seconds:selection.seconds,budget:selection.budget,segments:geometry.instanceCount};
+    });
+  }
+  render(dt, elapsed, motionDt=dt) {
     const s = this.settings;
     this.compass.visible=!!s.compass&&this.mouse.down&&this.mouse.dragging&&+s.newproperty61===0;
-    if (+s.newproperty61 === 1) {
-      const a = Math.min(1, s.newproperty62 * dt * 60);
-      this.follow.x += (this.mouse.x - this.follow.x) * a; this.follow.y += (this.mouse.y - this.follow.y) * a;
-      this.rot.y = this.follow.x * s.x6 * Math.PI / 180 + (s.newproperty16 ? elapsed * s.newproperty51 * Math.PI / 180 : 0);
-      this.rot.x = this.follow.y * s.y7 * Math.PI / 180;
-    } else {
-      this.rot.vy *= Math.pow(s.y6, dt * 60);
-      this.rot.y += this.rot.vy * dt * 60 + (s.newproperty16 ? s.newproperty51 * dt * Math.PI / 180 : 0);
-      this.rot.x = THREE.MathUtils.clamp(this.rot.x, -Math.PI / 6, Math.PI / 6);
-    }
-    this.world.rotation.set(this.rot.x + (s.newproperty16 ? Math.sin(elapsed * .1) * s.brfontcoloraaaaaaxspinangle * Math.PI / 180 : 0), this.rot.y, 0);
+    if(s.newproperty16)this.autoAngle+=s.newproperty51*motionDt*Math.PI/180;
+    if(+s.newproperty61===1){
+      for(let remaining=motionDt;remaining>1e-8;){const step=Math.min(1/60,remaining);this.rot.follow(this.mouse.y*s.y7*Math.PI/180,this.mouse.x*s.x6*Math.PI/180,step,Math.max(.25,s.newproperty62*12));remaining-=step;}
+    }else this.rot.coast(motionDt,-Math.log(Math.min(.999,s.y6))*120);
+    this.world.rotation.set(this.rot.x+(s.newproperty16?Math.sin(elapsed*.1)*s.brfontcoloraaaaaaxspinangle*Math.PI/180:0),this.rot.y+this.autoAngle,0);
     this.nodes.forEach((n, i) => {
       n.group.position.lerp(n.target, 1 - Math.exp(-dt * 22)); n.mesh.rotation.y += dt * .1;
       if (i < 3) { n.glow.material.opacity = Math.min(1, .35 + s.newproperty49 * .3 + (s.newproperty2 ? s.hdr * .09 : 0) + this.audioLevel * .12); }
@@ -211,6 +214,9 @@ export class SpaceRenderer {
       n.label.style.visibility = vec.z > 1 || vec.z < -1 ? 'hidden' : 'visible';
       if (this.snap) n.label.querySelector('small').textContent = `${n.group.position.x.toFixed(2)} / ${n.group.position.y.toFixed(2)}`;
     });
+    if(s.newproperty14&&this.snap&&(this.lastTrailRender===undefined||elapsed-this.lastTrailRender>=.05)){
+      this.updateTrails(Math.min(1,elapsed-(this.lastTrailRender??elapsed-.05)));this.lastTrailRender=elapsed;
+    }
     this.dustLayers.forEach((d, i) => { d.rotation.y = elapsed * .002 * (i + 1); });
     this.post.uniforms.time.value = elapsed;
     if (s.newproperty2) this.composer.render(dt); else this.renderer.render(this.scene, this.camera);
