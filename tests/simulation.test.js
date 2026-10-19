@@ -18,7 +18,7 @@ test('183 original controls retain definitions, with the requested trails enable
   const controls = Object.entries(propertySchema).filter(([, p]) => p.type && p.type !== 'group');
   assert.equal(controls.length, 183);
   const config = normalizeSettings();
-  for (const [key, def] of controls) assert.deepEqual(config[key], key === 'newproperty14' ? true : def.value, key);
+  for (const [key, def] of controls) assert.deepEqual(config[key], ({newproperty14:true,newproperty45:-20,newproperty46:40,newproperty51:.35,newproperty3:0,newproperty68:0})[key] ?? def.value, key);
   const sim = new Simulation();
   assert.equal(sim.modules['008'].scriptProperties.fourthMass, 5000);
   assert.equal(sim.modules['008'].scriptProperties.constraint_M, 15000000);
@@ -98,7 +98,7 @@ test('legacy mode preserves original birth, thermal death and Roche priority', (
 });
 
 test('manual restart records one death and does not secretly reinitialize 120 ticks later', () => {
-  const s=new Simulation({seed:'TRISOLARIS'});run(s,60);assert.equal(s.shared.civilizationAlive,true);
+  const s=new Simulation({seed:'TRISOLARIS',civilizationMode:'legacy'});run(s,60);assert.equal(s.shared.civilizationAlive,true);
   s.restart();s.tick();const initial=structuredClone(s.initialBodies);run(s,140);
   assert.deepEqual(s.initialBodies,initial);assert.equal(s.generation,2);
   const event=s.events.find(e=>e.type==='civilization:death');assert.ok(event);assert.equal(event.detail.initialBodies.length,4);
@@ -120,4 +120,19 @@ test('long reference run remains finite and has bounded in-memory event buffers'
 test('settings clamp malformed numeric values and reject invalid combo/color data', () => {
   const s=normalizeSettings({timespeed:Infinity,newproperty53:-100,newproperty17:'nope',datacolor:'bad bad bad',seed:99});
   assert.equal(s.timespeed,1);assert.equal(s.newproperty53,propertySchema.newproperty53.min);assert.equal(s.newproperty17,'4');assert.equal(s.datacolor,propertySchema.datacolor.value);assert.equal(s.seed,'TRISOLARIS');
+});
+
+// A terminal world remains visible while awaiting the explicit universe restart.
+test('planetary loss has one archive entry, no rebirth and a complete four-body snapshot through restart',()=>{
+  const s=new Simulation({autorestart:false});s.tick();
+  s.shared.civilizationAlive=true;s.shared.civilizationStartTime=0;s.civilization.reset();
+  s.world.terminal={kind:'disrupted',zh:'大撕裂',en:'Great Tear'};
+  run(s,360);assert.equal(s.snapshot().alive,false);assert.equal(s.shared.civilizationRecords.length,1);assert.equal(s.snapshot().world.planet.terminal.kind,'disrupted');assert.equal(s.generation,1);
+  s.restart();assert.equal(s.snapshot().bodies.length,4);s.tick();assert.equal(s.snapshot().world.planet.terminal,null);assert.equal(s.generation,2);
+});
+
+test('automatic planetary restart publishes a complete new generation on the next tick',()=>{
+  const s=new Simulation({autorestart:true});s.tick();s.world.terminal={kind:'disrupted',zh:'大撕裂',en:'Great Tear'};
+  let previous=s.snapshot();for(let i=0;i<250;i++){s.tick();const state=s.snapshot();assert.equal(state.bodies.length,4);if(state.generation!==previous.generation)assert.equal(state.world.planet.terminal,null);previous=state;}
+  assert.equal(s.generation,2);
 });

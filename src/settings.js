@@ -2,9 +2,21 @@ import { propertySchema } from './original-data.js';
 
 export const defaults = Object.fromEntries(Object.entries(propertySchema)
   .filter(([, d]) => d.type && d.type !== 'group').map(([k, d]) => [k, d.value]));
-export const extraDefaults = { seed: 'TRISOLARIS', music: false, volume: 0.35, trailsLength: 400, physicsMode: 'reference', pixelRatio: 1.5, bodyLabels: true, civilizationMode: 'balanced', thermalGrace: 8 };
+export const extraDefaults = { seed: 'TRISOLARIS', music: false, volume: 0.35, trailsLength: 400, physicsMode: 'reference', pixelRatio: 4, bodyLabels: true, civilizationMode: 'balanced', thermalGrace: 8, wakeDelay: 3, epochWindow: 2, climateInertia: 1.5, stellarBreathing: true, renderQuality: 'native' };
 // New installs show the requested tails; explicitly saved off/on preferences still win.
 defaults.newproperty14 = true;
+defaults.newproperty45 = -20;
+defaults.newproperty46 = 40;
+defaults.newproperty51 = .35;
+defaults.newproperty3 = 0;
+defaults.newproperty68 = 0;
+export const effectivePropertySchema = { ...propertySchema,
+  newproperty45: {...propertySchema.newproperty45,text:'常态活动低温边界 / Active life minimum °C',value:-20},
+  newproperty46: {...propertySchema.newproperty46,text:'常态活动高温边界 / Active life maximum °C',value:40},
+  newproperty43: {...propertySchema.newproperty43,text:'干仓低温耐受 / Dry storage minimum °C'},
+  newproperty44: {...propertySchema.newproperty44,text:'干仓高温耐受 / Dry storage maximum °C'},
+  newproperty51: {...propertySchema.newproperty51,value:.35}
+};
 export function normalizeSettings(source = {}, includeExtras = true) {
   const out = { ...defaults, ...(includeExtras ? extraDefaults : {}) };
   for (const [key, value] of Object.entries(source)) {
@@ -21,10 +33,15 @@ export function normalizeSettings(source = {}, includeExtras = true) {
     else if (key === 'volume' && Number.isFinite(+value)) out.volume = Math.min(1, Math.max(0, +value));
     else if (key === 'trailsLength' && Number.isFinite(+value)) out.trailsLength = Math.round(Math.min(2000, Math.max(20, +value)));
     else if (key === 'physicsMode' && ['reference', 'realtime'].includes(value)) out.physicsMode = value;
-    else if (key === 'pixelRatio' && Number.isFinite(+value)) out.pixelRatio = Math.min(2, Math.max(0.5, +value));
+    else if (key === 'pixelRatio' && Number.isFinite(+value)) out.pixelRatio = Math.min(4, Math.max(0.5, +value));
     else if (key === 'bodyLabels') out.bodyLabels = value === true;
     else if (key === 'civilizationMode' && ['balanced', 'legacy'].includes(value)) out.civilizationMode = value;
     else if (key === 'thermalGrace' && Number.isFinite(+value)) out.thermalGrace = Math.min(60, Math.max(1, +value));
+    else if (key === 'wakeDelay' && Number.isFinite(+value)) out.wakeDelay = Math.min(60,Math.max(1,+value));
+    else if (key === 'epochWindow' && Number.isFinite(+value)) out.epochWindow = Math.min(20,Math.max(.25,+value));
+    else if (key === 'climateInertia' && Number.isFinite(+value)) out.climateInertia = Math.min(30,Math.max(.05,+value));
+    else if (key === 'stellarBreathing') out.stellarBreathing=value===true;
+    else if (key === 'renderQuality' && ['native','8k'].includes(value)) out.renderQuality=value;
   }
   return out;
 }
@@ -32,7 +49,11 @@ export function colorRGB(s = '1 1 1') { return s.split(/\s+/).map(Number); }
 export function colorHex(s) { return '#' + colorRGB(s).map(x => Math.round(x * 255).toString(16).padStart(2, '0')).join(''); }
 export function fromHex(s) { return [1, 3, 5].map(i => parseInt(s.slice(i, i + 2), 16) / 255).join(' '); }
 export function plainText(s = '') { return s.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' '); }
-export function algorithmId(s) { return `sykm-scene-v3-${s.physicsMode}60-civ-${s.civilizationMode}-v2`; }
+export function algorithmId(s) { return `sykm-scene-v3-${s.physicsMode}60-civ-${s.civilizationMode}-v3`; }
+export function migrateSettings(saved={},version=3){
+  if(version<3)return normalizeSettings({...saved,newproperty45:-20,newproperty46:40,newproperty51:Math.abs(saved.newproperty51??3)>=2 ? .35 : (saved.newproperty51??.35),newproperty3:0,newproperty68:0});
+  return normalizeSettings(saved);
+}
 export function seededRandom(seed) {
   let h = 2166136261;
   for (const c of String(seed)) h = Math.imul(h ^ c.charCodeAt(0), 16777619);

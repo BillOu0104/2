@@ -4,7 +4,7 @@ const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PAT
   args: ['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader'] });
 const page = await browser.newPage({ viewport: { width: 1100, height: 720 } });
 const errors=[]; page.on('pageerror',e=>errors.push(e.message));
-await page.addInitScript(() => localStorage.setItem('three-body.settings.v2', JSON.stringify({newproperty63:false,newproperty64:false,newproperty14:true,newproperty2:false,pixelRatio:1,newproperty17:'2',newproperty40:'0 0 0',dust:false,compass:false,newproperty16:false,newproperty61:2,timespeed:2.5,seed:'TAIL-CHECK'})));
+await page.addInitScript(() => localStorage.setItem('three-body.settings.v3', JSON.stringify({newproperty63:false,newproperty64:false,newproperty14:true,newproperty2:false,pixelRatio:1,newproperty17:'2',newproperty40:'0 0 0',dust:false,compass:false,newproperty16:false,newproperty61:2,timespeed:2.5,seed:'TAIL-CHECK'})));
 try {
   await page.goto('http://localhost:4173',{waitUntil:'networkidle'});
   await page.waitForFunction(()=>window.__threeBodyDiagnostics?.().ready);

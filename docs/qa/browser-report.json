@@ -1,7 +1,7 @@
 {
   "passed": 17,
   "checks": [
-    "183 original + 9 extension controls and worker ready",
+    "183 original + 14 extension controls and worker ready",
     "fading tails are enabled and populated for all four bodies",
     "all bodies use round sphere geometry and circular glow",
     "habitability and resilience are visible in optimized mode",
@@ -25,24 +25,45 @@
   "errors": [],
   "diagnostics": {
     "ready": true,
-    "tick": 573,
-    "fps": 8,
+    "tick": 930,
+    "fps": 3,
     "paused": false,
-    "controls": 192,
-    "history": 3,
+    "controls": 197,
+    "history": 1,
     "worker": true,
     "scene": {
+      "canvas": [
+        390,
+        844
+      ],
+      "drawingBuffer": [
+        390,
+        844
+      ],
+      "renderedFrames": 36,
+      "compassVisible": false,
+      "maxTextureSize": 8192,
+      "backgroundSizes": {
+        "1": [
+          8192,
+          4096
+        ],
+        "4": [
+          8192,
+          4096
+        ]
+      },
       "backgroundFollowsView": true,
       "viewRotation": [
-        0.14835298641951802,
-        0.8835729338221292,
+        0.14835298641917133,
+        0.8835729338200645,
         0
       ],
       "skyRotation": [
-        0.0669932816661846,
-        0.4263793960635767,
-        0.03168546244947107,
-        0.901503489895307
+        0.06699328166606104,
+        0.42637939606265146,
+        0.03168546244932799,
+        0.9015034898957589
       ],
       "bodyShapes": [
         "SphereGeometry",
@@ -52,10 +73,10 @@
       ],
       "glowShape": "radial-circle",
       "trailSamples": [
-        400,
-        400,
-        400,
-        400
+        319,
+        319,
+        319,
+        319
       ],
       "trailsVisible": true
     }

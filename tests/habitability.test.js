@@ -1,87 +1,65 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { Habitability } from '../src/habitability.js';
+import { WorldState, largestEigenvalue } from '../src/world-state.js';
+import { CivilizationState } from '../src/civilization-state.js';
 import { Simulation } from '../src/simulation.js';
-import { normalizeSettings, algorithmId } from '../src/settings.js';
-
-const safe = () => ({ tem:20,d14:1,d24:1,d34:1,d12:1,d13:1,d23:1,xntime:0,ktime:1,rst:0 });
-function climateTick(s, temperature, extra = {}) {
-  Object.assign(s.shared,safe(),{tem:temperature},extra);
-  s.habitability.update(s.shared,s.settings);
-  s.modules['042'].update('');
+import { normalizeSettings, migrateSettings } from '../src/settings.js';
+const settings=normalizeSettings({stellarBreathing:false,autorestart:false});
+const body=(x,y=0,mass=1000,vx=0,vy=0)=>({x,y,z:0,mass,vx,vy,vz:0});
+const bodies=()=>[body(1,0,1e6,0,1),body(20,1,1e3),body(-20,2,1e3),body(0,0,5000)];
+function fixture(){
+ const shared={civilizationAlive:false,civilizationCount:1,civilizationStartTime:0,lastCivilizationLifespan:0,civilizationRecords:[]};
+ const civ=new CivilizationState(shared),hab=new Habitability();let runtime=0;
+ return {shared,civ,hab,tick(temperature=20,options={}){runtime+=1/60;const world={epoch:{kind:options.epoch||'stable'},planet:{temperature,terminal:options.terminal||null},phenomena:[],safeToWake:options.safe!==false};const h=hab.update({tem:temperature},settings,1/60,{phase:civ.phase,terminal:world.planet.terminal});return civ.update(world,h,settings,runtime,runtime);},run(n,t=20,o={}){for(let i=0;i<n;i++)this.tick(t,o);}};
 }
 
-test('stable climate supports continuous civilization despite distant stellar encounters', () => {
-  const s = new Simulation();
-  for(let i=0;i<6000;i++) climateTick(s,20,{d12:.1,xntime:i/60});
-  assert.equal(s.shared.civilizationAlive,true); assert.equal(s.shared.civilizationCount,1);
-  assert.equal(s.shared.civilizationRecords.length,0); assert.equal(s.habitability.health,1);
-  assert.ok(s.habitability.result.score>.99);
+test('only -20 through 40 C supports activity, independently of era',()=>{
+ for(const [temperature,expected]of[[-21,false],[-20,true],[40,true],[41,false]])assert.equal(new Habitability().update({tem:temperature},settings).canGrow,expected);
+ const f=fixture();f.run(240,20,{epoch:'chaotic'});assert.equal(f.civ.phase,'active');assert.equal(f.shared.civilizationCount,1);
 });
-
-test('the same distant encounter still destroys civilization in legacy mode', () => {
-  const s = new Simulation({civilizationMode:'legacy'});
-  for(let i=0;i<60;i++)climateTick(s,20);
-  climateTick(s,20,{d12:.1}); assert.equal(s.shared.civilizationAlive,false);
-  assert.match(s.shared.civilizationRecords.at(-1).destructionEvent,/恒星1与恒星2/);
+test('dehydration preserves the same civilization; safe rehydration resumes it',()=>{
+ const f=fixture();f.run(240);assert.equal(f.civ.phase,'active');f.run(180,100);assert.equal(f.civ.phase,'dormant');assert.equal(f.shared.civilizationAlive,true);
+ f.run(360);assert.equal(f.civ.phase,'active');assert.equal(f.shared.civilizationCount,1);assert.equal(f.shared.civilizationRecords.length,0);assert.ok(f.civ.logs.some(l=>l.kind==='wake'));
 });
-
-test('brief climate spikes reduce resilience without instant extinction and stable climate recovers', () => {
-  const s = new Simulation(); for(let i=0;i<60;i++)climateTick(s,20);
-  for(let i=0;i<30;i++)climateTick(s,300);
-  assert.equal(s.shared.civilizationAlive,true); const stressed=s.habitability.health;assert.ok(stressed<1&&stressed>0);
-  for(let i=0;i<600;i++)climateTick(s,20);
-  assert.equal(s.shared.civilizationAlive,true);assert.ok(s.habitability.health>stressed);assert.equal(s.shared.civilizationRecords.length,0);
+test('unsafe fluctuating climate interrupts rehydration instead of creating new civilizations',()=>{
+ const f=fixture();f.run(240);f.run(180,80);f.run(230);assert.equal(f.civ.phase,'rehydrating');f.tick(20,{safe:false});assert.equal(f.civ.phase,'dormant');assert.equal(f.shared.civilizationCount,1);
 });
-
-test('sustained extreme heat and cold still destroy civilization', () => {
-  for(const temperature of [-250,1000]) {
-    const s=new Simulation();for(let i=0;i<60;i++)climateTick(s,20);
-    for(let i=0;i<600;i++)climateTick(s,temperature);
-    assert.equal(s.shared.civilizationAlive,false);assert.equal(s.shared.civilizationRecords.length,1);
-    assert.match(s.shared.civilizationRecords[0].destructionEvent,temperature<0?/低温/:/高温/);
-  }
+test('dry storage is finite and prolonged extreme heat or cold destroys it once',()=>{
+ for(const temp of[-250,1000]){const f=fixture();f.run(240);f.run(1800,temp);assert.equal(f.shared.civilizationAlive,false);assert.equal(f.shared.civilizationRecords.length,1);assert.equal(f.civ.phase,'destroyed');}
 });
-
-test('planetary collision and tidal destruction stay immediate, and hazards block rebirth loops', () => {
-  for(const [distance,cause]of [[.1,/大撕裂/],[.18,/相撞/]]){
-    const s=new Simulation({brfontcoloraaaaaarochelimitt:.15});for(let i=0;i<60;i++)climateTick(s,20);
-    for(let i=0;i<200;i++)climateTick(s,20,{d14:distance});
-    assert.equal(s.shared.civilizationAlive,false);assert.equal(s.shared.civilizationRecords.length,1);
-    assert.match(s.shared.civilizationRecords[0].destructionEvent,cause);
-  }
+test('destroyed planet permanently blocks local rebirth even with comfortable temperature',()=>{
+ const f=fixture();f.run(240);const terminal={kind:'disrupted',zh:'大撕裂',en:'Great Tear'};f.run(2400,20,{terminal});assert.equal(f.shared.civilizationAlive,false);assert.equal(f.shared.civilizationRecords.length,1);assert.equal(f.civ.phase,'destroyed');
 });
-
-test('edited stable thresholds remain consistent with climate habitability', () => {
-  const s=new Simulation({newproperty43:-10,newproperty44:100,newproperty45:-55,newproperty46:70});
-  for(let i=0;i<1200;i++)climateTick(s,-50);
-  assert.equal(s.habitability.result.stable,true);assert.equal(s.shared.civilizationAlive,true);assert.equal(s.habitability.health,1);
+test('orbital stable era can be frozen; distant flying stars do not require cold weather',()=>{
+ const w=new WorldState();let state;for(let i=0;i<180;i++)state=w.update(bodies(),1e-6,-150,settings,i/60);
+ assert.equal(state.epoch.kind,'stable');assert.equal(state.planet.condition,'frozen');assert.ok(state.phenomena.some(p=>p.kind==='flying'));
+ const warm=new WorldState().update(bodies(),1e-6,20,settings,0);assert.ok(warm.phenomena.some(p=>p.kind==='flying'));assert.equal(warm.epoch.kind,'chaotic');assert.equal(warm.planet.condition,'temperate');
 });
-
-test('climate exposure depends on elapsed simulation time, not integration sampling rate', () => {
-  const config=normalizeSettings();const a=new Habitability(),b=new Habitability();
-  for(let i=0;i<60;i++)a.update({...safe(),tem:300},config,1/60);
-  for(let i=0;i<120;i++)b.update({...safe(),tem:300},config,1/120);
-  assert.ok(Math.abs(a.health-b.health)<1e-12);
+test('stationary flying star requires a closing radial velocity, not zero camera motion',()=>{
+ const b=bodies();b[1]=body(20,0,1000,-1);let s=new WorldState().update(b,1e-6,20,settings,0);assert.ok(s.phenomena.some(p=>p.kind==='stationary'));
+ b[1].vx=1;s=new WorldState().update(b,1e-6,20,settings,0);assert.ok(!s.phenomena.some(p=>p.kind==='stationary'));
 });
-
-test('tail visibility and color changes never reset the orbit', () => {
-  const a=new Simulation(),b=new Simulation();for(let i=0;i<120;i++){a.tick();b.tick();}
-  a.configure({newproperty14:false,brfontcoloraaaaaatrail1color:'1 0 0',trailsLength:120});
-  for(let i=0;i<120;i++){a.tick();b.tick();}
-  assert.deepEqual(a.snapshot().bodies,b.snapshot().bodies);assert.equal(a.revision,b.revision);
+test('alignment requires three stars on the same ray; opposite directions do not count',()=>{
+ const b=[body(2),body(3),body(4),body(0,0,5000)];let s=new WorldState().update(b,1e-6,20,settings,0);assert.ok(s.phenomena.some(p=>p.kind==='alignment'));assert.equal(s.planet.terminal,null);assert.equal(s.stars[1].visibleFraction,0);
+ b[2].x=-4;s=new WorldState().update(b,1e-6,20,settings,0);assert.ok(!s.phenomena.some(p=>p.kind==='alignment'));
 });
-
-test('balanced simulation reduces stable-era extinction on the reported default Seed', () => {
-  const counts=[];
-  for(const civilizationMode of ['legacy','balanced']){
-    const s=new Simulation({seed:'TRISOLARIS',civilizationMode});let deaths=0;
-    for(let i=0;i<18000;i++){const before=s.shared.civilizationRecords.length;s.tick();if(s.era==='恒纪元')deaths+=s.shared.civilizationRecords.length-before;}
-    counts.push(deaths);
-  }
-  assert.ok(counts[0]>20); assert.ok(counts[1]<counts[0]*.2,JSON.stringify(counts));
+test('differential gravity tensor is rotation invariant and combines all stellar tides',()=>{
+ assert.equal(largestEigenvalue([[2,0,0],[0,-1,0],[0,0,-1]]),2);assert.ok(Math.abs(largestEigenvalue([[.5,1.5,0],[1.5,.5,0],[0,0,-1]])-2)<1e-12);
+ const w=new WorldState(),b=[body(.2,0,1e7),body(10,0,0),body(-10,0,0),body(0,0,5000)];
+ const s=w.update(b,1e-6,20,{...settings,newproperty20:.02},0);assert.ok(Math.abs(s.planet.tideRatio-4)<1e-10);assert.ok(s.planet.integrity<1);
+ const integrity=s.planet.integrity;b[0].x=10;assert.equal(w.update(b,1e-6,20,settings,1).planet.integrity,integrity);
 });
-
-test('seed identifiers distinguish optimized and legacy civilization policies', () => {
-  assert.notEqual(algorithmId(normalizeSettings()),algorithmId(normalizeSettings({civilizationMode:'legacy'})));
+test('stellar contact is irreversible, and thermal inertia softens instantaneous radiative spikes',()=>{
+ const w=new WorldState(),b=bodies();w.update(b,1e-6,20,settings,0);let s=w.update(b,1e-6,1000,settings,1/60);assert.ok(s.planet.temperature>20&&s.planet.temperature<40);
+ b[0].x=.001;s=w.update(b,1e-6,20,settings,1);assert.equal(s.planet.terminal.kind,'engulfed');b[0].x=100;assert.equal(w.update(b,1e-6,20,settings,2).planet.terminal.kind,'engulfed');
+});
+test('climate damage depends on elapsed time instead of sampling frequency',()=>{
+ const a=new Habitability(),b=new Habitability();for(let i=0;i<60;i++)a.update({tem:300},settings,1/60);for(let i=0;i<120;i++)b.update({tem:300},settings,1/120);assert.ok(Math.abs(a.health-b.health)<1e-12);
+});
+test('tail visibility and color never reset physical trajectories',()=>{
+ const a=new Simulation(),b=new Simulation();for(let i=0;i<120;i++){a.tick();b.tick();}a.configure({newproperty14:false,brfontcoloraaaaaatrail1color:'1 0 0',trailsLength:120});for(let i=0;i<120;i++){a.tick();b.tick();}assert.deepEqual(a.snapshot().bodies,b.snapshot().bodies);
+});
+test('previous settings migrate the requested slow rotation, activity bounds and clarity',()=>{
+ const migrated=migrateSettings({newproperty51:3,newproperty45:-55,newproperty46:70},2);assert.equal(migrated.newproperty51,.35);assert.equal(migrated.newproperty45,-20);assert.equal(migrated.newproperty46,40);assert.equal(migrated.newproperty68,0);assert.equal(migrateSettings({newproperty51:.1},2).newproperty51,.1);
 });

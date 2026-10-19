@@ -9,7 +9,7 @@ import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
 import { colorRGB, seededRandom } from './settings.js';
 
 const C = v => new THREE.Color(...colorRGB(v));
-const sphere = new THREE.SphereGeometry(1, 48, 32);
+const sphere = new THREE.SphereGeometry(1, 96, 64);
 const vec = new THREE.Vector3();
 function roundGlow() {
   const canvas = document.createElement('canvas'); canvas.width = canvas.height = 256;
@@ -34,7 +34,7 @@ const postShader = {
 export class SpaceRenderer {
   constructor(canvas, labelRoot, settings) {
     this.canvas = canvas; this.labels = labelRoot; this.settings = settings; this.snap = null; this.audioLevel = 0;
-    this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'low-power' });
+    this.renderer = new THREE.WebGLRenderer({ canvas, antialias: settings.renderQuality !== '8k', powerPreference: 'high-performance' });
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping; this.renderer.toneMappingExposure = 1;
     this.scene = new THREE.Scene(); this.camera = new THREE.PerspectiveCamera(50, 1, 0.01, 200);
@@ -49,7 +49,7 @@ export class SpaceRenderer {
     for (let i = 0; i < 120; i++) { const a = i / 120 * Math.PI * 2; const r = i % 10 ? 1.44 : 1.48; ticks.push(Math.cos(a) * 1.42, Math.sin(a) * 1.42, 0, Math.cos(a) * r, Math.sin(a) * r, 0); }
     this.compass.add(new THREE.LineSegments(new THREE.BufferGeometry().setAttribute('position', new THREE.Float32BufferAttribute(ticks, 3)), new THREE.LineBasicMaterial({ color: 0x94b7d9, transparent: true, opacity: .2 })));
     const textureLoader = new THREE.TextureLoader();
-    const texture = name => { const t = textureLoader.load(`assets/original/${name}.webp`); t.colorSpace = THREE.SRGBColorSpace; return t; };
+    const texture = name => { const t = textureLoader.load(`assets/original/${name}.webp`); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy=Math.min(16,this.renderer.capabilities.getMaxAnisotropy()); return t; };
     this.starTexture = texture('0aun'); this.planetTexture = texture('0dq'); this.spikeTexture = roundGlow();
     this.bgTextures = { '1': texture('B8k'), '4': texture('st2') };
     for (const t of Object.values(this.bgTextures)) t.mapping = THREE.EquirectangularReflectionMapping;
@@ -81,27 +81,39 @@ export class SpaceRenderer {
       this.world.add(dust); this.dustLayers.push(dust);
     }
     this.nebula = new THREE.Mesh(new THREE.SphereGeometry(70, 24, 16), new THREE.MeshBasicMaterial({ map: this.bgTextures['1'], side: THREE.BackSide, transparent: true, opacity: .35, color: 0x6e83a7, blending: THREE.AdditiveBlending, depthWrite: false })); this.world.add(this.nebula);
-    this.composer = new EffectComposer(this.renderer); this.composer.addPass(new RenderPass(this.scene, this.camera));
+    this.composer = null;
     // Small bright spheres become square impulses in a downsampled bloom pyramid.
     // Explicit radial sprites provide the HDR halo without changing circular silhouettes.
-    this.post = new ShaderPass(postShader); this.composer.addPass(this.post); this.composer.addPass(new OutputPass());
-    this.mouse = { x: 0, y: 0, down: false, lastX: 0, lastY: 0 }; this.rot = { x: 0, y: 0, vx: 0, vy: 0 }; this.follow = { x: 0, y: 0 };
-    canvas.addEventListener('pointerdown', e => { this.mouse.down = true; this.mouse.lastX = e.clientX; this.mouse.lastY = e.clientY; canvas.setPointerCapture(e.pointerId); });
+    this.post = new ShaderPass(postShader);
+    this.mouse = { x: 0, y: 0, down: false, dragging: false, startX: 0, startY: 0, lastX: 0, lastY: 0 }; this.rot = { x: 0, y: 0, vx: 0, vy: 0 }; this.follow = { x: 0, y: 0 };
+    canvas.addEventListener('pointerdown', e => { if(e.button!==0)return; this.mouse.down = true; this.mouse.dragging=false; this.mouse.startX=this.mouse.lastX = e.clientX; this.mouse.startY=this.mouse.lastY = e.clientY; canvas.setPointerCapture(e.pointerId); });
     canvas.addEventListener('pointermove', e => {
       this.mouse.x = e.clientX / innerWidth * 2 - 1; this.mouse.y = e.clientY / innerHeight * 2 - 1;
       if (this.mouse.down && +this.settings.newproperty61 === 0) {
+        if(Math.hypot(e.clientX-this.mouse.startX,e.clientY-this.mouse.startY)>3)this.mouse.dragging=true;
         this.rot.vy += (e.clientX - this.mouse.lastX) / innerWidth * this.settings.y5 * 10;
         this.rot.x += (e.clientY - this.mouse.lastY) / innerHeight * this.settings.x5 * 2;
       }
       this.mouse.lastX = e.clientX; this.mouse.lastY = e.clientY;
     });
-    for (const type of ['pointerup', 'pointercancel', 'lostpointercapture']) canvas.addEventListener(type, () => { this.mouse.down = false; });
+    for (const type of ['pointerup', 'pointercancel', 'lostpointercapture']) canvas.addEventListener(type, () => { this.mouse.down = false; this.mouse.dragging=false; this.compass.visible=false; });
     this.updateSettings(settings); this.resize();
     this.onResize = () => this.resize(); addEventListener('resize', this.onResize);
   }
   resize() {
-    this.renderer.setPixelRatio(Math.min(devicePixelRatio || 1, this.settings.pixelRatio));
-    this.renderer.setSize(innerWidth, innerHeight, false); this.composer.setSize(innerWidth, innerHeight);
+    const gl=this.renderer.getContext(),limit=Math.min(this.renderer.capabilities.maxTextureSize,gl.getParameter(gl.MAX_RENDERBUFFER_SIZE));
+    const requested=this.settings.renderQuality==='8k'?Math.min(7680/innerWidth,4320/innerHeight):Math.min(devicePixelRatio||1,this.settings.pixelRatio);
+    const ratio=Math.min(requested,limit/innerWidth,limit/innerHeight);
+    if(this.drawWidth!==innerWidth||this.drawHeight!==innerHeight||this.drawRatio!==ratio){
+      this.renderer.setPixelRatio(ratio);this.renderer.setSize(innerWidth,innerHeight,false);
+      this.drawWidth=innerWidth;this.drawHeight=innerHeight;this.drawRatio=ratio;
+    }
+    if(this.settings.newproperty2&&!this.composer){
+      const target=new THREE.WebGLRenderTarget(1,1,{type:THREE.UnsignedByteType});
+      this.composer=new EffectComposer(this.renderer,target);this.composer.addPass(new RenderPass(this.scene,this.camera));this.composer.addPass(this.post);this.composer.addPass(new OutputPass());
+    }
+    if(this.composer){this.composer.setPixelRatio(ratio);this.composer.setSize(innerWidth,innerHeight);}
+
     this.camera.aspect = innerWidth / innerHeight; this.camera.updateProjectionMatrix();
     this.trails.forEach(line => line.material.resolution.set(innerWidth, innerHeight));
   }
@@ -119,7 +131,7 @@ export class SpaceRenderer {
     this.sky.material.color.copy(C(mode === '3' ? s.newproperty55 : s.backgroundcolor)).multiplyScalar(mode === '3' ? s.newproperty56 : s.newproperty9);
     this.sky.material.needsUpdate = true;
     this.camera.fov = s.newproperty71; this.camera.position.z = Math.max(1.4, 5.2 - s.distance * .65); this.camera.updateProjectionMatrix();
-    this.compass.visible = s.compass; this.compass.children.forEach(n => n.material?.color.copy(C(s.datacolor)));
+    this.compass.visible = !!s.compass && this.mouse.down && this.mouse.dragging && +s.newproperty61===0; this.compass.children.forEach(n => n.material?.color.copy(C(s.datacolor)));
     this.nebula.visible = s.brfontcoloraaaaaabrnebularequirespostprocessingultrahighquality;
     for (const [u, key] of Object.entries({ grain: 'newproperty68', crt: 'newproperty3', blur: 'newproperty23', pulse: 'newproperty54' })) this.post.uniforms[u].value = s[key];
     const radii = [s._13, s._21, s._3, s.newproperty20];
@@ -173,9 +185,13 @@ export class SpaceRenderer {
     if (t <= -100) color.setRGB(THREE.MathUtils.clamp((t + 210) / 110, 0, 1), THREE.MathUtils.clamp((t + 210) / 110, 0, 1), 1);
     else if (t >= 10) color.setRGB(1, Math.max(0, 1 - (t - 10) / 990), Math.max(0, 1 - (t - 10) / 990));
     this.nodes[3].material.emissive.copy(color);
+    this.nodes[3].group.visible=!state.world?.planet.terminal;
+    this.nodes[3].label.hidden=!this.settings.newproperty65||!this.settings.bodyLabels||!!state.world?.planet.terminal;
+    this.nodes.slice(0,3).forEach((n,i)=>{const radius=state.world?.stars[i]?.radius;if(radius)n.mesh.scale.setScalar(radius);});
   }
   render(dt, elapsed) {
     const s = this.settings;
+    this.compass.visible=!!s.compass&&this.mouse.down&&this.mouse.dragging&&+s.newproperty61===0;
     if (+s.newproperty61 === 1) {
       const a = Math.min(1, s.newproperty62 * dt * 60);
       this.follow.x += (this.mouse.x - this.follow.x) * a; this.follow.y += (this.mouse.y - this.follow.y) * a;

@@ -5,3 +5,11 @@
 .habitability-readout{margin-top:22px;width:160px;font-size:9px;letter-spacing:1px;color:#8fa9c2}.habitability-readout>div:not(.habitat-bar){display:flex;justify-content:space-between;align-items:center}.habitability-readout b{font:12px Rajdhani;color:#b4d8e6}.habitat-bar{height:2px;background:#a9d8eb12;margin:6px 0 13px}.habitat-bar i{display:block;height:100%;width:0;background:#89b6ca;transition:width .25s}#health-fill{background:#9ab7a1}#habitability-warning{font-size:8px;letter-spacing:1px;line-height:1.8;color:#6f8ba2;margin:4px 0 0}
 @media(max-width:600px){.habitability-readout{width:110px;margin-top:14px;font-size:8px}.habitat-bar{margin-bottom:9px}#habitability-warning{font-size:7px}.side-widget{bottom:25%}.era-widget{bottom:21%}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* Compact central HUD; log size stays constant while opacity ages. */
+.civilization-widget{top:calc(15% + 79px);font-size:11px;line-height:1.35;letter-spacing:.5px}
+#civilization-status{margin-bottom:4px}#civilization-lifespan{font-size:11px;margin-bottom:7px}
+.civilization-widget li{font-size:11px;line-height:1.35;margin-bottom:3px;transition:opacity .4s linear}
+.clock-calendar{margin-top:9px}#hydration{margin-bottom:8px;line-height:1.5;letter-spacing:1px}
+#phenomena{font-size:10px;line-height:1.5;opacity:.6;margin:0 0 16px;min-height:15px}
+@media(max-width:600px){.civilization-widget{top:calc(15% + 66px);max-width:88vw}.civilization-widget li,#civilization-lifespan{font-size:11px}#phenomena{font-size:8px;margin-bottom:10px}}

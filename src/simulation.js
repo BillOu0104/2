@@ -7,6 +7,8 @@ import loadingFactory from './legacy/156.js';
 import { moduleBindings } from './original-data.js';
 import { normalizeSettings, seededRandom, algorithmId } from './settings.js';
 import { Habitability } from './habitability.js';
+import { WorldState } from './world-state.js';
+import { CivilizationState } from './civilization-state.js';
 
 class Vec3 { constructor(x = 0, y = x, z = x) { this.x = x; this.y = y; this.z = z; } }
 const plain = v => v && typeof v === 'object' ? structuredClone(v) : v;
@@ -20,9 +22,11 @@ export class Simulation {
     this.input = { cursorScreenPosition: new Vec3(960, 540, 0) };
     this.generation = 1; this.tickCount = 0; this.revision = 0; this.events = []; this.eventSeq = 0;
     this.habitability = new Habitability();
+    this.world = new WorldState(); this.terminalSince=null;
     this.setRandom();
     this.modules = {};
     for (const [id, factory] of Object.entries({ '008': physicsFactory, '010': timeFactory, '042': civilizationFactory, '072': eraFactory, '079': temperatureFactory, '156': loadingFactory })) this.modules[id] = this.createModule(id, factory);
+    this.civilization = new CivilizationState(this.shared);
     this.modules['008'].init();
   }
   setRandom() { this.random = seededRandom(`${this.settings.seed}:${this.generation}`); }
@@ -39,13 +43,13 @@ export class Simulation {
     builder.values = {};
     builder.finish = function() { return Object.assign(this.values, overrides); };
     const math = Object.create(Math); math.random = () => self.random();
-    return factory({ shared: this.shared, engine: this.engine, input: this.input, thisScene: { createLayer: data => data }, Vec3, Math: math, createScriptProperties: () => builder, getHabitability: () => self.settings.civilizationMode === 'balanced' ? self.habitability.result : null, onInitialize: bodies => { self.initialBodies = plain(bodies); self.habitability.reset(); } });
+    return factory({ shared: this.shared, engine: this.engine, input: this.input, thisScene: { createLayer: data => data }, Vec3, Math: math, createScriptProperties: () => builder, getHabitability: () => null, onInitialize: bodies => { self.initialBodies = plain(bodies); self.habitability.reset(); self.world.reset(); self.civilization?.reset(); self.terminalSince=null; } });
   }
   configure(patch) {
     const next = normalizeSettings({ ...this.settings, ...patch });
     const changed = Object.keys(next).filter(k => next[k] !== this.settings[k]);
     this.settings = next;
-    if (changed.includes('civilizationMode')) { this.habitability.reset(); this.shared.suitablePeriodCount = 0; }
+    if (changed.includes('civilizationMode')) { this.habitability.reset(); this.civilization.reset(); this.shared.suitablePeriodCount = 0; }
     const resetKeys = new Set(['seed', 'physicsMode', 'newproperty53']);
     const mapped = {};
     for (const [id, module] of Object.entries(this.modules)) {
@@ -64,17 +68,20 @@ export class Simulation {
     } else { this.modules['008'].applyUserProperties(mapped); if (Object.keys(mapped).length) this.revision++; }
     return changed;
   }
-  restart() {
+  restart(reason='restart') {
+    this.pendingRestart=null;
     this.shared.rst = 1;
     // Original log's escape edge is observed before physics consumes rst.
     const before = this.shared.civilizationRecords.length;
-    this.modules['042'].update('');
+    if(this.settings.civilizationMode==='legacy')this.modules['042'].update('');
+    else this.civilization.destroy({zh:reason==='escape'?'天体逃逸':'宇宙重新初始化',en:reason==='escape'?'Celestial escape':'Universe reinitialized'},this.shared.xntime||0,this.engine.runtime,this.settings);
     for (const record of this.shared.civilizationRecords.slice(before)) this.recordDeath(record);
     this.generation++; this.setRandom();
     this.modules['008'] = this.createModule('008', physicsFactory); this.modules['008'].init();
     this.shared.rst = 0; this.shared.num = 0; this.revision++;
   }
   tick() {
+    if(this.pendingRestart)this.restart(this.pendingRestart);
     this.engine.runtime = ++this.tickCount / 60;
     this.modules['008'].update(true);
     if (this.settings.physicsMode === 'realtime') {
@@ -83,22 +90,33 @@ export class Simulation {
       const steps = Math.ceil(remaining / p.state().step);
       for (let i = 0; i < steps; i++) p.directStep(remaining / steps);
     }
-    const state = this.modules['008'].state();
+    const state = this.modules['008'].state(); this.lastPhysicsState=state;
     for (let a = 0; a < 4; a++) for (let b = a + 1; b < 4; b++) {
       const x = state.bodies[a], y = state.bodies[b];
       this.shared[`d${a + 1}${b + 1}`] = Math.hypot(x.x - y.x, x.y - y.y, x.z - y.z);
     }
     this.modules['010'].update('');
     this.modules['079'].update('');
-    this.habitability.update(this.shared, this.settings);
-    this.era = this.modules['072'].update('');
+    const equilibrium=Number(this.shared.tem);
+    const world=this.world.update(state.bodies,state.G,equilibrium,this.settings,this.engine.runtime);
+    const legacy=this.settings.civilizationMode==='legacy';
+    if(!legacy)this.shared.tem=world.planet.temperature;
+    this.habitability.update(this.shared,this.settings,1/60,{phase:this.civilization.phase,terminal:!legacy&&world.planet.terminal,hazard:!legacy&&world.planet.tideRatio>1?'tidal':null});
+    this.era = legacy?this.modules['072'].update(''):(world.epoch.kind==='stable'?(this.settings.cnen2?'Stable Era':'恒纪元'):(this.settings.cnen2?'Chaotic Era':'乱纪元'));
     const previousAlive = this.shared.civilizationAlive;
     const before = this.shared.civilizationRecords.length;
     this.shared.text = `/Seed:${this.settings.seed}/Universe:${this.generation}`;
-    this.modules['042'].update('');
+    if(legacy)this.modules['042'].update('');
+    else {
+      const previousPhase=this.civilization.result?.phase;
+      this.civilization.update(world,this.habitability.result,this.settings,this.shared.xntime,this.engine.runtime);
+      if(previousPhase!==this.civilization.phase)this.emit('civilization:phase',{phase:this.civilization.phase,number:this.shared.civilizationCount});
+    }
     if (!previousAlive && this.shared.civilizationAlive) this.emit('civilization:birth', { number: this.shared.civilizationCount });
     for (const record of this.shared.civilizationRecords.slice(before)) this.recordDeath(record);
-    if (this.shared.tj === 1 && this.settings.autorestart) { this.emit('system:escape', {}); this.restart(); }
+    if(!legacy&&world.planet.terminal&&this.terminalSince===null){this.terminalSince=this.engine.runtime;this.emit('planet:destroyed',plain(world.planet.terminal));}
+    if (this.shared.tj === 1 && this.settings.autorestart) { this.emit('system:escape', {}); this.pendingRestart='escape'; }
+    else if(!legacy&&this.terminalSince!==null&&this.settings.autorestart&&this.engine.runtime-this.terminalSince>=4)this.pendingRestart='planet';
     this.modules['156'].update('');
     // Legacy ranked output reads the full list; a finite bound prevents days-long sessions growing forever.
     if (this.shared.civilizationRecords.length > 1000) this.shared.civilizationRecords.splice(0, this.shared.civilizationRecords.length - 1000);
@@ -110,11 +128,12 @@ export class Simulation {
     if (this.events.length > 100) this.events.shift();
   }
   snapshot({ afterEvent = 0, compact = false } = {}) {
-    const p = this.modules['008'].state(); const s = this.shared;
+    const current = this.modules['008'].state(); const p=current.bodies.length===4?current:this.lastPhysicsState||current; const s = this.shared;
     return { tick: this.tickCount, revision: this.revision, runtime: this.engine.runtime, generation: this.generation, algorithm: algorithmId(this.settings),
       seed: this.settings.seed, bodies: p.bodies, com: p.com, G: p.G, temperature: Number(s.tem || 0), year: s.xntime || 0,
       era: this.era || '', escaped: s.tj === 1, alive: !!s.civilizationAlive, civilization: s.civilizationCount,
       habitability: plain(this.habitability.result),
+      world: plain(this.world.state),civilizationState:plain(this.civilization.result),logItems:this.settings.civilizationMode==='legacy'?[]:plain(this.civilization.logs),
       lifespan: s.civilizationAlive ? Math.floor(s.xntime) - s.civilizationStartTime : s.lastCivilizationLifespan,
       initialBodies: plain(this.initialBodies),
       log: [...(s.logEntries || [])], records: plain(compact ? [...(s.civilizationRecords || [])].sort((a,b) => b.lifespan-a.lifespan).slice(0,6) : s.civilizationRecords || []), events: plain(this.events.filter(e => e.id > afterEvent)),
