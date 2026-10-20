@@ -1,6 +1,6 @@
 # 研究恢复入口
 
-状态：进行中，阶段1/2和数值控制完成，阶段3独立确认及消融运行中。
+状态：进行中，独立确认512条、消融128条和原队列3000/10000年扩展完成；几何族扫描和全确认队列精细步长复算运行中。
 
 基线：c7a53a01def5f9d60389ee20ec0f8bac5210ed69。
 分支：research/newtonian-survival；禁止合并 main。
@@ -20,9 +20,12 @@ validation.json：500 帧与原求解器比较，位置速度最大差约 1.2e-1
 完整事实见 PHASE2.md / NUMERICS.md。随机初始行星并非普遍未束缚：阶段1全部对至少一星初始负能，但最近宿主偏心率中位数.818。
 数值控制中24种子精确牛顿不同步长/算法的主要存活判定相同，不能把真实弹弓归咎于数值误差。
 
+独立确认：原始0/128期末存活，候选6/128；平均受限寿命146->244年，恒纪元2.9%->21.2%。3000年候选1/128，10000年0/128。本结果不等于纯牛顿不可能。
+首16种子精细复算仍0个期末存活判定差异，但寿命最大差195年；需要完整精细队列验证种子级统计。
+
 下一步命令（已有键自动跳过）：
-`node docs/research/run.mjs docs/research/phase3.json`
-`node docs/research/run.mjs docs/research/ablation.json`
-完成后分别用 summarize.py 统计，然后运行 chaos.mjs 和 extend.mjs（创建后），继续3000/10000年队列。
+`node docs/research/run.mjs docs/research/geometry.json`
+`node docs/research/run.mjs docs/research/candidate-convergence-rest.json`
+完成后合并前16+后112精细结果（不重复实验），写完整精细结果与扩展；视几何族完整数据决定下一轮。读取 PHASE3.md。
 独立确认集128个新种子，不因前几条结果修改配置；研究engine-v2仅增加诊断和消融选项，已验证与v1相同配置逐字段一致。
 恢复要求：只重跑缺失键；检查程序哈希，不把不同版本实验混写。
