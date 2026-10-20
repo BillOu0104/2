@@ -67,6 +67,8 @@ document.addEventListener('keydown', e => {
 });
 
 const hintMap = {
+  viewSensitivity: '越小越精细，0关闭鼠标转动。悬停与按住拖动共用此倍率。',
+  compassOpacity: '数值越小越透明，0完全隐藏；出现和消失自动淡入淡出。',
   newproperty7: '原版此项为固定值：引力指数恒为 2。保留设置定义，但不改变原算法。',
   cnen1: '切换原版使用说明的语言；界面语言请使用快捷设置中的 Language。',
   menuinit: '下次载入时，默认打开右下角的完整设置面板。',
@@ -123,7 +125,9 @@ function groupElement(title, open = false) {
 function buildSettings() {
   const definitions={
     planetStrength:{type:'slider',text:'行星结构强度 / Structural strength',min:1,max:4,step:.1},
-    orbitalInitialization:{type:'combo',text:'随机初始轨道 / Initial orbits',options:[{value:'balanced',label:'束缚轨道 · 更长恒纪元（默认）'},{value:'original',label:'原版完全随机'}]},
+    viewSensitivity:{type:'slider',text:'整体视角灵敏度 / Mouse sensitivity',min:0,max:2,step:.01},
+    compassOpacity:{type:'slider',text:'旋转环不透明度 / Ring opacity',min:0,max:.5,step:.01},
+    orbitalInitialization:{type:'combo',text:'随机初始轨道 / Initial orbits',options:[{value:'chaotic',label:'混沌星系 · 三维随机（默认）'},{value:'original',label:'原版完全随机'},{value:'balanced',label:'稳定轨道实验'}]},
     seed: { type: 'textinput', text: '随机初始化 Seed' },
     physicsMode: { type: 'combo', text: '物理时钟', options: [{ value: 'reference', label: '原版节奏 · 固定 60 Hz（默认）' }, { value: 'realtime', label: '墙钟同步 · 修复原版每帧步数上限' }] },
     civilizationMode: { type: 'combo', text: '文明延续机制 / Civilization', options: [{ value: 'balanced', label: '原著规则 · 脱水、休眠与复苏（默认）' }, { value: 'legacy', label: '原版即时判定' }] },
@@ -139,7 +143,7 @@ function buildSettings() {
     music: { type: 'bool', text: '播放原版音乐 · Ether' },
     volume: { type: 'slider', text: '音乐音量 / Volume', min: 0, max: 1, step: .01 }
   };
-  const categories=[['layout','布局与窗口 / Layout',[]],['simulation','模拟与文明 / Simulation',['seed','orbitalInitialization','physicsMode','civilizationMode','thermalGrace','wakeDelay','epochWindow','climateInertia','stellarBreathing','planetStrength']],['view','视角与银河 / View',['newproperty16','newproperty51','newproperty61','x5','y5','x6','y7','newproperty62','y6','compass']],['visual','画面与轨迹 / Visual',['renderQuality','trailsLength','pixelRatio','bodyLabels']],['audio','声音 / Audio',['music','volume']]];
+  const categories=[['layout','布局与窗口 / Layout',[]],['simulation','模拟与文明 / Simulation',['seed','orbitalInitialization','physicsMode','civilizationMode','thermalGrace','wakeDelay','epochWindow','climateInertia','stellarBreathing','planetStrength']],['view','视角与银河 / View',['viewSensitivity','newproperty16','newproperty51','newproperty61','x5','y5','x6','y7','newproperty62','y6','compass','compassOpacity']],['visual','画面与轨迹 / Visual',['renderQuality','trailsLength','pixelRatio','bodyLabels','dust','_1dust1quantity','_1dust1size','_2dust2quantity','_2dust1size']],['audio','声音 / Audio',['music','volume']]];
   for(const[id,title,keys]of categories){
     const group=groupElement(title);group.dataset.category=id;
     if(id==='layout'){
@@ -378,4 +382,4 @@ try {
 }
 // Diagnostic readout for automated smoke checks and host integrations.
 window.__threeBodyDiagnostics = () => ({ ready: !!state && !fatal, tick: lastTick, fps, paused: userPaused || hostPaused || visibilityPaused, controls: controlMap.size, history: history.length, worker: !!worker,
-  scene: renderer ? { canvas:[renderer.canvas.width,renderer.canvas.height], drawingBuffer:[renderer.renderer.getContext().drawingBufferWidth,renderer.renderer.getContext().drawingBufferHeight], renderedFrames:renderer.renderer.info.render.frame, viewVelocity:[renderer.rot.vx,renderer.rot.vy], speedLimited:false, compassOpacity:renderer.compass.children.map(n=>n.material.opacity), idleYaw:renderer.autoAngle, returningToGalaxy:renderer.returning, compassScale:renderer.compass.scale.x, pointerMode:+settings.newproperty61, galaxyCoreScreen:renderer.sky.localToWorld(renderer.galaxyDirection.clone().multiplyScalar(90)).project(renderer.camera).toArray(), layoutEditing:layoutEditor.editing, compassVisible:renderer.compass.visible, maxTextureSize:renderer.renderer.capabilities.maxTextureSize, backgroundSizes:Object.fromEntries(Object.entries(renderer.bgTextures).map(([k,t])=>[k,[t.image?.width||0,t.image?.height||0]])), backgroundFollowsView: renderer.sky.parent === renderer.world, viewRotation: renderer.world.rotation.toArray().slice(0,3), skyRotation: renderer.sky.getWorldQuaternion(new renderer.camera.quaternion.constructor()).toArray(), bodyShapes: renderer.nodes.map(n => n.mesh.geometry.type), glowShape: 'radial-circle', bodyLabelsVisible:renderer.nodes.some(n=>!n.label.hidden), trailSamples: renderer.trailBuffers.map(b => b.length), trailComplexity:renderer.trailComplexity||0, trailMetrics:renderer.trailMetrics||[], trailsVisible: renderer.trails.every(t => t.visible) } : null });
+  scene: renderer ? { canvas:[renderer.canvas.width,renderer.canvas.height], drawingBuffer:[renderer.renderer.getContext().drawingBufferWidth,renderer.renderer.getContext().drawingBufferHeight], renderedFrames:renderer.renderer.info.render.frame, viewVelocity:[renderer.rot.vx,renderer.rot.vy], speedLimited:false, compassOpacity:renderer.compass.children.map(n=>n.material.opacity), idleYaw:renderer.autoAngle, returningToGalaxy:renderer.returning, compassScale:renderer.compass.scale.x, compassTarget:renderer.compassTarget, compassFade:renderer.compassFade, viewSensitivity:settings.viewSensitivity, dustLayers:renderer.dustLayers.map(d=>({visible:d.visible,count:d.geometry.drawRange.count,size:d.material.size,opacity:d.material.opacity})), pointerMode:+settings.newproperty61, galaxyCoreScreen:renderer.sky.localToWorld(renderer.galaxyDirection.clone().multiplyScalar(90)).project(renderer.camera).toArray(), layoutEditing:layoutEditor.editing, compassVisible:renderer.compass.visible, maxTextureSize:renderer.renderer.capabilities.maxTextureSize, backgroundSizes:Object.fromEntries(Object.entries(renderer.bgTextures).map(([k,t])=>[k,[t.image?.width||0,t.image?.height||0]])), backgroundFollowsView: renderer.sky.parent === renderer.world, viewRotation: renderer.world.rotation.toArray().slice(0,3), skyRotation: renderer.sky.getWorldQuaternion(new renderer.camera.quaternion.constructor()).toArray(), bodyShapes: renderer.nodes.map(n => n.mesh.geometry.type), glowShape: 'radial-circle', bodyLabelsVisible:renderer.nodes.some(n=>!n.label.hidden), trailSamples: renderer.trailBuffers.map(b => b.length), trailComplexity:renderer.trailComplexity||0, trailMetrics:renderer.trailMetrics||[], trailsVisible: renderer.trails.every(t => t.visible) } : null });

@@ -31,3 +31,35 @@ export function prepareBalancedOrbits(bodies,G,p,settings,random){
   const mass=bodies.reduce((n,b)=>n+b.mass,0);for(const key of ['x','y','z','vx','vy','vz']){const mean=bodies.reduce((n,b)=>n+b.mass*b[key],0)/mass;for(const b of bodies)b[key]-=mean;}
   return true;
 }
+
+// Irregular 3D configurations with random virial velocities, without circular/star-lock constraints.
+export function prepareChaoticOrbits(bodies,G,p,settings,random){
+  if(settings.orbitalInitialization!=='chaotic'||!(G>0)||bodies.some(b=>!(b.mass>0))||p.xcxc<.5)return false;
+  const extent=p.xcxc,stars=bodies.slice(0,3),distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y,a.z-b.z);
+  for(let i=0;i<3;i++){
+    let trial;
+    for(let attempt=0;attempt<80;attempt++){
+      trial={x:(random()-.5)*extent,y:(random()-.5)*extent,z:(random()-.5)*extent};
+      if(stars.slice(0,i).every(b=>distance(b,trial)>extent*.3))break;
+    }
+    Object.assign(stars[i],trial,{vx:random()-.5,vy:random()-.5,vz:random()-.5});
+  }
+  const mass=stars.reduce((n,b)=>n+b.mass,0),com=Object.fromEntries(['x','y','z','vx','vy','vz'].map(k=>[k,stars.reduce((n,b)=>n+b.mass*b[k],0)/mass]));
+  for(const b of stars)for(const k of ['vx','vy','vz'])b[k]-=com[k];
+  let potential=0;for(let i=0;i<3;i++)for(let j=i+1;j<3;j++)potential+=G*stars[i].mass*stars[j].mass/distance(stars[i],stars[j]);
+  const kinetic=stars.reduce((n,b)=>n+.5*b.mass*(b.vx*b.vx+b.vy*b.vy+b.vz*b.vz),0);
+  const ratio=.65+random()*.3,vscale=Math.sqrt(ratio*potential/Math.max(2*kinetic,1e-20))*p.vcvc/.1;
+  for(const b of stars)for(const k of ['vx','vy','vz'])b[k]*=vscale;
+  const planet=bodies[3];
+  for(let attempt=0;attempt<80;attempt++){
+    for(const k of ['x','y','z'])planet[k]=com[k]+(random()-.5)*extent*.65;
+    if(stars.every(b=>distance(b,planet)>Math.max(p.ras*3.2,extent*.18))&&[planet.x,planet.y,planet.z].every(v=>Math.abs(v)<=extent/2))break;
+  }
+  for(const k of ['x','y','z'])planet[k]=Math.max(-extent/2,Math.min(extent/2,planet[k]));
+  const escape=Math.sqrt(2*G*stars.reduce((n,b)=>n+b.mass/distance(b,planet),0)),v=[random()-.5,random()-.5,random()-.5],norm=Math.hypot(...v)||1;
+  const speed=escape*(.25+random()*.25)*p.vcvc/.1;
+  for(const [i,k]of ['vx','vy','vz'].entries())planet[k]=speed*v[i]/norm;
+  const total=mass+planet.mass;for(const k of ['vx','vy','vz']){const drift=bodies.reduce((n,b)=>n+b.mass*b[k],0)/total;for(const b of bodies)b[k]-=drift;}
+  return true;
+}
+export function prepareOrbits(...args){return prepareChaoticOrbits(...args)||prepareBalancedOrbits(...args);}

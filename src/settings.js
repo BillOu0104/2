@@ -2,9 +2,13 @@ import { propertySchema } from './original-data.js';
 
 export const defaults = Object.fromEntries(Object.entries(propertySchema)
   .filter(([, d]) => d.type && d.type !== 'group').map(([k, d]) => [k, d.value]));
-export const extraDefaults = { seed: 'TRISOLARIS', music: false, volume: 0.35, trailsLength: 400, orbitalInitialization: 'balanced', physicsMode: 'reference', pixelRatio: 4, bodyLabels: false, presentationRevision: 4, layout: {}, planetStrength: 1.6, idleAmplitude: 6, civilizationMode: 'balanced', thermalGrace: 8, wakeDelay: 3, epochWindow: 2, climateInertia: 1.5, stellarBreathing: true, renderQuality: 'native' };
+export const extraDefaults = { seed: 'TRISOLARIS', music: false, volume: 0.35, trailsLength: 400, orbitalInitialization: 'chaotic', physicsMode: 'reference', pixelRatio: 4, bodyLabels: false, presentationRevision: 5, layout: {}, viewSensitivity: .12, compassOpacity: .12, planetStrength: 1.6, idleAmplitude: 6, civilizationMode: 'balanced', thermalGrace: 8, wakeDelay: 3, epochWindow: 2, climateInertia: 1.5, stellarBreathing: true, renderQuality: 'native' };
 // New installs show the requested tails; explicitly saved off/on preferences still win.
 defaults.newproperty14 = true;
+defaults.brfontcoloraaaaaarandomposrange = 3.2;
+defaults.rc = 1.6;
+defaults.k2 = .22;
+defaults.newproperty67 = 4;
 defaults.newproperty39 = true;
 defaults.newproperty45 = -20;
 defaults.newproperty46 = 40;
@@ -38,7 +42,9 @@ export function normalizeSettings(source = {}, includeExtras = true) {
     else if (key === 'music') out.music = value === true;
     else if (key === 'volume' && Number.isFinite(+value)) out.volume = Math.min(1, Math.max(0, +value));
     else if (key === 'trailsLength' && Number.isFinite(+value)) out.trailsLength = Math.round(Math.min(2000, Math.max(20, +value)));
-    else if(key==='orbitalInitialization'&&['balanced','original'].includes(value))out.orbitalInitialization=value;
+    else if(key==='viewSensitivity'&&Number.isFinite(+value))out.viewSensitivity=Math.max(0,Math.min(2,+value));
+    else if(key==='compassOpacity'&&Number.isFinite(+value))out.compassOpacity=Math.max(0,Math.min(.5,+value));
+    else if(key==='orbitalInitialization'&&['chaotic','balanced','original'].includes(value))out.orbitalInitialization=value;
     else if (key === 'physicsMode' && ['reference', 'realtime'].includes(value)) out.physicsMode = value;
     else if (key === 'pixelRatio' && Number.isFinite(+value)) out.pixelRatio = Math.min(4, Math.max(0.5, +value));
     else if (key === 'bodyLabels') out.bodyLabels = value === true;
@@ -61,9 +67,14 @@ export function colorRGB(s = '1 1 1') { return s.split(/\s+/).map(Number); }
 export function colorHex(s) { return '#' + colorRGB(s).map(x => Math.round(x * 255).toString(16).padStart(2, '0')).join(''); }
 export function fromHex(s) { return [1, 3, 5].map(i => parseInt(s.slice(i, i + 2), 16) / 255).join(' '); }
 export function plainText(s = '') { return s.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' '); }
-export function algorithmId(s) { return `sykm-scene-v4-${s.physicsMode}60-civ-${s.civilizationMode}-v041-${s.orbitalInitialization}-orbits`; }
+export function algorithmId(s) { return `sykm-scene-v4-${s.physicsMode}60-civ-${s.civilizationMode}-v042-${s.orbitalInitialization}-orbits`; }
 export function migrateSettings(saved={},version=3){
   if((saved.presentationRevision??0)<4)saved={...saved,newproperty51:Math.abs(saved.newproperty51??.08)>=.08?.01:(saved.newproperty51??.01),newproperty61:+(saved.newproperty61??1)===0?1:saved.newproperty61??1};
+  if((saved.presentationRevision??0)<5){
+    const migrated={...saved,orbitalInitialization:!saved.orbitalInitialization||saved.orbitalInitialization==='balanced'?'chaotic':saved.orbitalInitialization};
+    for(const [key,oldValue,newValue]of [['brfontcoloraaaaaarandomposrange',2,3.2],['rc',.2,1.6],['k2',.5,.22],['newproperty67',2.1,4]])if(saved[key]===undefined||Math.abs(saved[key]-oldValue)<1e-5)migrated[key]=newValue;
+    saved=migrated;
+  }
   // One-time presentation migration for v0.3 installations with labels enabled.
   if(saved.presentationRevision!==extraDefaults.presentationRevision)saved={...saved,bodyLabels:saved.presentationRevision>=1?saved.bodyLabels:false,newproperty39:true};
   if(version<3)return normalizeSettings({...saved,newproperty45:-20,newproperty46:40,newproperty51:Math.abs(saved.newproperty51??3)>=2 ? .01 : (saved.newproperty51??.01),newproperty3:0,newproperty68:0});

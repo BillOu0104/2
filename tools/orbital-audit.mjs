@@ -1,7 +1,7 @@
 import {Simulation} from '../src/simulation.js';
 import {writeFile} from 'node:fs/promises';
-export function measure(seed,mode,ticks=6000){
- const sim=new Simulation({seed,orbitalInitialization:mode,autorestart:false});let stable=0,active=0,inner=0,streak=0,maxStreak=0,maxLife=0,maxRadius=0,terminalAt=null;
+export function measure(seed,mode,ticks=6000,profile={}){
+ const sim=new Simulation({seed,orbitalInitialization:mode,autorestart:false,...profile});let stable=0,active=0,inner=0,streak=0,maxStreak=0,maxLife=0,maxRadius=0,terminalAt=null;
  for(let i=0;i<ticks;i++){
   sim.tick();const w=sim.world.state,p=sim.lastPhysicsState,planet=p.bodies[3],radius=Math.hypot(planet.x-p.com.x,planet.y-p.com.y,planet.z-p.com.z),extent=Math.max(...p.bodies.slice(0,3).map(b=>Math.hypot(b.x-p.com.x,b.y-p.com.y,b.z-p.com.z)));
   stable+=!w.planet.terminal&&w.epoch.kind==='stable';inner+=radius<=extent;maxRadius=Math.max(maxRadius,radius);

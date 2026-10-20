@@ -13,7 +13,7 @@ try{
  assert.equal(await page.locator('#setting-newproperty51').inputValue(),'0.01');assert.equal(await page.locator('#setting-newproperty45').inputValue(),'-20');assert.equal(await page.locator('#setting-newproperty46').inputValue(),'40');checks.push('gentler idle speed and -20 to 40 C activity thresholds');
  const bounds=await page.locator('#civilization-widget').boundingBox(),clock=await page.locator('#clock-widget').boundingBox();assert.ok(bounds.y>=clock.y+clock.height-2);checks.push('compact civilization block fits below the clock');
  await page.waitForFunction(()=>Object.values(window.__threeBodyDiagnostics().scene.backgroundSizes).every(v=>v[0]===8192&&v[1]===4096));checks.push('both active background textures loaded at native 8192x4096');
- await page.evaluate(()=>{window.__wallpaperFPS=2;window.threeBody.applySettings({renderQuality:'8k',newproperty17:'2',newproperty40:'0 0 0',newproperty14:false,newproperty16:false,newproperty61:'2'});});
+ await page.evaluate(()=>{window.__wallpaperFPS=2;window.threeBody.applySettings({renderQuality:'8k',dust:true,newproperty17:'2',newproperty40:'0 0 0',newproperty14:false,newproperty16:false,newproperty61:'2'});});
  await page.waitForFunction(()=>window.__threeBodyDiagnostics().scene.drawingBuffer[0]===7680&&window.__threeBodyDiagnostics().scene.drawingBuffer[1]===4320,{timeout:30000});
  const first=(await diag()).scene.renderedFrames;await page.waitForFunction(n=>window.__threeBodyDiagnostics().scene.renderedFrames>n+1,first,{timeout:60000});
  const eightK=await diag();assert.deepEqual(eightK.scene.canvas,[7680,4320]);assert.deepEqual(eightK.scene.drawingBuffer,[7680,4320]);checks.push('actual WebGL drawing buffer renders multiple frames at 7680x4320');

@@ -7,6 +7,7 @@ import { Line2 } from 'three/addons/lines/Line2.js';
 import { LineGeometry } from 'three/addons/lines/LineGeometry.js';
 import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
 import { colorRGB, seededRandom } from './settings.js';
+import { fadeMotion } from './motion-visuals.js';
 import { ViewMotion } from './view-motion.js';
 import { TrailHistory, trailComplexity, selectTrail } from './adaptive-trails.js';
 
@@ -21,6 +22,10 @@ function roundGlow() {
   gradient.addColorStop(.35, 'rgba(255,255,255,.12)'); gradient.addColorStop(1, 'rgba(255,255,255,0)');
   context.fillStyle = gradient; context.fillRect(0, 0, 256, 256);
   return new THREE.CanvasTexture(canvas);
+}
+function softParticle(){
+  const canvas=document.createElement('canvas');canvas.width=canvas.height=64;const c=canvas.getContext('2d'),g=c.createRadialGradient(32,32,0,32,32,32);
+  g.addColorStop(0,'rgba(255,255,255,1)');g.addColorStop(.3,'rgba(255,255,255,.9)');g.addColorStop(.7,'rgba(255,255,255,.25)');g.addColorStop(1,'rgba(255,255,255,0)');c.fillStyle=g;c.fillRect(0,0,64,64);return new THREE.CanvasTexture(canvas);
 }
 const postShader = {
   uniforms: { tDiffuse: { value: null }, time: { value: 0 }, grain: { value: 0.15 }, crt: { value: 0.03 }, blur: { value: 0 }, pulse: { value: 0 } },
@@ -42,14 +47,14 @@ export class SpaceRenderer {
     this.scene = new THREE.Scene(); this.camera = new THREE.PerspectiveCamera(50, 1, 0.01, 200);
     this.camera.position.set(0, 0.25, 5.2); this.camera.lookAt(0, 0, 0);
     this.world = new THREE.Group(); this.scene.add(this.world);
-    this.compass = new THREE.Group(); this.world.add(this.compass);this.compass.scale.setScalar(.3);
+    this.compass = new THREE.Group(); this.world.add(this.compass);this.compass.scale.setScalar(.3);this.compass.visible=false;this.compassFade=0;this.compassTarget=false;
     const ringGeometry = new THREE.BufferGeometry().setFromPoints(Array.from({ length: 257 }, (_, i) => new THREE.Vector3(Math.cos(i / 256 * Math.PI * 2) * 1.42, Math.sin(i / 256 * Math.PI * 2) * 1.42, 0)));
-    for (const [angle, opacity] of [[0, .5], [Math.PI / 2, .5]]) {
-      const ring = new THREE.LineLoop(ringGeometry, new THREE.LineBasicMaterial({ color: 0x95c4eb, transparent: true, opacity })); ring.rotation.x = angle; this.compass.add(ring);
+    for (const [angle, opacity] of [[0, 0], [Math.PI / 2, 0]]) {
+      const ring = new THREE.LineLoop(ringGeometry, new THREE.LineBasicMaterial({ color: 0x95c4eb, transparent: true, opacity, depthWrite:false })); ring.rotation.x = angle; this.compass.add(ring);
     }
     const ticks = [];
     for (let i = 0; i < 120; i++) { const a = i / 120 * Math.PI * 2; const r = i % 10 ? 1.44 : 1.48; ticks.push(Math.cos(a) * 1.42, Math.sin(a) * 1.42, 0, Math.cos(a) * r, Math.sin(a) * r, 0); }
-    this.compass.add(new THREE.LineSegments(new THREE.BufferGeometry().setAttribute('position', new THREE.Float32BufferAttribute(ticks, 3)), new THREE.LineBasicMaterial({ color: 0x94b7d9, transparent: true, opacity: .5 })));
+    this.compass.add(new THREE.LineSegments(new THREE.BufferGeometry().setAttribute('position', new THREE.Float32BufferAttribute(ticks, 3)), new THREE.LineBasicMaterial({ color: 0x94b7d9, transparent: true, opacity: 0, depthWrite:false })));
     const textureLoader = new THREE.TextureLoader();
     const texture = name => { const t = textureLoader.load(`assets/original/${name}.webp`); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy=Math.min(16,this.renderer.capabilities.getMaxAnisotropy()); return t; };
     this.starTexture = texture('0aun'); this.planetTexture = texture('0dq'); this.spikeTexture = roundGlow();
@@ -78,13 +83,14 @@ export class SpaceRenderer {
       const line = new Line2(geo, new LineMaterial({ linewidth: 2.2, vertexColors: true, transparent: true, opacity: .8, blending: THREE.AdditiveBlending, depthWrite: false }));
       line.frustumCulled = false; this.world.add(line); this.trails.push(line); this.trailBuffers.push(new TrailHistory());
     }
-    this.dustLayers = [];
+    this.dustLayers = [];this.dustTexture=softParticle();
     const rng = seededRandom('original-dust');
     for (let layer = 0; layer < 2; layer++) {
-      const points = new Float32Array(1800 * 3); for (let i = 0; i < points.length; i++) points[i] = (rng() - .5) * 35;
-      const geometry = new THREE.BufferGeometry(); geometry.setAttribute('position', new THREE.BufferAttribute(points, 3));
-      const dust = new THREE.Points(geometry, new THREE.PointsMaterial({ color: 0xb2becd, size: layer ? .008 : .013, transparent: true, opacity: .38, depthWrite: false, sizeAttenuation: true }));
-      this.world.add(dust); this.dustLayers.push(dust);
+      const capacity=layer?3600:1800,points=new Float32Array(capacity*3);
+      for(let i=0;i<capacity;i++){points[i*3]=(rng()-.5)*(layer?32:18);points[i*3+1]=(rng()-.5)*(layer?20:12);points[i*3+2]=layer?-2-rng()*12:3.6-rng()*6;}
+      const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.BufferAttribute(points,3));
+      const dust=new THREE.Points(geometry,new THREE.PointsMaterial({map:this.dustTexture,color:0xc5d5e7,size:.04,transparent:true,opacity:layer?.42:.5,blending:THREE.AdditiveBlending,depthWrite:false,sizeAttenuation:true}));
+      this.world.add(dust);this.dustLayers.push(dust);
     }
     this.nebula = new THREE.Mesh(new THREE.SphereGeometry(70, 24, 16), new THREE.MeshBasicMaterial({ map: this.bgTextures['1'], side: THREE.BackSide, transparent: true, opacity: .35, color: 0x6e83a7, blending: THREE.AdditiveBlending, depthWrite: false })); this.nebula.quaternion.copy(this.sky.quaternion);this.world.add(this.nebula);
     this.composer = null;
@@ -94,11 +100,11 @@ export class SpaceRenderer {
     this.mouse = { x: 0, y: 0, down: false, dragging: false, startX: 0, startY: 0, lastX: 0, lastY: 0, lastInput: -Infinity, inside:false }; this.rot = new ViewMotion();this.autoAngle=0;this.returning=false;
     canvas.addEventListener('pointerdown', e => { if(e.button!==0)return; this.mouse.down = true; this.mouse.lastInput=performance.now();this.mouse.dragging=false; this.mouse.startX=this.mouse.lastX = e.clientX; this.mouse.startY=this.mouse.lastY = e.clientY; canvas.setPointerCapture(e.pointerId); });
     canvas.addEventListener('pointermove', e => {
-      this.mouse.inside=true;if(+this.settings.newproperty61===1||this.mouse.down)this.mouse.lastInput=performance.now();
+      this.mouse.inside=true;if(this.settings.viewSensitivity>0&&(+this.settings.newproperty61===1||this.mouse.down))this.mouse.lastInput=performance.now();
       this.mouse.x = e.clientX / innerWidth * 2 - 1; this.mouse.y = e.clientY / innerHeight * 2 - 1;
-      if (this.mouse.down && +this.settings.newproperty61 === 0) {
+      if (this.settings.viewSensitivity>0 && this.mouse.down && +this.settings.newproperty61 === 0) {
         if(Math.hypot(e.clientX-this.mouse.startX,e.clientY-this.mouse.startY)>3)this.mouse.dragging=true;
-        this.rot.drag((e.clientX-this.mouse.lastX)/innerWidth,(e.clientY-this.mouse.lastY)/innerHeight,this.settings.x5,this.settings.y5);
+        this.rot.drag((e.clientX-this.mouse.lastX)/innerWidth,(e.clientY-this.mouse.lastY)/innerHeight,this.settings.x5*this.settings.viewSensitivity/.12,this.settings.y5*this.settings.viewSensitivity/.12);
       }
       this.mouse.lastX = e.clientX; this.mouse.lastY = e.clientY;
     });
@@ -131,6 +137,7 @@ export class SpaceRenderer {
   updateSettings(s) {
     if (this.settings?.newproperty14 !== s.newproperty14) this.clearTrails();
     this.settings = s;
+    this.spaceScale=s.orbitalInitialization==='chaotic'?Math.max(1,s.brfontcoloraaaaaarandomposrange/2):1;
     const mode = String(s.newproperty17);
     this.scene.background = mode === '2' ? C(s.newproperty40).multiplyScalar(s.newproperty57) : C(s.schemecolor);
     this.sky.visible = mode !== '2' && (mode !== '3' || !!this.customBackground);
@@ -138,23 +145,23 @@ export class SpaceRenderer {
     this.sky.material.color.copy(C(mode === '3' ? s.newproperty55 : s.backgroundcolor)).multiplyScalar(mode === '3' ? s.newproperty56 : s.newproperty9);
     this.sky.material.needsUpdate = true;
     this.camera.fov = s.newproperty71; this.camera.position.z = Math.max(1.4, 5.2 - s.distance * .65); this.camera.updateProjectionMatrix();
-    this.compass.visible = !!s.compass && (this.mouse.dragging||Math.hypot(this.rot.vx,this.rot.vy)>.0005); this.compass.children.forEach(n => n.material?.color.copy(C(s.datacolor)));
+    this.compass.children.forEach(n => n.material?.color.copy(C(s.datacolor)));
     this.nebula.visible = s.brfontcoloraaaaaabrnebularequirespostprocessingultrahighquality;
     for (const [u, key] of Object.entries({ grain: 'newproperty68', crt: 'newproperty3', blur: 'newproperty23', pulse: 'newproperty54' })) this.post.uniforms[u].value = s[key];
     const radii = [s._13, s._21, s._3, s.newproperty20];
     const colors = [s._14, s._22, s._31, '1 1 1']; const emissions = [s._15, s._23, s._32]; const spikeColors = [s._16, s._24, s._33];
     this.nodes.forEach((n, i) => {
-      n.mesh.scale.setScalar(radii[i]); n.material.color.copy(C(colors[i]));
+      n.mesh.scale.setScalar(radii[i]/this.spaceScale); n.material.color.copy(C(colors[i]));
       if (i < 3) {
         n.material.emissive.copy(C(emissions[i])); n.material.emissiveIntensity = 1.5;
         n.glow.material.color.copy(C(spikeColors[i]));
-        n.glow.scale.setScalar(radii[i] * (7 + s.newproperty49 * 5) * (1 + (s.newproperty2 ? s.hdr1 * .3 : 0)));
+        n.glow.scale.setScalar(radii[i]/this.spaceScale * (7 + s.newproperty49 * 5) * (1 + (s.newproperty2 ? s.hdr1 * .3 : 0)));
         n.glow.visible = s.newproperty18; n.light.color.copy(C(emissions[i]));
       }
       n.label.hidden = !s.newproperty65 || !s.bodyLabels;
       this.trails[i].visible = s.newproperty14;
     });
-    this.dustLayers.forEach((d, i) => { d.visible = s.dust; d.geometry.setDrawRange(0, Math.round(1800 * Math.min(1, s[i ? '_2dust2quantity' : '_1dust1quantity']))); d.material.size = s[i ? '_2dust1size' : '_1dust1size'] * .1; });
+    this.dustLayers.forEach((d,i)=>{d.visible=s.dust&&s[i?'_2dust2quantity':'_1dust1quantity']>0&&s[i?'_2dust1size':'_1dust1size']>0;d.geometry.setDrawRange(0,Math.round(900*s[i?'_2dust2quantity':'_1dust1quantity']));d.material.size=s[i?'_2dust1size':'_1dust1size']*(i?1:1.2);});
     this.resize();
   }
   clearTrails() {
@@ -167,7 +174,7 @@ export class SpaceRenderer {
     if (!this.snap) this.firstPosition = true;
     this.snap = state;
     state.bodies.forEach((b, i) => {
-      const n = this.nodes[i]; n.target.set(b.x - state.com.x, b.y - state.com.y, b.z - state.com.z);
+      const n = this.nodes[i]; n.target.set((b.x - state.com.x)/this.spaceScale,(b.y - state.com.y)/this.spaceScale,(b.z - state.com.z)/this.spaceScale);
       if (this.firstPosition) n.group.position.copy(n.target);
       if (this.settings.newproperty14)this.trailBuffers[i].push(n.target,state.runtime);
     });
@@ -179,7 +186,7 @@ export class SpaceRenderer {
     this.nodes[3].material.emissive.copy(color);
     this.nodes[3].group.visible=!state.world?.planet.terminal;
     this.nodes[3].label.hidden=!this.settings.newproperty65||!this.settings.bodyLabels||!!state.world?.planet.terminal;
-    this.nodes.slice(0,3).forEach((n,i)=>{const radius=state.world?.stars[i]?.radius;if(radius)n.mesh.scale.setScalar(radius);});
+    this.nodes.slice(0,3).forEach((n,i)=>{const radius=state.world?.stars[i]?.radius;if(radius)n.mesh.scale.setScalar(radius/this.spaceScale);});
   }
   updateTrails(dt) {
     this.world.updateWorldMatrix(true,false);this.camera.updateMatrixWorld();
@@ -207,10 +214,12 @@ export class SpaceRenderer {
   render(dt, elapsed, motionDt=dt) {
     const s = this.settings;
     const idle=(performance.now()-this.mouse.lastInput)/1000;
-    if(+s.newproperty61===1&&this.mouse.inside&&idle<2){
-      for(let remaining=motionDt;remaining>1e-8;){const step=Math.min(1/60,remaining);this.rot.follow(this.mouse.y*s.y7*s.x5*.12*Math.PI/180,this.mouse.x*s.x6*s.y5*.12*Math.PI/180,step,Math.max(.25,s.newproperty62*12));remaining-=step;}
+    if(s.viewSensitivity>0&&+s.newproperty61===1&&this.mouse.inside&&idle<2){
+      for(let remaining=motionDt;remaining>1e-8;){const step=Math.min(1/60,remaining);this.rot.follow(this.mouse.y*s.y7*s.x5*s.viewSensitivity*Math.PI/180,this.mouse.x*s.x6*s.y5*s.viewSensitivity*Math.PI/180,step,Math.max(.25,s.newproperty62*12));remaining-=step;}
     }else this.rot.coast(motionDt,-Math.log(Math.min(.999,s.y6))*120);
-    this.compass.visible=!!s.compass&&(this.mouse.dragging||Math.hypot(this.rot.vx,this.rot.vy)>.0005);
+    this.compassTarget=!!s.compass&&(this.mouse.dragging||Math.hypot(this.rot.vx,this.rot.vy)>.0005);
+    this.compassFade=fadeMotion(this.compassFade,this.compassTarget,motionDt);this.compass.visible=this.compassFade>.002&&s.compassOpacity>0;
+    for(const child of this.compass.children)child.material.opacity=s.compassOpacity*this.compassFade;
     this.returning=!!s.newproperty16&&!this.mouse.down&&idle>=2;
     if(this.returning)this.rot.returnToOrigin(motionDt,s.newproperty51);
     this.world.rotation.set(this.rot.x,this.rot.y,0);
@@ -225,7 +234,7 @@ export class SpaceRenderer {
     if(s.newproperty14&&this.snap&&(this.lastTrailRender===undefined||elapsed-this.lastTrailRender>=.05)){
       this.updateTrails(Math.min(1,elapsed-(this.lastTrailRender??elapsed-.05)));this.lastTrailRender=elapsed;
     }
-    this.dustLayers.forEach((d, i) => { d.rotation.y = elapsed * .002 * (i + 1); });
+    this.dustLayers.forEach((d, i) => { d.rotation.y = elapsed * .002 * (i + 1);d.position.x=Math.sin(elapsed*.06+i)*.12;d.position.y=Math.cos(elapsed*.04+i)*.08; });
     this.post.uniforms.time.value = elapsed;
     if (s.newproperty2) this.composer.render(dt); else this.renderer.render(this.scene, this.camera);
   }

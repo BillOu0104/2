@@ -6,7 +6,7 @@ import temperatureFactory from './legacy/079.js';
 import loadingFactory from './legacy/156.js';
 import { moduleBindings } from './original-data.js';
 import { normalizeSettings, seededRandom, algorithmId } from './settings.js';
-import { prepareBalancedOrbits } from './orbital-initialization.js';
+import { prepareOrbits } from './orbital-initialization.js';
 import { Habitability } from './habitability.js';
 import { RunStatistics } from './run-statistics.js';
 import { WorldState } from './world-state.js';
@@ -47,7 +47,7 @@ export class Simulation {
     builder.values = {};
     builder.finish = function() { return Object.assign(this.values, overrides); };
     const math = Object.create(Math); math.random = () => self.random();
-    return factory({ shared: this.shared, engine: this.engine, input: this.input, thisScene: { createLayer: data => data }, Vec3, Math: math, createScriptProperties: () => builder, getHabitability: () => null, prepareInitialBodies: (bodies,G,p) => prepareBalancedOrbits(bodies,G,p,self.settings,()=>self.random()), onInitialize: bodies => { self.initialBodies = plain(bodies); self.habitability.reset(); self.world.reset(); self.civilization?.reset(); self.terminalSince=null;self.restartSince=null; } });
+    return factory({ shared: this.shared, engine: this.engine, input: this.input, thisScene: { createLayer: data => data }, Vec3, Math: math, createScriptProperties: () => builder, getHabitability: () => null, prepareInitialBodies: (bodies,G,p) => prepareOrbits(bodies,G,p,self.settings,()=>self.random()), onInitialize: bodies => { self.initialBodies = plain(bodies); self.habitability.reset(); self.world.reset(); self.civilization?.reset(); self.terminalSince=null;self.restartSince=null; } });
   }
   configure(patch) {
     const next = normalizeSettings({ ...this.settings, ...patch });

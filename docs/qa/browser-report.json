@@ -1,7 +1,7 @@
 {
   "passed": 17,
   "checks": [
-    "183 original + 26 extension/layout controls and worker ready",
+    "183 original + 28 extension/layout controls and worker ready",
     "fading tails are enabled and populated for all four bodies",
     "all bodies use round sphere geometry and circular glow",
     "habitability and resilience are visible in optimized mode",
@@ -25,11 +25,11 @@
   "errors": [],
   "diagnostics": {
     "ready": true,
-    "tick": 880,
-    "fps": 5,
+    "tick": 1008,
+    "fps": 4,
     "paused": false,
-    "controls": 209,
-    "history": 1,
+    "controls": 211,
+    "history": 0,
     "worker": true,
     "scene": {
       "canvas": [
@@ -42,23 +42,40 @@
       ],
       "renderedFrames": 45,
       "viewVelocity": [
-        2.9656636473839743e-13,
-        2.2668271422146604e-12
+        1.7007656135676705e-14,
+        1.285044655698189e-13
       ],
       "speedLimited": false,
       "compassOpacity": [
-        0.5,
-        0.5,
-        0.5
+        1.2321541965679086e-11,
+        1.2321541965679086e-11,
+        1.2321541965679086e-11
       ],
       "idleYaw": 0,
       "returningToGalaxy": false,
       "compassScale": 0.3,
+      "compassTarget": false,
+      "compassFade": 1.0267951638065906e-10,
+      "viewSensitivity": 0.12,
+      "dustLayers": [
+        {
+          "visible": true,
+          "count": 450,
+          "size": 0.04000000000000001,
+          "opacity": 0.5
+        },
+        {
+          "visible": true,
+          "count": 900,
+          "size": 0.035,
+          "opacity": 0.42
+        }
+      ],
       "pointerMode": 1,
       "galaxyCoreScreen": [
-        -0.4668169662019026,
-        0.035564098932475356,
-        0.9998887718838642
+        -0.46695746090898593,
+        0.03557275704983779,
+        0.9998887711957226
       ],
       "layoutEditing": false,
       "compassVisible": false,
@@ -75,15 +92,15 @@
       },
       "backgroundFollowsView": true,
       "viewRotation": [
-        0.017818348253521993,
-        0.10614650846601752,
+        0.01782278554880201,
+        0.10617822802592311,
         0
       ],
       "skyRotation": [
-        -0.021966857391042833,
-        0.8245398333919929,
-        -0.02940688401879787,
-        0.5646120398101437
+        -0.0219663040532935,
+        0.8245488455224836,
+        -0.029404546749458426,
+        0.5645990218413743
       ],
       "bodyShapes": [
         "SphereGeometry",
@@ -94,36 +111,36 @@
       "glowShape": "radial-circle",
       "bodyLabelsVisible": false,
       "trailSamples": [
-        320,
-        320,
-        320,
-        320
+        344,
+        344,
+        344,
+        344
       ],
-      "trailComplexity": 0.04887313052124415,
+      "trailComplexity": 0,
       "trailMetrics": [
         {
-          "arcPixels": 250.11075732174982,
-          "seconds": 11.166666666666666,
-          "budget": 359.2458837741466,
-          "segments": 153
+          "arcPixels": 104.78207667497529,
+          "seconds": 12.816666666666665,
+          "budget": 430.0661337299118,
+          "segments": 72
         },
         {
-          "arcPixels": 256.30923587972916,
-          "seconds": 11.166666666666666,
-          "budget": 359.2458837741466,
-          "segments": 153
+          "arcPixels": 75.18050916635717,
+          "seconds": 12.7,
+          "budget": 430.0661337299118,
+          "segments": 54
         },
         {
-          "arcPixels": 242.43036335265157,
-          "seconds": 11.166666666666666,
-          "budget": 359.2458837741466,
-          "segments": 153
+          "arcPixels": 69.17478589051696,
+          "seconds": 12.7,
+          "budget": 430.0661337299118,
+          "segments": 50
         },
         {
-          "arcPixels": 359.24574163229875,
-          "seconds": 9.408041935206969,
-          "budget": 359.2458837741466,
-          "segments": 189
+          "arcPixels": 184.64446844743438,
+          "seconds": 12.7,
+          "budget": 430.0661337299118,
+          "segments": 113
         }
       ],
       "trailsVisible": true
