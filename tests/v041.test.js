@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { WorldState } from '../src/world-state.js';
 import { Simulation } from '../src/simulation.js';
 import { RunStatistics } from '../src/run-statistics.js';
-import { ViewMotion,idleSway } from '../src/view-motion.js';
+import { ViewMotion } from '../src/view-motion.js';
 import { normalizeSettings,migrateSettings } from '../src/settings.js';
 import { clampWindow } from '../src/layout.js';
 const settings=normalizeSettings({stellarBreathing:false});
@@ -44,12 +44,12 @@ test('legacy ranking origin is backfilled only when an archive identifies it',()
  const s=new RunStatistics({format:'three-body-statistics',version:1,totalYears:20,universeNumber:3,civilizations:[{number:7,lifespan:12}],legacyRecords:[{number:7,lifespan:12,generation:2}]});assert.equal(s.snapshot().civilizationRanking[0].universe,2);
 });
 test('drag no longer saturates, horizontal gain is lower and follow acceleration is reduced',()=>{
- const a=new ViewMotion();a.drag(.1,0);assert.equal(a.vy,3.2);assert.ok(a.vy>.55);a.drag(.1,0);assert.equal(a.vy,6.4);assert.equal(a.acceleration,3);
+ const a=new ViewMotion();a.drag(.1,0);assert.equal(a.vy,.4);a.drag(.1,0);assert.equal(a.vy,.8);assert.ok(a.vy>.55);assert.equal(a.acceleration,.75);
 });
-test('idle panorama stays within the same small angle and reverses direction',()=>{
- const values=Array.from({length:3600},(_,i)=>idleSway(i*10));assert.ok(Math.max(...values)<=6*Math.PI/180+1e-9);assert.ok(Math.min(...values)<0);assert.ok(Math.max(...values)>0);assert.ok(Math.abs(idleSway(.01)/.01-.08*Math.PI/180)<1e-8);
+test('idle return follows the nearest galaxy heading extremely slowly without overshoot',()=>{
+ const m=new ViewMotion();m.x=.1;m.y=2*Math.PI+.2;m.returnToOrigin(60);assert.ok(Math.abs(m.y-(.2-Math.PI/300))<1e-12);assert.ok(m.x>0&&m.x<.1);m.returnToOrigin(100000);assert.equal(m.x,0);assert.equal(m.y,0);m.returnToOrigin(1);assert.equal(m.y,0);
 });
 test('window settings clamp coordinates and migrate defaults without losing custom layout',()=>{
  assert.deepEqual(clampWindow(-10,900,200,100,800,600),{x:4,y:496});const config=normalizeSettings({layout:{left:{x:-10,y:200},bad:{x:10,y:10},clock:{x:NaN,y:1}}});assert.deepEqual(config.layout,{left:{x:0,y:100}});
- const migrated=migrateSettings({presentationRevision:2,newproperty51:.35,newproperty61:'1',layout:{clock:{x:20,y:10}}});assert.equal(migrated.newproperty51,.08);assert.equal(migrated.newproperty61,0);assert.deepEqual(migrated.layout.clock,{x:20,y:10});
+ const migrated=migrateSettings({presentationRevision:2,newproperty51:.35,newproperty61:'1',layout:{clock:{x:20,y:10}}});assert.equal(migrated.newproperty51,.01);assert.equal(migrated.newproperty61,1);assert.deepEqual(migrated.layout.clock,{x:20,y:10});
 });

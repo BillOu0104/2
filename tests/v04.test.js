@@ -33,7 +33,7 @@ test('corrupt checkpoint fields do not break simulation startup',()=>{
  const s=new Simulation({},saved);s.tick();assert.ok(Number.isFinite(s.snapshot().year));assert.ok(s.snapshot().statistics.universeRanking.every(r=>Number.isFinite(r.lifespan)));
 });
 test('drag accelerates promptly, allows uncapped angular speed and dissipates inertia faster',()=>{
- const m=new ViewMotion();m.drag(1,1);assert.ok(Math.hypot(m.vx,m.vy)>10);const initial=Math.hypot(m.vx,m.vy);m.coast(.5);assert.ok(Math.hypot(m.vx,m.vy)<initial*.5);
+ const m=new ViewMotion();m.drag(1,1);assert.ok(Math.hypot(m.vx,m.vy)>.55);const initial=Math.hypot(m.vx,m.vy);m.coast(.5);assert.ok(Math.hypot(m.vx,m.vy)<initial*.5);
  for(let i=0;i<100;i++){m.drag(1,-1);m.coast(1/60);assert.ok(Number.isFinite(m.vy));}
 });
 test('follow mode retains bounded acceleration without a speed cap, and pause freezes movement',()=>{

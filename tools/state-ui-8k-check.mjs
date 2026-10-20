@@ -9,8 +9,8 @@ const diag=()=>page.evaluate(()=>window.__threeBodyDiagnostics());
 try{
  await page.goto('http://localhost:4173',{waitUntil:'networkidle'});await page.waitForFunction(()=>window.__threeBodyDiagnostics?.().ready);
  assert.equal(await page.locator('.signature,.coordinates,#running-caption').count(),0);checks.push('removed upper-left/right text and sentence below YEARS');
- assert.equal((await diag()).scene.compassVisible,false);checks.push('rotation rings stay hidden during idle sway');
- assert.equal(await page.locator('#setting-newproperty51').inputValue(),'0.08');assert.equal(await page.locator('#setting-newproperty45').inputValue(),'-20');assert.equal(await page.locator('#setting-newproperty46').inputValue(),'40');checks.push('gentler idle speed and -20 to 40 C activity thresholds');
+ assert.equal((await diag()).scene.compassVisible,false);checks.push('rotation rings stay hidden during slow galaxy return');
+ assert.equal(await page.locator('#setting-newproperty51').inputValue(),'0.01');assert.equal(await page.locator('#setting-newproperty45').inputValue(),'-20');assert.equal(await page.locator('#setting-newproperty46').inputValue(),'40');checks.push('gentler idle speed and -20 to 40 C activity thresholds');
  const bounds=await page.locator('#civilization-widget').boundingBox(),clock=await page.locator('#clock-widget').boundingBox();assert.ok(bounds.y>=clock.y+clock.height-2);checks.push('compact civilization block fits below the clock');
  await page.waitForFunction(()=>Object.values(window.__threeBodyDiagnostics().scene.backgroundSizes).every(v=>v[0]===8192&&v[1]===4096));checks.push('both active background textures loaded at native 8192x4096');
  await page.evaluate(()=>{window.__wallpaperFPS=2;window.threeBody.applySettings({renderQuality:'8k',newproperty17:'2',newproperty40:'0 0 0',newproperty14:false,newproperty16:false,newproperty61:'2'});});

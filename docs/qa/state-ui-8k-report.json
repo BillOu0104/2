@@ -2,7 +2,7 @@
   "passed": 7,
   "checks": [
     "removed upper-left/right text and sentence below YEARS",
-    "rotation rings stay hidden during idle sway",
+    "rotation rings stay hidden during slow galaxy return",
     "gentler idle speed and -20 to 40 C activity thresholds",
     "compact civilization block fits below the clock",
     "both active background textures loaded at native 8192x4096",
@@ -12,7 +12,7 @@
   "errors": [],
   "eightK": {
     "ready": true,
-    "tick": 395,
+    "tick": 485,
     "fps": 1,
     "paused": false,
     "controls": 209,
@@ -39,6 +39,9 @@
         0.5
       ],
       "idleYaw": 0,
+      "returningToGalaxy": false,
+      "compassScale": 0.3,
+      "pointerMode": 2,
       "galaxyCoreScreen": [
         1.3504145066350381e-16,
         -1.9380948937817673e-17,

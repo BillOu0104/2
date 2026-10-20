@@ -1020,6 +1020,7 @@ function resetSystem() {
         }
     }
     
+    if (!scriptProperties.cus_en) ctx.prepareInitialBodies?.(bodies, G, scriptProperties);
     // 初始化前一个位置
     for (let i = 0; i < bodies.length; i++) {
         bodies[i].prevX = bodies[i].x;

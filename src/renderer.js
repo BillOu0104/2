@@ -7,7 +7,7 @@ import { Line2 } from 'three/addons/lines/Line2.js';
 import { LineGeometry } from 'three/addons/lines/LineGeometry.js';
 import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
 import { colorRGB, seededRandom } from './settings.js';
-import { ViewMotion, idleSway } from './view-motion.js';
+import { ViewMotion } from './view-motion.js';
 import { TrailHistory, trailComplexity, selectTrail } from './adaptive-trails.js';
 
 const C = v => new THREE.Color(...colorRGB(v));
@@ -42,7 +42,7 @@ export class SpaceRenderer {
     this.scene = new THREE.Scene(); this.camera = new THREE.PerspectiveCamera(50, 1, 0.01, 200);
     this.camera.position.set(0, 0.25, 5.2); this.camera.lookAt(0, 0, 0);
     this.world = new THREE.Group(); this.scene.add(this.world);
-    this.compass = new THREE.Group(); this.world.add(this.compass);
+    this.compass = new THREE.Group(); this.world.add(this.compass);this.compass.scale.setScalar(.3);
     const ringGeometry = new THREE.BufferGeometry().setFromPoints(Array.from({ length: 257 }, (_, i) => new THREE.Vector3(Math.cos(i / 256 * Math.PI * 2) * 1.42, Math.sin(i / 256 * Math.PI * 2) * 1.42, 0)));
     for (const [angle, opacity] of [[0, .5], [Math.PI / 2, .5]]) {
       const ring = new THREE.LineLoop(ringGeometry, new THREE.LineBasicMaterial({ color: 0x95c4eb, transparent: true, opacity })); ring.rotation.x = angle; this.compass.add(ring);
@@ -91,9 +91,10 @@ export class SpaceRenderer {
     // Small bright spheres become square impulses in a downsampled bloom pyramid.
     // Explicit radial sprites provide the HDR halo without changing circular silhouettes.
     this.post = new ShaderPass(postShader);
-    this.mouse = { x: 0, y: 0, down: false, dragging: false, startX: 0, startY: 0, lastX: 0, lastY: 0 }; this.rot = new ViewMotion();this.autoAngle=0;this.swayTime=0;
-    canvas.addEventListener('pointerdown', e => { if(e.button!==0)return; this.mouse.down = true; this.mouse.dragging=false; this.mouse.startX=this.mouse.lastX = e.clientX; this.mouse.startY=this.mouse.lastY = e.clientY; canvas.setPointerCapture(e.pointerId); });
+    this.mouse = { x: 0, y: 0, down: false, dragging: false, startX: 0, startY: 0, lastX: 0, lastY: 0, lastInput: -Infinity, inside:false }; this.rot = new ViewMotion();this.autoAngle=0;this.returning=false;
+    canvas.addEventListener('pointerdown', e => { if(e.button!==0)return; this.mouse.down = true; this.mouse.lastInput=performance.now();this.mouse.dragging=false; this.mouse.startX=this.mouse.lastX = e.clientX; this.mouse.startY=this.mouse.lastY = e.clientY; canvas.setPointerCapture(e.pointerId); });
     canvas.addEventListener('pointermove', e => {
+      this.mouse.inside=true;if(+this.settings.newproperty61===1||this.mouse.down)this.mouse.lastInput=performance.now();
       this.mouse.x = e.clientX / innerWidth * 2 - 1; this.mouse.y = e.clientY / innerHeight * 2 - 1;
       if (this.mouse.down && +this.settings.newproperty61 === 0) {
         if(Math.hypot(e.clientX-this.mouse.startX,e.clientY-this.mouse.startY)>3)this.mouse.dragging=true;
@@ -101,6 +102,7 @@ export class SpaceRenderer {
       }
       this.mouse.lastX = e.clientX; this.mouse.lastY = e.clientY;
     });
+    canvas.addEventListener('pointerleave',()=>{this.mouse.inside=false;});
     for (const type of ['pointerup', 'pointercancel', 'lostpointercapture']) canvas.addEventListener(type, () => { this.mouse.down = false; this.mouse.dragging=false; });
     this.updateSettings(settings); this.resize();
     this.onResize = () => this.resize(); addEventListener('resize', this.onResize);
@@ -136,7 +138,7 @@ export class SpaceRenderer {
     this.sky.material.color.copy(C(mode === '3' ? s.newproperty55 : s.backgroundcolor)).multiplyScalar(mode === '3' ? s.newproperty56 : s.newproperty9);
     this.sky.material.needsUpdate = true;
     this.camera.fov = s.newproperty71; this.camera.position.z = Math.max(1.4, 5.2 - s.distance * .65); this.camera.updateProjectionMatrix();
-    this.compass.visible = !!s.compass && (this.mouse.dragging||Math.hypot(this.rot.vx,this.rot.vy)>.02); this.compass.children.forEach(n => n.material?.color.copy(C(s.datacolor)));
+    this.compass.visible = !!s.compass && (this.mouse.dragging||Math.hypot(this.rot.vx,this.rot.vy)>.0005); this.compass.children.forEach(n => n.material?.color.copy(C(s.datacolor)));
     this.nebula.visible = s.brfontcoloraaaaaabrnebularequirespostprocessingultrahighquality;
     for (const [u, key] of Object.entries({ grain: 'newproperty68', crt: 'newproperty3', blur: 'newproperty23', pulse: 'newproperty54' })) this.post.uniforms[u].value = s[key];
     const radii = [s._13, s._21, s._3, s.newproperty20];
@@ -204,12 +206,14 @@ export class SpaceRenderer {
   }
   render(dt, elapsed, motionDt=dt) {
     const s = this.settings;
-    this.swayTime+=motionDt;this.autoAngle=s.newproperty16?idleSway(this.swayTime,s.newproperty51,s.idleAmplitude):0;
-    if(+s.newproperty61===1){
-      for(let remaining=motionDt;remaining>1e-8;){const step=Math.min(1/60,remaining);this.rot.follow(this.mouse.y*s.y7*Math.PI/180,this.mouse.x*s.x6*Math.PI/180,step,Math.max(.25,s.newproperty62*12));remaining-=step;}
+    const idle=(performance.now()-this.mouse.lastInput)/1000;
+    if(+s.newproperty61===1&&this.mouse.inside&&idle<2){
+      for(let remaining=motionDt;remaining>1e-8;){const step=Math.min(1/60,remaining);this.rot.follow(this.mouse.y*s.y7*s.x5*.12*Math.PI/180,this.mouse.x*s.x6*s.y5*.12*Math.PI/180,step,Math.max(.25,s.newproperty62*12));remaining-=step;}
     }else this.rot.coast(motionDt,-Math.log(Math.min(.999,s.y6))*120);
-    this.compass.visible=!!s.compass&&(this.mouse.dragging||Math.hypot(this.rot.vx,this.rot.vy)>.02);
-    this.world.rotation.set(this.rot.x+(s.newproperty16?Math.sin(elapsed*.1)*s.brfontcoloraaaaaaxspinangle*Math.PI/180:0),this.rot.y+this.autoAngle,0);
+    this.compass.visible=!!s.compass&&(this.mouse.dragging||Math.hypot(this.rot.vx,this.rot.vy)>.0005);
+    this.returning=!!s.newproperty16&&!this.mouse.down&&idle>=2;
+    if(this.returning)this.rot.returnToOrigin(motionDt,s.newproperty51);
+    this.world.rotation.set(this.rot.x,this.rot.y,0);
     this.nodes.forEach((n, i) => {
       n.group.position.lerp(n.target, 1 - Math.exp(-dt * 22)); n.mesh.rotation.y += dt * .1;
       if (i < 3) { n.glow.material.opacity = Math.min(1, .35 + s.newproperty49 * .3 + (s.newproperty2 ? s.hdr * .09 : 0) + this.audioLevel * .12); }
