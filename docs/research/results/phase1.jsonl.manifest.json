@@ -1,0 +1,126 @@
+{
+  "hash": "f6d52ef18e3a622c578183f08a9e397d79d46a25edef450ab2d54d465cbdcede",
+  "config": {
+    "prefix": "EXPLORE-A",
+    "start": 0,
+    "seeds": 32,
+    "horizon": 200,
+    "output": "results/phase1.jsonl",
+    "hypothesis": "Separate host-frame initial binding, near-field force law and stellar virial/angular momentum effects. All continuous seeds used without survival prescreening.",
+    "profiles": [
+      {
+        "id": "legacy-random",
+        "force": "legacy"
+      },
+      {
+        "id": "newton-random",
+        "force": "newton",
+        "adaptive": true
+      },
+      {
+        "id": "legacy-bound20",
+        "force": "legacy",
+        "planet": "bound",
+        "inPlane": true,
+        "radiusFraction": 0.2
+      },
+      {
+        "id": "newton-bound20",
+        "force": "newton",
+        "adaptive": true,
+        "planet": "bound",
+        "inPlane": true,
+        "radiusFraction": 0.2
+      },
+      {
+        "id": "newton-bound12",
+        "force": "newton",
+        "adaptive": true,
+        "planet": "bound",
+        "inPlane": true,
+        "radiusFraction": 0.12
+      },
+      {
+        "id": "newton-retro20",
+        "force": "newton",
+        "adaptive": true,
+        "planet": "bound",
+        "inPlane": true,
+        "radiusFraction": 0.2,
+        "direction": -1
+      },
+      {
+        "id": "newton-Q05",
+        "force": "newton",
+        "adaptive": true,
+        "planet": "bound",
+        "inPlane": true,
+        "radiusFraction": 0.2,
+        "Q": 0.5
+      },
+      {
+        "id": "newton-Q10",
+        "force": "newton",
+        "adaptive": true,
+        "planet": "bound",
+        "inPlane": true,
+        "radiusFraction": 0.2,
+        "Q": 1
+      },
+      {
+        "id": "newton-Q14",
+        "force": "newton",
+        "adaptive": true,
+        "planet": "bound",
+        "inPlane": true,
+        "radiusFraction": 0.2,
+        "Q": 1.4
+      },
+      {
+        "id": "newton-spin05",
+        "force": "newton",
+        "adaptive": true,
+        "planet": "bound",
+        "inPlane": true,
+        "radiusFraction": 0.2,
+        "spin": 0.5
+      },
+      {
+        "id": "newton-spin10",
+        "force": "newton",
+        "adaptive": true,
+        "planet": "bound",
+        "inPlane": true,
+        "radiusFraction": 0.2,
+        "spin": 1
+      },
+      {
+        "id": "newton-scale2",
+        "force": "newton",
+        "adaptive": true,
+        "planet": "bound",
+        "inPlane": true,
+        "radiusFraction": 0.2,
+        "scale": 2
+      },
+      {
+        "id": "balanced-control",
+        "mode": "balanced",
+        "force": "newton",
+        "adaptive": true
+      },
+      {
+        "id": "hierarchy-control",
+        "geometry": "hierarchical",
+        "force": "newton",
+        "adaptive": true,
+        "planet": "bound",
+        "inPlane": true,
+        "fixedRadius": 0.5
+      }
+    ]
+  },
+  "baseline": "c7a53a01def5f9d60389ee20ec0f8bac5210ed69",
+  "node": "v24.19.0",
+  "started": "2026-10-20T13:57:53.556Z"
+}
