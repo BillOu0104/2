@@ -1,3 +1,4 @@
+import {settingsDefinitions,settingsCategories} from './settings-catalog.js';
 import { layoutWidgets,widgetPosition,clearLayoutStyles,applyLayout,installLayoutEditor } from './layout.js';
 import { SpaceRenderer } from './renderer.js';
 import { effectivePropertySchema as propertySchema, migrateSettings } from './settings.js';
@@ -67,19 +68,23 @@ document.addEventListener('keydown', e => {
 });
 
 const hintMap = {
-  viewSensitivity: '越小越精细，0关闭鼠标转动。悬停与按住拖动共用此倍率。',
+  viewSensitivity: '越小越精细，0关闭鼠标转动。悬停与拖动共用此倍率；拖动另乘拖拽倍率（默认 5）。',
+  dragSensitivity: '只放大拖动，默认是原拖动响应的 5 倍。悬停跟随不受此项影响。',
+  birthDelay: '新文明只需短暂安全窗口即可诞生；不会因诞生前的严寒被预先扣掉人口。',
+  civilizationLevels: '只累计安全环境中实际生产发展的年数。休眠保留等级，但不升级。',
+  developmentRate: '只影响科技进度，不改变物理时钟、文明寿命或轨道。',
   compassOpacity: '数值越小越透明，0完全隐藏；出现和消失自动淡入淡出。',
   newproperty7: '原版此项为固定值：引力指数恒为 2。保留设置定义，但不改变原算法。',
   cnen1: '切换原版使用说明的语言；界面语言请使用快捷设置中的 Language。',
   menuinit: '下次载入时，默认打开右下角的完整设置面板。',
   newproperty53: '修改后立即重建物理积分器；文明历史保留。',
-  t: '原版按适温帧累计；本版本固定 60 Hz 检测，并非按年计数。',
+  t: '原版按适温帧累计；仅原版即时判定模式使用。现代文明请调整“文明诞生安全窗口”。',
   newproperty26: '保留原版时间因子重复相乘的算法，以匹配原版节奏。',
   cheatingcheck: '标记引力牢笼、温度距离倍数及非默认物理参数。',
   custombg: '选择球面全景图。文件仅保存在本机；WE 中也可使用原生背景属性。',
   newproperty63: '原版虚构账号与密码的视觉展示，不涉及实际账号登录。',
   civilizationMode: '纪元由轨道稳定性判断；文明在 −20～40°C 活动，脱水保存、原编号复苏。行星毁坏后只能重建宇宙。原版模式保留旧判定。',
-  thermalGrace: '活动与干仓采用各自温度边界；持续极端温度会毁灭干仓。数值为模拟参数，可自行调整。'
+  thermalGrace: '越大越耐久。文明诞生后才有人口储备与干仓质量；等级提升额外延缓损耗。持续极端灾害仍会毁灭文明。'
 };
 function makeControl(key, def, extension = false) {
   const container = document.createElement('div'); container.className = 'control'; container.dataset.key = key;
@@ -123,27 +128,7 @@ function groupElement(title, open = false) {
   const summary = document.createElement('summary'); summary.textContent = title; group.append(summary); return group;
 }
 function buildSettings() {
-  const definitions={
-    planetStrength:{type:'slider',text:'行星结构强度 / Structural strength',min:1,max:4,step:.1},
-    viewSensitivity:{type:'slider',text:'整体视角灵敏度 / Mouse sensitivity',min:0,max:2,step:.01},
-    compassOpacity:{type:'slider',text:'旋转环不透明度 / Ring opacity',min:0,max:.5,step:.01},
-    orbitalInitialization:{type:'combo',text:'随机初始轨道 / Initial orbits',options:[{value:'chaotic',label:'混沌星系 · 三维随机（默认）'},{value:'original',label:'原版完全随机'},{value:'balanced',label:'稳定轨道实验'}]},
-    seed: { type: 'textinput', text: '随机初始化 Seed' },
-    physicsMode: { type: 'combo', text: '物理时钟', options: [{ value: 'reference', label: '原版节奏 · 固定 60 Hz（默认）' }, { value: 'realtime', label: '墙钟同步 · 修复原版每帧步数上限' }] },
-    civilizationMode: { type: 'combo', text: '文明延续机制 / Civilization', options: [{ value: 'balanced', label: '原著规则 · 脱水、休眠与复苏（默认）' }, { value: 'legacy', label: '原版即时判定' }] },
-    thermalGrace: { type: 'slider', text: '气候耐受时间 / Climate resilience (s)', min: 1, max: 60, step: 1 },
-    wakeDelay: { type: 'slider', text: '复苏安全窗口 / Safe window (s)', min: 1, max: 60, step: .5 },
-    epochWindow: { type: 'slider', text: '恒纪元轨道确认 / Orbital stability (s)', min: .25, max: 20, step: .25 },
-    climateInertia: { type: 'slider', text: '气候热惯性 / Thermal inertia (s)', min: .05, max: 30, step: .05 },
-    stellarBreathing: { type: 'bool', text: '恒星半径缓慢呼吸 / Stellar breathing' },
-    renderQuality: { type: 'combo', text: '渲染清晰度 / Render resolution', options: [{value:'native',label:'原生屏幕分辨率 · 8K 原图（默认）'},{value:'8k',label:'8K 超采样 · 最高 7680×4320'}] },
-    trailsLength: { type: 'slider', text: '自适应尾迹长度基准 / Trail length', min: 20, max: 2000, integer: true },
-    pixelRatio: { type: 'slider', text: '最大渲染像素比 / Pixel ratio', min: .5, max: 4, step: .1 },
-    bodyLabels: { type: 'bool', text: '显示天体标签 / Body labels' },
-    music: { type: 'bool', text: '播放原版音乐 · Ether' },
-    volume: { type: 'slider', text: '音乐音量 / Volume', min: 0, max: 1, step: .01 }
-  };
-  const categories=[['layout','布局与窗口 / Layout',[]],['simulation','模拟与文明 / Simulation',['seed','orbitalInitialization','physicsMode','civilizationMode','thermalGrace','wakeDelay','epochWindow','climateInertia','stellarBreathing','planetStrength']],['view','视角与银河 / View',['viewSensitivity','newproperty16','newproperty51','newproperty61','x5','y5','x6','y7','newproperty62','y6','compass','compassOpacity']],['visual','画面与轨迹 / Visual',['renderQuality','trailsLength','pixelRatio','bodyLabels','dust','_1dust1quantity','_1dust1size','_2dust2quantity','_2dust1size']],['audio','声音 / Audio',['music','volume']]];
+  const definitions=settingsDefinitions,categories=settingsCategories;
   for(const[id,title,keys]of categories){
     const group=groupElement(title);group.dataset.category=id;
     if(id==='layout'){
@@ -255,7 +240,7 @@ function renderHistory() {
   for (const entry of history.slice().reverse().slice(0, 200)) {
     const li = document.createElement('li'), title = document.createElement('b'), sub = document.createElement('small'), button = document.createElement('button');
     title.textContent = `宇宙${entry.universe||entry.generation||'?'} · 文明${entry.number} · ${entry.lifespan} 年 · ${entry.destructionEvent}`;
-    sub.textContent = `${entry.seed} / 宇宙 ${entry.generation} / ${new Date(entry.savedAt).toLocaleString()}`;
+    sub.textContent = `${entry.seed} / 宇宙 ${entry.generation}${entry.development?` / Lv.${entry.development.level} ${entry.development.zh} / 发展 ${entry.development.developmentYears.toFixed(1)}年`:''} / ${new Date(entry.savedAt).toLocaleString()}`;
     button.textContent = '复现初始种子'; button.onclick = () => {
       const replay = entry.initialBodies ? settingsFromInitial(entry.settings, entry.initialBodies) : entry.settings;
       changeSettings(replay); worker?.postMessage({ type: 'restart' }); notice('已载入该文明完整初始条件');
@@ -272,7 +257,7 @@ function renderStatistics(s){
   $('#civilization-years').textContent=stats.civilization?years(stats.civilization.lifespan):'—';
   for(const [id,records]of[['civilization-ranking',stats.civilizationRanking],['universe-ranking',stats.universeRanking]]){
     const list=$(`#${id}`);if(list.children.length!==5){list.replaceChildren();for(let i=0;i<5;i++){const li=document.createElement('li');li.innerHTML='<span class="rank-number"></span><span class="rank-id"></span><span class="rank-years"></span>';list.append(li);}}
-    [...list.children].forEach((li,i)=>{const entry=records[i];li.dataset.active=String(!!entry?.active);li.querySelector('.rank-number').textContent=String(i+1).padStart(2,'0');li.querySelector('.rank-id').textContent=entry?`${id==='civilization-ranking'?pair(entry):'#'+entry.number}${entry.active?' ·':''}`:'—';li.querySelector('.rank-years').textContent=entry?years(entry.lifespan):'—';const opacityKey=['t9','t10','tex4opacity','tex5opacity','tex6opacity'][i];li.style.opacity=Math.min(1,(entry?.active ? .85 : .58)*settings[opacityKey]/propertySchema[opacityKey].value);li.title=entry?.active?(en?'Still running':'仍在运行'):'';});
+    [...list.children].forEach((li,i)=>{const entry=records[i];li.dataset.active=String(!!entry?.active);li.querySelector('.rank-number').textContent=String(i+1).padStart(2,'0');li.querySelector('.rank-id').textContent=entry?`${id==='civilization-ranking'?pair(entry):'#'+entry.number}${entry.active?' ·':''}`:'—';li.querySelector('.rank-years').textContent=entry?years(entry.lifespan):'—';const opacityKey=['t9','t10','tex4opacity','tex5opacity','tex6opacity'][i];li.style.opacity=Math.min(1,(entry?.active ? .85 : .58)*settings[opacityKey]/propertySchema[opacityKey].value);li.title=[entry?.active?(en?'Still running':'仍在运行'):'',entry?.development?`Lv.${entry.development.level} · ${en?entry.development.en:entry.development.zh} · ${entry.development.developmentYears.toFixed(1)}${en?' development years':'发展年'}`:''].filter(Boolean).join(' / ');});
   }
 }
 function renderState(s) {
@@ -283,11 +268,15 @@ function renderState(s) {
   const phase=settings.civilizationMode==='legacy'?(s.alive?'active':'empty'):(s.civilizationState?.phase||'empty'),phases={empty:['等待文明诞生','Awaiting civilization'],active:['恢复生产 · 文明发展','Production and development'],dehydrating:['脱水保存中','Dehydrating'],dormant:['干仓储存 · 等待复苏','Dry storage'],rehydrating:['浸泡复苏中','Rehydrating'],destroyed:['文明已终结','Civilization ended']};
   $('#civilization-phase').textContent=phases[phase]?.[en?1:0]||'';$('#civilization-phase-detail').textContent=s.alive?(en?`U${s.generation} · C${s.civilization} · ${s.lifespan} years`:`宇宙${s.generation} · 文明${s.civilization} · 已延续${s.lifespan}年`):(en?'Dehydration preserves a civilization; it is not a rebirth.':'脱水保存与浸泡复苏延续同一文明');
   $('#phenomena').textContent=(s.world?.phenomena||[]).map(p=>en?p.en:p.zh).join(' · ');
+  const development=s.civilizationState?.development;
+  $('#civilization-level').textContent=development?`Lv.${development.level} · ${en?development.en:development.zh}`:'';
+  $('#civilization-development').textContent=development?(en?`Development ${development.developmentYears.toFixed(1)} years${development.nextYears?` / ${development.nextYears}`:''}`:`发展积累 ${development.developmentYears.toFixed(1)}年${development.nextYears?` / 下一级 ${development.nextYears}年`:settings.civilizationLevels?' · 已达最高阶段':' · 等级已关闭'}`):'';
   const habitat = s.habitability;
-  $('#habitability-readout').hidden = !habitat?.enabled;
+  $('#habitability-readout').hidden = !habitat?.enabled;$('#civilization-reserves').hidden=!habitat?.enabled;
   if (habitat?.enabled) {
     $('#habitability-score').textContent = `${Math.round(habitat.score * 100)}%`;
-    $('#civilization-health').textContent = `${Math.round(habitat.health * 100)}%`;
+    $('#civilization-health').textContent = habitat.health===null?'—':`${Math.round(habitat.health * 100)}%`;
+    $('#civilization-reserves').textContent=habitat.population===null?(en?'No civilization yet':'文明尚未诞生'):(en?`Population ${Math.round(habitat.population*100)}% · Dry storage ${Math.round(habitat.storageQuality*100)}%`:`人口储备 ${Math.round(habitat.population*100)}% · 干仓质量 ${Math.round(habitat.storageQuality*100)}%`);
     $('#habitability-fill').style.width = `${habitat.score * 100}%`;
     $('#health-fill').style.width = `${habitat.health * 100}%`;
   }
@@ -382,4 +371,4 @@ try {
 }
 // Diagnostic readout for automated smoke checks and host integrations.
 window.__threeBodyDiagnostics = () => ({ ready: !!state && !fatal, tick: lastTick, fps, paused: userPaused || hostPaused || visibilityPaused, controls: controlMap.size, history: history.length, worker: !!worker,
-  scene: renderer ? { canvas:[renderer.canvas.width,renderer.canvas.height], drawingBuffer:[renderer.renderer.getContext().drawingBufferWidth,renderer.renderer.getContext().drawingBufferHeight], renderedFrames:renderer.renderer.info.render.frame, viewVelocity:[renderer.rot.vx,renderer.rot.vy], speedLimited:false, compassOpacity:renderer.compass.children.map(n=>n.material.opacity), idleYaw:renderer.autoAngle, returningToGalaxy:renderer.returning, compassScale:renderer.compass.scale.x, compassTarget:renderer.compassTarget, compassFade:renderer.compassFade, viewSensitivity:settings.viewSensitivity, dustLayers:renderer.dustLayers.map(d=>({visible:d.visible,count:d.geometry.drawRange.count,size:d.material.size,opacity:d.material.opacity})), pointerMode:+settings.newproperty61, galaxyCoreScreen:renderer.sky.localToWorld(renderer.galaxyDirection.clone().multiplyScalar(90)).project(renderer.camera).toArray(), layoutEditing:layoutEditor.editing, compassVisible:renderer.compass.visible, maxTextureSize:renderer.renderer.capabilities.maxTextureSize, backgroundSizes:Object.fromEntries(Object.entries(renderer.bgTextures).map(([k,t])=>[k,[t.image?.width||0,t.image?.height||0]])), backgroundFollowsView: renderer.sky.parent === renderer.world, viewRotation: renderer.world.rotation.toArray().slice(0,3), skyRotation: renderer.sky.getWorldQuaternion(new renderer.camera.quaternion.constructor()).toArray(), bodyShapes: renderer.nodes.map(n => n.mesh.geometry.type), glowShape: 'radial-circle', bodyLabelsVisible:renderer.nodes.some(n=>!n.label.hidden), trailSamples: renderer.trailBuffers.map(b => b.length), trailComplexity:renderer.trailComplexity||0, trailMetrics:renderer.trailMetrics||[], trailsVisible: renderer.trails.every(t => t.visible) } : null });
+  scene: renderer ? { canvas:[renderer.canvas.width,renderer.canvas.height], drawingBuffer:[renderer.renderer.getContext().drawingBufferWidth,renderer.renderer.getContext().drawingBufferHeight], renderedFrames:renderer.renderer.info.render.frame, viewVelocity:[renderer.rot.vx,renderer.rot.vy], speedLimited:false, compassOpacity:renderer.compass.children.map(n=>n.material.opacity), idleYaw:renderer.autoAngle, returningToGalaxy:renderer.returning, compassScale:renderer.compass.scale.x, compassTarget:renderer.compassTarget, compassFade:renderer.compassFade, viewSensitivity:settings.viewSensitivity, dragSensitivity:settings.dragSensitivity, dustLayers:renderer.dustLayers.map(d=>({visible:d.visible,count:d.geometry.drawRange.count,size:d.material.size,opacity:d.material.opacity,blending:d.material.blending,alphaTest:d.material.alphaTest})), pointerMode:+settings.newproperty61, galaxyCoreScreen:renderer.sky.localToWorld(renderer.galaxyDirection.clone().multiplyScalar(90)).project(renderer.camera).toArray(), layoutEditing:layoutEditor.editing, compassVisible:renderer.compass.visible, maxTextureSize:renderer.renderer.capabilities.maxTextureSize, backgroundSizes:Object.fromEntries(Object.entries(renderer.bgTextures).map(([k,t])=>[k,[t.image?.width||0,t.image?.height||0]])), backgroundFollowsView: renderer.sky.parent === renderer.world, viewRotation: renderer.world.rotation.toArray().slice(0,3), skyRotation: renderer.sky.getWorldQuaternion(new renderer.camera.quaternion.constructor()).toArray(), bodyShapes: renderer.nodes.map(n => n.mesh.geometry.type), glowShape: 'radial-circle', bodyLabelsVisible:renderer.nodes.some(n=>!n.label.hidden), trailSamples: renderer.trailBuffers.map(b => b.length), trailComplexity:renderer.trailComplexity||0, trailMetrics:renderer.trailMetrics||[], trailsVisible: renderer.trails.every(t => t.visible) } : null });

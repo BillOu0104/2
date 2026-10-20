@@ -109,15 +109,20 @@ export class Simulation {
     const world=this.world.update(state.bodies,state.G,equilibrium,this.settings,this.engine.runtime);
     const legacy=this.settings.civilizationMode==='legacy';
     if(!legacy)this.shared.tem=world.planet.temperature;
-    this.habitability.update(this.shared,this.settings,1/60,{phase:this.civilization.phase,terminal:!legacy&&world.planet.terminal,damaged:!legacy&&!world.planet.canSupportLife,integrity:world.planet.integrity,tideRatio:legacy?0:world.planet.stressRatio,hazard:!legacy&&world.planet.stressRatio>1?'tidal':null});
+    this.habitability.update(this.shared,this.settings,1/60,{alive:!!this.shared.civilizationAlive,number:this.shared.civilizationCount,developmentYears:this.civilization.developmentYears,phase:this.civilization.phase,terminal:!legacy&&world.planet.terminal,damaged:!legacy&&!world.planet.canSupportLife,integrity:world.planet.integrity,tideRatio:legacy?0:world.planet.stressRatio,hazard:!legacy&&world.planet.stressRatio>1?'tidal':null});
     this.era = legacy?this.modules['072'].update(''):(world.epoch.kind==='stable'?(this.settings.cnen2?'Stable Era':'恒纪元'):(this.settings.cnen2?'Chaotic Era':'乱纪元'));
     const previousAlive = this.shared.civilizationAlive;
     const before = this.shared.civilizationRecords.length;
     this.shared.text = `/Seed:${this.settings.seed}/Universe:${this.generation}`;
     if(legacy)this.modules['042'].update('');
     else {
-      const previousPhase=this.civilization.result?.phase;
+      const previousPhase=this.civilization.result?.phase,previousLevel=this.civilization.result?.development?.level;
       this.civilization.update(world,this.habitability.result,this.settings,this.shared.xntime,this.engine.runtime);
+      if(!previousAlive&&this.shared.civilizationAlive){this.habitability.begin(this.shared.civilizationCount);Object.assign(this.habitability.result,{health:1,population:1,storageQuality:1,level:1});}
+      if(previousAlive&&!this.shared.civilizationAlive){this.habitability.reset();this.habitability.update(this.shared,this.settings,0,{terminal:world.planet.terminal,damaged:!world.planet.canSupportLife,tideRatio:world.planet.stressRatio,integrity:world.planet.integrity});}
+      const development=this.civilization.result?.development;
+      if(previousLevel&&development?.level>previousLevel)this.emit('civilization:level',{number:this.shared.civilizationCount,universe:this.generation,development});
+      this.shared.civilizationDevelopment=development;
       if(previousPhase!==this.civilization.phase)this.emit('civilization:phase',{phase:this.civilization.phase,number:this.shared.civilizationCount});
     }
     this.statistics.observe(this.shared.xntime,this.shared);

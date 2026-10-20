@@ -2,12 +2,12 @@ import { propertySchema } from './original-data.js';
 
 export const defaults = Object.fromEntries(Object.entries(propertySchema)
   .filter(([, d]) => d.type && d.type !== 'group').map(([k, d]) => [k, d.value]));
-export const extraDefaults = { seed: 'TRISOLARIS', music: false, volume: 0.35, trailsLength: 400, orbitalInitialization: 'chaotic', physicsMode: 'reference', pixelRatio: 4, bodyLabels: false, presentationRevision: 5, layout: {}, viewSensitivity: .12, compassOpacity: .12, planetStrength: 1.6, idleAmplitude: 6, civilizationMode: 'balanced', thermalGrace: 8, wakeDelay: 3, epochWindow: 2, climateInertia: 1.5, stellarBreathing: true, renderQuality: 'native' };
+export const extraDefaults = { seed: 'TRISOLARIS', music: false, volume: 0.35, trailsLength: 400, orbitalInitialization: 'chaotic', physicsMode: 'reference', pixelRatio: 4, bodyLabels: false, presentationRevision: 6, layout: {}, viewSensitivity: .12, compassOpacity: .12, planetStrength: 1.6, idleAmplitude: 6, civilizationMode: 'balanced', thermalGrace: 30, wakeDelay: 1, epochWindow: 2, climateInertia: 1.5, stellarBreathing: true, renderQuality: 'native', dragSensitivity: 5, birthDelay: .5, civilizationLevels: true, developmentRate: 1 };
 // New installs show the requested tails; explicitly saved off/on preferences still win.
 defaults.newproperty14 = true;
 defaults.brfontcoloraaaaaarandomposrange = 3.2;
 defaults.rc = 1.6;
-defaults.k2 = .22;
+defaults.k2 = .3;
 defaults.newproperty67 = 4;
 defaults.newproperty39 = true;
 defaults.newproperty45 = -20;
@@ -25,7 +25,7 @@ export const effectivePropertySchema = { ...propertySchema,
   newproperty44: {...propertySchema.newproperty44,text:'干仓高温耐受 / Dry storage maximum °C'},
   newproperty16:{...propertySchema.newproperty16,text:'闲置时缓慢回归银河 / Return to Milky Way'},
   newproperty51: {...propertySchema.newproperty51,text:'回归银河速度 °/s',value:.01},
-  newproperty61:{...propertySchema.newproperty61,text:'鼠标视角：0 按住拖动 / 1 悬停跟随 / 2 固定',value:1}
+  newproperty61:{...propertySchema.newproperty61,text:'鼠标视角：0 按住拖动 / 1 悬停与拖动 / 2 固定',value:1}
 };
 export function normalizeSettings(source = {}, includeExtras = true) {
   const out = { ...defaults, ...(includeExtras ? extraDefaults : {}) };
@@ -43,6 +43,10 @@ export function normalizeSettings(source = {}, includeExtras = true) {
     else if (key === 'volume' && Number.isFinite(+value)) out.volume = Math.min(1, Math.max(0, +value));
     else if (key === 'trailsLength' && Number.isFinite(+value)) out.trailsLength = Math.round(Math.min(2000, Math.max(20, +value)));
     else if(key==='viewSensitivity'&&Number.isFinite(+value))out.viewSensitivity=Math.max(0,Math.min(2,+value));
+    else if(key==='dragSensitivity'&&Number.isFinite(+value))out.dragSensitivity=Math.max(.1,Math.min(20,+value));
+    else if(key==='birthDelay'&&Number.isFinite(+value))out.birthDelay=Math.max(.1,Math.min(10,+value));
+    else if(key==='developmentRate'&&Number.isFinite(+value))out.developmentRate=Math.max(.1,Math.min(20,+value));
+    else if(key==='civilizationLevels')out.civilizationLevels=value===true;
     else if(key==='compassOpacity'&&Number.isFinite(+value))out.compassOpacity=Math.max(0,Math.min(.5,+value));
     else if(key==='orbitalInitialization'&&['chaotic','balanced','original'].includes(value))out.orbitalInitialization=value;
     else if (key === 'physicsMode' && ['reference', 'realtime'].includes(value)) out.physicsMode = value;
@@ -67,13 +71,17 @@ export function colorRGB(s = '1 1 1') { return s.split(/\s+/).map(Number); }
 export function colorHex(s) { return '#' + colorRGB(s).map(x => Math.round(x * 255).toString(16).padStart(2, '0')).join(''); }
 export function fromHex(s) { return [1, 3, 5].map(i => parseInt(s.slice(i, i + 2), 16) / 255).join(' '); }
 export function plainText(s = '') { return s.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' '); }
-export function algorithmId(s) { return `sykm-scene-v4-${s.physicsMode}60-civ-${s.civilizationMode}-v042-${s.orbitalInitialization}-orbits`; }
+export function algorithmId(s) { return `sykm-scene-v4-${s.physicsMode}60-civ-${s.civilizationMode}-v050-${s.orbitalInitialization}-orbits`; }
 export function migrateSettings(saved={},version=3){
   if((saved.presentationRevision??0)<4)saved={...saved,newproperty51:Math.abs(saved.newproperty51??.08)>=.08?.01:(saved.newproperty51??.01),newproperty61:+(saved.newproperty61??1)===0?1:saved.newproperty61??1};
   if((saved.presentationRevision??0)<5){
     const migrated={...saved,orbitalInitialization:!saved.orbitalInitialization||saved.orbitalInitialization==='balanced'?'chaotic':saved.orbitalInitialization};
     for(const [key,oldValue,newValue]of [['brfontcoloraaaaaarandomposrange',2,3.2],['rc',.2,1.6],['k2',.5,.22],['newproperty67',2.1,4]])if(saved[key]===undefined||Math.abs(saved[key]-oldValue)<1e-5)migrated[key]=newValue;
     saved=migrated;
+  }
+  if((saved.presentationRevision??0)<6){
+    saved={...saved};
+    for(const [key,oldValue,newValue]of [['k2',.22,.3],['thermalGrace',8,30],['wakeDelay',3,1]])if(saved[key]===undefined||Math.abs(saved[key]-oldValue)<1e-5)saved[key]=newValue;
   }
   // One-time presentation migration for v0.3 installations with labels enabled.
   if(saved.presentationRevision!==extraDefaults.presentationRevision)saved={...saved,bodyLabels:saved.presentationRevision>=1?saved.bodyLabels:false,newproperty39:true};

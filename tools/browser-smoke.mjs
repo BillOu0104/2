@@ -14,7 +14,7 @@ await page.addInitScript(() => {
 try {
   await page.goto('http://localhost:4173', { waitUntil: 'networkidle' });
   await page.waitForFunction(() => window.__threeBodyDiagnostics?.().ready, { timeout: 30000 });
-  assert.equal(await page.evaluate(() => window.__threeBodyDiagnostics().controls), 211); checks.push('183 original + 28 extension/layout controls and worker ready');
+  assert.equal(await page.evaluate(() => window.__threeBodyDiagnostics().controls), 215); checks.push('183 original + 32 extension/layout controls and worker ready');
   await page.waitForFunction(() => window.__threeBodyDiagnostics().scene.trailSamples.every(n=>n>3));
   assert.equal(await page.evaluate(() => window.__threeBodyDiagnostics().scene.trailsVisible),true); checks.push('fading tails are enabled and populated for all four bodies');
   assert.equal(await page.evaluate(() => window.__threeBodyDiagnostics().scene.bodyShapes.every(s=>s==='SphereGeometry')),true); checks.push('all bodies use round sphere geometry and circular glow');

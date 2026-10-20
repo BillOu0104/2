@@ -1,3 +1,4 @@
+import {generateSettingsGuide} from './generate-settings-guide.mjs';
 import { build } from 'esbuild';
 import { defaults, effectivePropertySchema } from '../src/settings.js';
 import { mkdir, rm, cp, readFile, writeFile } from 'node:fs/promises';
@@ -9,6 +10,9 @@ await rm(dist, { recursive: true, force: true }); await mkdir(dist, { recursive:
 const worker = await build({ entryPoints: [path.join(root, 'src/simulation-worker.js')], bundle: true, minify: true, format: 'iife', target: 'chrome90', write: false });
 await build({ entryPoints: [path.join(root, 'src/main.js')], bundle: true, minify: true, format: 'iife', target: 'chrome90', outfile: path.join(dist, 'app.js'), external: ['assets/*'], define: { __WORKER_SOURCE__: JSON.stringify(worker.outputFiles[0].text) }, legalComments: 'eof' });
 await cp(path.join(dist, 'app.css'), path.join(dist, 'style.css'));
+await generateSettingsGuide();
+await cp(path.join(root,'docs/SETTINGS-GUIDE-v0.5.md'),path.join(dist,'SETTINGS-GUIDE-v0.5.md'));
+await cp(path.join(root,'docs/settings-guide.html'),path.join(dist,'settings-guide.html'));
 await cp(path.join(root, 'index.html'), path.join(dist, 'index.html')); await cp(path.join(root, 'assets'), path.join(dist, 'assets'), { recursive: true });
 await mkdir(path.join(dist, '.openai'), { recursive: true });
 await cp(path.join(root, '.openai/hosting.json'), path.join(dist, '.openai/hosting.json'));

@@ -11,7 +11,7 @@ const bodies=()=>[body(1,0,1e6,0,1),body(20,1,1e3),body(-20,2,1e3),body(0,0,5000
 function fixture(){
  const shared={civilizationAlive:false,civilizationCount:1,civilizationStartTime:0,lastCivilizationLifespan:0,civilizationRecords:[]};
  const civ=new CivilizationState(shared),hab=new Habitability();let runtime=0;
- return {shared,civ,hab,tick(temperature=20,options={}){runtime+=1/60;const world={epoch:{kind:options.epoch||'stable'},planet:{temperature,terminal:options.terminal||null},phenomena:[],safeToWake:options.safe!==false};const h=hab.update({tem:temperature},settings,1/60,{phase:civ.phase,terminal:world.planet.terminal});return civ.update(world,h,settings,runtime,runtime);},run(n,t=20,o={}){for(let i=0;i<n;i++)this.tick(t,o);}};
+ return {shared,civ,hab,tick(temperature=20,options={}){runtime+=1/60;const world={epoch:{kind:options.epoch||'stable'},planet:{temperature,terminal:options.terminal||null},phenomena:[],safeToWake:options.safe!==false};const h=hab.update({tem:temperature},settings,1/60,{alive:shared.civilizationAlive,number:shared.civilizationCount,developmentYears:civ.developmentYears,phase:civ.phase,terminal:world.planet.terminal});return civ.update(world,h,settings,runtime,runtime);},run(n,t=20,o={}){for(let i=0;i<n;i++)this.tick(t,o);}};
 }
 
 test('only -20 through 40 C supports activity, independently of era',()=>{
@@ -23,10 +23,10 @@ test('dehydration preserves the same civilization; safe rehydration resumes it',
  f.run(360);assert.equal(f.civ.phase,'active');assert.equal(f.shared.civilizationCount,1);assert.equal(f.shared.civilizationRecords.length,0);assert.equal(f.civ.logs.filter(l=>l.kind==='birth').length,1);
 });
 test('unsafe fluctuating climate interrupts rehydration instead of creating new civilizations',()=>{
- const f=fixture();f.run(240);f.run(180,80);f.run(230);assert.equal(f.civ.phase,'rehydrating');f.tick(20,{safe:false});assert.equal(f.civ.phase,'dormant');assert.equal(f.shared.civilizationCount,1);
+ const f=fixture();f.run(240);f.run(180,80);f.run(75);assert.equal(f.civ.phase,'rehydrating');f.tick(20,{safe:false});assert.equal(f.civ.phase,'dormant');assert.equal(f.shared.civilizationCount,1);
 });
 test('dry storage is finite and prolonged extreme heat or cold destroys it once',()=>{
- for(const temp of[-250,1000]){const f=fixture();f.run(240);f.run(1800,temp);assert.equal(f.shared.civilizationAlive,false);assert.equal(f.shared.civilizationRecords.length,1);assert.equal(f.civ.phase,'destroyed');}
+ for(const temp of[-250,1000]){const f=fixture();f.run(240);f.run(24000,temp);assert.equal(f.shared.civilizationAlive,false);assert.equal(f.shared.civilizationRecords.length,1);assert.equal(f.civ.phase,'destroyed');}
 });
 test('destroyed planet permanently blocks local rebirth even with comfortable temperature',()=>{
  const f=fixture();f.run(240);const terminal={kind:'disrupted',zh:'大撕裂',en:'Great Tear'};f.run(2400,20,{terminal});assert.equal(f.shared.civilizationAlive,false);assert.equal(f.shared.civilizationRecords.length,1);assert.equal(f.civ.phase,'destroyed');
@@ -55,7 +55,7 @@ test('stellar contact is irreversible, and thermal inertia softens instantaneous
  b[0].x=.001;s=w.update(b,1e-6,20,settings,1);assert.equal(s.planet.terminal.kind,'engulfed');b[0].x=100;assert.equal(w.update(b,1e-6,20,settings,2).planet.terminal.kind,'engulfed');
 });
 test('climate damage depends on elapsed time instead of sampling frequency',()=>{
- const a=new Habitability(),b=new Habitability();for(let i=0;i<60;i++)a.update({tem:300},settings,1/60);for(let i=0;i<120;i++)b.update({tem:300},settings,1/120);assert.ok(Math.abs(a.health-b.health)<1e-12);
+ const a=new Habitability(),b=new Habitability();for(let i=0;i<60;i++)a.update({tem:300},settings,1/60,{alive:true,number:1});for(let i=0;i<120;i++)b.update({tem:300},settings,1/120,{alive:true,number:1});assert.ok(Math.abs(a.health-b.health)<1e-12);
 });
 test('tail visibility and color never reset physical trajectories',()=>{
  const a=new Simulation(),b=new Simulation();for(let i=0;i<120;i++){a.tick();b.tick();}a.configure({newproperty14:false,brfontcoloraaaaaatrail1color:'1 0 0',trailsLength:120});for(let i=0;i<120;i++){a.tick();b.tick();}assert.deepEqual(a.snapshot().bodies,b.snapshot().bodies);

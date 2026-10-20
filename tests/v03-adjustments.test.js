@@ -12,8 +12,8 @@ test('22.6 C immediately reports fully suitable climate after a cold or hot inte
  const h=new Habitability();h.update({tem:-100},settings);assert.equal(h.update({tem:22.6},settings).score,1);assert.equal(h.result.canGrow,true);
  assert.equal(h.update({tem:41},settings).score,0);assert.equal(h.result.canGrow,false);
 });
-test('warm damaged planets cannot show a suitable score or heal civilization',()=>{
- const h=new Habitability();h.health=.7;const result=h.update({tem:22.6},settings,1/60,{damaged:true});assert.equal(result.score,0);assert.equal(result.canGrow,false);assert.ok(result.health<.7);
+test('warm damaged planets block production without treating an old scar as continual population loss',()=>{
+ const h=new Habitability();h.begin(1);h.population=.7;const result=h.update({tem:22.6},settings,1/60,{alive:true,number:1,damaged:true});assert.equal(result.score,0);assert.equal(result.canGrow,false);assert.equal(result.health,.7);
  assert.equal(h.update({tem:22.6},settings,1/60,{terminal:true}).score,0);
 });
 test('tidal danger reduces suitability and blocks growth before structural failure',()=>{
