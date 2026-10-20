@@ -13,7 +13,7 @@ def final_hierarchy(row):
     return {'boundInner':True,'innerSemimajor':float(ain),'outerEnergy':float(eo),'outerUnbound':bool(eo>=0),'outerPericenterToInnerA':float(q/ain),'hierarchicalBound':bool(eo<0 and q/ain>3),'shape':float(max(d)/min(d))}
 
 output={}
-for name in ['phase3','extended-3000','extended-10000']:
+for name in ['phase3','extended-3000','extended-10000-v2']:
     path=root/'results'/f'{name}.jsonl'
     if not path.exists():continue
     rows=[json.loads(x) for x in path.read_text().splitlines()];g=collections.defaultdict(list)
@@ -21,6 +21,7 @@ for name in ['phase3','extended-3000','extended-10000']:
     if len(rows)!=512 or any(len(v)!=128 for v in g.values()):
         if name=='phase3':raise RuntimeError('Incomplete holdout: do not analyze early')
         continue
+    if any(r['error'] for r in rows):raise RuntimeError('Unresolved numerical stops must not be analyzed as physical failures')
     detail={}
     for p,rr in g.items():
         surviving=[r for r in rr if r['survived']];classify=[final_hierarchy(r) for r in surviving]

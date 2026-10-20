@@ -29,7 +29,7 @@ fig.savefig(out/'holdout.png',dpi=180);plt.close(fig)
 fig,axs=plt.subplots(1,2,figsize=(12,4),layout='constrained')
 for name,label,color in zip(names,labels,colors):
     ss=[]
-    for file in ['phase3','extended-3000','extended-10000']:
+    for file in ['phase3','extended-3000','extended-10000-v2']:
         rr=[json.loads(l) for l in (root/'results'/f'{file}.jsonl').read_text().splitlines()];a=[r for r in rr if r['profile']==name];ss.append(np.mean([r['survived'] for r in a]))
     axs[0].plot([1000,3000,10000],ss,'o-',color=color,label=label)
 axs[0].set(xscale='log',xlabel='Horizon (display years)',ylabel='Survivors / original 128 seeds',ylim=(-.01,1));axs[0].legend(fontsize=8);axs[0].set_title('Entire holdout cohort retained at each horizon')
