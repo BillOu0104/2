@@ -1,0 +1,4678 @@
+{
+  "camera": {
+    "center": "-1.83970 0.51670 9.15603",
+    "eye": "-2.05772 0.85240 10.07242",
+    "up": "0.00000 1.00000 0.00000"
+  },
+  "general": {
+    "ambientcolor": "0.00000 0.00000 0.00000",
+    "bloom": true,
+    "bloomhdrfeather": 0.88,
+    "bloomhdriterations": 6,
+    "bloomhdrscatter": {
+      "user": "hdr1",
+      "value": 2.0
+    },
+    "bloomhdrstrength": {
+      "user": "hdr",
+      "value": 4.0
+    },
+    "bloomhdrthreshold": 0.46000001,
+    "bloomstrength": 4.0,
+    "bloomthreshold": 0.23,
+    "bloomtint": "1.00000 1.00000 1.00000",
+    "camerafade": true,
+    "cameraparallax": false,
+    "cameraparallaxamount": 1.1900001,
+    "cameraparallaxdelay": 0.12,
+    "cameraparallaxmouseinfluence": 1.0,
+    "camerapreview": true,
+    "camerashake": false,
+    "camerashakeamplitude": {
+      "user": "lensshakeamplitude",
+      "value": 0.5
+    },
+    "camerashakeroughness": 1.0,
+    "camerashakespeed": {
+      "user": "lensshakespeed",
+      "value": 0.61799997
+    },
+    "clearcolor": "0.00000 0.00000 0.00000",
+    "clearenabled": true,
+    "farz": 10000.0,
+    "fov": 50.0,
+    "gravitydirection": "0.00000 -1.00000 0.00000",
+    "gravitystrength": 1.0,
+    "hdr": true,
+    "nearz": 0.0099999998,
+    "orthogonalprojection": null,
+    "skylightcolor": "0.23922 0.23922 0.23922",
+    "transparentsorting": true,
+    "winddirection": "0.70700 0.70700 0.00000",
+    "windenabled": false,
+    "windstrength": 1.0,
+    "zoom": 1.0
+  },
+  "objects": [
+    {
+      "alignment": "bottom",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 532,
+      "image": "models/black2.json",
+      "name": "black2",
+      "origin": {
+        "scriptproperties": {
+          "peakvalue": 8
+        },
+        "value": "0.00000 0.00000 4.50000"
+      },
+      "scale": "1.00000 0.50000 0.02109",
+      "size": "32.00000 32.00000",
+      "visible": false
+    },
+    {
+      "alignment": "top",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 577,
+      "image": "models/black2.json",
+      "name": "black2",
+      "origin": {
+        "scriptproperties": {
+          "peakvalue": 4
+        },
+        "value": "0.00000 0.00000 4.50000"
+      },
+      "scale": "1.00000 0.04000 1.00000",
+      "size": "32.00000 32.00000",
+      "visible": false
+    },
+    {
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 535,
+      "image": "models/black2.json",
+      "name": "black2",
+      "origin": "0.00000 0.00000 4.50000",
+      "scale": {
+        "scriptproperties": {
+          "peakvalue": 1
+        },
+        "value": "1.00000 0.04000 1.00000"
+      },
+      "size": "32.00000 32.00000",
+      "visible": false
+    },
+    {
+      "brightness": {
+        "user": "newproperty57",
+        "value": 1.0
+      },
+      "castshadow": false,
+      "clampuvs": true,
+      "color": {
+        "user": "newproperty40",
+        "value": "0.09804 0.15294 0.20000"
+      },
+      "disablepropagation": false,
+      "id": 1245,
+      "image": "models/solid_instance_model_5f3e4616.json",
+      "instance": {
+        "combos": {
+          "version": 2
+        },
+        "id": 1246,
+        "textures": [
+          "util/white"
+        ]
+      },
+      "name": "自定义纯色背景",
+      "origin": "0.00000 0.00000 -25.00000",
+      "scale": "1.00000 1.00000 0.00900",
+      "size": "256.00000 256.00000",
+      "visible": {
+        "user": {
+          "condition": "2",
+          "name": "newproperty17"
+        },
+        "value": false
+      }
+    },
+    {
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 92,
+      "image": "models/solid_instance_model_03de9c8d.json",
+      "instance": {
+        "combos": {
+          "version": 2
+        },
+        "id": 93,
+        "textures": [
+          "util/white"
+        ]
+      },
+      "name": "迟滞滑块|预留 作废",
+      "origin": {
+        "value": "0.00000 0.00000 0.00000"
+      },
+      "scale": "0.00900 0.00900 0.00900",
+      "size": "50.00000 50.00000",
+      "visible": false
+    },
+    {
+      "alpha": 0.38,
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 1237,
+      "image": "models/solid_instance_model_fb6df235.json",
+      "instance": {
+        "combos": {
+          "version": 2
+        },
+        "id": 1239,
+        "textures": [
+          "util/white"
+        ]
+      },
+      "name": "RST按钮",
+      "scale": "0.00200 0.00100 0.00900",
+      "size": "256.00000 256.00000",
+      "visible": {
+        "scriptproperties": {
+          "auto": {
+            "user": "autorestart",
+            "value": false
+          }
+        },
+        "value": false
+      }
+    },
+    {
+      "alpha": {
+        "value": 1.0
+      },
+      "anchor": "none",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "fonts/Rajdhani Medium.otf",
+      "horizontalalign": "center",
+      "id": 2054,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "RST文字",
+      "opaquebackground": false,
+      "padding": 32,
+      "pointsize": 21.0,
+      "scale": "0.00100 0.00100 0.00100",
+      "size": "181.00000 88.00000",
+      "text": {
+        "scriptproperties": {
+          "ez": {
+            "user": "cnen2",
+            "value": false
+          }
+        },
+        "value": "reset"
+      },
+      "verticalalign": "center"
+    },
+    {
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 317,
+      "image": "models/util/fullscreenlayer.json",
+      "name": "光标旋转后处理",
+      "parallaxDepth": "0.00000 0.00000",
+      "visible": {
+        "value": true
+      }
+    },
+    {
+      "disablepropagation": false,
+      "id": 1326,
+      "name": "MAIN",
+      "solid": true,
+      "visible": {
+        "scriptproperties": {
+          "DD": {
+            "user": "newproperty13",
+            "value": 4.5
+          },
+          "body1_vx": {
+            "user": "v1",
+            "value": 0.1
+          },
+          "body1_vy": {
+            "user": "vy1",
+            "value": -0.2
+          },
+          "body1_vz": {
+            "user": "vz1",
+            "value": -0.1
+          },
+          "body1_x": {
+            "user": "x11",
+            "value": 0
+          },
+          "body1_y": {
+            "user": "y11",
+            "value": 1
+          },
+          "body1_z": {
+            "user": "z1",
+            "value": 0
+          },
+          "body2_vx": {
+            "user": "vx2",
+            "value": -0.1
+          },
+          "body2_vy": {
+            "user": "vy2",
+            "value": 0.2
+          },
+          "body2_vz": {
+            "user": "vz2",
+            "value": 0
+          },
+          "body2_x": {
+            "user": "x21",
+            "value": -0.866
+          },
+          "body2_y": {
+            "user": "y21",
+            "value": -0.5
+          },
+          "body2_z": {
+            "user": "z2",
+            "value": 0
+          },
+          "body3_vx": {
+            "user": "vx3",
+            "value": 0
+          },
+          "body3_vy": {
+            "user": "vy3",
+            "value": 0.1
+          },
+          "body3_vz": {
+            "user": "vz3",
+            "value": -0.2
+          },
+          "body3_x": {
+            "user": "x3",
+            "value": 0.866
+          },
+          "body3_y": {
+            "user": "y3",
+            "value": -0.5
+          },
+          "body3_z": {
+            "user": "z3",
+            "value": 0
+          },
+          "body4_vx": {
+            "user": "vx4",
+            "value": 0
+          },
+          "body4_vy": {
+            "user": "vy4",
+            "value": 0
+          },
+          "body4_vz": {
+            "user": "vz4",
+            "value": 0
+          },
+          "body4_x": {
+            "user": "x4",
+            "value": 0
+          },
+          "body4_y": {
+            "user": "y4",
+            "value": 0
+          },
+          "body4_z": {
+            "user": "z4",
+            "value": 0
+          },
+          "color1": {
+            "user": "brfontcoloraaaaaatrail1color",
+            "value": "1 1 1"
+          },
+          "color2": {
+            "user": "brfontcoloraaaaaatrail2color",
+            "value": "1 1 1"
+          },
+          "color3": {
+            "user": "brfontcoloraaaaaatrail3color",
+            "value": "1 1 1"
+          },
+          "color4": {
+            "user": "brfontcoloraaaaaatrail4color",
+            "value": "0.3843137254901961 0.6941176470588235 1"
+          },
+          "constraint_En": {
+            "user": "newproperty60",
+            "value": false
+          },
+          "constraint_M": {
+            "user": "mc",
+            "value": 5000000
+          },
+          "constraint_Rc": {
+            "user": "newproperty67",
+            "value": 2.0999999
+          },
+          "constraint_k1": {
+            "user": "k1",
+            "value": 0
+          },
+          "constraint_k2": {
+            "user": "k2",
+            "value": 0.5
+          },
+          "constraint_n": {
+            "user": "expc",
+            "value": 2
+          },
+          "constraint_rc": {
+            "user": "rc",
+            "value": 0.2
+          },
+          "constraint_re": {
+            "user": "re",
+            "value": 0.1
+          },
+          "cus_en": {
+            "user": "newproperty50",
+            "value": false
+          },
+          "damp": {
+            "user": "y6",
+            "value": 0.98500001
+          },
+          "fourthMass": {
+            "user": "newproperty8",
+            "value": 1000
+          },
+          "hardConstraint": {
+            "user": "newproperty66",
+            "value": true
+          },
+          "kSoft": {
+            "user": "newproperty29",
+            "value": 2.8
+          },
+          "kg": {
+            "user": "newproperty52",
+            "value": 1000
+          },
+          "ktime": {
+            "user": "timespeed",
+            "value": 1
+          },
+          "lenAX": {
+            "user": "x6",
+            "value": 90
+          },
+          "lenAY": {
+            "user": "y7",
+            "value": 30
+          },
+          "lenR_en": {
+            "user": "newproperty16",
+            "value": true
+          },
+          "lenV": {
+            "user": "newproperty62",
+            "value": 0.1
+          },
+          "lenc_mode": {
+            "user": "newproperty61",
+            "value": 0
+          },
+          "mass1": {
+            "user": "_110",
+            "value": 5000000
+          },
+          "mass2": {
+            "user": "_26",
+            "value": 5000000
+          },
+          "mass3": {
+            "user": "_34",
+            "value": 5000000
+          },
+          "ras": {
+            "user": "newproperty28",
+            "value": 0.1
+          },
+          "rxz": true,
+          "senx": {
+            "user": "y5",
+            "value": 1
+          },
+          "seny": {
+            "user": "x5",
+            "value": 1
+          },
+          "step": {
+            "user": "newproperty53",
+            "value": 0.75
+          },
+          "trailEndSize": 0.00039999999,
+          "trailLength": 400,
+          "trailStartSize": 9.9999997e-05,
+          "trailen": {
+            "user": "newproperty14",
+            "value": true
+          },
+          "vcvc": {
+            "user": "newproperty48",
+            "value": 0.75
+          },
+          "xcxc": {
+            "user": "brfontcoloraaaaaarandomposrange",
+            "value": 1.5
+          },
+          "zizhuanX": {
+            "user": "brfontcoloraaaaaaxspinangle",
+            "value": 4
+          },
+          "zizhuanY": {
+            "user": "newproperty51",
+            "value": 3
+          }
+        },
+        "value": true
+      }
+    },
+    {
+      "alpha": {
+        "scriptproperties": {
+          "tmdyears": {
+            "user": "newproperty22",
+            "value": 0.5
+          }
+        },
+        "value": 1.0
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "center",
+      "id": 345,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "time",
+      "opaquebackground": false,
+      "origin": "0.00000 -0.54000 4.00000",
+      "padding": 32,
+      "pointsize": 9.0,
+      "scale": "0.00090 0.00080 0.00900",
+      "size": "2.00000 2.00000",
+      "text": {
+        "scriptproperties": {
+          "kt": {
+            "user": "newproperty26",
+            "value": 10
+          }
+        },
+        "value": ""
+      },
+      "verticalalign": "center"
+    },
+    {
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 2017,
+      "image": "models/ta.json",
+      "name": "ta",
+      "scale": "0.00583 0.00583 0.00583",
+      "size": "32.00000 32.00000",
+      "solid": false,
+      "visible": false
+    },
+    {
+      "angles": "0.00000 -0.00000 0.00000",
+      "disablepropagation": false,
+      "id": 205,
+      "name": "MAIN 0-0",
+      "solid": true
+    },
+    {
+      "alpha": {
+        "value": 1.0
+      },
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 155,
+      "image": "models/0aun.json",
+      "name": "Sun png",
+      "origin": "0.00000 0.00000 -30.00000",
+      "parent": 205,
+      "scale": "0.00500 0.00500 0.00500",
+      "size": "1080.00000 540.00000",
+      "visible": false
+    },
+    {
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "effects": [
+        {
+          "file": "effects/scroll/effect.json",
+          "id": 353,
+          "name": "",
+          "passes": [
+            {
+              "constantshadervalues": {
+                "repeat": "1 1",
+                "speedx": 0.5,
+                "speedy": 0.5
+              },
+              "id": 354
+            }
+          ],
+          "visible": true
+        }
+      ],
+      "id": 427,
+      "image": "models/0sun.json",
+      "name": "Sun E png",
+      "origin": "-1.65329 0.00000 1.74153",
+      "parent": 205,
+      "scale": "0.00500 0.00500 0.00500",
+      "size": "1080.00000 540.00000",
+      "visible": false
+    },
+    {
+      "angles": {
+        "value": "0.00000 -0.00000 0.00000"
+      },
+      "disablepropagation": false,
+      "id": 188,
+      "model": "models/1/1.mdl",
+      "name": "Star1 model1",
+      "origin": {
+        "value": "0.00000 1.00000 0.00000"
+      },
+      "parent": 205,
+      "scale": {
+        "scriptproperties": {
+          "h1z": {
+            "user": "_13",
+            "value": 0.029999999
+          }
+        },
+        "value": "0.03000 0.03000 0.03000"
+      },
+      "solid": true
+    },
+    {
+      "alpha": 0.58999997,
+      "angles": "0.00000 -0.00000 0.00000",
+      "brightness": {
+        "scriptproperties": {
+          "peakvalues1": 1.0
+        },
+        "value": 1.0
+      },
+      "castshadow": false,
+      "clampuvs": true,
+      "color": {
+        "user": "_16",
+        "value": "1.00000 0.79608 0.69412"
+      },
+      "disablepropagation": false,
+      "effects": [
+        {
+          "file": "effects/pulse/effect.json",
+          "id": 301,
+          "name": "",
+          "passes": [
+            {
+              "constantshadervalues": {
+                "amount": 1,
+                "bounds": "0 1",
+                "noiseamount": 0.38,
+                "noisespeed": 0.34999999,
+                "phase": 0,
+                "power": 0.88999999,
+                "speed": 1.37,
+                "tinthigh": "0.8235294117647058 0.8235294117647058 0.8235294117647058",
+                "tintlow": "0.11372549019607843 0.11372549019607843 0.11372549019607843"
+              },
+              "id": 306
+            }
+          ],
+          "visible": true
+        }
+      ],
+      "id": 300,
+      "image": "models/sa3.json",
+      "name": "sa3",
+      "origin": {
+        "value": "0.00000 1.00000 0.00000"
+      },
+      "parent": 205,
+      "scale": {
+        "scriptproperties": {
+          "h1zs": {
+            "user": "_13",
+            "value": 0.029999999
+          }
+        },
+        "value": "0.00300 0.00300 0.00300"
+      },
+      "size": "512.00000 512.00000",
+      "visible": {
+        "user": "newproperty18",
+        "value": true
+      }
+    },
+    {
+      "angles": {
+        "value": "0.00000 -0.00000 0.00000"
+      },
+      "disablepropagation": false,
+      "id": 214,
+      "model": "models/2/2.mdl",
+      "name": "Star2 model1",
+      "origin": {
+        "value": "-0.86600 -0.50000 0.00000"
+      },
+      "parent": 205,
+      "scale": {
+        "scriptproperties": {
+          "h2z": {
+            "user": "_21",
+            "value": 0.022
+          }
+        },
+        "value": "0.02200 0.02200 0.02200"
+      },
+      "solid": true
+    },
+    {
+      "alpha": 0.58999997,
+      "angles": "0.00000 -0.00000 0.00000",
+      "brightness": {
+        "scriptproperties": {
+          "peakvalues1": 1.0
+        },
+        "value": 1.0
+      },
+      "castshadow": false,
+      "clampuvs": true,
+      "color": {
+        "user": "_24",
+        "value": "1.00000 0.79608 0.69412"
+      },
+      "disablepropagation": false,
+      "effects": [
+        {
+          "file": "effects/pulse/effect.json",
+          "id": 2092,
+          "name": "",
+          "passes": [
+            {
+              "constantshadervalues": {
+                "amount": 1,
+                "bounds": "0 1",
+                "noiseamount": 0.38,
+                "noisespeed": 0.34999999,
+                "phase": 0,
+                "power": 0.88999999,
+                "speed": 1.37,
+                "tinthigh": "0.8235294117647058 0.8235294117647058 0.8235294117647058",
+                "tintlow": "0.11372549019607843 0.11372549019607843 0.11372549019607843"
+              },
+              "id": 2093
+            }
+          ],
+          "visible": true
+        }
+      ],
+      "id": 294,
+      "image": "models/sa3.json",
+      "name": "sa3",
+      "origin": {
+        "value": "-0.86600 -0.50000 0.00000"
+      },
+      "parent": 205,
+      "scale": {
+        "scriptproperties": {
+          "h2zs": {
+            "user": "_21",
+            "value": 0.022
+          }
+        },
+        "value": "0.00220 0.00220 0.00220"
+      },
+      "size": "512.00000 512.00000",
+      "visible": {
+        "user": "newproperty18",
+        "value": true
+      }
+    },
+    {
+      "angles": {
+        "value": "0.00000 -0.00000 0.00000"
+      },
+      "disablepropagation": false,
+      "id": 218,
+      "model": "models/3/3.mdl",
+      "name": "Star3 model1",
+      "origin": {
+        "value": "0.86600 -0.50000 0.00000"
+      },
+      "parent": 205,
+      "scale": {
+        "scriptproperties": {
+          "h3z": {
+            "user": "_3",
+            "value": 0.017999999
+          }
+        },
+        "value": "0.01800 0.01800 0.01800"
+      },
+      "solid": true
+    },
+    {
+      "alpha": 0.58999997,
+      "angles": "0.00000 -0.00000 0.00000",
+      "brightness": {
+        "scriptproperties": {
+          "peakvalues1": 1.0
+        },
+        "value": 1.0
+      },
+      "castshadow": false,
+      "clampuvs": true,
+      "color": {
+        "user": "_33",
+        "value": "1.00000 0.79608 0.69412"
+      },
+      "disablepropagation": false,
+      "effects": [
+        {
+          "file": "effects/pulse/effect.json",
+          "id": 2100,
+          "name": "",
+          "passes": [
+            {
+              "constantshadervalues": {
+                "amount": 1,
+                "bounds": "0 1",
+                "noiseamount": 0.38,
+                "noisespeed": 0.34999999,
+                "phase": 0,
+                "power": 0.88999999,
+                "speed": 1.37,
+                "tinthigh": "0.8235294117647058 0.8235294117647058 0.8235294117647058",
+                "tintlow": "0.11372549019607843 0.11372549019607843 0.11372549019607843"
+              },
+              "id": 2101
+            }
+          ],
+          "visible": true
+        }
+      ],
+      "id": 2073,
+      "image": "models/sa3.json",
+      "name": "sa3",
+      "origin": {
+        "value": "0.86600 -0.50000 0.00000"
+      },
+      "parent": 205,
+      "scale": {
+        "scriptproperties": {
+          "h3zs": {
+            "user": "_3",
+            "value": 0.017999999
+          }
+        },
+        "value": "0.00180 0.00180 0.00180"
+      },
+      "size": "512.00000 512.00000",
+      "visible": {
+        "user": "newproperty18",
+        "value": true
+      }
+    },
+    {
+      "angles": {
+        "value": "0.00000 -0.00000 0.00000"
+      },
+      "disablepropagation": false,
+      "id": 2077,
+      "model": "models/球体04/球体04.mdl",
+      "name": "Earth4 model2",
+      "origin": {
+        "value": "0.00000 0.00000 0.00000"
+      },
+      "parent": 205,
+      "scale": {
+        "scriptproperties": {
+          "x1z": {
+            "user": "newproperty20",
+            "value": 0.0099999998
+          }
+        },
+        "value": "0.01000 0.01000 0.01000"
+      },
+      "solid": true
+    },
+    {
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 411,
+      "image": "models/0dq.json",
+      "name": "Earth png",
+      "origin": "0.12579 0.00000 -0.71249",
+      "parent": 205,
+      "scale": "0.01000 0.01000 0.01000",
+      "size": "540.00000 270.00000",
+      "visible": false
+    },
+    {
+      "disablepropagation": false,
+      "id": 383,
+      "name": "",
+      "origin": {
+        "scriptproperties": {
+          "duration": 8,
+          "easingType": "easeOutQuart",
+          "endValue": {
+            "user": "distance",
+            "value": -2
+          },
+          "startTime": 0,
+          "startValue": 50
+        },
+        "value": "0.00000 0.00000 0.00000"
+      },
+      "solid": true
+    },
+    {
+      "angles": {
+        "value": "0.00000 -0.00000 0.00000"
+      },
+      "disablepropagation": false,
+      "id": 245,
+      "name": "MAIN 0-1",
+      "origin": {
+        "value": "0.00000 0.00000 0.00000"
+      },
+      "solid": true
+    },
+    {
+      "angles": "0.17453 -0.00000 0.00000",
+      "disablepropagation": false,
+      "id": 2097,
+      "instanceoverride": {
+        "alpha": 0.94999999,
+        "brightness": 2.0,
+        "colorn": "0.94510 0.87059 1.00000",
+        "count": {
+          "user": "_1dust1quantity",
+          "value": 0.5
+        },
+        "id": 128,
+        "size": {
+          "user": "_1dust1size",
+          "value": 0.1
+        },
+        "speed": 0.61000001
+      },
+      "name": "star1",
+      "parent": 245,
+      "particle": "particles/star.json",
+      "scale": "0.22000 0.22000 0.22000",
+      "solid": true,
+      "visible": {
+        "user": "dust",
+        "value": true
+      }
+    },
+    {
+      "angles": "0.17453 -0.00000 0.00000",
+      "disablepropagation": false,
+      "id": 2084,
+      "instanceoverride": {
+        "brightness": 4.0,
+        "colorn": "0.63922 0.52941 0.68627",
+        "count": {
+          "user": "_2dust2quantity",
+          "value": 1.0
+        },
+        "id": 132,
+        "size": {
+          "user": "_2dust1size",
+          "value": 0.07
+        },
+        "speed": 0.61000001
+      },
+      "name": "star2",
+      "parent": 245,
+      "particle": "particles/star.json",
+      "scale": "0.42000 0.42000 0.42000",
+      "solid": true,
+      "visible": {
+        "user": "dust",
+        "value": true
+      }
+    },
+    {
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 439,
+      "image": "models/B8k.json",
+      "name": "B8k",
+      "origin": "-0.95268 0.00000 -6.36177",
+      "parent": 245,
+      "scale": "0.00066 0.00066 0.00066",
+      "size": "8192.00000 4096.00000",
+      "visible": false
+    },
+    {
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 319,
+      "image": "models/BB8k3.json",
+      "name": "BB8k3",
+      "origin": "0.00000 0.00000 -21.00000",
+      "parent": 245,
+      "scale": "0.01600 0.01600 0.01600",
+      "size": "8192.00000 4096.00000",
+      "visible": false
+    },
+    {
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 284,
+      "image": "models/st2.json",
+      "name": "st2",
+      "origin": "0.00000 0.00000 -21.00000",
+      "parent": 245,
+      "scale": "0.01600 0.01600 0.01600",
+      "size": "8192.00000 4096.00000",
+      "visible": false
+    },
+    {
+      "angles": "0.00000 -0.00000 0.00000",
+      "disablepropagation": false,
+      "id": 409,
+      "instanceoverride": {
+        "alpha": 0.1,
+        "brightness": 0.30000001,
+        "colorn": "0.82745 0.10196 0.67059",
+        "id": 243,
+        "rate": 0.5,
+        "size": 7.0
+      },
+      "name": "new_particle_system",
+      "parent": 245,
+      "particle": "particles/new_particle_system.json",
+      "scale": "1.50000 1.50000 1.50000",
+      "solid": true,
+      "visible": {
+        "user": "brfontcoloraaaaaabrnebularequirespostprocessingultrahighquality",
+        "value": false
+      }
+    },
+    {
+      "angles": "0.00000 -0.00000 0.00000",
+      "disablepropagation": false,
+      "id": 551,
+      "instanceoverride": {
+        "alpha": 0.15000001,
+        "brightness": 0.30000001,
+        "colorn": "0.32941 0.50980 0.81961",
+        "id": 60,
+        "rate": 0.5,
+        "size": 7.0
+      },
+      "name": "new_particle_system",
+      "parent": 245,
+      "particle": "particles/new_particle_system.json",
+      "solid": true,
+      "visible": {
+        "user": "brfontcoloraaaaaabrnebularequirespostprocessingultrahighquality",
+        "value": false
+      }
+    },
+    {
+      "angles": "0.00000 -0.00000 0.00000",
+      "disablepropagation": false,
+      "id": 505,
+      "name": "",
+      "parent": 245,
+      "scale": {
+        "scriptproperties": {
+          "duration": 8,
+          "easingType": "easeOutQuart",
+          "endValue": 1,
+          "startTime": 0,
+          "startValue": 50
+        },
+        "value": "1.00000 1.00000 1.00000"
+      },
+      "solid": true
+    },
+    {
+      "angles": "0.00000 -2.35619 0.00000",
+      "castshadow": false,
+      "disablepropagation": false,
+      "id": 238,
+      "model": "models/自制天空盒00/自制天空盒00.mdl",
+      "name": "自制天空盒00",
+      "parent": 505,
+      "scale": "8.00000 12.00000 8.00000",
+      "solid": true,
+      "visible": {
+        "user": {
+          "condition": "4",
+          "name": "newproperty17"
+        },
+        "value": true
+      }
+    },
+    {
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "disablepropagation": false,
+      "id": 332,
+      "model": "models/自制天空盒01/自制天空盒01.mdl",
+      "name": "自制天空盒01",
+      "parent": 505,
+      "scale": "8.00000 12.00000 8.00000",
+      "solid": true,
+      "visible": {
+        "user": {
+          "condition": "1",
+          "name": "newproperty17"
+        },
+        "value": false
+      }
+    },
+    {
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "dependencies": [
+        589
+      ],
+      "disablepropagation": false,
+      "id": 331,
+      "model": "models/自制天空盒02/自制天空盒02.mdl",
+      "name": "自制天空盒02",
+      "parent": 505,
+      "scale": "8.00000 12.00000 8.00000",
+      "solid": true,
+      "visible": {
+        "user": {
+          "condition": "3",
+          "name": "newproperty17"
+        },
+        "value": false
+      }
+    },
+    {
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 589,
+      "image": "models/CUbg.json",
+      "name": "Custom BG",
+      "origin": "0.00000 0.00000 -50.00000",
+      "scale": "0.00066 0.00066 0.00066",
+      "size": "4096.00000 2048.00000",
+      "visible": false
+    },
+    {
+      "angles": {
+        "value": "0.00000 0.00000 0.00000"
+      },
+      "disablepropagation": false,
+      "id": 525,
+      "name": "罗盘",
+      "solid": true
+    },
+    {
+      "alpha": {
+        "value": 1.0
+      },
+      "angles": "0.00000 -0.00000 1.57080",
+      "castshadow": false,
+      "clampuvs": true,
+      "color": "0.15686 0.28627 0.43529",
+      "disablepropagation": false,
+      "id": 2173,
+      "image": "models/solid_instance_model_a4682815.json",
+      "instance": {
+        "combos": {
+          "version": 2
+        },
+        "id": 2174,
+        "textures": [
+          "util/white"
+        ]
+      },
+      "name": "导航盘 Y轴2",
+      "parent": 525,
+      "scale": "0.00900 0.01000 0.00400",
+      "size": "100.00000 1.00000",
+      "visible": false
+    },
+    {
+      "alpha": {
+        "value": 1.0
+      },
+      "angles": "1.57080 -0.00000 1.57080",
+      "castshadow": false,
+      "clampuvs": true,
+      "color": "0.15686 0.28627 0.43529",
+      "disablepropagation": false,
+      "id": 2192,
+      "image": "models/solid_instance_model_a4682815.json",
+      "instance": {
+        "combos": {
+          "version": 2
+        },
+        "id": 2193,
+        "textures": [
+          "util/white"
+        ]
+      },
+      "name": "导航盘 Y轴1",
+      "parent": 525,
+      "scale": "0.00900 0.01000 0.00400",
+      "size": "100.00000 1.00000",
+      "visible": false
+    },
+    {
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "dependencies": [
+        433
+      ],
+      "disablepropagation": false,
+      "id": 436,
+      "model": "models/Hollow Cylinder/Hollow Cylinder.mdl",
+      "name": "导航盘 赤道",
+      "parent": 525,
+      "scale": "0.20000 0.01000 0.20000",
+      "solid": true,
+      "visible": {
+        "user": "compass",
+        "value": true
+      }
+    },
+    {
+      "alpha": {
+        "value": 1.0
+      },
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 433,
+      "image": "models/solid_instance_model_8f909af6.json",
+      "instance": {
+        "combos": {
+          "version": 2
+        },
+        "id": 435,
+        "textures": [
+          "util/white"
+        ]
+      },
+      "name": "导航盘 赤道 color",
+      "origin": "-0.12053 0.00000 1.67663",
+      "parent": 525,
+      "scale": "0.00900 0.00900 0.00900",
+      "size": "5.00000 5.00000",
+      "visible": false
+    },
+    {
+      "alpha": {
+        "value": 1.0
+      },
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 405,
+      "image": "models/sz00png.json",
+      "name": "sz00png",
+      "scale": "0.00050 0.00050 0.00050",
+      "size": "142.00000 142.00000",
+      "visible": false
+    },
+    {
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "center",
+      "id": 1227,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "日志",
+      "opaquebackground": false,
+      "origin": "0.00000 1.80000 0.00000",
+      "padding": 32,
+      "pointsize": 32.0,
+      "scale": "0.00070 0.00070 1.00000",
+      "size": "266.00000 153.00000",
+      "text": {
+        "scriptproperties": {
+          "cTe": {
+            "user": "cnen2",
+            "value": false
+          },
+          "collisionDistance": {
+            "user": "newproperty42",
+            "value": 0.1
+          },
+          "feixingDistance": {
+            "user": "newproperty31",
+            "value": 2
+          },
+          "feixingTemp": {
+            "user": "newproperty41",
+            "value": -60
+          },
+          "highTempDestruction": {
+            "user": "newproperty44",
+            "value": 300
+          },
+          "lingkongDistance": {
+            "user": "newproperty30",
+            "value": 0.30000001
+          },
+          "logInterval": {
+            "user": "newproperty10",
+            "value": 5
+          },
+          "lowTempDestruction": {
+            "user": "newproperty43",
+            "value": -100
+          },
+          "rocheLimit": {
+            "user": "brfontcoloraaaaaarochelimitt",
+            "value": 0.050000001
+          },
+          "survivalThreshold": {
+            "user": "t",
+            "value": 50
+          }
+        },
+        "value": "日志"
+      },
+      "verticalalign": "top",
+      "visible": false
+    },
+    {
+      "angles": "0.00000 -0.00000 0.00000",
+      "disablepropagation": false,
+      "id": 2051,
+      "name": "日志",
+      "origin": {
+        "scriptproperties": {
+          "drzx": {
+            "user": "x1",
+            "value": 0
+          },
+          "drzy": {
+            "user": "y1",
+            "value": 1.8
+          }
+        },
+        "value": "0.00000 1.80000 0.00000"
+      },
+      "scale": {
+        "scriptproperties": {
+          "drzs": {
+            "user": "size1",
+            "value": 1
+          }
+        },
+        "value": "1.00000 1.00000 1.00000"
+      },
+      "solid": true,
+      "visible": {
+        "user": "newproperty38",
+        "value": true
+      }
+    },
+    {
+      "alpha": {
+        "scriptproperties": {
+          "atc": 0,
+          "clog1": {
+            "user": "t1",
+            "value": 0.69999999
+          },
+          "easingTypetc": "easeOutCubic",
+          "endTimetc": 11,
+          "startTimetc": 5
+        },
+        "value": 0.30000001
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "center",
+      "id": 1230,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "CIV STATE",
+      "opaquebackground": false,
+      "origin": "0.00000 0.72000 0.00000",
+      "padding": 32,
+      "parent": 2051,
+      "pointsize": 28.0,
+      "scale": "0.00070 0.00070 1.00000",
+      "size": "535.00000 134.00000",
+      "text": {
+        "value": "Text Layer"
+      },
+      "verticalalign": "center"
+    },
+    {
+      "alpha": {
+        "scriptproperties": {
+          "atc": 0,
+          "clog2": {
+            "user": "t2",
+            "value": 0.69999999
+          },
+          "easingTypetc": "easeOutCubic",
+          "endTimetc": 11,
+          "startTimetc": 5
+        },
+        "value": 0.23999999
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "center",
+      "id": 1244,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "lifetime",
+      "opaquebackground": false,
+      "origin": "0.00000 0.60000 0.00000",
+      "padding": 32,
+      "parent": 2051,
+      "pointsize": 28.0,
+      "scale": "0.00070 0.00070 1.00000",
+      "size": "535.00000 134.00000",
+      "text": {
+        "value": "Text Layer"
+      },
+      "verticalalign": "center"
+    },
+    {
+      "alpha": {
+        "scriptproperties": {
+          "atc": 0,
+          "clog3": {
+            "user": "t3",
+            "value": 0.69999999
+          },
+          "easingTypetc": "easeOutCubic",
+          "endTimetc": 11,
+          "startTimetc": 5
+        },
+        "value": 0.16
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "center",
+      "id": 1232,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "note1",
+      "opaquebackground": false,
+      "origin": "0.00000 0.48000 0.00000",
+      "padding": 28,
+      "parent": 2051,
+      "pointsize": 28.0,
+      "scale": "0.00070 0.00070 1.00000",
+      "size": "535.00000 134.00000",
+      "text": {
+        "value": "Text Layer"
+      },
+      "verticalalign": "center"
+    },
+    {
+      "alpha": {
+        "scriptproperties": {
+          "atc": 0,
+          "clog4": {
+            "user": "t4",
+            "value": {
+              "user": "t5",
+              "value": 0.69999999
+            }
+          },
+          "easingTypetc": "easeOutCubic",
+          "endTimetc": 11,
+          "startTimetc": 5
+        },
+        "value": 0.1
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "center",
+      "id": 1234,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "note2",
+      "opaquebackground": false,
+      "origin": "0.00000 0.36000 0.00000",
+      "padding": 32,
+      "parent": 2051,
+      "pointsize": 28.0,
+      "scale": "0.00070 0.00070 1.00000",
+      "size": "535.00000 134.00000",
+      "text": {
+        "value": "Text Layer"
+      },
+      "verticalalign": "center"
+    },
+    {
+      "alpha": {
+        "scriptproperties": {
+          "atc": 0,
+          "clog5": {
+            "user": "t5",
+            "value": 0.69999999
+          },
+          "easingTypetc": "easeOutCubic",
+          "endTimetc": 11,
+          "startTimetc": 5
+        },
+        "value": 0.07
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "center",
+      "id": 1236,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "note3",
+      "opaquebackground": false,
+      "origin": "0.00000 0.24000 0.00000",
+      "padding": 32,
+      "parent": 2051,
+      "pointsize": 28.0,
+      "scale": "0.00070 0.00070 1.00000",
+      "size": "535.00000 134.00000",
+      "text": {
+        "value": "Text Layer"
+      },
+      "verticalalign": "center"
+    },
+    {
+      "alpha": {
+        "scriptproperties": {
+          "atc": 0,
+          "clog6": {
+            "user": "t6",
+            "value": 0.69999999
+          },
+          "easingTypetc": "easeOutCubic",
+          "endTimetc": 11,
+          "startTimetc": 5
+        },
+        "value": 0.039999999
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "center",
+      "id": 1238,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "note4",
+      "opaquebackground": false,
+      "origin": "0.00000 0.12000 0.00000",
+      "padding": 32,
+      "parent": 2051,
+      "pointsize": 28.0,
+      "scale": "0.00070 0.00070 1.00000",
+      "size": "535.00000 134.00000",
+      "text": {
+        "value": "Text Layer"
+      },
+      "verticalalign": "center"
+    },
+    {
+      "alpha": {
+        "scriptproperties": {
+          "atc": 0,
+          "clog7": {
+            "user": "t7",
+            "value": 0.69999999
+          },
+          "easingTypetc": "easeOutCubic",
+          "endTimetc": 11,
+          "startTimetc": 5
+        },
+        "value": 0.0
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "center",
+      "id": 1241,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "note5",
+      "opaquebackground": false,
+      "padding": 32,
+      "parent": 2051,
+      "pointsize": 28.0,
+      "scale": "0.00070 0.00070 1.00000",
+      "size": "535.00000 134.00000",
+      "text": {
+        "value": "Text Layer"
+      },
+      "verticalalign": "center"
+    },
+    {
+      "disablepropagation": false,
+      "id": 263,
+      "name": "排行榜",
+      "origin": {
+        "scriptproperties": {
+          "phx": {
+            "user": "x2",
+            "value": 0
+          },
+          "phy": {
+            "user": "y2",
+            "value": 1.8
+          }
+        },
+        "value": "0.00000 -2.70000 0.00000"
+      },
+      "scale": {
+        "scriptproperties": {
+          "phs": {
+            "user": "size3",
+            "value": 1
+          }
+        },
+        "value": "1.00000 1.00000 1.00000"
+      },
+      "solid": true,
+      "visible": {
+        "user": "newproperty39",
+        "value": false
+      }
+    },
+    {
+      "alpha": {
+        "user": "t8",
+        "value": 0.40000001
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "center",
+      "id": 252,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "RANK",
+      "opaquebackground": false,
+      "origin": "0.00000 0.72000 0.00000",
+      "padding": 32,
+      "parent": 263,
+      "pointsize": 25.0,
+      "scale": "0.00070 0.00070 1.00000",
+      "size": "477.00000 120.00000",
+      "text": {
+        "value": "Text Layer"
+      },
+      "verticalalign": "center"
+    },
+    {
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "color": {
+        "user": "datacolor",
+        "value": "0.59216 0.76471 1.00000"
+      },
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "center",
+      "id": 401,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "userset",
+      "opaquebackground": false,
+      "origin": "0.00000 0.60000 0.00000",
+      "padding": 32,
+      "parent": 263,
+      "pointsize": 25.0,
+      "scale": "0.00070 0.00070 1.00000",
+      "size": "477.00000 120.00000",
+      "text": {
+        "value": "Text Layer"
+      },
+      "verticalalign": "center"
+    },
+    {
+      "alpha": {
+        "user": "t9",
+        "value": 0.31999999
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "center",
+      "id": 259,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "RANK1",
+      "opaquebackground": false,
+      "origin": "0.00000 0.48000 0.00000",
+      "padding": 32,
+      "parent": 263,
+      "pointsize": 25.0,
+      "scale": "0.00070 0.00070 1.00000",
+      "size": "477.00000 120.00000",
+      "text": {
+        "value": "Text Layer"
+      },
+      "verticalalign": "center"
+    },
+    {
+      "alpha": {
+        "user": "t10",
+        "value": 0.23999999
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "center",
+      "id": 261,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "RANK2",
+      "opaquebackground": false,
+      "origin": "0.00000 0.36000 0.00000",
+      "padding": 32,
+      "parent": 263,
+      "pointsize": 25.0,
+      "scale": "0.00070 0.00070 1.00000",
+      "size": "477.00000 120.00000",
+      "text": {
+        "value": "Text Layer"
+      },
+      "verticalalign": "center"
+    },
+    {
+      "alpha": {
+        "user": "tex4opacity",
+        "value": 0.16
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "center",
+      "id": 464,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "RANK3",
+      "opaquebackground": false,
+      "origin": "0.00000 0.24000 0.00000",
+      "padding": 32,
+      "parent": 263,
+      "pointsize": 25.0,
+      "scale": "0.00070 0.00070 1.00000",
+      "size": "477.00000 120.00000",
+      "text": {
+        "value": "Text Layer"
+      },
+      "verticalalign": "center"
+    },
+    {
+      "alpha": {
+        "user": "tex5opacity",
+        "value": 0.079999998
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "center",
+      "id": 465,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "RANK4",
+      "opaquebackground": false,
+      "origin": "0.00000 0.12000 0.00000",
+      "padding": 32,
+      "parent": 263,
+      "pointsize": 25.0,
+      "scale": "0.00070 0.00070 1.00000",
+      "size": "477.00000 120.00000",
+      "text": {
+        "value": "Text Layer"
+      },
+      "verticalalign": "center"
+    },
+    {
+      "alpha": {
+        "user": "tex6opacity",
+        "value": 0.039999999
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "center",
+      "id": 466,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "RANK5",
+      "opaquebackground": false,
+      "padding": 32,
+      "parent": 263,
+      "pointsize": 25.0,
+      "scale": "0.00070 0.00070 1.00000",
+      "size": "477.00000 120.00000",
+      "text": {
+        "value": "Text Layer"
+      },
+      "verticalalign": "center"
+    },
+    {
+      "alpha": {
+        "user": "tex7opacity",
+        "value": 0.0
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "center",
+      "id": 467,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "RANK6",
+      "opaquebackground": false,
+      "origin": "0.00000 -0.12000 0.00000",
+      "padding": 32,
+      "parent": 263,
+      "pointsize": 25.0,
+      "scale": "0.00070 0.00070 1.00000",
+      "size": "477.00000 120.00000",
+      "text": {
+        "value": "Text Layer"
+      },
+      "verticalalign": "center"
+    },
+    {
+      "angles": "0.00000 -0.00000 0.00000",
+      "disablepropagation": false,
+      "id": 1226,
+      "name": "Menu Left",
+      "origin": {
+        "scriptproperties": {
+          "mlx": {
+            "user": "mlx",
+            "value": -0.47999999
+          },
+          "mly": {
+            "user": "mly",
+            "value": -0.22
+          }
+        },
+        "value": "-0.48000 -0.22000 4.00000"
+      },
+      "scale": {
+        "scriptproperties": {
+          "mls": {
+            "user": "size2",
+            "value": 1
+          }
+        },
+        "value": "1.00000 1.00000 1.00000"
+      },
+      "solid": true,
+      "visible": {
+        "user": "menul",
+        "value": true
+      }
+    },
+    {
+      "alpha": {
+        "scriptproperties": {
+          "tmdML1": {
+            "user": "_19",
+            "value": 1
+          }
+        },
+        "value": 0.56
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "brightness": 1.5,
+      "castshadow": false,
+      "clampuvs": true,
+      "color": {
+        "user": "datacolor",
+        "value": "0.59216 0.76471 1.00000"
+      },
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "center",
+      "id": 337,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "State2",
+      "opaquebackground": false,
+      "origin": "-0.00000 0.08000 0.00000",
+      "padding": 32,
+      "parent": 1226,
+      "pointsize": 10.0,
+      "scale": "0.00080 0.00080 0.00900",
+      "size": "2.00000 2.00000",
+      "text": {
+        "scriptproperties": {
+          "feixingDistance": {
+            "user": "newproperty31",
+            "value": 2
+          },
+          "feixingTemp": {
+            "user": "newproperty41",
+            "value": -60
+          },
+          "lingkongDistance": {
+            "user": "newproperty30",
+            "value": 0.30000001
+          },
+          "mL1EN": {
+            "user": "cnen2",
+            "value": false
+          },
+          "stableHighTemp": {
+            "user": "newproperty46",
+            "value": 70
+          },
+          "stableLowTemp": {
+            "user": "newproperty45",
+            "value": -50
+          }
+        },
+        "value": ""
+      },
+      "verticalalign": "center"
+    },
+    {
+      "alpha": {
+        "scriptproperties": {
+          "tmdML2": {
+            "user": "_25",
+            "value": 1
+          }
+        },
+        "value": 1.0
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "color": {
+        "value": "0.45490 0.75294 1.00000"
+      },
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "center",
+      "id": 323,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "State脱水",
+      "opaquebackground": false,
+      "origin": "-0.00000 0.00000 0.00000",
+      "padding": 32,
+      "parent": 1226,
+      "pointsize": 8.0,
+      "scale": "0.00080 0.00080 0.00900",
+      "size": "2.00000 2.00000",
+      "text": {
+        "scriptproperties": {
+          "mL2EN": {
+            "user": "cnen2",
+            "value": false
+          }
+        },
+        "value": ""
+      },
+      "verticalalign": "center"
+    },
+    {
+      "alpha": {
+        "scriptproperties": {
+          "tmdML3": {
+            "user": "newproperty21",
+            "value": 1
+          }
+        },
+        "value": 1.0
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "color": {
+        "user": "datacolor",
+        "value": "0.59216 0.76471 1.00000"
+      },
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "right",
+      "id": 314,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "Tx",
+      "opaquebackground": false,
+      "origin": "0.01800 -0.08000 0.00000",
+      "padding": 32,
+      "parent": 1226,
+      "pointsize": 9.0,
+      "scale": "0.00080 0.00080 0.00900",
+      "size": "2.00000 2.00000",
+      "text": {
+        "scriptproperties": {
+          "tempE": {
+            "user": "cnen2",
+            "value": false
+          }
+        },
+        "value": ""
+      },
+      "verticalalign": "center"
+    },
+    {
+      "alpha": {
+        "scriptproperties": {
+          "tmdML4": {
+            "user": "newproperty21",
+            "value": 1
+          }
+        },
+        "value": 1.0
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "brightness": 1.5,
+      "castshadow": false,
+      "clampuvs": true,
+      "color": {
+        "user": "datacolor",
+        "value": "0.59216 0.76471 1.00000"
+      },
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "left",
+      "id": 220,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "Tem",
+      "opaquebackground": false,
+      "origin": "0.01200 -0.08000 0.00000",
+      "padding": 32,
+      "parent": 1226,
+      "pointsize": 9.0,
+      "scale": "0.00080 0.00080 0.00900",
+      "size": "2.00000 2.00000",
+      "text": {
+        "scriptproperties": {
+          "k_temp_dist": {
+            "user": "newproperty69",
+            "value": 6
+          },
+          "sL1": {
+            "user": "_111lum_sun",
+            "value": 1.5
+          },
+          "sL2": {
+            "user": "_211lum_sun",
+            "value": 0.5
+          },
+          "sL3": {
+            "user": "_311lum_sun",
+            "value": 0.1
+          }
+        },
+        "value": ""
+      },
+      "verticalalign": "center"
+    },
+    {
+      "angles": "0.00000 -0.00000 0.00000",
+      "disablepropagation": false,
+      "id": 352,
+      "name": "Menu Right",
+      "origin": {
+        "scriptproperties": {
+          "mrx": {
+            "user": "mrx",
+            "value": 50
+          },
+          "mry": {
+            "user": "mry",
+            "value": 50
+          }
+        },
+        "value": "0.48000 -0.22000 0.00000"
+      },
+      "scale": {
+        "scriptproperties": {
+          "mrs": {
+            "user": "size",
+            "value": 1
+          }
+        },
+        "value": "1.00000 1.00000 1.00000"
+      },
+      "solid": true,
+      "visible": {
+        "user": "audiobar",
+        "value": true
+      }
+    },
+    {
+      "alpha": {
+        "scriptproperties": {
+          "tmdMR1": {
+            "user": "newproperty24",
+            "value": 1
+          }
+        },
+        "value": 0.49000001
+      },
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 273,
+      "image": "models/solid_instance_model_d04c2e29.json",
+      "instance": {
+        "combos": {
+          "version": 2
+        },
+        "id": 274,
+        "textures": [
+          "util/white"
+        ]
+      },
+      "name": "tt3",
+      "origin": "0.00000 0.08000 4.00000",
+      "parent": 352,
+      "scale": "0.00090 0.00080 0.00900",
+      "size": "256.00000 4.00000"
+    },
+    {
+      "alignment": "left",
+      "alpha": {
+        "value": 0.49000001
+      },
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 278,
+      "image": "models/solid_instance_model_d04c2e29.json",
+      "instance": {
+        "combos": {
+          "version": 2
+        },
+        "id": 279,
+        "textures": [
+          "util/white"
+        ]
+      },
+      "name": "tt3d",
+      "origin": "-126.66660 0.00002 0.00000",
+      "parent": 273,
+      "scale": {
+        "value": "1.00000 1.50000 1.00000"
+      },
+      "size": "256.00000 8.00000"
+    },
+    {
+      "alpha": {
+        "scriptproperties": {
+          "tmdMR2": {
+            "user": "newproperty24",
+            "value": 1
+          }
+        },
+        "value": 0.49000001
+      },
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 256,
+      "image": "models/solid_instance_model_d04c2e29.json",
+      "instance": {
+        "combos": {
+          "version": 2
+        },
+        "id": 257,
+        "textures": [
+          "util/white"
+        ]
+      },
+      "name": "tt2",
+      "origin": "0.00000 0.00000 4.00000",
+      "parent": 352,
+      "scale": "0.00090 0.00080 0.00900",
+      "size": "256.00000 4.00000"
+    },
+    {
+      "alignment": "left",
+      "alpha": {
+        "value": 0.49000001
+      },
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 266,
+      "image": "models/solid_instance_model_d04c2e29.json",
+      "instance": {
+        "combos": {
+          "version": 2
+        },
+        "id": 267,
+        "textures": [
+          "util/white"
+        ]
+      },
+      "name": "tt2d",
+      "origin": "-126.66666 0.00000 0.00000",
+      "parent": 256,
+      "scale": {
+        "value": "1.00000 3.00000 1.00000"
+      },
+      "size": "256.00000 4.00000"
+    },
+    {
+      "alpha": {
+        "scriptproperties": {
+          "tmdMR3": {
+            "user": "newproperty24",
+            "value": 1
+          }
+        },
+        "value": 0.49000001
+      },
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 224,
+      "image": "models/solid_instance_model_d04c2e29.json",
+      "instance": {
+        "combos": {
+          "version": 2
+        },
+        "id": 230,
+        "textures": [
+          "util/white"
+        ]
+      },
+      "name": "tt1",
+      "origin": "0.00000 -0.08000 4.00000",
+      "parent": 352,
+      "scale": "0.00090 0.00080 0.00900",
+      "size": "256.00000 4.00000"
+    },
+    {
+      "alignment": "left",
+      "alpha": {
+        "value": 0.49000001
+      },
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 242,
+      "image": "models/solid_instance_model_d04c2e29.json",
+      "instance": {
+        "combos": {
+          "version": 2
+        },
+        "id": 248,
+        "textures": [
+          "util/white"
+        ]
+      },
+      "name": "tt1d",
+      "origin": "-126.66660 0.00009 0.00000",
+      "parent": 224,
+      "scale": {
+        "value": "1.00000 3.00000 1.00000"
+      },
+      "size": "256.00000 4.00000"
+    },
+    {
+      "alpha": {
+        "scriptproperties": {
+          "tmdMR4": {
+            "user": "newproperty25",
+            "value": 1
+          }
+        },
+        "value": 0.40000001
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "brightness": 1.5,
+      "castshadow": false,
+      "clampuvs": true,
+      "color": {
+        "user": "datacolor",
+        "value": "0.59216 0.76471 1.00000"
+      },
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "center",
+      "id": 305,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "γ",
+      "opaquebackground": false,
+      "origin": "0.16200 0.08000 4.00000",
+      "padding": 32,
+      "parent": 352,
+      "pointsize": 9.0,
+      "scale": "0.00090 0.00080 0.00900",
+      "size": "19.00000 43.00000",
+      "text": "γ",
+      "verticalalign": "center"
+    },
+    {
+      "alpha": {
+        "scriptproperties": {
+          "tmdMR5": {
+            "user": "newproperty25",
+            "value": 1
+          }
+        },
+        "value": 1.0
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "brightness": 1.5,
+      "castshadow": false,
+      "clampuvs": true,
+      "color": {
+        "user": "datacolor",
+        "value": "0.59216 0.76471 1.00000"
+      },
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "center",
+      "id": 303,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "β",
+      "opaquebackground": false,
+      "origin": "0.16200 0.00000 4.00000",
+      "padding": 32,
+      "parent": 352,
+      "pointsize": 9.0,
+      "scale": "0.00090 0.00080 0.00900",
+      "size": "21.00000 43.00000",
+      "text": "β",
+      "verticalalign": "center"
+    },
+    {
+      "alpha": {
+        "scriptproperties": {
+          "tmdMR6": {
+            "user": "newproperty25",
+            "value": 1
+          }
+        },
+        "value": 1.0
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "brightness": 1.5,
+      "castshadow": false,
+      "clampuvs": true,
+      "color": {
+        "user": "datacolor",
+        "value": "0.59216 0.76471 1.00000"
+      },
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "center",
+      "id": 299,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "α",
+      "opaquebackground": false,
+      "origin": "0.16200 -0.08000 4.00000",
+      "padding": 32,
+      "parent": 352,
+      "pointsize": 9.0,
+      "scale": "0.00090 0.00080 0.00900",
+      "size": "21.00000 43.00000",
+      "text": "α",
+      "verticalalign": "center"
+    },
+    {
+      "angles": "0.00000 -0.00000 0.00000",
+      "disablepropagation": false,
+      "id": 368,
+      "name": "clock",
+      "origin": {
+        "scriptproperties": {
+          "clx": {
+            "user": "clx",
+            "value": 0
+          },
+          "cly": {
+            "user": "cly",
+            "value": 0.40000001
+          }
+        },
+        "value": "0.00000 0.19000 0.00000"
+      },
+      "scale": {
+        "scriptproperties": {
+          "sz": {
+            "user": "clocksize",
+            "value": 0.69999999
+          }
+        },
+        "value": "0.70000 0.70000 1.00000"
+      },
+      "solid": true,
+      "visible": {
+        "user": "clock",
+        "value": true
+      }
+    },
+    {
+      "alpha": {
+        "scriptproperties": {
+          "atc": 0,
+          "btc": 0.80000001,
+          "easingTypetc": "easeOutCubic",
+          "endTimetc": 8,
+          "startTimetc": 3.5
+        },
+        "value": 1.0
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "color": {
+        "user": "clockcolor",
+        "value": "0.61176 0.61176 0.61176"
+      },
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "fonts/Rajdhani Medium.otf",
+      "horizontalalign": "center",
+      "id": 400,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "clock BT",
+      "opaquebackground": false,
+      "origin": "0.00000 0.39833 4.00000",
+      "padding": 101,
+      "parent": 368,
+      "pointsize": 27.0,
+      "scale": {
+        "scriptproperties": {
+          "active": true,
+          "hoScaleMax": 1.1,
+          "hoScaleMin": 1,
+          "override": false,
+          "speed": 50,
+          "textMax": "2, 1, 1",
+          "textMin": "0.5, 1, 1"
+        },
+        "value": "0.00080 0.00080 0.00900"
+      },
+      "size": "222.00000 113.00000",
+      "text": {
+        "value": "12:53"
+      },
+      "verticalalign": "center",
+      "visible": {
+        "scriptproperties": {
+          "menuEn": {
+            "user": "menuinit",
+            "value": true
+          }
+        },
+        "user": "clock2",
+        "value": true
+      }
+    },
+    {
+      "alpha": {
+        "scriptproperties": {
+          "atc": 0,
+          "btc": 0.69999999,
+          "easingTypetc": "easeOutCubic",
+          "endTimetc": 8.5,
+          "startTimetc": 4
+        },
+        "value": 1.0
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "color": {
+        "user": "daycolor",
+        "value": "1.00000 1.00000 1.00000"
+      },
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "fonts/FZTieXHJW_Cu.TTF",
+      "horizontalalign": "center",
+      "id": 391,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "day",
+      "opaquebackground": false,
+      "origin": "0.00000 0.32159 4.00000",
+      "padding": 300,
+      "parent": 368,
+      "pointsize": 9.0,
+      "scale": "0.00100 0.00100 0.00900",
+      "size": "161.00000 46.00000",
+      "text": {
+        "value": "Wednesday"
+      },
+      "verticalalign": "center",
+      "visible": {
+        "user": "day",
+        "value": true
+      }
+    },
+    {
+      "alpha": {
+        "scriptproperties": {
+          "atc": 0,
+          "btc": 0.69999999,
+          "easingTypetc": "easeOutCubic",
+          "endTimetc": 9,
+          "startTimetc": 4.5
+        },
+        "value": 1.0
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "brightness": 2.29,
+      "castshadow": false,
+      "clampuvs": true,
+      "color": {
+        "user": "datacolor",
+        "value": "0.59216 0.76471 1.00000"
+      },
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "fonts/Rajdhani Medium.otf",
+      "horizontalalign": "center",
+      "id": 387,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "date",
+      "opaquebackground": false,
+      "origin": "0.00000 0.27443 4.00000",
+      "padding": 67,
+      "parent": 368,
+      "pointsize": 8.0,
+      "scale": "0.00100 0.00100 0.00900",
+      "size": "150.00000 33.00000",
+      "text": {
+        "scriptproperties": {
+          "user_phy_check": {
+            "user": "cheatingcheck",
+            "value": true
+          }
+        },
+        "value": "2025-03-25"
+      },
+      "verticalalign": "center",
+      "visible": {
+        "user": "date",
+        "value": true
+      }
+    },
+    {
+      "angles": "0.00000 -0.00000 0.00000",
+      "disablepropagation": false,
+      "id": 222,
+      "name": "audio",
+      "origin": {
+        "scriptproperties": {
+          "ypx": {
+            "user": "x",
+            "value": 0
+          },
+          "ypy": {
+            "user": "y",
+            "value": -1.3
+          }
+        },
+        "value": "0.00000 -1.30000 0.00000"
+      },
+      "scale": {
+        "scriptproperties": {
+          "yszx": {
+            "user": "sizex",
+            "value": {
+              "user": "x",
+              "value": {
+                "user": "sizex",
+                "value": 0.60000002
+              }
+            }
+          },
+          "yszy": {
+            "user": "sizey",
+            "value": 0.40000001
+          }
+        },
+        "value": "0.60000 0.40000 1.00000"
+      },
+      "solid": true,
+      "visible": {
+        "user": "audioresponse",
+        "value": true
+      }
+    },
+    {
+      "alpha": {
+        "scriptproperties": {
+          "tmdgg1": 0.30000001
+        },
+        "value": 0.49000001
+      },
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 215,
+      "image": "models/solid_instance_model_d04c2e29.json",
+      "instance": {
+        "combos": {
+          "version": 2
+        },
+        "id": 216,
+        "textures": [
+          "util/white"
+        ]
+      },
+      "name": "纯色占位符",
+      "origin": "2.60000 -0.05000 0.00000",
+      "parent": 222,
+      "scale": "0.00900 0.01000 1.00000",
+      "size": "256.00000 2.00000",
+      "visible": {
+        "user": {
+          "condition": "2",
+          "name": "newproperty4"
+        },
+        "value": false
+      }
+    },
+    {
+      "alpha": {
+        "scriptproperties": {
+          "tmdgg1": 0.30000001
+        },
+        "value": 1.0
+      },
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 212,
+      "image": "models/solid_instance_model_d04c2e29.json",
+      "instance": {
+        "combos": {
+          "version": 2
+        },
+        "id": 219,
+        "textures": [
+          "util/white"
+        ]
+      },
+      "name": "纯色占位符",
+      "origin": "-2.60000 -0.05000 0.00000",
+      "parent": 222,
+      "scale": "0.00900 0.01000 1.00000",
+      "size": "256.00000 2.00000",
+      "visible": {
+        "user": {
+          "condition": "2",
+          "name": "newproperty4"
+        },
+        "value": false
+      }
+    },
+    {
+      "alpha": {
+        "value": 1.0
+      },
+      "angles": "0.00000 -0.00000 1.57080",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 223,
+      "image": "models/util/solidlayer_depthtest.json",
+      "name": "纯色",
+      "origin": "-1.28000 -0.05000 0.00000",
+      "parent": 222,
+      "scale": "0.00140 0.00500 0.00900",
+      "size": "256.00000 2.00000"
+    },
+    {
+      "alpha": {
+        "value": 1.0
+      },
+      "angles": "0.00000 -0.00000 1.57080",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 234,
+      "image": "models/util/solidlayer_depthtest.json",
+      "name": "纯色",
+      "origin": "1.28000 -0.05000 0.00000",
+      "parent": 222,
+      "scale": "0.00140 0.00500 0.00900",
+      "size": "256.00000 2.00000"
+    },
+    {
+      "alpha": {
+        "value": 0.30000001
+      },
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "effects": [
+        {
+          "file": "effects/waterwaves/effect.json",
+          "id": 250,
+          "name": "",
+          "passes": [
+            {
+              "constantshadervalues": {
+                "direction": -1.5707963,
+                "exponent": 1,
+                "scale": 8,
+                "speed": 10,
+                "strength": {
+                  "value": 0.60000002
+                }
+              },
+              "id": 254,
+              "textures": [
+                null,
+                "llx"
+              ]
+            }
+          ],
+          "visible": true
+        }
+      ],
+      "id": 249,
+      "image": "models/ll.json",
+      "name": "llL",
+      "origin": "0.00000 -0.05000 0.00000",
+      "parent": 222,
+      "scale": "0.01000 0.01500 0.02109",
+      "size": "256.00000 256.00000"
+    },
+    {
+      "alpha": {
+        "scriptproperties": {
+          "tmd3y": 1
+        },
+        "value": 1.0
+      },
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "effects": [
+        {
+          "file": "effects/waterwaves/effect.json",
+          "id": 265,
+          "name": "",
+          "passes": [
+            {
+              "constantshadervalues": {
+                "direction": -1.5707963,
+                "exponent": 1,
+                "scale": 40,
+                "speed": 20,
+                "strength": {
+                  "value": 0.60000002
+                }
+              },
+              "id": 268,
+              "textures": [
+                null,
+                "llx"
+              ]
+            }
+          ],
+          "visible": true
+        }
+      ],
+      "id": 264,
+      "image": "models/ll.json",
+      "name": "llM",
+      "origin": "0.00000 -0.05000 0.00000",
+      "parent": 222,
+      "scale": "0.01000 0.01500 0.02109",
+      "size": "256.00000 256.00000"
+    },
+    {
+      "alpha": {
+        "value": 0.30000001
+      },
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "color": {
+        "user": "datacolor",
+        "value": "0.59216 0.76471 1.00000"
+      },
+      "disablepropagation": false,
+      "effects": [
+        {
+          "file": "effects/waterwaves/effect.json",
+          "id": 287,
+          "name": "",
+          "passes": [
+            {
+              "constantshadervalues": {
+                "direction": -1.5707963,
+                "exponent": 1,
+                "scale": 120,
+                "speed": 40,
+                "strength": {
+                  "value": 0.60000002
+                }
+              },
+              "id": 291,
+              "textures": [
+                null,
+                "llx"
+              ]
+            }
+          ],
+          "visible": true
+        }
+      ],
+      "id": 281,
+      "image": "models/ll.json",
+      "name": "llH",
+      "origin": "0.00000 -0.05000 0.00000",
+      "parent": 222,
+      "scale": "0.01000 0.01500 0.02109",
+      "size": "256.00000 256.00000"
+    },
+    {
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 296,
+      "image": "models/llx.json",
+      "name": "llx",
+      "origin": "0.07076 3.25000 0.00000",
+      "parent": 222,
+      "scale": "0.01507 0.02110 0.01055",
+      "size": "256.00000 256.00000",
+      "visible": false
+    },
+    {
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 3815,
+      "image": "models/util/solidlayer_depthtest.json",
+      "name": "音频按钮",
+      "origin": "0.00000 -0.05000 0.00000",
+      "parent": 222,
+      "scale": "0.01000 0.00500 0.00900",
+      "size": "256.00000 256.00000",
+      "visible": {
+        "value": false
+      }
+    },
+    {
+      "disablepropagation": false,
+      "id": 455,
+      "name": "装饰",
+      "solid": true
+    },
+    {
+      "alpha": {
+        "value": 1.0
+      },
+      "angles": "0.00000 -0.00000 0.00000",
+      "brightness": 0.69999999,
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 2158,
+      "image": "models/2y.json",
+      "name": "2y",
+      "parent": 455,
+      "scale": "0.00300 0.00300 0.00300",
+      "size": "300.00000 300.00000",
+      "visible": {
+        "user": "compass",
+        "value": true
+      }
+    },
+    {
+      "alignment": "right",
+      "alpha": {
+        "scriptproperties": {
+          "tmd3y": 0.40000001
+        },
+        "value": 1.0
+      },
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 2127,
+      "image": "models/solid_instance_model_d04c2e29.json",
+      "instance": {
+        "combos": {
+          "version": 2
+        },
+        "id": 2128,
+        "textures": [
+          "util/white"
+        ]
+      },
+      "name": "纯色占位符3y",
+      "origin": "-1.80000 0.00000 0.00000",
+      "parent": 455,
+      "scale": "0.00960 0.00200 0.00900",
+      "size": "256.00000 2.00000",
+      "visible": {
+        "user": {
+          "condition": "1",
+          "name": "newproperty4"
+        },
+        "value": false
+      }
+    },
+    {
+      "alignment": "left",
+      "alpha": {
+        "scriptproperties": {
+          "tmd3y": 0.40000001
+        },
+        "value": 1.0
+      },
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 2126,
+      "image": "models/solid_instance_model_d04c2e29.json",
+      "instance": {
+        "combos": {
+          "version": 2
+        },
+        "id": 2129,
+        "textures": [
+          "util/white"
+        ]
+      },
+      "name": "纯色占位符3y",
+      "origin": "1.80000 0.00000 0.00000",
+      "parent": 455,
+      "scale": "0.00960 0.00200 0.00900",
+      "size": "256.00000 2.00000",
+      "visible": {
+        "user": {
+          "condition": "1",
+          "name": "newproperty4"
+        },
+        "value": false
+      }
+    },
+    {
+      "alpha": {
+        "scriptproperties": {
+          "tmd3y": 0.1
+        },
+        "value": 1.0
+      },
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 2104,
+      "image": "models/3y.json",
+      "name": "3y",
+      "parent": 455,
+      "scale": "0.00456 0.00456 1.00000",
+      "size": "848.00000 742.00000",
+      "visible": {
+        "user": {
+          "condition": "1",
+          "name": "newproperty6"
+        },
+        "value": true
+      }
+    },
+    {
+      "alpha": {
+        "scriptproperties": {
+          "tmd3y": 0.5
+        },
+        "value": 1.0
+      },
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 342,
+      "image": "models/3f.json",
+      "name": "3f",
+      "parent": 455,
+      "scale": "0.00420 0.00420 1.00000",
+      "size": "1184.00000 652.00000",
+      "visible": {
+        "user": {
+          "condition": "2",
+          "name": "newproperty6"
+        },
+        "value": false
+      }
+    },
+    {
+      "disablepropagation": false,
+      "id": 521,
+      "name": "O-[]",
+      "solid": true,
+      "visible": {
+        "user": "newproperty65",
+        "value": true
+      }
+    },
+    {
+      "alpha": {
+        "value": 0.5
+      },
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 340,
+      "image": "models/OL.json",
+      "name": "OL",
+      "origin": {
+        "value": "0.00000 0.00000 0.00000"
+      },
+      "parent": 521,
+      "scale": "0.00300 0.00300 0.00300",
+      "size": "400.00000 400.00000"
+    },
+    {
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 424,
+      "image": "models/util/solidlayer_depthtest.json",
+      "name": "纯色",
+      "parent": 340,
+      "scale": "3.00000 3.00000 3.00000",
+      "size": "50.00000 50.00000",
+      "visible": {
+        "value": false
+      }
+    },
+    {
+      "alpha": {
+        "value": 0.73000002
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "center",
+      "id": 408,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "",
+      "opaquebackground": false,
+      "origin": {
+        "value": "0.00000 0.00000 0.00000"
+      },
+      "padding": 32,
+      "parent": 521,
+      "pointsize": 32.0,
+      "scale": "0.00040 0.00040 0.00200",
+      "size": "615.00000 153.00000",
+      "text": {
+        "value": "Text Layer"
+      },
+      "verticalalign": "center"
+    },
+    {
+      "alpha": {
+        "value": 0.73000002
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "color": {
+        "user": "datacolor",
+        "value": "0.59216 0.76471 1.00000"
+      },
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "center",
+      "id": 396,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "",
+      "opaquebackground": false,
+      "origin": {
+        "value": "0.00000 0.00000 0.00000"
+      },
+      "padding": 32,
+      "parent": 521,
+      "pointsize": 32.0,
+      "scale": "0.00040 0.00040 0.00200",
+      "size": "980.00000 153.00000",
+      "text": "L/1st-Arm/3S-S1",
+      "verticalalign": "center"
+    },
+    {
+      "alpha": {
+        "value": 0.5
+      },
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 522,
+      "image": "models/OL.json",
+      "name": "OL",
+      "origin": {
+        "value": "0.00000 0.00000 0.00000"
+      },
+      "parent": 521,
+      "scale": "0.00300 0.00300 0.00200",
+      "size": "400.00000 400.00000"
+    },
+    {
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 423,
+      "image": "models/util/solidlayer_depthtest.json",
+      "name": "纯色",
+      "parent": 522,
+      "scale": "3.00000 3.00000 4.50000",
+      "size": "50.00000 50.00000",
+      "visible": {
+        "value": false
+      }
+    },
+    {
+      "alpha": {
+        "value": 0.73000002
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "center",
+      "id": 536,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "",
+      "opaquebackground": false,
+      "origin": {
+        "value": "0.00000 0.00000 0.00000"
+      },
+      "padding": 32,
+      "parent": 521,
+      "pointsize": 32.0,
+      "scale": "0.00040 0.00040 0.00200",
+      "size": "615.00000 153.00000",
+      "text": {
+        "value": "Text Layer"
+      },
+      "verticalalign": "center"
+    },
+    {
+      "alpha": {
+        "value": 0.73000002
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "color": {
+        "user": "datacolor",
+        "value": "0.59216 0.76471 1.00000"
+      },
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "center",
+      "id": 398,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "",
+      "opaquebackground": false,
+      "origin": {
+        "value": "0.00000 0.00000 0.00000"
+      },
+      "padding": 32,
+      "parent": 521,
+      "pointsize": 32.0,
+      "scale": "0.00040 0.00040 0.00200",
+      "size": "980.00000 153.00000",
+      "text": "L/1st-Arm/3S-S2",
+      "verticalalign": "center"
+    },
+    {
+      "alpha": {
+        "value": 0.5
+      },
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 524,
+      "image": "models/OL.json",
+      "name": "OL",
+      "origin": {
+        "value": "0.00000 0.00000 0.00000"
+      },
+      "parent": 521,
+      "scale": "0.00300 0.00300 0.00200",
+      "size": "400.00000 400.00000"
+    },
+    {
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 425,
+      "image": "models/util/solidlayer_depthtest.json",
+      "name": "纯色",
+      "parent": 524,
+      "scale": "3.00000 3.00000 4.50000",
+      "size": "50.00000 50.00000",
+      "visible": {
+        "value": false
+      }
+    },
+    {
+      "alpha": {
+        "value": 0.73000002
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "center",
+      "id": 538,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "",
+      "opaquebackground": false,
+      "origin": {
+        "value": "0.00000 0.00000 0.00000"
+      },
+      "padding": 32,
+      "parent": 521,
+      "pointsize": 32.0,
+      "scale": "0.00040 0.00040 0.00200",
+      "size": "615.00000 153.00000",
+      "text": {
+        "value": "Text Layer"
+      },
+      "verticalalign": "center"
+    },
+    {
+      "alpha": {
+        "value": 0.73000002
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "color": {
+        "user": "datacolor",
+        "value": "0.59216 0.76471 1.00000"
+      },
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "center",
+      "id": 402,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "",
+      "opaquebackground": false,
+      "origin": {
+        "value": "0.00000 0.00000 0.00000"
+      },
+      "padding": 32,
+      "parent": 521,
+      "pointsize": 32.0,
+      "scale": "0.00040 0.00040 0.00200",
+      "size": "980.00000 153.00000",
+      "text": "L/1st-Arm/3S-S3",
+      "verticalalign": "center"
+    },
+    {
+      "alpha": {
+        "value": 0.5
+      },
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 527,
+      "image": "models/OL.json",
+      "name": "OL",
+      "origin": {
+        "value": "0.00000 0.00000 0.00000"
+      },
+      "parent": 521,
+      "scale": "0.00200 0.00200 0.00200",
+      "size": "400.00000 400.00000"
+    },
+    {
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 428,
+      "image": "models/util/solidlayer_depthtest.json",
+      "name": "纯色",
+      "parent": 527,
+      "scale": "4.50000 4.50000 4.50000",
+      "size": "50.00000 50.00000",
+      "visible": {
+        "value": false
+      }
+    },
+    {
+      "alpha": {
+        "value": 0.73000002
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "center",
+      "id": 540,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "",
+      "opaquebackground": false,
+      "origin": {
+        "value": "0.00000 0.00000 0.00000"
+      },
+      "padding": 32,
+      "parent": 521,
+      "pointsize": 32.0,
+      "scale": "0.00030 0.00030 0.00200",
+      "size": "615.00000 153.00000",
+      "text": {
+        "value": "Text Layer"
+      },
+      "verticalalign": "center"
+    },
+    {
+      "alpha": {
+        "value": 0.73000002
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "color": {
+        "user": "datacolor",
+        "value": "0.59216 0.76471 1.00000"
+      },
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "center",
+      "id": 410,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "",
+      "opaquebackground": false,
+      "origin": {
+        "value": "0.00000 0.00000 0.00000"
+      },
+      "padding": 32,
+      "parent": 521,
+      "pointsize": 32.0,
+      "scale": "0.00030 0.00030 0.00200",
+      "size": "973.00000 153.00000",
+      "text": "L/1st-Arm/3S:1P",
+      "verticalalign": "center"
+    },
+    {
+      "alpha": {
+        "scriptproperties": {
+          "peakvalue": {
+            "user": "newproperty15",
+            "value": 1
+          }
+        },
+        "value": 1.0
+      },
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 449,
+      "image": "models/black.json",
+      "ledsource": true,
+      "name": "RST界面背景备用",
+      "origin": "0.00000 0.00000 4.50000",
+      "size": "32.00000 32.00000"
+    },
+    {
+      "disablepropagation": false,
+      "id": 489,
+      "name": "加载信息",
+      "solid": true,
+      "visible": {
+        "scriptproperties": {
+          "en_enw": {
+            "user": "cnen2",
+            "value": false
+          }
+        },
+        "user": "newproperty64",
+        "value": true
+      }
+    },
+    {
+      "alpha": {
+        "value": 1.0
+      },
+      "angles": {
+        "value": "0.00000 -0.00000 0.00000"
+      },
+      "brightness": 1.5,
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 479,
+      "image": "models/LOAD.json",
+      "name": "LOAD2",
+      "origin": "0.00000 0.00000 5.10000",
+      "parent": 489,
+      "scale": "0.00030 0.00030 0.00100",
+      "size": "256.00000 256.00000"
+    },
+    {
+      "alpha": {
+        "value": 1.0
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "center",
+      "id": 491,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "lot1",
+      "opaquebackground": false,
+      "origin": "0.00000 -0.09000 5.10000",
+      "padding": 32,
+      "parent": 489,
+      "pointsize": 32.0,
+      "scale": "0.00009 0.00009 0.00100",
+      "size": "222.00000 153.00000",
+      "text": {
+        "value": "222"
+      },
+      "verticalalign": "center"
+    },
+    {
+      "alpha": {
+        "value": 1.0
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "color": {
+        "user": "datacolor",
+        "value": "0.59216 0.76471 1.00000"
+      },
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "fonts/Rajdhani Medium.otf",
+      "horizontalalign": "center",
+      "id": 488,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "lot2",
+      "opaquebackground": false,
+      "origin": "0.00000 -0.11000 5.10000",
+      "padding": 32,
+      "parent": 489,
+      "pointsize": 32.0,
+      "scale": "0.00010 0.00010 0.00100",
+      "size": "192.00000 133.00000",
+      "text": {
+        "value": "222"
+      },
+      "verticalalign": "center"
+    },
+    {
+      "alpha": {
+        "value": 1.0
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "fonts/Rajdhani Medium.otf",
+      "horizontalalign": "left",
+      "id": 493,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "lot3",
+      "opaquebackground": false,
+      "origin": "-0.17000 -0.13000 5.10000",
+      "padding": 32,
+      "parent": 489,
+      "pointsize": 32.0,
+      "scale": "0.00009 0.00009 0.00100",
+      "size": "192.00000 133.00000",
+      "text": {
+        "value": "222"
+      },
+      "verticalalign": "center"
+    },
+    {
+      "alpha": {
+        "value": 1.0
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "fonts/Rajdhani Medium.otf",
+      "horizontalalign": "left",
+      "id": 495,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "lot4",
+      "opaquebackground": false,
+      "origin": "-0.17000 -0.15000 5.10000",
+      "padding": 32,
+      "parent": 489,
+      "pointsize": 32.0,
+      "scale": "0.00009 0.00009 0.00100",
+      "size": "192.00000 133.00000",
+      "text": {
+        "value": "222"
+      },
+      "verticalalign": "center"
+    },
+    {
+      "alpha": {
+        "value": 1.0
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "fonts/Rajdhani Medium.otf",
+      "horizontalalign": "left",
+      "id": 497,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "lot5",
+      "opaquebackground": false,
+      "origin": "-0.17000 -0.17000 5.10000",
+      "padding": 32,
+      "parent": 489,
+      "pointsize": 32.0,
+      "scale": "0.00009 0.00009 0.00100",
+      "size": "192.00000 133.00000",
+      "text": {
+        "value": "222"
+      },
+      "verticalalign": "center"
+    },
+    {
+      "alpha": {
+        "value": 1.0
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "fonts/Rajdhani Medium.otf",
+      "horizontalalign": "left",
+      "id": 499,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "lot6",
+      "opaquebackground": false,
+      "origin": "-0.17000 -0.19000 5.10000",
+      "padding": 32,
+      "parent": 489,
+      "pointsize": 32.0,
+      "scale": "0.00009 0.00009 0.00100",
+      "size": "192.00000 133.00000",
+      "text": {
+        "value": "222"
+      },
+      "verticalalign": "center"
+    },
+    {
+      "angles": "0.00000 -0.00000 0.00000",
+      "disablepropagation": false,
+      "id": 507,
+      "name": "DL",
+      "origin": "0.00000 -0.04500 0.00000",
+      "solid": true,
+      "visible": {
+        "user": "newproperty63",
+        "value": true
+      }
+    },
+    {
+      "alpha": {
+        "value": 1.0
+      },
+      "angles": "0.00000 -0.00000 0.00000",
+      "brightness": 1.5,
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 534,
+      "image": "models/LOAD-S.json",
+      "name": "LOAD-S",
+      "origin": "0.00000 0.04500 5.10000",
+      "parent": 507,
+      "scale": "0.00015 0.00015 1.00000",
+      "size": "256.00000 256.00000"
+    },
+    {
+      "alpha": {
+        "value": 1.0
+      },
+      "angles": {
+        "value": "0.00000 -0.00000 0.00000"
+      },
+      "brightness": 1.5,
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 482,
+      "image": "models/LOAD.json",
+      "name": "LOAD1",
+      "origin": "0.00000 0.04500 5.10000",
+      "parent": 507,
+      "scale": "0.00030 0.00030 0.00100",
+      "size": "256.00000 256.00000"
+    },
+    {
+      "alpha": {
+        "value": 1.0
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "color": "0.27059 0.27059 0.27059",
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "left",
+      "id": 251,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "/Vector",
+      "opaquebackground": false,
+      "origin": "-0.04000 0.16000 5.10000",
+      "padding": 32,
+      "parent": 507,
+      "pointsize": 32.0,
+      "scale": "0.00010 0.00010 0.00100",
+      "size": "416.00000 153.00000",
+      "text": "/Vector",
+      "verticalalign": "bottom"
+    },
+    {
+      "alpha": {
+        "value": 1.0
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "color": {
+        "user": "datacolor",
+        "value": "0.59216 0.76471 1.00000"
+      },
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "left",
+      "id": 386,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "ucp",
+      "opaquebackground": false,
+      "origin": "-0.11000 -0.14000 5.10000",
+      "padding": 32,
+      "parent": 507,
+      "pointsize": 32.0,
+      "scale": "0.00008 0.00008 0.00100",
+      "size": "352.00000 153.00000",
+      "text": "UCP :",
+      "verticalalign": "bottom"
+    },
+    {
+      "alpha": {
+        "value": 1.0
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "left",
+      "id": 395,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "uccp",
+      "opaquebackground": false,
+      "origin": "-0.07000 -0.14000 5.10000",
+      "padding": 32,
+      "parent": 507,
+      "pointsize": 32.0,
+      "scale": "0.00007 0.00007 0.00100",
+      "size": "2.00000 2.00000",
+      "text": {
+        "value": ""
+      },
+      "verticalalign": "bottom"
+    },
+    {
+      "alpha": {
+        "value": 1.0
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "color": {
+        "user": "datacolor",
+        "value": "0.59216 0.76471 1.00000"
+      },
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "left",
+      "id": 253,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "ip",
+      "opaquebackground": false,
+      "origin": "-0.11000 -0.16000 5.10000",
+      "padding": 32,
+      "parent": 507,
+      "pointsize": 32.0,
+      "scale": "0.00008 0.00008 0.00100",
+      "size": "329.00000 153.00000",
+      "text": "ETP :",
+      "verticalalign": "bottom"
+    },
+    {
+      "alpha": {
+        "value": 1.0
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "left",
+      "id": 509,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "ymd",
+      "opaquebackground": false,
+      "origin": "-0.07000 -0.16000 5.10000",
+      "padding": 32,
+      "parent": 507,
+      "pointsize": 32.0,
+      "scale": "0.00007 0.00007 0.00100",
+      "size": "2.00000 2.00000",
+      "text": {
+        "value": ""
+      },
+      "verticalalign": "bottom"
+    },
+    {
+      "alpha": {
+        "value": 1.0
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "center",
+      "id": 506,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "<Body,3>",
+      "opaquebackground": false,
+      "origin": "0.00000 0.15000 5.10000",
+      "padding": 32,
+      "parent": 507,
+      "pointsize": 32.0,
+      "scale": "0.00013 0.00013 0.00100",
+      "size": "557.00000 153.00000",
+      "text": {
+        "user": "customtex1",
+        "value": "<Body,3>"
+      },
+      "verticalalign": "center"
+    },
+    {
+      "alpha": {
+        "value": 1.0
+      },
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 515,
+      "image": "models/LOAD-A.json",
+      "name": "LOAD-A",
+      "origin": "-0.10000 -0.03000 5.10000",
+      "parent": 507,
+      "scale": "0.00013 0.00013 1.00000",
+      "size": "256.00000 256.00000"
+    },
+    {
+      "alpha": {
+        "value": 1.0
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "left",
+      "id": 508,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "Account",
+      "opaquebackground": false,
+      "origin": "-0.08000 -0.03000 5.10000",
+      "padding": 32,
+      "parent": 507,
+      "pointsize": 32.0,
+      "scale": "0.00010 0.00010 0.00010",
+      "size": "480.00000 153.00000",
+      "text": "Account",
+      "verticalalign": "center"
+    },
+    {
+      "alpha": {
+        "value": 1.0
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "left",
+      "id": 486,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "哥白尼",
+      "opaquebackground": false,
+      "origin": "-0.00400 -0.03000 5.10000",
+      "padding": 32,
+      "parent": 507,
+      "pointsize": 32.0,
+      "scale": "0.00009 0.00009 0.00010",
+      "size": "399.00000 153.00000",
+      "text": {
+        "user": "newproperty58",
+        "value": "哥白尼"
+      },
+      "verticalalign": "center"
+    },
+    {
+      "alignment": "right",
+      "alpha": {
+        "value": 1.0
+      },
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 514,
+      "image": "models/kk.json",
+      "name": "kk",
+      "origin": "0.10000 -0.03200 5.10000",
+      "parent": 507,
+      "scale": "0.00025 0.00054 0.00035",
+      "size": "454.00000 64.00000"
+    },
+    {
+      "alpha": {
+        "value": 1.0
+      },
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 519,
+      "image": "models/LOAD-P.json",
+      "name": "LOAD-P",
+      "origin": "-0.10000 -0.07000 5.10000",
+      "parent": 507,
+      "scale": "0.00013 0.00013 1.00000",
+      "size": "256.00000 256.00000"
+    },
+    {
+      "alpha": {
+        "value": 1.0
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "left",
+      "id": 512,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "Password",
+      "opaquebackground": false,
+      "origin": "-0.08000 -0.07000 5.10000",
+      "padding": 32,
+      "parent": 507,
+      "pointsize": 32.0,
+      "scale": "0.00010 0.00010 0.00010",
+      "size": "582.00000 153.00000",
+      "text": "Password",
+      "verticalalign": "center"
+    },
+    {
+      "alpha": {
+        "value": 1.0
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "left",
+      "id": 490,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "***",
+      "opaquebackground": false,
+      "origin": "-0.00500 -0.07200 5.10000",
+      "padding": 32,
+      "parent": 507,
+      "pointsize": 32.0,
+      "scale": "0.00009 0.00009 0.00010",
+      "size": "667.00000 153.00000",
+      "text": {
+        "user": "newproperty59",
+        "value": "* * * * * * * *"
+      },
+      "verticalalign": "center"
+    },
+    {
+      "alpha": {
+        "value": 1.0
+      },
+      "anchor": "none",
+      "angles": "0.00000 -0.00000 0.00000",
+      "backgroundbrightness": 1.0,
+      "backgroundcolor": "0.00000 0.00000 0.00000",
+      "blockalign": false,
+      "castshadow": false,
+      "clampuvs": true,
+      "depthtest": "enabled",
+      "disablepropagation": false,
+      "font": "systemfont_arial",
+      "horizontalalign": "center",
+      "id": 484,
+      "limitrows": false,
+      "limituseellipsis": false,
+      "limitwidth": false,
+      "maxrows": 1,
+      "maxwidth": 500.0,
+      "name": "|",
+      "opaquebackground": false,
+      "origin": "0.06000 -0.06900 5.10000",
+      "padding": 32,
+      "parent": 507,
+      "pointsize": 32.0,
+      "scale": "0.00009 0.00009 0.00010",
+      "size": "34.00000 153.00000",
+      "text": "|",
+      "verticalalign": "center"
+    },
+    {
+      "alignment": "right",
+      "alpha": {
+        "value": 1.0
+      },
+      "angles": "0.00000 -0.00000 0.00000",
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "id": 475,
+      "image": "models/kk.json",
+      "name": "kk",
+      "origin": "0.10000 -0.07200 5.10000",
+      "parent": 507,
+      "scale": "0.00025 0.00054 0.00035",
+      "size": "454.00000 64.00000"
+    },
+    {
+      "castshadow": false,
+      "clampuvs": true,
+      "disablepropagation": false,
+      "effects": [
+        {
+          "file": "effects/godrays/effect.json",
+          "id": 438,
+          "name": "",
+          "passes": [
+            {
+              "constantshadervalues": {
+                "noiseamount": 0.40000001,
+                "noisescale": 3,
+                "noisesmoothness": 0.2,
+                "noisespeed": 0.15000001,
+                "raythreshold": 0.44999999
+              },
+              "id": 0
+            },
+            {
+              "constantshadervalues": {
+                "center": "0.5 0.5",
+                "color": "1 1 1",
+                "direction": 3.141593,
+                "rayintensity": {
+                  "user": "newproperty49",
+                  "value": 0.75
+                },
+                "raylength": 1
+              },
+              "id": 440
+            },
+            {
+              "constantshadervalues": {
+                "blurscale": "2 2"
+              },
+              "id": 441
+            },
+            {
+              "combos": {
+                "VERTICAL": 1
+              },
+              "constantshadervalues": {
+                "blurscale": "2 2"
+              },
+              "id": 442
+            },
+            {
+              "id": 444
+            }
+          ],
+          "visible": true
+        },
+        {
+          "file": "effects/pulse/effect.json",
+          "id": 450,
+          "name": "",
+          "passes": [
+            {
+              "combos": {
+                "BLENDMODE": 24
+              },
+              "constantshadervalues": {
+                "amount": {
+                  "user": "newproperty54",
+                  "value": 0.37
+                },
+                "audioamount": 1,
+                "audiobounds": "0.5 1.0",
+                "audioexponent": 1,
+                "bounds": "0 1",
+                "frequencymax": 1,
+                "frequencymin": 0,
+                "noiseamount": 0.47,
+                "noisespeed": 0.34999999,
+                "phase": 0,
+                "power": 1,
+                "speed": 1.6,
+                "tinthigh": "0.8117647058823529 0.8117647058823529 0.8117647058823529",
+                "tintlow": "0.6823529411764706 0.6823529411764706 0.6823529411764706"
+              },
+              "id": 451
+            }
+          ],
+          "visible": true
+        },
+        {
+          "file": "effects/blurradial/effect.json",
+          "id": 335,
+          "name": "",
+          "passes": [
+            {
+              "constantshadervalues": {
+                "center": "0.5 0.5",
+                "scale": {
+                  "user": "newproperty23",
+                  "value": 0.050000001
+                }
+              },
+              "id": 336
+            }
+          ],
+          "visible": true
+        },
+        {
+          "file": "effects/workshop/2821337237/crt_screen/effect.json",
+          "id": 2087,
+          "name": "",
+          "passes": [
+            {
+              "combos": {
+                "SHADOWMASK": 3
+              },
+              "constantshadervalues": {
+                "Opacity": {
+                  "user": "newproperty3",
+                  "value": 0.1
+                },
+                "Resolution": 0.38,
+                "Static noise": 0.49000001
+              },
+              "id": 2088
+            },
+            {
+              "combos": {
+                "ARTIFACTS": 0,
+                "BLACKBORDERS": 0,
+                "SHADOWMASK": 3
+              },
+              "constantshadervalues": {
+                "Border size": "0 0",
+                "Brightness": 1.5,
+                "Curvature": 0,
+                "Light bleed": 1.62,
+                "Opacity": {
+                  "user": "newproperty3",
+                  "value": 0.1
+                },
+                "Saturation": 1
+              },
+              "id": 2090
+            }
+          ],
+          "visible": true
+        },
+        {
+          "file": "effects/filmgrain/effect.json",
+          "id": 548,
+          "name": "",
+          "passes": [
+            {
+              "constantshadervalues": {
+                "exponent": 1,
+                "scale": 7,
+                "strength": {
+                  "user": "newproperty68",
+                  "value": 0.46000001
+                }
+              },
+              "id": 549
+            }
+          ],
+          "visible": true
+        }
+      ],
+      "id": 421,
+      "image": "models/util/fullscreenlayer.json",
+      "name": "超后处理层",
+      "parallaxDepth": "0.00000 0.00000",
+      "visible": {
+        "user": "newproperty2",
+        "value": true
+      }
+    },
+    {
+      "camera": "default",
+      "disablepropagation": false,
+      "fov": {
+        "user": "newproperty71",
+        "value": 50.0
+      },
+      "id": 443,
+      "name": "",
+      "origin": "0.00000 0.00000 6.00000",
+      "path": "scripts/camera_paths_443.json",
+      "queuemode": "sequential",
+      "solid": true,
+      "zoom": 1.0
+    },
+    {
+      "disablepropagation": false,
+      "id": 324,
+      "maxtime": 5.0,
+      "mintime": 1.0,
+      "muteineditor": true,
+      "name": "Melodysheep - Ether.flac",
+      "playbackmode": "loop",
+      "solid": true,
+      "sound": [
+        "sounds/Melodysheep - Ether.flac"
+      ],
+      "startsilent": false,
+      "volume": 1.0
+    }
+  ],
+  "version": 5
+}

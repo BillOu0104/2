@@ -1,0 +1,168 @@
+{
+  "passed": 6,
+  "checks": [
+    "old v0.3 settings migrate to hidden body labels",
+    "activity-temperature small print removed from HUD",
+    "actual worker damage shows zero suitability and enables the next universe before terminal destruction",
+    "manual damaged-planet action starts universe 2",
+    "slow simple motion retains more than 20 seconds of visible physical history",
+    "complex crossing motion reduces actual on-screen trail arcs within fixed GPU capacity"
+  ],
+  "errors": [],
+  "calm": {
+    "canvas": [
+      640,
+      360
+    ],
+    "drawingBuffer": [
+      640,
+      360
+    ],
+    "renderedFrames": 35,
+    "compassVisible": false,
+    "maxTextureSize": 8192,
+    "backgroundSizes": {
+      "1": [
+        8192,
+        4096
+      ],
+      "4": [
+        8192,
+        4096
+      ]
+    },
+    "backgroundFollowsView": true,
+    "viewRotation": [
+      0,
+      0,
+      0
+    ],
+    "skyRotation": [
+      0,
+      0,
+      0,
+      1
+    ],
+    "bodyShapes": [
+      "SphereGeometry",
+      "SphereGeometry",
+      "SphereGeometry",
+      "SphereGeometry"
+    ],
+    "glowShape": "radial-circle",
+    "bodyLabelsVisible": false,
+    "trailSamples": [
+      1100,
+      1100,
+      1100,
+      1100
+    ],
+    "trailComplexity": 0,
+    "trailMetrics": [
+      {
+        "arcPixels": 485.459695993863,
+        "seconds": 36.60000000000035,
+        "budget": 792.0000000000001,
+        "segments": 366
+      },
+      {
+        "arcPixels": 487.4706212315601,
+        "seconds": 36.60000000000035,
+        "budget": 792.0000000000001,
+        "segments": 366
+      },
+      {
+        "arcPixels": 489.4982755233216,
+        "seconds": 36.60000000000035,
+        "budget": 792.0000000000001,
+        "segments": 366
+      },
+      {
+        "arcPixels": 491.54286849668665,
+        "seconds": 36.60000000000035,
+        "budget": 792.0000000000001,
+        "segments": 366
+      }
+    ],
+    "trailsVisible": true
+  },
+  "complex": {
+    "canvas": [
+      640,
+      360
+    ],
+    "drawingBuffer": [
+      640,
+      360
+    ],
+    "renderedFrames": 52,
+    "compassVisible": false,
+    "maxTextureSize": 8192,
+    "backgroundSizes": {
+      "1": [
+        8192,
+        4096
+      ],
+      "4": [
+        8192,
+        4096
+      ]
+    },
+    "backgroundFollowsView": true,
+    "viewRotation": [
+      0,
+      0,
+      0
+    ],
+    "skyRotation": [
+      0,
+      0,
+      0,
+      1
+    ],
+    "bodyShapes": [
+      "SphereGeometry",
+      "SphereGeometry",
+      "SphereGeometry",
+      "SphereGeometry"
+    ],
+    "glowShape": "radial-circle",
+    "bodyLabelsVisible": false,
+    "trailSamples": [
+      1340,
+      1340,
+      1340,
+      1340
+    ],
+    "trailComplexity": 0.9683268422122806,
+    "trailMetrics": [
+      {
+        "arcPixels": 178.9190306552225,
+        "seconds": 0.04892351120869165,
+        "budget": 179.13349919472023,
+        "segments": 2
+      },
+      {
+        "arcPixels": 179.3499126987462,
+        "seconds": 0.04969443371564353,
+        "budget": 179.13349919472023,
+        "segments": 2
+      },
+      {
+        "arcPixels": 178.91955700383429,
+        "seconds": 0.050677632624989144,
+        "budget": 179.13349919472023,
+        "segments": 2
+      },
+      {
+        "arcPixels": 179.34113887318668,
+        "seconds": 0.05171000071419485,
+        "budget": 179.13349919472023,
+        "segments": 2
+      }
+    ],
+    "trailsVisible": true
+  },
+  "fixture": "real worker for damage/restart; controlled Worker messages for repeatable visual trail comparison",
+  "publication": "local v0.3 work only, no source push or deployment"
+}
