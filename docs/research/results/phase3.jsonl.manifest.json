@@ -1,0 +1,48 @@
+{
+  "hash": "46ae872500fb03e7114a82694e59dbc2e1bdc5c4427ab90159a98574cd6c9833",
+  "config": {
+    "engine": "./engine-v2.mjs",
+    "prefix": "HOLDOUT-C",
+    "start": 0,
+    "seeds": 128,
+    "horizon": 1000,
+    "output": "results/phase3.jsonl",
+    "hypothesis": "Independent confirmation of frozen Q=1 host-relative retrograde circular orbit at .12 times nearest stellar separation; report survival and stable era together with stellar integrity and nonhierarchical occupancy.",
+    "profiles": [
+      {
+        "id": "legacy-random",
+        "force": "legacy"
+      },
+      {
+        "id": "newton-random",
+        "force": "newton",
+        "adaptive": true,
+        "eta": 0.0075
+      },
+      {
+        "id": "retro12-originalQ",
+        "force": "newton",
+        "adaptive": true,
+        "eta": 0.0075,
+        "planet": "bound",
+        "inPlane": true,
+        "radiusFraction": 0.12,
+        "direction": -1
+      },
+      {
+        "id": "candidate",
+        "force": "newton",
+        "adaptive": true,
+        "eta": 0.0075,
+        "planet": "bound",
+        "inPlane": true,
+        "radiusFraction": 0.12,
+        "Q": 1,
+        "direction": -1
+      }
+    ]
+  },
+  "baseline": "c7a53a01def5f9d60389ee20ec0f8bac5210ed69",
+  "node": "v24.19.0",
+  "started": "2026-10-20T14:08:45.239Z"
+}

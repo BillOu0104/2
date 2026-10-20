@@ -23,7 +23,7 @@ for name,rows in groups.items():
 
 comparisons={};rng=np.random.default_rng(20261020)
 for base,base_rows in groups.items():
-    if base not in ['legacy-random','newton-random','newton-bound20','candidate']:continue
+    if base not in ['legacy-random','newton-random','newton-bound20','candidate','anchor']:continue
     a={r['seed']:r for r in base_rows}
     for target,rr in groups.items():
         common=sorted(set(a)&{r['seed'] for r in rr})

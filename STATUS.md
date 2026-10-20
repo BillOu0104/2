@@ -1,6 +1,6 @@
 # 研究恢复入口
 
-状态：进行中，阶段 1 完成，准备阶段 2。开始前读取本文件、docs/research/PLAN.md 和最近结果。
+状态：进行中，阶段1/2和数值控制完成，阶段3独立确认及消融运行中。
 
 基线：c7a53a01def5f9d60389ee20ec0f8bac5210ed69。
 分支：research/newtonian-survival；禁止合并 main。
@@ -15,6 +15,14 @@ validation.json：500 帧与原求解器比较，位置速度最大差约 1.2e-1
 阶段1共448条完成：仅修复行星主星参考系轨道提高恒纪元，但寿命改善有限；Q1.4较有希望。尺度放大与层级对照不能直接宣称成功。细节见 PHASE1.md。
 产品9测试文件仍全部通过。研究分支已实际推送成功，main未改。
 
-下一步命令：`node docs/research/run.mjs docs/research/phase2.json`；已完成键自动跳过。
-随后：`python3 docs/research/summarize.py docs/research/results/phase2.jsonl`，冻结独立确认候选与更长时窗。
+已完成1288条：阶段1 448、阶段2 576、数值控制264；另有独立DOP853参考和两个弹弓做功诊断。
+阶段2主候选冻结为Q=1、行星相对预定宿主2逆行圆轨道、半径为宿主最近星距.12倍，保持质量、半径、G及全部判定。
+完整事实见 PHASE2.md / NUMERICS.md。随机初始行星并非普遍未束缚：阶段1全部对至少一星初始负能，但最近宿主偏心率中位数.818。
+数值控制中24种子精确牛顿不同步长/算法的主要存活判定相同，不能把真实弹弓归咎于数值误差。
+
+下一步命令（已有键自动跳过）：
+`node docs/research/run.mjs docs/research/phase3.json`
+`node docs/research/run.mjs docs/research/ablation.json`
+完成后分别用 summarize.py 统计，然后运行 chaos.mjs 和 extend.mjs（创建后），继续3000/10000年队列。
+独立确认集128个新种子，不因前几条结果修改配置；研究engine-v2仅增加诊断和消融选项，已验证与v1相同配置逐字段一致。
 恢复要求：只重跑缺失键；检查程序哈希，不把不同版本实验混写。
