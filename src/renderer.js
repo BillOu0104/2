@@ -7,7 +7,7 @@ import { Line2 } from 'three/addons/lines/Line2.js';
 import { LineGeometry } from 'three/addons/lines/LineGeometry.js';
 import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
 import { colorRGB, seededRandom } from './settings.js';
-import { ViewMotion } from './view-motion.js';
+import { ViewMotion, idleSway } from './view-motion.js';
 import { TrailHistory, trailComplexity, selectTrail } from './adaptive-trails.js';
 
 const C = v => new THREE.Color(...colorRGB(v));
@@ -44,18 +44,22 @@ export class SpaceRenderer {
     this.world = new THREE.Group(); this.scene.add(this.world);
     this.compass = new THREE.Group(); this.world.add(this.compass);
     const ringGeometry = new THREE.BufferGeometry().setFromPoints(Array.from({ length: 257 }, (_, i) => new THREE.Vector3(Math.cos(i / 256 * Math.PI * 2) * 1.42, Math.sin(i / 256 * Math.PI * 2) * 1.42, 0)));
-    for (const [angle, opacity] of [[0, .18], [Math.PI / 2, .08]]) {
+    for (const [angle, opacity] of [[0, .5], [Math.PI / 2, .5]]) {
       const ring = new THREE.LineLoop(ringGeometry, new THREE.LineBasicMaterial({ color: 0x95c4eb, transparent: true, opacity })); ring.rotation.x = angle; this.compass.add(ring);
     }
     const ticks = [];
     for (let i = 0; i < 120; i++) { const a = i / 120 * Math.PI * 2; const r = i % 10 ? 1.44 : 1.48; ticks.push(Math.cos(a) * 1.42, Math.sin(a) * 1.42, 0, Math.cos(a) * r, Math.sin(a) * r, 0); }
-    this.compass.add(new THREE.LineSegments(new THREE.BufferGeometry().setAttribute('position', new THREE.Float32BufferAttribute(ticks, 3)), new THREE.LineBasicMaterial({ color: 0x94b7d9, transparent: true, opacity: .2 })));
+    this.compass.add(new THREE.LineSegments(new THREE.BufferGeometry().setAttribute('position', new THREE.Float32BufferAttribute(ticks, 3)), new THREE.LineBasicMaterial({ color: 0x94b7d9, transparent: true, opacity: .5 })));
     const textureLoader = new THREE.TextureLoader();
     const texture = name => { const t = textureLoader.load(`assets/original/${name}.webp`); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy=Math.min(16,this.renderer.capabilities.getMaxAnisotropy()); return t; };
     this.starTexture = texture('0aun'); this.planetTexture = texture('0dq'); this.spikeTexture = roundGlow();
     this.bgTextures = { '1': texture('B8k'), '4': texture('st2') };
     for (const t of Object.values(this.bgTextures)) t.mapping = THREE.EquirectangularReflectionMapping;
     this.sky = new THREE.Mesh(new THREE.SphereGeometry(90, 48, 24), new THREE.MeshBasicMaterial({ map: this.bgTextures['4'], side: THREE.BackSide, toneMapped: false, depthWrite: false }));
+    // The broad bright patch in the original st2 panorama, measured on a blurred thumbnail.
+    const u=.4580078125,v=.486328125,theta=v*Math.PI,phi=u*Math.PI*2;
+    this.galaxyDirection=new THREE.Vector3(-Math.cos(phi)*Math.sin(theta),Math.cos(theta),Math.sin(phi)*Math.sin(theta));
+    this.camera.updateMatrixWorld();this.sky.quaternion.setFromUnitVectors(this.galaxyDirection,this.camera.getWorldDirection(new THREE.Vector3()));
     this.world.add(this.sky);
     this.scene.add(new THREE.AmbientLight(0x8297b4, 0.35));
     this.nodes = []; this.trails = []; this.trailBuffers = [];
@@ -82,12 +86,12 @@ export class SpaceRenderer {
       const dust = new THREE.Points(geometry, new THREE.PointsMaterial({ color: 0xb2becd, size: layer ? .008 : .013, transparent: true, opacity: .38, depthWrite: false, sizeAttenuation: true }));
       this.world.add(dust); this.dustLayers.push(dust);
     }
-    this.nebula = new THREE.Mesh(new THREE.SphereGeometry(70, 24, 16), new THREE.MeshBasicMaterial({ map: this.bgTextures['1'], side: THREE.BackSide, transparent: true, opacity: .35, color: 0x6e83a7, blending: THREE.AdditiveBlending, depthWrite: false })); this.world.add(this.nebula);
+    this.nebula = new THREE.Mesh(new THREE.SphereGeometry(70, 24, 16), new THREE.MeshBasicMaterial({ map: this.bgTextures['1'], side: THREE.BackSide, transparent: true, opacity: .35, color: 0x6e83a7, blending: THREE.AdditiveBlending, depthWrite: false })); this.nebula.quaternion.copy(this.sky.quaternion);this.world.add(this.nebula);
     this.composer = null;
     // Small bright spheres become square impulses in a downsampled bloom pyramid.
     // Explicit radial sprites provide the HDR halo without changing circular silhouettes.
     this.post = new ShaderPass(postShader);
-    this.mouse = { x: 0, y: 0, down: false, dragging: false, startX: 0, startY: 0, lastX: 0, lastY: 0 }; this.rot = new ViewMotion();this.autoAngle=0;
+    this.mouse = { x: 0, y: 0, down: false, dragging: false, startX: 0, startY: 0, lastX: 0, lastY: 0 }; this.rot = new ViewMotion();this.autoAngle=0;this.swayTime=0;
     canvas.addEventListener('pointerdown', e => { if(e.button!==0)return; this.mouse.down = true; this.mouse.dragging=false; this.mouse.startX=this.mouse.lastX = e.clientX; this.mouse.startY=this.mouse.lastY = e.clientY; canvas.setPointerCapture(e.pointerId); });
     canvas.addEventListener('pointermove', e => {
       this.mouse.x = e.clientX / innerWidth * 2 - 1; this.mouse.y = e.clientY / innerHeight * 2 - 1;
@@ -97,7 +101,7 @@ export class SpaceRenderer {
       }
       this.mouse.lastX = e.clientX; this.mouse.lastY = e.clientY;
     });
-    for (const type of ['pointerup', 'pointercancel', 'lostpointercapture']) canvas.addEventListener(type, () => { this.mouse.down = false; this.mouse.dragging=false; this.compass.visible=false; });
+    for (const type of ['pointerup', 'pointercancel', 'lostpointercapture']) canvas.addEventListener(type, () => { this.mouse.down = false; this.mouse.dragging=false; });
     this.updateSettings(settings); this.resize();
     this.onResize = () => this.resize(); addEventListener('resize', this.onResize);
   }
@@ -132,7 +136,7 @@ export class SpaceRenderer {
     this.sky.material.color.copy(C(mode === '3' ? s.newproperty55 : s.backgroundcolor)).multiplyScalar(mode === '3' ? s.newproperty56 : s.newproperty9);
     this.sky.material.needsUpdate = true;
     this.camera.fov = s.newproperty71; this.camera.position.z = Math.max(1.4, 5.2 - s.distance * .65); this.camera.updateProjectionMatrix();
-    this.compass.visible = !!s.compass && this.mouse.down && this.mouse.dragging && +s.newproperty61===0; this.compass.children.forEach(n => n.material?.color.copy(C(s.datacolor)));
+    this.compass.visible = !!s.compass && (this.mouse.dragging||Math.hypot(this.rot.vx,this.rot.vy)>.02); this.compass.children.forEach(n => n.material?.color.copy(C(s.datacolor)));
     this.nebula.visible = s.brfontcoloraaaaaabrnebularequirespostprocessingultrahighquality;
     for (const [u, key] of Object.entries({ grain: 'newproperty68', crt: 'newproperty3', blur: 'newproperty23', pulse: 'newproperty54' })) this.post.uniforms[u].value = s[key];
     const radii = [s._13, s._21, s._3, s.newproperty20];
@@ -200,11 +204,11 @@ export class SpaceRenderer {
   }
   render(dt, elapsed, motionDt=dt) {
     const s = this.settings;
-    this.compass.visible=!!s.compass&&this.mouse.down&&this.mouse.dragging&&+s.newproperty61===0;
-    if(s.newproperty16)this.autoAngle+=s.newproperty51*motionDt*Math.PI/180;
+    this.swayTime+=motionDt;this.autoAngle=s.newproperty16?idleSway(this.swayTime,s.newproperty51,s.idleAmplitude):0;
     if(+s.newproperty61===1){
       for(let remaining=motionDt;remaining>1e-8;){const step=Math.min(1/60,remaining);this.rot.follow(this.mouse.y*s.y7*Math.PI/180,this.mouse.x*s.x6*Math.PI/180,step,Math.max(.25,s.newproperty62*12));remaining-=step;}
     }else this.rot.coast(motionDt,-Math.log(Math.min(.999,s.y6))*120);
+    this.compass.visible=!!s.compass&&(this.mouse.dragging||Math.hypot(this.rot.vx,this.rot.vy)>.02);
     this.world.rotation.set(this.rot.x+(s.newproperty16?Math.sin(elapsed*.1)*s.brfontcoloraaaaaaxspinangle*Math.PI/180:0),this.rot.y+this.autoAngle,0);
     this.nodes.forEach((n, i) => {
       n.group.position.lerp(n.target, 1 - Math.exp(-dt * 22)); n.mesh.rotation.y += dt * .1;

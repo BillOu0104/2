@@ -23,16 +23,15 @@ test('labels default off; existing v0.3 preferences migrate once, optional opt-i
  assert.equal(settings.bodyLabels,false);assert.equal(migrateSettings({bodyLabels:true},3).bodyLabels,false);
  assert.equal(migrateSettings({presentationRevision:2,bodyLabels:true},3).bodyLabels,true);
 });
-test('damaged world offers restart before terminal loss and stays uninhabitable',()=>{
- const s=new Simulation({autorestart:false});s.tick();s.world.integrity=.97;s.world.temperature=22.6;s.tick();
- const state=s.snapshot();assert.equal(state.world.planet.restartRequired,true);assert.equal(state.world.planet.terminal,null);assert.equal(state.habitability.score,0);assert.equal(state.habitability.canGrow,false);assert.equal(state.world.safeToWake,false);
- for(let i=0;i<200;i++)s.tick();assert.equal(s.generation,1);assert.equal(s.events.filter(e=>e.type==='planet:damaged').length,1);
+test('recoverable damage no longer requests an automatic universe restart',()=>{
+ const s=new Simulation({autorestart:true});s.tick();s.world.integrity=.97;s.tick();
+ assert.equal(s.snapshot().world.planet.restartRequired,false);assert.equal(s.snapshot().world.planet.recoverable,true);
+ for(let i=0;i<120;i++)s.tick();assert.equal(s.generation,1);
 });
-test('automatic next universe archives damage once and clears it on the generation boundary',()=>{
- const s=new Simulation({autorestart:true});s.tick();s.shared.civilizationAlive=true;s.shared.civilizationStartTime=0;s.civilization.reset();s.world.integrity=.97;
- for(let i=0;i<130;i++){s.tick();if(s.generation===2)break;}
- assert.equal(s.generation,2);assert.equal(s.snapshot().bodies.length,4);assert.equal(s.snapshot().world.planet.damaged,false);
- const deaths=s.events.filter(e=>e.type==='civilization:death');assert.equal(deaths.length,1);assert.equal(deaths[0].detail.destructionEvent,'行星结构受损');
+test('terminal planetary loss still advances to the next universe',()=>{
+ const s=new Simulation({autorestart:true});s.tick();s.world.terminal={kind:'disrupted',zh:'大撕裂',en:'Great Tear'};
+ for(let i=0;i<250;i++){s.tick();if(s.generation===2)break;}
+ assert.equal(s.generation,2);assert.equal(s.snapshot().world.planet.terminal,null);
 });
 test('slow and fast simple trajectories have comparable visible lengths but different history spans',()=>{
  const slow=straight(3600,.25),fast=straight(600,2);

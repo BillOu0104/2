@@ -19,7 +19,7 @@ export function largestEigenvalue(matrix){
 }
 export class WorldState{
   constructor(){this.reset();}
-  reset(){this.primary=-1;this.candidate=-1;this.stableTime=0;this.unstableTime=0;this.epoch='chaotic';this.integrity=1;this.terminal=null;this.temperature=null;this.lastFlux=null;this.fluxChange=0;this.state=null;}
+  reset(){this.primary=-1;this.candidate=-1;this.stableTime=0;this.unstableTime=0;this.epoch='chaotic';this.integrity=1;this.terminal=null;this.temperature=null;this.lastFlux=null;this.fluxChange=0;this.state=null;this.recoveryTime=0;}
   update(bodies,G,equilibrium,settings,runtime,dt=1/60){
     const planet=bodies[3],radius=Math.max(settings.newproperty20,1e-5);
     const stars=bodies.slice(0,3).map((body,i)=>{
@@ -40,7 +40,12 @@ export class WorldState{
     if(this.epoch==='stable'&&main?.i!==this.primary){this.epoch='chaotic';this.primary=-1;}
     const tensor=Array.from({length:3},()=>[0,0,0]);
     for(const star of active){const strength=star.mass/Math.max(planet.mass,1)*Math.pow(radius/star.distance,3);for(let i=0;i<3;i++)for(let j=0;j<3;j++)tensor[i][j]+=strength*(3*star.direction[i]*star.direction[j]-(i===j?1:0));}
-    const tideRatio=Math.max(0,largestEigenvalue(tensor));if(tideRatio>1)this.integrity=clamp(this.integrity-dt*(tideRatio-1)/2);
+    const tideRatio=Math.max(0,largestEigenvalue(tensor)),hardness=settings.planetStrength??1.6,stressRatio=tideRatio/hardness;
+    if(!this.terminal){
+      if(stressRatio>1){this.integrity=clamp(this.integrity-dt*(stressRatio-1)/6);this.recoveryTime=0;}
+      else if(stressRatio<.6){this.recoveryTime+=dt;if(this.recoveryTime>3)this.integrity=clamp(this.integrity+dt*.008*(1-stressRatio));}
+      else this.recoveryTime=0;
+    }
     const contact=active.find(s=>s.distance<=s.radius+radius);
     if(!this.terminal&&contact)this.terminal={kind:'engulfed',zh:`行星被恒星${contact.i+1}吞噬`,en:`Planet engulfed by star ${contact.i+1}`};
     if(!this.terminal&&this.integrity<=0)this.terminal={kind:'disrupted',zh:'大撕裂：行星结构崩溃',en:'Great Tear: planetary disruption'};
@@ -53,15 +58,16 @@ export class WorldState{
     if(flying.some(s=>s.angularRate<.005&&s.radial<-.01))add('stationary','飞星不动 · 正在接近','Stationary flying star · approaching','warning');
     const giant=active.filter(s=>s.visibleFraction>0&&s.distance<settings.newproperty30);
     if(giant.length)add('overhead',giant.length===1?'巨日近掠':giant.length===2?'双日凌空':'三日凌空',giant.length===1?'Giant sun passage':giant.length===2?'Two suns overhead':'Three suns overhead',this.temperature>40?'warning':'observation');
+    for(const p of phenomena){if(p.kind==='flying')p.count=flying.length;if(p.kind==='overhead')p.count=giant.length;}
     const aligned=active.length===3&&active.every((s,i)=>active.slice(i+1).every(t=>dot(s.direction,t.direction)>Math.cos(5*Math.PI/180)));
     if(aligned)add('alignment','三日连珠','Three-sun alignment',tideRatio>.5?'warning':'observation');
     if(tideRatio>.5)add('tidal','潮汐应力上升','Rising tidal stress','warning');
     if(this.terminal)add(this.terminal.kind,this.terminal.zh,this.terminal.en,'fatal');
-    const damaged=this.integrity<.98;
-    const condition=this.terminal?.kind||(damaged?'damaged':tideRatio>1?'tidal-stress':this.temperature>1000?'molten':this.temperature>settings.newproperty46?'hot':this.temperature<settings.newproperty45?'frozen':'temperate');
+    const damaged=this.integrity<.98,recovering=damaged&&!this.terminal&&stressRatio<.6&&this.recoveryTime>3;
+    const condition=this.terminal?.kind||(recovering?'recovering':damaged?'damaged':stressRatio>1?'tidal-stress':this.temperature>1000?'molten':this.temperature>settings.newproperty46?'hot':this.temperature<settings.newproperty45?'frozen':'temperate');
     this.state={epoch:{kind:this.epoch,primary:this.primary,stableFor:this.stableTime,bound,dominance,perturbation},phenomena,
-      planet:{condition,damaged,restartRequired:damaged||!!this.terminal,intact:!this.terminal,terminal:this.terminal,integrity:this.integrity,tideRatio,temperature:this.temperature,equilibriumTemperature:equilibrium},
+      planet:{condition,damaged,recovering,recoverable:!this.terminal,canSupportLife:!this.terminal&&this.integrity>=.25&&stressRatio<.8,restartRequired:!!this.terminal,intact:!this.terminal,terminal:this.terminal,integrity:this.integrity,tideRatio,stressRatio,hardness,temperature:this.temperature,equilibriumTemperature:equilibrium},
       stars:stars.map(s=>({index:s.i,distance:s.distance,angularRate:s.angularRate,radialSpeed:s.radial,visibleFraction:s.visibleFraction,radius:s.radius,flying:s.distance>settings.newproperty31})),
-      fluxChange:this.fluxChange,safeToWake:!this.terminal&&!damaged&&tideRatio<.5&&(this.epoch==='stable'||this.fluxChange<.15)};return this.state;
+      fluxChange:this.fluxChange,safeToWake:!this.terminal&&this.integrity>=.25&&stressRatio<.5&&(this.epoch==='stable'||this.fluxChange<.15)};return this.state;
   }
 }

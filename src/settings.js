@@ -2,13 +2,14 @@ import { propertySchema } from './original-data.js';
 
 export const defaults = Object.fromEntries(Object.entries(propertySchema)
   .filter(([, d]) => d.type && d.type !== 'group').map(([k, d]) => [k, d.value]));
-export const extraDefaults = { seed: 'TRISOLARIS', music: false, volume: 0.35, trailsLength: 400, physicsMode: 'reference', pixelRatio: 4, bodyLabels: false, presentationRevision: 2, civilizationMode: 'balanced', thermalGrace: 8, wakeDelay: 3, epochWindow: 2, climateInertia: 1.5, stellarBreathing: true, renderQuality: 'native' };
+export const extraDefaults = { seed: 'TRISOLARIS', music: false, volume: 0.35, trailsLength: 400, physicsMode: 'reference', pixelRatio: 4, bodyLabels: false, presentationRevision: 3, layout: {}, planetStrength: 1.6, idleAmplitude: 6, civilizationMode: 'balanced', thermalGrace: 8, wakeDelay: 3, epochWindow: 2, climateInertia: 1.5, stellarBreathing: true, renderQuality: 'native' };
 // New installs show the requested tails; explicitly saved off/on preferences still win.
 defaults.newproperty14 = true;
 defaults.newproperty39 = true;
 defaults.newproperty45 = -20;
 defaults.newproperty46 = 40;
-defaults.newproperty51 = .35;
+defaults.newproperty51 = .08;
+defaults.newproperty61 = 0;
 defaults.newproperty3 = 0;
 defaults.newproperty68 = 0;
 export const effectivePropertySchema = { ...propertySchema,
@@ -18,7 +19,8 @@ export const effectivePropertySchema = { ...propertySchema,
   newproperty46: {...propertySchema.newproperty46,text:'常态活动高温边界 / Active life maximum °C',value:40},
   newproperty43: {...propertySchema.newproperty43,text:'干仓低温耐受 / Dry storage minimum °C'},
   newproperty44: {...propertySchema.newproperty44,text:'干仓高温耐受 / Dry storage maximum °C'},
-  newproperty51: {...propertySchema.newproperty51,value:.35}
+  newproperty51: {...propertySchema.newproperty51,text:'静置左右摇摆速度 °/s',value:.08},
+  newproperty61:{...propertySchema.newproperty61,value:0}
 };
 export function normalizeSettings(source = {}, includeExtras = true) {
   const out = { ...defaults, ...(includeExtras ? extraDefaults : {}) };
@@ -44,6 +46,11 @@ export function normalizeSettings(source = {}, includeExtras = true) {
     else if (key === 'epochWindow' && Number.isFinite(+value)) out.epochWindow = Math.min(20,Math.max(.25,+value));
     else if (key === 'climateInertia' && Number.isFinite(+value)) out.climateInertia = Math.min(30,Math.max(.05,+value));
     else if (key === 'stellarBreathing') out.stellarBreathing=value===true;
+    else if(key==='planetStrength'&&Number.isFinite(+value))out.planetStrength=Math.min(4,Math.max(1,+value));
+    else if(key==='idleAmplitude'&&Number.isFinite(+value))out.idleAmplitude=Math.min(20,Math.max(0,+value));
+    else if(key==='layout'&&value&&typeof value==='object'){
+      out.layout={};for(const id of ['left','right','clock','logs','years']){const p=value[id];if(p&&Number.isFinite(p.x)&&Number.isFinite(p.y))out.layout[id]={x:Math.max(0,Math.min(100,p.x)),y:Math.max(0,Math.min(100,p.y))};}
+    }
     else if (key === 'renderQuality' && ['native','8k'].includes(value)) out.renderQuality=value;
   }
   return out;
@@ -52,11 +59,12 @@ export function colorRGB(s = '1 1 1') { return s.split(/\s+/).map(Number); }
 export function colorHex(s) { return '#' + colorRGB(s).map(x => Math.round(x * 255).toString(16).padStart(2, '0')).join(''); }
 export function fromHex(s) { return [1, 3, 5].map(i => parseInt(s.slice(i, i + 2), 16) / 255).join(' '); }
 export function plainText(s = '') { return s.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' '); }
-export function algorithmId(s) { return `sykm-scene-v4-${s.physicsMode}60-civ-${s.civilizationMode}-v3-damage1`; }
+export function algorithmId(s) { return `sykm-scene-v4-${s.physicsMode}60-civ-${s.civilizationMode}-v041-recovery`; }
 export function migrateSettings(saved={},version=3){
+  if((saved.presentationRevision??0)<3)saved={...saved,newproperty51:Math.abs(saved.newproperty51??.35)>=.3?.08:(saved.newproperty51??.08),newproperty61:String(saved.newproperty61??'1')==='1'?'0':saved.newproperty61};
   // One-time presentation migration for v0.3 installations with labels enabled.
   if(saved.presentationRevision!==extraDefaults.presentationRevision)saved={...saved,bodyLabels:saved.presentationRevision>=1?saved.bodyLabels:false,newproperty39:true};
-  if(version<3)return normalizeSettings({...saved,newproperty45:-20,newproperty46:40,newproperty51:Math.abs(saved.newproperty51??3)>=2 ? .35 : (saved.newproperty51??.35),newproperty3:0,newproperty68:0});
+  if(version<3)return normalizeSettings({...saved,newproperty45:-20,newproperty46:40,newproperty51:Math.abs(saved.newproperty51??3)>=2 ? .08 : (saved.newproperty51??.08),newproperty3:0,newproperty68:0});
   return normalizeSettings(saved);
 }
 export function seededRandom(seed) {

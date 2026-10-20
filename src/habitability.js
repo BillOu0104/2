@@ -7,12 +7,12 @@ export class Habitability {
     const temperature=Number(shared.tem),low=settings.newproperty45,high=settings.newproperty46;
     const comfortable=Number.isFinite(temperature)&&temperature>=low&&temperature<=high;
     const sleeping=['dormant','dehydrating','rehydrating'].includes(context.phase),terminal=!!context.terminal;
-    const damaged=!!context.damaged,tideRatio=context.tideRatio??0;
+    const damaged=!!context.damaged,tideRatio=context.tideRatio??0,integrity=clamp(context.integrity??1);
     const hazard=damaged?'damaged':context.hazard|| (tideRatio>=.5?'tidal':null);
     const excess=Number.isFinite(temperature)?Math.max(low-temperature,temperature-high,0):1000;
     const storageExcess=Number.isFinite(temperature)?Math.max(settings.newproperty43-temperature,temperature-settings.newproperty44,0):1000;
     // This is current environmental suitability, not a moving average of past weather.
-    this.score=comfortable&&!terminal&&!damaged?clamp((1-tideRatio)/.5):0;
+    this.score=comfortable&&!terminal&&!damaged?integrity*clamp((1-tideRatio)/.5):0;
     let exposure=0;
     if(!comfortable)exposure=sleeping?(storageExcess>0?(.3+storageExcess/100)/settings.thermalGrace:.00025):(.15+excess/60)/settings.thermalGrace;
     if(hazard)exposure+=.05;

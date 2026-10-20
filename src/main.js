@@ -1,3 +1,4 @@
+import { layoutWidgets,widgetPosition,clearLayoutStyles,applyLayout,installLayoutEditor } from './layout.js';
 import { SpaceRenderer } from './renderer.js';
 import { effectivePropertySchema as propertySchema, migrateSettings } from './settings.js';
 import { normalizeSettings, colorHex, fromHex, colorRGB, plainText, settingsFromInitial, algorithmId } from './settings.js';
@@ -24,6 +25,8 @@ let state = null, userPaused = false, hostPaused = false, visibilityPaused = fal
 let sessionId = crypto.randomUUID?.() || String(Date.now());
 let customURL = null, history = [], lastTick = 0, fps = 0, fatal = false;
 const controlMap = new Map();
+function controlValue(key){if(key.startsWith('layout.')){const[,id,axis]=key.split('.');return settings.layout[id]?.[axis]??+widgetPosition(id)[axis].toFixed(1);}return settings[key];}
+function setControl(key,value){if(key.startsWith('layout.')){const[,id,axis]=key.split('.');changeSettings({layout:{...settings.layout,[id]:{...(settings.layout[id]||widgetPosition(id)),[axis]:value}}});}else changeSettings({[key]:value});}
 const notice = (message, error = false) => {
   $('#notice').textContent = message; $('#notice').hidden = false; $('#notice').classList.toggle('error', error);
   clearTimeout(notice.timer); notice.timer = setTimeout(() => { $('#notice').hidden = true; }, error ? 14000 : 4000);
@@ -81,21 +84,21 @@ function makeControl(key, def, extension = false) {
   const heading = document.createElement('div'); heading.className = 'control-head';
   const label = document.createElement('label'); label.htmlFor = `setting-${key}`; label.textContent = plainText(def.text).trim(); heading.append(label); container.append(heading);
   let input, number;
-  if (def.type === 'bool') { input = document.createElement('input'); input.type = 'checkbox'; heading.append(input); input.onchange = () => changeSettings({ [key]: input.checked }); }
-  else if (def.type === 'color') { input = document.createElement('input'); input.type = 'color'; heading.append(input); input.onchange = () => changeSettings({ [key]: fromHex(input.value) }); }
+  if (def.type === 'bool') { input = document.createElement('input'); input.type = 'checkbox'; heading.append(input); input.onchange = () => setControl(key,input.checked); }
+  else if (def.type === 'color') { input = document.createElement('input'); input.type = 'color'; heading.append(input); input.onchange = () => setControl(key,fromHex(input.value)); }
   else if (def.type === 'slider') {
     input = document.createElement('input'); input.type = 'range'; input.min = def.min; input.max = def.max;
     input.step = def.fraction === false || def.integer ? 1 : def.step || (def.max - def.min > 1e5 ? 1000 : 0.001);
     number = document.createElement('input'); number.type = 'number'; number.className = 'number-value'; number.min = def.min; number.max = def.max; number.step = input.step; number.setAttribute('aria-label', label.textContent);
     heading.append(number); container.append(input);
     input.oninput = () => { number.value = input.value; };
-    input.onchange = () => changeSettings({ [key]: +input.value });
-    number.onchange = () => { if (number.value !== '' && Number.isFinite(+number.value)) changeSettings({ [key]: +number.value }); else updateControls(); };
+    input.onchange = () => setControl(key,+input.value);
+    number.onchange = () => { if (number.value !== '' && Number.isFinite(+number.value)) setControl(key,+number.value); else updateControls(); };
     if (key === 'newproperty7') input.disabled = number.disabled = true;
   } else if (def.type === 'combo') {
     input = document.createElement('select');
     for (const option of def.options) { const o = document.createElement('option'); o.value = option.value; o.textContent = option.label; input.append(o); }
-    container.append(input); input.onchange = () => changeSettings({ [key]: input.value });
+    container.append(input); input.onchange = () => setControl(key,input.value);
   } else if (def.type === 'scenetexture') {
     input = document.createElement('input'); input.type = 'file'; input.accept = 'image/*'; container.append(input);
     input.onchange = async () => {
@@ -108,7 +111,7 @@ function makeControl(key, def, extension = false) {
         notice(saved ? '背景已保存在本机' : '背景已载入；当前环境不支持持久保存');
       } catch { notice('无法读取这张图片，请选择 PNG、JPEG 或 WebP。', true); }
     };
-  } else { input = document.createElement('input'); input.type = 'text'; container.append(input); input.onchange = () => changeSettings({ [key]: input.value }); }
+  } else { input = document.createElement('input'); input.type = 'text'; container.append(input); input.onchange = () => setControl(key,input.value); }
   input.id = `setting-${key}`;
   const hint = hintMap[key]; if (hint) { const p = document.createElement('small'); p.className = 'control-hint'; p.textContent = hint; container.append(p); }
   controlMap.set(key, { input, number, type: def.type, container, extension }); return container;
@@ -118,8 +121,9 @@ function groupElement(title, open = false) {
   const summary = document.createElement('summary'); summary.textContent = title; group.append(summary); return group;
 }
 function buildSettings() {
-  const extras = groupElement('运行与可复现种子 / Runtime', true);
-  for (const [key, def] of Object.entries({
+  const definitions={
+    planetStrength:{type:'slider',text:'行星结构强度 / Structural strength',min:1,max:4,step:.1},
+    idleAmplitude:{type:'slider',text:'静置左右摇摆幅度 °',min:0,max:20,step:.5},
     seed: { type: 'textinput', text: '随机初始化 Seed' },
     physicsMode: { type: 'combo', text: '物理时钟', options: [{ value: 'reference', label: '原版节奏 · 固定 60 Hz（默认）' }, { value: 'realtime', label: '墙钟同步 · 修复原版每帧步数上限' }] },
     civilizationMode: { type: 'combo', text: '文明延续机制 / Civilization', options: [{ value: 'balanced', label: '原著规则 · 脱水、休眠与复苏（默认）' }, { value: 'legacy', label: '原版即时判定' }] },
@@ -134,12 +138,22 @@ function buildSettings() {
     bodyLabels: { type: 'bool', text: '显示天体标签 / Body labels' },
     music: { type: 'bool', text: '播放原版音乐 · Ether' },
     volume: { type: 'slider', text: '音乐音量 / Volume', min: 0, max: 1, step: .01 }
-  })) extras.append(makeControl(key, def, true));
-  $('#extension-controls').append(extras);
+  };
+  const categories=[['layout','布局与窗口 / Layout',[]],['simulation','模拟与文明 / Simulation',['seed','physicsMode','civilizationMode','thermalGrace','wakeDelay','epochWindow','climateInertia','stellarBreathing','planetStrength']],['view','视角与银河 / View',['idleAmplitude','newproperty16','newproperty51','newproperty61','x5','y5','y6','compass']],['visual','画面与轨迹 / Visual',['renderQuality','trailsLength','pixelRatio','bodyLabels']],['audio','声音 / Audio',['music','volume']]];
+  for(const[id,title,keys]of categories){
+    const group=groupElement(title);group.dataset.category=id;
+    if(id==='layout'){
+      const buttons=document.createElement('div');buttons.className='layout-actions';buttons.innerHTML='<button id="layout-edit">拖动调整窗口</button><button id="layout-reset">恢复默认布局</button>';group.append(buttons);
+      for(const[name,label]of Object.entries({left:'左侧行星与文明',right:'右侧信息与排行',clock:'时钟与日期',logs:'中央文明与日志',years:'底部年份'}))for(const axis of ['x','y'])group.append(makeControl(`layout.${name}.${axis}`,{type:'slider',text:`${label} · ${axis==='x'?'水平':'垂直'}位置 %`,min:0,max:100,step:.1},true));
+      for(const key of ['clock','menul','audiobar','newproperty38','newproperty39'])group.append(makeControl(key,propertySchema[key]));
+    }
+    for(const key of keys)group.append(makeControl(key,definitions[key]||propertySchema[key],!!definitions[key]));
+    $('#extension-controls').append(group);
+  }
   const root = $('#original-controls'); let group = groupElement('通用 / General'); root.append(group);
   for (const [key, def] of Object.entries(propertySchema).sort((a, b) => a[1].index - b[1].index)) {
     if (def.type === 'group') { group = groupElement(plainText(def.text), key === 'newproperty27'); group.dataset.group = key; root.append(group); }
-    else if (def.type) group.append(makeControl(key, def));
+    else if (def.type) {if(!controlMap.has(key))group.append(makeControl(key, def));}
     else {
       const text = plainText(def.text).trim(); if (!text) continue;
       const note = document.createElement('p'); note.className = 'setting-note';
@@ -154,9 +168,9 @@ function buildSettings() {
 }
 function updateControls() {
   for (const [key, { input, number, type }] of controlMap) {
-    if (type === 'bool') input.checked = !!settings[key];
-    else if (type === 'color') input.value = colorHex(settings[key]);
-    else if (type !== 'scenetexture') { input.value = settings[key]; if (number) number.value = settings[key]; }
+    if (type === 'bool') input.checked = !!controlValue(key);
+    else if (type === 'color') input.value = colorHex(controlValue(key));
+    else if (type !== 'scenetexture') { input.value = controlValue(key); if (number) number.value = controlValue(key); }
   }
 }
 $('#settings-search').oninput = () => {
@@ -177,6 +191,7 @@ for (const button of document.querySelectorAll('[data-tab]')) button.onclick = (
 };
 
 function applyAppearance() {
+  clearLayoutStyles();
   const s = settings, en = s.cnen2;
   document.documentElement.lang = en ? 'en' : 'zh-CN'; document.documentElement.style.setProperty('--accent', colorHex(s.datacolor));
   for (const el of document.querySelectorAll('[data-note]')) { if (el.dataset.note === '_2') el.hidden = !s.cnen1; if (el.dataset.note === '_3d') el.hidden = s.cnen1; }
@@ -202,6 +217,7 @@ function applyAppearance() {
   $('#pause-button').textContent = userPaused ? (en ? '▷ Resume' : '▷ 继续') : (en ? 'Ⅱ Pause' : 'Ⅱ 暂停');
   $('#restart-button').textContent = en ? '↻ Restart' : '↻ 重启'; $('#fullscreen-button').textContent = en ? '⛶ Fullscreen' : '⛶ 全屏';
   $('#export-settings').textContent = en ? 'Export seed' : '导出种子'; $('#reset-settings').textContent = en ? 'Factory reset' : '恢复默认';
+  applyLayout(s.layout);
   const tabNames = en ? ['Settings', 'Archive', 'About'] : ['全部设置', '文明档案', '项目说明']; document.querySelectorAll('[data-tab]').forEach((b, i) => b.textContent = tabNames[i]);
 }
 
@@ -234,7 +250,7 @@ function renderHistory() {
   if (!history.length) { const li = document.createElement('li'); li.textContent = '尚无文明死亡记录。新的记录会自动保存在本机。'; list.append(li); return; }
   for (const entry of history.slice().reverse().slice(0, 200)) {
     const li = document.createElement('li'), title = document.createElement('b'), sub = document.createElement('small'), button = document.createElement('button');
-    title.textContent = `#${entry.number} · ${entry.lifespan} 年 · ${entry.destructionEvent}`;
+    title.textContent = `宇宙${entry.universe||entry.generation||'?'} · 文明${entry.number} · ${entry.lifespan} 年 · ${entry.destructionEvent}`;
     sub.textContent = `${entry.seed} / 宇宙 ${entry.generation} / ${new Date(entry.savedAt).toLocaleString()}`;
     button.textContent = '复现初始种子'; button.onclick = () => {
       const replay = entry.initialBodies ? settingsFromInitial(entry.settings, entry.initialBodies) : entry.settings;
@@ -244,22 +260,24 @@ function renderHistory() {
   }
 }
 function renderStatistics(s){
-  const stats=s.statistics;if(!stats)return;const en=settings.cnen2;
+  const stats=s.statistics;if(!stats)return;const en=settings.cnen2;const pair=entry=>entry.universe?(en?`U${entry.universe} · C${entry.number}`:`宇宙${entry.universe} · 文明${entry.number}`):(en?`History C${entry.number}`:`历史文明${entry.number}`);
   const years=n=>`${n>=1e7?n.toExponential(1):n.toFixed(1)}${en?' yr':'年'}`;
   $('#total-years').textContent=years(stats.totalYears);$('#current-universe').textContent=`#${stats.universe.number}`;
   $('#universe-years').textContent=years(stats.universe.lifespan);
-  $('#current-civilization').textContent=stats.civilization?`#${stats.civilization.number}`:(en?'Awaiting birth':'等待诞生');
+  $('#current-civilization').textContent=stats.civilization?pair(stats.civilization):(en?'Awaiting birth':'等待诞生');
   $('#civilization-years').textContent=stats.civilization?years(stats.civilization.lifespan):'—';
   for(const [id,records]of[['civilization-ranking',stats.civilizationRanking],['universe-ranking',stats.universeRanking]]){
     const list=$(`#${id}`);if(list.children.length!==5){list.replaceChildren();for(let i=0;i<5;i++){const li=document.createElement('li');li.innerHTML='<span class="rank-number"></span><span class="rank-id"></span><span class="rank-years"></span>';list.append(li);}}
-    [...list.children].forEach((li,i)=>{const entry=records[i];li.dataset.active=String(!!entry?.active);li.querySelector('.rank-number').textContent=String(i+1).padStart(2,'0');li.querySelector('.rank-id').textContent=entry?`#${entry.number}${entry.active?' ·':''}`:'—';li.querySelector('.rank-years').textContent=entry?years(entry.lifespan):'—';const opacityKey=['t9','t10','tex4opacity','tex5opacity','tex6opacity'][i];li.style.opacity=Math.min(1,(entry?.active ? .85 : .58)*settings[opacityKey]/propertySchema[opacityKey].value);li.title=entry?.active?(en?'Still running':'仍在运行'):'';});
+    [...list.children].forEach((li,i)=>{const entry=records[i];li.dataset.active=String(!!entry?.active);li.querySelector('.rank-number').textContent=String(i+1).padStart(2,'0');li.querySelector('.rank-id').textContent=entry?`${id==='civilization-ranking'?pair(entry):'#'+entry.number}${entry.active?' ·':''}`:'—';li.querySelector('.rank-years').textContent=entry?years(entry.lifespan):'—';const opacityKey=['t9','t10','tex4opacity','tex5opacity','tex6opacity'][i];li.style.opacity=Math.min(1,(entry?.active ? .85 : .58)*settings[opacityKey]/propertySchema[opacityKey].value);li.title=entry?.active?(en?'Still running':'仍在运行'):'';});
   }
 }
 function renderState(s) {
   const en = settings.cnen2;
   $('#era').textContent = s.era; $('#temperature').textContent = s.temperature.toFixed(1);
-  const condition=s.world?.planet.condition,planetLabels={temperate:['温带行星','Temperate'],hot:['高温行星','Overheated'],frozen:['冰封行星','Frozen'],molten:['熔融行星','Molten'],damaged:['行星结构受损','Planetary damage'],'tidal-stress':['潮汐应力过高','High tidal stress'],engulfed:['行星已被吞噬','Planet engulfed'],disrupted:['行星已被撕裂','Planet disrupted']};
+  const condition=s.world?.planet.condition,planetLabels={temperate:['温带行星','Temperate'],hot:['高温行星','Overheated'],frozen:['冰封行星','Frozen'],molten:['熔融行星','Molten'],damaged:['行星受损 · 可恢复','Recoverable damage'],recovering:['行星结构恢复中','Structure recovering'],'tidal-stress':['潮汐应力过高','High tidal stress'],engulfed:['行星已被吞噬','Planet engulfed'],disrupted:['行星已被撕裂','Planet disrupted']};
   $('#hydration').textContent=planetLabels[condition]?.[en?1:0]||'';
+  const phase=settings.civilizationMode==='legacy'?(s.alive?'active':'empty'):(s.civilizationState?.phase||'empty'),phases={empty:['等待文明诞生','Awaiting civilization'],active:['恢复生产 · 文明发展','Production and development'],dehydrating:['脱水保存中','Dehydrating'],dormant:['干仓储存 · 等待复苏','Dry storage'],rehydrating:['浸泡复苏中','Rehydrating'],destroyed:['文明已终结','Civilization ended']};
+  $('#civilization-phase').textContent=phases[phase]?.[en?1:0]||'';$('#civilization-phase-detail').textContent=s.alive?(en?`U${s.generation} · C${s.civilization} · ${s.lifespan} years`:`宇宙${s.generation} · 文明${s.civilization} · 已延续${s.lifespan}年`):(en?'Dehydration preserves a civilization; it is not a rebirth.':'脱水保存与浸泡复苏延续同一文明');
   $('#phenomena').textContent=(s.world?.phenomena||[]).map(p=>en?p.en:p.zh).join(' · ');
   const habitat = s.habitability;
   $('#habitability-readout').hidden = !habitat?.enabled;
@@ -272,9 +290,9 @@ function renderState(s) {
   $('#temperature-indicator').style.left = `${(s.temperature + 270) / 1770 * 100}%`;
   $('.temperature').style.color = s.temperature > settings.newproperty46 ? '#dcb09c' : s.temperature < settings.newproperty45 ? '#8dbde5' : 'var(--accent)';
   $('#civilization-status').textContent = s.text[0]; $('#civilization-lifespan').textContent = s.text[6];
-  const log=$('#civilization-log'),items=s.logItems?.length?s.logItems:s.log.map((text,i)=>({id:text,zh:text,en:text,at:s.runtime-i*5,legacy:true}));
+  const log=$('#civilization-log'),items=s.logItems??s.log.map((text,i)=>({id:text,zh:text,en:text,at:s.runtime-i*5,legacy:true}));
   const retained=new Set();
-  items.slice(0,10).forEach((entry,i)=>{
+  items.slice(0,6).forEach((entry,i)=>{
     const id=String(entry.id);retained.add(id);let li=[...log.children].find(el=>el.dataset.id===id);
     if(!li){li=document.createElement('li');li.dataset.id=id;log.append(li);}
     li.textContent=entry.legacy?entry.zh:(en?`Year ${Math.floor(entry.year)} · ${entry.en}`:`第${Math.floor(entry.year)}年，${entry.zh}`);
@@ -284,7 +302,7 @@ function renderState(s) {
   [...log.children].forEach(li=>{if(!retained.has(li.dataset.id))li.remove();});
   renderStatistics(s);
   $('#simulation-year').textContent = s.year >= 1e8 ? s.year.toExponential(2) : s.year.toFixed(2);
-  $('#restart-prompt').hidden = !(s.escaped||s.world?.planet.restartRequired) || settings.autorestart;
+  $('#restart-prompt').hidden = !(s.world?.planet.restartRequired||(settings.civilizationMode==='legacy'&&s.escaped)) || settings.autorestart;
   $('#restart-prompt span').textContent=s.world?.planet.terminal?(en?s.world.planet.terminal.en:s.world.planet.terminal.zh):s.world?.planet.damaged?(en?'PLANETARY DAMAGE':'行星结构受损'):(en?'CELESTIAL ESCAPE':'天体已逃逸');
   $('#restart-prompt strong').textContent=en?`Start universe ${s.generation+1} ↻`:`开启第${s.generation+1}号宇宙 ↻`;
 
@@ -316,6 +334,9 @@ function hideLoading() { clearTimeout(loadingTimer); $('#loading-overlay').class
 $('#enter-universe').onclick = hideLoading;
 
 buildSettings(); applyAppearance();
+const layoutEditor=installLayoutEditor({getSettings:()=>settings,save:changeSettings,setPanel,updateControls});
+addEventListener('resize',()=>{applyAppearance();updateControls();});
+document.fonts.ready.then(()=>{applyAppearance();updateControls();});
 const audio = new AudioController((values, average) => {
   if (renderer) renderer.audioLevel = settings.audioresponse ? average : 0;
 
@@ -329,7 +350,7 @@ try {
     if (data.type === 'state') { state = data.state; lastTick = state.tick; window.__threeBodyState = state; renderer.ingest(state); renderState(state); handleEvents(state.events);persistStatistics(); }
   };
   worker.onerror = event => { fatal = true; console.error(event); notice('后台模拟无法启动。请通过本地服务器或 Wallpaper Engine 打开此项目。', true); };
-  store.getAll('history').then(records=>{history=records.sort((a,b)=>a.savedAt-b.savedAt);worker.postMessage({type:'init',settings,statistics:savedStatistics()||{legacyRecords:history}});});
+  store.getAll('history').then(records=>{history=records.sort((a,b)=>a.savedAt-b.savedAt);worker.postMessage({type:'init',settings,statistics:{...(savedStatistics()||{}),legacyRecords:history}});});
   installWallpaperBridge({ changeSettings, renderer, audio, setHostPaused: value => { hostPaused = value; applyPause(); } });
   store.getAsset('background').then(file => { if (file) { customURL = URL.createObjectURL(file); renderer.setCustomBackground(customURL); } });
   let lastFrame = performance.now(), startTime = lastFrame, fpsStart = lastFrame, frames = 0, lastDraw = 0;
@@ -357,4 +378,4 @@ try {
 }
 // Diagnostic readout for automated smoke checks and host integrations.
 window.__threeBodyDiagnostics = () => ({ ready: !!state && !fatal, tick: lastTick, fps, paused: userPaused || hostPaused || visibilityPaused, controls: controlMap.size, history: history.length, worker: !!worker,
-  scene: renderer ? { canvas:[renderer.canvas.width,renderer.canvas.height], drawingBuffer:[renderer.renderer.getContext().drawingBufferWidth,renderer.renderer.getContext().drawingBufferHeight], renderedFrames:renderer.renderer.info.render.frame, viewVelocity:[renderer.rot.vx,renderer.rot.vy], maxAngularSpeed:renderer.rot.maxSpeed, compassVisible:renderer.compass.visible, maxTextureSize:renderer.renderer.capabilities.maxTextureSize, backgroundSizes:Object.fromEntries(Object.entries(renderer.bgTextures).map(([k,t])=>[k,[t.image?.width||0,t.image?.height||0]])), backgroundFollowsView: renderer.sky.parent === renderer.world, viewRotation: renderer.world.rotation.toArray().slice(0,3), skyRotation: renderer.sky.getWorldQuaternion(new renderer.camera.quaternion.constructor()).toArray(), bodyShapes: renderer.nodes.map(n => n.mesh.geometry.type), glowShape: 'radial-circle', bodyLabelsVisible:renderer.nodes.some(n=>!n.label.hidden), trailSamples: renderer.trailBuffers.map(b => b.length), trailComplexity:renderer.trailComplexity||0, trailMetrics:renderer.trailMetrics||[], trailsVisible: renderer.trails.every(t => t.visible) } : null });
+  scene: renderer ? { canvas:[renderer.canvas.width,renderer.canvas.height], drawingBuffer:[renderer.renderer.getContext().drawingBufferWidth,renderer.renderer.getContext().drawingBufferHeight], renderedFrames:renderer.renderer.info.render.frame, viewVelocity:[renderer.rot.vx,renderer.rot.vy], speedLimited:false, compassOpacity:renderer.compass.children.map(n=>n.material.opacity), idleYaw:renderer.autoAngle, galaxyCoreScreen:renderer.sky.localToWorld(renderer.galaxyDirection.clone().multiplyScalar(90)).project(renderer.camera).toArray(), layoutEditing:layoutEditor.editing, compassVisible:renderer.compass.visible, maxTextureSize:renderer.renderer.capabilities.maxTextureSize, backgroundSizes:Object.fromEntries(Object.entries(renderer.bgTextures).map(([k,t])=>[k,[t.image?.width||0,t.image?.height||0]])), backgroundFollowsView: renderer.sky.parent === renderer.world, viewRotation: renderer.world.rotation.toArray().slice(0,3), skyRotation: renderer.sky.getWorldQuaternion(new renderer.camera.quaternion.constructor()).toArray(), bodyShapes: renderer.nodes.map(n => n.mesh.geometry.type), glowShape: 'radial-circle', bodyLabelsVisible:renderer.nodes.some(n=>!n.label.hidden), trailSamples: renderer.trailBuffers.map(b => b.length), trailComplexity:renderer.trailComplexity||0, trailMetrics:renderer.trailMetrics||[], trailsVisible: renderer.trails.every(t => t.visible) } : null });

@@ -1,7 +1,7 @@
 {
   "passed": 17,
   "checks": [
-    "183 original + 14 extension controls and worker ready",
+    "183 original + 26 extension/layout controls and worker ready",
     "fading tails are enabled and populated for all four bodies",
     "all bodies use round sphere geometry and circular glow",
     "habitability and resilience are visible in optimized mode",
@@ -25,10 +25,10 @@
   "errors": [],
   "diagnostics": {
     "ready": true,
-    "tick": 1090,
-    "fps": 3,
+    "tick": 875,
+    "fps": 4,
     "paused": false,
-    "controls": 197,
+    "controls": 209,
     "history": 1,
     "worker": true,
     "scene": {
@@ -40,12 +40,24 @@
         390,
         844
       ],
-      "renderedFrames": 43,
+      "renderedFrames": 50,
       "viewVelocity": [
-        0,
-        0
+        -2.2838873675595485e-16,
+        -9.13554952972733e-16
       ],
-      "maxAngularSpeed": 0.55,
+      "speedLimited": false,
+      "compassOpacity": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "idleYaw": 0,
+      "galaxyCoreScreen": [
+        -5.203099076034179,
+        0.2383660833728731,
+        0.9997773176272053
+      ],
+      "layoutEditing": false,
       "compassVisible": false,
       "maxTextureSize": 8192,
       "backgroundSizes": {
@@ -60,15 +72,15 @@
       },
       "backgroundFollowsView": true,
       "viewRotation": [
-        0.14835298641951802,
-        0.8798930816272243,
+        0.14835298641951813,
+        0.8835729338221296,
         0
       ],
       "skyRotation": [
-        0.06705146714547615,
-        0.42471997548458773,
-        0.031562146198899715,
-        0.9022864700888126
+        -0.023248459059096865,
+        0.9757350718574153,
+        0.04866572956419146,
+        0.21220797691125384
       ],
       "bodyShapes": [
         "SphereGeometry",
@@ -79,36 +91,36 @@
       "glowShape": "radial-circle",
       "bodyLabelsVisible": false,
       "trailSamples": [
-        102,
-        102,
-        102,
-        102
+        313,
+        313,
+        313,
+        313
       ],
-      "trailComplexity": 0,
+      "trailComplexity": 0.42040682826662334,
       "trailMetrics": [
         {
-          "arcPixels": 14.673208799702936,
-          "seconds": 3.5166666666666657,
-          "budget": 429.00000000000006,
-          "segments": 11
+          "arcPixels": 169.59241506131625,
+          "seconds": 3.329615402537213,
+          "budget": 169.5924716181267,
+          "segments": 68
         },
         {
-          "arcPixels": 36.13695614895116,
-          "seconds": 3.4000000000000004,
-          "budget": 429.00000000000006,
-          "segments": 24
+          "arcPixels": 169.59302992242525,
+          "seconds": 4.010193241285917,
+          "budget": 169.5924716181267,
+          "segments": 78
         },
         {
-          "arcPixels": 15.678440107022935,
-          "seconds": 2.3166666666666664,
-          "budget": 429.00000000000006,
-          "segments": 11
+          "arcPixels": 169.59205153134505,
+          "seconds": 4.188023824263645,
+          "budget": 169.5924716181267,
+          "segments": 86
         },
         {
-          "arcPixels": 29.962631367949474,
-          "seconds": 3.549999999999999,
-          "budget": 429.00000000000006,
-          "segments": 21
+          "arcPixels": 169.59254538245096,
+          "seconds": 5.021912998057532,
+          "budget": 169.5924716181267,
+          "segments": 74
         }
       ],
       "trailsVisible": true

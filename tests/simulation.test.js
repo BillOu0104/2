@@ -18,7 +18,7 @@ test('183 original controls retain definitions, with the requested trails enable
   const controls = Object.entries(propertySchema).filter(([, p]) => p.type && p.type !== 'group');
   assert.equal(controls.length, 183);
   const config = normalizeSettings();
-  for (const [key, def] of controls) assert.deepEqual(config[key], ({newproperty14:true,newproperty39:true,newproperty45:-20,newproperty46:40,newproperty51:.35,newproperty3:0,newproperty68:0})[key] ?? def.value, key);
+  for (const [key, def] of controls) assert.deepEqual(config[key], ({newproperty14:true,newproperty39:true,newproperty45:-20,newproperty46:40,newproperty51:.08,newproperty61:0,newproperty3:0,newproperty68:0})[key] ?? def.value, key);
   const sim = new Simulation();
   assert.equal(sim.modules['008'].scriptProperties.fourthMass, 5000);
   assert.equal(sim.modules['008'].scriptProperties.constraint_M, 15000000);

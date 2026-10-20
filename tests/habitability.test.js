@@ -20,7 +20,7 @@ test('only -20 through 40 C supports activity, independently of era',()=>{
 });
 test('dehydration preserves the same civilization; safe rehydration resumes it',()=>{
  const f=fixture();f.run(240);assert.equal(f.civ.phase,'active');f.run(180,100);assert.equal(f.civ.phase,'dormant');assert.equal(f.shared.civilizationAlive,true);
- f.run(360);assert.equal(f.civ.phase,'active');assert.equal(f.shared.civilizationCount,1);assert.equal(f.shared.civilizationRecords.length,0);assert.ok(f.civ.logs.some(l=>l.kind==='wake'));
+ f.run(360);assert.equal(f.civ.phase,'active');assert.equal(f.shared.civilizationCount,1);assert.equal(f.shared.civilizationRecords.length,0);assert.equal(f.civ.logs.filter(l=>l.kind==='birth').length,1);
 });
 test('unsafe fluctuating climate interrupts rehydration instead of creating new civilizations',()=>{
  const f=fixture();f.run(240);f.run(180,80);f.run(230);assert.equal(f.civ.phase,'rehydrating');f.tick(20,{safe:false});assert.equal(f.civ.phase,'dormant');assert.equal(f.shared.civilizationCount,1);
@@ -61,5 +61,5 @@ test('tail visibility and color never reset physical trajectories',()=>{
  const a=new Simulation(),b=new Simulation();for(let i=0;i<120;i++){a.tick();b.tick();}a.configure({newproperty14:false,brfontcoloraaaaaatrail1color:'1 0 0',trailsLength:120});for(let i=0;i<120;i++){a.tick();b.tick();}assert.deepEqual(a.snapshot().bodies,b.snapshot().bodies);
 });
 test('previous settings migrate the requested slow rotation, activity bounds and clarity',()=>{
- const migrated=migrateSettings({newproperty51:3,newproperty45:-55,newproperty46:70},2);assert.equal(migrated.newproperty51,.35);assert.equal(migrated.newproperty45,-20);assert.equal(migrated.newproperty46,40);assert.equal(migrated.newproperty68,0);assert.equal(migrateSettings({newproperty51:.1},2).newproperty51,.1);
+ const migrated=migrateSettings({newproperty51:3,newproperty45:-55,newproperty46:70},2);assert.equal(migrated.newproperty51,.08);assert.equal(migrated.newproperty45,-20);assert.equal(migrated.newproperty46,40);assert.equal(migrated.newproperty68,0);assert.equal(migrateSettings({newproperty51:.1},2).newproperty51,.1);
 });

@@ -19,7 +19,7 @@ export class Simulation {
   constructor(settings = {}, statistics = {}) {
     this.statistics=new RunStatistics(statistics);
     this.settings = normalizeSettings(settings);
-    this.shared = { gjz: 0, rst: 0, cfw: 0, c_down: false, text: '',xntime:this.statistics.totalYears };
+    this.shared = { gjz: 0, rst: 0, cfw: 0, c_down: false, text: '',universeNumber:this.statistics.universeNumber,xntime:this.statistics.totalYears };
     this.engine = { runtime: 0, frametime: 1 / 60, screenResolution: new Vec3(1920, 1080, 0) };
     this.input = { cursorScreenPosition: new Vec3(960, 540, 0) };
     this.generation = this.statistics.universeNumber; this.tickCount = 0; this.revision = 0; this.events = []; this.eventSeq = 0;
@@ -80,7 +80,7 @@ export class Simulation {
     if(this.settings.civilizationMode==='legacy')this.modules['042'].update('');
     else this.civilization.destroy({zh:reason==='escape'?'天体逃逸':reason==='planet-damage'?'行星结构受损':'宇宙重新初始化',en:reason==='escape'?'Celestial escape':reason==='planet-damage'?'Planetary damage':'Universe reinitialized'},this.shared.xntime||0,this.engine.runtime,this.settings);
     for (const record of this.shared.civilizationRecords.slice(before)) this.recordDeath(record);
-    this.statistics.finishUniverse(reason);this.generation=this.statistics.universeNumber;this.setRandom();
+    this.statistics.finishUniverse(reason);this.generation=this.statistics.universeNumber;this.shared.universeNumber=this.generation;this.setRandom();
     this.emit('universe:restart',{number:this.generation,reason});
     this.modules['008'] = this.createModule('008', physicsFactory); this.modules['008'].init();
     this.shared.rst = 0; this.shared.num = 0; this.revision++;
@@ -104,10 +104,11 @@ export class Simulation {
     this.statistics.totalYears=this.shared.xntime;
     this.modules['079'].update('');
     const equilibrium=Number(this.shared.tem);
+    const wasDamaged=this.world.state?.planet.damaged;
     const world=this.world.update(state.bodies,state.G,equilibrium,this.settings,this.engine.runtime);
     const legacy=this.settings.civilizationMode==='legacy';
     if(!legacy)this.shared.tem=world.planet.temperature;
-    this.habitability.update(this.shared,this.settings,1/60,{phase:this.civilization.phase,terminal:!legacy&&world.planet.terminal,damaged:!legacy&&world.planet.damaged,tideRatio:legacy?0:world.planet.tideRatio,hazard:!legacy&&world.planet.tideRatio>1?'tidal':null});
+    this.habitability.update(this.shared,this.settings,1/60,{phase:this.civilization.phase,terminal:!legacy&&world.planet.terminal,damaged:!legacy&&!world.planet.canSupportLife,integrity:world.planet.integrity,tideRatio:legacy?0:world.planet.stressRatio,hazard:!legacy&&world.planet.stressRatio>1?'tidal':null});
     this.era = legacy?this.modules['072'].update(''):(world.epoch.kind==='stable'?(this.settings.cnen2?'Stable Era':'恒纪元'):(this.settings.cnen2?'Chaotic Era':'乱纪元'));
     const previousAlive = this.shared.civilizationAlive;
     const before = this.shared.civilizationRecords.length;
@@ -122,18 +123,16 @@ export class Simulation {
     if (!previousAlive && this.shared.civilizationAlive) this.emit('civilization:birth', { number: this.shared.civilizationCount });
     for (const record of this.shared.civilizationRecords.slice(before)) this.recordDeath(record);
     if(!legacy&&world.planet.terminal&&this.terminalSince===null){this.terminalSince=this.engine.runtime;this.emit('planet:destroyed',plain(world.planet.terminal));}
-    if(!legacy&&world.planet.restartRequired&&this.restartSince===null){
-      this.restartSince=this.engine.runtime;
-      if(!world.planet.terminal)this.emit('planet:damaged',{integrity:world.planet.integrity,nextGeneration:this.generation+1});
-    }
-    if (this.shared.tj === 1 && this.settings.autorestart) { this.emit('system:escape', {}); this.pendingRestart='escape'; }
-    else if(!legacy&&this.restartSince!==null&&this.settings.autorestart&&this.engine.runtime-this.restartSince>=(world.planet.terminal?4:2))this.pendingRestart=world.planet.terminal?'planet':'planet-damage';
+    if(!legacy&&world.planet.damaged&&!wasDamaged&&!world.planet.terminal)this.emit('planet:damaged',{integrity:world.planet.integrity,recoverable:true});
+    if(!legacy&&world.planet.restartRequired&&this.restartSince===null)this.restartSince=this.engine.runtime;
+    if (legacy&&this.shared.tj === 1 && this.settings.autorestart) { this.emit('system:escape', {}); this.pendingRestart='escape'; }
+    else if(!legacy&&world.planet.terminal&&this.restartSince!==null&&this.settings.autorestart&&this.engine.runtime-this.restartSince>=4)this.pendingRestart='planet';
     this.modules['156'].update('');
     // Legacy ranked output reads the full list; a finite bound prevents days-long sessions growing forever.
     if (this.shared.civilizationRecords.length > 1000) this.shared.civilizationRecords.splice(0, this.shared.civilizationRecords.length - 1000);
     return state;
   }
-  recordDeath(record) { this.statistics.finishCivilization(record); this.emit('civilization:death', { ...plain(record), seed: this.settings.seed, generation: this.generation, settings: plain(this.settings), initialBodies: plain(this.initialBodies), algorithm: algorithmId(this.settings) }); }
+  recordDeath(record) { this.statistics.finishCivilization(record); this.emit('civilization:death', { ...plain(record), universe:this.generation, seed: this.settings.seed, generation: this.generation, settings: plain(this.settings), initialBodies: plain(this.initialBodies), algorithm: algorithmId(this.settings) }); }
   emit(type, detail) {
     this.events.push({ id: ++this.eventSeq, type, year: this.shared.xntime || 0, detail });
     if (this.events.length > 100) this.events.shift();
