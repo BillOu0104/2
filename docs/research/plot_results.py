@@ -33,10 +33,10 @@ for name,label,color in zip(names,labels,colors):
         rr=[json.loads(l) for l in (root/'results'/f'{file}.jsonl').read_text().splitlines()];a=[r for r in rr if r['profile']==name];ss.append(np.mean([r['survived'] for r in a]))
     axs[0].plot([1000,3000,10000],ss,'o-',color=color,label=label)
 axs[0].set(xscale='log',xlabel='Horizon (display years)',ylabel='Survivors / original 128 seeds',ylim=(-.01,1));axs[0].legend(fontsize=8);axs[0].set_title('Entire holdout cohort retained at each horizon')
-for name,label,color in [('candidate','Candidate','#136e45'),('hierarchy-control','Hierarchical control','#634c9b')]:
-    rr=[json.loads(l) for l in (root/'results/chaos.jsonl').read_text().splitlines()];a=[r for r in rr if r['profile']==name];array=np.array([[p['relativeStellarSeparation']/r['initialRelativeSeparation'] for p in r['points']] for r in a]);t=[p['years'] for p in a[0]['points']];med=np.median(array,axis=0);axs[1].semilogy(t,np.maximum(med,1e-3),color=color,label=label)
-axs[1].set(xlabel='Display years',ylabel='Median stellar perturbation amplification');axs[1].legend();axs[1].set_title('16 shadow pairs; finite-time sensitivity only')
-fig.savefig(out/'long-horizon-and-chaos.png',dpi=180);plt.close(fig)
+fine=[json.loads(l) for l in (root/'results/candidate-fine-all.jsonl').read_text().splitlines()];coarse={r['seed']:r for r in g['candidate']}
+axs[1].scatter([coarse[r['seed']]['restrictedLife'] for r in fine],[r['restrictedLife'] for r in fine],s=20,alpha=.65,color='#136e45');axs[1].plot([0,1000],[0,1000],color='gray',lw=.7)
+axs[1].set(xlabel='Candidate lifetime, original resolution',ylabel='Candidate lifetime, half step and eta');axs[1].set_title('All 128 refined seeds\nSame survivors; individual chaotic lifetimes differ')
+fig.savefig(out/'long-horizon-and-convergence.png',dpi=180);plt.close(fig)
 
 fig,axs=plt.subplots(1,2,figsize=(12,4),layout='constrained')
 for ax,seed in zip(axs,['EXPLORE-A-3','EXPLORE-A-15']):

@@ -1,0 +1,1140 @@
+{
+  "source": "docs/research/results/geometry.jsonl",
+  "seedIndependentUnit": true,
+  "bootstrapDraws": 10000,
+  "summary": {
+    "newton-random": {
+      "n": 32,
+      "survivors": 0,
+      "survival": 0.0,
+      "survival95": [
+        0.0,
+        0.10717919825506533
+      ],
+      "jointSurvivors": 0,
+      "stellarContacts": 20,
+      "stellarBoundaryCrossings": 16,
+      "positiveEscapes": 20,
+      "lossReasons": {
+        "boundary-crossing": 13,
+        "positive-energy-escape": 12,
+        "engulfed": 6,
+        "disrupted": 1
+      },
+      "errors": 0,
+      "cpuWallSeconds": 43.65222380300006,
+      "unresolvedPrimaryOutcomes": 0,
+      "survivalBoundsWithUnresolved": [
+        0.0,
+        0.0
+      ],
+      "restrictedLife": {
+        "nKnown": 32,
+        "mean": 114.80000000000001,
+        "median": 87.59166666666667,
+        "p90": 235.25166666666667,
+        "max": 645.2166666666667
+      },
+      "stableFraction": {
+        "nKnown": 32,
+        "mean": 0.0261953125,
+        "median": 0.0091,
+        "p90": 0.07064500000000003,
+        "max": 0.13266666666666665
+      },
+      "stableConditional": {
+        "nKnown": 32,
+        "mean": 0.2237967518894954,
+        "median": 0.14448364114269902,
+        "p90": 0.5574742453196169,
+        "max": 0.9805370780980537
+      },
+      "temperateFraction": {
+        "nKnown": 32,
+        "mean": 0.015485416666666665,
+        "median": 0.008733333333333333,
+        "p90": 0.04381,
+        "max": 0.08431666666666666
+      },
+      "compactNonhierFraction": {
+        "nKnown": 32,
+        "mean": 0.22651875,
+        "median": 0.18462499999999998,
+        "p90": 0.4936833333333334,
+        "max": 0.7689666666666667
+      },
+      "jointStableFraction": {
+        "nKnown": 32,
+        "mean": 0.0192421875,
+        "median": 0.0040999999999999995,
+        "p90": 0.05113166666666668,
+        "max": 0.10956666666666667
+      },
+      "maxEnergyError": {
+        "nKnown": 32,
+        "mean": 1.8792612536726864e-08,
+        "median": 8.262742633525587e-09,
+        "p90": 4.9058884849282963e-08,
+        "max": 1.443699027909049e-07
+      },
+      "maxEnergyErrorBeforeContact": {
+        "nKnown": 32,
+        "mean": 5.758831629924253e-09,
+        "median": 3.963141408167237e-09,
+        "p90": 1.1822512032825284e-08,
+        "max": 2.2466154891887445e-08
+      },
+      "maxLError": {
+        "nKnown": 32,
+        "mean": 1.9569383956141335e-12,
+        "median": 2.969834734258986e-13,
+        "p90": 5.97618500485347e-12,
+        "max": 2.2880624421530272e-11
+      },
+      "minSS": {
+        "nKnown": 32,
+        "mean": 0.04854630219516564,
+        "median": 0.0347603331490896,
+        "p90": 0.10780400228517936,
+        "max": 0.18488227569981813
+      },
+      "minSP": {
+        "nKnown": 32,
+        "mean": 0.2117074365385863,
+        "median": 0.19947121834603485,
+        "p90": 0.45167112559430034,
+        "max": 0.5832868209856903
+      },
+      "initialBoundAnyHost": 32,
+      "initialMeanQ": 0.8046754828523263,
+      "initialMeanL": 0.1462373181121476
+    },
+    "candidate": {
+      "n": 32,
+      "survivors": 1,
+      "survival": 0.03125,
+      "survival95": [
+        0.005537860164003344,
+        0.15744263820012042
+      ],
+      "jointSurvivors": 1,
+      "stellarContacts": 21,
+      "stellarBoundaryCrossings": 15,
+      "positiveEscapes": 20,
+      "lossReasons": {
+        "boundary-crossing": 8,
+        "engulfed": 12,
+        "disrupted": 3,
+        "positive-energy-escape": 8,
+        "null": 1
+      },
+      "errors": 0,
+      "cpuWallSeconds": 45.486246750999975,
+      "unresolvedPrimaryOutcomes": 0,
+      "survivalBoundsWithUnresolved": [
+        0.03125,
+        0.03125
+      ],
+      "restrictedLife": {
+        "nKnown": 32,
+        "mean": 301.5739583333334,
+        "median": 241.06666666666666,
+        "p90": 719.5500000000002,
+        "max": 1000.0
+      },
+      "stableFraction": {
+        "nKnown": 32,
+        "mean": 0.27276041666666667,
+        "median": 0.14425833333333332,
+        "p90": 0.7181616666666668,
+        "max": 0.9615166666666667
+      },
+      "stableConditional": {
+        "nKnown": 32,
+        "mean": 0.8638166289077422,
+        "median": 0.9810820623417371,
+        "p90": 0.9990286887009793,
+        "max": 0.9998960823028161
+      },
+      "temperateFraction": {
+        "nKnown": 32,
+        "mean": 0.08379947916666666,
+        "median": 0.011925000000000002,
+        "p90": 0.3168883333333337,
+        "max": 0.617
+      },
+      "compactNonhierFraction": {
+        "nKnown": 32,
+        "mean": 0.2826390625,
+        "median": 0.24705,
+        "p90": 0.6544733333333334,
+        "max": 0.79735
+      },
+      "jointStableFraction": {
+        "nKnown": 32,
+        "mean": 0.18133489583333334,
+        "median": 0.1063,
+        "p90": 0.5608233333333337,
+        "max": 0.6421166666666667
+      },
+      "maxEnergyError": {
+        "nKnown": 32,
+        "mean": 2.011539582660957e-08,
+        "median": 1.0837450715477634e-08,
+        "p90": 5.575422244919617e-08,
+        "max": 7.467273556108658e-08
+      },
+      "maxEnergyErrorBeforeContact": {
+        "nKnown": 32,
+        "mean": 6.248988853252375e-09,
+        "median": 5.349768111723576e-09,
+        "p90": 1.308551411266188e-08,
+        "max": 1.6560130905348283e-08
+      },
+      "maxLError": {
+        "nKnown": 32,
+        "mean": 6.374277953910234e-13,
+        "median": 2.2444481893813674e-13,
+        "p90": 2.0151434118316366e-12,
+        "max": 6.4259198300140555e-12
+      },
+      "minSS": {
+        "nKnown": 32,
+        "mean": 0.051633648254853906,
+        "median": 0.0298422183980583,
+        "p90": 0.12435647976929196,
+        "max": 0.22114937229906462
+      },
+      "minSP": {
+        "nKnown": 32,
+        "mean": 0.08909808862166245,
+        "median": 0.05047601586363509,
+        "p90": 0.23494013096368824,
+        "max": 0.3967146640943642
+      },
+      "initialBoundAnyHost": 32,
+      "initialMeanQ": 0.998792980930336,
+      "initialMeanL": 0.16359158011699848
+    },
+    "figure8-periodic-control": {
+      "n": 32,
+      "survivors": 32,
+      "survival": 1.0,
+      "survival95": [
+        0.8928208017449346,
+        1.0
+      ],
+      "jointSurvivors": 32,
+      "stellarContacts": 0,
+      "stellarBoundaryCrossings": 0,
+      "positiveEscapes": 0,
+      "lossReasons": {
+        "null": 32
+      },
+      "errors": 0,
+      "cpuWallSeconds": 42.193333576999976,
+      "unresolvedPrimaryOutcomes": 0,
+      "survivalBoundsWithUnresolved": [
+        1.0,
+        1.0
+      ],
+      "restrictedLife": {
+        "nKnown": 32,
+        "mean": 1000.0,
+        "median": 1000.0,
+        "p90": 1000.0,
+        "max": 1000.0
+      },
+      "stableFraction": {
+        "nKnown": 32,
+        "mean": 0.9999333333333333,
+        "median": 0.9999333333333333,
+        "p90": 0.9999333333333333,
+        "max": 0.9999333333333333
+      },
+      "stableConditional": {
+        "nKnown": 32,
+        "mean": 0.9999333333333333,
+        "median": 0.9999333333333333,
+        "p90": 0.9999333333333333,
+        "max": 0.9999333333333333
+      },
+      "temperateFraction": {
+        "nKnown": 32,
+        "mean": 0.0,
+        "median": 0.0,
+        "p90": 0.0,
+        "max": 0.0
+      },
+      "compactNonhierFraction": {
+        "nKnown": 32,
+        "mean": 1.0,
+        "median": 1.0,
+        "p90": 1.0,
+        "max": 1.0
+      },
+      "jointStableFraction": {
+        "nKnown": 32,
+        "mean": 0.9999333333333333,
+        "median": 0.9999333333333333,
+        "p90": 0.9999333333333333,
+        "max": 0.9999333333333333
+      },
+      "maxEnergyError": {
+        "nKnown": 32,
+        "mean": 1.9608990078924667e-13,
+        "median": 1.9007665943038596e-13,
+        "p90": 2.9967431216619116e-13,
+        "max": 3.994873640947135e-13
+      },
+      "maxEnergyErrorBeforeContact": {
+        "nKnown": 32,
+        "mean": 1.9608990078924667e-13,
+        "median": 1.9007665943038596e-13,
+        "p90": 2.9967431216619116e-13,
+        "max": 3.994873640947135e-13
+      },
+      "maxLError": {
+        "nKnown": 32,
+        "mean": 3.626242690004416e-10,
+        "median": 3.1279277788797395e-10,
+        "p90": 6.009905698313498e-10,
+        "max": 9.182639670820725e-10
+      },
+      "minSS": {
+        "nKnown": 32,
+        "mean": 1.0416873752911244,
+        "median": 1.0416132702589502,
+        "p90": 1.0419992194361851,
+        "max": 1.0422194243705987
+      },
+      "minSP": {
+        "nKnown": 32,
+        "mean": 0.18316203205707032,
+        "median": 0.18360500472754876,
+        "p90": 0.1841766291679008,
+        "max": 0.1844808397975836
+      },
+      "initialBoundAnyHost": 32,
+      "initialMeanQ": 0.9705523631193108,
+      "initialMeanL": 3.1274214219499787e-18
+    },
+    "figure8-perturb001": {
+      "n": 32,
+      "survivors": 32,
+      "survival": 1.0,
+      "survival95": [
+        0.8928208017449346,
+        1.0
+      ],
+      "jointSurvivors": 32,
+      "stellarContacts": 0,
+      "stellarBoundaryCrossings": 0,
+      "positiveEscapes": 0,
+      "lossReasons": {
+        "null": 32
+      },
+      "errors": 0,
+      "cpuWallSeconds": 44.296285807999986,
+      "unresolvedPrimaryOutcomes": 0,
+      "survivalBoundsWithUnresolved": [
+        1.0,
+        1.0
+      ],
+      "restrictedLife": {
+        "nKnown": 32,
+        "mean": 1000.0,
+        "median": 1000.0,
+        "p90": 1000.0,
+        "max": 1000.0
+      },
+      "stableFraction": {
+        "nKnown": 32,
+        "mean": 0.9999333333333333,
+        "median": 0.9999333333333333,
+        "p90": 0.9999333333333333,
+        "max": 0.9999333333333333
+      },
+      "stableConditional": {
+        "nKnown": 32,
+        "mean": 0.9999333333333333,
+        "median": 0.9999333333333333,
+        "p90": 0.9999333333333333,
+        "max": 0.9999333333333333
+      },
+      "temperateFraction": {
+        "nKnown": 32,
+        "mean": 0.0,
+        "median": 0.0,
+        "p90": 0.0,
+        "max": 0.0
+      },
+      "compactNonhierFraction": {
+        "nKnown": 32,
+        "mean": 1.0,
+        "median": 1.0,
+        "p90": 1.0,
+        "max": 1.0
+      },
+      "jointStableFraction": {
+        "nKnown": 32,
+        "mean": 0.9999333333333333,
+        "median": 0.9999333333333333,
+        "p90": 0.9999333333333333,
+        "max": 0.9999333333333333
+      },
+      "maxEnergyError": {
+        "nKnown": 32,
+        "mean": 1.726556417635269e-13,
+        "median": 1.6246277886897523e-13,
+        "p90": 2.509223301278188e-13,
+        "max": 3.0613298031177593e-13
+      },
+      "maxEnergyErrorBeforeContact": {
+        "nKnown": 32,
+        "mean": 1.726556417635269e-13,
+        "median": 1.6246277886897523e-13,
+        "p90": 2.509223301278188e-13,
+        "max": 3.0613298031177593e-13
+      },
+      "maxLError": {
+        "nKnown": 32,
+        "mean": 7.285178141280063e-11,
+        "median": 4.925361531492367e-11,
+        "p90": 1.2957178775580545e-10,
+        "max": 2.440581550451333e-10
+      },
+      "minSS": {
+        "nKnown": 32,
+        "mean": 1.0324990219928334,
+        "median": 1.0333336920476617,
+        "p90": 1.0403895818218656,
+        "max": 1.044491476259528
+      },
+      "minSP": {
+        "nKnown": 32,
+        "mean": 0.18306999462227166,
+        "median": 0.1832502655704898,
+        "p90": 0.18433966844469576,
+        "max": 0.18581035265761953
+      },
+      "initialBoundAnyHost": 32,
+      "initialMeanQ": 0.9702369126698613,
+      "initialMeanL": 0.00022304893189707708
+    },
+    "figure8-perturb01": {
+      "n": 32,
+      "survivors": 30,
+      "survival": 0.9375,
+      "survival95": [
+        0.7985287685584593,
+        0.9826894329683585
+      ],
+      "jointSurvivors": 30,
+      "stellarContacts": 2,
+      "stellarBoundaryCrossings": 0,
+      "positiveEscapes": 2,
+      "lossReasons": {
+        "null": 30,
+        "engulfed": 1,
+        "disrupted": 1
+      },
+      "errors": 0,
+      "cpuWallSeconds": 44.31887851100001,
+      "unresolvedPrimaryOutcomes": 0,
+      "survivalBoundsWithUnresolved": [
+        0.9375,
+        0.9375
+      ],
+      "restrictedLife": {
+        "nKnown": 32,
+        "mean": 991.4010416666666,
+        "median": 1000.0,
+        "p90": 1000.0,
+        "max": 1000.0
+      },
+      "stableFraction": {
+        "nKnown": 32,
+        "mean": 0.9911682291666667,
+        "median": 0.9999333333333333,
+        "p90": 0.9999333333333333,
+        "max": 0.9999333333333333
+      },
+      "stableConditional": {
+        "nKnown": 32,
+        "mean": 0.9997504520423324,
+        "median": 0.9999333333333333,
+        "p90": 0.9999333333333333,
+        "max": 0.9999333333333333
+      },
+      "temperateFraction": {
+        "nKnown": 32,
+        "mean": 0.00011041666666666666,
+        "median": 0.0,
+        "p90": 0.0,
+        "max": 0.003533333333333333
+      },
+      "compactNonhierFraction": {
+        "nKnown": 32,
+        "mean": 0.9809749999999999,
+        "median": 1.0,
+        "p90": 1.0,
+        "max": 1.0
+      },
+      "jointStableFraction": {
+        "nKnown": 32,
+        "mean": 0.9770802083333333,
+        "median": 0.9999333333333333,
+        "p90": 0.9999333333333333,
+        "max": 0.9999333333333333
+      },
+      "maxEnergyError": {
+        "nKnown": 32,
+        "mean": 1.5158593597412323e-09,
+        "median": 2.077090891079146e-13,
+        "p90": 3.432338785984358e-13,
+        "max": 4.2477802499070557e-08
+      },
+      "maxEnergyErrorBeforeContact": {
+        "nKnown": 32,
+        "mean": 5.745562302533129e-10,
+        "median": 2.077090891079146e-13,
+        "p90": 3.432338785984358e-13,
+        "max": 1.2918885316225786e-08
+      },
+      "maxLError": {
+        "nKnown": 32,
+        "mean": 9.166016833001993e-12,
+        "median": 7.388590794268805e-12,
+        "p90": 1.4265841468995246e-11,
+        "max": 3.2010584127068664e-11
+      },
+      "minSS": {
+        "nKnown": 32,
+        "mean": 0.8425572378333204,
+        "median": 0.9326145184442471,
+        "p90": 0.9895036527212442,
+        "max": 1.020885853165654
+      },
+      "minSP": {
+        "nKnown": 32,
+        "mean": 0.17090887703163632,
+        "median": 0.18095083140490587,
+        "p90": 0.18593405220398404,
+        "max": 0.18725952693828288
+      },
+      "initialBoundAnyHost": 32,
+      "initialMeanQ": 0.9674867100406706,
+      "initialMeanL": 0.0022295140338566676
+    },
+    "figure8-perturb05": {
+      "n": 32,
+      "survivors": 11,
+      "survival": 0.34375,
+      "survival95": [
+        0.20410437924433478,
+        0.516889120210373
+      ],
+      "jointSurvivors": 10,
+      "stellarContacts": 15,
+      "stellarBoundaryCrossings": 2,
+      "positiveEscapes": 15,
+      "lossReasons": {
+        "null": 11,
+        "positive-energy-escape": 5,
+        "engulfed": 9,
+        "disrupted": 5,
+        "boundary-crossing": 2
+      },
+      "errors": 0,
+      "cpuWallSeconds": 44.86987372299989,
+      "unresolvedPrimaryOutcomes": 0,
+      "survivalBoundsWithUnresolved": [
+        0.34375,
+        0.34375
+      ],
+      "restrictedLife": {
+        "nKnown": 32,
+        "mean": 626.4364583333333,
+        "median": 660.5999999999999,
+        "p90": 1000.0,
+        "max": 1000.0
+      },
+      "stableFraction": {
+        "nKnown": 32,
+        "mean": 0.6140739583333333,
+        "median": 0.660125,
+        "p90": 0.9999333333333333,
+        "max": 0.9999333333333333
+      },
+      "stableConditional": {
+        "nKnown": 32,
+        "mean": 0.9565740813579927,
+        "median": 0.9970727399250843,
+        "p90": 0.9999333333333333,
+        "max": 0.9999333333333333
+      },
+      "temperateFraction": {
+        "nKnown": 32,
+        "mean": 0.007073958333333334,
+        "median": 0.0,
+        "p90": 0.03043833333333334,
+        "max": 0.0532
+      },
+      "compactNonhierFraction": {
+        "nKnown": 32,
+        "mean": 0.6809984375,
+        "median": 0.815475,
+        "p90": 0.9738400000000001,
+        "max": 0.9882666666666666
+      },
+      "jointStableFraction": {
+        "nKnown": 32,
+        "mean": 0.5380947916666667,
+        "median": 0.598725,
+        "p90": 0.9737733333333335,
+        "max": 0.9882
+      },
+      "maxEnergyError": {
+        "nKnown": 32,
+        "mean": 2.235194891958308e-08,
+        "median": 2.260872776567939e-09,
+        "p90": 7.306161122799075e-08,
+        "max": 1.1038493412325615e-07
+      },
+      "maxEnergyErrorBeforeContact": {
+        "nKnown": 32,
+        "mean": 5.091864736064832e-09,
+        "median": 9.94140558593419e-10,
+        "p90": 1.3886610586462859e-08,
+        "max": 1.835295577894558e-08
+      },
+      "maxLError": {
+        "nKnown": 32,
+        "mean": 3.1498838583768598e-12,
+        "median": 1.84576239914682e-12,
+        "p90": 7.317134633240977e-12,
+        "max": 1.52738870512921e-11
+      },
+      "minSS": {
+        "nKnown": 32,
+        "mean": 0.22344420474597082,
+        "median": 0.057481873128313696,
+        "p90": 0.7218109434255553,
+        "max": 0.8754184437178656
+      },
+      "minSP": {
+        "nKnown": 32,
+        "mean": 0.08611120190193462,
+        "median": 0.0756651198763055,
+        "p90": 0.18045381641764105,
+        "max": 0.1940439392353172
+      },
+      "initialBoundAnyHost": 32,
+      "initialMeanQ": 0.9571982861395483,
+      "initialMeanL": 0.011129105081558087
+    }
+  },
+  "comparisons": {
+    "newton-random -> candidate": {
+      "survived": {
+        "pairedDifference": 0.03125,
+        "bootstrap95": [
+          0.0,
+          0.09375
+        ],
+        "n": 32
+      },
+      "jointSurvived": {
+        "pairedDifference": 0.03125,
+        "bootstrap95": [
+          0.0,
+          0.09375
+        ],
+        "n": 32
+      },
+      "restrictedLife": {
+        "pairedDifference": 186.77395833333333,
+        "bootstrap95": [
+          93.78213541666666,
+          283.9937630208333
+        ],
+        "n": 32
+      },
+      "stableFraction": {
+        "pairedDifference": 0.2465651041666667,
+        "bootstrap95": [
+          0.15615554687500002,
+          0.34275407552083326
+        ],
+        "n": 32
+      },
+      "jointStableFraction": {
+        "pairedDifference": 0.16209270833333334,
+        "bootstrap95": [
+          0.09800368489583333,
+          0.23397994791666663
+        ],
+        "n": 32
+      },
+      "compactNonhierFraction": {
+        "pairedDifference": 0.0561203125,
+        "bootstrap95": [
+          -0.0065988802083333355,
+          0.12254
+        ],
+        "n": 32
+      }
+    },
+    "newton-random -> figure8-periodic-control": {
+      "survived": {
+        "pairedDifference": 1.0,
+        "bootstrap95": [
+          1.0,
+          1.0
+        ],
+        "n": 32
+      },
+      "jointSurvived": {
+        "pairedDifference": 1.0,
+        "bootstrap95": [
+          1.0,
+          1.0
+        ],
+        "n": 32
+      },
+      "restrictedLife": {
+        "pairedDifference": 885.2,
+        "bootstrap95": [
+          838.0750260416667,
+          923.65796875
+        ],
+        "n": 32
+      },
+      "stableFraction": {
+        "pairedDifference": 0.9737380208333334,
+        "bootstrap95": [
+          0.9604643359375001,
+          0.9851863281250001
+        ],
+        "n": 32
+      },
+      "jointStableFraction": {
+        "pairedDifference": 0.9806911458333334,
+        "bootstrap95": [
+          0.9695529166666667,
+          0.9900219270833334
+        ],
+        "n": 32
+      },
+      "compactNonhierFraction": {
+        "pairedDifference": 0.7734812499999999,
+        "bootstrap95": [
+          0.7047368489583333,
+          0.8366355989583334
+        ],
+        "n": 32
+      }
+    },
+    "newton-random -> figure8-perturb001": {
+      "survived": {
+        "pairedDifference": 1.0,
+        "bootstrap95": [
+          1.0,
+          1.0
+        ],
+        "n": 32
+      },
+      "jointSurvived": {
+        "pairedDifference": 1.0,
+        "bootstrap95": [
+          1.0,
+          1.0
+        ],
+        "n": 32
+      },
+      "restrictedLife": {
+        "pairedDifference": 885.2,
+        "bootstrap95": [
+          837.0483593750001,
+          923.3366536458333
+        ],
+        "n": 32
+      },
+      "stableFraction": {
+        "pairedDifference": 0.9737380208333334,
+        "bootstrap95": [
+          0.9605139453125,
+          0.9852881510416668
+        ],
+        "n": 32
+      },
+      "jointStableFraction": {
+        "pairedDifference": 0.9806911458333334,
+        "bootstrap95": [
+          0.9695853515625001,
+          0.9900787239583334
+        ],
+        "n": 32
+      },
+      "compactNonhierFraction": {
+        "pairedDifference": 0.7734812499999999,
+        "bootstrap95": [
+          0.7044488671875,
+          0.8377193359375
+        ],
+        "n": 32
+      }
+    },
+    "newton-random -> figure8-perturb01": {
+      "survived": {
+        "pairedDifference": 0.9375,
+        "bootstrap95": [
+          0.84375,
+          1.0
+        ],
+        "n": 32
+      },
+      "jointSurvived": {
+        "pairedDifference": 0.9375,
+        "bootstrap95": [
+          0.84375,
+          1.0
+        ],
+        "n": 32
+      },
+      "restrictedLife": {
+        "pairedDifference": 876.6010416666667,
+        "bootstrap95": [
+          826.1432161458334,
+          916.9995703125
+        ],
+        "n": 32
+      },
+      "stableFraction": {
+        "pairedDifference": 0.9649729166666666,
+        "bootstrap95": [
+          0.9467650260416667,
+          0.9807776302083334
+        ],
+        "n": 32
+      },
+      "jointStableFraction": {
+        "pairedDifference": 0.9578380208333334,
+        "bootstrap95": [
+          0.9350539192708334,
+          0.9767116666666668
+        ],
+        "n": 32
+      },
+      "compactNonhierFraction": {
+        "pairedDifference": 0.75445625,
+        "bootstrap95": [
+          0.6869914583333334,
+          0.8158649869791667
+        ],
+        "n": 32
+      }
+    },
+    "newton-random -> figure8-perturb05": {
+      "survived": {
+        "pairedDifference": 0.34375,
+        "bootstrap95": [
+          0.1875,
+          0.5
+        ],
+        "n": 32
+      },
+      "jointSurvived": {
+        "pairedDifference": 0.3125,
+        "bootstrap95": [
+          0.15625,
+          0.46875
+        ],
+        "n": 32
+      },
+      "restrictedLife": {
+        "pairedDifference": 511.6364583333334,
+        "bootstrap95": [
+          385.3017708333333,
+          638.9293359375
+        ],
+        "n": 32
+      },
+      "stableFraction": {
+        "pairedDifference": 0.5878786458333333,
+        "bootstrap95": [
+          0.4586587760416667,
+          0.7166064453125
+        ],
+        "n": 32
+      },
+      "jointStableFraction": {
+        "pairedDifference": 0.5188526041666667,
+        "bootstrap95": [
+          0.40034989583333336,
+          0.6353168359374998
+        ],
+        "n": 32
+      },
+      "compactNonhierFraction": {
+        "pairedDifference": 0.4544796874999999,
+        "bootstrap95": [
+          0.3333143489583333,
+          0.5673064192708333
+        ],
+        "n": 32
+      }
+    },
+    "candidate -> newton-random": {
+      "survived": {
+        "pairedDifference": -0.03125,
+        "bootstrap95": [
+          -0.09375,
+          0.0
+        ],
+        "n": 32
+      },
+      "jointSurvived": {
+        "pairedDifference": -0.03125,
+        "bootstrap95": [
+          -0.09375,
+          0.0
+        ],
+        "n": 32
+      },
+      "restrictedLife": {
+        "pairedDifference": -186.77395833333333,
+        "bootstrap95": [
+          -284.99079427083336,
+          -91.54031250000001
+        ],
+        "n": 32
+      },
+      "stableFraction": {
+        "pairedDifference": -0.2465651041666667,
+        "bootstrap95": [
+          -0.3451521744791667,
+          -0.15868459635416668
+        ],
+        "n": 32
+      },
+      "jointStableFraction": {
+        "pairedDifference": -0.16209270833333334,
+        "bootstrap95": [
+          -0.2352737890625,
+          -0.09885514322916666
+        ],
+        "n": 32
+      },
+      "compactNonhierFraction": {
+        "pairedDifference": -0.0561203125,
+        "bootstrap95": [
+          -0.1215283203125,
+          0.007182343750000001
+        ],
+        "n": 32
+      }
+    },
+    "candidate -> figure8-periodic-control": {
+      "survived": {
+        "pairedDifference": 0.96875,
+        "bootstrap95": [
+          0.90625,
+          1.0
+        ],
+        "n": 32
+      },
+      "jointSurvived": {
+        "pairedDifference": 0.96875,
+        "bootstrap95": [
+          0.90625,
+          1.0
+        ],
+        "n": 32
+      },
+      "restrictedLife": {
+        "pairedDifference": 698.4260416666666,
+        "bootstrap95": [
+          606.0184375,
+          783.1795442708334
+        ],
+        "n": 32
+      },
+      "stableFraction": {
+        "pairedDifference": 0.7271729166666667,
+        "bootstrap95": [
+          0.6318511979166667,
+          0.8140241145833332
+        ],
+        "n": 32
+      },
+      "jointStableFraction": {
+        "pairedDifference": 0.8185984375,
+        "bootstrap95": [
+          0.7491551562500001,
+          0.8801365234374999
+        ],
+        "n": 32
+      },
+      "compactNonhierFraction": {
+        "pairedDifference": 0.7173609375,
+        "bootstrap95": [
+          0.6343114583333334,
+          0.7947755989583334
+        ],
+        "n": 32
+      }
+    },
+    "candidate -> figure8-perturb001": {
+      "survived": {
+        "pairedDifference": 0.96875,
+        "bootstrap95": [
+          0.90625,
+          1.0
+        ],
+        "n": 32
+      },
+      "jointSurvived": {
+        "pairedDifference": 0.96875,
+        "bootstrap95": [
+          0.90625,
+          1.0
+        ],
+        "n": 32
+      },
+      "restrictedLife": {
+        "pairedDifference": 698.4260416666666,
+        "bootstrap95": [
+          604.271875,
+          783.5217968750001
+        ],
+        "n": 32
+      },
+      "stableFraction": {
+        "pairedDifference": 0.7271729166666667,
+        "bootstrap95": [
+          0.6321252994791666,
+          0.8138493749999999
+        ],
+        "n": 32
+      },
+      "jointStableFraction": {
+        "pairedDifference": 0.8185984375,
+        "bootstrap95": [
+          0.7493163411458333,
+          0.8814314973958333
+        ],
+        "n": 32
+      },
+      "compactNonhierFraction": {
+        "pairedDifference": 0.7173609375,
+        "bootstrap95": [
+          0.6353560937499999,
+          0.7957823958333332
+        ],
+        "n": 32
+      }
+    },
+    "candidate -> figure8-perturb01": {
+      "survived": {
+        "pairedDifference": 0.90625,
+        "bootstrap95": [
+          0.78125,
+          1.0
+        ],
+        "n": 32
+      },
+      "jointSurvived": {
+        "pairedDifference": 0.90625,
+        "bootstrap95": [
+          0.8125,
+          1.0
+        ],
+        "n": 32
+      },
+      "restrictedLife": {
+        "pairedDifference": 689.8270833333333,
+        "bootstrap95": [
+          596.3479296875,
+          774.1777213541666
+        ],
+        "n": 32
+      },
+      "stableFraction": {
+        "pairedDifference": 0.7184078125,
+        "bootstrap95": [
+          0.6223818880208334,
+          0.8045813671875001
+        ],
+        "n": 32
+      },
+      "jointStableFraction": {
+        "pairedDifference": 0.7957453125,
+        "bootstrap95": [
+          0.7260786067708334,
+          0.8606133854166667
+        ],
+        "n": 32
+      },
+      "compactNonhierFraction": {
+        "pairedDifference": 0.6983359375,
+        "bootstrap95": [
+          0.6176340624999999,
+          0.7775380859375
+        ],
+        "n": 32
+      }
+    },
+    "candidate -> figure8-perturb05": {
+      "survived": {
+        "pairedDifference": 0.3125,
+        "bootstrap95": [
+          0.125,
+          0.5
+        ],
+        "n": 32
+      },
+      "jointSurvived": {
+        "pairedDifference": 0.28125,
+        "bootstrap95": [
+          0.09375,
+          0.46875
+        ],
+        "n": 32
+      },
+      "restrictedLife": {
+        "pairedDifference": 324.86249999999995,
+        "bootstrap95": [
+          175.06380208333331,
+          479.1049609374999
+        ],
+        "n": 32
+      },
+      "stableFraction": {
+        "pairedDifference": 0.34131354166666666,
+        "bootstrap95": [
+          0.18180087239583334,
+          0.5007964973958333
+        ],
+        "n": 32
+      },
+      "jointStableFraction": {
+        "pairedDifference": 0.35675989583333334,
+        "bootstrap95": [
+          0.2198334114583333,
+          0.4948639713541666
+        ],
+        "n": 32
+      },
+      "compactNonhierFraction": {
+        "pairedDifference": 0.39835937499999996,
+        "bootstrap95": [
+          0.27605428385416664,
+          0.5161586979166666
+        ],
+        "n": 32
+      }
+    }
+  }
+}

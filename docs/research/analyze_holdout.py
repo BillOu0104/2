@@ -8,7 +8,7 @@ def final_hierarchy(row):
     i,j=min(pairs,key=lambda ij:sum((b[ij[0]][k]-b[ij[1]][k])**2 for k in ['x','y','z']))
     k=3-i-j;p=np.array([[x[q] for q in ['x','y','z']] for x in b]);v=np.array([[x[q] for q in ['vx','vy','vz']] for x in b]);m=np.array([x['mass'] for x in b]);r=np.linalg.norm(p[i]-p[j]);vi=v[i]-v[j];mu=G*(m[i]+m[j]);eb=np.dot(vi,vi)/2-mu/r
     d=[np.linalg.norm(p[a]-p[c]) for a,c in pairs]
-    if eb>=0:return {'boundInner':False,'shape':max(d)/min(d),'hierarchicalBound':False,'outerUnbound':None}
+    if eb>=0:return {'boundInner':False,'shape':float(max(d)/min(d)),'hierarchicalBound':False,'outerUnbound':None}
     ain=-mu/(2*eb);pc=(m[i]*p[i]+m[j]*p[j])/(m[i]+m[j]);vc=(m[i]*v[i]+m[j]*v[j])/(m[i]+m[j]);dr=p[k]-pc;dv=v[k]-vc;R=np.linalg.norm(dr);M=G*m.sum();eo=np.dot(dv,dv)/2-M/R;h=np.linalg.norm(np.cross(dr,dv));ecc=math.sqrt(max(0,1+2*eo*h*h/M**2));q=h*h/(M*(1+ecc))
     return {'boundInner':True,'innerSemimajor':float(ain),'outerEnergy':float(eo),'outerUnbound':bool(eo>=0),'outerPericenterToInnerA':float(q/ain),'hierarchicalBound':bool(eo<0 and q/ain>3),'shape':float(max(d)/min(d))}
 

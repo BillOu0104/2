@@ -1,0 +1,115 @@
+{
+  "source": "docs/research/results/candidate-fine-extended-10000.jsonl",
+  "seedIndependentUnit": true,
+  "bootstrapDraws": 10000,
+  "summary": {
+    "candidate-fine": {
+      "n": 128,
+      "survivors": 1,
+      "survival": 0.0078125,
+      "survival95": [
+        0.0013804318928742967,
+        0.04292625943885903
+      ],
+      "jointSurvivors": 1,
+      "stellarContacts": 71,
+      "stellarBoundaryCrossings": 65,
+      "positiveEscapes": 97,
+      "lossReasons": {
+        "boundary-crossing": 26,
+        "positive-energy-escape": 46,
+        "disrupted": 27,
+        "engulfed": 28,
+        "null": 1
+      },
+      "errors": 0,
+      "cpuWallSeconds": 46.902702389,
+      "unresolvedPrimaryOutcomes": 0,
+      "survivalBoundsWithUnresolved": [
+        0.0078125,
+        0.0078125
+      ],
+      "restrictedLife": {
+        "nKnown": 128,
+        "mean": 328.74869791666663,
+        "median": 169.21666666666667,
+        "p90": 548.3333333333334,
+        "max": 10000.0
+      },
+      "stableFraction": {
+        "nKnown": 128,
+        "mean": 0.02927380208333333,
+        "median": 0.013999166666666667,
+        "p90": 0.04820766666666665,
+        "max": 0.9999933333333333
+      },
+      "stableConditional": {
+        "nKnown": 128,
+        "mean": 0.8131606790621431,
+        "median": 0.9358546631127556,
+        "p90": 0.9990787497170607,
+        "max": 0.9999933333333333
+      },
+      "temperateFraction": {
+        "nKnown": 128,
+        "mean": 0.005644348958333333,
+        "median": 0.0003925,
+        "p90": 0.014258333333333328,
+        "max": 0.093805
+      },
+      "compactNonhierFraction": {
+        "nKnown": 1,
+        "mean": 1.0,
+        "median": 1.0,
+        "p90": 1.0,
+        "max": 1.0
+      },
+      "jointStableFraction": {
+        "nKnown": 128,
+        "mean": 0.02045276041666667,
+        "median": 0.007045833333333333,
+        "p90": 0.0314925,
+        "max": 0.9999933333333333
+      },
+      "maxEnergyError": {
+        "nKnown": 1,
+        "mean": 6.375823966057315e-13,
+        "median": 6.375823966057315e-13,
+        "p90": 6.375823966057315e-13,
+        "max": 6.375823966057315e-13
+      },
+      "maxEnergyErrorBeforeContact": {
+        "nKnown": 128,
+        "mean": 3.7052194519112753e-10,
+        "median": 3.4733593915887144e-10,
+        "p90": 7.720464000039406e-10,
+        "max": 1.5640134651931176e-09
+      },
+      "maxLError": {
+        "nKnown": 128,
+        "mean": 4.137804550820052e-12,
+        "median": 3.4457743980318856e-13,
+        "p90": 3.987979053908382e-12,
+        "max": 3.302626295165901e-10
+      },
+      "minSS": {
+        "nKnown": 128,
+        "mean": 0.07446445538728186,
+        "median": 0.030236391255634845,
+        "p90": 0.16952748462936143,
+        "max": 1.1541384856605101
+      },
+      "minSP": {
+        "nKnown": 128,
+        "mean": 0.07791402452985247,
+        "median": 0.04780908347951611,
+        "p90": 0.17823133365014995,
+        "max": 0.37377597966424375
+      },
+      "initialBoundAnyHost": 128,
+      "initialMeanQ": 0.9990842209346384,
+      "initialMeanL": 0.17829542336608917
+    }
+  },
+  "comparisons": {}
+}

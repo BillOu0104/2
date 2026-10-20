@@ -6,7 +6,7 @@ const cfg=JSON.parse(readFileSync(configPath)),dir=path.dirname(configPath),out=
 const enginePath=new URL(cfg.engine??'./engine.mjs',import.meta.url),{runTrial}=await import(enginePath);
 const hash=createHash('sha256').update(readFileSync(enginePath)).update(readFileSync(configPath)).digest('hex');
 if(existsSync(manifest)&&JSON.parse(readFileSync(manifest)).hash!==hash)throw Error('Engine/config hash mismatch: create a new output instead of mixing results');
-writeFileSync(manifest,JSON.stringify({hash,config:cfg,baseline:'c7a53a01def5f9d60389ee20ec0f8bac5210ed69',node:process.version,started:new Date().toISOString()},null,2)+'\n');
+if(!existsSync(manifest))writeFileSync(manifest,JSON.stringify({hash,config:cfg,baseline:'c7a53a01def5f9d60389ee20ec0f8bac5210ed69',node:process.version,started:new Date().toISOString()},null,2)+'\n');
 const keys=new Set();if(existsSync(out)){const raw=readFileSync(out,'utf8');if(raw&&!raw.endsWith('\n'))throw Error('Truncated JSONL tail: repair explicitly before resume');for(const l of raw.trim().split('\n').filter(Boolean)){const r=JSON.parse(l);keys.add(`${r.profile}:${r.seed}`);}}
 const fd=openSync(out,'a');let done=0;const start=performance.now();
 try{for(let i=cfg.start??0;i<(cfg.start??0)+cfg.seeds;i++)for(const profile of cfg.profiles){const seed=`${cfg.prefix}-${i}`,key=`${profile.id}:${seed}`;if(keys.has(key))continue;const r=runTrial(seed,profile,profile.horizon??cfg.horizon);writeSync(fd,JSON.stringify(r)+'\n');fsyncSync(fd);done++;if(done%8===0)console.log(JSON.stringify({done,seed,profile:profile.id,seconds:Math.round((performance.now()-start)/1000),lastSteps:r.steps}));}}finally{closeSync(fd);}

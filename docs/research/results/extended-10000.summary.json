@@ -23,6 +23,7 @@
       },
       "errors": 0,
       "cpuWallSeconds": 0,
+      "unresolvedPrimaryOutcomes": 0,
       "survivalBoundsWithUnresolved": [
         0.0,
         0.0
@@ -128,6 +129,7 @@
       },
       "errors": 0,
       "cpuWallSeconds": 0,
+      "unresolvedPrimaryOutcomes": 0,
       "survivalBoundsWithUnresolved": [
         0.0,
         0.0
@@ -231,6 +233,7 @@
       },
       "errors": 1,
       "cpuWallSeconds": 16.296429710000012,
+      "unresolvedPrimaryOutcomes": 1,
       "survivalBoundsWithUnresolved": [
         0.0,
         0.0078125
@@ -335,6 +338,7 @@
       },
       "errors": 1,
       "cpuWallSeconds": 15.874596262000006,
+      "unresolvedPrimaryOutcomes": 1,
       "survivalBoundsWithUnresolved": [
         0.0,
         0.0078125
@@ -465,90 +469,6 @@
         "n": 128
       }
     },
-    "legacy-random -> retro12-originalQ": {
-      "survived": {
-        "pairedDifference": 0.0,
-        "bootstrap95": [
-          0.0,
-          0.0
-        ],
-        "n": 128
-      },
-      "jointSurvived": {
-        "pairedDifference": 0.0,
-        "bootstrap95": [
-          0.0,
-          0.0
-        ],
-        "n": 128
-      },
-      "restrictedLife": {
-        "pairedDifference": 150.16328125,
-        "bootstrap95": [
-          41.371829427083334,
-          311.49266601562505
-        ],
-        "n": 128
-      },
-      "stableFraction": {
-        "pairedDifference": 0.022000195312500002,
-        "bootstrap95": [
-          0.011571518880208333,
-          0.038402943359375
-        ],
-        "n": 128
-      },
-      "jointStableFraction": {
-        "pairedDifference": 0.007292135416666666,
-        "bootstrap95": [
-          0.0053545569661458325,
-          0.009699435221354163
-        ],
-        "n": 128
-      }
-    },
-    "legacy-random -> candidate": {
-      "survived": {
-        "pairedDifference": 0.0,
-        "bootstrap95": [
-          0.0,
-          0.0
-        ],
-        "n": 128
-      },
-      "jointSurvived": {
-        "pairedDifference": 0.0,
-        "bootstrap95": [
-          0.0,
-          0.0
-        ],
-        "n": 128
-      },
-      "restrictedLife": {
-        "pairedDifference": 172.77330729166664,
-        "bootstrap95": [
-          68.6452734375,
-          328.76318359374994
-        ],
-        "n": 128
-      },
-      "stableFraction": {
-        "pairedDifference": 0.025549518229166665,
-        "bootstrap95": [
-          0.0153999755859375,
-          0.04135868782552082
-        ],
-        "n": 128
-      },
-      "jointStableFraction": {
-        "pairedDifference": 0.017702747395833333,
-        "bootstrap95": [
-          0.0092811884765625,
-          0.03194678841145833
-        ],
-        "n": 128
-      }
-    },
     "newton-random -> legacy-random": {
       "survived": {
         "pairedDifference": 0.0,
@@ -569,234 +489,24 @@
       "restrictedLife": {
         "pairedDifference": -3.4079427083333336,
         "bootstrap95": [
-          -36.83173502604166,
-          28.5902734375
+          -36.717675781249994,
+          28.844388020833318
         ],
         "n": 128
       },
       "stableFraction": {
         "pairedDifference": 1.230468750000019e-05,
         "bootstrap95": [
-          -0.0007847148437499999,
-          0.000886298828125
+          -0.0007686660156250001,
+          0.0009097630208333332
         ],
         "n": 128
       },
       "jointStableFraction": {
         "pairedDifference": -0.00017425781249999993,
         "bootstrap95": [
-          -0.0005821793619791666,
-          0.00022558658854166674
-        ],
-        "n": 128
-      }
-    },
-    "newton-random -> retro12-originalQ": {
-      "survived": {
-        "pairedDifference": 0.0,
-        "bootstrap95": [
-          0.0,
-          0.0
-        ],
-        "n": 128
-      },
-      "jointSurvived": {
-        "pairedDifference": 0.0,
-        "bootstrap95": [
-          0.0,
-          0.0
-        ],
-        "n": 128
-      },
-      "restrictedLife": {
-        "pairedDifference": 146.75533854166667,
-        "bootstrap95": [
-          34.52370117187499,
-          308.12338216145815
-        ],
-        "n": 128
-      },
-      "stableFraction": {
-        "pairedDifference": 0.0220125,
-        "bootstrap95": [
-          0.011526277343750002,
-          0.03783392545572916
-        ],
-        "n": 128
-      },
-      "jointStableFraction": {
-        "pairedDifference": 0.007117877604166666,
-        "bootstrap95": [
-          0.005081536458333333,
-          0.009578046223958333
-        ],
-        "n": 128
-      }
-    },
-    "newton-random -> candidate": {
-      "survived": {
-        "pairedDifference": 0.0,
-        "bootstrap95": [
-          0.0,
-          0.0
-        ],
-        "n": 128
-      },
-      "jointSurvived": {
-        "pairedDifference": 0.0,
-        "bootstrap95": [
-          0.0,
-          0.0
-        ],
-        "n": 128
-      },
-      "restrictedLife": {
-        "pairedDifference": 169.36536458333333,
-        "bootstrap95": [
-          63.82423502604166,
-          329.8415234374999
-        ],
-        "n": 128
-      },
-      "stableFraction": {
-        "pairedDifference": 0.025561822916666668,
-        "bootstrap95": [
-          0.015576998046875,
-          0.041354671875
-        ],
-        "n": 128
-      },
-      "jointStableFraction": {
-        "pairedDifference": 0.017528489583333334,
-        "bootstrap95": [
-          0.008958380533854166,
-          0.032025366210937496
-        ],
-        "n": 128
-      }
-    },
-    "candidate -> legacy-random": {
-      "survived": {
-        "pairedDifference": 0.0,
-        "bootstrap95": [
-          0.0,
-          0.0
-        ],
-        "n": 128
-      },
-      "jointSurvived": {
-        "pairedDifference": 0.0,
-        "bootstrap95": [
-          0.0,
-          0.0
-        ],
-        "n": 128
-      },
-      "restrictedLife": {
-        "pairedDifference": -172.77330729166664,
-        "bootstrap95": [
-          -331.42546875000005,
-          -68.20669596354168
-        ],
-        "n": 128
-      },
-      "stableFraction": {
-        "pairedDifference": -0.025549518229166665,
-        "bootstrap95": [
-          -0.0414814326171875,
-          -0.015606630533854167
-        ],
-        "n": 128
-      },
-      "jointStableFraction": {
-        "pairedDifference": -0.017702747395833333,
-        "bootstrap95": [
-          -0.0327491591796875,
-          -0.009298068033854167
-        ],
-        "n": 128
-      }
-    },
-    "candidate -> newton-random": {
-      "survived": {
-        "pairedDifference": 0.0,
-        "bootstrap95": [
-          0.0,
-          0.0
-        ],
-        "n": 128
-      },
-      "jointSurvived": {
-        "pairedDifference": 0.0,
-        "bootstrap95": [
-          0.0,
-          0.0
-        ],
-        "n": 128
-      },
-      "restrictedLife": {
-        "pairedDifference": -169.36536458333333,
-        "bootstrap95": [
-          -326.71507161458334,
-          -63.59773763020835
-        ],
-        "n": 128
-      },
-      "stableFraction": {
-        "pairedDifference": -0.025561822916666668,
-        "bootstrap95": [
-          -0.04109088313802084,
-          -0.015455237955729166
-        ],
-        "n": 128
-      },
-      "jointStableFraction": {
-        "pairedDifference": -0.017528489583333334,
-        "bootstrap95": [
-          -0.03194916569010416,
-          -0.009096855143229166
-        ],
-        "n": 128
-      }
-    },
-    "candidate -> retro12-originalQ": {
-      "survived": {
-        "pairedDifference": 0.0,
-        "bootstrap95": [
-          0.0,
-          0.0
-        ],
-        "n": 128
-      },
-      "jointSurvived": {
-        "pairedDifference": 0.0,
-        "bootstrap95": [
-          0.0,
-          0.0
-        ],
-        "n": 128
-      },
-      "restrictedLife": {
-        "pairedDifference": -22.61002604166668,
-        "bootstrap95": [
-          -209.8382975260417,
-          167.42530598958325
-        ],
-        "n": 128
-      },
-      "stableFraction": {
-        "pairedDifference": -0.0035493229166666668,
-        "bootstrap95": [
-          -0.021971472005208333,
-          0.014782335611979168
-        ],
-        "n": 128
-      },
-      "jointStableFraction": {
-        "pairedDifference": -0.010410611979166665,
-        "bootstrap95": [
-          -0.024655073567708335,
-          -0.0020204026692708333
+          -0.0005783385416666666,
+          0.00021716243489583326
         ],
         "n": 128
       }

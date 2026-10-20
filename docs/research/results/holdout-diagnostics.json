@@ -308,7 +308,7 @@
       "exactMcNemarP": 1.0
     }
   },
-  "extended-10000": {
+  "extended-10000-v2": {
     "groups": {
       "legacy-random": {
         "n": 128,
@@ -338,35 +338,62 @@
       },
       "retro12-originalQ": {
         "n": 128,
-        "survivors": 0,
-        "jointSurvivors": 0,
+        "survivors": 1,
+        "jointSurvivors": 1,
         "jointAndNonhierOverHalf": 0,
-        "survivorBoundHierarchies": 0,
+        "survivorBoundHierarchies": 1,
         "survivorOuterUnbound": 0,
         "survivorFinalShapeBelow3": 0,
-        "survivorDetails": [],
+        "survivorDetails": [
+          {
+            "seed": "HOLDOUT-C-124",
+            "hierarchy": {
+              "boundInner": true,
+              "innerSemimajor": 0.8020528131988609,
+              "outerEnergy": -0.02349318754514522,
+              "outerUnbound": false,
+              "outerPericenterToInnerA": 3.5953215889449917,
+              "hierarchicalBound": true,
+              "shape": 4.886190984056464
+            },
+            "jointSurvived": true,
+            "nonhierFraction": 0.090055
+          }
+        ],
         "initialMeanCrossingYears": 16.047701677632276,
         "energyBeforeLossMedian": 7.526455447637752e-10,
         "energyBeforeLossMax": 1.9884028681285795e-08
       },
       "candidate": {
         "n": 128,
-        "survivors": 0,
-        "jointSurvivors": 0,
-        "jointAndNonhierOverHalf": 0,
+        "survivors": 1,
+        "jointSurvivors": 1,
+        "jointAndNonhierOverHalf": 1,
         "survivorBoundHierarchies": 0,
         "survivorOuterUnbound": 0,
-        "survivorFinalShapeBelow3": 0,
-        "survivorDetails": [],
+        "survivorFinalShapeBelow3": 1,
+        "survivorDetails": [
+          {
+            "seed": "HOLDOUT-C-28",
+            "hierarchy": {
+              "boundInner": false,
+              "shape": 1.9839967925000639,
+              "hierarchicalBound": false,
+              "outerUnbound": null
+            },
+            "jointSurvived": true,
+            "nonhierFraction": 1
+          }
+        ],
         "initialMeanCrossingYears": 16.047701677632276,
         "energyBeforeLossMedian": 5.335005443355491e-10,
         "energyBeforeLossMax": 2.508179026667449e-08
       }
     },
     "pairedDiscordance": {
-      "candidateOnlySurvived": 0,
+      "candidateOnlySurvived": 1,
       "baselineOnlySurvived": 0,
-      "exactMcNemarP": 1
+      "exactMcNemarP": 1.0
     }
   }
 }
