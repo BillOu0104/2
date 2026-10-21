@@ -1,0 +1,88 @@
+{
+  "sourceHash": "dd9de546d74b62483b487d40511fab862e37f516179d652228072b516734200e",
+  "configHash": "0cce89a3167a3672f6441a7ee9687c7b7289e894235d7226ceaab145e674f3a5",
+  "binaryHash": "cf2117ac290bea83d6cfbdb07f98888412d594024e295887bc537bce5132f091",
+  "sourceFiles": [
+    "docs/research-v2/native.cpp",
+    "docs/research-v2/vendor/json.hpp",
+    "docs/research-v2/build-native.sh",
+    "docs/research-v2/run-native.mjs",
+    "docs/research-v2/engine.mjs",
+    "docs/research-v2/controllers/index.mjs",
+    "src/adaptive-trails.js",
+    "src/audio.js",
+    "src/bridge.js",
+    "src/civilization-levels.js",
+    "src/civilization-state.js",
+    "src/escape-state.js",
+    "src/fixed-display-frame.js",
+    "src/habitability.js",
+    "src/layout.js",
+    "src/main.js",
+    "src/motion-visuals.js",
+    "src/orbit-trace.js",
+    "src/orbital-initialization.js",
+    "src/original-data.js",
+    "src/renderer.js",
+    "src/run-statistics.js",
+    "src/seed-compatibility.js",
+    "src/settings-catalog.js",
+    "src/settings.js",
+    "src/simulation-worker.js",
+    "src/simulation.js",
+    "src/storage.js",
+    "src/trail-ribbon.js",
+    "src/view-motion.js",
+    "src/world-state.js",
+    "src/physics/gravity.js",
+    "src/legacy/008.js",
+    "src/legacy/079.js",
+    "src/legacy/010.js"
+  ],
+  "config": {
+    "prefix": "V2-CONFIRM-20261021",
+    "start": 64,
+    "seeds": 8,
+    "horizon": 100000,
+    "saveCheckpoints": true,
+    "output": "docs/research-v2/results/confirmation-v1/b08.jsonl",
+    "profiles": [
+      {
+        "id": "newton",
+        "shadow": true
+      },
+      {
+        "id": "legacy-cage",
+        "cage": true,
+        "shadow": true
+      },
+      {
+        "capture": true,
+        "redistribute": true,
+        "capturePositiveOnly": true,
+        "captureSeparationFactor": 1.5,
+        "shadow": true,
+        "reflect": true,
+        "id": "deflect4-trigger8",
+        "captureTriggerScale": 8,
+        "deflect": true,
+        "deflectionFactor": 4
+      },
+      {
+        "capture": true,
+        "redistribute": true,
+        "capturePositiveOnly": true,
+        "captureSeparationFactor": 1.5,
+        "shadow": true,
+        "reflect": true,
+        "id": "reflect-trigger8",
+        "captureTriggerScale": 8
+      }
+    ]
+  },
+  "shard": 1,
+  "shards": 2,
+  "createdAt": "2026-10-21T23:22:07.275661+00:00",
+  "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+  "flags": "-std=c++17 -O3 -ffp-contract=off -Wall -Wextra -pedantic"
+}
