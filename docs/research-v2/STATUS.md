@@ -1,6 +1,6 @@
 # V2 恢复入口
 
-状态：10000年224条、30000年96条及负对照均已完成并审计。弱负能反馈1000年96条完成并审计，正在推进10000年。研究未完成，尚无正式100000年结果。main未改，私有网页未更新。
+状态：10000年224条、30000年96条及负对照均已完成并审计。弱负能反馈1000年和10000年各96条已完成并审计，正在推进30000年。研究未完成，尚无正式100000年结果。main未改，私有网页未更新。
 
 先读RESEARCH_PLAN.md、STRICT_PROTOCOL.md、MEDIUM_PROTOCOL.md、EXPERIMENT_LOG.md。V1在根FINAL_REPORT.md。
 
@@ -15,13 +15,13 @@
 ```sh
 # 先检查锁/native worker和最近20分钟记录；有活跃工作即跳过。
 # 无活跃工作时检查当前源码和manifest匹配，不重编译覆盖活跃二进制。
-python3 docs/research-v2/run-stream.py docs/research-v2/weak10k.json 0 2
-python3 docs/research-v2/run-stream.py docs/research-v2/weak10k.json 1 2
-python3 docs/research-v2/audit.py docs/research-v2/weak10k.json
-python3 docs/research-v2/summarize.py docs/research-v2/results/weak10k
+python3 docs/research-v2/run-stream.py docs/research-v2/weak30k.json 0 2
+python3 docs/research-v2/run-stream.py docs/research-v2/weak30k.json 1 2
+python3 docs/research-v2/audit.py docs/research-v2/weak30k.json
+python3 docs/research-v2/summarize.py docs/research-v2/results/weak30k
 ```
 
-同阶段两Shard并行，最多2个worker。已完成键自动跳过。1000年完成审计后依次用weak10k.json、weak30k.json执行相同步骤，不能把三个窗口累计成单次长窗。协议WEAK_BINDING_PROTOCOL.md，V2-D-0..15六方案。当前未运行正式确认集。
+同阶段两Shard并行，最多2个worker。已完成键自动跳过。1000年完成审计后依次用weak30k.json、weak30k.json执行相同步骤，不能把三个窗口累计成单次长窗。协议WEAK_BINDING_PROTOCOL.md，V2-D-0..15六方案。当前未运行正式确认集。
 
 科学源/配置/二进制哈希在各Shard manifest；发生源码差异必须停止，不强行跳过版本检查。有活跃worker时不修改计算源码或重编译。旧long30科学源bf7f9d2，旧medium科学源1a9de78，不能用当前新增参数源覆盖旧manifest。完整原始结果/恢复检查点均已保存。
 
