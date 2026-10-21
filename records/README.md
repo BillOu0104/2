@@ -21,6 +21,7 @@
 | [v0.5.3](versions/v0.5.3/README.md) | 显示居中、慢速银河归位与十二阶段科技 | [292d21d](https://github.com/BillOu0104/2/commit/292d21d93e90ae212a41f828ea454337582dbf2b) |
 | [v0.5.4](versions/v0.5.4/README.md) | v0.5.4：松手回弹、完全重置与逃逸重建 | [de49389](https://github.com/BillOu0104/2/commit/de493891629800b8b70614f11915847a6594da9d) |
 | [v0.5.5](versions/v0.5.5/README.md) | v0.5.5：固定观察原点、守恒核查与连续尾迹 | [e62d7e8](https://github.com/BillOu0104/2/commit/e62d7e8761c1b318de23d600e121bee41907c0e2) |
+| [minimal-chaos-v2-canonical](analyses/minimal-chaos-v2-canonical/README.md) | V2 canonical contact-aware experiment and recoverable batches | [1a9de78](https://github.com/BillOu0104/2/commit/1a9de7889942f57fd0997943d99612096bced012) |
 | [minimal-chaos-v2-prototype](analyses/minimal-chaos-v2-prototype/README.md) | V2 validated driver, strict escape observer and controller experiments | [aba525d](https://github.com/BillOu0104/2/commit/aba525d5dd9ac69c451f58ed43b0f3037fe91b33) |
 | [minimal-chaos-v2-start](analyses/minimal-chaos-v2-start/README.md) | V2 baseline registration and headless research prototype | [f6e89c2](https://github.com/BillOu0104/2/commit/f6e89c22bd6b6f0938ec8991eb2c1809f4894788) |
 | [newtonian-survival](analyses/newtonian-survival/README.md) | 无牢笼牛顿三星长期存活研究 | [c198020](https://github.com/BillOu0104/2/commit/c1980201d11c7d0968d9039bfca4ad91383b27b0) |
