@@ -4,7 +4,7 @@ import {WorldState} from '../../src/world-state.js';
 import {escapeCandidates} from '../../src/escape-state.js';
 import {Habitability} from '../../src/habitability.js';
 import {CivilizationState} from '../../src/civilization-state.js';
-import {forces,capture,reflect,applyVelocity,norm,dot,cross,sub,pos,vel,keys,center} from './controllers/index.mjs';
+import {forces,capture,reflect,deflect,applyVelocity,norm,dot,cross,sub,pos,vel,keys,center} from './controllers/index.mjs';
 export {keys};
 export const G=1.3275440274585598e-8;
 const starPairs=[[0,1],[0,2],[1,2]],distance=(a,b)=>norm(sub(pos(a),pos(b)));
@@ -13,7 +13,7 @@ export function initialize(seed,cfg={}){const sim=new Simulation({seed,autoresta
 export class ControlledIntegrator extends GravityIntegrator{
  constructor(bodies,settings,cfg,cost){super(bodies,G,{model:'newtonian',radii:()=>[settings._13,settings._21,settings._3,0]});this.settings=settings;this.cfg=cfg;this.cost=cost;this.starContact=null;this.minSS=Infinity;}
  kick(h){if(!this.cfg.barrier&&!this.cfg.cage){super.kick(h);return;}const v0=this.bodies.map(vel),oldWork=this.cost.work;super.kick(h);const a=forces(this.bodies,G,this.cfg,this.settings);for(let i=0;i<4;i++)if(this.bodies[i].mass)applyVelocity(this.bodies[i],a[i].map(x=>x*h),this.cost);this.cost.work=oldWork;for(let i=0;i<4;i++)this.cost.work+=this.bodies[i].mass*dot(v0[i].map((x,k)=>(x+vel(this.bodies[i])[k])/2),a[i].map(x=>x*h));}
- step(h){reflect(this.bodies,G,this.cfg,this.settings,this.cost);super.step(h);}
+ step(h){deflect(this.bodies,G,this.cfg,this.settings,this.cost);reflect(this.bodies,G,this.cfg,this.settings,this.cost);super.step(h);}
  detectContacts(h){
   const radii=[this.settings._13,this.settings._21,this.settings._3].map((r,i)=>r*(this.settings.stellarBreathing?1+.08*Math.sin(this.time/.45/120+i*2):1));
   for(const [i,j]of starPairs){const old=[0,1,2].map(k=>this.saved[j*6+k]-this.saved[i*6+k]),change=sub(sub(pos(this.bodies[j]),pos(this.bodies[i])),old),den=dot(change,change),t=den?Math.max(0,Math.min(1,-dot(old,change)/den)):0,d=norm(old.map((x,k)=>x+t*change[k]));this.minSS=Math.min(this.minSS,d);if(d<=radii[i]+radii[j]&&this.starContact===null)this.starContact={pair:[i,j],time:this.time-h+t*h,distance:d,radius:radii[i]+radii[j]};}

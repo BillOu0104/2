@@ -41,3 +41,17 @@ export function capture(b,G,cfg,scale,cost){
  return count;
 }
 export function reflect(b,G,cfg,settings,cost){if(!cfg.reflect)return;for(let i=0;i<3;i++)for(let j=i+1;j<3;j++){const r=sub(pos(b[j]),pos(b[i])),v=sub(vel(b[j]),vel(b[i])),R=norm(r),vr=dot(r,v)/R,radii=[settings._13,settings._21,settings._3],guard=(cfg.reflectionMargin??1.15)*(radii[i]+radii[j])*(settings.stellarBreathing?1.08:1);if(!(R<guard&&vr<0))continue;const change=r.map(x=>-2*vr*x/R),M=b[i].mass+b[j].mass;for(const [body,f]of [[b[i],-b[j].mass/M],[b[j],b[i].mass/M]]){const dv=change.map(x=>x*f);cost.absoluteWork+=Math.abs(applyVelocity(body,dv,cost));cost.impulse+=body.mass*norm(dv);}cost.projectionEvents++;cost.reflectionEvents=(cost.reflectionEvents??0)+1;}}
+export function deflect(b,G,cfg,settings,cost){
+ if(!cfg.deflect)return;
+ const radii=[settings._13,settings._21,settings._3];
+ for(let i=0;i<3;i++)for(let j=i+1;j<3;j++){
+  const r=sub(pos(b[j]),pos(b[i])),v=sub(vel(b[j]),vel(b[i])),R=norm(r),vr=dot(r,v)/R,radius=(radii[i]+radii[j])*(settings.stellarBreathing?1.08:1),target=(cfg.deflectionTarget??1.3)*radius;
+  if(!(vr<0&&R<(cfg.deflectionFactor??4)*radius&&R>target))continue;
+  const mu=G*(b[i].mass+b[j].mass),E=.5*dot(v,v)-mu/R,h=cross(r,v),h2=dot(h,h),ecc=Math.sqrt(Math.max(0,1+2*E*h2/(mu*mu))),q=h2/(mu*(1+ecc));if(!(q<(cfg.reflectionMargin??1.15)*radius))continue;
+  const vt2=Math.max(0,(2*target*target*E+2*mu*target)/(R*R));if(!(vt2<dot(v,v)))continue;
+  const n=r.map(x=>x/R);let t=sub(v,n.map(x=>x*vr));if(norm(t)<1e-12){const k=n.map(Math.abs).indexOf(Math.min(...n.map(Math.abs))),basis=[0,0,0];basis[k]=1;t=sub(basis,n.map(x=>x*dot(basis,n)));}t=t.map(x=>x/norm(t));
+  const u=n.map((x,k)=>-x*Math.sqrt(Math.max(0,dot(v,v)-vt2))+t[k]*Math.sqrt(vt2)),change=sub(u,v),M=b[i].mass+b[j].mass;
+  for(const [body,f]of [[b[i],-b[j].mass/M],[b[j],b[i].mass/M]]){const dv=change.map(x=>x*f);cost.absoluteWork+=Math.abs(applyVelocity(body,dv,cost));cost.impulse+=body.mass*norm(dv);}
+  cost.projectionEvents++;cost.deflectionEvents=(cost.deflectionEvents??0)+1;
+ }
+}

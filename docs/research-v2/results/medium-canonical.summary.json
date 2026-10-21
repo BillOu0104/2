@@ -1,0 +1,2692 @@
+{
+  "files": [
+    "docs/research-v2/results/medium-canonical.shard0.jsonl",
+    "docs/research-v2/results/medium-canonical.shard1.jsonl"
+  ],
+  "groups": {
+    "legacy-cage": {
+      "n": 32,
+      "stellarSuccesses": 0,
+      "numericalUnknowns": 0,
+      "stellarRateObserved": 0.0,
+      "wilsonKnownOnly": [
+        0.0,
+        0.1071791982550706
+      ],
+      "unknownWorstBestRate": [
+        0.0,
+        0.0
+      ],
+      "failures": {
+        "stellar-contact": 32
+      },
+      "stableAllSeedsMean": 0.030563020833333333,
+      "stableSurvivorsMean": null,
+      "matureStableSurvivorsMean": null,
+      "matureStableAllSeedsMean": null,
+      "planetOriginalSuccesses": 0,
+      "planetLossesTotal": 34,
+      "planetLossesMean": 1.0625,
+      "absentFractionMean": 0.000530625,
+      "civilizationBirthsTotal": 36,
+      "civilizationDeathsTotal": 14,
+      "civilizationAliveMean": 0.03514276041666667,
+      "nonhierSurvivorsMean": null,
+      "longestGeometricHierarchySurvivorsMean": null,
+      "dynamicalHierarchySurvivorsMean": null,
+      "longestDynamicalHierarchySurvivorsMax": null,
+      "conditionalFTLESurvivors": [],
+      "tightExchangesSurvivorsMean": null,
+      "controlSignedWorkOverE0Mean": 0.6191788437877721,
+      "controlGrossWorkOverE0Mean": 4.992132571069948,
+      "controlImpulseMean": 9807551.91379836,
+      "controlActiveFrameFractionMean": 0.04113026041666667,
+      "controlPeakAccelerationMax": 0.648323391966592,
+      "controlPeakVelocityJumpMax": 0,
+      "maxNumericalEnergyResidual": 1.0736179088322905e-08,
+      "wallSecondsTotal": 12.124607556,
+      "maxRSSMiB": 183.19140625,
+      "planetFirstLossObserved": 16,
+      "originalPlanetRightCensored": 16,
+      "civilizationFirstDeathObserved": 11,
+      "civilizationFirstLifeRightCensored": 14,
+      "civilizationNeverBorn": 7,
+      "fullConditionalFTLESurvivorsMean": null,
+      "matureConditionalFTLESurvivorsMean": null,
+      "survivorDistribution": {}
+    },
+    "newton": {
+      "n": 32,
+      "stellarSuccesses": 1,
+      "numericalUnknowns": 0,
+      "stellarRateObserved": 0.03125,
+      "wilsonKnownOnly": [
+        0.005537860164003122,
+        0.15744263820012558
+      ],
+      "unknownWorstBestRate": [
+        0.03125,
+        0.03125
+      ],
+      "failures": {
+        "stellar-contact": 27,
+        "stellar-separation": 4,
+        "complete": 1
+      },
+      "stableAllSeedsMean": 0.12651734375,
+      "stableSurvivorsMean": 0.24296333333333334,
+      "matureStableSurvivorsMean": null,
+      "matureStableAllSeedsMean": null,
+      "planetOriginalSuccesses": 0,
+      "planetLossesTotal": 62,
+      "planetLossesMean": 1.9375,
+      "absentFractionMean": 0.00096765625,
+      "civilizationBirthsTotal": 44,
+      "civilizationDeathsTotal": 30,
+      "civilizationAliveMean": 0.058239114583333335,
+      "nonhierSurvivorsMean": 0.057473333333333335,
+      "longestGeometricHierarchySurvivorsMean": 5441.433333333333,
+      "dynamicalHierarchySurvivorsMean": 0,
+      "longestDynamicalHierarchySurvivorsMax": 0,
+      "conditionalFTLESurvivors": [
+        [
+          "V2-B-10",
+          null
+        ]
+      ],
+      "tightExchangesSurvivorsMean": 5,
+      "controlSignedWorkOverE0Mean": 0.0,
+      "controlGrossWorkOverE0Mean": 0.0,
+      "controlImpulseMean": 0.0,
+      "controlActiveFrameFractionMean": 0.0,
+      "controlPeakAccelerationMax": 0,
+      "controlPeakVelocityJumpMax": 0,
+      "maxNumericalEnergyResidual": 3.108590854110313e-08,
+      "wallSecondsTotal": 26.656758978,
+      "maxRSSMiB": 183.1875,
+      "planetFirstLossObserved": 18,
+      "originalPlanetRightCensored": 14,
+      "civilizationFirstDeathObserved": 15,
+      "civilizationFirstLifeRightCensored": 11,
+      "civilizationNeverBorn": 6,
+      "fullConditionalFTLESurvivorsMean": null,
+      "matureConditionalFTLESurvivorsMean": null,
+      "survivorDistribution": {
+        "V2-B-10": {
+          "stableFraction": 0.24296333333333334,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.057473333333333335,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 11,
+          "fullConditionalFTLE": null,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 5,
+          "controlActiveFrameFraction": 0
+        }
+      }
+    },
+    "reflect": {
+      "n": 32,
+      "stellarSuccesses": 7,
+      "numericalUnknowns": 0,
+      "stellarRateObserved": 0.21875,
+      "wilsonKnownOnly": [
+        0.11023836252604186,
+        0.3875499364924353
+      ],
+      "unknownWorstBestRate": [
+        0.21875,
+        0.21875
+      ],
+      "failures": {
+        "stellar-separation": 25,
+        "complete": 7
+      },
+      "stableAllSeedsMean": 0.26144828125,
+      "stableSurvivorsMean": 0.33534833333333336,
+      "matureStableSurvivorsMean": null,
+      "matureStableAllSeedsMean": null,
+      "planetOriginalSuccesses": 1,
+      "planetLossesTotal": 169,
+      "planetLossesMean": 5.28125,
+      "absentFractionMean": 0.0026375,
+      "civilizationBirthsTotal": 91,
+      "civilizationDeathsTotal": 84,
+      "civilizationAliveMean": 0.15505833333333333,
+      "nonhierSurvivorsMean": 0.1760452380952381,
+      "longestGeometricHierarchySurvivorsMean": 2987.019047619048,
+      "dynamicalHierarchySurvivorsMean": 0.0,
+      "longestDynamicalHierarchySurvivorsMax": 0,
+      "conditionalFTLESurvivors": [
+        [
+          "V2-B-10",
+          null
+        ],
+        [
+          "V2-B-5",
+          null
+        ],
+        [
+          "V2-B-13",
+          null
+        ],
+        [
+          "V2-B-21",
+          null
+        ],
+        [
+          "V2-B-25",
+          null
+        ],
+        [
+          "V2-B-27",
+          null
+        ],
+        [
+          "V2-B-31",
+          null
+        ]
+      ],
+      "tightExchangesSurvivorsMean": 16.285714285714285,
+      "controlSignedWorkOverE0Mean": -3.5088565557006393e-15,
+      "controlGrossWorkOverE0Mean": 37.09645980443443,
+      "controlImpulseMean": 469918661.1261488,
+      "controlActiveFrameFractionMean": 5.255208333333333e-05,
+      "controlPeakAccelerationMax": 0,
+      "controlPeakVelocityJumpMax": 2.2297987951156446,
+      "maxNumericalEnergyResidual": 1.0359155138278528e-07,
+      "wallSecondsTotal": 100.830849639,
+      "maxRSSMiB": 183.265625,
+      "planetFirstLossObserved": 27,
+      "originalPlanetRightCensored": 4,
+      "civilizationFirstDeathObserved": 27,
+      "civilizationFirstLifeRightCensored": 1,
+      "civilizationNeverBorn": 3,
+      "fullConditionalFTLESurvivorsMean": 0.01427833884294523,
+      "matureConditionalFTLESurvivorsMean": null,
+      "survivorDistribution": {
+        "V2-B-10": {
+          "stableFraction": 0.24296333333333334,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.057473333333333335,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 11,
+          "fullConditionalFTLE": 0.007526089905757364,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 5,
+          "controlActiveFrameFraction": 0
+        },
+        "V2-B-5": {
+          "stableFraction": 0.014406666666666667,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.2774333333333333,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 0,
+          "fullConditionalFTLE": 0.013874249654438214,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 15,
+          "controlActiveFrameFraction": 1.8333333333333333e-05
+        },
+        "V2-B-13": {
+          "stableFraction": 0.03415,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.2720416666666667,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 1,
+          "fullConditionalFTLE": 0.0095531388849497,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 35,
+          "controlActiveFrameFraction": 0.00021166666666666667
+        },
+        "V2-B-21": {
+          "stableFraction": 0.8893416666666667,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.3091833333333333,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.0,
+          "longestDynamicalHierarchyYears": 0.0,
+          "planetLosses": 3,
+          "fullConditionalFTLE": 0.011215923504858215,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 0,
+          "controlActiveFrameFraction": 2.6666666666666667e-05
+        },
+        "V2-B-25": {
+          "stableFraction": 0.999475,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.021255,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.0,
+          "longestDynamicalHierarchyYears": 0.0,
+          "planetLosses": 1,
+          "fullConditionalFTLE": 0.017067423093188417,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 2,
+          "controlActiveFrameFraction": 1.6666666666666667e-06
+        },
+        "V2-B-27": {
+          "stableFraction": 0.05648333333333334,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.188025,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.0,
+          "longestDynamicalHierarchyYears": 0.0,
+          "planetLosses": 3,
+          "fullConditionalFTLE": 0.024393239482360902,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 43,
+          "controlActiveFrameFraction": 0.00019833333333333332
+        },
+        "V2-B-31": {
+          "stableFraction": 0.11061833333333333,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.106905,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.0,
+          "longestDynamicalHierarchyYears": 0.0,
+          "planetLosses": 8,
+          "fullConditionalFTLE": 0.016318307375063804,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 14,
+          "controlActiveFrameFraction": 0.0007916666666666666
+        }
+      }
+    },
+    "reflect-cap": {
+      "n": 32,
+      "stellarSuccesses": 32,
+      "numericalUnknowns": 0,
+      "stellarRateObserved": 1.0,
+      "wilsonKnownOnly": [
+        0.8928208017449293,
+        1.0
+      ],
+      "unknownWorstBestRate": [
+        1.0,
+        1.0
+      ],
+      "failures": {
+        "complete": 32
+      },
+      "stableAllSeedsMean": 0.7459738020833333,
+      "stableSurvivorsMean": 0.7459738020833333,
+      "matureStableSurvivorsMean": null,
+      "matureStableAllSeedsMean": null,
+      "planetOriginalSuccesses": 2,
+      "planetLossesTotal": 228,
+      "planetLossesMean": 7.125,
+      "absentFractionMean": 0.0035581770833333333,
+      "civilizationBirthsTotal": 79,
+      "civilizationDeathsTotal": 67,
+      "civilizationAliveMean": 0.3610903125,
+      "nonhierSurvivorsMean": 0.0504775,
+      "longestGeometricHierarchySurvivorsMean": 8516.071875,
+      "dynamicalHierarchySurvivorsMean": 0.89298078125,
+      "longestDynamicalHierarchySurvivorsMax": 9861.95,
+      "conditionalFTLESurvivors": [
+        [
+          "V2-B-0",
+          null
+        ],
+        [
+          "V2-B-2",
+          null
+        ],
+        [
+          "V2-B-4",
+          null
+        ],
+        [
+          "V2-B-6",
+          null
+        ],
+        [
+          "V2-B-8",
+          null
+        ],
+        [
+          "V2-B-10",
+          null
+        ],
+        [
+          "V2-B-12",
+          null
+        ],
+        [
+          "V2-B-14",
+          null
+        ],
+        [
+          "V2-B-16",
+          null
+        ],
+        [
+          "V2-B-18",
+          null
+        ],
+        [
+          "V2-B-20",
+          null
+        ],
+        [
+          "V2-B-22",
+          null
+        ],
+        [
+          "V2-B-24",
+          null
+        ],
+        [
+          "V2-B-26",
+          null
+        ],
+        [
+          "V2-B-28",
+          null
+        ],
+        [
+          "V2-B-30",
+          null
+        ],
+        [
+          "V2-B-1",
+          null
+        ],
+        [
+          "V2-B-3",
+          null
+        ],
+        [
+          "V2-B-5",
+          null
+        ],
+        [
+          "V2-B-7",
+          null
+        ],
+        [
+          "V2-B-9",
+          null
+        ],
+        [
+          "V2-B-11",
+          null
+        ],
+        [
+          "V2-B-13",
+          null
+        ],
+        [
+          "V2-B-15",
+          null
+        ],
+        [
+          "V2-B-17",
+          null
+        ],
+        [
+          "V2-B-19",
+          null
+        ],
+        [
+          "V2-B-21",
+          null
+        ],
+        [
+          "V2-B-23",
+          null
+        ],
+        [
+          "V2-B-25",
+          null
+        ],
+        [
+          "V2-B-27",
+          null
+        ],
+        [
+          "V2-B-29",
+          null
+        ],
+        [
+          "V2-B-31",
+          null
+        ]
+      ],
+      "tightExchangesSurvivorsMean": 9.96875,
+      "controlSignedWorkOverE0Mean": -11.315408425070414,
+      "controlGrossWorkOverE0Mean": 43835.84965997368,
+      "controlImpulseMean": 352943271357.35034,
+      "controlActiveFrameFractionMean": 0.10828291666666666,
+      "controlPeakAccelerationMax": 0,
+      "controlPeakVelocityJumpMax": 2.21614310548521,
+      "maxNumericalEnergyResidual": 2.6692280037371196e-05,
+      "wallSecondsTotal": 355.415669704,
+      "maxRSSMiB": 3604.84765625,
+      "planetFirstLossObserved": 30,
+      "originalPlanetRightCensored": 0,
+      "civilizationFirstDeathObserved": 29,
+      "civilizationFirstLifeRightCensored": 0,
+      "civilizationNeverBorn": 0,
+      "fullConditionalFTLESurvivorsMean": 0.015160182408034094,
+      "matureConditionalFTLESurvivorsMean": null,
+      "survivorDistribution": {
+        "V2-B-0": {
+          "stableFraction": 0.9344533333333334,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.022383333333333335,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.867745,
+          "longestDynamicalHierarchyYears": 8677.45,
+          "planetLosses": 14,
+          "fullConditionalFTLE": 0.018847232005862177,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 12,
+          "controlActiveFrameFraction": 0.021166666666666667
+        },
+        "V2-B-2": {
+          "stableFraction": 0.9889716666666667,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.01936,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.9702333333333333,
+          "longestDynamicalHierarchyYears": 9702.333333333334,
+          "planetLosses": 1,
+          "fullConditionalFTLE": 0.008411641457942482,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 4,
+          "controlActiveFrameFraction": 0.008121666666666666
+        },
+        "V2-B-4": {
+          "stableFraction": 0.5699916666666667,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.01374,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.9750683333333333,
+          "longestDynamicalHierarchyYears": 9750.616666666667,
+          "planetLosses": 3,
+          "fullConditionalFTLE": 0.01140291163521336,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 2,
+          "controlActiveFrameFraction": 0.038435
+        },
+        "V2-B-6": {
+          "stableFraction": 0.936465,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.08341833333333333,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.7808033333333333,
+          "longestDynamicalHierarchyYears": 7808.033333333334,
+          "planetLosses": 30,
+          "fullConditionalFTLE": 0.049476524842686845,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 50,
+          "controlActiveFrameFraction": 0.10059666666666667
+        },
+        "V2-B-8": {
+          "stableFraction": 0.9994866666666666,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.04411333333333333,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.9340066666666667,
+          "longestDynamicalHierarchyYears": 9340.066666666668,
+          "planetLosses": 1,
+          "fullConditionalFTLE": 0.030264888327828105,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 4,
+          "controlActiveFrameFraction": 0.0074916666666666664
+        },
+        "V2-B-10": {
+          "stableFraction": 0.9412666666666667,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.04863166666666666,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.87251,
+          "longestDynamicalHierarchyYears": 8725.1,
+          "planetLosses": 17,
+          "fullConditionalFTLE": 0.022975062514712742,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 20,
+          "controlActiveFrameFraction": 0.021521666666666668
+        },
+        "V2-B-12": {
+          "stableFraction": 0.740135,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.029448333333333333,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.94287,
+          "longestDynamicalHierarchyYears": 9428.7,
+          "planetLosses": 4,
+          "fullConditionalFTLE": 0.016843924673298812,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 16,
+          "controlActiveFrameFraction": 0.017953333333333335
+        },
+        "V2-B-14": {
+          "stableFraction": 0.9900783333333333,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.057451666666666665,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.9245816666666666,
+          "longestDynamicalHierarchyYears": 9245.5,
+          "planetLosses": 3,
+          "fullConditionalFTLE": 0.006708001406468742,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 8,
+          "controlActiveFrameFraction": 0.21261
+        },
+        "V2-B-16": {
+          "stableFraction": 0.86619,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.07912333333333334,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.8996533333333333,
+          "longestDynamicalHierarchyYears": 8996.166666666666,
+          "planetLosses": 7,
+          "fullConditionalFTLE": 0.020962473353396224,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 10,
+          "controlActiveFrameFraction": 0.25098333333333334
+        },
+        "V2-B-18": {
+          "stableFraction": 0.9703833333333334,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.006288333333333333,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.969265,
+          "longestDynamicalHierarchyYears": 9692.65,
+          "planetLosses": 5,
+          "fullConditionalFTLE": 0.02982655962600587,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 2,
+          "controlActiveFrameFraction": 0.013438333333333333
+        },
+        "V2-B-20": {
+          "stableFraction": 0.6068283333333333,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.15049,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.8056916666666667,
+          "longestDynamicalHierarchyYears": 8056.916666666667,
+          "planetLosses": 6,
+          "fullConditionalFTLE": 0.015764280211124544,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 24,
+          "controlActiveFrameFraction": 0.011901666666666666
+        },
+        "V2-B-22": {
+          "stableFraction": 0.7845166666666666,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.11198833333333333,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.765235,
+          "longestDynamicalHierarchyYears": 7652.35,
+          "planetLosses": 6,
+          "fullConditionalFTLE": 0.011903505060077684,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 8,
+          "controlActiveFrameFraction": 0.011733333333333333
+        },
+        "V2-B-24": {
+          "stableFraction": 0.91239,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.09397833333333333,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.888955,
+          "longestDynamicalHierarchyYears": 8889.55,
+          "planetLosses": 5,
+          "fullConditionalFTLE": 0.03264352329663689,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 22,
+          "controlActiveFrameFraction": 0.004455
+        },
+        "V2-B-26": {
+          "stableFraction": 0.9562833333333334,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.040445,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.9392983333333333,
+          "longestDynamicalHierarchyYears": 9388.9,
+          "planetLosses": 3,
+          "fullConditionalFTLE": 0.003130623396199639,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 6,
+          "controlActiveFrameFraction": 0.470725
+        },
+        "V2-B-28": {
+          "stableFraction": 0.7757783333333333,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.016208333333333335,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.9756783333333333,
+          "longestDynamicalHierarchyYears": 9756.183333333332,
+          "planetLosses": 2,
+          "fullConditionalFTLE": 0.013012479002405448,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 1,
+          "controlActiveFrameFraction": 0.16738
+        },
+        "V2-B-30": {
+          "stableFraction": 0.98483,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.041725,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.93633,
+          "longestDynamicalHierarchyYears": 9363.3,
+          "planetLosses": 2,
+          "fullConditionalFTLE": 0.005003342157270845,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 3,
+          "controlActiveFrameFraction": 0.16735333333333333
+        },
+        "V2-B-1": {
+          "stableFraction": 0.031593333333333334,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.066585,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.9091433333333333,
+          "longestDynamicalHierarchyYears": 9091.433333333332,
+          "planetLosses": 2,
+          "fullConditionalFTLE": 0.010566108357171798,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 9,
+          "controlActiveFrameFraction": 0.006216666666666666
+        },
+        "V2-B-3": {
+          "stableFraction": 0.97778,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.04003,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.9292483333333333,
+          "longestDynamicalHierarchyYears": 9292.483333333334,
+          "planetLosses": 11,
+          "fullConditionalFTLE": 0.00866691923878601,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 22,
+          "controlActiveFrameFraction": 0.001145
+        },
+        "V2-B-5": {
+          "stableFraction": 0.008898333333333333,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.004991666666666667,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.986195,
+          "longestDynamicalHierarchyYears": 9861.95,
+          "planetLosses": 0,
+          "fullConditionalFTLE": 0.006825136230861567,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 0,
+          "controlActiveFrameFraction": 0.10454833333333333
+        },
+        "V2-B-7": {
+          "stableFraction": 0.9902583333333334,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.03582833333333333,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.9520533333333333,
+          "longestDynamicalHierarchyYears": 9519.65,
+          "planetLosses": 6,
+          "fullConditionalFTLE": 0.00826001332786764,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 6,
+          "controlActiveFrameFraction": 0.14062666666666668
+        },
+        "V2-B-9": {
+          "stableFraction": 0.9953316666666666,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.03123333333333333,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.95498,
+          "longestDynamicalHierarchyYears": 9549.8,
+          "planetLosses": 8,
+          "fullConditionalFTLE": 0.008462895401511709,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 3,
+          "controlActiveFrameFraction": 0.00195
+        },
+        "V2-B-11": {
+          "stableFraction": 0.490435,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.10157666666666666,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.8582416666666667,
+          "longestDynamicalHierarchyYears": 8582.416666666666,
+          "planetLosses": 8,
+          "fullConditionalFTLE": 0.009479400125107474,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 11,
+          "controlActiveFrameFraction": 0.014885
+        },
+        "V2-B-13": {
+          "stableFraction": 0.6360816666666667,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.09853833333333334,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.86967,
+          "longestDynamicalHierarchyYears": 8696.05,
+          "planetLosses": 6,
+          "fullConditionalFTLE": 0.007959617915209674,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 12,
+          "controlActiveFrameFraction": 0.8710116666666666
+        },
+        "V2-B-15": {
+          "stableFraction": 0.99047,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.010178333333333333,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.978195,
+          "longestDynamicalHierarchyYears": 9781.95,
+          "planetLosses": 5,
+          "fullConditionalFTLE": 0.008681049427243768,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 1,
+          "controlActiveFrameFraction": 0.023235
+        },
+        "V2-B-17": {
+          "stableFraction": 0.6493783333333333,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.055356666666666665,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.8996066666666667,
+          "longestDynamicalHierarchyYears": 8996.066666666668,
+          "planetLosses": 23,
+          "fullConditionalFTLE": 0.02851084041197546,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 38,
+          "controlActiveFrameFraction": 0.05112333333333333
+        },
+        "V2-B-19": {
+          "stableFraction": 0.022311666666666667,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.04395,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.9219933333333333,
+          "longestDynamicalHierarchyYears": 9217.633333333333,
+          "planetLosses": 0,
+          "fullConditionalFTLE": 0.007739059532406394,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 0,
+          "controlActiveFrameFraction": 0.0308
+        },
+        "V2-B-21": {
+          "stableFraction": 0.893495,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.131705,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.7752666666666667,
+          "longestDynamicalHierarchyYears": 7752.666666666667,
+          "planetLosses": 6,
+          "fullConditionalFTLE": 0.010298175117588437,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 0,
+          "controlActiveFrameFraction": 0.00125
+        },
+        "V2-B-23": {
+          "stableFraction": 0.9915233333333333,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.033846666666666664,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.916145,
+          "longestDynamicalHierarchyYears": 9161.45,
+          "planetLosses": 5,
+          "fullConditionalFTLE": 0.007444683160621946,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 7,
+          "controlActiveFrameFraction": 0.32954
+        },
+        "V2-B-25": {
+          "stableFraction": 0.049005,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.018696666666666667,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.9393166666666667,
+          "longestDynamicalHierarchyYears": 9391.15,
+          "planetLosses": 4,
+          "fullConditionalFTLE": 0.004058664170698549,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 5,
+          "controlActiveFrameFraction": 0.07962166666666666
+        },
+        "V2-B-27": {
+          "stableFraction": 0.2256,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.024536666666666665,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.354495,
+          "longestDynamicalHierarchyYears": 1342.2,
+          "planetLosses": 28,
+          "fullConditionalFTLE": 0.03921716335836419,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 4,
+          "controlActiveFrameFraction": 0.030681666666666666
+        },
+        "V2-B-29": {
+          "stableFraction": 0.9901433333333334,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.024201666666666666,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.9332566666666666,
+          "longestDynamicalHierarchyYears": 9332.166666666666,
+          "planetLosses": 1,
+          "fullConditionalFTLE": 0.006122942288963276,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 4,
+          "controlActiveFrameFraction": 0.05398666666666667
+        },
+        "V2-B-31": {
+          "stableFraction": 0.9708083333333334,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.03523166666666667,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.9496533333333333,
+          "longestDynamicalHierarchyYears": 9236.4,
+          "planetLosses": 6,
+          "fullConditionalFTLE": 0.015656196025582703,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 5,
+          "controlActiveFrameFraction": 0.198565
+        }
+      }
+    },
+    "reflect-positive-cap": {
+      "n": 32,
+      "stellarSuccesses": 32,
+      "numericalUnknowns": 0,
+      "stellarRateObserved": 1.0,
+      "wilsonKnownOnly": [
+        0.8928208017449293,
+        1.0
+      ],
+      "unknownWorstBestRate": [
+        1.0,
+        1.0
+      ],
+      "failures": {
+        "complete": 32
+      },
+      "stableAllSeedsMean": 0.37565635416666665,
+      "stableSurvivorsMean": 0.37565635416666665,
+      "matureStableSurvivorsMean": null,
+      "matureStableAllSeedsMean": null,
+      "planetOriginalSuccesses": 2,
+      "planetLossesTotal": 312,
+      "planetLossesMean": 9.75,
+      "absentFractionMean": 0.004868333333333333,
+      "civilizationBirthsTotal": 128,
+      "civilizationDeathsTotal": 123,
+      "civilizationAliveMean": 0.24116442708333333,
+      "nonhierSurvivorsMean": 0.21076270833333333,
+      "longestGeometricHierarchySurvivorsMean": 2521.8265625,
+      "dynamicalHierarchySurvivorsMean": 0.0,
+      "longestDynamicalHierarchySurvivorsMax": 0,
+      "conditionalFTLESurvivors": [
+        [
+          "V2-B-0",
+          null
+        ],
+        [
+          "V2-B-2",
+          null
+        ],
+        [
+          "V2-B-4",
+          null
+        ],
+        [
+          "V2-B-6",
+          null
+        ],
+        [
+          "V2-B-8",
+          null
+        ],
+        [
+          "V2-B-10",
+          null
+        ],
+        [
+          "V2-B-12",
+          null
+        ],
+        [
+          "V2-B-14",
+          null
+        ],
+        [
+          "V2-B-16",
+          null
+        ],
+        [
+          "V2-B-18",
+          null
+        ],
+        [
+          "V2-B-20",
+          null
+        ],
+        [
+          "V2-B-22",
+          null
+        ],
+        [
+          "V2-B-24",
+          null
+        ],
+        [
+          "V2-B-26",
+          null
+        ],
+        [
+          "V2-B-28",
+          null
+        ],
+        [
+          "V2-B-30",
+          null
+        ],
+        [
+          "V2-B-1",
+          null
+        ],
+        [
+          "V2-B-3",
+          null
+        ],
+        [
+          "V2-B-5",
+          null
+        ],
+        [
+          "V2-B-7",
+          null
+        ],
+        [
+          "V2-B-9",
+          null
+        ],
+        [
+          "V2-B-11",
+          null
+        ],
+        [
+          "V2-B-13",
+          null
+        ],
+        [
+          "V2-B-15",
+          null
+        ],
+        [
+          "V2-B-17",
+          null
+        ],
+        [
+          "V2-B-19",
+          null
+        ],
+        [
+          "V2-B-21",
+          null
+        ],
+        [
+          "V2-B-23",
+          null
+        ],
+        [
+          "V2-B-25",
+          null
+        ],
+        [
+          "V2-B-27",
+          null
+        ],
+        [
+          "V2-B-29",
+          null
+        ],
+        [
+          "V2-B-31",
+          null
+        ]
+      ],
+      "tightExchangesSurvivorsMean": 48.375,
+      "controlSignedWorkOverE0Mean": -2.0948849248895085,
+      "controlGrossWorkOverE0Mean": 1387.2852422829421,
+      "controlImpulseMean": 12641428447.436825,
+      "controlActiveFrameFractionMean": 0.0017827083333333334,
+      "controlPeakAccelerationMax": 0,
+      "controlPeakVelocityJumpMax": 2.2766504109067323,
+      "maxNumericalEnergyResidual": 5.511677638185018e-06,
+      "wallSecondsTotal": 184.932022396,
+      "maxRSSMiB": 249.609375,
+      "planetFirstLossObserved": 30,
+      "originalPlanetRightCensored": 0,
+      "civilizationFirstDeathObserved": 30,
+      "civilizationFirstLifeRightCensored": 0,
+      "civilizationNeverBorn": 1,
+      "fullConditionalFTLESurvivorsMean": 0.030851565001862688,
+      "matureConditionalFTLESurvivorsMean": null,
+      "survivorDistribution": {
+        "V2-B-0": {
+          "stableFraction": 0.40946333333333335,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.21500666666666668,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 24,
+          "fullConditionalFTLE": 0.028228212528494476,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 33,
+          "controlActiveFrameFraction": 6.666666666666667e-05
+        },
+        "V2-B-2": {
+          "stableFraction": 0.23534666666666668,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.07527333333333333,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 6,
+          "fullConditionalFTLE": 0.012290846767781529,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 10,
+          "controlActiveFrameFraction": 2.1666666666666667e-05
+        },
+        "V2-B-4": {
+          "stableFraction": 0.15639833333333333,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.13639166666666666,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 5,
+          "fullConditionalFTLE": 0.034729157941238854,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 38,
+          "controlActiveFrameFraction": 0.000105
+        },
+        "V2-B-6": {
+          "stableFraction": 0.00424,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.16674166666666668,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 2,
+          "fullConditionalFTLE": 0.05646532370372944,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 52,
+          "controlActiveFrameFraction": 0.0030816666666666666
+        },
+        "V2-B-8": {
+          "stableFraction": 0.7559916666666666,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.26633,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 4,
+          "fullConditionalFTLE": 0.031026637456641828,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 47,
+          "controlActiveFrameFraction": 9.666666666666667e-05
+        },
+        "V2-B-10": {
+          "stableFraction": 0.24296333333333334,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.057473333333333335,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 11,
+          "fullConditionalFTLE": 0.007526089905757364,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 5,
+          "controlActiveFrameFraction": 0
+        },
+        "V2-B-12": {
+          "stableFraction": 0.2595033333333333,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.5811333333333333,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 20,
+          "fullConditionalFTLE": 0.06006162947182186,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 198,
+          "controlActiveFrameFraction": 0.0002483333333333333
+        },
+        "V2-B-14": {
+          "stableFraction": 0.08049833333333334,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.31068,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 3,
+          "fullConditionalFTLE": 0.011736621169759445,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 34,
+          "controlActiveFrameFraction": 3.3333333333333333e-06
+        },
+        "V2-B-16": {
+          "stableFraction": 0.030995,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.16403666666666666,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 4,
+          "fullConditionalFTLE": 0.1116980217709081,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 63,
+          "controlActiveFrameFraction": 0.012358333333333334
+        },
+        "V2-B-18": {
+          "stableFraction": 0.04028166666666667,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.2626366666666667,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 2,
+          "fullConditionalFTLE": 0.08420137697091351,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 209,
+          "controlActiveFrameFraction": 0.005711666666666667
+        },
+        "V2-B-20": {
+          "stableFraction": 0.15216166666666667,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.19507833333333333,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 2,
+          "fullConditionalFTLE": 0.016822040973165094,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 25,
+          "controlActiveFrameFraction": 0.000425
+        },
+        "V2-B-22": {
+          "stableFraction": 0.787995,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.49976166666666666,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 11,
+          "fullConditionalFTLE": 0.0270979970330502,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 34,
+          "controlActiveFrameFraction": 5e-06
+        },
+        "V2-B-24": {
+          "stableFraction": 0.7744466666666666,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.13750166666666666,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 17,
+          "fullConditionalFTLE": 0.02966464721271543,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 40,
+          "controlActiveFrameFraction": 1.6666666666666667e-05
+        },
+        "V2-B-26": {
+          "stableFraction": 0.5328983333333334,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.14078833333333332,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 4,
+          "fullConditionalFTLE": 0.016456882204078118,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 19,
+          "controlActiveFrameFraction": 0.0002866666666666667
+        },
+        "V2-B-28": {
+          "stableFraction": 0.136045,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.23360166666666668,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 36,
+          "fullConditionalFTLE": 0.050417149314333415,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 112,
+          "controlActiveFrameFraction": 0.005711666666666667
+        },
+        "V2-B-30": {
+          "stableFraction": 0.5963866666666666,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.092075,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 12,
+          "fullConditionalFTLE": 0.020909090230736845,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 18,
+          "controlActiveFrameFraction": 0.00037833333333333333
+        },
+        "V2-B-1": {
+          "stableFraction": 0.013543333333333333,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.17003166666666666,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 0,
+          "fullConditionalFTLE": 0.030383896242503376,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 40,
+          "controlActiveFrameFraction": 0.00297
+        },
+        "V2-B-3": {
+          "stableFraction": 0.107425,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.26082833333333333,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 14,
+          "fullConditionalFTLE": 0.056208779604456686,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 148,
+          "controlActiveFrameFraction": 0.015998333333333333
+        },
+        "V2-B-5": {
+          "stableFraction": 0.014406666666666667,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.2774333333333333,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 0,
+          "fullConditionalFTLE": 0.013874249654438214,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 15,
+          "controlActiveFrameFraction": 1.8333333333333333e-05
+        },
+        "V2-B-7": {
+          "stableFraction": 0.9118183333333333,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.16804,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 29,
+          "fullConditionalFTLE": 0.02577018673897701,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 30,
+          "controlActiveFrameFraction": 0.000915
+        },
+        "V2-B-9": {
+          "stableFraction": 0.07793666666666667,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.16113666666666668,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 6,
+          "fullConditionalFTLE": 0.01797793975121631,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 37,
+          "controlActiveFrameFraction": 7.666666666666667e-05
+        },
+        "V2-B-11": {
+          "stableFraction": 0.7857816666666667,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.114795,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 7,
+          "fullConditionalFTLE": 0.01177476926478066,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 12,
+          "controlActiveFrameFraction": 0.00012
+        },
+        "V2-B-13": {
+          "stableFraction": 0.03415,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.2720416666666667,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.0,
+          "longestDynamicalHierarchyYears": 0.0,
+          "planetLosses": 1,
+          "fullConditionalFTLE": 0.0095531388849497,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 35,
+          "controlActiveFrameFraction": 0.00021166666666666667
+        },
+        "V2-B-15": {
+          "stableFraction": 0.54022,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.14209833333333333,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.0,
+          "longestDynamicalHierarchyYears": 0.0,
+          "planetLosses": 13,
+          "fullConditionalFTLE": 0.0272697508539534,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 32,
+          "controlActiveFrameFraction": 0.0008833333333333333
+        },
+        "V2-B-17": {
+          "stableFraction": 0.29783,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.098825,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.0,
+          "longestDynamicalHierarchyYears": 0.0,
+          "planetLosses": 17,
+          "fullConditionalFTLE": 0.049447056065653174,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 58,
+          "controlActiveFrameFraction": 0.006131666666666666
+        },
+        "V2-B-19": {
+          "stableFraction": 0.5529416666666667,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.34557666666666664,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.0,
+          "longestDynamicalHierarchyYears": 0.0,
+          "planetLosses": 4,
+          "fullConditionalFTLE": 0.019432288799252868,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 32,
+          "controlActiveFrameFraction": 3e-05
+        },
+        "V2-B-21": {
+          "stableFraction": 0.8893416666666667,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.3091833333333333,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.0,
+          "longestDynamicalHierarchyYears": 0.0,
+          "planetLosses": 3,
+          "fullConditionalFTLE": 0.011215923504858215,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 0,
+          "controlActiveFrameFraction": 2.6666666666666667e-05
+        },
+        "V2-B-23": {
+          "stableFraction": 0.703395,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.24872666666666668,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.0,
+          "longestDynamicalHierarchyYears": 0.0,
+          "planetLosses": 30,
+          "fullConditionalFTLE": 0.040785677086829855,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 77,
+          "controlActiveFrameFraction": 0.00014833333333333332
+        },
+        "V2-B-25": {
+          "stableFraction": 0.999475,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.021255,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.0,
+          "longestDynamicalHierarchyYears": 0.0,
+          "planetLosses": 1,
+          "fullConditionalFTLE": 0.017067423093188417,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 2,
+          "controlActiveFrameFraction": 1.6666666666666667e-06
+        },
+        "V2-B-27": {
+          "stableFraction": 0.05648333333333334,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.188025,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.0,
+          "longestDynamicalHierarchyYears": 0.0,
+          "planetLosses": 3,
+          "fullConditionalFTLE": 0.024393239482360902,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 43,
+          "controlActiveFrameFraction": 0.00019833333333333332
+        },
+        "V2-B-29": {
+          "stableFraction": 0.7300216666666667,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.324995,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.0,
+          "longestDynamicalHierarchyYears": 0.0,
+          "planetLosses": 13,
+          "fullConditionalFTLE": 0.0164457290019979,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 36,
+          "controlActiveFrameFraction": 8.333333333333334e-06
+        },
+        "V2-B-31": {
+          "stableFraction": 0.11061833333333333,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.106905,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.0,
+          "longestDynamicalHierarchyYears": 0.0,
+          "planetLosses": 8,
+          "fullConditionalFTLE": 0.016318307375063804,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 14,
+          "controlActiveFrameFraction": 0.0007916666666666666
+        }
+      }
+    },
+    "reflect-positive-transfer": {
+      "n": 32,
+      "stellarSuccesses": 32,
+      "numericalUnknowns": 0,
+      "stellarRateObserved": 1.0,
+      "wilsonKnownOnly": [
+        0.8928208017449293,
+        1.0
+      ],
+      "unknownWorstBestRate": [
+        1.0,
+        1.0
+      ],
+      "failures": {
+        "complete": 32
+      },
+      "stableAllSeedsMean": 0.3741296875,
+      "stableSurvivorsMean": 0.3741296875,
+      "matureStableSurvivorsMean": null,
+      "matureStableAllSeedsMean": null,
+      "planetOriginalSuccesses": 1,
+      "planetLossesTotal": 299,
+      "planetLossesMean": 9.34375,
+      "absentFractionMean": 0.00466703125,
+      "civilizationBirthsTotal": 140,
+      "civilizationDeathsTotal": 137,
+      "civilizationAliveMean": 0.23077307291666666,
+      "nonhierSurvivorsMean": 0.24606057291666666,
+      "longestGeometricHierarchySurvivorsMean": 2598.0734375,
+      "dynamicalHierarchySurvivorsMean": 0.0,
+      "longestDynamicalHierarchySurvivorsMax": 0,
+      "conditionalFTLESurvivors": [
+        [
+          "V2-B-0",
+          null
+        ],
+        [
+          "V2-B-2",
+          null
+        ],
+        [
+          "V2-B-4",
+          null
+        ],
+        [
+          "V2-B-6",
+          null
+        ],
+        [
+          "V2-B-8",
+          null
+        ],
+        [
+          "V2-B-10",
+          null
+        ],
+        [
+          "V2-B-12",
+          null
+        ],
+        [
+          "V2-B-14",
+          null
+        ],
+        [
+          "V2-B-16",
+          null
+        ],
+        [
+          "V2-B-18",
+          null
+        ],
+        [
+          "V2-B-20",
+          null
+        ],
+        [
+          "V2-B-22",
+          null
+        ],
+        [
+          "V2-B-24",
+          null
+        ],
+        [
+          "V2-B-26",
+          null
+        ],
+        [
+          "V2-B-28",
+          null
+        ],
+        [
+          "V2-B-30",
+          null
+        ],
+        [
+          "V2-B-1",
+          null
+        ],
+        [
+          "V2-B-3",
+          null
+        ],
+        [
+          "V2-B-5",
+          null
+        ],
+        [
+          "V2-B-7",
+          null
+        ],
+        [
+          "V2-B-9",
+          null
+        ],
+        [
+          "V2-B-11",
+          null
+        ],
+        [
+          "V2-B-13",
+          null
+        ],
+        [
+          "V2-B-15",
+          null
+        ],
+        [
+          "V2-B-17",
+          null
+        ],
+        [
+          "V2-B-19",
+          null
+        ],
+        [
+          "V2-B-21",
+          null
+        ],
+        [
+          "V2-B-23",
+          null
+        ],
+        [
+          "V2-B-25",
+          null
+        ],
+        [
+          "V2-B-27",
+          null
+        ],
+        [
+          "V2-B-29",
+          null
+        ],
+        [
+          "V2-B-31",
+          null
+        ]
+      ],
+      "tightExchangesSurvivorsMean": 39.65625,
+      "controlSignedWorkOverE0Mean": 9.755186803730438e-15,
+      "controlGrossWorkOverE0Mean": 79.45227893534451,
+      "controlImpulseMean": 1079672910.1570852,
+      "controlActiveFrameFractionMean": 0.000118125,
+      "controlPeakAccelerationMax": 0,
+      "controlPeakVelocityJumpMax": 2.456847660672191,
+      "maxNumericalEnergyResidual": 1.308073384967225e-07,
+      "wallSecondsTotal": 183.848440122,
+      "maxRSSMiB": 183.18359375,
+      "planetFirstLossObserved": 31,
+      "originalPlanetRightCensored": 0,
+      "civilizationFirstDeathObserved": 31,
+      "civilizationFirstLifeRightCensored": 0,
+      "civilizationNeverBorn": 0,
+      "fullConditionalFTLESurvivorsMean": 0.020011783841102984,
+      "matureConditionalFTLESurvivorsMean": null,
+      "survivorDistribution": {
+        "V2-B-0": {
+          "stableFraction": 0.25697,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.172525,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 9,
+          "fullConditionalFTLE": 0.018592396328315584,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 13,
+          "controlActiveFrameFraction": 0.00015333333333333334
+        },
+        "V2-B-2": {
+          "stableFraction": 0.440285,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.3354083333333333,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 15,
+          "fullConditionalFTLE": 0.020803127618307188,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 39,
+          "controlActiveFrameFraction": 3.1666666666666666e-05
+        },
+        "V2-B-4": {
+          "stableFraction": 0.18145833333333333,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.07968666666666667,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 11,
+          "fullConditionalFTLE": 0.014797214069981055,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 14,
+          "controlActiveFrameFraction": 4.5e-05
+        },
+        "V2-B-6": {
+          "stableFraction": 0.036775,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.24608666666666668,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 7,
+          "fullConditionalFTLE": 0.021802788442864034,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 51,
+          "controlActiveFrameFraction": 8.833333333333333e-05
+        },
+        "V2-B-8": {
+          "stableFraction": 0.9982183333333333,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.12348166666666667,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 3,
+          "fullConditionalFTLE": 0.026345132832838458,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 5,
+          "controlActiveFrameFraction": 6.666666666666667e-06
+        },
+        "V2-B-10": {
+          "stableFraction": 0.24296333333333334,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.057473333333333335,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 11,
+          "fullConditionalFTLE": 0.007526089905757364,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 5,
+          "controlActiveFrameFraction": 0
+        },
+        "V2-B-12": {
+          "stableFraction": 0.2595033333333333,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.6277766666666666,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 20,
+          "fullConditionalFTLE": 0.03372954074575527,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 136,
+          "controlActiveFrameFraction": 4.6666666666666665e-05
+        },
+        "V2-B-14": {
+          "stableFraction": 0.08049833333333334,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.329275,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 3,
+          "fullConditionalFTLE": 0.011078037870403767,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 36,
+          "controlActiveFrameFraction": 3.3333333333333333e-06
+        },
+        "V2-B-16": {
+          "stableFraction": 0.678205,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.26467,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 22,
+          "fullConditionalFTLE": 0.019545176940532063,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 58,
+          "controlActiveFrameFraction": 4.3333333333333334e-05
+        },
+        "V2-B-18": {
+          "stableFraction": 0.04028166666666667,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.21665833333333334,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 2,
+          "fullConditionalFTLE": 0.027256639352009882,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 69,
+          "controlActiveFrameFraction": 0.0005566666666666667
+        },
+        "V2-B-20": {
+          "stableFraction": 0.19328,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.28991833333333333,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 4,
+          "fullConditionalFTLE": 0.01348146203990442,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 25,
+          "controlActiveFrameFraction": 1.8333333333333333e-05
+        },
+        "V2-B-22": {
+          "stableFraction": 0.787995,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.5087516666666667,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 11,
+          "fullConditionalFTLE": 0.026984528072574204,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 34,
+          "controlActiveFrameFraction": 5e-06
+        },
+        "V2-B-24": {
+          "stableFraction": 0.25559,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.5166866666666666,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 24,
+          "fullConditionalFTLE": 0.039911208763520556,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 132,
+          "controlActiveFrameFraction": 0.000105
+        },
+        "V2-B-26": {
+          "stableFraction": 0.9265416666666667,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.148955,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 8,
+          "fullConditionalFTLE": 0.01814373861427324,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 15,
+          "controlActiveFrameFraction": 3.3333333333333333e-06
+        },
+        "V2-B-28": {
+          "stableFraction": 0.14047666666666667,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.24726833333333334,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 4,
+          "fullConditionalFTLE": 0.02171034557582478,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 72,
+          "controlActiveFrameFraction": 0.00011666666666666667
+        },
+        "V2-B-30": {
+          "stableFraction": 0.26800666666666667,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.10008666666666667,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 8,
+          "fullConditionalFTLE": 0.014547320730487465,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 17,
+          "controlActiveFrameFraction": 0.00017166666666666667
+        },
+        "V2-B-1": {
+          "stableFraction": 0.015121666666666667,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.208555,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 1,
+          "fullConditionalFTLE": 0.017853873759200452,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 40,
+          "controlActiveFrameFraction": 5.333333333333333e-05
+        },
+        "V2-B-3": {
+          "stableFraction": 0.10235,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.4279016666666667,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 14,
+          "fullConditionalFTLE": 0.035257985181691376,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 104,
+          "controlActiveFrameFraction": 0.00020666666666666666
+        },
+        "V2-B-5": {
+          "stableFraction": 0.014406666666666667,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.2774333333333333,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 0,
+          "fullConditionalFTLE": 0.013874249654438214,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 15,
+          "controlActiveFrameFraction": 1.8333333333333333e-05
+        },
+        "V2-B-7": {
+          "stableFraction": 0.616895,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.15995333333333334,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 21,
+          "fullConditionalFTLE": 0.01671974383792987,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 23,
+          "controlActiveFrameFraction": 0.000165
+        },
+        "V2-B-9": {
+          "stableFraction": 0.07793666666666667,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.12629333333333334,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 6,
+          "fullConditionalFTLE": 0.013536382318327085,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 16,
+          "controlActiveFrameFraction": 0.00034
+        },
+        "V2-B-11": {
+          "stableFraction": 0.781425,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.13320666666666667,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 7,
+          "fullConditionalFTLE": 0.010994792111495932,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 13,
+          "controlActiveFrameFraction": 8e-05
+        },
+        "V2-B-13": {
+          "stableFraction": 0.03415,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.2720416666666667,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.0,
+          "longestDynamicalHierarchyYears": 0.0,
+          "planetLosses": 1,
+          "fullConditionalFTLE": 0.0095531388849497,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 35,
+          "controlActiveFrameFraction": 0.00021166666666666667
+        },
+        "V2-B-15": {
+          "stableFraction": 0.5478316666666667,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.18591,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.0,
+          "longestDynamicalHierarchyYears": 0.0,
+          "planetLosses": 14,
+          "fullConditionalFTLE": 0.024646700395298697,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 42,
+          "controlActiveFrameFraction": 4.5e-05
+        },
+        "V2-B-17": {
+          "stableFraction": 0.4726033333333333,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.26261,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.0,
+          "longestDynamicalHierarchyYears": 0.0,
+          "planetLosses": 34,
+          "fullConditionalFTLE": 0.03474377041970646,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 88,
+          "controlActiveFrameFraction": 0.00014
+        },
+        "V2-B-19": {
+          "stableFraction": 0.342315,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.3951866666666667,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.0,
+          "longestDynamicalHierarchyYears": 0.0,
+          "planetLosses": 5,
+          "fullConditionalFTLE": 0.01966960002462511,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 36,
+          "controlActiveFrameFraction": 3e-05
+        },
+        "V2-B-21": {
+          "stableFraction": 0.8893416666666667,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.3091833333333333,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.0,
+          "longestDynamicalHierarchyYears": 0.0,
+          "planetLosses": 3,
+          "fullConditionalFTLE": 0.011215923504858215,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 0,
+          "controlActiveFrameFraction": 2.6666666666666667e-05
+        },
+        "V2-B-23": {
+          "stableFraction": 0.393305,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.209775,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.0,
+          "longestDynamicalHierarchyYears": 0.0,
+          "planetLosses": 8,
+          "fullConditionalFTLE": 0.022426612488412507,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 41,
+          "controlActiveFrameFraction": 6.833333333333333e-05
+        },
+        "V2-B-25": {
+          "stableFraction": 0.999475,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.021255,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.0,
+          "longestDynamicalHierarchyYears": 0.0,
+          "planetLosses": 1,
+          "fullConditionalFTLE": 0.017067423093188417,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 2,
+          "controlActiveFrameFraction": 1.6666666666666667e-06
+        },
+        "V2-B-27": {
+          "stableFraction": 0.05648333333333334,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.188025,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.0,
+          "longestDynamicalHierarchyYears": 0.0,
+          "planetLosses": 3,
+          "fullConditionalFTLE": 0.024393239482360902,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 43,
+          "controlActiveFrameFraction": 0.00019833333333333332
+        },
+        "V2-B-29": {
+          "stableFraction": 0.7308433333333333,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.324995,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.0,
+          "longestDynamicalHierarchyYears": 0.0,
+          "planetLosses": 11,
+          "fullConditionalFTLE": 0.015850592480399446,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 36,
+          "controlActiveFrameFraction": 8.333333333333334e-06
+        },
+        "V2-B-31": {
+          "stableFraction": 0.11061833333333333,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.106905,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.0,
+          "longestDynamicalHierarchyYears": 0.0,
+          "planetLosses": 8,
+          "fullConditionalFTLE": 0.016318307375063804,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 14,
+          "controlActiveFrameFraction": 0.0007916666666666666
+        }
+      }
+    },
+    "reflect-transfer": {
+      "n": 32,
+      "stellarSuccesses": 32,
+      "numericalUnknowns": 0,
+      "stellarRateObserved": 1.0,
+      "wilsonKnownOnly": [
+        0.8928208017449293,
+        1.0
+      ],
+      "unknownWorstBestRate": [
+        1.0,
+        1.0
+      ],
+      "failures": {
+        "complete": 32
+      },
+      "stableAllSeedsMean": 0.30959640625,
+      "stableSurvivorsMean": 0.30959640625,
+      "matureStableSurvivorsMean": null,
+      "matureStableAllSeedsMean": null,
+      "planetOriginalSuccesses": 0,
+      "planetLossesTotal": 606,
+      "planetLossesMean": 18.9375,
+      "absentFractionMean": 0.00946078125,
+      "civilizationBirthsTotal": 210,
+      "civilizationDeathsTotal": 205,
+      "civilizationAliveMean": 0.26575421875,
+      "nonhierSurvivorsMean": 0.45953645833333334,
+      "longestGeometricHierarchySurvivorsMean": 41.555729166666666,
+      "dynamicalHierarchySurvivorsMean": 1.1302083333333333e-05,
+      "longestDynamicalHierarchySurvivorsMax": 3.5,
+      "conditionalFTLESurvivors": [
+        [
+          "V2-B-0",
+          null
+        ],
+        [
+          "V2-B-2",
+          null
+        ],
+        [
+          "V2-B-4",
+          null
+        ],
+        [
+          "V2-B-6",
+          null
+        ],
+        [
+          "V2-B-8",
+          null
+        ],
+        [
+          "V2-B-10",
+          null
+        ],
+        [
+          "V2-B-12",
+          null
+        ],
+        [
+          "V2-B-14",
+          null
+        ],
+        [
+          "V2-B-16",
+          null
+        ],
+        [
+          "V2-B-18",
+          null
+        ],
+        [
+          "V2-B-20",
+          null
+        ],
+        [
+          "V2-B-22",
+          null
+        ],
+        [
+          "V2-B-24",
+          null
+        ],
+        [
+          "V2-B-26",
+          null
+        ],
+        [
+          "V2-B-28",
+          null
+        ],
+        [
+          "V2-B-30",
+          null
+        ],
+        [
+          "V2-B-1",
+          null
+        ],
+        [
+          "V2-B-3",
+          null
+        ],
+        [
+          "V2-B-5",
+          null
+        ],
+        [
+          "V2-B-7",
+          null
+        ],
+        [
+          "V2-B-9",
+          null
+        ],
+        [
+          "V2-B-11",
+          null
+        ],
+        [
+          "V2-B-13",
+          null
+        ],
+        [
+          "V2-B-15",
+          null
+        ],
+        [
+          "V2-B-17",
+          null
+        ],
+        [
+          "V2-B-19",
+          null
+        ],
+        [
+          "V2-B-21",
+          null
+        ],
+        [
+          "V2-B-23",
+          null
+        ],
+        [
+          "V2-B-25",
+          null
+        ],
+        [
+          "V2-B-27",
+          null
+        ],
+        [
+          "V2-B-29",
+          null
+        ],
+        [
+          "V2-B-31",
+          null
+        ]
+      ],
+      "tightExchangesSurvivorsMean": 43.875,
+      "controlSignedWorkOverE0Mean": -2.584817510525722e-15,
+      "controlGrossWorkOverE0Mean": 12971.423448390131,
+      "controlImpulseMean": 11624675565.509958,
+      "controlActiveFrameFractionMean": 0.09431192708333333,
+      "controlPeakAccelerationMax": 0,
+      "controlPeakVelocityJumpMax": 3.3269050520030317,
+      "maxNumericalEnergyResidual": 1.2310875789559934e-06,
+      "wallSecondsTotal": 242.766442637,
+      "maxRSSMiB": 423.1484375,
+      "planetFirstLossObserved": 32,
+      "originalPlanetRightCensored": 0,
+      "civilizationFirstDeathObserved": 32,
+      "civilizationFirstLifeRightCensored": 0,
+      "civilizationNeverBorn": 0,
+      "fullConditionalFTLESurvivorsMean": 0.062246491162377245,
+      "matureConditionalFTLESurvivorsMean": null,
+      "survivorDistribution": {
+        "V2-B-0": {
+          "stableFraction": 0.151805,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.5448816666666667,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 23,
+          "fullConditionalFTLE": 0.0595371693577979,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 62,
+          "controlActiveFrameFraction": 0.074055
+        },
+        "V2-B-2": {
+          "stableFraction": 0.14324833333333334,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.38955,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 8,
+          "fullConditionalFTLE": 0.043161201225858876,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 15,
+          "controlActiveFrameFraction": 0.16076
+        },
+        "V2-B-4": {
+          "stableFraction": 0.13708666666666666,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.4736783333333333,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 38,
+          "fullConditionalFTLE": 0.11048916850213998,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 98,
+          "controlActiveFrameFraction": 0.09892666666666666
+        },
+        "V2-B-6": {
+          "stableFraction": 0.3217433333333333,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.4041516666666667,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 60,
+          "fullConditionalFTLE": 0.10996282983173822,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 32,
+          "controlActiveFrameFraction": 0.13759333333333335
+        },
+        "V2-B-8": {
+          "stableFraction": 0.5238016666666667,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.5227583333333333,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 20,
+          "fullConditionalFTLE": 0.04836172388580805,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 42,
+          "controlActiveFrameFraction": 0.07324166666666666
+        },
+        "V2-B-10": {
+          "stableFraction": 0.3510433333333333,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.4344733333333333,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 38,
+          "fullConditionalFTLE": 0.0833138698348086,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 97,
+          "controlActiveFrameFraction": 0.09060166666666666
+        },
+        "V2-B-12": {
+          "stableFraction": 0.24318333333333333,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.4472583333333333,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 32,
+          "fullConditionalFTLE": 0.07694465493179937,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 60,
+          "controlActiveFrameFraction": 0.08132166666666667
+        },
+        "V2-B-14": {
+          "stableFraction": 0.829385,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.35296333333333335,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 11,
+          "fullConditionalFTLE": 0.01400833492668622,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 12,
+          "controlActiveFrameFraction": 0.015728333333333334
+        },
+        "V2-B-16": {
+          "stableFraction": 0.04594666666666666,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.39544666666666667,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 8,
+          "fullConditionalFTLE": 0.09402362574166409,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 58,
+          "controlActiveFrameFraction": 0.13658
+        },
+        "V2-B-18": {
+          "stableFraction": 0.5792866666666666,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.392575,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 63,
+          "fullConditionalFTLE": 0.08764126229558727,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 49,
+          "controlActiveFrameFraction": 0.07506333333333333
+        },
+        "V2-B-20": {
+          "stableFraction": 0.6368266666666667,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.5683266666666666,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 18,
+          "fullConditionalFTLE": 0.039031738557683146,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 34,
+          "controlActiveFrameFraction": 0.027823333333333332
+        },
+        "V2-B-22": {
+          "stableFraction": 0.10278666666666667,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.518535,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 10,
+          "fullConditionalFTLE": 0.03716841826664698,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 25,
+          "controlActiveFrameFraction": 0.090075
+        },
+        "V2-B-24": {
+          "stableFraction": 0.13021333333333332,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.4133016666666667,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 29,
+          "fullConditionalFTLE": 0.07908037856613669,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 74,
+          "controlActiveFrameFraction": 0.097595
+        },
+        "V2-B-26": {
+          "stableFraction": 0.64894,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.5933216666666666,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 10,
+          "fullConditionalFTLE": 0.02046750956683953,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 21,
+          "controlActiveFrameFraction": 0.04772333333333333
+        },
+        "V2-B-28": {
+          "stableFraction": 0.424135,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.4525516666666667,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 29,
+          "fullConditionalFTLE": 0.08410057148489747,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 43,
+          "controlActiveFrameFraction": 0.13731
+        },
+        "V2-B-30": {
+          "stableFraction": 0.05060666666666667,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.38366666666666666,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 1,
+          "fullConditionalFTLE": 0.09105779750264574,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 33,
+          "controlActiveFrameFraction": 0.24262833333333333
+        },
+        "V2-B-1": {
+          "stableFraction": 0.038588333333333336,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.49619,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 3,
+          "fullConditionalFTLE": 0.04944013322835264,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 67,
+          "controlActiveFrameFraction": 0.05183
+        },
+        "V2-B-3": {
+          "stableFraction": 0.37400333333333335,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.4041033333333333,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 18,
+          "fullConditionalFTLE": 0.05881801401075035,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 47,
+          "controlActiveFrameFraction": 0.06417333333333333
+        },
+        "V2-B-5": {
+          "stableFraction": 0.049305,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.6100383333333333,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 7,
+          "fullConditionalFTLE": 0.0239494348232678,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 61,
+          "controlActiveFrameFraction": 0.017413333333333333
+        },
+        "V2-B-7": {
+          "stableFraction": 0.34888166666666665,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.5463733333333334,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 27,
+          "fullConditionalFTLE": 0.0785865640682887,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 55,
+          "controlActiveFrameFraction": 0.13272666666666666
+        },
+        "V2-B-9": {
+          "stableFraction": 0.53887,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.45557166666666665,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 11,
+          "fullConditionalFTLE": 0.03782651759969184,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 19,
+          "controlActiveFrameFraction": 0.07408833333333334
+        },
+        "V2-B-11": {
+          "stableFraction": 0.114275,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.5239933333333333,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0,
+          "longestDynamicalHierarchyYears": 0,
+          "planetLosses": 5,
+          "fullConditionalFTLE": 0.0643229229949147,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 38,
+          "controlActiveFrameFraction": 0.10972
+        },
+        "V2-B-13": {
+          "stableFraction": 0.41543,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.4298166666666667,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.0,
+          "longestDynamicalHierarchyYears": 0.0,
+          "planetLosses": 29,
+          "fullConditionalFTLE": 0.07218894115726689,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 28,
+          "controlActiveFrameFraction": 0.19492833333333334
+        },
+        "V2-B-15": {
+          "stableFraction": 0.15198833333333334,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.4837416666666667,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 1.1666666666666666e-05,
+          "longestDynamicalHierarchyYears": 0.11666666666666667,
+          "planetLosses": 20,
+          "fullConditionalFTLE": 0.09298014548612628,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 48,
+          "controlActiveFrameFraction": 0.14581666666666668
+        },
+        "V2-B-17": {
+          "stableFraction": 0.053945,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.46996666666666664,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.0,
+          "longestDynamicalHierarchyYears": 0.0,
+          "planetLosses": 5,
+          "fullConditionalFTLE": 0.09748163299920908,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 50,
+          "controlActiveFrameFraction": 0.10405833333333334
+        },
+        "V2-B-19": {
+          "stableFraction": 0.06198,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.40240166666666666,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.0,
+          "longestDynamicalHierarchyYears": 0.0,
+          "planetLosses": 13,
+          "fullConditionalFTLE": 0.0865261864184411,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 45,
+          "controlActiveFrameFraction": 0.18258666666666667
+        },
+        "V2-B-21": {
+          "stableFraction": 0.3810383333333333,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.57619,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.0,
+          "longestDynamicalHierarchyYears": 0.0,
+          "planetLosses": 17,
+          "fullConditionalFTLE": 0.038924916701670455,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 30,
+          "controlActiveFrameFraction": 0.14235166666666665
+        },
+        "V2-B-23": {
+          "stableFraction": 0.08411666666666667,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.3394566666666667,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.0,
+          "longestDynamicalHierarchyYears": 0.0,
+          "planetLosses": 2,
+          "fullConditionalFTLE": 0.032937918943227416,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 46,
+          "controlActiveFrameFraction": 0.013583333333333333
+        },
+        "V2-B-25": {
+          "stableFraction": 0.341305,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.40917,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.0,
+          "longestDynamicalHierarchyYears": 0.0,
+          "planetLosses": 8,
+          "fullConditionalFTLE": 0.04611318096420211,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 27,
+          "controlActiveFrameFraction": 0.03344333333333333
+        },
+        "V2-B-27": {
+          "stableFraction": 0.4520416666666667,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.29006666666666664,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.0,
+          "longestDynamicalHierarchyYears": 0.0,
+          "planetLosses": 1,
+          "fullConditionalFTLE": 0.027311892599394053,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 31,
+          "controlActiveFrameFraction": 0.034401666666666664
+        },
+        "V2-B-29": {
+          "stableFraction": 0.561365,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.5878766666666667,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.0,
+          "longestDynamicalHierarchyYears": 0.0,
+          "planetLosses": 22,
+          "fullConditionalFTLE": 0.04792994126976609,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 24,
+          "controlActiveFrameFraction": 0.09179666666666667
+        },
+        "V2-B-31": {
+          "stableFraction": 0.6199133333333333,
+          "matureStableFraction": null,
+          "nonhierFraction": 0.39277,
+          "matureNonhierFraction": null,
+          "dynHierFraction": 0.00035,
+          "longestDynamicalHierarchyYears": 3.5,
+          "planetLosses": 20,
+          "fullConditionalFTLE": 0.058199119452764306,
+          "matureConditionalFTLE": null,
+          "tightPairChanges": 33,
+          "controlActiveFrameFraction": 0.03803666666666667
+        }
+      }
+    }
+  }
+}

@@ -4,7 +4,7 @@
 Install ijson3.3.0 into /tmp/codex-v2-python; no production dependencies change.
 The scientific source/config hashes remain unchanged; this transport has its own hash.
 """
-import fcntl,gzip,hashlib,json,os,pathlib,shutil,subprocess,sys,time
+import datetime,fcntl,gzip,hashlib,json,os,pathlib,shutil,subprocess,sys,time
 sys.path.insert(0,'/tmp/codex-v2-python')
 import ijson
 from ijson.common import ObjectBuilder
@@ -31,7 +31,13 @@ def digest(file):
   for b in iter(lambda:f.read(1024*1024),b''):h.update(b)
  return h.hexdigest()
 def main():
- config=sys.argv[1];shard=int(sys.argv[2]) if len(sys.argv)>2 else 0;shards=int(sys.argv[3]) if len(sys.argv)>3 else 1;cfg=json.load(open(config));out=cfg['output'].replace('.jsonl',f'.shard{shard}.jsonl' if shards>1 else '.jsonl');mf=json.load(open(out+'.manifest.json'))
+ config=sys.argv[1];shard=int(sys.argv[2]) if len(sys.argv)>2 else 0;shards=int(sys.argv[3]) if len(sys.argv)>3 else 1;cfg=json.load(open(config));out=cfg['output'].replace('.jsonl',f'.shard{shard}.jsonl' if shards>1 else '.jsonl');pathlib.Path(out).parent.mkdir(parents=True,exist_ok=True)
+ manifest=pathlib.Path(out+'.manifest.json')
+ if not manifest.exists():
+  files=['docs/research-v2/native.cpp','docs/research-v2/vendor/json.hpp','docs/research-v2/build-native.sh','docs/research-v2/run-native.mjs','docs/research-v2/engine.mjs','docs/research-v2/controllers/index.mjs']+[str(p) for p in sorted(pathlib.Path('src').glob('*.js'))]+['src/physics/gravity.js','src/legacy/008.js','src/legacy/079.js','src/legacy/010.js'];h=hashlib.sha256()
+  for p in files:h.update(p.encode()+b'\0');h.update(pathlib.Path(p).read_bytes())
+  mf={'sourceHash':h.hexdigest(),'configHash':digest(config),'binaryHash':digest('docs/research-v2/bin/native'),'sourceFiles':files,'config':cfg,'shard':shard,'shards':shards,'createdAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'compiler':subprocess.check_output(['g++','--version'],text=True).splitlines()[0],'flags':'-std=c++17 -O3 -ffp-contract=off -Wall -Wextra -pedantic'};manifest.write_text(json.dumps(mf,indent=2)+'\n')
+ else:mf=json.load(open(manifest))
  h=hashlib.sha256()
  for p in mf['sourceFiles']:h.update(p.encode()+b'\0');h.update(pathlib.Path(p).read_bytes())
  assert h.hexdigest()==mf['sourceHash'],'frozen scientific sources changed'
@@ -40,7 +46,7 @@ def main():
  with open(out+'.lock','a+') as lock:
   try:fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
   except BlockingIOError:print('already-running');return
-  done=set()
+  lock.seek(0);lock.truncate();json.dump({'pid':os.getpid(),'config':config,'shard':shard,'started':time.time()},lock);lock.flush();os.fsync(lock.fileno());pathlib.Path(out).touch(exist_ok=True);done=set()
   with open(out) as f:
    for line in f:
     r=json.loads(line);key=(r['seed'],r['profile']);assert key not in done,'duplicate';done.add(key)
@@ -62,6 +68,12 @@ def main():
      with gzip.GzipFile(filename='',mode='wb',compresslevel=6,fileobj=dest,mtime=0) as z:shutil.copyfileobj(src,z,1024*1024)
      dest.flush();os.fsync(dest.fileno())
     os.replace(str(target)+'.tmp',target);r.update(rawFile=str(target),rawSHA256=digest(target),eventCount=n,transportSHA256=transportHash,transport='file stdout + ijson metadata, identical frozen physics',transportWallSeconds=elapsed)
+    if pathlib.Path(cp).exists() and (cfg.get('saveCheckpoints',False) or r['numericallyCensored']):
+     statedir=pathlib.Path(out).parent/'checkpoints'/version;statedir.mkdir(parents=True,exist_ok=True);statefile=statedir/f"{seed}-{profile['id']}.state.json.gz";inputfile=statedir/f"{seed}-{profile['id']}.input.json"
+     with open(cp,'rb') as src,open(str(statefile)+'.tmp','wb') as dest:
+      with gzip.GzipFile(filename='',mode='wb',compresslevel=6,fileobj=dest,mtime=0) as z:shutil.copyfileobj(src,z,1024*1024)
+      dest.flush();os.fsync(dest.fileno())
+     os.replace(str(statefile)+'.tmp',statefile);shutil.copyfile(ip,inputfile);r.update(stateCheckpoint=str(statefile),stateCheckpointSHA256=digest(statefile),stateInput=str(inputfile),stateInputSHA256=digest(inputfile))
     with open(out,'a') as f:f.write(json.dumps(r,separators=(',',':'))+'\n');f.flush();os.fsync(f.fileno())
     done.add(key)
     for p in [ip,cp,full,err]:pathlib.Path(p).unlink(missing_ok=True)

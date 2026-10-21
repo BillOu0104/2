@@ -12,6 +12,7 @@
       "accelerationSquaredIntegral": 31.72753828142661,
       "activeFrames": 60,
       "activeTime": 0.4499999999999929,
+      "deflectionEvents": 0,
       "deltaL": [
         0,
         0,
@@ -44,6 +45,7 @@
       "accelerationSquaredIntegral": 0,
       "activeFrames": 1,
       "activeTime": 0,
+      "deflectionEvents": 0,
       "deltaL": [
         0,
         0,
@@ -76,6 +78,7 @@
       "accelerationSquaredIntegral": 0,
       "activeFrames": 60,
       "activeTime": 0,
+      "deflectionEvents": 0,
       "deltaL": [
         0,
         0,
@@ -93,6 +96,105 @@
       "projectionFrames": 60,
       "reflectionEvents": 1347,
       "work": 1.0601297617540695e-11
+    }
+  },
+  {
+    "fixture": "deflect",
+    "pass": true,
+    "maxStateDifference": 6.5780714209040525e-15,
+    "workJS": -2.7755575615628914e-10,
+    "workNative": 3.469446951953614e-10,
+    "relativeEnergyResidual": 1.5903207744610123e-12,
+    "cost": {
+      "absoluteWork": 3.469446951953614e-10,
+      "accelerationIntegral": 0,
+      "accelerationSquaredIntegral": 0,
+      "activeFrames": 1,
+      "activeTime": 0,
+      "deflectionEvents": 1,
+      "deltaL": [
+        0,
+        0,
+        -229139.99935775268
+      ],
+      "deltaP": [
+        0,
+        0,
+        0
+      ],
+      "impulse": 2983057.4426384885,
+      "peakAcceleration": 0,
+      "peakVelocityJump": 0.29830574426384887,
+      "projectionEvents": 1,
+      "projectionFrames": 1,
+      "reflectionEvents": 0,
+      "work": 3.469446951953614e-10
+    }
+  },
+  {
+    "fixture": "transfer",
+    "pass": true,
+    "maxStateDifference": 0,
+    "workJS": -4.656612873077393e-10,
+    "workNative": -4.656612873077393e-10,
+    "relativeEnergyResidual": 2.26468698566955e-15,
+    "cost": {
+      "absoluteWork": 3904468.035192106,
+      "accelerationIntegral": 0,
+      "accelerationSquaredIntegral": 0,
+      "activeFrames": 1,
+      "activeTime": 0,
+      "deflectionEvents": 0,
+      "deltaL": [
+        0,
+        0,
+        9.094947017729282e-13
+      ],
+      "deltaP": [
+        0,
+        0,
+        0
+      ],
+      "impulse": 10972555.579927066,
+      "peakAcceleration": 0,
+      "peakVelocityJump": 0.5653150500093875,
+      "projectionEvents": 1,
+      "projectionFrames": 1,
+      "reflectionEvents": 0,
+      "work": -4.656612873077393e-10
+    }
+  },
+  {
+    "fixture": "contact",
+    "pass": true,
+    "maxStateDifference": 0,
+    "workJS": 0,
+    "workNative": 0,
+    "relativeEnergyResidual": 3.4505653392643477e-13,
+    "cost": {
+      "absoluteWork": 0,
+      "accelerationIntegral": 0,
+      "accelerationSquaredIntegral": 0,
+      "activeFrames": 0,
+      "activeTime": 0,
+      "deflectionEvents": 0,
+      "deltaL": [
+        0,
+        0,
+        0
+      ],
+      "deltaP": [
+        0,
+        0,
+        0
+      ],
+      "impulse": 0,
+      "peakAcceleration": 0,
+      "peakVelocityJump": 0,
+      "projectionEvents": 0,
+      "projectionFrames": 0,
+      "reflectionEvents": 0,
+      "work": 0
     }
   },
   {
