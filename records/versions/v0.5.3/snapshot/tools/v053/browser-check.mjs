@@ -1,0 +1,28 @@
+import {chromium} from 'playwright-core';
+import assert from 'node:assert/strict';
+import {writeFile} from 'node:fs/promises';
+import {guideControls} from '../generate-settings-guide.mjs';
+const browser=await chromium.launch({executablePath:'/usr/bin/chromium',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+const context=await browser.newContext({viewport:{width:1280,height:900}}),page=await context.newPage(),checks=[],errors=[];
+page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error'&&!m.text().startsWith('Failed to load resource:'))errors.push(m.text());});page.on('response',r=>{if(r.status()>=400&&!r.url().endsWith('/favicon.ico'))errors.push(`${r.status()} ${r.url()}`);});
+await page.addInitScript(()=>{localStorage.setItem('three-body.settings.v3',JSON.stringify({presentationRevision:6,physicsRevision:1,newproperty51:.01,viewSensitivity:.04,pixelRatio:.5,newproperty63:false,newproperty64:false,newproperty2:false}));window.__wallpaperFPS=30;});
+const scene=()=>page.evaluate(()=>window.__threeBodyDiagnostics().scene),apply=patch=>page.evaluate(p=>window.threeBody.applySettings(p),patch);
+try{
+ await page.goto('http://localhost:4173',{waitUntil:'networkidle'});await page.waitForFunction(()=>window.__threeBodyDiagnostics?.().ready);
+ assert.equal(await page.evaluate(()=>window.threeBody.version),'0.5.3');assert.equal(await page.locator('#setting-newproperty51').inputValue(),'0.003');checks.push('actual v0.5.3 Worker boots and migrates old default galaxy speed to 0.003 deg/s');
+ const controls=await page.locator('.control').evaluateAll(n=>n.map(x=>x.dataset.key));assert.deepEqual(controls.sort(),guideControls().map(x=>x.key).sort());assert.equal(controls.length,218);checks.push('all 218 real controls match the generated guide, including visual stellar tracking');
+ await page.mouse.move(900,430);await page.waitForTimeout(700);const moving=await scene();assert.ok(Math.hypot(...moving.viewVelocity)>0);
+ await page.waitForTimeout(3500);const start=await scene(),t0=Date.now();assert.ok(start.returningToGalaxy);assert.deepEqual(start.viewVelocity,[0,0]);assert.equal(start.compassTarget,false);assert.ok(start.compassOpacity[0]<.003);
+ await page.waitForTimeout(1200);const end=await scene(),elapsed=(Date.now()-t0)/1000,distance=x=>Math.hypot(...x.viewRotation.slice(0,2)),travel=distance(start)-distance(end),cap=.003*Math.PI/180*elapsed;
+ assert.ok(travel>cap*.4&&travel<cap*1.4,JSON.stringify({travel,cap,start:start.viewRotation,end:end.viewRotation}));checks.push('real mouse follow works, idle return cancels inertia, hides the ring and obeys the slower total angular-speed cap');
+ await apply({newproperty61:2});const fixed=await scene();await page.waitForTimeout(600);assert.deepEqual((await scene()).viewRotation,fixed.viewRotation);checks.push('fixed view suppresses both idle return and residual coast');
+ const mass=5e6,G=1.3275440274585598e-8,speed=Math.sqrt(G*mass/Math.sqrt(3)),bodies=Array.from({length:3},(_,i)=>{const a=i*2*Math.PI/3;return{x:-2+Math.cos(a),y:Math.sin(a),z:0,vx:-speed*Math.sin(a),vy:speed*Math.cos(a),vz:0,mass};});bodies.push({x:6000,y:0,z:0,vx:0,vy:0,vz:0,mass:5000});
+ await apply({newproperty50:true,manualInitialBodies:bodies,autorestart:false,centerOnSystem:true,newproperty16:false,bodyLabels:true});await page.waitForFunction(()=>window.threeBody.getState().initialBodies?.[3]?.x===6000);await page.waitForTimeout(400);
+ const focused=await scene(),center=s=>[0,1,2].map(k=>s.bodyWorldPositions.slice(0,3).reduce((n,p)=>n+p[k],0)/3),centered=center(focused);assert.ok(Math.hypot(...centered)<.1,JSON.stringify(centered));assert.ok(Math.abs((await page.evaluate(()=>window.threeBody.getState().bodies[3].x))-6000)<1);checks.push('runaway planet remains at its physical distance while the stellar group is centered through rendering only');
+ await page.screenshot({path:'docs/v053/results/centered-runaway-planet.png'});
+ await apply({centerOnSystem:false});await page.waitForTimeout(3000);const offCenter=center(await scene());assert.ok(Math.hypot(...offCenter)>.7,JSON.stringify(offCenter));
+ await page.locator('#settings-toggle').click();await page.locator('[data-category=view] summary').click();await page.locator('#setting-centerOnSystem').check();await page.waitForTimeout(3500);const restored=center(await scene());assert.ok(Math.hypot(...restored)<Math.hypot(...offCenter)*.2);checks.push('real tracking checkbox restores the center smoothly without restarting the universe or modifying physics');
+ await page.locator('#settings-close').click();await apply({newproperty50:false,manualInitialBodies:null,newproperty61:1,newproperty16:true,centerOnSystem:true});await page.waitForTimeout(500);await page.screenshot({path:'docs/v053/results/desktop.png'});
+ const response=await page.goto('http://localhost:4173/settings-guide.html');assert.equal(response.status(),200);const text=await page.textContent('body');assert.ok(text.includes('旧石器时代')&&text.includes('40000')&&text.includes('0.003'));checks.push('offline settings guide includes all twelve technology stages, slower return and tracking semantics');
+ assert.deepEqual(errors,[]);await writeFile('docs/v053/results/browser.json',JSON.stringify({passed:true,checks,errors,returnMotion:{elapsed,travelRadians:travel,capRadians:cap},tracking:{centered,offCenter,restored},limits:'Actual Chromium pointer events and Worker with software WebGL; native Windows Wallpaper Engine not available'},null,2)+'\n');console.log(JSON.stringify({passed:true,checks},null,2));
+}finally{await browser.close();}
