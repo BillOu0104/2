@@ -38,4 +38,4 @@
 
 ## 真实100000年探索完成与正式确认
 
-详见EXPLORATION100K_RESULTS.md：80条全完成、UNKNOWN0，三控制各16/16三星完整，但混沌/连续参与不足样本不能忽略。精度、影子和消融192条序列均已完整归档/推送；不是128Seed确认。主确认冻结两个候选和两基准的128个全新Seed，另有32Seed精细辅助，规则和恢复方式见CONFIRMATION_PROTOCOL.md及STATUS.md。
+详见EXPLORATION100K_RESULTS.md：80条全完成、UNKNOWN0，三控制各16/16三星完整，但混沌/连续参与不足样本不能忽略。精度、影子、消融及100000年探索四阶段共192条均已完整归档/推送；不是128Seed确认。主确认冻结两个候选和两基准的128个全新Seed，另有32Seed精细辅助，规则和恢复方式见CONFIRMATION_PROTOCOL.md及STATUS.md。
