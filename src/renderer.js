@@ -3,12 +3,10 @@ import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
-import { Line2 } from 'three/addons/lines/Line2.js';
-import { LineGeometry } from 'three/addons/lines/LineGeometry.js';
-import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
 import { colorRGB, seededRandom } from './settings.js';
 import { fadeMotion } from './motion-visuals.js';
-import {displayCenter} from './display-center.js';
+import {FixedDisplayFrame} from './fixed-display-frame.js';
+import {TrailRibbon} from './trail-ribbon.js';
 import { ViewMotion } from './view-motion.js';
 import { TrailHistory, trailComplexity, selectTrail } from './adaptive-trails.js';
 
@@ -47,7 +45,7 @@ export class SpaceRenderer {
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping; this.renderer.toneMappingExposure = 1;
     this.scene = new THREE.Scene(); this.camera = new THREE.PerspectiveCamera(50, 1, 0.01, 200);
     this.camera.position.set(0, 0.25, 5.2); this.camera.lookAt(0, 0, 0);
-    this.world = new THREE.Group(); this.scene.add(this.world);this.system=new THREE.Group();this.world.add(this.system);this.focusTarget=new THREE.Vector3();
+    this.world = new THREE.Group(); this.scene.add(this.world);this.system=new THREE.Group();this.world.add(this.system);this.fixedFrame=new FixedDisplayFrame();this.renderTime=0;
     this.compass = new THREE.Group(); this.world.add(this.compass);this.compass.scale.setScalar(.3);this.compass.visible=false;this.compassFade=0;this.compassTarget=false;
     const ringGeometry = new THREE.BufferGeometry().setFromPoints(Array.from({ length: 257 }, (_, i) => new THREE.Vector3(Math.cos(i / 256 * Math.PI * 2) * 1.42, Math.sin(i / 256 * Math.PI * 2) * 1.42, 0)));
     for (const [angle, opacity] of [[0, 0], [Math.PI / 2, 0]]) {
@@ -78,10 +76,7 @@ export class SpaceRenderer {
       const light = new THREE.PointLight(0xffe2c3, i < 3 ? 5 : 0, 12, 1.3); group.add(light);
       const label = document.createElement('div'); label.className = `body-label body-${i}`; label.innerHTML = `<span>${['α', 'β', 'γ', '○'][i]}</span><small></small>`; this.labels.append(label);
       this.nodes.push({ group, mesh, material, glow, light, label, target: new THREE.Vector3() });
-      // Keep one fixed GPU capacity: Three caches an instanced geometry's first capacity.
-      // Growing a one-segment LineGeometry later silently clips rendering to that segment.
-      const geo = new LineGeometry(); geo.setPositions(new Float32Array(2000 * 3)); geo.setColors(new Float32Array(2000 * 3)); geo.instanceCount = 0;
-      const line = new Line2(geo, new LineMaterial({ linewidth: 2.2, vertexColors: true, transparent: true, opacity: .8, blending: THREE.AdditiveBlending, depthWrite: false }));
+      const line = new TrailRibbon();
       line.frustumCulled = false; this.system.add(line); this.trails.push(line); this.trailBuffers.push(new TrailHistory());
     }
     this.dustLayers = [];this.dustTexture=crispParticle();
@@ -179,19 +174,20 @@ export class SpaceRenderer {
   clearTrails() {
     this.trailBuffers.forEach(b => b.clear());
     this.trailComplexity=0;this.trailMetrics=[];
-    this.trails.forEach(line => { line.geometry.instanceCount = 0; });
+    this.trails.forEach(line => { line.segmentCount=0;line.geometry.setDrawRange(0,0); });
   }
   ingest(state) {
     if (this.snap && state.revision !== this.snap.revision) { this.clearTrails(); this.firstPosition = true; }
     if (!this.snap) this.firstPosition = true;
+    if(this.firstPosition){this.fixedFrame.reset(state.initialBodies);this.renderTime=Math.max(0,state.runtime-.05);}
     this.snap = state;
-    const center=this.settings.centerOnSystem?displayCenter(state.bodies,state.com):state.com;
-    this.focusTarget.set((state.com.x-center.x)/this.spaceScale,(state.com.y-center.y)/this.spaceScale,(state.com.z-center.z)/this.spaceScale);
-    if(this.firstPosition)this.system.position.copy(this.focusTarget);
+    if(state.runtime-this.renderTime>.15)this.renderTime=state.runtime-.05;
     state.bodies.forEach((b, i) => {
-      const n = this.nodes[i]; n.target.set((b.x - state.com.x)/this.spaceScale,(b.y - state.com.y)/this.spaceScale,(b.z - state.com.z)/this.spaceScale);
+      const n = this.nodes[i],position=this.fixedFrame.position(b,this.spaceScale);n.target.set(position.x,position.y,position.z);
       if (this.firstPosition) n.group.position.copy(n.target);
-      if (this.settings.newproperty14)this.trailBuffers[i].push(n.target,state.runtime);
+      const samples=state.trailSamples?.[i];
+      if(samples?.length)for(const p of samples){if(p.break)this.trailBuffers[i].clear();this.trailBuffers[i].push(this.fixedFrame.position(p,this.spaceScale),p.time);}
+      else this.trailBuffers[i].push(n.target,state.runtime);
     });
     this.lastTrailTick = state.tick;
     this.firstPosition = false;
@@ -209,21 +205,15 @@ export class SpaceRenderer {
       vec.set(point.x,point.y,point.z).applyMatrix4(this.system.matrixWorld).project(this.camera);
       return{x:(vec.x*.5+.5)*innerWidth,y:(-.5*vec.y+.5)*innerHeight,z:vec.z};
     };
-    const raw=trailComplexity(this.trailBuffers,project,this.snap.runtime);
+    const raw=trailComplexity(this.trailBuffers,project,this.renderTime);
     this.trailComplexity=(this.trailComplexity||0)+(raw-(this.trailComplexity||0))*(1-Math.exp(-dt/.7));
     const keys=['brfontcoloraaaaaatrail1color','brfontcoloraaaaaatrail2color','brfontcoloraaaaaatrail3color','brfontcoloraaaaaatrail4color'];
     this.trailMetrics=this.trailBuffers.map((history,i)=>{
-      const selection=selectTrail(history,project,{now:this.snap.runtime,viewport:Math.min(innerWidth,innerHeight),baseLength:this.settings.trailsLength,complexity:this.trailComplexity,dt});
-      const {points,fractions}=selection,geometry=this.trails[i].geometry,positions=geometry.attributes.instanceStart.data,colors=geometry.attributes.instanceColorStart.data,color=C(this.settings[keys[i]]);
-      for(let j=0;j<points.length-1;j++){
-        const a=points[j],b=points[j+1],offset=j*6,fadeA=Math.pow(fractions[j],1.4),fadeB=Math.pow(fractions[j+1],1.4);
-        positions.array.set([a.x,a.y,a.z,b.x,b.y,b.z],offset);
-        colors.array.set([color.r*fadeA,color.g*fadeA,color.b*fadeA,color.r*fadeB,color.g*fadeB,color.b*fadeB],offset);
-      }
-      positions.needsUpdate=colors.needsUpdate=true;geometry.instanceCount=Math.max(0,points.length-1);
+      const selection=selectTrail(history,project,{now:this.renderTime,viewport:Math.min(innerWidth,innerHeight),baseLength:this.settings.trailsLength,complexity:this.trailComplexity,dt});
+      const {points,fractions}=selection;this.trails[i].setPath(points,fractions,C(this.settings[keys[i]]));
       this.trails[i].material.opacity=.8-.25*this.trailComplexity;
       this.trails[i].material.linewidth=2.2-.5*this.trailComplexity;
-      return{arcPixels:selection.arcPixels,seconds:selection.seconds,budget:selection.budget,segments:geometry.instanceCount};
+      return{arcPixels:selection.arcPixels,seconds:selection.seconds,budget:selection.budget,segments:this.trails[i].segmentCount};
     });
   }
   render(dt, elapsed, motionDt=dt) {
@@ -242,17 +232,17 @@ export class SpaceRenderer {
     this.compassFade=fadeMotion(this.compassFade,this.compassTarget,motionDt);this.compass.visible=this.compassFade>.002&&s.compassOpacity>0;
     for(const child of this.compass.children)child.material.opacity=s.compassOpacity*this.compassFade;
     this.world.rotation.set(this.rot.x,this.rot.y,0);
-    this.system.position.lerp(this.focusTarget,1-Math.exp(-motionDt/1.5));
+    if(this.snap)this.renderTime=Math.min(this.snap.runtime,this.renderTime+dt);
     this.nodes.forEach((n, i) => {
-      n.group.position.lerp(n.target, 1 - Math.exp(-dt * 22)); n.mesh.rotation.y += dt * .1;
+      const p=this.trailBuffers[i].atTime(this.renderTime);if(p)n.group.position.set(p.x,p.y,p.z);n.mesh.rotation.y += dt * .1;
       if (i < 3) { n.glow.material.opacity = Math.min(1, .35 + s.newproperty49 * .3 + (s.newproperty2 ? s.hdr * .09 : 0) + this.audioLevel * .12); }
       n.group.getWorldPosition(vec);vec.project(this.camera);
       n.label.style.transform = `translate(${(vec.x * .5 + .5) * innerWidth + 15}px,${(-vec.y * .5 + .5) * innerHeight - 9}px)`;
       n.label.style.visibility = vec.z > 1 || vec.z < -1 ? 'hidden' : 'visible';
       if (this.snap) n.label.querySelector('small').textContent = `${n.group.position.x.toFixed(2)} / ${n.group.position.y.toFixed(2)}`;
     });
-    if(s.newproperty14&&this.snap&&(this.lastTrailRender===undefined||elapsed-this.lastTrailRender>=.05)){
-      this.updateTrails(Math.min(1,elapsed-(this.lastTrailRender??elapsed-.05)));this.lastTrailRender=elapsed;
+    if(s.newproperty14&&this.snap){
+      this.updateTrails(dt);
     }
     this.dustLayers.forEach((d, i) => { d.rotation.y = elapsed * .002 * (i + 1);d.position.x=Math.sin(elapsed*.06+i)*.12;d.position.y=Math.cos(elapsed*.04+i)*.08; });
     this.post.uniforms.time.value = elapsed;

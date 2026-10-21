@@ -17,10 +17,11 @@ export function pairPotential(r,{model='newtonian',softening=0,kSoft=2.8}={}){
 export function invariants(bodies,G,options={}){
  const mass=bodies.reduce((n,b)=>n+b.mass,0),com=[0,0,0,0,0,0];
  if(mass>0)for(const b of bodies)axes.forEach((key,i)=>com[i]+=b.mass*b[key]/mass);
- let kinetic=0,potential=0;const momentum=[0,0,0],angularMomentum=[0,0,0];
+ let kinetic=0,inertialKinetic=0,potential=0;const momentum=[0,0,0],angularMomentum=[0,0,0];
  for(const b of bodies){const r=[b.x-com[0],b.y-com[1],b.z-com[2]],v=[b.vx-com[3],b.vy-com[4],b.vz-com[5]],h=cross(r,v);kinetic+=.5*b.mass*v.reduce((n,x)=>n+x*x,0);for(let i=0;i<3;i++){momentum[i]+=b.mass*b[axes[i+3]];angularMomentum[i]+=b.mass*h[i];}}
  for(const[i,j]of pairs){const a=bodies[i],b=bodies[j];if(a.mass&&b.mass)potential+=G*a.mass*b.mass*pairPotential(Math.hypot(a.x-b.x,a.y-b.y,a.z-b.z),options);}
- return {energy:kinetic+potential,kinetic,potential,momentum,angularMomentum,center:com,virialRatio:potential<0?2*kinetic/-potential:null,mass};
+ for(const b of bodies)inertialKinetic+=.5*b.mass*(b.vx*b.vx+b.vy*b.vy+b.vz*b.vz);
+ return {energy:kinetic+potential,inertialEnergy:inertialKinetic+potential,inertialKinetic,kinetic,potential,momentum,angularMomentum,center:com,virialRatio:potential<0?2*kinetic/-potential:null,mass};
 }
 export class GravityIntegrator{
  constructor(bodies,G,{model='newtonian',softening=0,kSoft=2.8,cageAcceleration=null,radii=null}={}){
@@ -55,20 +56,22 @@ export class GravityIntegrator{
    if(d<=limit){this.contactKeys.add(key);this.contacts.push({pair:[i,j],time:this.time-h+fraction*h,distance:d,radius:limit,method:'accepted-step-segment'});}
   }
  }
- advance(duration,{maxStep=.00075,eta=.0075,adaptive=true,minStep=1e-10,maxSteps=200000}={}){
+ advance(duration,{maxStep=.00075,eta=.0075,adaptive=true,minStep=1e-10,maxSteps=200000,onAcceptedStep=null}={}){
   if(!Number.isFinite(duration)||!Number.isFinite(maxStep)||maxStep<=0||!Number.isFinite(eta)||eta<=0)throw new PhysicsError('invalid-step','物理步长或近遇精度参数无效');
   const sign=Math.sign(duration);let remaining=Math.abs(duration),used=0;
   try{while(remaining>1e-14){const limit=Math.min(maxStep,adaptive?eta*this.timescale():Infinity),magnitude=Math.min(remaining,limit);if(!(limit>minStep))throw new PhysicsError('minimum-step','近遇所需步长低于安全下限；数值中断不计为物理死亡');if(used++>=maxSteps)throw new PhysicsError('step-budget','单帧近遇计算预算耗尽；未跳过物理时间');
     const h=sign*magnitude;this.save();const oldTime=this.time,oldSteps=this.steps;
     try{this.step(h);if(this.bodies.some(b=>axes.some(k=>!Number.isFinite(b[k]))))throw new PhysicsError('non-finite','数值溢出；已恢复到最后有效状态');}
     catch(error){this.restore();this.time=oldTime;this.steps=oldSteps;throw error;}
-    this.detectContacts(h);remaining=Math.max(0,remaining-magnitude);
+    this.detectContacts(h);remaining=Math.max(0,remaining-magnitude);onAcceptedStep?.(this.bodies,this.time);
    }}catch(error){this.numericalError={code:error.code||'numerical-error',message:error.message,time:this.time};throw error;}
   return used;
  }
  diagnostics(){
   const now=invariants(this.bodies,this.G,this),energyError=Math.abs(now.energy-this.baseline.energy)/Math.max(Math.abs(this.baseline.energy),1e-20),angularError=length(now.angularMomentum.map((x,i)=>x-this.baseline.angularMomentum[i]))/this.angularScale,momentumError=length(now.momentum.map((x,i)=>x-this.baseline.momentum[i]))/this.momentumScale;
   this.maxEnergyError=Math.max(this.maxEnergyError,energyError);this.maxAngularError=Math.max(this.maxAngularError,angularError);this.maxMomentumError=Math.max(this.maxMomentumError,momentumError);if(!this.contacts.length)this.maxEnergyErrorBeforeContact=Math.max(this.maxEnergyErrorBeforeContact,energyError);
-  return {...now,model:this.model,steps:this.steps,solverTime:this.time,relativeEnergyError:energyError,maxRelativeEnergyError:this.maxEnergyError,maxRelativeEnergyErrorBeforeContact:this.maxEnergyErrorBeforeContact,relativeAngularMomentumError:angularError,maxRelativeAngularMomentumError:this.maxAngularError,normalizedMomentumDrift:momentumError,maxNormalizedMomentumDrift:this.maxMomentumError,cageActive:!!this.cageAcceleration,conservationApplicable:!this.cageAcceleration,physicalModelValid:!this.contacts.length,contacts:this.contacts,numericalError:this.numericalError};
+  const expectedCenter=this.baseline.center.slice(0,3).map((x,i)=>x+this.baseline.center[i+3]*this.time);
+  const centerPositionDrift=length(expectedCenter.map((x,i)=>now.center[i]-x)),centerVelocityDrift=length(now.center.slice(3).map((x,i)=>x-this.baseline.center[i+3]));
+  return {...now,expectedCenter,initialCenter:[...this.baseline.center],centerPositionDrift,centerVelocityDrift,relativeInertialEnergyError:Math.abs(now.inertialEnergy-this.baseline.inertialEnergy)/Math.max(Math.abs(this.baseline.inertialEnergy),1e-20),model:this.model,steps:this.steps,solverTime:this.time,relativeEnergyError:energyError,maxRelativeEnergyError:this.maxEnergyError,maxRelativeEnergyErrorBeforeContact:this.maxEnergyErrorBeforeContact,relativeAngularMomentumError:angularError,maxRelativeAngularMomentumError:this.maxAngularError,normalizedMomentumDrift:momentumError,maxNormalizedMomentumDrift:this.maxMomentumError,cageActive:!!this.cageAcceleration,conservationApplicable:!this.cageAcceleration,physicalModelValid:!this.contacts.length,contacts:this.contacts,numericalError:this.numericalError};
  }
 }
