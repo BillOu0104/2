@@ -11,6 +11,8 @@
 #include <string>
 #include <vector>
 #include <sys/resource.h>
+#include <fcntl.h>
+#include <unistd.h>
 #include "vendor/json.hpp"
 using json=nlohmann::json;
 using V=std::array<double,3>;
@@ -35,16 +37,18 @@ struct Civ{bool alive=false;int phase=0,number=1,level=1;double development=0,sa
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Civ,alive,phase,number,level,development,safeTime,progress,population,storage,startYear,maxLife,births,deaths,aliveFrames,activeFrames)
 struct Inv{double E=0,K=0,U=0;V P{},L{},R{},vcm{};};
 Inv invariant(const Bodies& b){Inv e;double m=0;for(auto x:b){m+=x.mass;e.R=add(e.R,mul(x.r,x.mass));e.P=add(e.P,mul(x.v,x.mass));e.L=add(e.L,mul(cross(x.r,x.v),x.mass));e.K+=.5*x.mass*dot(x.v,x.v);}e.R=mul(e.R,1/m);e.vcm=mul(e.P,1/m);for(int p=0;p<6;p++){auto a=b[pi[p]],c=b[pj[p]];if(a.mass&&c.mass)e.U-=G*a.mass*c.mass/norm(sub(a.r,c.r));}e.E=e.K+e.U;return e;}
-struct Config{bool cage=false,hardCage=false,barrier=false,capture=false,noRespawn=false,shadow=false,reflect=false,redistribute=false;double barrierRadius=.25,barrierAlpha=.1,apocenterScale=4,captureRadiusScale=1.5,reflectionMargin=1.15,dt=.00075,eta=.0075;};
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(Config,cage,hardCage,barrier,capture,noRespawn,shadow,reflect,redistribute,barrierRadius,barrierAlpha,apocenterScale,captureRadiusScale,reflectionMargin,dt,eta)
+struct Config{bool cage=false,hardCage=false,barrier=false,capture=false,noRespawn=false,shadow=false,reflect=false,redistribute=false,capturePositiveOnly=false;double barrierRadius=.25,barrierAlpha=.1,apocenterScale=4,captureRadiusScale=1.5,captureSeparationFactor=0,reflectionMargin=1.15,shadowEps=1e-8,shadowWindowYears=10,dt=.00075,eta=.0075;};
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(Config,cage,hardCage,barrier,capture,noRespawn,shadow,reflect,redistribute,capturePositiveOnly,barrierRadius,barrierAlpha,apocenterScale,captureRadiusScale,captureSeparationFactor,reflectionMargin,shadowEps,shadowWindowYears,dt,eta)
 struct State{
  Bodies b{},initial{};World world{};Civ civ{};Cost cost{},external{};Config cfg{};
  std::string seed,profile,sourceHash,configHash;double scale=0,initialE=0,time=0,minSS=1e100,maxResidual=0,firstPlanetLoss=-1,wallSeconds=0;
  long long frame=0,steps=0,returnFrame=-1,planetLosses=0,planetRespawns=0,stableFrames=0,matureStableFrames=0,absentFrames=0,nonhierFrames=0,changes=0,hierarchyRun=0,longestHierarchy=0;
  int lastPair=-1;std::array<double,12> timers{};json failure=nullptr,error=nullptr;std::vector<json> events,history,bins;
  Bodies shadow{};double lyapSum=0,lyapYears=0;long long lyapWindows=0;double shadowTime=0;
+ long long dynHierFrames=0,matureDynHierFrames=0,dynHierRun=0,longestDynHier=0,tightChanges=0,matureNonhierFrames=0;int lastTight=-1;
+ double fullLyapSum=0,fullLyapYears=0;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(State,b,initial,world,civ,cost,external,cfg,seed,profile,sourceHash,configHash,scale,initialE,time,minSS,maxResidual,firstPlanetLoss,wallSeconds,frame,steps,returnFrame,planetLosses,planetRespawns,stableFrames,matureStableFrames,absentFrames,nonhierFrames,changes,hierarchyRun,longestHierarchy,lastPair,timers,failure,error,events,history,bins,shadow,lyapSum,lyapYears,lyapWindows,shadowTime)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(State,b,initial,world,civ,cost,external,cfg,seed,profile,sourceHash,configHash,scale,initialE,time,minSS,maxResidual,firstPlanetLoss,wallSeconds,frame,steps,returnFrame,planetLosses,planetRespawns,stableFrames,matureStableFrames,absentFrames,nonhierFrames,changes,hierarchyRun,longestHierarchy,lastPair,timers,failure,error,events,history,bins,shadow,lyapSum,lyapYears,lyapWindows,shadowTime,dynHierFrames,matureDynHierFrames,dynHierRun,longestDynHier,tightChanges,matureNonhierFrames,lastTight,fullLyapSum,fullLyapYears)
 struct Options{double radius[4]={.03,.023,.016,.01},lum[3]={1.5,.5,.1},escapeRadius=6,climateInertia=1.5,epochWindow=1.0/12,hardness=1.6,planetMass=5000,tempDist=7,low=-20,high=40,storageLow=-100,storageHigh=200,thermalGrace=30,birthDelay=.5,wakeDelay=1,developmentRate=1,cageM=15e6,cageK1=0,cageK2=.3,cageRc=1.6,cageRe=.1,cageLimit=4,cageN=2;bool breathing=true,levels=true;};
 Options opt;
 Body center(const Bodies& b,int mask){Body c;for(int i=0;i<4;i++)if((mask&(1<<i))&&b[i].mass>0){c.mass+=b[i].mass;c.r=add(c.r,mul(b[i].r,b[i].mass));c.v=add(c.v,mul(b[i].v,b[i].mass));}if(c.mass){c.r=mul(c.r,1/c.mass);c.v=mul(c.v,1/c.mass);}return c;}
@@ -83,10 +87,12 @@ void advance(Bodies& b,double& time,long long& steps,Cost& cost,const Config& cf
  }
 }
 int capture(Bodies& b,const Config& cfg,double scale,Cost& c){
- if(!cfg.capture)return 0;int n=0;
+ if(!cfg.capture)return 0;
+ int n=0;
  for(int i=0;i<3;i++){
   Body other=center(b,7^(1<<i));V r=sub(b[i].r,other.r),v=sub(b[i].v,other.v);double R=norm(r),vr=dot(r,v)/R,mu=G*(other.mass+b[i].mass),E=.5*dot(v,v)-mu/R,target=-mu/(cfg.apocenterScale*scale);
-  if(!(vr>0&&R>cfg.captureRadiusScale*scale&&E>target+1e-14*mu/scale))continue;
+  int a=(i+1)%3,bb=(i+2)%3;
+  if(!(vr>0&&R>cfg.captureRadiusScale*scale&&R>cfg.captureSeparationFactor*norm(sub(b[a].r,b[bb].r))&&E>(cfg.capturePositiveOnly?0:target)+1e-14*mu/scale))continue;
   double vt2=std::max(0.0,dot(v,v)-vr*vr),available=std::max(0.0,2*(mu/R+target));V dv;
   if(available>=vt2)dv=mul(r,(std::sqrt(available-vt2)-vr)/R);else dv=mul(v,std::sqrt(available/dot(v,v))-1);
   double share=other.mass/(other.mass+b[i].mass),reaction=-b[i].mass/(other.mass+b[i].mass),oldWork=c.work;
@@ -151,11 +157,11 @@ void shadowUpdate(State& s){
  // Shared planet lifecycle is exogenous here: measures stellar sensitivity with
  // the primary trajectory's regeneration forcing. Report this conditional scope.
  if((s.shadow[3].mass>0)!=(s.b[3].mass>0))s.shadow[3]=s.b[3];
- if(s.frame%600==0){double vscale=std::sqrt(G*15e6/s.scale),sum=0;V drcm{},dvcm{};for(int i=0;i<3;i++){drcm=add(drcm,sub(s.shadow[i].r,s.b[i].r));dvcm=add(dvcm,sub(s.shadow[i].v,s.b[i].v));}drcm=mul(drcm,1.0/3);dvcm=mul(dvcm,1.0/3);for(int i=0;i<3;i++){V dr=sub(sub(s.shadow[i].r,s.b[i].r),drcm),dv=sub(sub(s.shadow[i].v,s.b[i].v),dvcm);sum+=dot(dr,dr)/(s.scale*s.scale)+dot(dv,dv)/(vscale*vscale);}double D=std::sqrt(sum),eps=1e-8;if(D>0&&std::isfinite(D)){double lg=std::log(D/eps);if(s.frame>600000){s.lyapSum+=lg;s.lyapYears+=10;s.lyapWindows++;}double ratio=eps/D;for(int i=0;i<3;i++){s.shadow[i].r=add(s.b[i].r,mul(sub(sub(s.shadow[i].r,s.b[i].r),drcm),ratio));s.shadow[i].v=add(s.b[i].v,mul(sub(sub(s.shadow[i].v,s.b[i].v),dvcm),ratio));}}else{throw std::runtime_error("shadow-collapse/non-finite");}s.shadow[3]=s.b[3];}
+ if(s.frame%std::llround(s.cfg.shadowWindowYears*60)==0){double vscale=std::sqrt(G*15e6/s.scale),sum=0;V drcm{},dvcm{};for(int i=0;i<3;i++){drcm=add(drcm,sub(s.shadow[i].r,s.b[i].r));dvcm=add(dvcm,sub(s.shadow[i].v,s.b[i].v));}drcm=mul(drcm,1.0/3);dvcm=mul(dvcm,1.0/3);for(int i=0;i<3;i++){V dr=sub(sub(s.shadow[i].r,s.b[i].r),drcm),dv=sub(sub(s.shadow[i].v,s.b[i].v),dvcm);sum+=dot(dr,dr)/(s.scale*s.scale)+dot(dv,dv)/(vscale*vscale);}double D=std::sqrt(sum),eps=s.cfg.shadowEps;if(D>0&&std::isfinite(D)){double lg=std::log(D/eps);s.fullLyapSum+=lg;s.fullLyapYears+=s.cfg.shadowWindowYears;if(s.frame>600000){s.lyapSum+=lg;s.lyapYears+=s.cfg.shadowWindowYears;s.lyapWindows++;}double ratio=eps/D;for(int i=0;i<3;i++){s.shadow[i].r=add(s.b[i].r,mul(sub(sub(s.shadow[i].r,s.b[i].r),drcm),ratio));s.shadow[i].v=add(s.b[i].v,mul(sub(sub(s.shadow[i].v,s.b[i].v),dvcm),ratio));}}else{throw std::runtime_error("shadow-collapse/non-finite");}s.shadow[3]=s.b[3];}
 }
 volatile std::sig_atomic_t stopRequested=0;
 void stopHandler(int){stopRequested=1;}
-void save(const State& s,const std::string& cp){if(cp.empty())return;std::string tmp=cp+".tmp";std::ofstream out(tmp);out<<json(s).dump()<<'\n';out.close();if(std::rename(tmp.c_str(),cp.c_str()))throw std::runtime_error("checkpoint-rename");}
+void save(const State& s,const std::string& cp){if(cp.empty())return;std::string tmp=cp+".tmp";std::ofstream out(tmp);out<<json(s).dump()<<'\n';out.close();int fd=open(tmp.c_str(),O_RDONLY);if(fd<0||fsync(fd))throw std::runtime_error("checkpoint-fsync");close(fd);if(std::rename(tmp.c_str(),cp.c_str()))throw std::runtime_error("checkpoint-rename");}
 json snapshot(const State& s){return {{"frame",s.frame},{"bodies",s.b},{"world",s.world},{"civilization",s.civ},{"cost",s.cost},{"stellarFailure",s.failure}};}
 int main(int argc,char** argv){
  if(argc<2){std::cerr<<"usage: native INPUT.json [CHECKPOINT.json] [TRACE.jsonl]\n";return 2;}
@@ -165,7 +171,7 @@ int main(int argc,char** argv){
   const char* rk[4]={"_13","_21","_3","newproperty20"};const char* lk[3]={"_111lum_sun","_211lum_sun","_311lum_sun"};for(int i=0;i<4;i++)opt.radius[i]=settings.at(rk[i]);for(int i=0;i<3;i++)opt.lum[i]=settings.at(lk[i]);
   opt.escapeRadius=settings.at("newproperty13");opt.planetMass=settings.at("newproperty8");opt.tempDist=settings.at("newproperty69");opt.climateInertia=settings.at("climateInertia");opt.epochWindow=settings.at("epochWindow");opt.hardness=settings.at("planetStrength");opt.breathing=settings.at("stellarBreathing");opt.low=settings.at("newproperty45");opt.high=settings.at("newproperty46");opt.storageLow=settings.at("newproperty43");opt.storageHigh=settings.at("newproperty44");opt.thermalGrace=settings.at("thermalGrace");opt.birthDelay=settings.at("birthDelay");opt.wakeDelay=settings.at("wakeDelay");opt.levels=settings.at("civilizationLevels");opt.developmentRate=settings.at("developmentRate");opt.cageM=settings.at("mc");opt.cageK1=settings.at("k1");opt.cageK2=settings.at("k2");opt.cageRc=settings.at("rc");opt.cageRe=settings.at("re");opt.cageLimit=settings.at("newproperty67");opt.cageN=settings.at("expc");
   if(!cp.empty()&&std::ifstream(cp).good()){std::ifstream(cp)>>input["saved"];s=input["saved"].get<State>();if(s.sourceHash!=input.at("sourceHash")||s.configHash!=input.at("configHash"))throw std::runtime_error("checkpoint source/config mismatch");}
-  else{s.seed=input.at("seed");s.profile=input.at("profile");s.sourceHash=input.at("sourceHash");s.configHash=input.at("configHash");s.cfg=input.at("controller").get<Config>();s.b=input.at("bodies").get<Bodies>();s.initial=s.b;s.initialE=invariant(s.b).E;for(int p=0;p<3;p++)s.scale+=norm(sub(s.b[pi[p]].r,s.b[pj[p]].r))/3;s.shadow=s.b;if(s.cfg.shadow){double d=1e-8*s.scale/std::sqrt(2.0);s.shadow[0].r[0]+=d;s.shadow[1].r[0]-=d;}}
+  else{s.seed=input.at("seed");s.profile=input.at("profile");s.sourceHash=input.at("sourceHash");s.configHash=input.at("configHash");s.cfg=input.at("controller").get<Config>();s.b=input.at("bodies").get<Bodies>();s.initial=s.b;s.initialE=invariant(s.b).E;for(int p=0;p<3;p++)s.scale+=norm(sub(s.b[pi[p]].r,s.b[pj[p]].r))/3;s.shadow=s.b;if(s.cfg.shadow){double d=s.cfg.shadowEps*s.scale/std::sqrt(2.0);s.shadow[0].r[0]+=d;s.shadow[1].r[0]-=d;}}
   std::ofstream trace;if(!tracePath.empty())trace.open(tracePath,std::ios::app);
   while(s.frame<total&&s.failure.is_null()&&s.error.is_null()&&!stopRequested){
    double oldActiveTime=s.cost.activeTime;long long oldProjections=s.cost.projectionEvents;
@@ -174,16 +180,20 @@ int main(int argc,char** argv){
    escapes(s);if(s.returnFrame>=0&&s.frame>=s.returnFrame)regenerate(s);
    if(s.b[3].mass){auto r=updateWorld(s.b,s.world,year);updateCiv(s,r);if(s.world.terminal)removePlanet(s,s.world.terminal==1?"engulfed":"disrupted");if(s.b[3].mass&&r.stable){s.stableFrames++;if(s.frame>600000)s.matureStableFrames++;}}
    else s.absentFrames++;
-   double d[3];for(int p=0;p<3;p++)d[p]=norm(sub(s.b[pi[p]].r,s.b[pj[p]].r));int pair=std::min_element(d,d+3)-d;double shape=*std::max_element(d,d+3)/d[pair];if(pair!=s.lastPair){if(s.lastPair>=0)s.changes++;s.lastPair=pair;}if(shape<3)s.nonhierFrames++;if(shape>5){s.hierarchyRun++;s.longestHierarchy=std::max(s.longestHierarchy,s.hierarchyRun);}else s.hierarchyRun=0;
+   double d[3];for(int p=0;p<3;p++)d[p]=norm(sub(s.b[pi[p]].r,s.b[pj[p]].r));int pair=std::min_element(d,d+3)-d;double shape=*std::max_element(d,d+3)/d[pair];if(pair!=s.lastPair){if(s.lastPair>=0)s.changes++;s.lastPair=pair;}if(shape<3){s.nonhierFrames++;if(s.frame>600000)s.matureNonhierFrames++;}if(shape>5){s.hierarchyRun++;s.longestHierarchy=std::max(s.longestHierarchy,s.hierarchyRun);}else s.hierarchyRun=0;
+   int ii=pi[pair],jj=pj[pair],kk=3-ii-jj;V innerR=sub(s.b[ii].r,s.b[jj].r),innerV=sub(s.b[ii].v,s.b[jj].v);double mui=G*(s.b[ii].mass+s.b[jj].mass),ei=.5*dot(innerV,innerV)-mui/d[pair];bool hierarchical=false;
+   if(ei<0){double ai=-mui/(2*ei),hi=norm(cross(innerR,innerV)),ecc=std::sqrt(std::max(0.0,1+2*ei*hi*hi/(mui*mui))),apo=ai*(1+ecc),next=1e100;for(int q=0;q<3;q++)if(q!=pair)next=std::min(next,d[q]);if(d[pair]<.5*next&&pair!=s.lastTight){if(s.lastTight>=0)s.tightChanges++;s.lastTight=pair;}auto cm=center(s.b,(1<<ii)|(1<<jj));V rr=sub(s.b[kk].r,cm.r),vv=sub(s.b[kk].v,cm.v);double R=norm(rr),muo=G*(cm.mass+s.b[kk].mass),eo=.5*dot(vv,vv)-muo/R;if(eo<0){double ho=norm(cross(rr,vv)),ec=std::sqrt(std::max(0.0,1+2*eo*ho*ho/(muo*muo))),peri=ho*ho/(muo*(1+ec));hierarchical=peri>3*apo;}}
+   if(hierarchical){s.dynHierFrames++;if(s.frame>600000)s.matureDynHierFrames++;s.dynHierRun++;s.longestDynHier=std::max(s.longestDynHier,s.dynHierRun);}else s.dynHierRun=0;
    if(s.frame%60==0){double residual=(invariant(s.b).E-s.initialE-s.cost.work-s.external.work)/std::max(std::abs(s.initialE),1e-20);s.maxResidual=std::max(s.maxResidual,std::abs(residual));}
    try{shadowUpdate(s);}catch(const std::exception& e){s.error={{"kind","shadow-numerical-error"},{"message",e.what()},{"year",year}};break;}
    if(trace.is_open())trace<<snapshot(s).dump()<<'\n';
    if(s.frame%6000==0)s.history.push_back({{"year",year},{"distances",{d[0],d[1],d[2]}},{"energy",invariant(s.b).E},{"costWork",s.cost.work},{"planetLosses",s.planetLosses},{"stableFraction",s.stableFrames/double(s.frame)},{"nonhierFraction",s.nonhierFrames/double(s.frame)}});
-   if(s.frame%60000==0){s.bins.push_back({{"year",year},{"stableFrames",s.stableFrames},{"matureStableFrames",s.matureStableFrames},{"nonhierFrames",s.nonhierFrames},{"closestPairChanges",s.changes},{"planetLosses",s.planetLosses},{"absentFrames",s.absentFrames},{"control",s.cost},{"lyapSum",s.lyapSum},{"lyapYears",s.lyapYears}});save(s,cp);}
+   if(s.frame%60000==0){s.bins.push_back({{"year",year},{"stableFrames",s.stableFrames},{"matureStableFrames",s.matureStableFrames},{"nonhierFrames",s.nonhierFrames},{"dynHierFrames",s.dynHierFrames},{"tightPairChanges",s.tightChanges},{"closestPairChanges",s.changes},{"planetLosses",s.planetLosses},{"absentFrames",s.absentFrames},{"control",s.cost},{"lyapSum",s.lyapSum},{"lyapYears",s.lyapYears},{"fullLyapSum",s.fullLyapSum},{"fullLyapYears",s.fullLyapYears}});save(s,cp);}
   }
   s.wallSeconds+=std::chrono::duration<double>(std::chrono::steady_clock::now()-started).count();if(stopRequested){save(s,cp);return 75;}
   bool complete=s.frame==total&&s.failure.is_null()&&s.error.is_null();json result={{"seed",s.seed},{"profile",s.profile},{"sourceHash",s.sourceHash},{"configHash",s.configHash},{"horizon",total/60.0},{"integratedYears",s.time/.45},{"stellarIntact",complete},{"starFailure",s.failure},{"numericallyCensored",!s.error.is_null()},{"error",s.error},{"firstPlanetLoss",s.firstPlanetLoss<0?json(nullptr):json(s.firstPlanetLoss)},{"originalPlanetSurvived",complete&&s.planetLosses==0},{"planetLosses",s.planetLosses},{"planetRespawns",s.planetRespawns},{"absentFraction",s.absentFrames/double(total)},{"stableFraction",s.stableFrames/double(total)},{"matureStableFraction",total>600000?json(s.matureStableFrames/double(total-600000)):json(nullptr)},{"civilizationBirths",s.civ.births},{"civilizationDeaths",s.civ.deaths},{"civilizationAliveFraction",s.civ.aliveFrames/double(total)},{"civilizationActiveFraction",s.civ.activeFrames/double(total)},{"longestCivilizationYears",s.civ.maxLife},{"nonhierFraction",s.nonhierFrames/double(total)},{"longestHierarchyYears",s.longestHierarchy/60.0},{"closestPairChanges",s.changes},{"minSS",s.minSS},{"control",s.cost},{"planetExternal",s.external},{"maxNumericalEnergyResidual",s.maxResidual},{"steps",s.steps},{"initialBodies",s.initial},{"finalBodies",s.b},{"initialScale",s.scale},{"initialCrossingYears",std::sqrt(s.scale*s.scale*s.scale/(G*15e6))/.45},{"bins",s.bins},{"events",s.events},{"history",s.history},{"wallSeconds",s.wallSeconds},{"matureConditionalFTLE",s.lyapYears>0?json(s.lyapSum/s.lyapYears):json(nullptr)},{"lyapunovWindows",s.lyapWindows},{"lyapunovScope","stellar shadow conditioned on primary planet lifecycle; 10-year renormalization, dimensionless eps1e-8"}};
   struct rusage usage{};getrusage(RUSAGE_SELF,&usage);result["maxRSSKiB"]=usage.ru_maxrss;result["initialEnergy"]=s.initialE;result["controlActiveFrameFraction"]=s.cost.activeFrames/double(total);result["controlMeanAcceleration"]=s.time>0?s.cost.accelerationIntegral/(s.time*3):0;result["controlRMSAcceleration"]=s.time>0?std::sqrt(s.cost.accelerationSquaredIntegral/(s.time*3)):0;
+  result["fullConditionalFTLE"]=s.fullLyapYears>0?json(s.fullLyapSum/s.fullLyapYears):json(nullptr);result["dynHierFraction"]=s.dynHierFrames/double(total);result["longestDynamicalHierarchyYears"]=s.longestDynHier/60.0;result["matureDynHierFraction"]=total>600000?json(s.matureDynHierFrames/double(total-600000)):json(nullptr);result["matureNonhierFraction"]=total>600000?json(s.matureNonhierFrames/double(total-600000)):json(nullptr);result["tightPairChanges"]=s.tightChanges;
   std::cout<<result.dump()<<'\n';return 0;
  }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 2;}
 }

@@ -27,7 +27,7 @@ export function capture(b,G,cfg,scale,cost){
  for(let i=0;i<3;i++){
   const others=b.slice(0,3).filter((_,j)=>j!==i),c=center(others),M=others.reduce((s,x)=>s+x.mass,0),r=sub(pos(b[i]),c.slice(0,3)),v=sub(vel(b[i]),c.slice(3)),R=norm(r),vr=dot(r,v)/R,mu=G*(M+b[i].mass),E=.5*dot(v,v)-mu/R;
   const target=-mu/((cfg.apocenterScale??4)*scale);
-  if(!(vr>0&&R>(cfg.captureRadiusScale??1.5)*scale&&E>target+1e-14*mu/scale))continue;
+  if(!(vr>0&&R>(cfg.captureRadiusScale??1.5)*scale&&R>(cfg.captureSeparationFactor??0)*norm(sub(pos(others[0]),pos(others[1])))&&E>(cfg.capturePositiveOnly?0:target)+1e-14*mu/scale))continue;
   const vt2=Math.max(0,dot(v,v)-vr*vr),available=Math.max(0,2*(mu/R+target));let dv;
   if(available>=vt2){const change=Math.sqrt(available-vt2)-vr;dv=r.map(x=>x/R*change);}
   else{const ratio=Math.sqrt(available/dot(v,v));dv=v.map(x=>x*(ratio-1));}

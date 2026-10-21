@@ -1,0 +1,97 @@
+{
+  "sourceHash": "4adeeddff982742c85ebaadaef6cf21289e4822a5affe1ff65f866dbf8564af9",
+  "configHash": "a4bd57932e2beb7f80736dff2eec7ffa20c4bc788c27ac30c2d6dd510289acf1",
+  "binaryHash": "2086197071dbeaa733aa5d6f47c8909727d41675a4da4019ab4aa0c63d37ca3c",
+  "config": {
+    "prefix": "V2-B",
+    "seeds": 32,
+    "horizon": 10000,
+    "output": "docs/research-v2/results/medium.jsonl",
+    "profiles": [
+      {
+        "id": "newton"
+      },
+      {
+        "id": "legacy-cage",
+        "cage": true
+      },
+      {
+        "id": "reflect",
+        "reflect": true,
+        "shadow": true
+      },
+      {
+        "id": "reflect-cap",
+        "reflect": true,
+        "capture": true,
+        "shadow": true
+      },
+      {
+        "id": "reflect-transfer",
+        "reflect": true,
+        "capture": true,
+        "redistribute": true,
+        "shadow": true
+      },
+      {
+        "id": "reflect-positive-cap",
+        "reflect": true,
+        "capture": true,
+        "capturePositiveOnly": true,
+        "captureSeparationFactor": 1.5,
+        "shadow": true
+      },
+      {
+        "id": "reflect-positive-transfer",
+        "reflect": true,
+        "capture": true,
+        "redistribute": true,
+        "capturePositiveOnly": true,
+        "captureSeparationFactor": 1.5,
+        "shadow": true
+      }
+    ]
+  },
+  "sourceFiles": [
+    "docs/research-v2/native.cpp",
+    "docs/research-v2/vendor/json.hpp",
+    "docs/research-v2/build-native.sh",
+    "docs/research-v2/run-native.mjs",
+    "docs/research-v2/engine.mjs",
+    "docs/research-v2/controllers/index.mjs",
+    "src/adaptive-trails.js",
+    "src/audio.js",
+    "src/bridge.js",
+    "src/civilization-levels.js",
+    "src/civilization-state.js",
+    "src/escape-state.js",
+    "src/fixed-display-frame.js",
+    "src/habitability.js",
+    "src/layout.js",
+    "src/main.js",
+    "src/motion-visuals.js",
+    "src/orbit-trace.js",
+    "src/orbital-initialization.js",
+    "src/original-data.js",
+    "src/renderer.js",
+    "src/run-statistics.js",
+    "src/seed-compatibility.js",
+    "src/settings-catalog.js",
+    "src/settings.js",
+    "src/simulation-worker.js",
+    "src/simulation.js",
+    "src/storage.js",
+    "src/trail-ribbon.js",
+    "src/view-motion.js",
+    "src/world-state.js",
+    "src/physics/gravity.js",
+    "src/legacy/008.js",
+    "src/legacy/079.js",
+    "src/legacy/010.js"
+  ],
+  "shard": 1,
+  "shards": 2,
+  "createdAt": "2026-10-21T15:33:36.487Z",
+  "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+  "flags": "-std=c++17 -O3 -ffp-contract=off -Wall -Wextra -pedantic"
+}

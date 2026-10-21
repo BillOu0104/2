@@ -1,0 +1,7 @@
+docs/research-v2/native.cpp: In function ‘int capture(Bodies&, const Config&, double, Cost&)’:
+docs/research-v2/native.cpp:86:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   86 |  if(!cfg.capture)return 0;int n=0;
+      |  ^~
+docs/research-v2/native.cpp:86:27: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   86 |  if(!cfg.capture)return 0;int n=0;
+      |                           ^~~

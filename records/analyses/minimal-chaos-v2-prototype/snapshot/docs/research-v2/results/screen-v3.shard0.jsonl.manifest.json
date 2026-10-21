@@ -1,0 +1,75 @@
+{
+  "sourceHash": "3f2d1c55bb8754b7dacc7c577628a1d0102484e5a51cdf27c1bcc6d8b844ccf5",
+  "configHash": "4901f00ded5bdde253b3fb24c7a54f023c123246475b16df0712ede281a94604",
+  "binaryHash": "c53cc2ad2e083a248f40545596a8289c6a5b67ff9cc14f1124cbe715c9b0c17f",
+  "config": {
+    "prefix": "V2-A",
+    "seeds": 16,
+    "horizon": 1000,
+    "output": "docs/research-v2/results/screen-v3.jsonl",
+    "profiles": [
+      {
+        "id": "newton"
+      },
+      {
+        "id": "legacy-cage",
+        "cage": true
+      },
+      {
+        "id": "encounter",
+        "barrier": true
+      },
+      {
+        "id": "capture",
+        "capture": true
+      },
+      {
+        "id": "combined",
+        "barrier": true,
+        "capture": true
+      }
+    ]
+  },
+  "sourceFiles": [
+    "docs/research-v2/native.cpp",
+    "docs/research-v2/vendor/json.hpp",
+    "docs/research-v2/build-native.sh",
+    "docs/research-v2/run-native.mjs",
+    "docs/research-v2/engine.mjs",
+    "docs/research-v2/controllers/index.mjs",
+    "src/adaptive-trails.js",
+    "src/audio.js",
+    "src/bridge.js",
+    "src/civilization-levels.js",
+    "src/civilization-state.js",
+    "src/escape-state.js",
+    "src/fixed-display-frame.js",
+    "src/habitability.js",
+    "src/layout.js",
+    "src/main.js",
+    "src/motion-visuals.js",
+    "src/orbit-trace.js",
+    "src/orbital-initialization.js",
+    "src/original-data.js",
+    "src/renderer.js",
+    "src/run-statistics.js",
+    "src/seed-compatibility.js",
+    "src/settings-catalog.js",
+    "src/settings.js",
+    "src/simulation-worker.js",
+    "src/simulation.js",
+    "src/storage.js",
+    "src/trail-ribbon.js",
+    "src/view-motion.js",
+    "src/world-state.js",
+    "src/physics/gravity.js",
+    "src/legacy/008.js",
+    "src/legacy/079.js",
+    "src/legacy/010.js"
+  ],
+  "shard": 0,
+  "shards": 2,
+  "createdAt": "2026-10-21T15:21:37.654Z",
+  "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+  "flags": "-std=c++17 -O3 -ffp-contract=off -Wall -Wextra -pedantic"
+}
