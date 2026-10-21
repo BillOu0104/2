@@ -8,6 +8,7 @@ import { LineGeometry } from 'three/addons/lines/LineGeometry.js';
 import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
 import { colorRGB, seededRandom } from './settings.js';
 import { fadeMotion } from './motion-visuals.js';
+import {displayCenter} from './display-center.js';
 import { ViewMotion } from './view-motion.js';
 import { TrailHistory, trailComplexity, selectTrail } from './adaptive-trails.js';
 
@@ -46,7 +47,7 @@ export class SpaceRenderer {
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping; this.renderer.toneMappingExposure = 1;
     this.scene = new THREE.Scene(); this.camera = new THREE.PerspectiveCamera(50, 1, 0.01, 200);
     this.camera.position.set(0, 0.25, 5.2); this.camera.lookAt(0, 0, 0);
-    this.world = new THREE.Group(); this.scene.add(this.world);
+    this.world = new THREE.Group(); this.scene.add(this.world);this.system=new THREE.Group();this.world.add(this.system);this.focusTarget=new THREE.Vector3();
     this.compass = new THREE.Group(); this.world.add(this.compass);this.compass.scale.setScalar(.3);this.compass.visible=false;this.compassFade=0;this.compassTarget=false;
     const ringGeometry = new THREE.BufferGeometry().setFromPoints(Array.from({ length: 257 }, (_, i) => new THREE.Vector3(Math.cos(i / 256 * Math.PI * 2) * 1.42, Math.sin(i / 256 * Math.PI * 2) * 1.42, 0)));
     for (const [angle, opacity] of [[0, 0], [Math.PI / 2, 0]]) {
@@ -69,7 +70,7 @@ export class SpaceRenderer {
     this.scene.add(new THREE.AmbientLight(0x8297b4, 0.35));
     this.nodes = []; this.trails = []; this.trailBuffers = [];
     for (let i = 0; i < 4; i++) {
-      const group = new THREE.Group(); this.world.add(group);
+      const group = new THREE.Group(); this.system.add(group);
       const material = i < 3 ? new THREE.MeshStandardMaterial({ map: this.starTexture, emissiveMap: this.starTexture, emissive: 0xffffff, emissiveIntensity: 3, roughness: 1 }) : new THREE.MeshStandardMaterial({ map: this.planetTexture, roughness: .83, emissive: 0x91c6ff, emissiveIntensity: .15 });
       const mesh = new THREE.Mesh(sphere, material); group.add(mesh);
       const glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: this.spikeTexture, color: 0xffcba8, transparent: true, opacity: .7, blending: THREE.AdditiveBlending, depthWrite: false })); group.add(glow);
@@ -81,7 +82,7 @@ export class SpaceRenderer {
       // Growing a one-segment LineGeometry later silently clips rendering to that segment.
       const geo = new LineGeometry(); geo.setPositions(new Float32Array(2000 * 3)); geo.setColors(new Float32Array(2000 * 3)); geo.instanceCount = 0;
       const line = new Line2(geo, new LineMaterial({ linewidth: 2.2, vertexColors: true, transparent: true, opacity: .8, blending: THREE.AdditiveBlending, depthWrite: false }));
-      line.frustumCulled = false; this.world.add(line); this.trails.push(line); this.trailBuffers.push(new TrailHistory());
+      line.frustumCulled = false; this.system.add(line); this.trails.push(line); this.trailBuffers.push(new TrailHistory());
     }
     this.dustLayers = [];this.dustTexture=crispParticle();
     const rng = seededRandom('original-dust');
@@ -103,7 +104,8 @@ export class SpaceRenderer {
     this.mouse = { x: 0, y: 0, down: false, dragging: false, startX: 0, startY: 0, lastX: 0, lastY: 0, lastInput: -Infinity, inside:false }; this.rot = new ViewMotion();this.autoAngle=0;this.returning=false;this.hoverBase={x:0,y:0};
     canvas.addEventListener('pointerdown', e => { if(e.button!==0)return; this.mouse.down = true; this.mouse.lastInput=performance.now();this.mouse.dragging=false; this.mouse.startX=this.mouse.lastX = e.clientX; this.mouse.startY=this.mouse.lastY = e.clientY; canvas.setPointerCapture(e.pointerId); });
     canvas.addEventListener('pointermove', e => {
-      this.mouse.inside=true;if(this.settings.viewSensitivity>0&&(+this.settings.newproperty61===1||this.mouse.down))this.mouse.lastInput=performance.now();
+      const moved=Math.hypot(e.clientX-this.mouse.lastX,e.clientY-this.mouse.lastY)>.1;
+      this.mouse.inside=true;if(moved&&this.settings.viewSensitivity>0&&(+this.settings.newproperty61===1||this.mouse.down))this.mouse.lastInput=performance.now();
       this.mouse.x = e.clientX / innerWidth * 2 - 1; this.mouse.y = e.clientY / innerHeight * 2 - 1;
       if (this.settings.viewSensitivity>0 && this.mouse.down && +this.settings.newproperty61 !== 2) {
         if(Math.hypot(e.clientX-this.mouse.startX,e.clientY-this.mouse.startY)>3)this.mouse.dragging=true;
@@ -176,6 +178,9 @@ export class SpaceRenderer {
     if (this.snap && state.revision !== this.snap.revision) { this.clearTrails(); this.firstPosition = true; }
     if (!this.snap) this.firstPosition = true;
     this.snap = state;
+    const center=this.settings.centerOnSystem?displayCenter(state.bodies,state.com):state.com;
+    this.focusTarget.set((state.com.x-center.x)/this.spaceScale,(state.com.y-center.y)/this.spaceScale,(state.com.z-center.z)/this.spaceScale);
+    if(this.firstPosition)this.system.position.copy(this.focusTarget);
     state.bodies.forEach((b, i) => {
       const n = this.nodes[i]; n.target.set((b.x - state.com.x)/this.spaceScale,(b.y - state.com.y)/this.spaceScale,(b.z - state.com.z)/this.spaceScale);
       if (this.firstPosition) n.group.position.copy(n.target);
@@ -192,9 +197,9 @@ export class SpaceRenderer {
     this.nodes.slice(0,3).forEach((n,i)=>{const radius=state.world?.stars[i]?.radius;if(radius)n.mesh.scale.setScalar(radius/this.spaceScale);});
   }
   updateTrails(dt) {
-    this.world.updateWorldMatrix(true,false);this.camera.updateMatrixWorld();
+    this.system.updateWorldMatrix(true,false);this.camera.updateMatrixWorld();
     const project=point=>{
-      vec.set(point.x,point.y,point.z).applyMatrix4(this.world.matrixWorld).project(this.camera);
+      vec.set(point.x,point.y,point.z).applyMatrix4(this.system.matrixWorld).project(this.camera);
       return{x:(vec.x*.5+.5)*innerWidth,y:(-.5*vec.y+.5)*innerHeight,z:vec.z};
     };
     const raw=trailComplexity(this.trailBuffers,project,this.snap.runtime);
@@ -217,19 +222,24 @@ export class SpaceRenderer {
   render(dt, elapsed, motionDt=dt) {
     const s = this.settings;
     const idle=(performance.now()-this.mouse.lastInput)/1000;
-    if(s.viewSensitivity>0&&+s.newproperty61===1&&!this.mouse.down&&this.mouse.inside&&idle<2){
+    this.returning=!!s.newproperty16&&+s.newproperty61!==2&&!this.mouse.down&&idle>=2&&s.newproperty51>0;
+    if(this.returning){
+      // Return owns the motion during idle; coasting must not fight it.
+      this.rot.returnToOrigin(motionDt,s.newproperty51);
+      this.hoverBase.x=this.rot.x-this.mouse.y*s.y7*s.x5*s.viewSensitivity*Math.PI/180;
+      this.hoverBase.y=this.rot.y-this.mouse.x*s.x6*s.y5*s.viewSensitivity*Math.PI/180;
+    }else if(s.viewSensitivity>0&&+s.newproperty61===1&&!this.mouse.down&&this.mouse.inside&&idle<2){
       for(let remaining=motionDt;remaining>1e-8;){const step=Math.min(1/60,remaining);this.rot.follow(this.hoverBase.x+this.mouse.y*s.y7*s.x5*s.viewSensitivity*Math.PI/180,this.hoverBase.y+this.mouse.x*s.x6*s.y5*s.viewSensitivity*Math.PI/180,step,Math.max(.25,s.newproperty62*12));remaining-=step;}
-    }else this.rot.coast(motionDt,-Math.log(Math.min(.999,s.y6))*120);
-    this.compassTarget=!!s.compass&&(this.mouse.dragging||Math.hypot(this.rot.vx,this.rot.vy)>.0005);
+    }else if(+s.newproperty61!==2)this.rot.coast(motionDt,-Math.log(Math.min(.999,s.y6))*120);
+    this.compassTarget=!!s.compass&&!this.returning&&+s.newproperty61!==2&&(this.mouse.dragging||(idle<2&&Math.hypot(this.rot.vx,this.rot.vy)>.0005));
     this.compassFade=fadeMotion(this.compassFade,this.compassTarget,motionDt);this.compass.visible=this.compassFade>.002&&s.compassOpacity>0;
     for(const child of this.compass.children)child.material.opacity=s.compassOpacity*this.compassFade;
-    this.returning=!!s.newproperty16&&!this.mouse.down&&idle>=2;
-    if(this.returning){this.rot.returnToOrigin(motionDt,s.newproperty51);this.hoverBase.x=this.rot.x-this.mouse.y*s.y7*s.x5*s.viewSensitivity*Math.PI/180;this.hoverBase.y=this.rot.y-this.mouse.x*s.x6*s.y5*s.viewSensitivity*Math.PI/180;}
     this.world.rotation.set(this.rot.x,this.rot.y,0);
+    this.system.position.lerp(this.focusTarget,1-Math.exp(-motionDt/1.5));
     this.nodes.forEach((n, i) => {
       n.group.position.lerp(n.target, 1 - Math.exp(-dt * 22)); n.mesh.rotation.y += dt * .1;
       if (i < 3) { n.glow.material.opacity = Math.min(1, .35 + s.newproperty49 * .3 + (s.newproperty2 ? s.hdr * .09 : 0) + this.audioLevel * .12); }
-      vec.copy(n.group.position); this.world.localToWorld(vec); vec.project(this.camera);
+      n.group.getWorldPosition(vec);vec.project(this.camera);
       n.label.style.transform = `translate(${(vec.x * .5 + .5) * innerWidth + 15}px,${(-vec.y * .5 + .5) * innerHeight - 9}px)`;
       n.label.style.visibility = vec.z > 1 || vec.z < -1 ? 'hidden' : 'visible';
       if (this.snap) n.label.querySelector('small').textContent = `${n.group.position.x.toFixed(2)} / ${n.group.position.y.toFixed(2)}`;

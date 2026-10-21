@@ -1,7 +1,7 @@
-name: v0.5.2 acceptance build
+name: Wallpaper acceptance build
 on:
   push:
-    branches: [fix/v0.5.2-newtonian]
+    branches: ['fix/**']
   workflow_dispatch:
 permissions:
   contents: read
@@ -19,6 +19,6 @@ jobs:
       - run: npm run build
       - uses: actions/upload-artifact@v4
         with:
-          name: three-body-v0.5.2-acceptance
+          name: three-body-acceptance
           path: dist/
           retention-days: 14
