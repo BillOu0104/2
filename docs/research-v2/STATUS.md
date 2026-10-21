@@ -21,8 +21,10 @@ python3 docs/research-v2/summarize.py docs/research-v2/results/medium-canonical
 
 两条supervise命令在两个终端并发，只用2个CPU worker。同Shard锁跳过活跃worker，结果跳过完成键，检查点恢复未完成Seed。**有活跃worker时不要重编译或修改计算源码**；新版本用新配置/输出。二进制哈希变化时先核对编译器与选项，不强行跳过版本检查。
 
+当前Shard0已完成112条；Shard1的B-13/reflect-cap超过Node输出缓冲（完整物理状态已到10000年，非死亡），改用同一冻结二进制的流式传输继续：`python3 docs/research-v2/run-stream.py docs/research-v2/medium.json 1 2`。该脚本也持同一Shard锁，拒绝重复进程；依赖`python3 -m pip install --target /tmp/codex-v2-python ijson==3.3.0`，不修改生产依赖。若仍用旧supervise恢复Shard1，会再次遇到同一输出上限，应使用run-stream。
+
 raw/<源码哈希>-<配置哈希>/保存gzip完整事件，JSONL含路径和SHA256。work/每1000年原子保存完整物理/控制/行星/文明/统计/影子状态，版本隔离。工作区被销毁后，未推送的检查点不保证可恢复。数值中断单列UNKNOWN。
 
 下一步：完成medium全部224条，比较全部Seed分布、条件FTLE、动力学层级占比、累计控制成本。根据证据选择或迭代，进入30000和100000年。正式确认前缀V2-CONFIRM-20261021至少128种子仍封存，成熟期固定10000年后。确认后做步长/eta减半、影子幅度/窗口校准、初始化和行星协议消融。证据充分才进集成分支；main替换需用户验收。
 
-资源：2核、8GiB、约30GiB磁盘，Node24.19、g++14.2、Python科学库。GitHub/npm网络已实际验证，研究分支已推送。环境永久保留、额度自动续期、定时任务能自动访问本工作区均未保证。
+资源：2核、8GiB、约30GiB磁盘，Node24.19、g++14.2、Python科学库。GitHub/npm网络已实际验证，研究分支已推送。已创建按小时恢复检查；首次检查成功读取本工作区并发现两Shard均活跃，未重复启动。此验证不保证额度重置后或工作区销毁后仍能自动恢复；环境永久保留及额度自动续期未保证。

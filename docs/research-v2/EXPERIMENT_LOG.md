@@ -10,3 +10,4 @@
 8. 环境没有/usr/bin/time，初次native启动在实际积分前失败（screen-v2空结果及manifest保留）；改用getrusage记录原生峰值RSS。JS/native接触斥势、速度反馈激活夹具及1000年检查点恢复到2000年对照通过。保存screen-v3源快照并验证其SHA256与旧manifest逐字一致，避免后续加严规则掩盖旧版本。
 9. 完整核查Simulation.tick发现产品还把接受步的星—行星接触传给WorldState，不能只复制WorldState逐帧接触检测。主动暂停刚开始的medium（SIGTERM检查点，状态75不是死亡），保留partial结果，补充接受步行星吞噬并重跑全部同组配置。主轨迹在步内移除行星时，条件影子必须在同一帧内同一物理时刻移除，否则会注入虚假敏感性；已加入分段驱动。新规范结果使用medium-contact-v2，不混用旧部分行。
 10. 原始事件压缩文件和检查点的路径必须含源码与配置哈希，避免同Seed跨版本复算覆盖旧事件。发现并恢复原始Git归档，contact-v2的17条已完成数据移到独立partial目录并核对SHA256；正式中期使用medium-canonical，旧partial仅用于调试。P5重生时点按不早于损失5年的下一参考帧固定，量化误差不超过1/60显示年。
+11. 10000年canonical的B-13/reflect-cap已完成600000参考帧并保存370MiB完整状态，但stdout超过Node256MiB缓冲，SIGPIPE/ENOBUFS停止的是传输，非物理失败。新增run-stream.py仅更换传输：同一冻结原生二进制、初始化和参数，stdout直接落盘，ijson逐字段抽取汇总、流式gzip保留全部事件，独立记录transportSHA256。其解析与原始native结果逐字段比对通过。无修改计算源码，不把超缓冲案例丢弃或记成死亡；采用同Seed同版本复算并仅记一次结局。依赖ijson3.3.0装于/tmp，生产package不变。
