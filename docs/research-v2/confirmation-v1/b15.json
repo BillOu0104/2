@@ -1,0 +1,41 @@
+{
+  "prefix": "V2-CONFIRM-20261021",
+  "start": 120,
+  "seeds": 8,
+  "horizon": 100000,
+  "saveCheckpoints": true,
+  "output": "docs/research-v2/results/confirmation-v1/b15.jsonl",
+  "profiles": [
+    {
+      "id": "newton",
+      "shadow": true
+    },
+    {
+      "id": "legacy-cage",
+      "cage": true,
+      "shadow": true
+    },
+    {
+      "capture": true,
+      "redistribute": true,
+      "capturePositiveOnly": true,
+      "captureSeparationFactor": 1.5,
+      "shadow": true,
+      "reflect": true,
+      "id": "deflect4-trigger8",
+      "captureTriggerScale": 8,
+      "deflect": true,
+      "deflectionFactor": 4
+    },
+    {
+      "capture": true,
+      "redistribute": true,
+      "capturePositiveOnly": true,
+      "captureSeparationFactor": 1.5,
+      "shadow": true,
+      "reflect": true,
+      "id": "reflect-trigger8",
+      "captureTriggerScale": 8
+    }
+  ]
+}
