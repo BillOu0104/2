@@ -28,3 +28,5 @@
 自动阶段 shadow30k 2026-10-21T18:59:57.379977+00:00：32/32条，原始及版本/恢复哈希审计通过，数值UNKNOWN=0，影子主轨迹检查退出码=0。完整记录见results/shadow30k.series.json、summary及paired；本次不是正式确认。
 
 自动阶段 ablation30k 2026-10-21T19:04:47.781187+00:00：64/64条，原始及版本/恢复哈希审计通过，数值UNKNOWN=0，影子主轨迹检查退出码=0。完整记录见results/ablation30k.series.json、summary及paired；本次不是正式确认。
+
+自动阶段 explore100k 2026-10-21T19:35:04.089086+00:00：80/80条，原始及版本/恢复哈希审计通过，数值UNKNOWN=0，影子主轨迹检查退出码=0。完整记录见results/explore100k.series.json、summary及paired；本次不是正式确认。
