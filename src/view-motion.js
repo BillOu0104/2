@@ -11,7 +11,7 @@ export class ViewMotion {
     const ax=clamp((x-this.x)*12*response-this.vx*7,-this.acceleration,this.acceleration),ay=clamp((y-this.y)*12*response-this.vy*7,-this.acceleration,this.acceleration);
     this.vx+=ax*dt;this.vy+=ay*dt;this.x+=this.vx*dt;this.y+=this.vy*dt;this.bound();
   }
-  returnToOrigin(dt,speed=.003){
+  returnToOrigin(dt,speed=.006){
     if(dt<=0||speed<=0)return;
     this.vx=0;this.vy=0;
     this.y=Math.atan2(Math.sin(this.y),Math.cos(this.y));

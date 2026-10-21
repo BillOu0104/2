@@ -101,10 +101,17 @@ export class SpaceRenderer {
     // Small bright spheres become square impulses in a downsampled bloom pyramid.
     // Explicit radial sprites provide the HDR halo without changing circular silhouettes.
     this.post = new ShaderPass(postShader);
-    this.mouse = { x: 0, y: 0, down: false, dragging: false, startX: 0, startY: 0, lastX: 0, lastY: 0, lastInput: -Infinity, inside:false }; this.rot = new ViewMotion();this.autoAngle=0;this.returning=false;this.hoverBase={x:0,y:0};
+    this.mouse = { x: 0, y: 0, down: false, dragging: false, startX: 0, startY: 0, lastX: 0, lastY: 0, lastInput: -Infinity, inside:false }; this.rot = new ViewMotion();this.autoAngle=0;this.returning=false;this.hoverBase={x:0,y:0};this.releaseCoasting=false;
     canvas.addEventListener('pointerdown', e => { if(e.button!==0)return; this.mouse.down = true; this.mouse.lastInput=performance.now();this.mouse.dragging=false; this.mouse.startX=this.mouse.lastX = e.clientX; this.mouse.startY=this.mouse.lastY = e.clientY; canvas.setPointerCapture(e.pointerId); });
     canvas.addEventListener('pointermove', e => {
       const moved=Math.hypot(e.clientX-this.mouse.lastX,e.clientY-this.mouse.lastY)>.1;
+      // Rebase at the coasted position only when genuine hover input resumes.
+      // A stationary pointer after release must not act as a spring to the release point.
+      if(moved&&!this.mouse.down&&this.releaseCoasting){
+        this.hoverBase.x=this.rot.x-this.mouse.y*this.settings.y7*this.settings.x5*this.settings.viewSensitivity*Math.PI/180;
+        this.hoverBase.y=this.rot.y-this.mouse.x*this.settings.x6*this.settings.y5*this.settings.viewSensitivity*Math.PI/180;
+        this.releaseCoasting=false;
+      }
       this.mouse.inside=true;if(moved&&this.settings.viewSensitivity>0&&(+this.settings.newproperty61===1||this.mouse.down))this.mouse.lastInput=performance.now();
       this.mouse.x = e.clientX / innerWidth * 2 - 1; this.mouse.y = e.clientY / innerHeight * 2 - 1;
       if (this.settings.viewSensitivity>0 && this.mouse.down && +this.settings.newproperty61 !== 2) {
@@ -114,7 +121,7 @@ export class SpaceRenderer {
       this.mouse.lastX = e.clientX; this.mouse.lastY = e.clientY;
     });
     canvas.addEventListener('pointerleave',()=>{this.mouse.inside=false;});
-    for (const type of ['pointerup', 'pointercancel', 'lostpointercapture']) canvas.addEventListener(type, () => { if(this.mouse.down){this.hoverBase.x=this.rot.x-this.mouse.y*this.settings.y7*this.settings.x5*this.settings.viewSensitivity*Math.PI/180;this.hoverBase.y=this.rot.y-this.mouse.x*this.settings.x6*this.settings.y5*this.settings.viewSensitivity*Math.PI/180;}this.mouse.down = false; this.mouse.dragging=false; });
+    for (const type of ['pointerup', 'pointercancel', 'lostpointercapture']) canvas.addEventListener(type, () => { if(this.mouse.down){this.releaseCoasting=true;this.mouse.lastInput=performance.now();}this.mouse.down = false; this.mouse.dragging=false; });
     this.updateSettings(settings); this.resize();
     this.onResize = () => this.resize(); addEventListener('resize', this.onResize);
   }
@@ -228,7 +235,7 @@ export class SpaceRenderer {
       this.rot.returnToOrigin(motionDt,s.newproperty51);
       this.hoverBase.x=this.rot.x-this.mouse.y*s.y7*s.x5*s.viewSensitivity*Math.PI/180;
       this.hoverBase.y=this.rot.y-this.mouse.x*s.x6*s.y5*s.viewSensitivity*Math.PI/180;
-    }else if(s.viewSensitivity>0&&+s.newproperty61===1&&!this.mouse.down&&this.mouse.inside&&idle<2){
+    }else if(s.viewSensitivity>0&&+s.newproperty61===1&&!this.mouse.down&&!this.releaseCoasting&&this.mouse.inside&&idle<2){
       for(let remaining=motionDt;remaining>1e-8;){const step=Math.min(1/60,remaining);this.rot.follow(this.hoverBase.x+this.mouse.y*s.y7*s.x5*s.viewSensitivity*Math.PI/180,this.hoverBase.y+this.mouse.x*s.x6*s.y5*s.viewSensitivity*Math.PI/180,step,Math.max(.25,s.newproperty62*12));remaining-=step;}
     }else if(+s.newproperty61!==2)this.rot.coast(motionDt,-Math.log(Math.min(.999,s.y6))*120);
     this.compassTarget=!!s.compass&&!this.returning&&+s.newproperty61!==2&&(this.mouse.dragging||(idle<2&&Math.hypot(this.rot.vx,this.rot.vy)>.0005));

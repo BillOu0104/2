@@ -6,7 +6,7 @@ import {measure} from '../tools/orbital-audit.mjs';
 import {prepareBalancedOrbits} from '../src/orbital-initialization.js';
 
 test('existing v0.4.1 profiles regain hover follow and slow galaxy return without losing layout',()=>{
- const s=migrateSettings({presentationRevision:3,newproperty61:0,newproperty51:.08,layout:{right:{x:70,y:30}},seed:'KEEP',planetStrength:2});assert.equal(s.newproperty61,1);assert.equal(s.newproperty51,.003);assert.equal(s.orbitalInitialization,'research');assert.deepEqual(s.layout.right,{x:70,y:30});assert.equal(s.seed,'KEEP');assert.equal(s.planetStrength,2);
+ const s=migrateSettings({presentationRevision:3,newproperty61:0,newproperty51:.08,layout:{right:{x:70,y:30}},seed:'KEEP',planetStrength:2});assert.equal(s.newproperty61,1);assert.equal(s.newproperty51,.006);assert.equal(s.orbitalInitialization,'research');assert.deepEqual(s.layout.right,{x:70,y:30});assert.equal(s.seed,'KEEP');assert.equal(s.planetStrength,2);
  const explicit=migrateSettings({...s,presentationRevision:4,newproperty61:0,newproperty51:.001,orbitalInitialization:'original'});assert.equal(explicit.newproperty61,0);assert.equal(explicit.newproperty51,.001);assert.equal(explicit.orbitalInitialization,'original');
 });
 test('historical v0.4.1 balanced cage profile permits sustained development and planetary passages inside the star system',()=>{

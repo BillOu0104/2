@@ -12,8 +12,10 @@ import './style.css';
 const $ = selector => document.querySelector(selector);
 const settingsKey = 'three-body.settings.v3';
 const statisticsKey='three-body.statistics.v1';let lastStatisticsSave=0;
+const resetPendingKey='three-body.reset-pending.v1';
+let resetting=false,resetInProgress=false,startWorker;
 function persistStatistics(force=false){
-  if(!state?.statisticsCheckpoint||(!force&&performance.now()-lastStatisticsSave<1000))return;
+  if(resetting||!state?.statisticsCheckpoint||(!force&&performance.now()-lastStatisticsSave<1000))return;
   try{localStorage.setItem(statisticsKey,JSON.stringify(state.statisticsCheckpoint));lastStatisticsSave=performance.now();}catch{}
 }
 function savedStatistics(){try{return JSON.parse(localStorage.getItem(statisticsKey)||'null');}catch{return null;}}
@@ -212,7 +214,7 @@ function applyAppearance() {
   const tabNames = en ? ['Settings', 'Archive', 'About'] : ['全部设置', '文明档案', '项目说明']; document.querySelectorAll('[data-tab]').forEach((b, i) => b.textContent = tabNames[i]);
 }
 
-function applyPause() { worker?.postMessage({ type: 'pause', value: userPaused || hostPaused || visibilityPaused }); }
+function applyPause() { worker?.postMessage({ type: 'pause', value: resetting || userPaused || hostPaused || visibilityPaused }); }
 $('#pause-button').onclick = () => { userPaused = !userPaused; applyPause(); applyAppearance(); };
 function restart() { worker?.postMessage({ type: 'restart' }); if (settings.newproperty64) showLoading(true); }
 $('#restart-button').onclick = restart; $('#restart-prompt').onclick = restart;
@@ -234,6 +236,29 @@ $('#import-settings').onchange = async e => {
   e.target.value = '';
 };
 $('#reset-settings').onclick = () => { changeSettings(normalizeSettings()); worker?.postMessage({ type: 'restart' }); notice('已恢复默认设置：文明延续优化、尾迹开启；文明档案保留'); };
+// Keep the destructive action distinct from ordinary restart and settings reset.
+async function clearRunHistory(){
+  resetting=true;applyPause();
+  if(!await store.clearHistory())throw new Error('历史数据库暂不可写');
+  localStorage.removeItem(statisticsKey);
+  localStorage.removeItem(resetPendingKey);
+  worker?.terminate();history=[];state=null;window.__threeBodyState=null;lastEvent=lastTick=lastStatisticsSave=0;
+  sessionId=crypto.randomUUID?.()||String(Date.now());renderer.clearTrails();renderer.snap=null;
+  $('#civilization-log').replaceChildren();renderHistory();fatal=false;resetting=false;
+  startWorker({});
+}
+$('#reset-history').onclick=async()=>{
+  if(resetInProgress||!startWorker)return;
+  const en=settings.cnen2;
+  if(!confirm(en?'Erase all universe/civilization history, rankings and elapsed years? This cannot be undone. Settings and background will be kept.':'确定完全重置？将永久清空宇宙与文明历史、排行榜、累计年数，从第1号宇宙重新开始。设置与自定义背景保留。'))return;
+  resetInProgress=true;$('#reset-history').disabled=true;
+  try{
+    // A reload after an interrupted clear must complete the clear before loading old statistics.
+    localStorage.setItem(resetPendingKey,'1');await clearRunHistory();
+    notice(en?'History cleared. Starting universe 1.':'全部历史已清空，已从第1号宇宙重新开始');
+  }catch(error){notice(`完全重置未完成：${error.message}。${resetting?'模拟保持暂停，请重试完全重置。':'未清除记录，请检查浏览器存储权限后重试。'}`,true);}
+  finally{resetInProgress=false;$('#reset-history').disabled=false;}
+};
 $('#export-history').onclick = () => downloadJSON('three-body-civilization-archive.json', { version: 1, records: history });
 
 function renderHistory() {
@@ -297,7 +322,7 @@ function renderState(s) {
   [...log.children].forEach(li=>{if(!retained.has(li.dataset.id))li.remove();});
   renderStatistics(s);
   $('#simulation-year').textContent = s.year >= 1e8 ? s.year.toExponential(2) : s.year.toFixed(2);
-  $('#restart-prompt').hidden = !(s.world?.planet.restartRequired||(settings.civilizationMode==='legacy'&&s.escaped)) || settings.autorestart;
+  $('#restart-prompt').hidden = !(s.world?.planet.restartRequired||s.escapeStatus?.confirmed||(settings.civilizationMode==='legacy'&&s.escaped)) || settings.autorestart;
   $('#restart-prompt span').textContent=s.world?.planet.terminal?(en?s.world.planet.terminal.en:s.world.planet.terminal.zh):s.world?.planet.damaged?(en?'PLANETARY DAMAGE':'行星结构受损'):(en?'CELESTIAL ESCAPE':'天体已逃逸');
   $('#restart-prompt strong').textContent=en?`Start universe ${s.generation+1} ↻`:`开启第${s.generation+1}号宇宙 ↻`;
 
@@ -342,12 +367,23 @@ const audio = new AudioController((values, average) => {
 try {
   renderer = new SpaceRenderer($('#universe'), $('#body-labels'), settings);
   const blob = new Blob([__WORKER_SOURCE__], { type: 'text/javascript' }); const workerURL = URL.createObjectURL(blob);
-  worker = new Worker(workerURL); worker.onmessage = ({ data }) => {
+  startWorker=statistics=>{
+  const activeWorker=new Worker(workerURL);worker=activeWorker;activeWorker.onmessage = ({ data }) => {
+    if(resetting||worker!==activeWorker)return;
     if (data.type === 'error') { fatal = true; console.error('Simulation worker:', data); notice(`模拟异常：${data.message}。请恢复默认设置后重试。`, true); return; }
     if (data.type === 'state') { state = data.state; lastTick = state.tick; window.__threeBodyState = state; renderer.ingest(state); renderState(state); handleEvents(state.events);persistStatistics(); }
   };
-  worker.onerror = event => { fatal = true; console.error(event); notice('后台模拟无法启动。请通过本地服务器或 Wallpaper Engine 打开此项目。', true); };
-  store.getAll('history').then(records=>{history=records.sort((a,b)=>a.savedAt-b.savedAt);worker.postMessage({type:'init',settings,statistics:{...(savedStatistics()||{}),legacyRecords:history}});});
+  worker.onerror = event => { if(resetting||worker!==activeWorker)return;fatal = true; console.error(event); notice('后台模拟无法启动。请通过本地服务器或 Wallpaper Engine 打开此项目。', true); };
+  worker.postMessage({type:'init',settings,statistics});applyPause();
+  };
+  (async()=>{
+    let interrupted=false;try{interrupted=!!localStorage.getItem(resetPendingKey);}catch{}
+    if(interrupted){resetInProgress=true;try{await clearRunHistory();}finally{resetInProgress=false;}return;}
+    const startupSession=sessionId,records=await store.getAll('history');
+    // A user may initiate reset while IndexedDB is still opening.
+    if(sessionId!==startupSession||resetting||resetInProgress)return;
+    history=records.sort((a,b)=>a.savedAt-b.savedAt);startWorker({...(savedStatistics()||{}),legacyRecords:history});
+  })().catch(error=>{notice(`历史载入未完成：${error.message}。请重试完全重置。`,true);});
   installWallpaperBridge({ changeSettings, renderer, audio, setHostPaused: value => { hostPaused = value; applyPause(); } });
   store.getAsset('background').then(file => { if (file) { customURL = URL.createObjectURL(file); renderer.setCustomBackground(customURL); } });
   let lastFrame = performance.now(), startTime = lastFrame, fpsStart = lastFrame, frames = 0, lastDraw = 0;
@@ -369,7 +405,7 @@ try {
   if (settings.newproperty64 || settings.newproperty63) showLoading(); else $('#loading-overlay').hidden = true;
   if (settings.menuinit) setPanel(true);
   addEventListener('pagehide',()=>persistStatistics(true));
-  addEventListener('beforeunload', () => { persistStatistics(true);worker.terminate(); URL.revokeObjectURL(workerURL); if (customURL) URL.revokeObjectURL(customURL); });
+  addEventListener('beforeunload', () => { persistStatistics(true);worker?.terminate(); URL.revokeObjectURL(workerURL); if (customURL) URL.revokeObjectURL(customURL); });
 } catch (error) {
   fatal = true; console.error(error); hideLoading(); notice(`无法初始化 3D 场景：${error.message}。请启用浏览器硬件加速。`, true);
 }
