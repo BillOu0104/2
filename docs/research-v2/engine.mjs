@@ -4,7 +4,7 @@ import {WorldState} from '../../src/world-state.js';
 import {escapeCandidates} from '../../src/escape-state.js';
 import {Habitability} from '../../src/habitability.js';
 import {CivilizationState} from '../../src/civilization-state.js';
-import {forces,capture,applyVelocity,norm,dot,cross,sub,pos,vel,keys,center} from './controllers/index.mjs';
+import {forces,capture,reflect,applyVelocity,norm,dot,cross,sub,pos,vel,keys,center} from './controllers/index.mjs';
 export {keys};
 export const G=1.3275440274585598e-8;
 const starPairs=[[0,1],[0,2],[1,2]],distance=(a,b)=>norm(sub(pos(a),pos(b)));
@@ -12,7 +12,8 @@ const emptyCost=()=>({work:0,absoluteWork:0,impulse:0,deltaP:[0,0,0],deltaL:[0,0
 export function initialize(seed,cfg={}){const sim=new Simulation({seed,autorestart:false,newproperty60:false,orbitalInitialization:cfg.initialization??'research'});sim.tick();return {bodies:structuredClone(sim.initialBodies),settings:sim.settings};}
 export class ControlledIntegrator extends GravityIntegrator{
  constructor(bodies,settings,cfg,cost){super(bodies,G,{model:'newtonian',radii:()=>[settings._13,settings._21,settings._3,0]});this.settings=settings;this.cfg=cfg;this.cost=cost;this.starContact=null;this.minSS=Infinity;}
- kick(h){super.kick(h);if(!this.cfg.barrier&&!this.cfg.cage)return;const a=forces(this.bodies,G,this.cfg,this.settings);for(let i=0;i<4;i++)if(this.bodies[i].mass)applyVelocity(this.bodies[i],a[i].map(x=>x*h),this.cost);}
+ kick(h){if(!this.cfg.barrier&&!this.cfg.cage){super.kick(h);return;}const v0=this.bodies.map(vel),oldWork=this.cost.work;super.kick(h);const a=forces(this.bodies,G,this.cfg,this.settings);for(let i=0;i<4;i++)if(this.bodies[i].mass)applyVelocity(this.bodies[i],a[i].map(x=>x*h),this.cost);this.cost.work=oldWork;for(let i=0;i<4;i++)this.cost.work+=this.bodies[i].mass*dot(v0[i].map((x,k)=>(x+vel(this.bodies[i])[k])/2),a[i].map(x=>x*h));}
+ step(h){reflect(this.bodies,G,this.cfg,this.settings,this.cost);super.step(h);}
  detectContacts(h){
   const radii=[this.settings._13,this.settings._21,this.settings._3].map((r,i)=>r*(this.settings.stellarBreathing?1+.08*Math.sin(this.time/.45/120+i*2):1));
   for(const [i,j]of starPairs){const old=[0,1,2].map(k=>this.saved[j*6+k]-this.saved[i*6+k]),change=sub(sub(pos(this.bodies[j]),pos(this.bodies[i])),old),den=dot(change,change),t=den?Math.max(0,Math.min(1,-dot(old,change)/den)):0,d=norm(old.map((x,k)=>x+t*change[k]));this.minSS=Math.min(this.minSS,d);if(d<=radii[i]+radii[j]&&this.starContact===null)this.starContact={pair:[i,j],time:this.time-h+t*h,distance:d,radius:radii[i]+radii[j]};}
@@ -41,7 +42,8 @@ function externalChange(s,action){const before=invariants(s.bodies,G);const deta
 function removePlanet(s,kind){if(!s.bodies[3].mass)return;s.planetLosses++;s.firstPlanetLoss??=s.frame/60;s.planetReturnFrame=s.cfg.noRespawn?null:s.frame+300;externalChange(s,()=>{s.bodies[3].mass=0;});s.events.push({kind:'planet-loss',cause:kind,year:s.frame/60});if(s.shared.civilizationAlive){s.civilization.destroy({zh:kind,en:kind},s.frame/60,s.frame/60,s.settings);s.civilizationDeaths++;}}
 function temperature(b,settings,t){let flux=0;for(let i=0;i<3;i++){const d=Math.max(distance(b[i],b[3]),.01)*1e12/settings.newproperty69/1.496e11;flux+=1361*[settings._111lum_sun,settings._211lum_sun,settings._311lum_sun][i]/(d*d);}const base=(flux*.7/(4*5.67e-8))**.25-273.15,albedo=base<0?.3+.3*Math.min(1,-base/20):.3;return Number(Math.max(-270,Math.min(1500,(flux*(1-albedo)/(4*5.67e-8))**.25-273.15+10*Math.sin(t))).toFixed(2));}
 // Same seven partitions as production, allowing a genuinely absent destroyed planet.
-export function candidates(bodies,settings){if(bodies[3].mass>0)return escapeCandidates(bodies,G,{...settings,newproperty60:false});const b=structuredClone(bodies);b[3].mass=1e-100;return escapeCandidates(b,G,{...settings,newproperty60:false}).filter(x=>x.partition!==7);}
+export function candidates(bodies,settings){if(bodies[3].mass>0)return escapeCandidates(bodies,G,{...settings,newproperty60:false});const b=structuredClone(bodies);const c=center(b.slice(0,3));for(let i=0;i<6;i++)b[3][keys[i]]=c[i];b[3].mass=1e-100;return escapeCandidates(b,G,{...settings,newproperty60:false}).filter(x=>x.partition!==7);}
+export function stellarCandidates(bodies,settings){const stars=bodies.slice(0,3),all=center(stars),out=[];if(!stars.some(b=>norm(sub(pos(b),all.slice(0,3)))>settings.newproperty13))return out;for(let i=0;i<3;i++){const other=stars.filter((_,j)=>j!==i),c=center(other),r=sub(pos(stars[i]),c.slice(0,3)),v=sub(vel(stars[i]),c.slice(3)),R=norm(r),radial=dot(r,v)/R,size=Math.max(...other.map(b=>norm(sub(pos(b),c.slice(0,3)))));if(!(R>4*size&&radial>0))continue;const M=other.reduce((s,b)=>s+b.mass,0),U=-G*(stars[i].mass+M)/M*other.reduce((s,b)=>s+b.mass/distance(b,stars[i]),0),E=.5*dot(v,v)+U;if(E>.1*Math.abs(U))out.push({partition:16+i,kind:'stellar-separation',distance:R,radialSpeed:radial,specificEnergy:E});}return out;}
 export function advanceState(s,endFrame,{onCheckpoint=null,trace=false}={}){
  const start=performance.now(),integrator=new ControlledIntegrator(s.bodies,s.settings,s.cfg,s.cost);integrator.steps=s.steps??0;integrator.time=s.solverTime??0;integrator.lastCostTime=integrator.time;
  const opts={maxStep:s.cfg.dt??.00075,eta:s.cfg.eta??.0075};
@@ -49,7 +51,7 @@ export function advanceState(s,endFrame,{onCheckpoint=null,trace=false}={}){
   try{integrator.advance(.0075,opts);}catch(e){if(e.physical){s.starFailure={kind:'stellar-contact',year:integrator.starContact.time/.45,...integrator.starContact};}else s.error={kind:e.code??'numerical-error',message:e.message,year:integrator.time/.45};break;}
   s.frame++;const year=s.frame/60,dt=1/60,b=s.bodies;
   const projected=capture(b,G,s.cfg,s.scale,s.cost);if(projected&&s.events.filter(x=>x.kind==='capture').length<200)s.events.push({kind:'capture',year,count:projected});
-  const active=new Set();for(const c of candidates(b,s.settings)){active.add(c.partition);s.escapeTimers[c.partition]=(s.escapeTimers[c.partition]??0)+dt;if(s.escapeTimers[c.partition]>=3){if(c.kind==='stellar-separation'){s.starFailure={kind:'stellar-separation',year,...c};}else removePlanet(s,'confirmed-escape');}}
+  const active=new Set();for(const c of [...candidates(b,s.settings).filter(x=>x.partition===7),...stellarCandidates(b,s.settings)]){active.add(c.partition);s.escapeTimers[c.partition]=(s.escapeTimers[c.partition]??0)+dt;if(s.escapeTimers[c.partition]>=3){if(c.kind==='stellar-separation'){s.starFailure={kind:'stellar-separation',year,...c};}else removePlanet(s,'confirmed-escape');}}
   for(const key of Object.keys(s.escapeTimers))if(!active.has(+key))delete s.escapeTimers[key];
   if(s.planetReturnFrame!==null&&s.frame>=s.planetReturnFrame){const details=externalChange(s,()=>regenerate(b,s.settings,s.planetRespawns));s.planetRespawns++;s.planetReturnFrame=null;s.world.reset();s.habitat.reset();s.civilization.reset();s.events.push({kind:'planet-respawn',year,...details});}
   let w=null;
@@ -69,5 +71,5 @@ export function advanceState(s,endFrame,{onCheckpoint=null,trace=false}={}){
  s.steps=integrator.steps;s.solverTime=integrator.time;s.runtimeSeconds+=(performance.now()-start)/1000;return s;
 }
 export function result(s,horizon){const total=Math.round(horizon*60),complete=s.frame===total&&!s.error&&!s.starFailure;return {seed:s.seed,profile:s.cfg.id,horizon,integratedYears:s.solverTime/.45,stellarIntact:complete,starFailure:s.starFailure,numericallyCensored:!!s.error,error:s.error,firstPlanetLoss:s.firstPlanetLoss,originalPlanetSurvived:complete&&!s.planetLosses,planetLosses:s.planetLosses,planetRespawns:s.planetRespawns,absentFraction:s.absentFrames/total,stableFraction:s.stableFrames/total,matureStableFraction:horizon>10000?s.matureStableFrames/((horizon-10000)*60):null,civilizationBirths:s.civilizationBirths,civilizationDeaths:s.civilizationDeaths,civilizationAliveFraction:s.civilizationAliveFrames/total,nonhierFraction:s.nonhierFrames/total,longestHierarchyYears:s.longestHierarchyFrames/60,closestPairChanges:s.closestPairChanges,minSS:s.minSS,control:s.cost,planetExternal:s.external,maxNumericalEnergyResidual:s.maxNumericalEnergyResidual,steps:s.steps,initialBodies:s.initialBodies,finalBodies:s.bodies,initialScale:s.scale,initialCrossingYears:Math.sqrt(s.scale**3/(G*s.bodies.slice(0,3).reduce((n,b)=>n+b.mass,0)))/.45,bins:s.bins,events:s.events,history:s.history,wallSeconds:s.runtimeSeconds};}
-export function encode(s){return JSON.stringify(s,(k,v)=>k==='shared'&&v===s.civilization.shared?undefined:v);}
+export function encode(s){return JSON.stringify({...s,civilization:{...s.civilization,shared:undefined}});}
 export function decode(text){const s=JSON.parse(text);s.world=Object.assign(new WorldState(),s.world);s.habitat=Object.assign(new Habitability(),s.habitat);s.civilization=Object.assign(new CivilizationState(s.shared),s.civilization);s.civilization.shared=s.shared;return s;}

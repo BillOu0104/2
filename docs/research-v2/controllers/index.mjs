@@ -27,14 +27,17 @@ export function capture(b,G,cfg,scale,cost){
  for(let i=0;i<3;i++){
   const others=b.slice(0,3).filter((_,j)=>j!==i),c=center(others),M=others.reduce((s,x)=>s+x.mass,0),r=sub(pos(b[i]),c.slice(0,3)),v=sub(vel(b[i]),c.slice(3)),R=norm(r),vr=dot(r,v)/R,mu=G*(M+b[i].mass),E=.5*dot(v,v)-mu/R;
   const target=-mu/((cfg.apocenterScale??4)*scale);
-  if(!(vr>0&&R>(cfg.captureRadiusScale??1.5)*scale&&E>target))continue;
+  if(!(vr>0&&R>(cfg.captureRadiusScale??1.5)*scale&&E>target+1e-14*mu/scale))continue;
   const vt2=Math.max(0,dot(v,v)-vr*vr),available=Math.max(0,2*(mu/R+target));let dv;
   if(available>=vt2){const change=Math.sqrt(available-vt2)-vr;dv=r.map(x=>x/R*change);}
   else{const ratio=Math.sqrt(available/dot(v,v));dv=v.map(x=>x*(ratio-1));}
-  const share=M/(M+b[i].mass),reaction=-b[i].mass/(M+b[i].mass);let absoluteWork=0;
+  const share=M/(M+b[i].mass),reaction=-b[i].mass/(M+b[i].mass),oldWork=cost.work;let absoluteWork=0;
   const velocities=[{body:b[i],dv:dv.map(x=>x*share)},...others.map(body=>({body,dv:dv.map(x=>x*reaction)}))];
   for(const item of velocities){absoluteWork+=Math.abs(applyVelocity(item.body,item.dv,cost));cost.impulse+=item.body.mass*norm(item.dv);}
-  cost.absoluteWork+=absoluteWork;cost.projectionEvents++;count++;
+  cost.absoluteWork+=absoluteWork;const removed=oldWork-cost.work;
+  if(cfg.redistribute&&removed>0){const [a,c]=others,r=sub(pos(a),pos(c)),nr=r.map(x=>x/norm(r)),u=sub(vel(a),vel(c)),ur=dot(nr,u),reduced=a.mass*c.mass/(a.mass+c.mass),newUr=Math.sign(ur||1)*Math.sqrt(ur*ur+2*removed/reduced),change=nr.map(x=>x*(newUr-ur));for(const [body,share]of [[a,c.mass/(a.mass+c.mass)],[c,-a.mass/(a.mass+c.mass)]]){const dv=change.map(x=>x*share);cost.absoluteWork+=Math.abs(applyVelocity(body,dv,cost));cost.impulse+=body.mass*norm(dv);}}
+  cost.projectionEvents++;count++;
  }
  return count;
 }
+export function reflect(b,G,cfg,settings,cost){if(!cfg.reflect)return;for(let i=0;i<3;i++)for(let j=i+1;j<3;j++){const r=sub(pos(b[j]),pos(b[i])),v=sub(vel(b[j]),vel(b[i])),R=norm(r),vr=dot(r,v)/R,radii=[settings._13,settings._21,settings._3],guard=(cfg.reflectionMargin??1.15)*(radii[i]+radii[j])*(settings.stellarBreathing?1.08:1);if(!(R<guard&&vr<0))continue;const change=r.map(x=>-2*vr*x/R),M=b[i].mass+b[j].mass;for(const [body,f]of [[b[i],-b[j].mass/M],[b[j],b[i].mass/M]]){const dv=change.map(x=>x*f);cost.absoluteWork+=Math.abs(applyVelocity(body,dv,cost));cost.impulse+=body.mass*norm(dv);}cost.projectionEvents++;cost.reflectionEvents=(cost.reflectionEvents??0)+1;}}

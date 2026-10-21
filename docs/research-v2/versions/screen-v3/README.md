@@ -1,0 +1,1 @@
+Frozen sources used by screen-v3. Original sourceHash 3f2d1c55bb8754b7dacc7c577628a1d0102484e5a51cdf27c1bcc6d8b844ccf5. Escaped-star under-detection; diagnostic only, superseded by strict stellar observer. Reproduce by restoring these paths into an isolated checkout; do not overwrite current work.

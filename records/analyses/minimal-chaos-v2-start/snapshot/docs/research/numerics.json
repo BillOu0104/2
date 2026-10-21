@@ -1,0 +1,17 @@
+{
+ "prefix":"NUMERICS","start":0,"seeds":24,"horizon":400,"output":"results/numerics.jsonl",
+ "hypothesis":"Control actual physical duration while refining step size, local encounter resolution and independent Verlet integration; no seed screening.",
+ "profiles":[
+  {"id":"legacy-random","force":"legacy"},
+  {"id":"legacy-quarter","force":"legacy","dt":0.0001875},
+  {"id":"newton-random","force":"newton"},
+  {"id":"newton-half","force":"newton","dt":0.000375},
+  {"id":"random-adaptive03","force":"newton","adaptive":true,"eta":0.03},
+  {"id":"random-adaptive0075","force":"newton","adaptive":true,"eta":0.0075},
+  {"id":"bound-fixed","force":"newton","planet":"bound","inPlane":true,"radiusFraction":0.2,"Q":1.4},
+  {"id":"candidate","force":"newton","adaptive":true,"eta":0.03,"planet":"bound","inPlane":true,"radiusFraction":0.2,"Q":1.4},
+  {"id":"bound-adaptive015","force":"newton","adaptive":true,"eta":0.015,"planet":"bound","inPlane":true,"radiusFraction":0.2,"Q":1.4},
+  {"id":"bound-adaptive0075","force":"newton","adaptive":true,"eta":0.0075,"planet":"bound","inPlane":true,"radiusFraction":0.2,"Q":1.4},
+  {"id":"bound-verlet","force":"newton","method":"verlet","dt":0.0001875,"adaptive":true,"eta":0.0075,"planet":"bound","inPlane":true,"radiusFraction":0.2,"Q":1.4}
+ ]
+}

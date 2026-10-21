@@ -1,0 +1,42 @@
+{
+  "identity": "d[0.5*v_planet^2 - sum(G*M_star/r)]/dt = sum(G*M_star*(r_star-r_planet).v_star/r^3) in inertial COM frame",
+  "selection": "Post-hoc mechanism diagnostics; all cohort seeds retained; not evidence of an improved seed generator",
+  "reports": [
+    {
+      "seed": "EXPLORE-A-3",
+      "solverTime": 31.49999999988987,
+      "displayYears": 70,
+      "initialPlanetSpecificEnergy": -0.16712164585271574,
+      "finalPlanetSpecificEnergy": 0.02038995592265683,
+      "deltaPlanetSpecificEnergy": 0.18751160177537257,
+      "integratedMovingStarWork": 0.1875116018016278,
+      "workByStar": [
+        0.08958293108131836,
+        0.02505168252895703,
+        0.07287698819135241
+      ],
+      "workIdentityAbsoluteResidual": 2.6255220220150477e-11,
+      "maxTotalEnergyRelativeError": 2.2230650154141327e-13,
+      "minPlanetDistance": 0.1299235949246484,
+      "firstPositivePlanetSpecificEnergyAt": 6.95
+    },
+    {
+      "seed": "EXPLORE-A-15",
+      "solverTime": 31.49999999988987,
+      "displayYears": 70,
+      "initialPlanetSpecificEnergy": -0.10925440772129019,
+      "finalPlanetSpecificEnergy": 0.12874637919149753,
+      "deltaPlanetSpecificEnergy": 0.23800078691278773,
+      "integratedMovingStarWork": 0.2380007869184197,
+      "workByStar": [
+        0.1600377227652529,
+        0.03846218685924018,
+        0.039500877293926595
+      ],
+      "workIdentityAbsoluteResidual": 5.63196711489411e-12,
+      "maxTotalEnergyRelativeError": 1.0784408017566956e-13,
+      "minPlanetDistance": 0.0864365058011384,
+      "firstPositivePlanetSpecificEnergyAt": 12.95
+    }
+  ]
+}

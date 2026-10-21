@@ -1,0 +1,35 @@
+{
+  "sourceHash": "96cb4373bded3421c47d803faf4ac483694d70e29279851bec936d84ef72148e",
+  "configHash": "45b87a77c237bb99c818965bf10c959364dc3a8055ff07a83d299a7eb8a11020",
+  "config": {
+    "prefix": "V2-A",
+    "seeds": 16,
+    "horizon": 1000,
+    "output": "docs/research-v2/results/baseline-v1.jsonl",
+    "profiles": [
+      {
+        "id": "newton"
+      },
+      {
+        "id": "legacy-cage",
+        "cage": true
+      }
+    ]
+  },
+  "sourceFiles": [
+    "docs/research-v2/engine.mjs",
+    "docs/research-v2/controllers/index.mjs",
+    "src/physics/gravity.js",
+    "src/world-state.js",
+    "src/escape-state.js",
+    "src/simulation.js",
+    "src/settings.js",
+    "src/orbital-initialization.js",
+    "src/habitability.js",
+    "src/civilization-state.js",
+    "src/civilization-levels.js"
+  ],
+  "shard": 0,
+  "shards": 2,
+  "createdAt": "2026-10-21T15:12:08.891Z"
+}

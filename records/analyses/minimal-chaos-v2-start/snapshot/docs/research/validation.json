@@ -1,0 +1,31 @@
+{
+  "pass": true,
+  "results": [
+    {
+      "check": "actual-runtime-trajectory-parity",
+      "force": "legacy",
+      "ticks": 500,
+      "maxAbsoluteDifference": 1.1546319456101628e-14
+    },
+    {
+      "check": "actual-runtime-trajectory-parity",
+      "force": "newton",
+      "ticks": 500,
+      "maxAbsoluteDifference": 1.1546319456101628e-14
+    },
+    {
+      "check": "legacy-force-potential-consistency",
+      "pass": true
+    },
+    {
+      "check": "deterministic-initialization-and-outcomes",
+      "pass": true
+    },
+    {
+      "check": "same-duration-step-convergence",
+      "coarseDifference": 1.1275552713740922e-10,
+      "halfDifference": 6.647571382245587e-12,
+      "ratio": 16.961912953437103
+    }
+  ]
+}

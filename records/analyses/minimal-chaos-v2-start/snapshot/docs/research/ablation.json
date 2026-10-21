@@ -1,0 +1,10 @@
+{
+ "engine":"./engine-v2.mjs","prefix":"ABLATION","start":0,"seeds":32,"horizon":400,"output":"results/ablation.jsonl",
+ "hypothesis":"Disentangle moving the planet from repairing its host-relative velocity. All stellar Q distributions remain the original ones; no survival filtering.",
+ "profiles":[
+  {"id":"newton-random","force":"newton","adaptive":true,"eta":0.0075},
+  {"id":"velocity-only","force":"newton","adaptive":true,"eta":0.0075,"planet":"bound","keepPlanetPosition":true},
+  {"id":"position-only","force":"newton","adaptive":true,"eta":0.0075,"planet":"position-only","inPlane":true,"radiusFraction":0.12,"direction":-1},
+  {"id":"position-and-velocity","force":"newton","adaptive":true,"eta":0.0075,"planet":"bound","inPlane":true,"radiusFraction":0.12,"direction":-1}
+ ]
+}
