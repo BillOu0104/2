@@ -24,3 +24,5 @@
 21. 注册ROBUSTNESS_PROTOCOL：precision30k16条、shadow30k32条、ablation30k64条、explore100k80条，后者为16个新V2-E探索Seed、五组100000年，正式确认集未用。run-series只编排冻结7f64a8a二进制，阶段自动审计/Git检查点/records/推送。已实测全局锁防重复及影子主轨迹不变检测器（刻意修改复制夹具被正确拒绝，不属于真实实验）。只要数值UNKNOWN、哈希或影子主轨迹检查失败就停止升级。
 
 自动阶段 precision30k 2026-10-21T18:55:23.318089+00:00：16/16条，原始及版本/恢复哈希审计通过，数值UNKNOWN=0，影子主轨迹检查退出码=0。完整记录见results/precision30k.series.json、summary及paired；本次不是正式确认。
+
+自动阶段 shadow30k 2026-10-21T18:59:57.379977+00:00：32/32条，原始及版本/恢复哈希审计通过，数值UNKNOWN=0，影子主轨迹检查退出码=0。完整记录见results/shadow30k.series.json、summary及paired；本次不是正式确认。
