@@ -1,0 +1,50 @@
+{
+  "prefix": "V2-E",
+  "seeds": 16,
+  "horizon": 100000,
+  "saveCheckpoints": true,
+  "output": "docs/research-v2/results/explore100k.jsonl",
+  "profiles": [
+    {
+      "id": "newton",
+      "shadow": true
+    },
+    {
+      "id": "legacy-cage",
+      "cage": true,
+      "shadow": true
+    },
+    {
+      "capture": true,
+      "redistribute": true,
+      "capturePositiveOnly": true,
+      "captureSeparationFactor": 1.5,
+      "shadow": true,
+      "reflect": true,
+      "id": "reflect-trigger8",
+      "captureTriggerScale": 8
+    },
+    {
+      "capture": true,
+      "redistribute": true,
+      "capturePositiveOnly": true,
+      "captureSeparationFactor": 1.5,
+      "shadow": true,
+      "reflect": true,
+      "id": "reflect-trigger24",
+      "captureTriggerScale": 24
+    },
+    {
+      "capture": true,
+      "redistribute": true,
+      "capturePositiveOnly": true,
+      "captureSeparationFactor": 1.5,
+      "shadow": true,
+      "reflect": true,
+      "id": "deflect4-trigger8",
+      "captureTriggerScale": 8,
+      "deflect": true,
+      "deflectionFactor": 4
+    }
+  ]
+}

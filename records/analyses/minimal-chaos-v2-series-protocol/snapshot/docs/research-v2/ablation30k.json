@@ -1,0 +1,89 @@
+{
+  "prefix": "V2-ABLATION",
+  "seeds": 8,
+  "horizon": 30000,
+  "saveCheckpoints": true,
+  "output": "docs/research-v2/results/ablation30k.jsonl",
+  "profiles": [
+    {
+      "id": "newton__research__P5",
+      "shadow": true,
+      "initialization": "research",
+      "noRespawn": false
+    },
+    {
+      "id": "newton__research__noRespawn",
+      "shadow": true,
+      "initialization": "research",
+      "noRespawn": true
+    },
+    {
+      "capture": true,
+      "redistribute": true,
+      "capturePositiveOnly": true,
+      "captureSeparationFactor": 1.5,
+      "shadow": true,
+      "reflect": true,
+      "id": "deflect4-trigger8__research__P5",
+      "captureTriggerScale": 8,
+      "deflect": true,
+      "deflectionFactor": 4,
+      "initialization": "research",
+      "noRespawn": false
+    },
+    {
+      "capture": true,
+      "redistribute": true,
+      "capturePositiveOnly": true,
+      "captureSeparationFactor": 1.5,
+      "shadow": true,
+      "reflect": true,
+      "id": "deflect4-trigger8__research__noRespawn",
+      "captureTriggerScale": 8,
+      "deflect": true,
+      "deflectionFactor": 4,
+      "initialization": "research",
+      "noRespawn": true
+    },
+    {
+      "id": "newton__chaotic__P5",
+      "shadow": true,
+      "initialization": "chaotic",
+      "noRespawn": false
+    },
+    {
+      "id": "newton__chaotic__noRespawn",
+      "shadow": true,
+      "initialization": "chaotic",
+      "noRespawn": true
+    },
+    {
+      "capture": true,
+      "redistribute": true,
+      "capturePositiveOnly": true,
+      "captureSeparationFactor": 1.5,
+      "shadow": true,
+      "reflect": true,
+      "id": "deflect4-trigger8__chaotic__P5",
+      "captureTriggerScale": 8,
+      "deflect": true,
+      "deflectionFactor": 4,
+      "initialization": "chaotic",
+      "noRespawn": false
+    },
+    {
+      "capture": true,
+      "redistribute": true,
+      "capturePositiveOnly": true,
+      "captureSeparationFactor": 1.5,
+      "shadow": true,
+      "reflect": true,
+      "id": "deflect4-trigger8__chaotic__noRespawn",
+      "captureTriggerScale": 8,
+      "deflect": true,
+      "deflectionFactor": 4,
+      "initialization": "chaotic",
+      "noRespawn": true
+    }
+  ]
+}

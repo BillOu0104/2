@@ -1,0 +1,21 @@
+[
+  {
+    "check": "held global lock prevents duplicate sequence",
+    "pass": true,
+    "output": "already-running-series"
+  },
+  {
+    "check": "identical primary passes paired comparison",
+    "pass": true,
+    "exit": 0,
+    "output": "paired comparisons 1 primary measurement errors 0",
+    "fixture": "copied immutable D result; deliberate velocity mutation only in rejected diagnostic fixture, not an experiment"
+  },
+  {
+    "check": "shadow diagnostic detects changed primary",
+    "pass": true,
+    "exit": 1,
+    "output": "paired comparisons 1 primary measurement errors 1",
+    "fixture": "copied immutable D result; deliberate velocity mutation only in rejected diagnostic fixture, not an experiment"
+  }
+]

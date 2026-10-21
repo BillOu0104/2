@@ -1,0 +1,113 @@
+{
+  "prefix": "V2-D",
+  "seeds": 4,
+  "horizon": 30000,
+  "saveCheckpoints": true,
+  "output": "docs/research-v2/results/shadow30k.jsonl",
+  "profiles": [
+    {
+      "capture": true,
+      "redistribute": true,
+      "capturePositiveOnly": true,
+      "captureSeparationFactor": 1.5,
+      "shadow": true,
+      "reflect": true,
+      "id": "reflect-trigger8__eps7",
+      "captureTriggerScale": 8,
+      "shadowEps": 1e-07,
+      "shadowWindowYears": 10
+    },
+    {
+      "capture": true,
+      "redistribute": true,
+      "capturePositiveOnly": true,
+      "captureSeparationFactor": 1.5,
+      "shadow": true,
+      "reflect": true,
+      "id": "reflect-trigger8__eps9",
+      "captureTriggerScale": 8,
+      "shadowEps": 1e-09,
+      "shadowWindowYears": 10
+    },
+    {
+      "capture": true,
+      "redistribute": true,
+      "capturePositiveOnly": true,
+      "captureSeparationFactor": 1.5,
+      "shadow": true,
+      "reflect": true,
+      "id": "reflect-trigger8__window5",
+      "captureTriggerScale": 8,
+      "shadowEps": 1e-08,
+      "shadowWindowYears": 5
+    },
+    {
+      "capture": true,
+      "redistribute": true,
+      "capturePositiveOnly": true,
+      "captureSeparationFactor": 1.5,
+      "shadow": true,
+      "reflect": true,
+      "id": "reflect-trigger8__window20",
+      "captureTriggerScale": 8,
+      "shadowEps": 1e-08,
+      "shadowWindowYears": 20
+    },
+    {
+      "capture": true,
+      "redistribute": true,
+      "capturePositiveOnly": true,
+      "captureSeparationFactor": 1.5,
+      "shadow": true,
+      "reflect": true,
+      "id": "deflect4-trigger8__eps7",
+      "captureTriggerScale": 8,
+      "deflect": true,
+      "deflectionFactor": 4,
+      "shadowEps": 1e-07,
+      "shadowWindowYears": 10
+    },
+    {
+      "capture": true,
+      "redistribute": true,
+      "capturePositiveOnly": true,
+      "captureSeparationFactor": 1.5,
+      "shadow": true,
+      "reflect": true,
+      "id": "deflect4-trigger8__eps9",
+      "captureTriggerScale": 8,
+      "deflect": true,
+      "deflectionFactor": 4,
+      "shadowEps": 1e-09,
+      "shadowWindowYears": 10
+    },
+    {
+      "capture": true,
+      "redistribute": true,
+      "capturePositiveOnly": true,
+      "captureSeparationFactor": 1.5,
+      "shadow": true,
+      "reflect": true,
+      "id": "deflect4-trigger8__window5",
+      "captureTriggerScale": 8,
+      "deflect": true,
+      "deflectionFactor": 4,
+      "shadowEps": 1e-08,
+      "shadowWindowYears": 5
+    },
+    {
+      "capture": true,
+      "redistribute": true,
+      "capturePositiveOnly": true,
+      "captureSeparationFactor": 1.5,
+      "shadow": true,
+      "reflect": true,
+      "id": "deflect4-trigger8__window20",
+      "captureTriggerScale": 8,
+      "deflect": true,
+      "deflectionFactor": 4,
+      "shadowEps": 1e-08,
+      "shadowWindowYears": 20
+    }
+  ]
+}
