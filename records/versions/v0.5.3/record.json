@@ -1,0 +1,163 @@
+{
+  "format": 1,
+  "id": "v0.5.3",
+  "path": "versions/v0.5.3",
+  "kind": "version",
+  "version": "0.5.3",
+  "title": "显示居中、慢速银河归位与十二阶段科技",
+  "summary": "按用户澄清，天体离开画面是显示跟随问题。新增仅渲染的星群居中，保持v0.5.2牛顿物理逐位一致；修复银河归位与惯性竞争，默认0.003°/秒；科技从旧石器起扩展为十二阶段，200至40000安全生产年推进。保存108项测试、7项真实浏览器检查和8个匹配Seed各200年的旧版物理对照。",
+  "source_commit": "292d21d93e90ae212a41f828ea454337582dbf2b",
+  "previous_commit": "c86dec104f9ca77f5e175d820f55745478ad41f9",
+  "source_repository": "https://github.com/BillOu0104/2",
+  "source_subject": "v0.5.3: fix visual centering and galaxy return; slow twelve-stage technology",
+  "source_date": "2026-10-21T11:22:59Z",
+  "archived_at": "2026-10-21T11:22:59.695109+00:00",
+  "runtime_fingerprint": "fb82c6d0e3e9c602091405d5d00efcc9efd50e3d11d5d4c6a77b5dc39fd28f71",
+  "deleted_paths": [],
+  "files": [
+    {
+      "source_path": ".github/workflows/physics-acceptance.yml",
+      "archive_path": "snapshot/.github/workflows/physics-acceptance.yml",
+      "sha256": "ad10b7bf6cb5b3dacf506e837004401a658502dc100f7d881741c931bff77d6c",
+      "bytes": 526
+    },
+    {
+      "source_path": "README.md",
+      "archive_path": "snapshot/README.md",
+      "sha256": "769f70a2c670c6b84f17c3ef432a3ce55a86c9a28c2830bed8bce488f74ed8af",
+      "bytes": 11799
+    },
+    {
+      "source_path": "docs/SETTINGS-GUIDE-v0.5.md",
+      "archive_path": "snapshot/docs/SETTINGS-GUIDE-v0.5.md",
+      "sha256": "648a8a0a4e524594ece1e985774d3db0bc2c1c6e727c07a1c6b525833e574372",
+      "bytes": 54118
+    },
+    {
+      "source_path": "docs/settings-guide.html",
+      "archive_path": "snapshot/docs/settings-guide.html",
+      "sha256": "b2eb2f161b7f7d99a56871b83b871e62c27a9bf8c124594457e41a0344b5c594",
+      "bytes": 67445
+    },
+    {
+      "source_path": "docs/v053/RELEASE.md",
+      "archive_path": "snapshot/docs/v053/RELEASE.md",
+      "sha256": "5e46ad0d9c1faf9db5ff2f91d24aaac5a3c1c71bd6f723775f854389919ef22e",
+      "bytes": 5004
+    },
+    {
+      "source_path": "docs/v053/results/browser.json",
+      "archive_path": "snapshot/docs/v053/results/browser.json",
+      "sha256": "8cb8df5da1f11957bcd0339b5eb0e7b4ff699daf77d4a647a4da661e48f43119",
+      "bytes": 1343
+    },
+    {
+      "source_path": "docs/v053/results/build.txt",
+      "archive_path": "snapshot/docs/v053/results/build.txt",
+      "sha256": "2a35d5098738701f97917e8bdda6d9c79eed7e1a3030ceedba4e67f8592c7d5e",
+      "bytes": 129
+    },
+    {
+      "source_path": "docs/v053/results/centered-runaway-planet.png",
+      "archive_path": "snapshot/docs/v053/results/centered-runaway-planet.png",
+      "sha256": "096ac1d32bf7831201b0b11abce2ba092319c1ae749b6a31b6ab4d1b6bf928d6",
+      "bytes": 918408
+    },
+    {
+      "source_path": "docs/v053/results/desktop.png",
+      "archive_path": "snapshot/docs/v053/results/desktop.png",
+      "sha256": "2c1c64c017df21828b9ccf8e7885c68eba1269c5080fc6eb93d61221734f53e6",
+      "bytes": 925132
+    },
+    {
+      "source_path": "docs/v053/results/npm-test.txt",
+      "archive_path": "snapshot/docs/v053/results/npm-test.txt",
+      "sha256": "029aa97e521d620cb5ca9a6d6ae76b7cd12ac0434c1eef5581b606be1251f8fb",
+      "bytes": 644
+    },
+    {
+      "source_path": "docs/v053/results/physical-parity.json",
+      "archive_path": "snapshot/docs/v053/results/physical-parity.json",
+      "sha256": "2cca30bf4c87f09f0af3c9d0240f28af1e9c822eb11ac9f3208658f7ae04f32d",
+      "bytes": 2156
+    },
+    {
+      "source_path": "docs/v053/results/unit-tests.txt",
+      "archive_path": "snapshot/docs/v053/results/unit-tests.txt",
+      "sha256": "22ca216ca1201324260640d1df8c1bf64e4d09eec53363859f9c8c8b46168d8b",
+      "bytes": 10983
+    },
+    {
+      "source_path": "package-lock.json",
+      "archive_path": "snapshot/package-lock.json",
+      "sha256": "fcc1ca80ee69bdf39e289150ad5828c71dd9443166a8df42c85325b28521395c",
+      "bytes": 15394
+    },
+    {
+      "source_path": "package.json",
+      "archive_path": "snapshot/package.json",
+      "sha256": "09c90444211652b8d9bd719c090e68587fc493504a556b7bad12ee4935819bb6",
+      "bytes": 415
+    },
+    {
+      "source_path": "tests/habitability.test.js",
+      "archive_path": "snapshot/tests/habitability.test.js",
+      "sha256": "459cd51bd9ec40dd85f05a1c5cf806f21f892dd50f87cf61fd30e890b72cee39",
+      "bytes": 6732
+    },
+    {
+      "source_path": "tests/simulation.test.js",
+      "archive_path": "snapshot/tests/simulation.test.js",
+      "sha256": "51c701c103509a113269a617a7d90f067f5139891261d6d003f1758129958c23",
+      "bytes": 8993
+    },
+    {
+      "source_path": "tests/v041-hotfix.test.js",
+      "archive_path": "snapshot/tests/v041-hotfix.test.js",
+      "sha256": "35bab0885059db0bbbb5bfc23961e6738ded9f2f6cf3560c114edb0e241bb189",
+      "bytes": 2847
+    },
+    {
+      "source_path": "tests/v041.test.js",
+      "archive_path": "snapshot/tests/v041.test.js",
+      "sha256": "1ff0c2a202ebe6f241bf4e1a84bec6978900ecdd551793976235eeb05e39ae41",
+      "bytes": 6119
+    },
+    {
+      "source_path": "tests/v05.test.js",
+      "archive_path": "snapshot/tests/v05.test.js",
+      "sha256": "bca03d40b790327100677b277cda82a0db7d0dda9dfc3e2ad55424c570c4303e",
+      "bytes": 6812
+    },
+    {
+      "source_path": "tests/v053.test.js",
+      "archive_path": "snapshot/tests/v053.test.js",
+      "sha256": "80b0ee50dfa8b82e4f8f34a30bfe5085e297be64fbccbfa0a15a21157f2da3f2",
+      "bytes": 4395
+    },
+    {
+      "source_path": "tools/generate-settings-guide.mjs",
+      "archive_path": "snapshot/tools/generate-settings-guide.mjs",
+      "sha256": "526ad4ce9627cbb6313a1dfc34dd1d232c8b454a4ead9dfda3716a17da5eeecb",
+      "bytes": 37639
+    },
+    {
+      "source_path": "tools/v053/browser-check.mjs",
+      "archive_path": "snapshot/tools/v053/browser-check.mjs",
+      "sha256": "125d17d82f5d89341735a8851ca1e267cb2255f4abad5e84aa9cb5e9814fdfbb",
+      "bytes": 5639
+    },
+    {
+      "source_path": "tools/v053/physical-parity.mjs",
+      "archive_path": "snapshot/tools/v053/physical-parity.mjs",
+      "sha256": "1244af05eace95efc4a96079622aa1dd404e1b0cfd66147865ebcb75b063a787",
+      "bytes": 1670
+    },
+    {
+      "source_path": null,
+      "archive_path": "changes.patch",
+      "sha256": "cbbc82740f627cc2501531500162b9b4ba9e416c311a374f3e85706188469fc1",
+      "bytes": 95472
+    }
+  ]
+}
