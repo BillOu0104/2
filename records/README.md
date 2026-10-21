@@ -27,6 +27,7 @@
 | [minimal-chaos-v2-prototype](analyses/minimal-chaos-v2-prototype/README.md) | V2 validated driver, strict escape observer and controller experiments | [aba525d](https://github.com/BillOu0104/2/commit/aba525d5dd9ac69c451f58ed43b0f3037fe91b33) |
 | [minimal-chaos-v2-start](analyses/minimal-chaos-v2-start/README.md) | V2 baseline registration and headless research prototype | [f6e89c2](https://github.com/BillOu0104/2/commit/f6e89c22bd6b6f0938ec8991eb2c1809f4894788) |
 | [minimal-chaos-v2-weak-trigger](analyses/minimal-chaos-v2-weak-trigger/README.md) | 弱负能触发间隔原型与物理夹具 | [7f64a8a](https://github.com/BillOu0104/2/commit/7f64a8aad9107f0ac94c16ca273ebdbf3742d605) |
+| [minimal-chaos-v2-weak1k](analyses/minimal-chaos-v2-weak1k/README.md) | 弱负能反馈1000年功能阶段 | [8475100](https://github.com/BillOu0104/2/commit/8475100c1f5302be7c39fd01859f681f736fb127) |
 | [newtonian-survival](analyses/newtonian-survival/README.md) | 无牢笼牛顿三星长期存活研究 | [c198020](https://github.com/BillOu0104/2/commit/c1980201d11c7d0968d9039bfca4ad91383b27b0) |
 | [v054-centering-conservation-review](analyses/v054-centering-conservation-review/README.md) | 星群跟随不能代替守恒排查 | [7a63ebe](https://github.com/BillOu0104/2/commit/7a63ebefae4f9fa4b2db993697221e720506ca2e) |
 
