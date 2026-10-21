@@ -1,0 +1,45 @@
+
+> three-body-reconstruction@0.5.4 test
+> node --test tests/*.test.js
+
+✖ tests/habitability.test.js (249.084911ms)
+✖ tests/simulation.test.js (1280.372943ms)
+✔ tests/v03-adjustments.test.js (107.932313ms)
+✔ tests/v04.test.js (138.241926ms)
+✖ tests/v041-hotfix.test.js (1305.552284ms)
+✖ tests/v041.test.js (98.691221ms)
+✔ tests/v042.test.js (1056.487161ms)
+✔ tests/v05.test.js (345.172497ms)
+✔ tests/v051.test.js (182.155695ms)
+✔ tests/v052-physics.test.js (176.901782ms)
+✖ tests/v053.test.js (190.362899ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 6
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5140.355116
+
+✖ failing tests:
+
+test at tests/habitability.test.js:1:1
+✖ tests/habitability.test.js (249.084911ms)
+  'test failed'
+
+test at tests/simulation.test.js:1:1
+✖ tests/simulation.test.js (1280.372943ms)
+  'test failed'
+
+test at tests/v041-hotfix.test.js:1:1
+✖ tests/v041-hotfix.test.js (1305.552284ms)
+  'test failed'
+
+test at tests/v041.test.js:1:1
+✖ tests/v041.test.js (98.691221ms)
+  'test failed'
+
+test at tests/v053.test.js:1:1
+✖ tests/v053.test.js (190.362899ms)
+  'test failed'

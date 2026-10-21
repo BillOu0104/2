@@ -1,0 +1,22 @@
+{
+  "release": "v0.5.4",
+  "recordedAtUtc": "2026-10-21",
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.41",
+  "node": "v24.19.0",
+  "python": "3.12.14",
+  "chromium": "Chromium 154.0.8037.57 built on Debian GNU/Linux 13 (trixie)",
+  "baselineCommit": "292d21d93e90ae212a41f828ea454337582dbf2b",
+  "commands": {
+    "namedTests": "node --test --test-isolation=none --test-reporter=spec tests/*.test.js",
+    "standardTests": "npm test",
+    "build": "npm run build",
+    "browser": "node tools/v054/browser-check.mjs",
+    "parity": "node tools/v054/physical-parity.mjs /tmp/v054-baseline"
+  },
+  "notes": [
+    "Tests use production modules, no mock physics.",
+    "Browser QA uses isolated contexts; user history was not cleared.",
+    "Browser software WebGL; native Wallpaper Engine not tested.",
+    "No new 128-seed survival benchmark was run."
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "checks": [
+    "v0.5.4 real Worker starts and migrates the old default to 0.006 deg/s",
+    "left and right drag releases coast monotonically without a reverse rebound in hover+drag mode",
+    "holding a drag still for more than two seconds does not trigger immediate reverse auto-return upon release",
+    "fresh hover input resumes without requiring a click",
+    "idle return uses the slightly increased speed without residual inertia or overshoot",
+    "canceling complete reset retains archives, rankings and accumulated time",
+    "confirmed reset clears IndexedDB archives, pending writes, in-memory logs, rankings, numbering and statistics; settings/background survive",
+    "cleared history and old statistics do not return after reload",
+    "an interrupted reset is completed on startup before old checkpoints can load",
+    "real Worker exposes confirmed escape and manual restart when disabled, then rebuilds once automatic restart is enabled",
+    "denied localStorage access still allows the simulation to boot"
+  ]
+}

@@ -17,9 +17,9 @@ test('idle return cancels residual inertia and obeys one total angular-speed cap
  m.returnToOrigin(100000,.003);assert.equal(m.x,0);assert.equal(m.y,0);m.returnToOrigin(1);assert.equal(m.y,0);
 });
 test('galaxy-return migration is once-only and retains custom speeds and independent view preferences',()=>{
- const old=migrateSettings({presentationRevision:6,newproperty51:.01,viewSensitivity:.04,layout:{clock:{x:20,y:12}}});assert.equal(old.newproperty51,.003);assert.equal(old.viewSensitivity,.04);assert.deepEqual(old.layout.clock,{x:20,y:12});
+ const old=migrateSettings({presentationRevision:6,newproperty51:.01,viewSensitivity:.04,layout:{clock:{x:20,y:12}}});assert.equal(old.newproperty51,.006);assert.equal(old.viewSensitivity,.04);assert.deepEqual(old.layout.clock,{x:20,y:12});
  assert.equal(migrateSettings({presentationRevision:6,newproperty51:.001}).newproperty51,.001);
- assert.equal(migrateSettings({...old,newproperty51:.01}).newproperty51,.01);assert.equal(normalizeSettings().newproperty51,.003);
+ assert.equal(migrateSettings({...old,newproperty51:.01}).newproperty51,.01);assert.equal(normalizeSettings().newproperty51,.006);
 });
 test('a runaway planet cannot drag the tracked stellar center away; the physical state and invariants remain exact',()=>{
  const b=[body(-2.3),body(-1.7),body(-2,.4),body(6000,0,5000)],copy=structuredClone(b),before=invariants(b,1.3275440274585598e-8),c=displayCenter(b);

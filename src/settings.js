@@ -2,7 +2,7 @@ import { propertySchema } from './original-data.js';
 
 export const defaults = Object.fromEntries(Object.entries(propertySchema)
   .filter(([, d]) => d.type && d.type !== 'group').map(([k, d]) => [k, d.value]));
-export const extraDefaults = { seed: 'TRISOLARIS', music: false, volume: 0.35, trailsLength: 400, orbitalInitialization: 'research', physicsMode: 'reference', pixelRatio: 4, bodyLabels: false, presentationRevision: 6, layout: {}, viewSensitivity: .12, compassOpacity: .12, planetStrength: 1.6, idleAmplitude: 6, civilizationMode: 'balanced', thermalGrace: 30, wakeDelay: 1, epochWindow: 1/12, epochTimebase: 'years', climateInertia: 1.5, stellarBreathing: true, renderQuality: 'native', dragSensitivity: 5, birthDelay: .5, civilizationLevels: true, developmentRate: 1, gravityModel: 'newtonian', encounterAccuracy: .0075, physicsRevision: 1, manualInitialBodies: null, centerOnSystem: true, galaxyReturnRevision: 1 };
+export const extraDefaults = { seed: 'TRISOLARIS', music: false, volume: 0.35, trailsLength: 400, orbitalInitialization: 'research', physicsMode: 'reference', pixelRatio: 4, bodyLabels: false, presentationRevision: 6, layout: {}, viewSensitivity: .12, compassOpacity: .12, planetStrength: 1.6, idleAmplitude: 6, civilizationMode: 'balanced', thermalGrace: 30, wakeDelay: 1, epochWindow: 1/12, epochTimebase: 'years', climateInertia: 1.5, stellarBreathing: true, renderQuality: 'native', dragSensitivity: 5, birthDelay: .5, civilizationLevels: true, developmentRate: 1, gravityModel: 'newtonian', encounterAccuracy: .0075, physicsRevision: 1, manualInitialBodies: null, centerOnSystem: true, galaxyReturnRevision: 2 };
 // New installs show the requested tails; explicitly saved off/on preferences still win.
 defaults.newproperty14 = true;
 defaults.newproperty60 = false;
@@ -13,7 +13,7 @@ defaults.newproperty67 = 4;
 defaults.newproperty39 = true;
 defaults.newproperty45 = -20;
 defaults.newproperty46 = 40;
-defaults.newproperty51 = .003;
+defaults.newproperty51 = .006;
 defaults.newproperty61 = 1;
 defaults.newproperty3 = 0;
 defaults.newproperty68 = 0;
@@ -25,7 +25,7 @@ export const effectivePropertySchema = { ...propertySchema,
   newproperty43: {...propertySchema.newproperty43,text:'干仓低温耐受 / Dry storage minimum °C'},
   newproperty44: {...propertySchema.newproperty44,text:'干仓高温耐受 / Dry storage maximum °C'},
   newproperty16:{...propertySchema.newproperty16,text:'闲置时缓慢回归银河 / Return to Milky Way'},
-  newproperty51: {...propertySchema.newproperty51,text:'回归银河速度 °/s',value:.003},
+  newproperty51: {...propertySchema.newproperty51,text:'回归银河速度 °/s',value:.006},
   newproperty61:{...propertySchema.newproperty61,text:'鼠标视角：0 按住拖动 / 1 悬停与拖动 / 2 固定',value:1}
 };
 export function normalizeSettings(source = {}, includeExtras = true) {
@@ -77,7 +77,7 @@ export function colorRGB(s = '1 1 1') { return s.split(/\s+/).map(Number); }
 export function colorHex(s) { return '#' + colorRGB(s).map(x => Math.round(x * 255).toString(16).padStart(2, '0')).join(''); }
 export function fromHex(s) { return [1, 3, 5].map(i => parseInt(s.slice(i, i + 2), 16) / 255).join(' '); }
 export function plainText(s = '') { return s.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' '); }
-export function algorithmId(s) { return `sykm-scene-v4-${s.physicsMode}60-civ-${s.civilizationMode}-v053-tech2-${s.gravityModel}-${s.orbitalInitialization}-eta${s.encounterAccuracy}-orbits`; }
+export function algorithmId(s) { return `sykm-scene-v4-${s.physicsMode}60-civ-${s.civilizationMode}-v054-tech2-escape1-${s.gravityModel}-${s.orbitalInitialization}-eta${s.encounterAccuracy}-orbits`; }
 export function migrateSettings(saved={},version=3){
   // v0.5.1: one simulated month replaces the former default two-second window.
   if(saved.epochTimebase!=='years')saved={...saved,epochWindow:saved.epochWindow===undefined||Math.abs(saved.epochWindow-2)<1e-9?1/12:saved.epochWindow};
@@ -95,6 +95,7 @@ export function migrateSettings(saved={},version=3){
   if(saved.presentationRevision!==extraDefaults.presentationRevision)saved={...saved,bodyLabels:saved.presentationRevision>=1?saved.bodyLabels:false,newproperty39:true};
   if(!saved.physicsRevision)saved={...saved,orbitalInitialization:!saved.orbitalInitialization||saved.orbitalInitialization==='chaotic'?'research':saved.orbitalInitialization,newproperty60:false,gravityModel:'newtonian'};
   if(!saved.galaxyReturnRevision&&Math.abs((saved.newproperty51??.01)-.01)<1e-9)saved={...saved,newproperty51:.003};
+  if((saved.galaxyReturnRevision??0)<2&&Math.abs((saved.newproperty51??.003)-.003)<1e-9)saved={...saved,newproperty51:.006};
   if(version<3)return normalizeSettings({...saved,newproperty45:-20,newproperty46:40,newproperty51:Math.abs(saved.newproperty51??3)>=2 ? .01 : (saved.newproperty51??.01),newproperty3:0,newproperty68:0});
   return normalizeSettings(saved);
 }

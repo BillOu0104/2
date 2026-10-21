@@ -1,0 +1,181 @@
+{
+  "format": 1,
+  "id": "v0.5.4",
+  "path": "versions/v0.5.4",
+  "kind": "version",
+  "version": "0.5.4",
+  "title": "v0.5.4：松手回弹、完全重置与逃逸重建",
+  "summary": "修复拖动后悬停弹簧反拉及长按松手立即归位；默认银河归位0.006°/秒。新增清空本地宇宙/文明档案与排行榜的完全重置，以及不改变轨道的保守逃逸确认重建。117项回归与11项浏览器检查通过，8个预定Seed各200年与v0.5.3物理及守恒诊断完全一致；保留初次失败证据和有限时间逃逸判断的限制。",
+  "source_commit": "de493891629800b8b70614f11915847a6594da9d",
+  "previous_commit": "23a5d209b1f53e61b2843754eba5ddfbc04b4047",
+  "source_repository": "https://github.com/BillOu0104/2",
+  "source_subject": "v0.5.4: fix drag rebound, clear run history and restart confirmed escapes",
+  "source_date": "2026-10-21T11:55:51Z",
+  "archived_at": "2026-10-21T11:56:04.684527+00:00",
+  "runtime_fingerprint": "edb97e831c10914a1850629187cbf550a1d44d068b3acaded4ce32e2676e50af",
+  "deleted_paths": [],
+  "files": [
+    {
+      "source_path": "README.md",
+      "archive_path": "snapshot/README.md",
+      "sha256": "24b45ac47df7e66ae593f97e4f3acd2e27162c0756cab5adf126da73c089f76c",
+      "bytes": 11723
+    },
+    {
+      "source_path": "docs/SETTINGS-GUIDE-v0.5.md",
+      "archive_path": "snapshot/docs/SETTINGS-GUIDE-v0.5.md",
+      "sha256": "5e671b36b8bf1b3ac2f8fa1c8c7679567a02bdfcc79eee937b5336747a8dca6f",
+      "bytes": 54600
+    },
+    {
+      "source_path": "docs/settings-guide.html",
+      "archive_path": "snapshot/docs/settings-guide.html",
+      "sha256": "958006115aa17a593b1e5f6a96bd96e82159ecbc00f4ae8aaa749e0e9bd0baec",
+      "bytes": 67927
+    },
+    {
+      "source_path": "docs/v054/RELEASE.md",
+      "archive_path": "snapshot/docs/v054/RELEASE.md",
+      "sha256": "e53ef24631c7391a15280e28a9d84bc769121d46b54698b2d2d9b7bc1997c35d",
+      "bytes": 6498
+    },
+    {
+      "source_path": "docs/v054/results/browser.json",
+      "archive_path": "snapshot/docs/v054/results/browser.json",
+      "sha256": "6e9c182d6e4ef70bbb7308a47075ec43eca095d934c5840dc6ed49a080157f9b",
+      "bytes": 6713
+    },
+    {
+      "source_path": "docs/v054/results/browser.log",
+      "archive_path": "snapshot/docs/v054/results/browser.log",
+      "sha256": "56a6fa48592322a55f734ca48ea4f44df5e3095e63e968203d124efbe741217e",
+      "bytes": 1056
+    },
+    {
+      "source_path": "docs/v054/results/build.log",
+      "archive_path": "snapshot/docs/v054/results/build.log",
+      "sha256": "95d368eb3791e1f7c2e7950aabbb756ff82493bb9f3ce883e33a51d098fa2fe3",
+      "bytes": 337
+    },
+    {
+      "source_path": "docs/v054/results/environment.json",
+      "archive_path": "snapshot/docs/v054/results/environment.json",
+      "sha256": "6ecd6ecd4f617a67991902a4114661f9919e9a0842e03db41b04c3529b001b33",
+      "bytes": 859
+    },
+    {
+      "source_path": "docs/v054/results/npm-test.log",
+      "archive_path": "snapshot/docs/v054/results/npm-test.log",
+      "sha256": "93de867f4696c6cd2639d12793a3262ca5f656707e1e5d394a25edd81273aa90",
+      "bytes": 12248
+    },
+    {
+      "source_path": "docs/v054/results/old-default-expectations-initial.log",
+      "archive_path": "snapshot/docs/v054/results/old-default-expectations-initial.log",
+      "sha256": "b2baf40243faa77c8ade52e64ecbf3be6f6b809aa47440bdef7f805be9fafa0b",
+      "bytes": 1139
+    },
+    {
+      "source_path": "docs/v054/results/physical-parity.json",
+      "archive_path": "snapshot/docs/v054/results/physical-parity.json",
+      "sha256": "ff7771a900a297c90b707bf8e64c8c20a7da31d8344247a652c33293e1f55bc3",
+      "bytes": 2160
+    },
+    {
+      "source_path": "docs/v054/results/physical-parity.log",
+      "archive_path": "snapshot/docs/v054/results/physical-parity.log",
+      "sha256": "b916f63eb2a2dab9b577c2446476e9285bfab0087c81a6a20ab8117d5b28d252",
+      "bytes": 35
+    },
+    {
+      "source_path": "docs/v054/results/reset-history.png",
+      "archive_path": "snapshot/docs/v054/results/reset-history.png",
+      "sha256": "f6ba0f2cee462e29236cb5431dcee29ebd9af671b7e9556e63370686d4c630c3",
+      "bytes": 690419
+    },
+    {
+      "source_path": "docs/v054/results/unit-tests-initial.log",
+      "archive_path": "snapshot/docs/v054/results/unit-tests-initial.log",
+      "sha256": "b82bee88de78f5554955a38223fdbe4be20c92d5025ee8c7ed7827c64ab7a4c5",
+      "bytes": 12747
+    },
+    {
+      "source_path": "docs/v054/results/unit-tests.log",
+      "archive_path": "snapshot/docs/v054/results/unit-tests.log",
+      "sha256": "870442b4c54d76ba598f9dcd2f7ecdda345c5e724efbb4724dbf901876ebfaf3",
+      "bytes": 11957
+    },
+    {
+      "source_path": "package-lock.json",
+      "archive_path": "snapshot/package-lock.json",
+      "sha256": "eb2974bb0d2be3575cf311940d8eac2fdd674f08136a164c97341d024de49e91",
+      "bytes": 15394
+    },
+    {
+      "source_path": "package.json",
+      "archive_path": "snapshot/package.json",
+      "sha256": "5c8c6ab0bc4719556579e938c4737a63381a225edc98514936daf02dcdb5e5e7",
+      "bytes": 415
+    },
+    {
+      "source_path": "tests/habitability.test.js",
+      "archive_path": "snapshot/tests/habitability.test.js",
+      "sha256": "1c8beeed2f68268c1b4494c2b7fa9fe1c006849de58230459abc3359de556084",
+      "bytes": 6732
+    },
+    {
+      "source_path": "tests/simulation.test.js",
+      "archive_path": "snapshot/tests/simulation.test.js",
+      "sha256": "95b5eb4f586df89eeca4f2028d53f26f86c99cca0680223481a2e5b64c14314b",
+      "bytes": 8993
+    },
+    {
+      "source_path": "tests/v041-hotfix.test.js",
+      "archive_path": "snapshot/tests/v041-hotfix.test.js",
+      "sha256": "c84950240a564ab025710f9c6adc544af0bec393e4faee6a7dae97f39b79001e",
+      "bytes": 2847
+    },
+    {
+      "source_path": "tests/v041.test.js",
+      "archive_path": "snapshot/tests/v041.test.js",
+      "sha256": "f43e3c850cf93359136424f69404fed2002bdca435de32296ddcf430ee12d870",
+      "bytes": 6119
+    },
+    {
+      "source_path": "tests/v053.test.js",
+      "archive_path": "snapshot/tests/v053.test.js",
+      "sha256": "4615976f5aa3df2fbaa159261eea52b1d6d582a47fe163ce0fc75b8f749ed576",
+      "bytes": 4395
+    },
+    {
+      "source_path": "tests/v054.test.js",
+      "archive_path": "snapshot/tests/v054.test.js",
+      "sha256": "f5628173d515cca688e414791e2dca0570877398c72760fb8156cbc4de9af538",
+      "bytes": 4688
+    },
+    {
+      "source_path": "tools/generate-settings-guide.mjs",
+      "archive_path": "snapshot/tools/generate-settings-guide.mjs",
+      "sha256": "98ad2b1c9da727c82708f6a5113a19524a6513e88767b4b6fa6fc2cc558fc87b",
+      "bytes": 38121
+    },
+    {
+      "source_path": "tools/v054/browser-check.mjs",
+      "archive_path": "snapshot/tools/v054/browser-check.mjs",
+      "sha256": "59999f292990a2797d25d56c9a6b0a03177619a0d324c25de2844ac183fd2b12",
+      "bytes": 10942
+    },
+    {
+      "source_path": "tools/v054/physical-parity.mjs",
+      "archive_path": "snapshot/tools/v054/physical-parity.mjs",
+      "sha256": "7f44826be7c4c24eb90e147b1b5e7f560e20f6bd21c36ecee9380800f83efee0",
+      "bytes": 1670
+    },
+    {
+      "source_path": null,
+      "archive_path": "changes.patch",
+      "sha256": "196e948fa8f27e4dfa924efc53354d27b43e9fdb185bf1bda3bdeba60e0b2d9e",
+      "bytes": 83470
+    }
+  ]
+}

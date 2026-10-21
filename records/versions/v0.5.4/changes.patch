@@ -1,0 +1,664 @@
+diff --git a/index.html b/index.html
+index 4946540..ec754d1 100644
+--- a/index.html
++++ b/index.html
+@@ -61,8 +61,8 @@
+     <label class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="10" cy="10" r="6"/><path d="m15 15 5 5"/></svg><input id="settings-search" type="search" placeholder="搜索设置 · Search 183 controls" aria-label="搜索设置"></label>
+     <div class="panel-tabs"><button class="active" data-tab="settings">全部设置</button><button data-tab="history">文明档案</button><button data-tab="about">项目说明</button></div>
+     <div id="settings-content" class="panel-scroll"><div id="extension-controls"></div><details id="advanced-controls" class="setting-group"><summary>原版高级设置 / Advanced</summary><div id="original-controls"></div></details><p id="search-empty" hidden>没有匹配的设置 / No matching settings</p></div>
+-    <div id="history-content" class="panel-scroll" hidden><div class="section-intro"><h3>文明档案</h3><p>当前设备保存的文明死亡记录。完整参数随档案保留，方便复现与后续扩展。</p><button id="export-history">导出档案 JSON</button></div><ol id="history-list"></ol></div>
+-    <div id="about-content" class="panel-scroll" hidden><article class="about-copy"><h3>三体 · 实时演算 v0.5.3</h3><p>以你提供的 SYKM 原版 Wallpaper Engine 场景为基础。移植四体运动、温度、纪元与文明事件 SceneScript，并优化文明适宜度与延续机制，复用原版贴图、字体和音乐，天体采用圆形柔光与渐隐尾迹。</p><p><a href="settings-guide.html" target="_blank" rel="noopener">打开 v0.5 完整设置说明 ↗</a> · <a href="SETTINGS-GUIDE-v0.5.md" download>下载 Markdown 文档</a></p><p>v0.5.3：修复显示中心跟随和银河归位，默认回中速度0.003°/秒；科技改为从旧石器时代开始的十二阶段。物理沿用v0.5.2：默认随机三星 Q=1，行星采用第三颗恒星周围 0.12D 逆向轨道；牛顿平方反比引力、近遇自适应 Yoshida 积分，默认关闭引力牢笼。旧模型与手动初值仍可选择。数值故障会暂停并提示；星体接触之后点质量模型的适用性受限。</p><h4>运行架构</h4><p>Three.js 渲染与后台 Web Worker 模拟独立运行；无需远程服务器，网页与 Wallpaper Engine 共用同一套内核。模拟事件可供未来通知与 Seed 排行榜订阅。</p><h4>还原边界</h4><p>默认按固定 60 Hz 复现原版物理节奏；根据提供的原著讲解区分轨道纪元、天象与文明延续。−20～40°C 为常态活动范围，干仓休眠后可恢复同一文明。修复步长设置不即时生效、恒星碰撞距离未赋值、隐藏 UI 影响计算等问题。模型使用球体和圆环重建，后处理为 Three.js 对应实现，效果尚不能声称与原版逐像素一致。</p><p>原版文明逻辑是适温诞生与灾变毁灭，没有人口或技术树。v0.5 增加人口储备、干仓质量与十二阶段文明发展；休眠保留文明，实际生产时间推动升级。保留轨道稳定确认、差分潮汐与不可逆行星毁坏。具体阈值是可调模拟参数，非小说给定数值；完整算法依据、参数表和兼容差异随源码提供。原版背景已恢复为原生 8192×4096，并支持最高 7680×4320 渲染。</p><h4>来源</h4><p>原场景：SYKM ·《三体实时演算》<br>音乐：Melodysheep · Ether<br>保留原资源来源与非商用声明。</p><p class="muted">网页版音频须主动播放；Wallpaper Engine 可直接接收系统音频。自定义背景与历史保存在当前浏览器，不会上传。</p><div id="runtime-diagnostics"></div></article></div>
++    <div id="history-content" class="panel-scroll" hidden><div class="section-intro"><h3>文明档案</h3><p>当前设备保存的文明死亡记录。完整参数随档案保留，方便复现与后续扩展。</p><button id="export-history">导出档案 JSON</button><button id="reset-history" data-zh="完全重置历史" data-en="Reset all history" title="清空宇宙与文明历史、排行榜和累计年份；保留设置与背景">完全重置历史</button></div><ol id="history-list"></ol></div>
++    <div id="about-content" class="panel-scroll" hidden><article class="about-copy"><h3>三体 · 实时演算 v0.5.4</h3><p>以你提供的 SYKM 原版 Wallpaper Engine 场景为基础。移植四体运动、温度、纪元与文明事件 SceneScript，并优化文明适宜度与延续机制，复用原版贴图、字体和音乐，天体采用圆形柔光与渐隐尾迹。</p><p><a href="settings-guide.html" target="_blank" rel="noopener">打开 v0.5 完整设置说明 ↗</a> · <a href="SETTINGS-GUIDE-v0.5.md" download>下载 Markdown 文档</a></p><p>v0.5.4：修复拖动松手后的反向回弹，默认银河归位0.006°/秒；新增完全重置历史，以及持续确认逃逸后的宇宙重建。保留十二阶段科技与星群显示跟随。物理沿用v0.5.2：默认随机三星 Q=1，行星采用第三颗恒星周围 0.12D 逆向轨道；牛顿平方反比引力、近遇自适应 Yoshida 积分，默认关闭引力牢笼。旧模型与手动初值仍可选择。数值故障会暂停并提示；星体接触之后点质量模型的适用性受限。</p><h4>运行架构</h4><p>Three.js 渲染与后台 Web Worker 模拟独立运行；无需远程服务器，网页与 Wallpaper Engine 共用同一套内核。模拟事件可供未来通知与 Seed 排行榜订阅。</p><h4>还原边界</h4><p>默认按固定 60 Hz 复现原版物理节奏；根据提供的原著讲解区分轨道纪元、天象与文明延续。−20～40°C 为常态活动范围，干仓休眠后可恢复同一文明。修复步长设置不即时生效、恒星碰撞距离未赋值、隐藏 UI 影响计算等问题。模型使用球体和圆环重建，后处理为 Three.js 对应实现，效果尚不能声称与原版逐像素一致。</p><p>原版文明逻辑是适温诞生与灾变毁灭，没有人口或技术树。v0.5 增加人口储备、干仓质量与十二阶段文明发展；休眠保留文明，实际生产时间推动升级。保留轨道稳定确认、差分潮汐与不可逆行星毁坏。具体阈值是可调模拟参数，非小说给定数值；完整算法依据、参数表和兼容差异随源码提供。原版背景已恢复为原生 8192×4096，并支持最高 7680×4320 渲染。</p><h4>来源</h4><p>原场景：SYKM ·《三体实时演算》<br>音乐：Melodysheep · Ether<br>保留原资源来源与非商用声明。</p><p class="muted">网页版音频须主动播放；Wallpaper Engine 可直接接收系统音频。自定义背景与历史保存在当前浏览器，不会上传。</p><div id="runtime-diagnostics"></div></article></div>
+     <footer class="panel-footer"><button id="export-settings">导出种子</button><label class="file-button">导入种子<input id="import-settings" type="file" accept="application/json,.json" hidden></label><button id="reset-settings">恢复默认</button><span id="save-status">已保存到本机</span></footer>
+   </aside>
+ </body>
+diff --git a/package-lock.json b/package-lock.json
+index 9650171..2bc1457 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -1,12 +1,12 @@
+ {
+   "name": "three-body-reconstruction",
+-  "version": "0.5.3",
++  "version": "0.5.4",
+   "lockfileVersion": 3,
+   "requires": true,
+   "packages": {
+     "": {
+       "name": "three-body-reconstruction",
+-      "version": "0.5.3",
++      "version": "0.5.4",
+       "dependencies": {
+         "three": "0.180.0"
+       },
+diff --git a/package.json b/package.json
+index 6de9b1b..ad84dcc 100644
+--- a/package.json
++++ b/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "three-body-reconstruction",
+-  "version": "0.5.3",
++  "version": "0.5.4",
+   "private": true,
+   "type": "module",
+   "scripts": {
+diff --git a/src/bridge.js b/src/bridge.js
+index e159b4c..e0715cb 100644
+--- a/src/bridge.js
++++ b/src/bridge.js
+@@ -13,6 +13,6 @@ export function installWallpaperBridge({ changeSettings, setHostPaused, audio, r
+     setPaused(paused) { setHostPaused(!!paused); }
+   };
+   // Stable public extension boundary: notifications and remote rankings can subscribe later.
+-  window.threeBody = { version: '0.5.3', get algorithm() { return window.__threeBodyState?.algorithm; }, getState: () => window.__threeBodyState ? structuredClone(window.__threeBodyState) : null, applySettings: patch => changeSettings(patch), subscribe(type, listener) { const fn = e => listener(e.detail); window.addEventListener(type, fn); return () => window.removeEventListener(type, fn); }, wallpaper: !!window.wallpaperRegisterAudioListener };
++  window.threeBody = { version: '0.5.4', get algorithm() { return window.__threeBodyState?.algorithm; }, getState: () => window.__threeBodyState ? structuredClone(window.__threeBodyState) : null, applySettings: patch => changeSettings(patch), subscribe(type, listener) { const fn = e => listener(e.detail); window.addEventListener(type, fn); return () => window.removeEventListener(type, fn); }, wallpaper: !!window.wallpaperRegisterAudioListener };
+   return () => { window.wallpaperPropertyListener = prior; };
+ }
+diff --git a/src/escape-state.js b/src/escape-state.js
+new file mode 100644
+index 0000000..8be7ae8
+--- /dev/null
++++ b/src/escape-state.js
+@@ -0,0 +1,44 @@
++import {pairPotential} from './physics/gravity.js';
++
++const center=bodies=>{
++  const mass=bodies.reduce((n,b)=>n+b.mass,0);
++  const c={mass};
++  for(const key of ['x','y','z','vx','vy','vz'])c[key]=bodies.reduce((n,b)=>n+b.mass*b[key],0)/mass;
++  c.radius=Math.max(...bodies.map(b=>Math.hypot(b.x-c.x,b.y-c.y,b.z-c.z)));
++  return c;
++};
++
++// Conservative separated-cluster test, not a proof of four-body future trajectories.
++// This observer never changes a coordinate, velocity or force.
++export function escapeCandidates(bodies,G,settings){
++  if(settings.newproperty60||!['newtonian','plummer'].includes(settings.gravityModel)||!(G>0)||bodies.length!==4||bodies.some(b=>!(b.mass>0)||['x','y','z','vx','vy','vz'].some(k=>!Number.isFinite(b[k]))))return [];
++  const all=center(bodies),result=[];
++  // All seven distinct bipartitions: includes a departing host with a bound planet.
++  for(let mask=1;mask<8;mask++){
++    const a=bodies.filter((_,i)=>mask&(1<<i)),b=bodies.filter((_,i)=>!(mask&(1<<i))),ca=center(a),cb=center(b);
++    const r=[ca.x-cb.x,ca.y-cb.y,ca.z-cb.z],v=[ca.vx-cb.vx,ca.vy-cb.vy,ca.vz-cb.vz],distance=Math.hypot(...r);
++    if(!bodies.some(body=>Math.hypot(body.x-all.x,body.y-all.y,body.z-all.z)>settings.newproperty13)||distance<=4*(ca.radius+cb.radius))continue;
++    const radialSpeed=r.reduce((n,x,i)=>n+x*v[i],0)/distance;
++    if(!(radialSpeed>0))continue;
++    let potential=0;
++    for(const x of a)for(const y of b)potential+=x.mass*y.mass*pairPotential(Math.hypot(x.x-y.x,x.y-y.y,x.z-y.z),{model:settings.gravityModel,softening:settings.newproperty28});
++    const kinetic=.5*v.reduce((n,x)=>n+x*x,0),specificPotential=G*(ca.mass+cb.mass)/(ca.mass*cb.mass)*potential,energy=kinetic+specificPotential;
++    // A 10% energy margin excludes near-parabolic, noise-sensitive candidates.
++    if(!(energy>.1*Math.abs(specificPotential)))continue;
++    result.push({partition:mask,kind:mask===7?'planet-escape':'stellar-separation',distance,radialSpeed,specificEnergy:energy});
++  }
++  return result;
++}
++
++export class EscapeState{
++  constructor(){this.reset();}
++  reset(){this.timers=new Map();this.result={confirmed:false,candidate:null,years:0,confirmationYears:3};this.notified=false;}
++  update(bodies,G,settings,elapsedYears){
++    const candidates=escapeCandidates(bodies,G,settings),active=new Set(candidates.map(c=>c.partition));
++    for(const key of this.timers.keys())if(!active.has(key))this.timers.delete(key);
++    for(const c of candidates)this.timers.set(c.partition,(this.timers.get(c.partition)||0)+Math.max(0,elapsedYears));
++    candidates.sort((a,b)=>this.timers.get(b.partition)-this.timers.get(a.partition)||a.partition-b.partition);
++    const candidate=candidates[0]??null,years=candidate?this.timers.get(candidate.partition):0;
++    this.result={confirmed:years>=3,candidate,years,confirmationYears:3};return this.result;
++  }
++}
+diff --git a/src/main.js b/src/main.js
+index 401cd84..5556031 100644
+--- a/src/main.js
++++ b/src/main.js
+@@ -12,8 +12,10 @@ import './style.css';
+ const $ = selector => document.querySelector(selector);
+ const settingsKey = 'three-body.settings.v3';
+ const statisticsKey='three-body.statistics.v1';let lastStatisticsSave=0;
++const resetPendingKey='three-body.reset-pending.v1';
++let resetting=false,resetInProgress=false,startWorker;
+ function persistStatistics(force=false){
+-  if(!state?.statisticsCheckpoint||(!force&&performance.now()-lastStatisticsSave<1000))return;
++  if(resetting||!state?.statisticsCheckpoint||(!force&&performance.now()-lastStatisticsSave<1000))return;
+   try{localStorage.setItem(statisticsKey,JSON.stringify(state.statisticsCheckpoint));lastStatisticsSave=performance.now();}catch{}
+ }
+ function savedStatistics(){try{return JSON.parse(localStorage.getItem(statisticsKey)||'null');}catch{return null;}}
+@@ -212,7 +214,7 @@ function applyAppearance() {
+   const tabNames = en ? ['Settings', 'Archive', 'About'] : ['全部设置', '文明档案', '项目说明']; document.querySelectorAll('[data-tab]').forEach((b, i) => b.textContent = tabNames[i]);
+ }
+ 
+-function applyPause() { worker?.postMessage({ type: 'pause', value: userPaused || hostPaused || visibilityPaused }); }
++function applyPause() { worker?.postMessage({ type: 'pause', value: resetting || userPaused || hostPaused || visibilityPaused }); }
+ $('#pause-button').onclick = () => { userPaused = !userPaused; applyPause(); applyAppearance(); };
+ function restart() { worker?.postMessage({ type: 'restart' }); if (settings.newproperty64) showLoading(true); }
+ $('#restart-button').onclick = restart; $('#restart-prompt').onclick = restart;
+@@ -234,6 +236,29 @@ $('#import-settings').onchange = async e => {
+   e.target.value = '';
+ };
+ $('#reset-settings').onclick = () => { changeSettings(normalizeSettings()); worker?.postMessage({ type: 'restart' }); notice('已恢复默认设置：文明延续优化、尾迹开启；文明档案保留'); };
++// Keep the destructive action distinct from ordinary restart and settings reset.
++async function clearRunHistory(){
++  resetting=true;applyPause();
++  if(!await store.clearHistory())throw new Error('历史数据库暂不可写');
++  localStorage.removeItem(statisticsKey);
++  localStorage.removeItem(resetPendingKey);
++  worker?.terminate();history=[];state=null;window.__threeBodyState=null;lastEvent=lastTick=lastStatisticsSave=0;
++  sessionId=crypto.randomUUID?.()||String(Date.now());renderer.clearTrails();renderer.snap=null;
++  $('#civilization-log').replaceChildren();renderHistory();fatal=false;resetting=false;
++  startWorker({});
++}
++$('#reset-history').onclick=async()=>{
++  if(resetInProgress||!startWorker)return;
++  const en=settings.cnen2;
++  if(!confirm(en?'Erase all universe/civilization history, rankings and elapsed years? This cannot be undone. Settings and background will be kept.':'确定完全重置？将永久清空宇宙与文明历史、排行榜、累计年数，从第1号宇宙重新开始。设置与自定义背景保留。'))return;
++  resetInProgress=true;$('#reset-history').disabled=true;
++  try{
++    // A reload after an interrupted clear must complete the clear before loading old statistics.
++    localStorage.setItem(resetPendingKey,'1');await clearRunHistory();
++    notice(en?'History cleared. Starting universe 1.':'全部历史已清空，已从第1号宇宙重新开始');
++  }catch(error){notice(`完全重置未完成：${error.message}。${resetting?'模拟保持暂停，请重试完全重置。':'未清除记录，请检查浏览器存储权限后重试。'}`,true);}
++  finally{resetInProgress=false;$('#reset-history').disabled=false;}
++};
+ $('#export-history').onclick = () => downloadJSON('three-body-civilization-archive.json', { version: 1, records: history });
+ 
+ function renderHistory() {
+@@ -297,7 +322,7 @@ function renderState(s) {
+   [...log.children].forEach(li=>{if(!retained.has(li.dataset.id))li.remove();});
+   renderStatistics(s);
+   $('#simulation-year').textContent = s.year >= 1e8 ? s.year.toExponential(2) : s.year.toFixed(2);
+-  $('#restart-prompt').hidden = !(s.world?.planet.restartRequired||(settings.civilizationMode==='legacy'&&s.escaped)) || settings.autorestart;
++  $('#restart-prompt').hidden = !(s.world?.planet.restartRequired||s.escapeStatus?.confirmed||(settings.civilizationMode==='legacy'&&s.escaped)) || settings.autorestart;
+   $('#restart-prompt span').textContent=s.world?.planet.terminal?(en?s.world.planet.terminal.en:s.world.planet.terminal.zh):s.world?.planet.damaged?(en?'PLANETARY DAMAGE':'行星结构受损'):(en?'CELESTIAL ESCAPE':'天体已逃逸');
+   $('#restart-prompt strong').textContent=en?`Start universe ${s.generation+1} ↻`:`开启第${s.generation+1}号宇宙 ↻`;
+ 
+@@ -342,12 +367,23 @@ const audio = new AudioController((values, average) => {
+ try {
+   renderer = new SpaceRenderer($('#universe'), $('#body-labels'), settings);
+   const blob = new Blob([__WORKER_SOURCE__], { type: 'text/javascript' }); const workerURL = URL.createObjectURL(blob);
+-  worker = new Worker(workerURL); worker.onmessage = ({ data }) => {
++  startWorker=statistics=>{
++  const activeWorker=new Worker(workerURL);worker=activeWorker;activeWorker.onmessage = ({ data }) => {
++    if(resetting||worker!==activeWorker)return;
+     if (data.type === 'error') { fatal = true; console.error('Simulation worker:', data); notice(`模拟异常：${data.message}。请恢复默认设置后重试。`, true); return; }
+     if (data.type === 'state') { state = data.state; lastTick = state.tick; window.__threeBodyState = state; renderer.ingest(state); renderState(state); handleEvents(state.events);persistStatistics(); }
+   };
+-  worker.onerror = event => { fatal = true; console.error(event); notice('后台模拟无法启动。请通过本地服务器或 Wallpaper Engine 打开此项目。', true); };
+-  store.getAll('history').then(records=>{history=records.sort((a,b)=>a.savedAt-b.savedAt);worker.postMessage({type:'init',settings,statistics:{...(savedStatistics()||{}),legacyRecords:history}});});
++  worker.onerror = event => { if(resetting||worker!==activeWorker)return;fatal = true; console.error(event); notice('后台模拟无法启动。请通过本地服务器或 Wallpaper Engine 打开此项目。', true); };
++  worker.postMessage({type:'init',settings,statistics});applyPause();
++  };
++  (async()=>{
++    let interrupted=false;try{interrupted=!!localStorage.getItem(resetPendingKey);}catch{}
++    if(interrupted){resetInProgress=true;try{await clearRunHistory();}finally{resetInProgress=false;}return;}
++    const startupSession=sessionId,records=await store.getAll('history');
++    // A user may initiate reset while IndexedDB is still opening.
++    if(sessionId!==startupSession||resetting||resetInProgress)return;
++    history=records.sort((a,b)=>a.savedAt-b.savedAt);startWorker({...(savedStatistics()||{}),legacyRecords:history});
++  })().catch(error=>{notice(`历史载入未完成：${error.message}。请重试完全重置。`,true);});
+   installWallpaperBridge({ changeSettings, renderer, audio, setHostPaused: value => { hostPaused = value; applyPause(); } });
+   store.getAsset('background').then(file => { if (file) { customURL = URL.createObjectURL(file); renderer.setCustomBackground(customURL); } });
+   let lastFrame = performance.now(), startTime = lastFrame, fpsStart = lastFrame, frames = 0, lastDraw = 0;
+@@ -369,7 +405,7 @@ try {
+   if (settings.newproperty64 || settings.newproperty63) showLoading(); else $('#loading-overlay').hidden = true;
+   if (settings.menuinit) setPanel(true);
+   addEventListener('pagehide',()=>persistStatistics(true));
+-  addEventListener('beforeunload', () => { persistStatistics(true);worker.terminate(); URL.revokeObjectURL(workerURL); if (customURL) URL.revokeObjectURL(customURL); });
++  addEventListener('beforeunload', () => { persistStatistics(true);worker?.terminate(); URL.revokeObjectURL(workerURL); if (customURL) URL.revokeObjectURL(customURL); });
+ } catch (error) {
+   fatal = true; console.error(error); hideLoading(); notice(`无法初始化 3D 场景：${error.message}。请启用浏览器硬件加速。`, true);
+ }
+diff --git a/src/renderer.js b/src/renderer.js
+index 9f83c4e..b520b0e 100644
+--- a/src/renderer.js
++++ b/src/renderer.js
+@@ -101,10 +101,17 @@ export class SpaceRenderer {
+     // Small bright spheres become square impulses in a downsampled bloom pyramid.
+     // Explicit radial sprites provide the HDR halo without changing circular silhouettes.
+     this.post = new ShaderPass(postShader);
+-    this.mouse = { x: 0, y: 0, down: false, dragging: false, startX: 0, startY: 0, lastX: 0, lastY: 0, lastInput: -Infinity, inside:false }; this.rot = new ViewMotion();this.autoAngle=0;this.returning=false;this.hoverBase={x:0,y:0};
++    this.mouse = { x: 0, y: 0, down: false, dragging: false, startX: 0, startY: 0, lastX: 0, lastY: 0, lastInput: -Infinity, inside:false }; this.rot = new ViewMotion();this.autoAngle=0;this.returning=false;this.hoverBase={x:0,y:0};this.releaseCoasting=false;
+     canvas.addEventListener('pointerdown', e => { if(e.button!==0)return; this.mouse.down = true; this.mouse.lastInput=performance.now();this.mouse.dragging=false; this.mouse.startX=this.mouse.lastX = e.clientX; this.mouse.startY=this.mouse.lastY = e.clientY; canvas.setPointerCapture(e.pointerId); });
+     canvas.addEventListener('pointermove', e => {
+       const moved=Math.hypot(e.clientX-this.mouse.lastX,e.clientY-this.mouse.lastY)>.1;
++      // Rebase at the coasted position only when genuine hover input resumes.
++      // A stationary pointer after release must not act as a spring to the release point.
++      if(moved&&!this.mouse.down&&this.releaseCoasting){
++        this.hoverBase.x=this.rot.x-this.mouse.y*this.settings.y7*this.settings.x5*this.settings.viewSensitivity*Math.PI/180;
++        this.hoverBase.y=this.rot.y-this.mouse.x*this.settings.x6*this.settings.y5*this.settings.viewSensitivity*Math.PI/180;
++        this.releaseCoasting=false;
++      }
+       this.mouse.inside=true;if(moved&&this.settings.viewSensitivity>0&&(+this.settings.newproperty61===1||this.mouse.down))this.mouse.lastInput=performance.now();
+       this.mouse.x = e.clientX / innerWidth * 2 - 1; this.mouse.y = e.clientY / innerHeight * 2 - 1;
+       if (this.settings.viewSensitivity>0 && this.mouse.down && +this.settings.newproperty61 !== 2) {
+@@ -114,7 +121,7 @@ export class SpaceRenderer {
+       this.mouse.lastX = e.clientX; this.mouse.lastY = e.clientY;
+     });
+     canvas.addEventListener('pointerleave',()=>{this.mouse.inside=false;});
+-    for (const type of ['pointerup', 'pointercancel', 'lostpointercapture']) canvas.addEventListener(type, () => { if(this.mouse.down){this.hoverBase.x=this.rot.x-this.mouse.y*this.settings.y7*this.settings.x5*this.settings.viewSensitivity*Math.PI/180;this.hoverBase.y=this.rot.y-this.mouse.x*this.settings.x6*this.settings.y5*this.settings.viewSensitivity*Math.PI/180;}this.mouse.down = false; this.mouse.dragging=false; });
++    for (const type of ['pointerup', 'pointercancel', 'lostpointercapture']) canvas.addEventListener(type, () => { if(this.mouse.down){this.releaseCoasting=true;this.mouse.lastInput=performance.now();}this.mouse.down = false; this.mouse.dragging=false; });
+     this.updateSettings(settings); this.resize();
+     this.onResize = () => this.resize(); addEventListener('resize', this.onResize);
+   }
+@@ -228,7 +235,7 @@ export class SpaceRenderer {
+       this.rot.returnToOrigin(motionDt,s.newproperty51);
+       this.hoverBase.x=this.rot.x-this.mouse.y*s.y7*s.x5*s.viewSensitivity*Math.PI/180;
+       this.hoverBase.y=this.rot.y-this.mouse.x*s.x6*s.y5*s.viewSensitivity*Math.PI/180;
+-    }else if(s.viewSensitivity>0&&+s.newproperty61===1&&!this.mouse.down&&this.mouse.inside&&idle<2){
++    }else if(s.viewSensitivity>0&&+s.newproperty61===1&&!this.mouse.down&&!this.releaseCoasting&&this.mouse.inside&&idle<2){
+       for(let remaining=motionDt;remaining>1e-8;){const step=Math.min(1/60,remaining);this.rot.follow(this.hoverBase.x+this.mouse.y*s.y7*s.x5*s.viewSensitivity*Math.PI/180,this.hoverBase.y+this.mouse.x*s.x6*s.y5*s.viewSensitivity*Math.PI/180,step,Math.max(.25,s.newproperty62*12));remaining-=step;}
+     }else if(+s.newproperty61!==2)this.rot.coast(motionDt,-Math.log(Math.min(.999,s.y6))*120);
+     this.compassTarget=!!s.compass&&!this.returning&&+s.newproperty61!==2&&(this.mouse.dragging||(idle<2&&Math.hypot(this.rot.vx,this.rot.vy)>.0005));
+diff --git a/src/settings.js b/src/settings.js
+index a373f6f..f1595c5 100644
+--- a/src/settings.js
++++ b/src/settings.js
+@@ -2,7 +2,7 @@ import { propertySchema } from './original-data.js';
+ 
+ export const defaults = Object.fromEntries(Object.entries(propertySchema)
+   .filter(([, d]) => d.type && d.type !== 'group').map(([k, d]) => [k, d.value]));
+-export const extraDefaults = { seed: 'TRISOLARIS', music: false, volume: 0.35, trailsLength: 400, orbitalInitialization: 'research', physicsMode: 'reference', pixelRatio: 4, bodyLabels: false, presentationRevision: 6, layout: {}, viewSensitivity: .12, compassOpacity: .12, planetStrength: 1.6, idleAmplitude: 6, civilizationMode: 'balanced', thermalGrace: 30, wakeDelay: 1, epochWindow: 1/12, epochTimebase: 'years', climateInertia: 1.5, stellarBreathing: true, renderQuality: 'native', dragSensitivity: 5, birthDelay: .5, civilizationLevels: true, developmentRate: 1, gravityModel: 'newtonian', encounterAccuracy: .0075, physicsRevision: 1, manualInitialBodies: null, centerOnSystem: true, galaxyReturnRevision: 1 };
++export const extraDefaults = { seed: 'TRISOLARIS', music: false, volume: 0.35, trailsLength: 400, orbitalInitialization: 'research', physicsMode: 'reference', pixelRatio: 4, bodyLabels: false, presentationRevision: 6, layout: {}, viewSensitivity: .12, compassOpacity: .12, planetStrength: 1.6, idleAmplitude: 6, civilizationMode: 'balanced', thermalGrace: 30, wakeDelay: 1, epochWindow: 1/12, epochTimebase: 'years', climateInertia: 1.5, stellarBreathing: true, renderQuality: 'native', dragSensitivity: 5, birthDelay: .5, civilizationLevels: true, developmentRate: 1, gravityModel: 'newtonian', encounterAccuracy: .0075, physicsRevision: 1, manualInitialBodies: null, centerOnSystem: true, galaxyReturnRevision: 2 };
+ // New installs show the requested tails; explicitly saved off/on preferences still win.
+ defaults.newproperty14 = true;
+ defaults.newproperty60 = false;
+@@ -13,7 +13,7 @@ defaults.newproperty67 = 4;
+ defaults.newproperty39 = true;
+ defaults.newproperty45 = -20;
+ defaults.newproperty46 = 40;
+-defaults.newproperty51 = .003;
++defaults.newproperty51 = .006;
+ defaults.newproperty61 = 1;
+ defaults.newproperty3 = 0;
+ defaults.newproperty68 = 0;
+@@ -25,7 +25,7 @@ export const effectivePropertySchema = { ...propertySchema,
+   newproperty43: {...propertySchema.newproperty43,text:'干仓低温耐受 / Dry storage minimum °C'},
+   newproperty44: {...propertySchema.newproperty44,text:'干仓高温耐受 / Dry storage maximum °C'},
+   newproperty16:{...propertySchema.newproperty16,text:'闲置时缓慢回归银河 / Return to Milky Way'},
+-  newproperty51: {...propertySchema.newproperty51,text:'回归银河速度 °/s',value:.003},
++  newproperty51: {...propertySchema.newproperty51,text:'回归银河速度 °/s',value:.006},
+   newproperty61:{...propertySchema.newproperty61,text:'鼠标视角：0 按住拖动 / 1 悬停与拖动 / 2 固定',value:1}
+ };
+ export function normalizeSettings(source = {}, includeExtras = true) {
+@@ -77,7 +77,7 @@ export function colorRGB(s = '1 1 1') { return s.split(/\s+/).map(Number); }
+ export function colorHex(s) { return '#' + colorRGB(s).map(x => Math.round(x * 255).toString(16).padStart(2, '0')).join(''); }
+ export function fromHex(s) { return [1, 3, 5].map(i => parseInt(s.slice(i, i + 2), 16) / 255).join(' '); }
+ export function plainText(s = '') { return s.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' '); }
+-export function algorithmId(s) { return `sykm-scene-v4-${s.physicsMode}60-civ-${s.civilizationMode}-v053-tech2-${s.gravityModel}-${s.orbitalInitialization}-eta${s.encounterAccuracy}-orbits`; }
++export function algorithmId(s) { return `sykm-scene-v4-${s.physicsMode}60-civ-${s.civilizationMode}-v054-tech2-escape1-${s.gravityModel}-${s.orbitalInitialization}-eta${s.encounterAccuracy}-orbits`; }
+ export function migrateSettings(saved={},version=3){
+   // v0.5.1: one simulated month replaces the former default two-second window.
+   if(saved.epochTimebase!=='years')saved={...saved,epochWindow:saved.epochWindow===undefined||Math.abs(saved.epochWindow-2)<1e-9?1/12:saved.epochWindow};
+@@ -95,6 +95,7 @@ export function migrateSettings(saved={},version=3){
+   if(saved.presentationRevision!==extraDefaults.presentationRevision)saved={...saved,bodyLabels:saved.presentationRevision>=1?saved.bodyLabels:false,newproperty39:true};
+   if(!saved.physicsRevision)saved={...saved,orbitalInitialization:!saved.orbitalInitialization||saved.orbitalInitialization==='chaotic'?'research':saved.orbitalInitialization,newproperty60:false,gravityModel:'newtonian'};
+   if(!saved.galaxyReturnRevision&&Math.abs((saved.newproperty51??.01)-.01)<1e-9)saved={...saved,newproperty51:.003};
++  if((saved.galaxyReturnRevision??0)<2&&Math.abs((saved.newproperty51??.003)-.003)<1e-9)saved={...saved,newproperty51:.006};
+   if(version<3)return normalizeSettings({...saved,newproperty45:-20,newproperty46:40,newproperty51:Math.abs(saved.newproperty51??3)>=2 ? .01 : (saved.newproperty51??.01),newproperty3:0,newproperty68:0});
+   return normalizeSettings(saved);
+ }
+diff --git a/src/simulation.js b/src/simulation.js
+index 59a0df2..2b1a4c3 100644
+--- a/src/simulation.js
++++ b/src/simulation.js
+@@ -11,6 +11,7 @@ import { Habitability } from './habitability.js';
+ import { RunStatistics } from './run-statistics.js';
+ import { WorldState } from './world-state.js';
+ import { CivilizationState } from './civilization-state.js';
++import { EscapeState } from './escape-state.js';
+ 
+ class Vec3 { constructor(x = 0, y = x, z = x) { this.x = x; this.y = y; this.z = z; } }
+ const plain = v => v && typeof v === 'object' ? structuredClone(v) : v;
+@@ -25,7 +26,7 @@ export class Simulation {
+     this.input = { cursorScreenPosition: new Vec3(960, 540, 0) };
+     this.generation = this.statistics.universeNumber; this.tickCount = 0; this.revision = 0; this.events = []; this.eventSeq = 0;
+     this.habitability = new Habitability();
+-    this.world = new WorldState(); this.terminalSince=null;this.restartSince=null;
++    this.world = new WorldState();this.escape=new EscapeState(); this.terminalSince=null;this.restartSince=null;
+     this.setRandom();
+     this.modules = {};
+     for (const [id, factory] of Object.entries({ '008': physicsFactory, '010': timeFactory, '042': civilizationFactory, '072': eraFactory, '079': temperatureFactory, '156': loadingFactory })) this.modules[id] = this.createModule(id, factory);
+@@ -47,13 +48,14 @@ export class Simulation {
+     builder.values = {};
+     builder.finish = function() { return Object.assign(this.values, overrides); };
+     const math = Object.create(Math); math.random = () => self.random();
+-    return factory({ shared: this.shared, engine: this.engine, input: this.input, thisScene: { createLayer: data => data }, Vec3, Math: math, createScriptProperties: () => builder, getHabitability: () => null, getPhysicsSettings:()=>self.settings, prepareManualBodies:bodies=>{self.initializationMetadata=null;if(self.settings.manualInitialBodies)for(let i=0;i<4;i++)Object.assign(bodies[i],self.settings.manualInitialBodies[i]);}, prepareInitialBodies: (bodies,G,p) => {const result=prepareOrbits(bodies,G,p,self.settings,()=>self.random());self.initializationMetadata=result?.metadata??null;return result;}, onInitialize: bodies => { self.initialBodies = plain(bodies); self.habitability.reset(); self.world.reset(); self.civilization?.reset(); self.terminalSince=null;self.restartSince=null;self.observedContacts=new Set(); } });
++    return factory({ shared: this.shared, engine: this.engine, input: this.input, thisScene: { createLayer: data => data }, Vec3, Math: math, createScriptProperties: () => builder, getHabitability: () => null, getPhysicsSettings:()=>self.settings, prepareManualBodies:bodies=>{self.initializationMetadata=null;if(self.settings.manualInitialBodies)for(let i=0;i<4;i++)Object.assign(bodies[i],self.settings.manualInitialBodies[i]);}, prepareInitialBodies: (bodies,G,p) => {const result=prepareOrbits(bodies,G,p,self.settings,()=>self.random());self.initializationMetadata=result?.metadata??null;return result;}, onInitialize: bodies => { self.initialBodies = plain(bodies); self.habitability.reset(); self.world.reset();self.escape.reset(); self.civilization?.reset(); self.terminalSince=null;self.restartSince=null;self.observedContacts=new Set(); } });
+   }
+   configure(patch) {
+     const next = normalizeSettings({ ...this.settings, ...patch });
+     if(next.manualInitialBodies&&manualInitialKeys.some(k=>next[k]!==this.settings[k])&&!('manualInitialBodies' in patch))next.manualInitialBodies=null;
+     const changed = Object.keys(next).filter(k => k==='manualInitialBodies'?JSON.stringify(next[k])!==JSON.stringify(this.settings[k]):next[k]!==this.settings[k]);
+     this.settings = next;
++    if(!next.autorestart||(next.newproperty60&&next.civilizationMode!=='legacy'&&this.pendingRestart==='escape'))this.pendingRestart=null;
+     if (changed.includes('civilizationMode')) { this.habitability.reset(); this.civilization.reset(); this.shared.suitablePeriodCount = 0; }
+     const resetKeys = new Set(['seed', 'physicsMode', 'newproperty53', 'orbitalInitialization','gravityModel','encounterAccuracy','manualInitialBodies']);
+     const mapped = {};
+@@ -75,8 +77,10 @@ export class Simulation {
+     return changed;
+   }
+   restart(reason='restart') {
++    if(reason==='restart'&&this.escape.result.confirmed)reason='escape';
+     if(reason==='restart'&&this.world.state?.planet.damaged)reason='planet-damage';
+     this.pendingRestart=null;
++    this.escape.reset();
+     this.shared.rst = 1;
+     // Original log's escape edge is observed before physics consumes rst.
+     const before = this.shared.civilizationRecords.length;
+@@ -116,6 +120,7 @@ export class Simulation {
+       else if(!contact.pair.includes(3))this.emit('system:stellar-contact',{...plain(contact),modelValid:false});
+     }
+     const world=this.world.update(state.bodies,state.G,equilibrium,this.settings,this.engine.runtime,1/60,Math.max(0,this.shared.xntime-previousYear));
++    const escape=this.escape.update(state.bodies,state.G,this.settings,Math.max(0,this.shared.xntime-previousYear));
+     const legacy=this.settings.civilizationMode==='legacy';
+     if(!legacy)this.shared.tem=world.planet.temperature;
+     this.habitability.update(this.shared,this.settings,1/60,{alive:!!this.shared.civilizationAlive,number:this.shared.civilizationCount,developmentYears:this.civilization.developmentYears,phase:this.civilization.phase,terminal:!legacy&&world.planet.terminal,damaged:!legacy&&!world.planet.canSupportLife,integrity:world.planet.integrity,tideRatio:legacy?0:world.planet.stressRatio,hazard:!legacy&&world.planet.stressRatio>1?'tidal':null});
+@@ -142,6 +147,10 @@ export class Simulation {
+     if(!legacy&&world.planet.restartRequired&&this.restartSince===null)this.restartSince=this.engine.runtime;
+     if (legacy&&this.shared.tj === 1 && this.settings.autorestart) { this.emit('system:escape', {}); this.pendingRestart='escape'; }
+     else if(!legacy&&world.planet.terminal&&this.restartSince!==null&&this.settings.autorestart&&this.engine.runtime-this.restartSince>=4)this.pendingRestart='planet';
++    else if(!legacy&&!world.planet.terminal&&escape.confirmed){
++      if(!this.escape.notified){this.escape.notified=true;this.emit('system:escape',plain(escape));}
++      if(this.settings.autorestart)this.pendingRestart='escape';
++    }
+     this.modules['156'].update('');
+     // Legacy ranked output reads the full list; a finite bound prevents days-long sessions growing forever.
+     if (this.shared.civilizationRecords.length > 1000) this.shared.civilizationRecords.splice(0, this.shared.civilizationRecords.length - 1000);
+@@ -161,6 +170,7 @@ export class Simulation {
+       world: plain(this.world.state),civilizationState:plain(this.civilization.result),logItems:this.settings.civilizationMode==='legacy'?[]:plain(this.civilization.logs),
+       lifespan: s.civilizationAlive ? Math.floor(s.xntime) - s.civilizationStartTime : s.lastCivilizationLifespan,
+       physics:plain(p.diagnostics),initialization:plain(this.initializationMetadata),initialBodies: plain(this.initialBodies),
++      escapeStatus:plain(this.escape.result),
+       log: [...(s.logEntries || [])], records: plain(compact ? [...(s.civilizationRecords || [])].sort((a,b) => b.lifespan-a.lifespan).slice(0,6) : s.civilizationRecords || []), events: plain(this.events.filter(e => e.id > afterEvent)),
+       distances: [s.d14, s.d24, s.d34], text: Array.from({ length: 14 }, (_, i) => s[`txt${i + 1}`] || ''), loading: s.num || 0 };
+   }
+diff --git a/src/storage.js b/src/storage.js
+index 600348b..d397d70 100644
+--- a/src/storage.js
++++ b/src/storage.js
+@@ -29,4 +29,16 @@ export class LocalStore {
+       tx.oncomplete = () => resolve(true); tx.onerror = () => resolve(false); tx.onabort = () => resolve(false);
+     });
+   }
++  async clearHistory() {
++    const db = await this.ready;
++    if (!db) return false;
++    // A transaction on this store waits for all earlier history writes.
++    // Assets (including the custom background) are intentionally untouched.
++    return new Promise(resolve => {
++      const tx = db.transaction('history', 'readwrite');
++      tx.objectStore('history').clear();
++      tx.oncomplete = () => resolve(true);
++      tx.onerror = tx.onabort = () => resolve(false);
++    });
++  }
+ }
+diff --git a/src/view-motion.js b/src/view-motion.js
+index 222f208..e7abd62 100644
+--- a/src/view-motion.js
++++ b/src/view-motion.js
+@@ -11,7 +11,7 @@ export class ViewMotion {
+     const ax=clamp((x-this.x)*12*response-this.vx*7,-this.acceleration,this.acceleration),ay=clamp((y-this.y)*12*response-this.vy*7,-this.acceleration,this.acceleration);
+     this.vx+=ax*dt;this.vy+=ay*dt;this.x+=this.vx*dt;this.y+=this.vy*dt;this.bound();
+   }
+-  returnToOrigin(dt,speed=.003){
++  returnToOrigin(dt,speed=.006){
+     if(dt<=0||speed<=0)return;
+     this.vx=0;this.vy=0;
+     this.y=Math.atan2(Math.sin(this.y),Math.cos(this.y));
+diff --git a/tests/habitability.test.js b/tests/habitability.test.js
+index 9e72a81..18a40fb 100644
+--- a/tests/habitability.test.js
++++ b/tests/habitability.test.js
+@@ -61,5 +61,5 @@ test('tail visibility and color never reset physical trajectories',()=>{
+  const a=new Simulation(),b=new Simulation();for(let i=0;i<120;i++){a.tick();b.tick();}a.configure({newproperty14:false,brfontcoloraaaaaatrail1color:'1 0 0',trailsLength:120});for(let i=0;i<120;i++){a.tick();b.tick();}assert.deepEqual(a.snapshot().bodies,b.snapshot().bodies);
+ });
+ test('previous settings migrate the requested slow rotation, activity bounds and clarity',()=>{
+- const migrated=migrateSettings({newproperty51:3,newproperty45:-55,newproperty46:70},2);assert.equal(migrated.newproperty51,.003);assert.equal(migrated.newproperty45,-20);assert.equal(migrated.newproperty46,40);assert.equal(migrated.newproperty68,0);assert.equal(migrateSettings({newproperty51:.001},2).newproperty51,.001);
++ const migrated=migrateSettings({newproperty51:3,newproperty45:-55,newproperty46:70},2);assert.equal(migrated.newproperty51,.006);assert.equal(migrated.newproperty45,-20);assert.equal(migrated.newproperty46,40);assert.equal(migrated.newproperty68,0);assert.equal(migrateSettings({newproperty51:.001},2).newproperty51,.001);
+ });
+diff --git a/tests/simulation.test.js b/tests/simulation.test.js
+index ccd1247..0abadf8 100644
+--- a/tests/simulation.test.js
++++ b/tests/simulation.test.js
+@@ -19,7 +19,7 @@ test('183 original controls retain definitions, with the requested trails enable
+   const controls = Object.entries(propertySchema).filter(([, p]) => p.type && p.type !== 'group');
+   assert.equal(controls.length, 183);
+   const config = normalizeSettings();
+-  for (const [key, def] of controls) assert.deepEqual(config[key], ({newproperty60:false,newproperty14:true,brfontcoloraaaaaarandomposrange:3.2,rc:1.6,k2:.3,newproperty67:4,newproperty39:true,newproperty45:-20,newproperty46:40,newproperty51:.003,newproperty61:1,newproperty3:0,newproperty68:0})[key] ?? def.value, key);
++  for (const [key, def] of controls) assert.deepEqual(config[key], ({newproperty60:false,newproperty14:true,brfontcoloraaaaaarandomposrange:3.2,rc:1.6,k2:.3,newproperty67:4,newproperty39:true,newproperty45:-20,newproperty46:40,newproperty51:.006,newproperty61:1,newproperty3:0,newproperty68:0})[key] ?? def.value, key);
+   const sim = new Simulation();
+   assert.equal(sim.modules['008'].scriptProperties.fourthMass, 5000);
+   assert.equal(sim.modules['008'].scriptProperties.constraint_M, 15000000);
+diff --git a/tests/v041-hotfix.test.js b/tests/v041-hotfix.test.js
+index eea3a4d..a1542dc 100644
+--- a/tests/v041-hotfix.test.js
++++ b/tests/v041-hotfix.test.js
+@@ -6,7 +6,7 @@ import {measure} from '../tools/orbital-audit.mjs';
+ import {prepareBalancedOrbits} from '../src/orbital-initialization.js';
+ 
+ test('existing v0.4.1 profiles regain hover follow and slow galaxy return without losing layout',()=>{
+- const s=migrateSettings({presentationRevision:3,newproperty61:0,newproperty51:.08,layout:{right:{x:70,y:30}},seed:'KEEP',planetStrength:2});assert.equal(s.newproperty61,1);assert.equal(s.newproperty51,.003);assert.equal(s.orbitalInitialization,'research');assert.deepEqual(s.layout.right,{x:70,y:30});assert.equal(s.seed,'KEEP');assert.equal(s.planetStrength,2);
++ const s=migrateSettings({presentationRevision:3,newproperty61:0,newproperty51:.08,layout:{right:{x:70,y:30}},seed:'KEEP',planetStrength:2});assert.equal(s.newproperty61,1);assert.equal(s.newproperty51,.006);assert.equal(s.orbitalInitialization,'research');assert.deepEqual(s.layout.right,{x:70,y:30});assert.equal(s.seed,'KEEP');assert.equal(s.planetStrength,2);
+  const explicit=migrateSettings({...s,presentationRevision:4,newproperty61:0,newproperty51:.001,orbitalInitialization:'original'});assert.equal(explicit.newproperty61,0);assert.equal(explicit.newproperty51,.001);assert.equal(explicit.orbitalInitialization,'original');
+ });
+ test('historical v0.4.1 balanced cage profile permits sustained development and planetary passages inside the star system',()=>{
+diff --git a/tests/v041.test.js b/tests/v041.test.js
+index 6361fd6..c095ca5 100644
+--- a/tests/v041.test.js
++++ b/tests/v041.test.js
+@@ -47,9 +47,9 @@ test('drag no longer saturates, horizontal gain is lower and follow acceleration
+  const a=new ViewMotion();a.drag(.1,0);assert.equal(a.vy,.4);a.drag(.1,0);assert.equal(a.vy,.8);assert.ok(a.vy>.55);assert.equal(a.acceleration,.75);
+ });
+ test('idle return follows the nearest galaxy heading extremely slowly without overshoot',()=>{
+- const m=new ViewMotion();m.x=.1;m.y=2*Math.PI+.2;m.returnToOrigin(60);assert.ok(Math.abs(Math.hypot(m.x,m.y)-(Math.hypot(.1,.2)-.003*Math.PI/3))<1e-12);assert.ok(m.x>0&&m.x<.1);m.returnToOrigin(100000);assert.equal(m.x,0);assert.equal(m.y,0);m.returnToOrigin(1);assert.equal(m.y,0);
++ const m=new ViewMotion();m.x=.1;m.y=2*Math.PI+.2;m.returnToOrigin(60);assert.ok(Math.abs(Math.hypot(m.x,m.y)-(Math.hypot(.1,.2)-.006*Math.PI/3))<1e-12);assert.ok(m.x>0&&m.x<.1);m.returnToOrigin(100000);assert.equal(m.x,0);assert.equal(m.y,0);m.returnToOrigin(1);assert.equal(m.y,0);
+ });
+ test('window settings clamp coordinates and migrate defaults without losing custom layout',()=>{
+  assert.deepEqual(clampWindow(-10,900,200,100,800,600),{x:4,y:496});const config=normalizeSettings({layout:{left:{x:-10,y:200},bad:{x:10,y:10},clock:{x:NaN,y:1}}});assert.deepEqual(config.layout,{left:{x:0,y:100}});
+- const migrated=migrateSettings({presentationRevision:2,newproperty51:.35,newproperty61:'1',layout:{clock:{x:20,y:10}}});assert.equal(migrated.newproperty51,.003);assert.equal(migrated.newproperty61,1);assert.deepEqual(migrated.layout.clock,{x:20,y:10});
++ const migrated=migrateSettings({presentationRevision:2,newproperty51:.35,newproperty61:'1',layout:{clock:{x:20,y:10}}});assert.equal(migrated.newproperty51,.006);assert.equal(migrated.newproperty61,1);assert.deepEqual(migrated.layout.clock,{x:20,y:10});
+ });
+diff --git a/tests/v053.test.js b/tests/v053.test.js
+index 30a3fd3..19188a7 100644
+--- a/tests/v053.test.js
++++ b/tests/v053.test.js
+@@ -17,9 +17,9 @@ test('idle return cancels residual inertia and obeys one total angular-speed cap
+  m.returnToOrigin(100000,.003);assert.equal(m.x,0);assert.equal(m.y,0);m.returnToOrigin(1);assert.equal(m.y,0);
+ });
+ test('galaxy-return migration is once-only and retains custom speeds and independent view preferences',()=>{
+- const old=migrateSettings({presentationRevision:6,newproperty51:.01,viewSensitivity:.04,layout:{clock:{x:20,y:12}}});assert.equal(old.newproperty51,.003);assert.equal(old.viewSensitivity,.04);assert.deepEqual(old.layout.clock,{x:20,y:12});
++ const old=migrateSettings({presentationRevision:6,newproperty51:.01,viewSensitivity:.04,layout:{clock:{x:20,y:12}}});assert.equal(old.newproperty51,.006);assert.equal(old.viewSensitivity,.04);assert.deepEqual(old.layout.clock,{x:20,y:12});
+  assert.equal(migrateSettings({presentationRevision:6,newproperty51:.001}).newproperty51,.001);
+- assert.equal(migrateSettings({...old,newproperty51:.01}).newproperty51,.01);assert.equal(normalizeSettings().newproperty51,.003);
++ assert.equal(migrateSettings({...old,newproperty51:.01}).newproperty51,.01);assert.equal(normalizeSettings().newproperty51,.006);
+ });
+ test('a runaway planet cannot drag the tracked stellar center away; the physical state and invariants remain exact',()=>{
+  const b=[body(-2.3),body(-1.7),body(-2,.4),body(6000,0,5000)],copy=structuredClone(b),before=invariants(b,1.3275440274585598e-8),c=displayCenter(b);
+diff --git a/tests/v054.test.js b/tests/v054.test.js
+new file mode 100644
+index 0000000..a6e565a
+--- /dev/null
++++ b/tests/v054.test.js
+@@ -0,0 +1,57 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {escapeCandidates,EscapeState} from '../src/escape-state.js';
++import {normalizeSettings,migrateSettings,settingsFromInitial} from '../src/settings.js';
++import {Simulation} from '../src/simulation.js';
++const G=1.3275440274585598e-8;
++const body=(x,y=0,vx=0,mass=5e6)=>({x,y,z:0,vx,vy:0,vz:0,mass});
++const escapedPlanet=()=>[body(-.5),body(.5),body(0,.5),body(30,0,1,1000)];
++const settings=normalizeSettings();
++
++test('galaxy default doubles slightly, migrates v0.5.3 once and preserves custom speeds',()=>{
++ assert.equal(settings.newproperty51,.006);
++ const upgraded=migrateSettings({galaxyReturnRevision:1,newproperty51:.003});assert.equal(upgraded.newproperty51,.006);assert.equal(upgraded.galaxyReturnRevision,2);
++ for(const value of [.001,.004,.01,0])assert.equal(migrateSettings({galaxyReturnRevision:1,newproperty51:value}).newproperty51,value);
++ assert.equal(migrateSettings({...upgraded,newproperty51:.003}).newproperty51,.003);
++});
++test('escaping planet is observed without any mutation and only confirmed after three continuous years',()=>{
++ const b=escapedPlanet(),before=structuredClone(b),monitor=new EscapeState();
++ assert.ok(escapeCandidates(b,G,settings).some(c=>c.kind==='planet-escape'));
++ assert.equal(monitor.update(b,G,settings,2.9).confirmed,false);assert.equal(monitor.update(b,G,settings,.11).confirmed,true);assert.deepEqual(b,before);
++});
++test('bound outbound apoapsis, incoming passage and near-system high velocities are not escape',()=>{
++ const b=escapedPlanet();b[3].vx=.01;assert.deepEqual(escapeCandidates(b,G,settings),[]);
++ b[3].vx=-1;assert.deepEqual(escapeCandidates(b,G,settings),[]);
++ b[3].x=1.5;b[3].vx=10;assert.deepEqual(escapeCandidates(b,G,settings),[]);
++});
++test('transient positive energy cannot accumulate through recapture; cage prevents escape resets',()=>{
++ const b=escapedPlanet(),m=new EscapeState();m.update(b,G,settings,2.9);b[3].vx=-1;assert.equal(m.update(b,G,settings,1).years,0);b[3].vx=1;assert.equal(m.update(b,G,settings,.2).confirmed,false);
++ assert.equal(m.update(b,G,{...settings,newproperty60:true},100).confirmed,false);assert.equal(m.result.years,0);
++});
++test('unbound star and a departing host-planet cluster can be detected, including frame boosts',()=>{
++ const b=[body(30,0,1),body(-.3),body(.3),body(30.1,0,1,1000)];b[3].vy=Math.sqrt(G*5e6/.1);
++ assert.ok(escapeCandidates(b,G,settings).some(c=>c.kind==='stellar-separation'));
++ const boosted=b.map(c=>({...c,x:c.x+1000,y:c.y-2000,vx:c.vx+10,vy:c.vy-20}));
++ assert.deepEqual(escapeCandidates(boosted,G,settings).map(c=>c.partition),escapeCandidates(b,G,settings).map(c=>c.partition));
++});
++test('separation during a complex close interaction and marginal parabolic energy are deferred',()=>{
++ const b=escapedPlanet();b[0].x=-10;b[1].x=10;assert.deepEqual(escapeCandidates(b,G,settings),[]);
++ const c=escapedPlanet();const base=escapeCandidates(c,G,settings).find(x=>x.partition===7),potential=base.specificEnergy-.5;c[3].vx=Math.sqrt(-2*potential*1.01);assert.ok(!escapeCandidates(c,G,settings).some(x=>x.partition===7));
++});
++test('confirmation drives one normal universe restart, preserving historical time and reason',()=>{
++ const b=escapedPlanet();b[0].y=-1;b[1].y=1;b[2].x=2;
++ const s=new Simulation(settingsFromInitial({...settings,autorestart:true},b));let confirmed=false;
++ for(let i=0;i<250;i++){s.tick();if(s.snapshot().escapeStatus.confirmed)confirmed=true;if(s.generation>1)break;}
++ assert.equal(confirmed,true);assert.equal(s.generation,2);const state=s.snapshot();assert.ok(state.year>=3);assert.equal(state.statisticsCheckpoint.universes[0].reason,'escape');assert.equal(s.events.filter(e=>e.type==='system:escape').length,1);assert.equal(state.escapeStatus.confirmed,false);
++});
++test('automatic restart off retains escaped bodies and emits one notification; manual restart archives escape',()=>{
++ const b=escapedPlanet();b[0].y=-1;b[1].y=1;b[2].x=2;
++ const s=new Simulation(settingsFromInitial({...settings,autorestart:false},b));for(let i=0;i<240;i++)s.tick();
++ assert.equal(s.generation,1);assert.equal(s.snapshot().escapeStatus.confirmed,true);assert.ok(s.snapshot().bodies[3].x>30);assert.equal(s.events.filter(e=>e.type==='system:escape').length,1);
++ s.restart();assert.equal(s.statistics.universes[0].reason,'escape');assert.equal(s.escape.result.confirmed,false);
++});
++test('disabling auto restart or enabling the cage cancels an escape queued on the preceding frame',()=>{
++ for(const patch of [{autorestart:false},{newproperty60:true}]){
++  const s=new Simulation({autorestart:true});s.pendingRestart='escape';s.configure(patch);assert.equal(s.pendingRestart,null);
++ }
++});
+diff --git a/tools/generate-settings-guide.mjs b/tools/generate-settings-guide.mjs
+index 6756611..8490f8a 100644
+--- a/tools/generate-settings-guide.mjs
++++ b/tools/generate-settings-guide.mjs
+@@ -25,9 +25,9 @@ const descriptions={
+  viewSensitivity:'鼠标共同倍率；越小，同距离移动引起的转动越小。0关闭悬停与拖动。默认0.12不变。',
+  dragSensitivity:'拖动额外倍率；默认5是v0.4.2原拖动响应的5倍，只作用于按住左键拖动，不放大悬停。可调0.1～20。',
+  compassOpacity:'旋转环最大不透明度；0隐藏、0.12=12%不透明。实际值再乘淡入淡出系数；环大小固定为原尺寸0.3倍。',
+- newproperty61:'0只拖动；1悬停跟随与左键拖动同时可用；2固定视角。模式1拖动结束后将当前位置作为悬停基准，避免回跳。',
++ newproperty61:'0只拖动；1悬停跟随与左键拖动同时可用；2固定视角。模式1拖动松手后先自然减速，不向松手位置反拉；真正再次移动鼠标时衔接悬停跟随。',
+  newproperty16:'连续2秒没有鼠标输入后，以设定的极慢速度回归银河最亮区域。不是持续绕圈，也不是自动左右摇摆。',
+- newproperty51:'银河归位的总角速度上限，单位度/秒；默认0.003°/s。无输入2秒后回中独立接管并清除残余惯性；手动操作仍保留惯性和原灵敏度。0或负值停止归位。',
++ newproperty51:'银河归位的总角速度上限，单位度/秒；默认0.006°/s。无输入2秒后回中独立接管并清除残余惯性；手动操作仍保留惯性和原灵敏度。0或负值停止归位。',
+  x5:'俯仰轴灵敏度；同时影响悬停和拖动。最终俯仰仍有±30°范围保护。',
+  y5:'水平旋转轴灵敏度；同时影响悬停和拖动。水平角可连续旋转。',
+  x6:'横向鼠标位置对应的悬停目标角度范围；还要乘水平灵敏度与整体倍率。',
+@@ -51,7 +51,7 @@ const descriptions={
+  newproperty17:'1预置背景一、2纯色、3自定义全景图、4原生8K银河。初始化朝向银河亮部；预置图片均使用本地资源。',
+  custombg:'选择本机全景图，保存在IndexedDB，自动切换到自定义模式。WE可用文件选择属性；文件不上传。',
+  newproperty50:'开启后直接使用24项位置/速度初值；随机种子与随机轨道准备不再决定初值。手动滑块仍按属性范围钳制；导入完整初始四体数组则保留精确值（每分量绝对值≤1e8），避免新轨道导出后被旧滑块范围截断。编辑任一手动坐标/质量后切回滑块数据。',
+- autorestart:'现代模式只在行星不可逆被吞噬/撕毁后延时4模拟秒重建宇宙；远抛、寒冷、可恢复损伤不会单独重置。关闭后显示手动重启入口。legacy沿用原版逃逸重启。',
++ autorestart:'现代模式在行星不可逆吞噬/撕毁后延时4模拟秒，或保守逃逸条件持续3显示年后重建。逃逸要求超过既有距离阈值、分离星群足够紧凑、向外运动且相对轨道能量明确为正；开启牢笼时不使用此逃逸判定。仍受束缚的远日点、寒冷、文明死亡和可恢复损伤不会单独重置。关闭后显示手动重启入口。legacy沿用原版逃逸重启。',
+  newproperty60:'开关原版质心引力牢笼；它是额外约束力，并非真实天体。默认仍开。',
+  newproperty13:'原版任一天体超出质心距离D的逃逸阈值；现代模式保留逃逸标志但不因其自动重启完整行星。',
+  newproperty14:'四条天体尾迹显示开关，不影响物理轨迹。',menuinit:'下次加载默认展开右下角设置面板。',compass:'鼠标转动/惯性明显时显示旋转环；静止后淡出。银河自动慢回归不会单独触发旋转环。',
+@@ -114,9 +114,9 @@ export function guideControls(){
+ const format=value=>typeof value==='boolean'?(value?'开':'关'):String(value===''?'（空）':value);
+ const cell=v=>String(v).replaceAll('|',' / ').replaceAll('\n',' ');
+ export async function generateSettingsGuide(){
+- const controls=guideControls();let md=`# 三体实时演算 v0.5 完整设置说明\n\n本文更新到v0.5.3：修复显示中心和银河归位，科技从旧石器时代开始扩展为十二阶段并显著放慢。牛顿物理与v0.5.2一致；完整说明见docs/v053/RELEASE.md。本文对应实际界面中的 **${controls.length} 项控件**：183项原版兼容设置、${controls.length-193}项扩展设置和10项窗口坐标。控件目录直接由界面共用的 settings-catalog.js 和原版属性表生成，默认值来自 settings.js。\n\n## 1. 先看这张设置结构\n\n\`\`\`text\n右下角齿轮\n├─ 暂停 / 重启宇宙 / 全屏\n├─ 搜索：可以搜中文名称，也可以搜参数键（例如 k2）\n├─ 全部设置\n│  ├─ 布局与窗口：五个窗口位置、显隐、拖动编辑\n│  ├─ 模拟与文明：种子、轨道模式、韧性、等级和气候\n│  ├─ 视角与银河：悬停、拖拽、阻尼、旋转环、闲置回归\n│  ├─ 画面与轨迹：分辨率、尾迹、两层粒子\n│  ├─ 声音：音乐、音量\n│  └─ 原版高级设置：物理、牢笼、温度、手动初值、外观与旧UI参数\n├─ 文明档案：查看终结记录、等级、发展年数、导出和复现初值\n├─ 项目说明：版本、架构、本说明入口\n└─ 导出种子 / 导入种子 / 恢复默认\n\`\`\`\n\n改动通过本机 localStorage 保存；自定义背景和文明档案放在 IndexedDB。不同浏览器/设备不自动同步，没有在线排行榜。刷新会结算上一次运行并新开一个宇宙，当前人口和轨道不支持断点续跑。右侧累计年数和历史排行会保留。\n\n## 2. 最常用的调整\n\n| 想要什么 | 调哪里 | 建议与区别 |\n|---|---|---|\n| 文明更耐久 | 模拟与文明 → 文明耐受时间基准 | 增大 thermalGrace；延缓损耗，不让文明永生。 |\n| 先看到文明诞生 | 文明诞生安全窗口 | 默认0.5秒；和原文明复苏所需1秒分别设置。 |\n| 等级升级快一点 | 文明发展倍率 | 例如2；只放大发展进度，不把休眠计为生产。 |\n| 行星更常回到系统 | 高级 → 天体运动 → k2 | 默认关闭牢笼，此参数不生效；手动启用后默认0.30。提高会引入非牛顿约束，不能用于纯牛顿基准。 |\n| 鼠标整体更慢 | 视角与银河 → 整体视角灵敏度 | 0.12→0.06；悬停和拖动同时减半。 |\n| 只改拖动幅度 | 拖拽灵敏度倍率 | 默认5；改2会保持悬停原样、降低拖动。 |\n| 惯性更快停下 | y轴阻尼 | 减小 y6，越接近1越难停。 |\n| 环更透明 | 旋转环不透明度 | 0.12即12%不透明。0完全隐藏。 |\n| 银河回归更慢 | 回归银河速度 | 默认0.003度/秒；连续2秒无输入才回归。 |\n| 少一点粒子 | 画面与轨迹 → 尘埃1计数 | 只改近景；点大小另由尘埃1大小控制。 |\n| 让画面更清晰 | 原生分辨率/8K与高级后处理 | 胶片颗粒、CRT默认关闭；径向模糊仍可自行调整。 |\n\n## 3. 文明韧性、等级与死亡是怎样算的\n\n环境适宜度反映当前温度和潮汐，不等于文明还剩多少生命。文明没诞生前，人口、干仓质量、韧性和等级显示为“—”，不会被几百年的严寒提前扣光。短暂但连续安全的窗口满足 birthDelay 后才建立新文明，两个储备从100%开始。\n\n文明具有两种归一化储备，百分比不是虚构的精确人口普查：人口储备表示可延续的人口，干仓质量表示脱水生命和保存体系的完好程度。综合韧性=人口储备×干仓质量。安全且处于活动状态时，两者每模拟秒分别恢复1.5和1个百分点，最高100%。脱水储存范围以内不凭时间强制扣寿命；超出干仓耐受范围才持续损失保存质量，同时以较慢速度损失人口。已恢复的旧结构损伤不会继续作为固定伤害源。\n\n保护分母=thermalGrace×等级韧性倍率。休眠气候损耗率=(0.015+超出干仓温度范围的摄氏度/2000)/保护分母；没有越界时为0。人口承受此损耗的15%。尚未脱水的异常气候人口损耗=(0.05+超出活动温区的度数/300)/保护分母。当前有效潮汐应力超过1时另有结构损耗；不是一有“飞星”就杀死文明。任一储备降至1%或以下，文明终结。恒星吞噬、行星完整度归零则立即结束文明；高级文明也没有免疫这些事件。\n\n阶段流程：安全生产 → 不适宜时脱水（1秒）→ 干仓保存 → 连续安全 wakeDelay 秒 → 浸泡（0.5秒）→ 恢复同一文明。浸泡中环境再次不安全，回干仓；编号与等级保留。文明终结后再遇安全窗口才产生新编号，科技从头开始。\n\n| 等级 | 阶段 | 累计发展年数 | 损耗保护倍率 | 活动温区（默认） | 干仓温区（默认） |\n|---|---|---|---|---|---|\n`;
++ const controls=guideControls();let md=`# 三体实时演算 v0.5 完整设置说明\n\n本文更新到v0.5.4：修复显示中心和银河归位，科技从旧石器时代开始扩展为十二阶段并显著放慢。牛顿物理与v0.5.2一致；完整说明见docs/v053/RELEASE.md。本文对应实际界面中的 **${controls.length} 项控件**：183项原版兼容设置、${controls.length-193}项扩展设置和10项窗口坐标。控件目录直接由界面共用的 settings-catalog.js 和原版属性表生成，默认值来自 settings.js。\n\n## 1. 先看这张设置结构\n\n\`\`\`text\n右下角齿轮\n├─ 暂停 / 重启宇宙 / 全屏\n├─ 搜索：可以搜中文名称，也可以搜参数键（例如 k2）\n├─ 全部设置\n│  ├─ 布局与窗口：五个窗口位置、显隐、拖动编辑\n│  ├─ 模拟与文明：种子、轨道模式、韧性、等级和气候\n│  ├─ 视角与银河：悬停、拖拽、阻尼、旋转环、闲置回归\n│  ├─ 画面与轨迹：分辨率、尾迹、两层粒子\n│  ├─ 声音：音乐、音量\n│  └─ 原版高级设置：物理、牢笼、温度、手动初值、外观与旧UI参数\n├─ 文明档案：查看终结记录、等级、发展年数、导出和复现初值\n├─ 项目说明：版本、架构、本说明入口\n└─ 导出种子 / 导入种子 / 恢复默认\n\`\`\`\n\n改动通过本机 localStorage 保存；自定义背景和文明档案放在 IndexedDB。不同浏览器/设备不自动同步，没有在线排行榜。刷新会结算上一次运行并新开一个宇宙，当前人口和轨道不支持断点续跑。右侧累计年数和历史排行会保留。\n\n## 2. 最常用的调整\n\n| 想要什么 | 调哪里 | 建议与区别 |\n|---|---|---|\n| 文明更耐久 | 模拟与文明 → 文明耐受时间基准 | 增大 thermalGrace；延缓损耗，不让文明永生。 |\n| 先看到文明诞生 | 文明诞生安全窗口 | 默认0.5秒；和原文明复苏所需1秒分别设置。 |\n| 等级升级快一点 | 文明发展倍率 | 例如2；只放大发展进度，不把休眠计为生产。 |\n| 行星更常回到系统 | 高级 → 天体运动 → k2 | 默认关闭牢笼，此参数不生效；手动启用后默认0.30。提高会引入非牛顿约束，不能用于纯牛顿基准。 |\n| 鼠标整体更慢 | 视角与银河 → 整体视角灵敏度 | 0.12→0.06；悬停和拖动同时减半。 |\n| 只改拖动幅度 | 拖拽灵敏度倍率 | 默认5；改2会保持悬停原样、降低拖动。 |\n| 惯性更快停下 | y轴阻尼 | 减小 y6，越接近1越难停。 |\n| 环更透明 | 旋转环不透明度 | 0.12即12%不透明。0完全隐藏。 |\n| 银河回归更慢 | 回归银河速度 | 默认0.006度/秒；连续2秒无输入才回归。 |\n| 少一点粒子 | 画面与轨迹 → 尘埃1计数 | 只改近景；点大小另由尘埃1大小控制。 |\n| 让画面更清晰 | 原生分辨率/8K与高级后处理 | 胶片颗粒、CRT默认关闭；径向模糊仍可自行调整。 |\n\n## 3. 文明韧性、等级与死亡是怎样算的\n\n环境适宜度反映当前温度和潮汐，不等于文明还剩多少生命。文明没诞生前，人口、干仓质量、韧性和等级显示为“—”，不会被几百年的严寒提前扣光。短暂但连续安全的窗口满足 birthDelay 后才建立新文明，两个储备从100%开始。\n\n文明具有两种归一化储备，百分比不是虚构的精确人口普查：人口储备表示可延续的人口，干仓质量表示脱水生命和保存体系的完好程度。综合韧性=人口储备×干仓质量。安全且处于活动状态时，两者每模拟秒分别恢复1.5和1个百分点，最高100%。脱水储存范围以内不凭时间强制扣寿命；超出干仓耐受范围才持续损失保存质量，同时以较慢速度损失人口。已恢复的旧结构损伤不会继续作为固定伤害源。\n\n保护分母=thermalGrace×等级韧性倍率。休眠气候损耗率=(0.015+超出干仓温度范围的摄氏度/2000)/保护分母；没有越界时为0。人口承受此损耗的15%。尚未脱水的异常气候人口损耗=(0.05+超出活动温区的度数/300)/保护分母。当前有效潮汐应力超过1时另有结构损耗；不是一有“飞星”就杀死文明。任一储备降至1%或以下，文明终结。恒星吞噬、行星完整度归零则立即结束文明；高级文明也没有免疫这些事件。\n\n阶段流程：安全生产 → 不适宜时脱水（1秒）→ 干仓保存 → 连续安全 wakeDelay 秒 → 浸泡（0.5秒）→ 恢复同一文明。浸泡中环境再次不安全，回干仓；编号与等级保留。文明终结后再遇安全窗口才产生新编号，科技从头开始。\n\n| 等级 | 阶段 | 累计发展年数 | 损耗保护倍率 | 活动温区（默认） | 干仓温区（默认） |\n|---|---|---|---|---|---|\n`;
+  for(const s of civilizationLevels)md+=`| Lv.${s.level} | ${s.zh} | ${s.years} | ${s.resilience}× | ${defaults.newproperty45-s.climate}～${defaults.newproperty46+s.climate}°C | ${defaults.newproperty43-s.storage}～${defaults.newproperty44+s.storage}°C |\n`;
+- md+=`\n发展年数只在文明确实处于“恢复生产/发展”、温度合适且行星安全时积累，再乘 developmentRate。**文明寿命包含休眠，科技发展年数不包含休眠。** 如果改动基础温区，表中所有等级范围会随之平移/扩展。文明阶段参考原著展示的农业、工业、原子信息及远航发展方向；200/800/1800/3500/6000/9000/12000/16000/21000/28000/40000生产年阈值与保护倍率都是本版本的设计，并非小说给定数值；没有假装已经实现智子制造或真实星际迁移。\n\n恒/乱纪元独立按轨道束缚与扰动判断。乱纪元可有短暂适温窗口，寒冷恒纪元也不一定适合生产。现代模式中，只要行星尚可恢复，就不因“飞得远”“文明死亡”或“气温极端”自动开新宇宙；结构可恢复与文明能否延续是两个不同问题。\n\n日志只保留最近12个事件、屏幕最多6行：文明启动、毁灭、每50年寿命里程碑、等级晋升，以及确认超过0.5秒的三日连珠/三日凌空/飞星不动，同类天象冷却60模拟秒。常规飞星、脱水切换等不逐条刷屏。\n\n## 4. 每个控件的完整参考\n\n“默认”指v0.5.3新安装值。银河归位原默认0.01一次迁移为0.003°/秒，自定义速度保留。v0.5.2 默认 research 初始化、newtonian 引力、牢笼关闭；旧配置升级会切换这些默认项。相同 Seed 的轨迹已改变，要复现 v0.5.1 必须显式选择 chaotic + legacy 并恢复旧牢笼与其余参数。升级时原有自定义值保留；仅识别到旧默认 k2=0.22、thermalGrace=8、wakeDelay=3 时迁移为0.30、30、1。v0.5.1还把旧默认epochWindow=2迁移为1/12模拟年；其他明确自定义值保留数值，按模拟年解释，并记录epochTimebase=years。已保存的灵敏度、窗口位置、背景、音量和档案继续保留。表内“兼容保留/不生效”项如实列出，避免误以为滑块必定改变现代逻辑。\n`;
++ md+=`\n发展年数只在文明确实处于“恢复生产/发展”、温度合适且行星安全时积累，再乘 developmentRate。**文明寿命包含休眠，科技发展年数不包含休眠。** 如果改动基础温区，表中所有等级范围会随之平移/扩展。文明阶段参考原著展示的农业、工业、原子信息及远航发展方向；200/800/1800/3500/6000/9000/12000/16000/21000/28000/40000生产年阈值与保护倍率都是本版本的设计，并非小说给定数值；没有假装已经实现智子制造或真实星际迁移。\n\n恒/乱纪元独立按轨道束缚与扰动判断。乱纪元可有短暂适温窗口，寒冷恒纪元也不一定适合生产。现代模式不会只因“飞得远”“文明死亡”或“气温极端”自动开新宇宙；v0.5.4额外在未开启牢笼且保守逃逸条件持续3显示年时重建，不改变实际引力或轨道。设置→文明档案→完全重置历史可清除宇宙/文明档案、排行榜和累计年份，保留设置和背景；普通重启与恢复默认仍保留历史。\n\n日志只保留最近12个事件、屏幕最多6行：文明启动、毁灭、每50年寿命里程碑、等级晋升，以及确认超过0.5秒的三日连珠/三日凌空/飞星不动，同类天象冷却60模拟秒。常规飞星、脱水切换等不逐条刷屏。\n\n## 4. 每个控件的完整参考\n\n“默认”指v0.5.4新安装值。银河归位旧默认0.003迁移为0.006°/秒（更早默认0.01同样迁移），自定义速度保留。v0.5.2 默认 research 初始化、newtonian 引力、牢笼关闭；旧配置升级会切换这些默认项。相同 Seed 的轨迹已改变，要复现 v0.5.1 必须显式选择 chaotic + legacy 并恢复旧牢笼与其余参数。升级时原有自定义值保留；仅识别到旧默认 k2=0.22、thermalGrace=8、wakeDelay=3 时迁移为0.30、30、1。v0.5.1还把旧默认epochWindow=2迁移为1/12模拟年；其他明确自定义值保留数值，按模拟年解释，并记录epochTimebase=years。已保存的灵敏度、窗口位置、背景、音量和档案继续保留。表内“兼容保留/不生效”项如实列出，避免误以为滑块必定改变现代逻辑。\n`;
+  let group='';for(const c of controls){if(c.group!==group){group=c.group;md+=`\n### ${group}\n\n| 名称 / 参数键 | 默认 | 范围 / 类型 | 实际作用 |\n|---|---|---|---|\n`;}
+  const d=c.def,range=d.type==='slider'?`${d.min}～${d.max}`:d.type==='combo'?d.options.map(o=>`${o.value}=${o.label}`).join('；'):({bool:'开关',color:'RGB，各0～1',textinput:'文字',scenetexture:'本地图片'}[d.type]||d.type);
+  md+=`| ${cell(plainText(d.text))}<br>\`${c.key}\` | ${cell(format(c.value))} | ${cell(range)} | ${cell(c.description)} |\n`;}
+diff --git a/tools/v054/browser-check.mjs b/tools/v054/browser-check.mjs
+new file mode 100644
+index 0000000..1e2880d
+--- /dev/null
++++ b/tools/v054/browser-check.mjs
+@@ -0,0 +1,59 @@
++import {chromium} from 'playwright-core';
++import assert from 'node:assert/strict';
++import {writeFile} from 'node:fs/promises';
++const browser=await chromium.launch({executablePath:'/usr/bin/chromium',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
++const context=await browser.newContext({viewport:{width:1280,height:900}}),page=await context.newPage(),checks=[],errors=[],motion=[];
++page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error'&&!m.text().startsWith('Failed to load resource:'))errors.push(m.text());});
++await page.addInitScript(()=>{
++ if(!localStorage.getItem('qa-initialized')){
++  localStorage.setItem('qa-initialized','1');
++  localStorage.setItem('three-body.settings.v3',JSON.stringify({presentationRevision:6,physicsRevision:1,galaxyReturnRevision:1,newproperty51:.003,viewSensitivity:.04,pixelRatio:.5,newproperty63:false,newproperty64:false,newproperty2:false,autorestart:false,seed:'V054-BROWSER'}));
++  localStorage.setItem('three-body.statistics.v1',JSON.stringify({format:'three-body-statistics',version:1,totalYears:12345,universeNumber:88,universeStart:12000,nextCivilization:99,universes:[{number:70,lifespan:1000}],civilizations:[{number:80,universe:70,lifespan:900}]}));
++ }
++ window.__wallpaperFPS=30;
++});
++const scene=()=>page.evaluate(()=>window.__threeBodyDiagnostics().scene),apply=patch=>page.evaluate(p=>window.threeBody.applySettings(p),patch),ready=()=>page.waitForFunction(()=>window.__threeBodyDiagnostics?.().ready);
++try{
++ await page.goto('http://localhost:4173',{waitUntil:'networkidle'});await ready();
++ assert.equal(await page.evaluate(()=>window.threeBody.version),'0.5.4');assert.equal(await page.locator('#setting-newproperty51').inputValue(),'0.006');checks.push('v0.5.4 real Worker starts and migrates the old default to 0.006 deg/s');
++ // Test real pointer events in both directions with hover mode enabled.
++ await apply({newproperty16:false,newproperty61:1});
++ for(const direction of [1,-1]){
++  await page.mouse.move(560,650);await page.waitForTimeout(350);await page.mouse.down();await page.mouse.move(560+direction*140,650,{steps:10});await page.waitForTimeout(80);await page.mouse.up();
++  const samples=[];for(let i=0;i<24;i++){const s=await scene();samples.push({yaw:s.viewRotation[1],velocity:s.viewVelocity[1]});await page.waitForTimeout(60);}
++  assert.ok(samples[0].velocity*direction>0);
++  for(let i=1;i<samples.length;i++){assert.ok((samples[i].yaw-samples[i-1].yaw)*direction>=-1e-9,JSON.stringify(samples));assert.ok(samples[i].velocity*direction>=-1e-9);}
++  motion.push({direction,samples});
++ }
++ checks.push('left and right drag releases coast monotonically without a reverse rebound in hover+drag mode');
++ await apply({newproperty16:true});await page.mouse.move(560,650);await page.mouse.down();await page.mouse.move(680,650,{steps:8});await page.waitForTimeout(2150);await page.mouse.up();await page.waitForTimeout(100);assert.equal((await scene()).returningToGalaxy,false);checks.push('holding a drag still for more than two seconds does not trigger immediate reverse auto-return upon release');
++ const before=await scene();await page.mouse.move(500,620,{steps:5});await page.waitForTimeout(300);const hover=await scene();assert.ok(Math.abs(hover.viewRotation[1]-before.viewRotation[1])>1e-5);checks.push('fresh hover input resumes without requiring a click');
++ await apply({newproperty16:true});await page.waitForTimeout(2200);const a=await scene(),t=Date.now();assert.equal(a.returningToGalaxy,true);assert.deepEqual(a.viewVelocity,[0,0]);await page.waitForTimeout(900);const b=await scene(),elapsed=(Date.now()-t)/1000,travel=Math.hypot(...a.viewRotation.slice(0,2))-Math.hypot(...b.viewRotation.slice(0,2)),cap=.006*Math.PI/180*elapsed;assert.ok(travel>cap*.3&&travel<cap*1.5,{travel,cap});checks.push('idle return uses the slightly increased speed without residual inertia or overshoot');
++ // Seed actual IndexedDB archives/background and reload to exercise loading and deletion.
++ await page.evaluate(async()=>{
++  await new Promise((resolve,reject)=>{const r=indexedDB.open('three-body-observatory',1);r.onerror=reject;r.onsuccess=()=>{const db=r.result,tx=db.transaction(['history','assets'],'readwrite');tx.objectStore('history').put({key:'qa-old-civilization',number:80,universe:70,generation:70,lifespan:900,year:12340,savedAt:Date.now(),seed:'OLD',destructionEvent:'QA',settings:{}});const c=document.createElement('canvas');c.width=c.height=1;tx.objectStore('assets').put(new Blob([Uint8Array.from(atob(c.toDataURL().split(',')[1]),x=>x.charCodeAt(0))],{type:'image/png'}),'background');tx.oncomplete=()=>{db.close();resolve();};tx.onerror=reject;};});
++ });
++ await page.reload({waitUntil:'networkidle'});await ready();await page.evaluate(()=>window.wallpaperPropertyListener.setPaused(true));assert.equal(await page.evaluate(()=>window.__threeBodyDiagnostics().history),1);
++ await page.locator('#settings-toggle').click();await page.locator('[data-tab="history"]').click();await page.waitForTimeout(400);
++ page.once('dialog',d=>d.dismiss());await page.locator('#reset-history').click();assert.equal(await page.evaluate(()=>window.__threeBodyDiagnostics().history),1);assert.ok((await page.evaluate(()=>window.threeBody.getState().year))>12345);checks.push('canceling complete reset retains archives, rankings and accumulated time');
++ // Queue a preceding write, then clear: it must not resurrect history after completion.
++ await page.evaluate(()=>{const r=indexedDB.open('three-body-observatory',1);r.onsuccess=()=>{const db=r.result,tx=db.transaction('history','readwrite');for(let i=0;i<20;i++)tx.objectStore('history').put({key:'pending-'+i,number:81+i,lifespan:5});tx.oncomplete=()=>db.close();};});
++ page.once('dialog',d=>d.accept());await page.locator('#reset-history').click();await page.waitForFunction(()=>window.threeBody.getState()?.generation===1&&window.__threeBodyDiagnostics().history===0);
++ const resetState=await page.evaluate(()=>window.threeBody.getState());assert.ok(resetState.year<1);assert.equal(resetState.statisticsCheckpoint.nextCivilization,1);assert.deepEqual(resetState.statisticsCheckpoint.civilizations,[]);assert.deepEqual(resetState.statisticsCheckpoint.universes,[]);assert.deepEqual(resetState.logItems,[]);assert.equal(await page.locator('#setting-viewSensitivity').inputValue(),'0.04');
++ const readStorage=()=>page.evaluate(async()=>{
++  const db=await new Promise(resolve=>{const r=indexedDB.open('three-body-observatory',1);r.onsuccess=()=>resolve(r.result);});
++  const history=await new Promise(resolve=>{const r=db.transaction('history').objectStore('history').getAll();r.onsuccess=()=>resolve(r.result);});const bg=await new Promise(resolve=>{const r=db.transaction('assets').objectStore('assets').get('background');r.onsuccess=()=>resolve(r.result);});db.close();return{records:history.length,background:!!bg,stats:JSON.parse(localStorage.getItem('three-body.statistics.v1')),pending:localStorage.getItem('three-body.reset-pending.v1')};
++ });
++ const cleared=await readStorage();assert.equal(cleared.records,0);assert.equal(cleared.background,true);assert.equal(cleared.pending,null);assert.ok(cleared.stats.totalYears<1);checks.push('confirmed reset clears IndexedDB archives, pending writes, in-memory logs, rankings, numbering and statistics; settings/background survive');
++ await page.screenshot({path:'docs/v054/results/reset-history.png'});
++ await page.reload({waitUntil:'networkidle'});await ready();await page.evaluate(()=>window.wallpaperPropertyListener.setPaused(true));assert.equal((await readStorage()).records,0);assert.ok((await page.evaluate(()=>window.threeBody.getState().year))<5);assert.equal(await page.evaluate(()=>window.__threeBodyDiagnostics().history),0);checks.push('cleared history and old statistics do not return after reload');
++ // Simulate an interrupted reset between marker creation and database clearing.
++ await page.evaluate(()=>{localStorage.setItem('three-body.reset-pending.v1','1');localStorage.setItem('three-body.statistics.v1',JSON.stringify({format:'three-body-statistics',version:1,totalYears:54321,universeNumber:333}));});await page.reload({waitUntil:'networkidle'});await ready();await page.evaluate(()=>window.wallpaperPropertyListener.setPaused(true));assert.equal(await page.evaluate(()=>window.threeBody.getState().generation),1);assert.ok((await page.evaluate(()=>window.threeBody.getState().year))<3);assert.equal((await readStorage()).pending,null);checks.push('an interrupted reset is completed on startup before old checkpoints can load');
++ const escaping=[{x:-.5,y:-1,z:0,vx:0,vy:0,vz:0,mass:5e6},{x:.5,y:1,z:0,vx:0,vy:0,vz:0,mass:5e6},{x:2,y:.5,z:0,vx:0,vy:0,vz:0,mass:5e6},{x:30,y:0,z:0,vx:1,vy:0,vz:0,mass:1000}];
++ await apply({newproperty50:true,manualInitialBodies:escaping,autorestart:false});await page.evaluate(()=>window.wallpaperPropertyListener.setPaused(false));await page.waitForFunction(()=>window.threeBody.getState()?.escapeStatus?.confirmed,{},{timeout:15000});await page.evaluate(()=>window.wallpaperPropertyListener.setPaused(true));assert.equal(await page.locator('#restart-prompt').isVisible(),true);const universe=await page.evaluate(()=>window.threeBody.getState().generation);await apply({autorestart:true});await page.evaluate(()=>window.wallpaperPropertyListener.setPaused(false));await page.waitForFunction(u=>window.threeBody.getState()?.generation>u,universe);await page.evaluate(()=>window.wallpaperPropertyListener.setPaused(true));assert.equal(await page.locator('#restart-prompt').isVisible(),false);checks.push('real Worker exposes confirmed escape and manual restart when disabled, then rebuilds once automatic restart is enabled');
++ const restricted=await browser.newContext({viewport:{width:800,height:600}}),restrictedPage=await restricted.newPage();
++ restrictedPage.on('pageerror',e=>errors.push(e.message));await restrictedPage.addInitScript(()=>{Storage.prototype.getItem=Storage.prototype.setItem=()=>{throw new DOMException('Storage denied','SecurityError');};window.__wallpaperFPS=10;});
++ await restrictedPage.goto('http://localhost:4173',{waitUntil:'networkidle'});await restrictedPage.waitForFunction(()=>window.__threeBodyDiagnostics?.().ready);await restricted.close();checks.push('denied localStorage access still allows the simulation to boot');
++ assert.deepEqual(errors,[]);await writeFile('docs/v054/results/browser.json',JSON.stringify({passed:true,checks,errors,motion,returnMotion:{elapsed,travelRadians:travel,capRadians:cap},storage:cleared,limits:'Chromium actual pointer/Worker/IndexedDB, software WebGL; native Wallpaper Engine unavailable'},null,2)+'\n');console.log(JSON.stringify({passed:true,checks},null,2));
++}catch(error){await writeFile('docs/v054/results/browser-failure.json',JSON.stringify({passed:false,checks,errors,motion,error:error.stack},null,2)+'\n');throw error;}
++finally{await browser.close();}
+diff --git a/tools/v054/physical-parity.mjs b/tools/v054/physical-parity.mjs
+new file mode 100644
+index 0000000..0b44b09
+--- /dev/null
++++ b/tools/v054/physical-parity.mjs
+@@ -0,0 +1,18 @@
++import assert from 'node:assert/strict';
++import {pathToFileURL} from 'node:url';
++import {writeFile} from 'node:fs/promises';
++import {Simulation} from '../../src/simulation.js';
++const baseline=process.argv[2];if(!baseline)throw Error('Pass a clean worktree checked out at the v0.5.3 tag');
++const {Simulation:Previous}=await import(pathToFileURL(`${baseline}/src/simulation.js`));
++const results=[];const physical=bodies=>bodies.map(b=>Object.fromEntries(['x','y','z','vx','vy','vz','mass'].map(k=>[k,b[k]])));
++for(let i=0;i<8;i++){
++ const seed=`V054-PHYSICS-PARITY-${i}`,settings={seed,autorestart:false},old=new Previous(settings),current=new Simulation(settings);let ticks=0,error=null;
++ for(;ticks<12000;ticks++){
++  let a,b;try{old.tick();}catch(e){a=e;}try{current.tick();}catch(e){b=e;}
++  if(a||b){assert.equal(a?.code,b?.code);assert.equal(a?.message,b?.message);error=a?.message;break;}
++  if(ticks%120===0){assert.deepEqual(physical(old.snapshot().bodies),physical(current.snapshot().bodies));assert.deepEqual(old.snapshot().physics,current.snapshot().physics);}
++ }
++ const a=old.snapshot(),b=current.snapshot();assert.deepEqual(physical(a.bodies),physical(b.bodies));assert.deepEqual(a.physics,b.physics);
++ results.push({seed,ticks,years:a.year,exactStateParity:true,exactConservationDiagnosticParity:true,energy:a.physics?.energy,error});
++}
++await writeFile('docs/v054/results/physical-parity.json',JSON.stringify({passed:true,baseline:'v0.5.3 / 292d21d',source:'Actual production Simulation in both versions; no resets; eight predetermined seeds x 200 displayed years',results},null,2)+'\n');console.log(JSON.stringify({passed:true,seeds:results.length},null,2));

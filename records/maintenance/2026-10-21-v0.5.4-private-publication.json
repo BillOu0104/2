@@ -1,0 +1,53 @@
+{
+  "date": "2026-10-21",
+  "release": "v0.5.4",
+  "status": "succeeded",
+  "url": "https://trisolaris-reconstruction-20261019.wittylark8.chatgpt.site",
+  "project_id": "appgprj_6ad60b784fa08191b7ac5c78832eb2d7",
+  "version_id": "appgprj_6ad60b784fa08191b7ac5c78832eb2d7~appgver_6aed790f35cc81918fb91fa28595a6b8",
+  "deployment_id": "appgdep_6ad8a8eb20dc8191a3c8030ad0eb1b18",
+  "published_at": "2026-10-21T11:58:50.662327+00:00",
+  "site_source_commit": "de8db2f8f79ec072b732dd3178e7e94aecf1fb0c",
+  "github_source_commit": "844c275cd3be1f912b464e2f892cbef63a62fa7a",
+  "implementation_commit": "de493891629800b8b70614f11915847a6594da9d",
+  "archive_sha256": "a3037a07b87b481cff718dc53f4bea8e00b49b19eed0d664e91927e26c2c853b",
+  "audience": "Owner only; original custom access unchanged",
+  "changes": [
+    "Drag release coasts without hover spring rebound; two-second grace begins at release",
+    "Default galaxy return 0.006 deg/s with once-only old-default migration",
+    "Confirmed full-history reset preserves settings/background and resumes interrupted clears",
+    "Conservative separated-cluster escape observer; no coordinate, velocity or force corrections"
+  ],
+  "verification": {
+    "nodeTests": 117,
+    "browserChecks": 11,
+    "baselineParity": "8 predetermined seeds x 200 displayed years; exact physical state and conservation diagnostic parity with v0.5.3, auto restart disabled",
+    "identicalRuntimeBuildFiles": 21,
+    "siteCheckoutTests": "npm test passed",
+    "siteCheckoutBuild": "npm run build passed",
+    "githubCi": [
+      {
+        "id": 39595676684,
+        "name": "Wallpaper acceptance build",
+        "conclusion": "success"
+      },
+      {
+        "id": 39595676709,
+        "name": "Verify version and analysis records",
+        "conclusion": "success"
+      },
+      {
+        "id": 39595750380,
+        "name": "Verify version and analysis records (PR)",
+        "conclusion": "success"
+      }
+    ],
+    "pullRequest": "https://github.com/BillOu0104/2/pull/3",
+    "pullRequestAttachment": "Tool invoked but host returned app tool no longer available; PR URL retained"
+  },
+  "limitations": [
+    "Separated-cluster escape criterion is a conservative finite-time heuristic, not a mathematical guarantee",
+    "Native Windows Wallpaper Engine not tested",
+    "No new 128-seed survival experiment; observer does not improve physical survival"
+  ]
+}
