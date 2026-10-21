@@ -30,6 +30,7 @@
 | [minimal-chaos-v2-weak-trigger](analyses/minimal-chaos-v2-weak-trigger/README.md) | 弱负能触发间隔原型与物理夹具 | [7f64a8a](https://github.com/BillOu0104/2/commit/7f64a8aad9107f0ac94c16ca273ebdbf3742d605) |
 | [minimal-chaos-v2-weak10k](analyses/minimal-chaos-v2-weak10k/README.md) | 弱负能反馈10000年完整探索 | [793076e](https://github.com/BillOu0104/2/commit/793076e819205a6f3bdce061d881f6e964066c9e) |
 | [minimal-chaos-v2-weak1k](analyses/minimal-chaos-v2-weak1k/README.md) | 弱负能反馈1000年功能阶段 | [8475100](https://github.com/BillOu0104/2/commit/8475100c1f5302be7c39fd01859f681f736fb127) |
+| [minimal-chaos-v2-weak30k](analyses/minimal-chaos-v2-weak30k/README.md) | 弱负能反馈30000年完整结果 | [2b7f1a3](https://github.com/BillOu0104/2/commit/2b7f1a397b8f1b430d1cf554cf5da5fa0316b1c1) |
 | [newtonian-survival](analyses/newtonian-survival/README.md) | 无牢笼牛顿三星长期存活研究 | [c198020](https://github.com/BillOu0104/2/commit/c1980201d11c7d0968d9039bfca4ad91383b27b0) |
 | [v054-centering-conservation-review](analyses/v054-centering-conservation-review/README.md) | 星群跟随不能代替守恒排查 | [7a63ebe](https://github.com/BillOu0104/2/commit/7a63ebefae4f9fa4b2db993697221e720506ca2e) |
 
