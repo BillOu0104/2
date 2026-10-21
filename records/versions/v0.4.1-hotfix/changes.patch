@@ -1,0 +1,444 @@
+diff --git a/src/legacy/008.js b/src/legacy/008.js
+index c62f7e2..58bbb9f 100644
+--- a/src/legacy/008.js
++++ b/src/legacy/008.js
+@@ -1020,6 +1020,7 @@ function resetSystem() {
+         }
+     }
+     
++    if (!scriptProperties.cus_en) ctx.prepareInitialBodies?.(bodies, G, scriptProperties);
+     // 初始化前一个位置
+     for (let i = 0; i < bodies.length; i++) {
+         bodies[i].prevX = bodies[i].x;
+diff --git a/src/main.js b/src/main.js
+index f546e57..6a234ae 100644
+--- a/src/main.js
++++ b/src/main.js
+@@ -123,7 +123,7 @@ function groupElement(title, open = false) {
+ function buildSettings() {
+   const definitions={
+     planetStrength:{type:'slider',text:'行星结构强度 / Structural strength',min:1,max:4,step:.1},
+-    idleAmplitude:{type:'slider',text:'静置左右摇摆幅度 °',min:0,max:20,step:.5},
++    orbitalInitialization:{type:'combo',text:'随机初始轨道 / Initial orbits',options:[{value:'balanced',label:'束缚轨道 · 更长恒纪元（默认）'},{value:'original',label:'原版完全随机'}]},
+     seed: { type: 'textinput', text: '随机初始化 Seed' },
+     physicsMode: { type: 'combo', text: '物理时钟', options: [{ value: 'reference', label: '原版节奏 · 固定 60 Hz（默认）' }, { value: 'realtime', label: '墙钟同步 · 修复原版每帧步数上限' }] },
+     civilizationMode: { type: 'combo', text: '文明延续机制 / Civilization', options: [{ value: 'balanced', label: '原著规则 · 脱水、休眠与复苏（默认）' }, { value: 'legacy', label: '原版即时判定' }] },
+@@ -139,7 +139,7 @@ function buildSettings() {
+     music: { type: 'bool', text: '播放原版音乐 · Ether' },
+     volume: { type: 'slider', text: '音乐音量 / Volume', min: 0, max: 1, step: .01 }
+   };
+-  const categories=[['layout','布局与窗口 / Layout',[]],['simulation','模拟与文明 / Simulation',['seed','physicsMode','civilizationMode','thermalGrace','wakeDelay','epochWindow','climateInertia','stellarBreathing','planetStrength']],['view','视角与银河 / View',['idleAmplitude','newproperty16','newproperty51','newproperty61','x5','y5','y6','compass']],['visual','画面与轨迹 / Visual',['renderQuality','trailsLength','pixelRatio','bodyLabels']],['audio','声音 / Audio',['music','volume']]];
++  const categories=[['layout','布局与窗口 / Layout',[]],['simulation','模拟与文明 / Simulation',['seed','orbitalInitialization','physicsMode','civilizationMode','thermalGrace','wakeDelay','epochWindow','climateInertia','stellarBreathing','planetStrength']],['view','视角与银河 / View',['newproperty16','newproperty51','newproperty61','x5','y5','x6','y7','newproperty62','y6','compass']],['visual','画面与轨迹 / Visual',['renderQuality','trailsLength','pixelRatio','bodyLabels']],['audio','声音 / Audio',['music','volume']]];
+   for(const[id,title,keys]of categories){
+     const group=groupElement(title);group.dataset.category=id;
+     if(id==='layout'){
+@@ -378,4 +378,4 @@ try {
+ }
+ // Diagnostic readout for automated smoke checks and host integrations.
+ window.__threeBodyDiagnostics = () => ({ ready: !!state && !fatal, tick: lastTick, fps, paused: userPaused || hostPaused || visibilityPaused, controls: controlMap.size, history: history.length, worker: !!worker,
+-  scene: renderer ? { canvas:[renderer.canvas.width,renderer.canvas.height], drawingBuffer:[renderer.renderer.getContext().drawingBufferWidth,renderer.renderer.getContext().drawingBufferHeight], renderedFrames:renderer.renderer.info.render.frame, viewVelocity:[renderer.rot.vx,renderer.rot.vy], speedLimited:false, compassOpacity:renderer.compass.children.map(n=>n.material.opacity), idleYaw:renderer.autoAngle, galaxyCoreScreen:renderer.sky.localToWorld(renderer.galaxyDirection.clone().multiplyScalar(90)).project(renderer.camera).toArray(), layoutEditing:layoutEditor.editing, compassVisible:renderer.compass.visible, maxTextureSize:renderer.renderer.capabilities.maxTextureSize, backgroundSizes:Object.fromEntries(Object.entries(renderer.bgTextures).map(([k,t])=>[k,[t.image?.width||0,t.image?.height||0]])), backgroundFollowsView: renderer.sky.parent === renderer.world, viewRotation: renderer.world.rotation.toArray().slice(0,3), skyRotation: renderer.sky.getWorldQuaternion(new renderer.camera.quaternion.constructor()).toArray(), bodyShapes: renderer.nodes.map(n => n.mesh.geometry.type), glowShape: 'radial-circle', bodyLabelsVisible:renderer.nodes.some(n=>!n.label.hidden), trailSamples: renderer.trailBuffers.map(b => b.length), trailComplexity:renderer.trailComplexity||0, trailMetrics:renderer.trailMetrics||[], trailsVisible: renderer.trails.every(t => t.visible) } : null });
++  scene: renderer ? { canvas:[renderer.canvas.width,renderer.canvas.height], drawingBuffer:[renderer.renderer.getContext().drawingBufferWidth,renderer.renderer.getContext().drawingBufferHeight], renderedFrames:renderer.renderer.info.render.frame, viewVelocity:[renderer.rot.vx,renderer.rot.vy], speedLimited:false, compassOpacity:renderer.compass.children.map(n=>n.material.opacity), idleYaw:renderer.autoAngle, returningToGalaxy:renderer.returning, compassScale:renderer.compass.scale.x, pointerMode:+settings.newproperty61, galaxyCoreScreen:renderer.sky.localToWorld(renderer.galaxyDirection.clone().multiplyScalar(90)).project(renderer.camera).toArray(), layoutEditing:layoutEditor.editing, compassVisible:renderer.compass.visible, maxTextureSize:renderer.renderer.capabilities.maxTextureSize, backgroundSizes:Object.fromEntries(Object.entries(renderer.bgTextures).map(([k,t])=>[k,[t.image?.width||0,t.image?.height||0]])), backgroundFollowsView: renderer.sky.parent === renderer.world, viewRotation: renderer.world.rotation.toArray().slice(0,3), skyRotation: renderer.sky.getWorldQuaternion(new renderer.camera.quaternion.constructor()).toArray(), bodyShapes: renderer.nodes.map(n => n.mesh.geometry.type), glowShape: 'radial-circle', bodyLabelsVisible:renderer.nodes.some(n=>!n.label.hidden), trailSamples: renderer.trailBuffers.map(b => b.length), trailComplexity:renderer.trailComplexity||0, trailMetrics:renderer.trailMetrics||[], trailsVisible: renderer.trails.every(t => t.visible) } : null });
+diff --git a/src/orbital-initialization.js b/src/orbital-initialization.js
+new file mode 100644
+index 0000000..397eef6
+--- /dev/null
++++ b/src/orbital-initialization.js
+@@ -0,0 +1,33 @@
++// Seeded, initially bound orbits; subsequent motion is entirely the original four-body solver.
++// Original random sampling and manual initial conditions remain selectable.
++export function prepareBalancedOrbits(bodies,G,p,settings,random){
++  if(settings.orbitalInitialization!=='balanced'||!(G>0)||bodies.some(b=>!(b.mass>0))||p.xcxc<.5)return false;
++  const tau=2*Math.PI,phase=random()*tau,scale=p.xcxc*.43;
++  for(let i=0;i<3;i++){
++    const a=phase+i*tau/3+(random()-.5)*.045,r=scale*(.97+random()*.06);
++    Object.assign(bodies[i],{x:r*Math.cos(a),y:r*Math.sin(a),z:(random()-.5)*scale*.025,vx:0,vy:0,vz:0});
++  }
++  const center=()=>{const m=bodies.slice(0,3).reduce((n,b)=>n+b.mass,0);return ['x','y','z'].map(k=>bodies.slice(0,3).reduce((n,b)=>n+b.mass*b[k],0)/m);};
++  const com=center(),speedScale=Math.max(0,p.vcvc/.1);
++  for(let i=0;i<3;i++){
++    const b=bodies[i],dx=b.x-com[0],dy=b.y-com[1],r=Math.hypot(dx,dy);let inward=0;
++    for(let j=0;j<3;j++)if(j!==i){const other=bodies[j],x=other.x-b.x,y=other.y-b.y,z=other.z-b.z,d=Math.hypot(x,y,z);inward+=G*other.mass*(-x*dx-y*dy)/(d*d*d*r);}
++    if(p.constraint_En&&r>p.constraint_rc){const delta=r-p.constraint_rc;inward+=p.hardConstraint?(r<p.constraint_Rc?p.constraint_k2*G*p.constraint_M*delta/Math.sqrt(Math.max(p.constraint_Rc**2-delta**2,1e-5)):100*p.constraint_k2*G*p.constraint_M):p.constraint_k2*G*p.constraint_M*delta**p.constraint_n;}
++    const v=Math.sqrt(Math.max(0,inward*r))*speedScale*(.985+random()*.03);b.vx=-dy/r*v;b.vy=dx/r*v;
++  }
++  const luminosities=[settings._111lum_sun,settings._211lum_sun,settings._311lum_sun];
++  const hostIndex=luminosities.indexOf(Math.min(...luminosities)),host=bodies[hostIndex],planet=bodies[3];
++  const nearest=Math.min(...bodies.slice(0,3).filter(b=>b!==host).map(b=>Math.hypot(b.x-host.x,b.y-host.y,b.z-host.z)));
++  const others=bodies.slice(0,3).reduce((n,b,i)=>n+(i===hostIndex?0:luminosities[i]/((b.x-host.x)**2+(b.y-host.y)**2+(b.z-host.z)**2)),0);
++  const distanceScale=1e12/settings.newproperty69/1.496e11,targetFlux=4*5.67e-8*293.15**4/(1361*.7)*distanceScale**2;
++  const minimum=Math.max(p.ras*3.2,(settings[['_13','_21','_3'][hostIndex]]+settings.newproperty20)*3);
++  const radius=Math.max(minimum,Math.min(nearest*.29,Math.sqrt(luminosities[hostIndex]/Math.max(.25,targetFlux-others))))*(.98+random()*.04);
++  const angle=random()*tau,direction=random()<.5?-1:1,relativeSpeed=Math.sqrt(G*(host.mass+planet.mass)/radius)*speedScale;
++  const vx=-Math.sin(angle)*relativeSpeed*direction,vy=Math.cos(angle)*relativeSpeed*direction,hostShare=host.mass/(host.mass+planet.mass),planetShare=1-hostShare;
++  Object.assign(planet,{x:host.x+Math.cos(angle)*radius,y:host.y+Math.sin(angle)*radius,z:host.z,vx:host.vx+vx*hostShare,vy:host.vy+vy*hostShare,vz:host.vz});host.vx-=vx*planetShare;host.vy-=vy*planetShare;
++  // Random common inclination preserves the initialized distances and binding energies.
++  const yaw=random()*tau,pitch=(random()-.5)*.8,cy=Math.cos(yaw),sy=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);
++  for(const b of bodies)for(const keys of [['x','y','z'],['vx','vy','vz']]){const[x,y,z]=keys.map(k=>b[k]),a=y*cp-z*sp,c=y*sp+z*cp;b[keys[0]]=x*cy+c*sy;b[keys[1]]=a;b[keys[2]]=-x*sy+c*cy;}
++  const mass=bodies.reduce((n,b)=>n+b.mass,0);for(const key of ['x','y','z','vx','vy','vz']){const mean=bodies.reduce((n,b)=>n+b.mass*b[key],0)/mass;for(const b of bodies)b[key]-=mean;}
++  return true;
++}
+diff --git a/src/renderer.js b/src/renderer.js
+index c72de84..808e612 100644
+--- a/src/renderer.js
++++ b/src/renderer.js
+@@ -7,7 +7,7 @@ import { Line2 } from 'three/addons/lines/Line2.js';
+ import { LineGeometry } from 'three/addons/lines/LineGeometry.js';
+ import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
+ import { colorRGB, seededRandom } from './settings.js';
+-import { ViewMotion, idleSway } from './view-motion.js';
++import { ViewMotion } from './view-motion.js';
+ import { TrailHistory, trailComplexity, selectTrail } from './adaptive-trails.js';
+ 
+ const C = v => new THREE.Color(...colorRGB(v));
+@@ -42,7 +42,7 @@ export class SpaceRenderer {
+     this.scene = new THREE.Scene(); this.camera = new THREE.PerspectiveCamera(50, 1, 0.01, 200);
+     this.camera.position.set(0, 0.25, 5.2); this.camera.lookAt(0, 0, 0);
+     this.world = new THREE.Group(); this.scene.add(this.world);
+-    this.compass = new THREE.Group(); this.world.add(this.compass);
++    this.compass = new THREE.Group(); this.world.add(this.compass);this.compass.scale.setScalar(.3);
+     const ringGeometry = new THREE.BufferGeometry().setFromPoints(Array.from({ length: 257 }, (_, i) => new THREE.Vector3(Math.cos(i / 256 * Math.PI * 2) * 1.42, Math.sin(i / 256 * Math.PI * 2) * 1.42, 0)));
+     for (const [angle, opacity] of [[0, .5], [Math.PI / 2, .5]]) {
+       const ring = new THREE.LineLoop(ringGeometry, new THREE.LineBasicMaterial({ color: 0x95c4eb, transparent: true, opacity })); ring.rotation.x = angle; this.compass.add(ring);
+@@ -91,9 +91,10 @@ export class SpaceRenderer {
+     // Small bright spheres become square impulses in a downsampled bloom pyramid.
+     // Explicit radial sprites provide the HDR halo without changing circular silhouettes.
+     this.post = new ShaderPass(postShader);
+-    this.mouse = { x: 0, y: 0, down: false, dragging: false, startX: 0, startY: 0, lastX: 0, lastY: 0 }; this.rot = new ViewMotion();this.autoAngle=0;this.swayTime=0;
+-    canvas.addEventListener('pointerdown', e => { if(e.button!==0)return; this.mouse.down = true; this.mouse.dragging=false; this.mouse.startX=this.mouse.lastX = e.clientX; this.mouse.startY=this.mouse.lastY = e.clientY; canvas.setPointerCapture(e.pointerId); });
++    this.mouse = { x: 0, y: 0, down: false, dragging: false, startX: 0, startY: 0, lastX: 0, lastY: 0, lastInput: -Infinity, inside:false }; this.rot = new ViewMotion();this.autoAngle=0;this.returning=false;
++    canvas.addEventListener('pointerdown', e => { if(e.button!==0)return; this.mouse.down = true; this.mouse.lastInput=performance.now();this.mouse.dragging=false; this.mouse.startX=this.mouse.lastX = e.clientX; this.mouse.startY=this.mouse.lastY = e.clientY; canvas.setPointerCapture(e.pointerId); });
+     canvas.addEventListener('pointermove', e => {
++      this.mouse.inside=true;if(+this.settings.newproperty61===1||this.mouse.down)this.mouse.lastInput=performance.now();
+       this.mouse.x = e.clientX / innerWidth * 2 - 1; this.mouse.y = e.clientY / innerHeight * 2 - 1;
+       if (this.mouse.down && +this.settings.newproperty61 === 0) {
+         if(Math.hypot(e.clientX-this.mouse.startX,e.clientY-this.mouse.startY)>3)this.mouse.dragging=true;
+@@ -101,6 +102,7 @@ export class SpaceRenderer {
+       }
+       this.mouse.lastX = e.clientX; this.mouse.lastY = e.clientY;
+     });
++    canvas.addEventListener('pointerleave',()=>{this.mouse.inside=false;});
+     for (const type of ['pointerup', 'pointercancel', 'lostpointercapture']) canvas.addEventListener(type, () => { this.mouse.down = false; this.mouse.dragging=false; });
+     this.updateSettings(settings); this.resize();
+     this.onResize = () => this.resize(); addEventListener('resize', this.onResize);
+@@ -136,7 +138,7 @@ export class SpaceRenderer {
+     this.sky.material.color.copy(C(mode === '3' ? s.newproperty55 : s.backgroundcolor)).multiplyScalar(mode === '3' ? s.newproperty56 : s.newproperty9);
+     this.sky.material.needsUpdate = true;
+     this.camera.fov = s.newproperty71; this.camera.position.z = Math.max(1.4, 5.2 - s.distance * .65); this.camera.updateProjectionMatrix();
+-    this.compass.visible = !!s.compass && (this.mouse.dragging||Math.hypot(this.rot.vx,this.rot.vy)>.02); this.compass.children.forEach(n => n.material?.color.copy(C(s.datacolor)));
++    this.compass.visible = !!s.compass && (this.mouse.dragging||Math.hypot(this.rot.vx,this.rot.vy)>.0005); this.compass.children.forEach(n => n.material?.color.copy(C(s.datacolor)));
+     this.nebula.visible = s.brfontcoloraaaaaabrnebularequirespostprocessingultrahighquality;
+     for (const [u, key] of Object.entries({ grain: 'newproperty68', crt: 'newproperty3', blur: 'newproperty23', pulse: 'newproperty54' })) this.post.uniforms[u].value = s[key];
+     const radii = [s._13, s._21, s._3, s.newproperty20];
+@@ -204,12 +206,14 @@ export class SpaceRenderer {
+   }
+   render(dt, elapsed, motionDt=dt) {
+     const s = this.settings;
+-    this.swayTime+=motionDt;this.autoAngle=s.newproperty16?idleSway(this.swayTime,s.newproperty51,s.idleAmplitude):0;
+-    if(+s.newproperty61===1){
+-      for(let remaining=motionDt;remaining>1e-8;){const step=Math.min(1/60,remaining);this.rot.follow(this.mouse.y*s.y7*Math.PI/180,this.mouse.x*s.x6*Math.PI/180,step,Math.max(.25,s.newproperty62*12));remaining-=step;}
++    const idle=(performance.now()-this.mouse.lastInput)/1000;
++    if(+s.newproperty61===1&&this.mouse.inside&&idle<2){
++      for(let remaining=motionDt;remaining>1e-8;){const step=Math.min(1/60,remaining);this.rot.follow(this.mouse.y*s.y7*s.x5*.12*Math.PI/180,this.mouse.x*s.x6*s.y5*.12*Math.PI/180,step,Math.max(.25,s.newproperty62*12));remaining-=step;}
+     }else this.rot.coast(motionDt,-Math.log(Math.min(.999,s.y6))*120);
+-    this.compass.visible=!!s.compass&&(this.mouse.dragging||Math.hypot(this.rot.vx,this.rot.vy)>.02);
+-    this.world.rotation.set(this.rot.x+(s.newproperty16?Math.sin(elapsed*.1)*s.brfontcoloraaaaaaxspinangle*Math.PI/180:0),this.rot.y+this.autoAngle,0);
++    this.compass.visible=!!s.compass&&(this.mouse.dragging||Math.hypot(this.rot.vx,this.rot.vy)>.0005);
++    this.returning=!!s.newproperty16&&!this.mouse.down&&idle>=2;
++    if(this.returning)this.rot.returnToOrigin(motionDt,s.newproperty51);
++    this.world.rotation.set(this.rot.x,this.rot.y,0);
+     this.nodes.forEach((n, i) => {
+       n.group.position.lerp(n.target, 1 - Math.exp(-dt * 22)); n.mesh.rotation.y += dt * .1;
+       if (i < 3) { n.glow.material.opacity = Math.min(1, .35 + s.newproperty49 * .3 + (s.newproperty2 ? s.hdr * .09 : 0) + this.audioLevel * .12); }
+diff --git a/src/settings.js b/src/settings.js
+index e769161..fbb457e 100644
+--- a/src/settings.js
++++ b/src/settings.js
+@@ -2,14 +2,14 @@ import { propertySchema } from './original-data.js';
+ 
+ export const defaults = Object.fromEntries(Object.entries(propertySchema)
+   .filter(([, d]) => d.type && d.type !== 'group').map(([k, d]) => [k, d.value]));
+-export const extraDefaults = { seed: 'TRISOLARIS', music: false, volume: 0.35, trailsLength: 400, physicsMode: 'reference', pixelRatio: 4, bodyLabels: false, presentationRevision: 3, layout: {}, planetStrength: 1.6, idleAmplitude: 6, civilizationMode: 'balanced', thermalGrace: 8, wakeDelay: 3, epochWindow: 2, climateInertia: 1.5, stellarBreathing: true, renderQuality: 'native' };
++export const extraDefaults = { seed: 'TRISOLARIS', music: false, volume: 0.35, trailsLength: 400, orbitalInitialization: 'balanced', physicsMode: 'reference', pixelRatio: 4, bodyLabels: false, presentationRevision: 4, layout: {}, planetStrength: 1.6, idleAmplitude: 6, civilizationMode: 'balanced', thermalGrace: 8, wakeDelay: 3, epochWindow: 2, climateInertia: 1.5, stellarBreathing: true, renderQuality: 'native' };
+ // New installs show the requested tails; explicitly saved off/on preferences still win.
+ defaults.newproperty14 = true;
+ defaults.newproperty39 = true;
+ defaults.newproperty45 = -20;
+ defaults.newproperty46 = 40;
+-defaults.newproperty51 = .08;
+-defaults.newproperty61 = 0;
++defaults.newproperty51 = .01;
++defaults.newproperty61 = 1;
+ defaults.newproperty3 = 0;
+ defaults.newproperty68 = 0;
+ export const effectivePropertySchema = { ...propertySchema,
+@@ -19,8 +19,9 @@ export const effectivePropertySchema = { ...propertySchema,
+   newproperty46: {...propertySchema.newproperty46,text:'常态活动高温边界 / Active life maximum °C',value:40},
+   newproperty43: {...propertySchema.newproperty43,text:'干仓低温耐受 / Dry storage minimum °C'},
+   newproperty44: {...propertySchema.newproperty44,text:'干仓高温耐受 / Dry storage maximum °C'},
+-  newproperty51: {...propertySchema.newproperty51,text:'静置左右摇摆速度 °/s',value:.08},
+-  newproperty61:{...propertySchema.newproperty61,value:0}
++  newproperty16:{...propertySchema.newproperty16,text:'闲置时缓慢回归银河 / Return to Milky Way'},
++  newproperty51: {...propertySchema.newproperty51,text:'回归银河速度 °/s',value:.01},
++  newproperty61:{...propertySchema.newproperty61,text:'鼠标视角：0 按住拖动 / 1 悬停跟随 / 2 固定',value:1}
+ };
+ export function normalizeSettings(source = {}, includeExtras = true) {
+   const out = { ...defaults, ...(includeExtras ? extraDefaults : {}) };
+@@ -37,6 +38,7 @@ export function normalizeSettings(source = {}, includeExtras = true) {
+     else if (key === 'music') out.music = value === true;
+     else if (key === 'volume' && Number.isFinite(+value)) out.volume = Math.min(1, Math.max(0, +value));
+     else if (key === 'trailsLength' && Number.isFinite(+value)) out.trailsLength = Math.round(Math.min(2000, Math.max(20, +value)));
++    else if(key==='orbitalInitialization'&&['balanced','original'].includes(value))out.orbitalInitialization=value;
+     else if (key === 'physicsMode' && ['reference', 'realtime'].includes(value)) out.physicsMode = value;
+     else if (key === 'pixelRatio' && Number.isFinite(+value)) out.pixelRatio = Math.min(4, Math.max(0.5, +value));
+     else if (key === 'bodyLabels') out.bodyLabels = value === true;
+@@ -59,12 +61,12 @@ export function colorRGB(s = '1 1 1') { return s.split(/\s+/).map(Number); }
+ export function colorHex(s) { return '#' + colorRGB(s).map(x => Math.round(x * 255).toString(16).padStart(2, '0')).join(''); }
+ export function fromHex(s) { return [1, 3, 5].map(i => parseInt(s.slice(i, i + 2), 16) / 255).join(' '); }
+ export function plainText(s = '') { return s.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' '); }
+-export function algorithmId(s) { return `sykm-scene-v4-${s.physicsMode}60-civ-${s.civilizationMode}-v041-recovery`; }
++export function algorithmId(s) { return `sykm-scene-v4-${s.physicsMode}60-civ-${s.civilizationMode}-v041-${s.orbitalInitialization}-orbits`; }
+ export function migrateSettings(saved={},version=3){
+-  if((saved.presentationRevision??0)<3)saved={...saved,newproperty51:Math.abs(saved.newproperty51??.35)>=.3?.08:(saved.newproperty51??.08),newproperty61:String(saved.newproperty61??'1')==='1'?'0':saved.newproperty61};
++  if((saved.presentationRevision??0)<4)saved={...saved,newproperty51:Math.abs(saved.newproperty51??.08)>=.08?.01:(saved.newproperty51??.01),newproperty61:+(saved.newproperty61??1)===0?1:saved.newproperty61??1};
+   // One-time presentation migration for v0.3 installations with labels enabled.
+   if(saved.presentationRevision!==extraDefaults.presentationRevision)saved={...saved,bodyLabels:saved.presentationRevision>=1?saved.bodyLabels:false,newproperty39:true};
+-  if(version<3)return normalizeSettings({...saved,newproperty45:-20,newproperty46:40,newproperty51:Math.abs(saved.newproperty51??3)>=2 ? .08 : (saved.newproperty51??.08),newproperty3:0,newproperty68:0});
++  if(version<3)return normalizeSettings({...saved,newproperty45:-20,newproperty46:40,newproperty51:Math.abs(saved.newproperty51??3)>=2 ? .01 : (saved.newproperty51??.01),newproperty3:0,newproperty68:0});
+   return normalizeSettings(saved);
+ }
+ export function seededRandom(seed) {
+diff --git a/src/simulation.js b/src/simulation.js
+index 5742efd..912bda8 100644
+--- a/src/simulation.js
++++ b/src/simulation.js
+@@ -6,6 +6,7 @@ import temperatureFactory from './legacy/079.js';
+ import loadingFactory from './legacy/156.js';
+ import { moduleBindings } from './original-data.js';
+ import { normalizeSettings, seededRandom, algorithmId } from './settings.js';
++import { prepareBalancedOrbits } from './orbital-initialization.js';
+ import { Habitability } from './habitability.js';
+ import { RunStatistics } from './run-statistics.js';
+ import { WorldState } from './world-state.js';
+@@ -46,14 +47,14 @@ export class Simulation {
+     builder.values = {};
+     builder.finish = function() { return Object.assign(this.values, overrides); };
+     const math = Object.create(Math); math.random = () => self.random();
+-    return factory({ shared: this.shared, engine: this.engine, input: this.input, thisScene: { createLayer: data => data }, Vec3, Math: math, createScriptProperties: () => builder, getHabitability: () => null, onInitialize: bodies => { self.initialBodies = plain(bodies); self.habitability.reset(); self.world.reset(); self.civilization?.reset(); self.terminalSince=null;self.restartSince=null; } });
++    return factory({ shared: this.shared, engine: this.engine, input: this.input, thisScene: { createLayer: data => data }, Vec3, Math: math, createScriptProperties: () => builder, getHabitability: () => null, prepareInitialBodies: (bodies,G,p) => prepareBalancedOrbits(bodies,G,p,self.settings,()=>self.random()), onInitialize: bodies => { self.initialBodies = plain(bodies); self.habitability.reset(); self.world.reset(); self.civilization?.reset(); self.terminalSince=null;self.restartSince=null; } });
+   }
+   configure(patch) {
+     const next = normalizeSettings({ ...this.settings, ...patch });
+     const changed = Object.keys(next).filter(k => next[k] !== this.settings[k]);
+     this.settings = next;
+     if (changed.includes('civilizationMode')) { this.habitability.reset(); this.civilization.reset(); this.shared.suitablePeriodCount = 0; }
+-    const resetKeys = new Set(['seed', 'physicsMode', 'newproperty53']);
++    const resetKeys = new Set(['seed', 'physicsMode', 'newproperty53', 'orbitalInitialization']);
+     const mapped = {};
+     for (const [id, module] of Object.entries(this.modules)) {
+       const changes = {};
+diff --git a/src/view-motion.js b/src/view-motion.js
+index cad4ace..622a4a8 100644
+--- a/src/view-motion.js
++++ b/src/view-motion.js
+@@ -1,8 +1,7 @@
+ const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+-export function idleSway(time,speed=.08,amplitude=6){return amplitude?amplitude*Math.PI/180*Math.sin(time*speed/amplitude):0;}
+ export class ViewMotion {
+-  constructor(){this.x=0;this.y=0;this.vx=0;this.vy=0;this.acceleration=3;}
+-  drag(dx,dy,sensitivityX=1,sensitivityY=1){this.vy+=dx*sensitivityY*32;this.vx+=dy*sensitivityX*18;}
++  constructor(){this.x=0;this.y=0;this.vx=0;this.vy=0;this.acceleration=.75;}
++  drag(dx,dy,sensitivityX=1,sensitivityY=1){this.vy+=dx*sensitivityY*4;this.vx+=dy*sensitivityX*2.25;}
+   coast(dt,friction=1.8){
+     if(dt<=0)return;const decay=Math.exp(-friction*dt),step=friction>1e-6?(1-decay)/friction:dt;
+     this.x+=this.vx*step;this.y+=this.vy*step;this.vx*=decay;this.vy*=decay;this.bound();
+@@ -12,5 +11,10 @@ export class ViewMotion {
+     const ax=clamp((x-this.x)*12*response-this.vx*7,-this.acceleration,this.acceleration),ay=clamp((y-this.y)*12*response-this.vy*7,-this.acceleration,this.acceleration);
+     this.vx+=ax*dt;this.vy+=ay*dt;this.x+=this.vx*dt;this.y+=this.vy*dt;this.bound();
+   }
++  returnToOrigin(dt,speed=.01){
++    if(dt<=0||speed<=0)return;const step=speed*Math.PI/180*dt;
++    this.y=Math.atan2(Math.sin(this.y),Math.cos(this.y));
++    const approach=x=>Math.sign(x)*Math.max(0,Math.abs(x)-step);this.x=approach(this.x);this.y=approach(this.y);
++  }
+   bound(){const next=clamp(this.x,-Math.PI/6,Math.PI/6);if(next!==this.x)this.vx=0;this.x=next;}
+ }
+diff --git a/tests/habitability.test.js b/tests/habitability.test.js
+index d7b793a..ef632b6 100644
+--- a/tests/habitability.test.js
++++ b/tests/habitability.test.js
+@@ -61,5 +61,5 @@ test('tail visibility and color never reset physical trajectories',()=>{
+  const a=new Simulation(),b=new Simulation();for(let i=0;i<120;i++){a.tick();b.tick();}a.configure({newproperty14:false,brfontcoloraaaaaatrail1color:'1 0 0',trailsLength:120});for(let i=0;i<120;i++){a.tick();b.tick();}assert.deepEqual(a.snapshot().bodies,b.snapshot().bodies);
+ });
+ test('previous settings migrate the requested slow rotation, activity bounds and clarity',()=>{
+- const migrated=migrateSettings({newproperty51:3,newproperty45:-55,newproperty46:70},2);assert.equal(migrated.newproperty51,.08);assert.equal(migrated.newproperty45,-20);assert.equal(migrated.newproperty46,40);assert.equal(migrated.newproperty68,0);assert.equal(migrateSettings({newproperty51:.1},2).newproperty51,.1);
++ const migrated=migrateSettings({newproperty51:3,newproperty45:-55,newproperty46:70},2);assert.equal(migrated.newproperty51,.01);assert.equal(migrated.newproperty45,-20);assert.equal(migrated.newproperty46,40);assert.equal(migrated.newproperty68,0);assert.equal(migrateSettings({newproperty51:.001},2).newproperty51,.001);
+ });
+diff --git a/tests/simulation.test.js b/tests/simulation.test.js
+index 357c4e1..aaabb2b 100644
+--- a/tests/simulation.test.js
++++ b/tests/simulation.test.js
+@@ -18,7 +18,7 @@ test('183 original controls retain definitions, with the requested trails enable
+   const controls = Object.entries(propertySchema).filter(([, p]) => p.type && p.type !== 'group');
+   assert.equal(controls.length, 183);
+   const config = normalizeSettings();
+-  for (const [key, def] of controls) assert.deepEqual(config[key], ({newproperty14:true,newproperty39:true,newproperty45:-20,newproperty46:40,newproperty51:.08,newproperty61:0,newproperty3:0,newproperty68:0})[key] ?? def.value, key);
++  for (const [key, def] of controls) assert.deepEqual(config[key], ({newproperty14:true,newproperty39:true,newproperty45:-20,newproperty46:40,newproperty51:.01,newproperty61:1,newproperty3:0,newproperty68:0})[key] ?? def.value, key);
+   const sim = new Simulation();
+   assert.equal(sim.modules['008'].scriptProperties.fourthMass, 5000);
+   assert.equal(sim.modules['008'].scriptProperties.constraint_M, 15000000);
+diff --git a/tests/v04.test.js b/tests/v04.test.js
+index 612d321..20e5b49 100644
+--- a/tests/v04.test.js
++++ b/tests/v04.test.js
+@@ -33,7 +33,7 @@ test('corrupt checkpoint fields do not break simulation startup',()=>{
+  const s=new Simulation({},saved);s.tick();assert.ok(Number.isFinite(s.snapshot().year));assert.ok(s.snapshot().statistics.universeRanking.every(r=>Number.isFinite(r.lifespan)));
+ });
+ test('drag accelerates promptly, allows uncapped angular speed and dissipates inertia faster',()=>{
+- const m=new ViewMotion();m.drag(1,1);assert.ok(Math.hypot(m.vx,m.vy)>10);const initial=Math.hypot(m.vx,m.vy);m.coast(.5);assert.ok(Math.hypot(m.vx,m.vy)<initial*.5);
++ const m=new ViewMotion();m.drag(1,1);assert.ok(Math.hypot(m.vx,m.vy)>.55);const initial=Math.hypot(m.vx,m.vy);m.coast(.5);assert.ok(Math.hypot(m.vx,m.vy)<initial*.5);
+  for(let i=0;i<100;i++){m.drag(1,-1);m.coast(1/60);assert.ok(Number.isFinite(m.vy));}
+ });
+ test('follow mode retains bounded acceleration without a speed cap, and pause freezes movement',()=>{
+diff --git a/tests/v041-hotfix.test.js b/tests/v041-hotfix.test.js
+new file mode 100644
+index 0000000..45d816e
+--- /dev/null
++++ b/tests/v041-hotfix.test.js
+@@ -0,0 +1,24 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {Simulation} from '../src/simulation.js';
++import {normalizeSettings,migrateSettings,settingsFromInitial} from '../src/settings.js';
++import {measure} from '../tools/orbital-audit.mjs';
++import {prepareBalancedOrbits} from '../src/orbital-initialization.js';
++
++test('existing v0.4.1 profiles regain hover follow and slow galaxy return without losing layout',()=>{
++ const s=migrateSettings({presentationRevision:3,newproperty61:0,newproperty51:.08,layout:{right:{x:70,y:30}},seed:'KEEP',planetStrength:2});assert.equal(s.newproperty61,1);assert.equal(s.newproperty51,.01);assert.equal(s.orbitalInitialization,'balanced');assert.deepEqual(s.layout.right,{x:70,y:30});assert.equal(s.seed,'KEEP');assert.equal(s.planetStrength,2);
++ const explicit=migrateSettings({...s,presentationRevision:4,newproperty61:0,newproperty51:.001,orbitalInitialization:'original'});assert.equal(explicit.newproperty61,0);assert.equal(explicit.newproperty51,.001);assert.equal(explicit.orbitalInitialization,'original');
++});
++test('default random systems permit sustained development and planetary passages inside the star system',()=>{
++ for(const seed of ['TRISOLARIS','A','B','C','D']){const r=measure(seed,'balanced');assert.ok(r.stableFraction>.4,JSON.stringify(r));assert.ok(r.maxContinuousDevelopmentYears>3,JSON.stringify(r));assert.ok(r.insideStellarExtentFraction>.2,JSON.stringify(r));assert.ok(r.maxPlanetRadius<2);assert.equal(r.terminalAtSeconds,null);}
++});
++test('bound random initial conditions replay exactly through the manual initial-condition pathway',()=>{
++ const a=new Simulation({seed:'HOTFIX-REPLAY'});for(let i=0;i<120;i++)a.tick();const b=new Simulation(settingsFromInitial(a.settings,a.initialBodies));for(let i=0;i<120;i++)b.tick();assert.deepEqual(a.snapshot().bodies,b.snapshot().bodies);
++});
++test('initialization retains zero center-of-mass momentum and the original mode is reproducible',()=>{
++ const a=new Simulation({seed:'MOMENTUM'});a.tick();for(const key of ['vx','vy','vz'])assert.ok(Math.abs(a.initialBodies.reduce((n,b)=>n+b[key]*b.mass,0))<1e-7);
++ const original=new Simulation({orbitalInitialization:'original'});original.tick();assert.notDeepEqual(a.initialBodies,original.initialBodies);assert.equal(normalizeSettings({orbitalInitialization:'invalid'}).orbitalInitialization,'balanced');
++});
++test('nonphysical gravity or zero masses leave the supplied original initialization intact',()=>{
++ const bodies=Array.from({length:4},(_,i)=>({x:i,y:0,z:0,vx:0,vy:0,vz:0,mass:i===0?0:1})),copy=structuredClone(bodies);assert.equal(prepareBalancedOrbits(bodies,1,{},normalizeSettings(),()=>.5),false);assert.deepEqual(bodies,copy);
++});
+diff --git a/tests/v041.test.js b/tests/v041.test.js
+index 178b42d..301b343 100644
+--- a/tests/v041.test.js
++++ b/tests/v041.test.js
+@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
+ import { WorldState } from '../src/world-state.js';
+ import { Simulation } from '../src/simulation.js';
+ import { RunStatistics } from '../src/run-statistics.js';
+-import { ViewMotion,idleSway } from '../src/view-motion.js';
++import { ViewMotion } from '../src/view-motion.js';
+ import { normalizeSettings,migrateSettings } from '../src/settings.js';
+ import { clampWindow } from '../src/layout.js';
+ const settings=normalizeSettings({stellarBreathing:false});
+@@ -44,12 +44,12 @@ test('legacy ranking origin is backfilled only when an archive identifies it',()
+  const s=new RunStatistics({format:'three-body-statistics',version:1,totalYears:20,universeNumber:3,civilizations:[{number:7,lifespan:12}],legacyRecords:[{number:7,lifespan:12,generation:2}]});assert.equal(s.snapshot().civilizationRanking[0].universe,2);
+ });
+ test('drag no longer saturates, horizontal gain is lower and follow acceleration is reduced',()=>{
+- const a=new ViewMotion();a.drag(.1,0);assert.equal(a.vy,3.2);assert.ok(a.vy>.55);a.drag(.1,0);assert.equal(a.vy,6.4);assert.equal(a.acceleration,3);
++ const a=new ViewMotion();a.drag(.1,0);assert.equal(a.vy,.4);a.drag(.1,0);assert.equal(a.vy,.8);assert.ok(a.vy>.55);assert.equal(a.acceleration,.75);
+ });
+-test('idle panorama stays within the same small angle and reverses direction',()=>{
+- const values=Array.from({length:3600},(_,i)=>idleSway(i*10));assert.ok(Math.max(...values)<=6*Math.PI/180+1e-9);assert.ok(Math.min(...values)<0);assert.ok(Math.max(...values)>0);assert.ok(Math.abs(idleSway(.01)/.01-.08*Math.PI/180)<1e-8);
++test('idle return follows the nearest galaxy heading extremely slowly without overshoot',()=>{
++ const m=new ViewMotion();m.x=.1;m.y=2*Math.PI+.2;m.returnToOrigin(60);assert.ok(Math.abs(m.y-(.2-Math.PI/300))<1e-12);assert.ok(m.x>0&&m.x<.1);m.returnToOrigin(100000);assert.equal(m.x,0);assert.equal(m.y,0);m.returnToOrigin(1);assert.equal(m.y,0);
+ });
+ test('window settings clamp coordinates and migrate defaults without losing custom layout',()=>{
+  assert.deepEqual(clampWindow(-10,900,200,100,800,600),{x:4,y:496});const config=normalizeSettings({layout:{left:{x:-10,y:200},bad:{x:10,y:10},clock:{x:NaN,y:1}}});assert.deepEqual(config.layout,{left:{x:0,y:100}});
+- const migrated=migrateSettings({presentationRevision:2,newproperty51:.35,newproperty61:'1',layout:{clock:{x:20,y:10}}});assert.equal(migrated.newproperty51,.08);assert.equal(migrated.newproperty61,0);assert.deepEqual(migrated.layout.clock,{x:20,y:10});
++ const migrated=migrateSettings({presentationRevision:2,newproperty51:.35,newproperty61:'1',layout:{clock:{x:20,y:10}}});assert.equal(migrated.newproperty51,.01);assert.equal(migrated.newproperty61,1);assert.deepEqual(migrated.layout.clock,{x:20,y:10});
+ });
+diff --git a/tools/build.mjs b/tools/build.mjs
+index c1d9211..b5451fb 100644
+--- a/tools/build.mjs
++++ b/tools/build.mjs
+@@ -18,7 +18,7 @@ const properties = structuredClone(original.general.properties);
+ properties.custombg = { ...properties.custombg, type: 'file', value: '' };
+ for(const [key,value] of Object.entries(defaults))if(properties[key])properties[key].value=value;
+ properties.audiobar.text='基础信息与排行';properties.newproperty39.text='显示文明与宇宙排行';
+-for(const key of ['audiobar','newproperty39','newproperty45','newproperty46','newproperty43','newproperty44','newproperty51'])properties[key].text=effectivePropertySchema[key].text;
++for(const key of ['audiobar','newproperty39','newproperty45','newproperty46','newproperty43','newproperty44','newproperty51','newproperty61','newproperty16'])properties[key].text=effectivePropertySchema[key].text;
+ const project = { title: '三体实时演算 · Web 重建', type: 'web', file: 'index.html', description: '基于用户提供的 SYKM 原版场景移植。Three.js + Worker，原版设置兼容。', version: 0, contentrating: 'Everyone', general: { ...original.general, supportsaudioprocessing: true, properties } };
+ await writeFile(path.join(dist, 'project.json'), JSON.stringify(project, null, 2));
+ await writeFile(path.join(dist, 'LICENSE-NOTICE.txt'), 'Original Wallpaper Engine scene: SYKM, workshop 3509243656. Music: Melodysheep - Ether. Original assets retained for the supplied authorized non-commercial use. See source docs/SOURCE-AUDIT.md and assets/original/manifest.json.\nThree.js: MIT.\n');
+diff --git a/tools/orbital-audit.mjs b/tools/orbital-audit.mjs
+new file mode 100644
+index 0000000..a278eaa
+--- /dev/null
++++ b/tools/orbital-audit.mjs
+@@ -0,0 +1,20 @@
++import {Simulation} from '../src/simulation.js';
++import {writeFile} from 'node:fs/promises';
++export function measure(seed,mode,ticks=6000){
++ const sim=new Simulation({seed,orbitalInitialization:mode,autorestart:false});let stable=0,active=0,inner=0,streak=0,maxStreak=0,maxLife=0,maxRadius=0,terminalAt=null;
++ for(let i=0;i<ticks;i++){
++  sim.tick();const w=sim.world.state,p=sim.lastPhysicsState,planet=p.bodies[3],radius=Math.hypot(planet.x-p.com.x,planet.y-p.com.y,planet.z-p.com.z),extent=Math.max(...p.bodies.slice(0,3).map(b=>Math.hypot(b.x-p.com.x,b.y-p.com.y,b.z-p.com.z)));
++  stable+=!w.planet.terminal&&w.epoch.kind==='stable';inner+=radius<=extent;maxRadius=Math.max(maxRadius,radius);
++  if(sim.civilization.phase==='active'){active++;streak++;maxStreak=Math.max(maxStreak,streak);}else streak=0;
++  if(sim.shared.civilizationAlive)maxLife=Math.max(maxLife,sim.shared.xntime-sim.shared.civilizationStartTime);
++  if(w.planet.terminal&&terminalAt===null)terminalAt=i/60;
++ }
++ return{seed,years:sim.shared.xntime,stableFraction:stable/ticks,activeFraction:active/ticks,insideStellarExtentFraction:inner/ticks,maxContinuousDevelopmentYears:maxStreak/ticks*sim.shared.xntime,maxCivilizationYears:maxLife,maxPlanetRadius:maxRadius,terminalAtSeconds:terminalAt};
++}
++if(process.argv[1]?.endsWith('/orbital-audit.mjs')||process.argv[1]==='tools/orbital-audit.mjs'){
++ const seeds=['TRISOLARIS','A','B','C','D','E','F','G'],original=seeds.map(s=>measure(s,'original')),balanced=seeds.map(s=>measure(s,'balanced'));
++ const summary=rows=>({stableFraction:rows.reduce((n,r)=>n+r.stableFraction,0)/rows.length,activeFraction:rows.reduce((n,r)=>n+r.activeFraction,0)/rows.length,insideFraction:rows.reduce((n,r)=>n+r.insideStellarExtentFraction,0)/rows.length,maxRadius:Math.max(...rows.map(r=>r.maxPlanetRadius)),survivingPlanets:rows.filter(r=>r.terminalAtSeconds===null).length,developedBeyondOneYear:rows.filter(r=>r.maxContinuousDevelopmentYears>1).length});
++ const long=Array.from({length:24},(_,i)=>measure(`LONG-${i}`,'balanced',24000));
++ const report={conditions:'Original four-body solver and cage, fixed 60 Hz, same climate and era criteria; only initialization differs. 8 seeds x 100 simulated years per mode; 24 additional seeds x 400 years. No lifetime floor or forced stable label.',original:{summary:summary(original),runs:original},balanced:{summary:summary(balanced),runs:balanced},long:{summary:summary(long),runs:long}};
++ await writeFile('docs/qa/v041-hotfix-orbits.json',JSON.stringify(report,null,2));console.log(JSON.stringify({original:report.original.summary,balanced:report.balanced.summary,long:report.long.summary},null,2));
++}
+diff --git a/tools/state-ui-8k-check.mjs b/tools/state-ui-8k-check.mjs
+index b5b3763..9f1314a 100644
+--- a/tools/state-ui-8k-check.mjs
++++ b/tools/state-ui-8k-check.mjs
+@@ -9,8 +9,8 @@ const diag=()=>page.evaluate(()=>window.__threeBodyDiagnostics());
+ try{
+  await page.goto('http://localhost:4173',{waitUntil:'networkidle'});await page.waitForFunction(()=>window.__threeBodyDiagnostics?.().ready);
+  assert.equal(await page.locator('.signature,.coordinates,#running-caption').count(),0);checks.push('removed upper-left/right text and sentence below YEARS');
+- assert.equal((await diag()).scene.compassVisible,false);checks.push('rotation rings stay hidden during idle sway');
+- assert.equal(await page.locator('#setting-newproperty51').inputValue(),'0.08');assert.equal(await page.locator('#setting-newproperty45').inputValue(),'-20');assert.equal(await page.locator('#setting-newproperty46').inputValue(),'40');checks.push('gentler idle speed and -20 to 40 C activity thresholds');
++ assert.equal((await diag()).scene.compassVisible,false);checks.push('rotation rings stay hidden during slow galaxy return');
++ assert.equal(await page.locator('#setting-newproperty51').inputValue(),'0.01');assert.equal(await page.locator('#setting-newproperty45').inputValue(),'-20');assert.equal(await page.locator('#setting-newproperty46').inputValue(),'40');checks.push('gentler idle speed and -20 to 40 C activity thresholds');
+  const bounds=await page.locator('#civilization-widget').boundingBox(),clock=await page.locator('#clock-widget').boundingBox();assert.ok(bounds.y>=clock.y+clock.height-2);checks.push('compact civilization block fits below the clock');
+  await page.waitForFunction(()=>Object.values(window.__threeBodyDiagnostics().scene.backgroundSizes).every(v=>v[0]===8192&&v[1]===4096));checks.push('both active background textures loaded at native 8192x4096');
+  await page.evaluate(()=>{window.__wallpaperFPS=2;window.threeBody.applySettings({renderQuality:'8k',newproperty17:'2',newproperty40:'0 0 0',newproperty14:false,newproperty16:false,newproperty61:'2'});});
+diff --git a/tools/v041-hotfix-browser.mjs b/tools/v041-hotfix-browser.mjs
+new file mode 100644
+index 0000000..394606e
+--- /dev/null
++++ b/tools/v041-hotfix-browser.mjs
+@@ -0,0 +1,23 @@
++import {chromium} from 'playwright-core';
++import assert from 'node:assert/strict';
++import {writeFile} from 'node:fs/promises';
++const browser=await chromium.launch({executablePath:'/usr/bin/chromium',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
++const page=await browser.newPage({viewport:{width:1280,height:800}}),checks=[],errors=[];
++page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
++await page.addInitScript(()=>{if(!localStorage.getItem('hotfix-seeded')){localStorage.setItem('three-body.settings.v3',JSON.stringify({presentationRevision:3,newproperty61:0,newproperty51:.08,newproperty63:false,newproperty64:false,newproperty2:false,pixelRatio:.5,dust:false,seed:'TRISOLARIS',layout:{years:{x:40,y:88}}}));localStorage.setItem('hotfix-seeded','1');}window.__wallpaperFPS=15;window.__pointerDowns=0;addEventListener('pointerdown',()=>window.__pointerDowns++);});
++const scene=()=>page.evaluate(()=>window.__threeBodyDiagnostics().scene);
++try{
++ await page.goto('http://localhost:4173',{waitUntil:'networkidle'});await page.waitForFunction(()=>window.__threeBodyDiagnostics?.().ready);
++ assert.equal((await scene()).pointerMode,1);assert.equal(await page.locator('#setting-newproperty51').inputValue(),'0.01');assert.equal(await page.locator('#setting-orbitalInitialization').inputValue(),'balanced');assert.equal((await scene()).compassScale,.3);assert.equal((await scene()).compassVisible,false);checks.push('existing v0.4.1 settings migrate to hover, 0.01 degree/sec return and bound initial orbits; ring scale is 0.3');
++ const original=await scene();await page.mouse.move(900,450);await page.waitForFunction(()=>window.__threeBodyDiagnostics().scene.compassVisible);await page.waitForTimeout(700);
++ const hover=await scene();assert.equal(await page.evaluate(()=>window.__pointerDowns),0);assert.ok(Math.abs(hover.viewRotation[1]-original.viewRotation[1])>.004);assert.ok(Math.abs(hover.viewRotation[1])<.12);assert.deepEqual(hover.compassOpacity,[.5,.5,.5]);checks.push('actual mouse hover moves the scene without any pointer press, with a small angle and half-transparent ring');
++ await page.mouse.move(1200,450);await page.waitForTimeout(1800);const atEdge=await scene();assert.ok(Math.abs(atEdge.viewRotation[1])<11*Math.PI/180);checks.push('moving nearly across the screen keeps hover travel below eleven degrees instead of the prior ninety-degree range');
++ await page.waitForFunction(()=>{const s=window.__threeBodyDiagnostics().scene;return s.returningToGalaxy&&!s.compassVisible;},null,{timeout:30000});
++ const a=await scene(),t0=Date.now();await page.waitForTimeout(5000);const b=await scene(),seconds=(Date.now()-t0)/1000,delta=Math.abs(a.viewRotation[1])-Math.abs(b.viewRotation[1]);
++ assert.ok(delta>0,JSON.stringify({a:a.viewRotation,b:b.viewRotation}));assert.ok(delta<seconds*.02*Math.PI/180);assert.equal(b.compassVisible,false);checks.push('idle view returns toward the galaxy monotonically at an extremely slow rate and does not show rings');
++ const clockLayout=await page.evaluate(()=>JSON.parse(localStorage.getItem('three-body.settings.v3')).layout.years);assert.deepEqual(clockLayout,{x:40,y:88});checks.push('camera migration preserves existing custom window positions');
++ await page.evaluate(()=>window.threeBody.applySettings({newproperty61:0,newproperty16:false}));await page.mouse.move(500,600);const beforeDrag=await scene();await page.mouse.down();await page.mouse.move(700,600,{steps:1});const drag=await scene();await page.mouse.up();assert.ok(Math.abs(drag.viewVelocity[1])<.8);assert.ok(Math.abs(drag.viewVelocity[1])>.05);checks.push('optional click-drag remains usable with greatly reduced impulse per pixel');
++ await page.evaluate(()=>window.threeBody.applySettings({newproperty61:1,newproperty16:true,pixelRatio:1}));await page.waitForTimeout(2500);await page.screenshot({path:'docs/qa/v041-hotfix-desktop.png'});
++ await page.reload({waitUntil:'networkidle'});await page.waitForFunction(()=>window.__threeBodyDiagnostics?.().ready);assert.equal((await scene()).pointerMode,1);checks.push('hover preference persists after reload');
++ assert.deepEqual(errors,[]);const report={passed:checks.length,checks,errors,hover,atEdge,returnMeasurement:{start:a.viewRotation,end:b.viewRotation,seconds,deltaRadians:delta},limits:['Measured real mouse and Worker behavior in software WebGL; native Windows Wallpaper Engine is unavailable.']};await writeFile('docs/qa/v041-hotfix-browser.json',JSON.stringify(report,null,2));console.log(JSON.stringify({passed:checks.length,checks,errors,returnMeasurement:report.returnMeasurement},null,2));
++}finally{await browser.close();}

@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-21",
+  "time_zone": "Asia/Shanghai",
+  "release": "v0.5.2",
+  "status": "succeeded",
+  "url": "https://trisolaris-reconstruction-20261019.wittylark8.chatgpt.site",
+  "audience": "Owner only; unchanged custom allowlist, zero external visitors",
+  "project_id": "appgprj_6ad60b784fa08191b7ac5c78832eb2d7",
+  "version_id": "appgprj_6ad60b784fa08191b7ac5c78832eb2d7~appgver_e4669e97f3b88191958dbaab416cf5c0",
+  "deployment_id": "appgdep_6ad894a978548191b168bc38284e842f",
+  "provider_updated_at": "2026-10-21T10:32:26.388665+00:00",
+  "site_source_commit": "3644538b6b5a0471481374d9eba570a1f14fbffc",
+  "github_source_commit": "efc8f69cc77a8a1e6b96feffddbad3e60a51c474",
+  "verified_physics_commit": "a219cf9bad9b50da639cc1c4f42af65f2bc19721",
+  "archive_sha256": "b446d9affafef4fe636e31e6749f9892c070748e27e007cd55fe7e9138d6d9af",
+  "checks": [
+    "npm test passed in Site checkout (10 test files; unchanged previously verified 101 named tests)",
+    "npm run build passed in Site checkout",
+    "All 21 runtime build files byte-identical to verified GitHub build; Site identity manifests excluded",
+    "13 archived records and 396 evidence files validated",
+    "Native private save-and-deploy returned succeeded with existing URL"
+  ],
+  "default_physics": {
+    "gravityModel": "newtonian",
+    "orbitalInitialization": "research",
+    "stellar_Q": 1,
+    "planet_radius_fraction": 0.12,
+    "planet_direction": "retrograde",
+    "gravity_cage": false
+  },
+  "verification_limits": [
+    "No new online browser or Windows Wallpaper Engine host test in this publication task",
+    "Site identity manifest differs from generic GitHub package as required for the existing Site"
+  ],
+  "publication_notes": "The Site source commit mirrors the verified GitHub tree with its existing project_id retained. No physics or UI changes were made. No sharing settings were changed. GitHub main and v0.5.2 tag remain untouched."
+}

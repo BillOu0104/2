@@ -1,0 +1,48 @@
+{
+  "pass": true,
+  "reference": "SciPy DOP853 rtol=1e-12 atol=1e-14; independently written force",
+  "results": [
+    {
+      "config": {},
+      "solverTime": 4.5,
+      "differences": [
+        {
+          "dt": 0.00075,
+          "maxStateDifference": 3.4025968336515167e-06
+        },
+        {
+          "dt": 0.000375,
+          "maxStateDifference": 2.1492953147794758e-07
+        },
+        {
+          "dt": 0.0001875,
+          "maxStateDifference": 1.3468550136286339e-08
+        }
+      ],
+      "referenceEvaluations": 2402
+    },
+    {
+      "config": {
+        "planet": "bound",
+        "inPlane": true,
+        "radiusFraction": 0.2
+      },
+      "solverTime": 4.5,
+      "differences": [
+        {
+          "dt": 0.00075,
+          "maxStateDifference": 1.3941003906836613e-10
+        },
+        {
+          "dt": 0.000375,
+          "maxStateDifference": 9.767103792412968e-12
+        },
+        {
+          "dt": 0.0001875,
+          "maxStateDifference": 2.695258946583401e-12
+        }
+      ],
+      "referenceEvaluations": 1202
+    }
+  ]
+}

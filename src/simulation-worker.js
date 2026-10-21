@@ -4,11 +4,11 @@ function sendState() {
   const state = simulation.snapshot({ afterEvent: sentEvent, compact: true });
   if (state.events.length) sentEvent = state.events.at(-1).id;
   // The UI receives a compact rank; durable archive payloads are sent only once as events.
-  self.postMessage({ type: 'state', state });
+  state.trailSamples=simulation.orbitTrace.drain();self.postMessage({ type: 'state', state });
 }
 self.onmessage = ({ data }) => {
   try {
-    if (data.type === 'init') { simulation = new Simulation(data.settings,data.statistics); simulation.tick(); sendState(); }
+    if (data.type === 'init') { simulation = new Simulation(data.settings,data.statistics,{trace:true}); simulation.tick(); sendState(); }
     if (data.type === 'settings') simulation?.configure(data.patch);
     if (data.type === 'restart') simulation?.restart();
     if (data.type === 'pause') { paused = data.value; remainder = 0; lastTime = performance.now(); }

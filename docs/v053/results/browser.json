@@ -1,0 +1,36 @@
+{
+  "passed": true,
+  "checks": [
+    "actual v0.5.3 Worker boots and migrates old default galaxy speed to 0.003 deg/s",
+    "all 218 real controls match the generated guide, including visual stellar tracking",
+    "real mouse follow works, idle return cancels inertia, hides the ring and obeys the slower total angular-speed cap",
+    "fixed view suppresses both idle return and residual coast",
+    "runaway planet remains at its physical distance while the stellar group is centered through rendering only",
+    "real tracking checkbox restores the center smoothly without restarting the universe or modifying physics",
+    "offline settings guide includes all twelve technology stages, slower return and tracking semantics"
+  ],
+  "errors": [],
+  "returnMotion": {
+    "elapsed": 1.203,
+    "travelRadians": 0.000058465039283309844,
+    "capRadians": 0.00006298893270447535
+  },
+  "tracking": {
+    "centered": [
+      4.218847493575595e-15,
+      0,
+      -1.0292692624129056e-16
+    ],
+    "offCenter": [
+      -1.0823447744387729,
+      0.000014379367123525574,
+      0.02744630722764582
+    ],
+    "restored": [
+      -0.11760413514354025,
+      0.0000015624162229184908,
+      0.002982228307116737
+    ]
+  },
+  "limits": "Actual Chromium pointer events and Worker with software WebGL; native Windows Wallpaper Engine not available"
+}

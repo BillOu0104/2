@@ -1,0 +1,132 @@
+{
+  "passed": 17,
+  "checks": [
+    "183 original + 26 extension/layout controls and worker ready",
+    "fading tails are enabled and populated for all four bodies",
+    "all bodies use round sphere geometry and circular glow",
+    "habitability and resilience are visible in optimized mode",
+    "single settings button opens accessible full panel",
+    "settings search filters original controls",
+    "language control updates the interface",
+    "user pause stops backend simulation",
+    "Wallpaper Engine property callbacks update controls and UI",
+    "Wallpaper Engine pause/resume preserves state",
+    "Wallpaper Engine audio callback accepts stereo spectrum",
+    "manual restart generates exactly one next universe",
+    "closing settings restores uncluttered wallpaper",
+    "settings survive reload",
+    "skybox follows the actual interactive view rotation",
+    "mobile panel fits 390px viewport",
+    "no browser JavaScript errors"
+  ],
+  "skipped": [
+    "Actual Wallpaper Engine file entry is not available in this environment; the existing browser policy blocks file:// navigation."
+  ],
+  "errors": [],
+  "diagnostics": {
+    "ready": true,
+    "tick": 880,
+    "fps": 5,
+    "paused": false,
+    "controls": 209,
+    "history": 1,
+    "worker": true,
+    "scene": {
+      "canvas": [
+        390,
+        844
+      ],
+      "drawingBuffer": [
+        390,
+        844
+      ],
+      "renderedFrames": 45,
+      "viewVelocity": [
+        2.9656636473839743e-13,
+        2.2668271422146604e-12
+      ],
+      "speedLimited": false,
+      "compassOpacity": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "idleYaw": 0,
+      "returningToGalaxy": false,
+      "compassScale": 0.3,
+      "pointerMode": 1,
+      "galaxyCoreScreen": [
+        -0.4668169662019026,
+        0.035564098932475356,
+        0.9998887718838642
+      ],
+      "layoutEditing": false,
+      "compassVisible": false,
+      "maxTextureSize": 8192,
+      "backgroundSizes": {
+        "1": [
+          8192,
+          4096
+        ],
+        "4": [
+          8192,
+          4096
+        ]
+      },
+      "backgroundFollowsView": true,
+      "viewRotation": [
+        0.017818348253521993,
+        0.10614650846601752,
+        0
+      ],
+      "skyRotation": [
+        -0.021966857391042833,
+        0.8245398333919929,
+        -0.02940688401879787,
+        0.5646120398101437
+      ],
+      "bodyShapes": [
+        "SphereGeometry",
+        "SphereGeometry",
+        "SphereGeometry",
+        "SphereGeometry"
+      ],
+      "glowShape": "radial-circle",
+      "bodyLabelsVisible": false,
+      "trailSamples": [
+        320,
+        320,
+        320,
+        320
+      ],
+      "trailComplexity": 0.04887313052124415,
+      "trailMetrics": [
+        {
+          "arcPixels": 250.11075732174982,
+          "seconds": 11.166666666666666,
+          "budget": 359.2458837741466,
+          "segments": 153
+        },
+        {
+          "arcPixels": 256.30923587972916,
+          "seconds": 11.166666666666666,
+          "budget": 359.2458837741466,
+          "segments": 153
+        },
+        {
+          "arcPixels": 242.43036335265157,
+          "seconds": 11.166666666666666,
+          "budget": 359.2458837741466,
+          "segments": 153
+        },
+        {
+          "arcPixels": 359.24574163229875,
+          "seconds": 9.408041935206969,
+          "budget": 359.2458837741466,
+          "segments": 189
+        }
+      ],
+      "trailsVisible": true
+    }
+  }
+}

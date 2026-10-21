@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-21",
+  "time_zone": "Asia/Shanghai",
+  "release": "v0.5.3",
+  "status": "succeeded",
+  "url": "https://trisolaris-reconstruction-20261019.wittylark8.chatgpt.site",
+  "project_id": "appgprj_6ad60b784fa08191b7ac5c78832eb2d7",
+  "version_id": "appgprj_6ad60b784fa08191b7ac5c78832eb2d7~appgver_7c9377f1f43c81919c0518484ea69328",
+  "deployment_id": "appgdep_6ad8a16ad0fc8191973904eebec91cf1",
+  "published_at": "2026-10-21T11:26:50.064075+00:00",
+  "site_source_commit": "6c99ea231c916a70af020cc73b3c86e487b1b2d8",
+  "github_source_commit": "50c6be0a0bf4b5a9955fdee39fb6b264f4a525a2",
+  "implementation_commit": "292d21d93e90ae212a41f828ea454337582dbf2b",
+  "archive_sha256": "0252e59147ae8e3ac8adce306aeec09f3987d13c871ee3f82c2dd2b7298fd3ff",
+  "audience": "Owner only; existing custom access unchanged",
+  "changes": [
+    "Render-only stellar centering, preserving v0.5.2 physics",
+    "Idle galaxy return owns motion; default total angular-speed cap 0.003 deg/s",
+    "Twelve technology stages from Paleolithic, 200–40000 safe production years"
+  ],
+  "verification": {
+    "nodeTests": 108,
+    "browserChecks": 7,
+    "realControls": 218,
+    "baselineParity": "Eight predetermined seeds x 200 displayed years, exact physics and conservation diagnostic parity with v0.5.2",
+    "identicalRuntimeBuildFiles": 21,
+    "siteCheckoutTests": "npm test passed",
+    "siteCheckoutBuild": "npm run build passed",
+    "githubCi": "passed on release archive commit"
+  },
+  "limits": [
+    "No new online browser test after native publication; local actual Chromium Worker/WebGL checks passed",
+    "Native Windows Wallpaper Engine not available",
+    "Visual tracking does not prevent physical ejection"
+  ]
+}

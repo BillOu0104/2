@@ -1,0 +1,9 @@
+{
+ "engine":"./engine-v4.mjs","prefix":"GEOMETRY-HOLDOUT-E","start":0,"seeds":64,"horizon":1000,"output":"results/geometry-confirm.jsonl",
+ "hypothesis":"Freeze the 1% and5% perturbed figure-eight families after the32-seed geometry scan; confirm effects on64 new paired seeds versus the random Newton baseline. No simulation-based seed selection.",
+ "profiles":[
+  {"id":"newton-random","force":"newton","adaptive":true,"eta":0.0075},
+  {"id":"figure8-perturb01","force":"newton","adaptive":true,"eta":0.0075,"geometry":"figure-eight","geometryPerturb":0.01,"planet":"bound","inPlane":true,"radiusFraction":0.12,"direction":-1,"orbitNormal":[0,0,1]},
+  {"id":"figure8-perturb05","force":"newton","adaptive":true,"eta":0.0075,"geometry":"figure-eight","geometryPerturb":0.05,"planet":"bound","inPlane":true,"radiusFraction":0.12,"direction":-1,"orbitNormal":[0,0,1]}
+ ]
+}

@@ -1,0 +1,95 @@
+{
+  "passed": 7,
+  "checks": [
+    "removed upper-left/right text and sentence below YEARS",
+    "rotation rings stay hidden during idle sway",
+    "gentler idle speed and -20 to 40 C activity thresholds",
+    "compact civilization block fits below the clock",
+    "both active background textures loaded at native 8192x4096",
+    "actual WebGL drawing buffer renders multiple frames at 7680x4320",
+    "8K render also completes frames with the postprocessing pipeline enabled"
+  ],
+  "errors": [],
+  "eightK": {
+    "ready": true,
+    "tick": 395,
+    "fps": 1,
+    "paused": false,
+    "controls": 209,
+    "history": 0,
+    "worker": true,
+    "scene": {
+      "canvas": [
+        7680,
+        4320
+      ],
+      "drawingBuffer": [
+        7680,
+        4320
+      ],
+      "renderedFrames": 8,
+      "viewVelocity": [
+        0,
+        0
+      ],
+      "speedLimited": false,
+      "compassOpacity": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "idleYaw": 0,
+      "galaxyCoreScreen": [
+        1.3504145066350381e-16,
+        -1.9380948937817673e-17,
+        0.9998899237158909
+      ],
+      "layoutEditing": false,
+      "compassVisible": false,
+      "maxTextureSize": 8192,
+      "backgroundSizes": {
+        "1": [
+          8192,
+          4096
+        ],
+        "4": [
+          8192,
+          4096
+        ]
+      },
+      "backgroundFollowsView": true,
+      "viewRotation": [
+        0,
+        0,
+        0
+      ],
+      "skyRotation": [
+        -0.02500852314609401,
+        0.7931443785621235,
+        -0.038131941277025176,
+        0.607324068006365
+      ],
+      "bodyShapes": [
+        "SphereGeometry",
+        "SphereGeometry",
+        "SphereGeometry",
+        "SphereGeometry"
+      ],
+      "glowShape": "radial-circle",
+      "bodyLabelsVisible": false,
+      "trailSamples": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "trailComplexity": 0,
+      "trailMetrics": [],
+      "trailsVisible": false
+    }
+  },
+  "limits": [
+    "8K frame buffer verified using software WebGL; this is not a target GPU frame-rate benchmark.",
+    "Native Windows Wallpaper Engine host is unavailable in this environment."
+  ]
+}

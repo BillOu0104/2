@@ -1,0 +1,50 @@
+{
+  "config": {
+    "prefix": "V052-ACCEPTANCE",
+    "start": 0,
+    "seeds": 128,
+    "horizon": 1000,
+    "output": "docs/v052/results/acceptance.jsonl",
+    "profiles": [
+      {
+        "id": "old-init-old-engine",
+        "force": "legacy",
+        "dt": 0.00075,
+        "eps": 0.1,
+        "adaptive": false
+      },
+      {
+        "id": "old-init-new-engine",
+        "force": "newton",
+        "dt": 0.00075,
+        "eta": 0.0075,
+        "adaptive": true
+      },
+      {
+        "id": "new-init-new-engine",
+        "initialization": "research",
+        "force": "newton",
+        "dt": 0.00075,
+        "eta": 0.0075,
+        "adaptive": true
+      }
+    ]
+  },
+  "hashes": {
+    "src/physics/gravity.js": "70d8ee2d1671d3981af006cfaec5913bc05b7f997eeef8d3c08e65bc77ef92af",
+    "src/orbital-initialization.js": "1429241a2aaec4d62cace480e14b231ce454dc79c6f60389979b9d7be6b3c56f",
+    "src/legacy/008.js": "783fe5a3e182a350ad508fd3f53615f4e986a924a806d9c852ac87abfb21bb67",
+    "src/settings.js": "efec61d59fa87456660ada47fee43746d8f561929d99be83471e6f9e6ac3ffa4",
+    "src/world-state.js": "b423367fc750270d32274e251d8c7c530fd1a9bf022abfc9fe642a617532a88d",
+    "tools/v052/research-reference.mjs": "91dfd436a0edcd70ced0727603f12e721492d84c5c8092a6a5e0a280834ce46b",
+    "tools/v052/benchmark-engine.mjs": "3d2df78c051c67b02b29adf5c5501f32cbedee2f5f5471144dc047718bc7872e",
+    "tools/v052/run-benchmark.mjs": "2a1f5f5a13e88fed27e8ae3547607a58aefb537f8aee47a39e63e79f6f3aad1d"
+  },
+  "baseCommit": "c7a53a01def5f9d60389ee20ec0f8bac5210ed69",
+  "researchCommit": "c198020",
+  "node": "v24.19.0",
+  "started": "2026-10-21T09:48:08.145Z",
+  "protocol": "Research first-loss endpoints; absorbing planet losses terminate integration. All seeds retained, no trajectory selection. Full-window stable fraction after first loss is zero. Numerical failure is separately censored, never a physical death.",
+  "finished": "2026-10-21T09:49:33.168Z",
+  "observations": 384
+}

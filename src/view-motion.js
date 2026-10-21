@@ -11,10 +11,13 @@ export class ViewMotion {
     const ax=clamp((x-this.x)*12*response-this.vx*7,-this.acceleration,this.acceleration),ay=clamp((y-this.y)*12*response-this.vy*7,-this.acceleration,this.acceleration);
     this.vx+=ax*dt;this.vy+=ay*dt;this.x+=this.vx*dt;this.y+=this.vy*dt;this.bound();
   }
-  returnToOrigin(dt,speed=.01){
-    if(dt<=0||speed<=0)return;const step=speed*Math.PI/180*dt;
+  returnToOrigin(dt,speed=.006){
+    if(dt<=0||speed<=0)return;
+    this.vx=0;this.vy=0;
     this.y=Math.atan2(Math.sin(this.y),Math.cos(this.y));
-    const approach=x=>Math.sign(x)*Math.max(0,Math.abs(x)-step);this.x=approach(this.x);this.y=approach(this.y);
+    const distance=Math.hypot(this.x,this.y),step=speed*Math.PI/180*dt;
+    if(distance<=step){this.x=0;this.y=0;return;}
+    const factor=1-step/distance;this.x*=factor;this.y*=factor;
   }
   bound(){const next=clamp(this.x,-Math.PI/6,Math.PI/6);if(next!==this.x)this.vx=0;this.x=next;}
 }

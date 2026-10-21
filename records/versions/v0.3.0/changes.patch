@@ -1,0 +1,951 @@
+diff --git a/index.html b/index.html
+index 1b4e7e2..1cf1de7 100644
+--- a/index.html
++++ b/index.html
+@@ -14,14 +14,12 @@
+   <canvas id="universe" aria-label="可拖动旋转的三体实时模拟"></canvas>
+   <div id="body-labels" aria-hidden="true"></div>
+   <main id="hud">
+-    <header class="signature"><span class="orbit-mark">∴</span><span>三体<span class="signature-sub">REAL-TIME SIMULATION</span></span></header>
+-    <div class="coordinates"><span class="live-dot"></span><span id="universe-id">UNIVERSE / 001</span><span id="seed-caption">TRISOLARIS</span></div>
+     <section id="clock-widget" class="clock-widget">
+       <div id="clock-time">00:00<span>:00</span></div><div class="clock-calendar"><span id="clock-day"></span><span id="clock-date"></span></div>
+     </section>
+     <section id="era-widget" class="side-widget era-widget">
+       <div class="eyebrow" data-zh="行星观测" data-en="PLANET OBSERVATORY">行星观测</div>
+-      <div class="widget-rule"></div><h1 id="era">恒纪元</h1><p id="hydration">浸泡 · 文明正在苏醒</p>
++      <div class="widget-rule"></div><h1 id="era">恒纪元</h1><p id="hydration"></p><p id="phenomena"></p>
+       <div class="temperature"><span id="temperature">—</span><span>°C</span></div>
+       <div class="temp-gauge"><i id="temperature-indicator"></i></div>
+       <div class="range-caption"><span>−270°</span><span>+1500°</span></div>
+@@ -41,7 +39,7 @@
+     </section>
+     <section id="civilization-widget" class="civilization-widget"><div id="civilization-status"></div><div id="civilization-lifespan"></div><ol id="civilization-log"></ol></section>
+     <section id="ranking-widget" class="ranking-widget" hidden><div class="eyebrow" data-zh="文明存活排行" data-en="CIVILIZATION LONGEVITY">文明存活排行</div><ol id="ranking-list"></ol></section>
+-    <section class="simulation-time"><div id="audio-bars" aria-hidden="true"></div><div><span id="simulation-year">0.00</span><span class="year-unit">YEARS</span></div><small id="running-caption">每一次重生，都是一次新的可能。</small></section>
++    <section class="simulation-time"><div id="audio-bars" aria-hidden="true"></div><div><span id="simulation-year">0.00</span><span class="year-unit">YEARS</span></div></section>
+     <div id="decor" aria-hidden="true"></div>
+     <button id="restart-prompt" hidden><span data-zh="天体已逃逸" data-en="CELESTIAL ESCAPE">天体已逃逸</span><strong data-zh="重启宇宙 ↻" data-en="RESTART UNIVERSE ↻">重启宇宙 ↻</strong></button>
+   </main>
+@@ -55,7 +53,7 @@
+     <div class="panel-tabs"><button class="active" data-tab="settings">全部设置</button><button data-tab="history">文明档案</button><button data-tab="about">项目说明</button></div>
+     <div id="settings-content" class="panel-scroll"><div id="extension-controls"></div><div id="original-controls"></div><p id="search-empty" hidden>没有匹配的设置 / No matching settings</p></div>
+     <div id="history-content" class="panel-scroll" hidden><div class="section-intro"><h3>文明档案</h3><p>当前设备保存的文明死亡记录。完整参数随档案保留，方便复现与后续扩展。</p><button id="export-history">导出档案 JSON</button></div><ol id="history-list"></ol></div>
+-    <div id="about-content" class="panel-scroll" hidden><article class="about-copy"><h3>三体 · 实时演算</h3><p>以你提供的 SYKM 原版 Wallpaper Engine 场景为基础。移植四体运动、温度、纪元与文明事件 SceneScript，并优化文明适宜度与延续机制，复用原版贴图、字体和音乐，天体采用圆形柔光与渐隐尾迹。</p><h4>运行架构</h4><p>Three.js 渲染与后台 Web Worker 模拟独立运行；无需远程服务器，网页与 Wallpaper Engine 共用同一套内核。模拟事件可供未来通知与 Seed 排行榜订阅。</p><h4>还原边界</h4><p>默认按固定 60 Hz 复现原版物理节奏；文明采用气候耐受与恢复，可切换原版判定。修复步长设置不即时生效、恒星碰撞距离未赋值、隐藏 UI 影响计算等问题。模型使用球体和圆环重建，后处理为 Three.js 对应实现，效果尚不能声称与原版逐像素一致。</p><p>原版文明逻辑是适温诞生与灾变毁灭，没有人口或技术树。完整算法依据、参数表和兼容差异随源码提供。</p><h4>来源</h4><p>原场景：SYKM ·《三体实时演算》<br>音乐：Melodysheep · Ether<br>保留原资源来源与非商用声明。</p><p class="muted">网页版音频须主动播放；Wallpaper Engine 可直接接收系统音频。自定义背景与历史保存在当前浏览器，不会上传。</p><div id="runtime-diagnostics"></div></article></div>
++    <div id="about-content" class="panel-scroll" hidden><article class="about-copy"><h3>三体 · 实时演算</h3><p>以你提供的 SYKM 原版 Wallpaper Engine 场景为基础。移植四体运动、温度、纪元与文明事件 SceneScript，并优化文明适宜度与延续机制，复用原版贴图、字体和音乐，天体采用圆形柔光与渐隐尾迹。</p><h4>运行架构</h4><p>Three.js 渲染与后台 Web Worker 模拟独立运行；无需远程服务器，网页与 Wallpaper Engine 共用同一套内核。模拟事件可供未来通知与 Seed 排行榜订阅。</p><h4>还原边界</h4><p>默认按固定 60 Hz 复现原版物理节奏；根据提供的原著讲解区分轨道纪元、天象与文明延续。−20～40°C 为常态活动范围，干仓休眠后可恢复同一文明。修复步长设置不即时生效、恒星碰撞距离未赋值、隐藏 UI 影响计算等问题。模型使用球体和圆环重建，后处理为 Three.js 对应实现，效果尚不能声称与原版逐像素一致。</p><p>原版文明逻辑是适温诞生与灾变毁灭，没有人口或技术树。新增轨道稳定确认、有限干仓耐受、差分潮汐与不可逆行星毁坏。具体阈值是可调模拟参数，非小说给定数值；完整算法依据、参数表和兼容差异随源码提供。原版背景已恢复为原生 8192×4096，并支持最高 7680×4320 渲染。</p><h4>来源</h4><p>原场景：SYKM ·《三体实时演算》<br>音乐：Melodysheep · Ether<br>保留原资源来源与非商用声明。</p><p class="muted">网页版音频须主动播放；Wallpaper Engine 可直接接收系统音频。自定义背景与历史保存在当前浏览器，不会上传。</p><div id="runtime-diagnostics"></div></article></div>
+     <footer class="panel-footer"><button id="export-settings">导出种子</button><label class="file-button">导入种子<input id="import-settings" type="file" accept="application/json,.json" hidden></label><button id="reset-settings">恢复默认</button><span id="save-status">已保存到本机</span></footer>
+   </aside>
+ </body>
+diff --git a/package-lock.json b/package-lock.json
+index 34b0cb1..4247abe 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -1,12 +1,12 @@
+ {
+   "name": "three-body-reconstruction",
+-  "version": "0.2.0",
++  "version": "0.3.0",
+   "lockfileVersion": 3,
+   "requires": true,
+   "packages": {
+     "": {
+       "name": "three-body-reconstruction",
+-      "version": "0.2.0",
++      "version": "0.3.0",
+       "dependencies": {
+         "three": "0.180.0"
+       },
+diff --git a/package.json b/package.json
+index e64c19b..5ece5db 100644
+--- a/package.json
++++ b/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "three-body-reconstruction",
+-  "version": "0.2.0",
++  "version": "0.3.0",
+   "private": true,
+   "type": "module",
+   "scripts": {
+diff --git a/src/bridge.js b/src/bridge.js
+index 6f76faf..4db5be7 100644
+--- a/src/bridge.js
++++ b/src/bridge.js
+@@ -13,6 +13,6 @@ export function installWallpaperBridge({ changeSettings, setHostPaused, audio, r
+     setPaused(paused) { setHostPaused(!!paused); }
+   };
+   // Stable public extension boundary: notifications and remote rankings can subscribe later.
+-  window.threeBody = { version: '0.2.0', get algorithm() { return window.__threeBodyState?.algorithm; }, getState: () => window.__threeBodyState ? structuredClone(window.__threeBodyState) : null, applySettings: patch => changeSettings(patch), subscribe(type, listener) { const fn = e => listener(e.detail); window.addEventListener(type, fn); return () => window.removeEventListener(type, fn); }, wallpaper: !!window.wallpaperRegisterAudioListener };
++  window.threeBody = { version: '0.3.0', get algorithm() { return window.__threeBodyState?.algorithm; }, getState: () => window.__threeBodyState ? structuredClone(window.__threeBodyState) : null, applySettings: patch => changeSettings(patch), subscribe(type, listener) { const fn = e => listener(e.detail); window.addEventListener(type, fn); return () => window.removeEventListener(type, fn); }, wallpaper: !!window.wallpaperRegisterAudioListener };
+   return () => { window.wallpaperPropertyListener = prior; };
+ }
+diff --git a/src/civilization-state.js b/src/civilization-state.js
+new file mode 100644
+index 0000000..04d1489
+--- /dev/null
++++ b/src/civilization-state.js
+@@ -0,0 +1,36 @@
++export class CivilizationState{
++  constructor(shared){this.shared=shared;this.logs=[];this.serial=0;this.reset();}
++  reset(){this.phase=this.shared.civilizationAlive?'active':'empty';this.progress=0;this.safeTime=0;this.lastPhenomena='';this.lastEpoch=null;this.result=null;}
++  log(kind,zh,en,year,runtime){this.logs.unshift({id:++this.serial,kind,zh,en,year,at:runtime});this.logs.length=Math.min(5,this.logs.length);}
++  destroy(cause,year,runtime,settings){
++    const s=this.shared;if(s.civilizationAlive){const number=s.civilizationCount,life=Math.max(0,Math.floor(year)-s.civilizationStartTime);s.lastCivilizationLifespan=life;s.civilizationAlive=false;
++      s.civilizationRecords.push({number,lifespan:life,destructionEvent:settings.cnen2?cause.en:cause.zh,text:s.text});
++      this.log('death',`第${number}号文明毁灭于${cause.zh}`,`Civilization ${number} destroyed: ${cause.en}`,year,runtime);s.civilizationCount++;}
++    this.phase='destroyed';this.progress=0;this.safeTime=0;
++  }
++  update(world,habitat,settings,year,runtime,dt=1/60){
++    const s=this.shared,en=settings.cnen2,planet=world.planet;
++    if(world.epoch.kind!==this.lastEpoch){if(this.lastEpoch!==null)this.log('epoch',world.epoch.kind==='stable'?'进入恒纪元':'进入乱纪元',world.epoch.kind==='stable'?'Stable era begins':'Chaotic era begins',year,runtime);this.lastEpoch=world.epoch.kind;}
++    const signature=world.phenomena.map(p=>p.kind).join('/');if(signature!==this.lastPhenomena&&world.phenomena.length)this.log('sky',world.phenomena.map(p=>p.zh).join(' · '),world.phenomena.map(p=>p.en).join(' · '),year,runtime);this.lastPhenomena=signature;
++    const suitable=habitat.canGrow&&world.safeToWake;this.safeTime=suitable?this.safeTime+dt:0;
++    if(planet.terminal){if(this.phase!=='destroyed')this.destroy(planet.terminal,year,runtime,settings);}
++    else if(s.civilizationAlive&&habitat.thermalFatal)this.destroy({zh:planet.temperature<settings.newproperty45?'长期严寒摧毁干仓':'极端烈焰摧毁干仓',en:planet.temperature<settings.newproperty45?'Prolonged cold destroyed dry storage':'Extreme heat destroyed dry storage'},year,runtime,settings);
++    else if(!s.civilizationAlive){
++      this.phase=this.phase==='destroyed'?'destroyed':'empty';
++      if(suitable&&this.safeTime>=Math.max(settings.wakeDelay,settings.t/60)){s.civilizationAlive=true;s.civilizationStartTime=Math.floor(year);this.phase='active';this.progress=0;this.log('birth',`第${s.civilizationCount}号文明启动`,`Civilization ${s.civilizationCount} started`,year,runtime);}
++    }else if(this.phase==='active'){
++      if(!habitat.comfortable||!world.safeToWake){this.phase='dehydrating';this.progress=0;this.log('sleep','文明开始脱水，保存知识与人口','Dehydrating; preserving population and knowledge',year,runtime);}
++    }else if(this.phase==='dehydrating'){this.progress+=dt;if(this.progress>=1){this.phase='dormant';this.progress=0;}}
++    else if(this.phase==='dormant'){if(suitable&&this.safeTime>=settings.wakeDelay){this.phase='rehydrating';this.progress=0;}}
++    else if(this.phase==='rehydrating'){if(!suitable){this.phase='dormant';this.progress=0;}else{this.progress+=dt;if(this.progress>=1.5){this.phase='active';this.log('wake','浸泡复苏，原文明继续延续','Rehydration complete; the same civilization continues',year,runtime);}}}
++    const labels={empty:['等待安全生存窗口','Awaiting a safe window'],active:['正常活动','Active'],dehydrating:['脱水保存中','Dehydrating'],dormant:['干仓休眠 · 文明延续','Dormant · civilization preserved'],rehydrating:['浸泡复苏中','Rehydrating'],destroyed:['文明已毁灭','Civilization destroyed']};
++    const life=s.civilizationAlive?Math.max(0,Math.floor(year)-s.civilizationStartTime):s.lastCivilizationLifespan;
++    const status=s.civilizationAlive?(en?`Civilization ${s.civilizationCount} · ${labels[this.phase][1]}`:`第${s.civilizationCount}号文明 · ${labels[this.phase][0]}`):labels[this.phase][en?1:0];
++    s.logEntries=this.logs.map(entry=>en?`Year ${Math.floor(entry.year)} · ${entry.en}`:`第${Math.floor(entry.year)}年，${entry.zh}`);
++    s.txt1=status;s.txt7=en?`${s.civilizationAlive?'Lifetime':'Last lifetime'}: ${life} years`:`${s.civilizationAlive?'文明已延续':'上个文明寿命'}：${life}年`;
++    for(let i=0;i<5;i++)s[`txt${i+2}`]=s.logEntries[i]||'';s.txt8=en?'Civilization longevity':'文明延续排行';
++    const ranked=[...s.civilizationRecords].sort((a,b)=>b.lifespan-a.lifespan).slice(0,6);
++    for(let i=0;i<6;i++)s[`txt${i+9}`]=ranked[i]?(en?`#${ranked[i].number} · ${ranked[i].lifespan} years · ${ranked[i].destructionEvent}`:`第${ranked[i].number}号 · ${ranked[i].lifespan}年 · ${ranked[i].destructionEvent}`):'';
++    this.result={phase:this.phase,continuing:!!s.civilizationAlive,active:this.phase==='active',safeWindow:this.safeTime,requiredWindow:settings.wakeDelay};return this.result;
++  }
++}
+diff --git a/src/habitability.js b/src/habitability.js
+index 49b4fe9..073014c 100644
+--- a/src/habitability.js
++++ b/src/habitability.js
+@@ -1,42 +1,23 @@
+-const clamp = x => Math.max(0, Math.min(1, x));
+-
+-// Climate resilience is integrated in fixed simulation seconds, independently of render FPS.
+-// Planetary collision / tidal destruction stay immediate. A distant stellar encounter is
+-// an observation, not evidence that the inhabited planet itself has been destroyed.
++const clamp=x=>Math.max(0,Math.min(1,x));
++// Normal activity and dehydrated storage have separate climate limits.
+ export class Habitability {
+-  constructor() { this.reset(); }
+-  reset() { this.health = 1; this.score = 1; this.result = null; }
+-  update(shared, settings, dt = 1 / 60) {
+-    const temperature = Number(shared.tem);
+-    const stableLow = Math.min(settings.newproperty45, settings.newproperty46);
+-    const stableHigh = Math.max(settings.newproperty45, settings.newproperty46);
+-    // The displayed stable band must always be climatically survivable, including after edits.
+-    const low = Math.min(settings.newproperty43, stableLow);
+-    const high = Math.max(settings.newproperty44, stableHigh);
+-    const stable = temperature >= stableLow && temperature <= stableHigh;
+-    const finite = Number.isFinite(temperature);
+-    let rawScore = 0, exposure = 0;
+-    if (finite && stable) rawScore = 1;
+-    else if (finite && temperature >= low && temperature <= high) {
+-      const fraction = temperature < stableLow ? (temperature - low) / Math.max(1, stableLow - low) : (high - temperature) / Math.max(1, high - stableHigh);
+-      rawScore = .35 + .65 * clamp(fraction);
+-    } else {
+-      const excess = finite ? Math.max(low - temperature, temperature - high, 0) : 1000;
+-      exposure = Math.min(4, .35 + excess / 100);
+-    }
+-    const tidal = [shared.d14, shared.d24, shared.d34].some(d => Number.isFinite(d) && d < settings.brfontcoloraaaaaarochelimitt);
+-    const collision = [shared.d14, shared.d24, shared.d34].some(d => Number.isFinite(d) && d < settings.newproperty42);
+-    const hazard = tidal ? 'tidal' : collision ? 'collision' : null;
+-    if (!this.result) this.score = hazard ? 0 : rawScore;
+-    else this.score += ((hazard ? 0 : rawScore) - this.score) * (1 - Math.exp(-dt / 1.5));
+-    this.health = clamp(this.health + (exposure ? -exposure / settings.thermalGrace : stable ? .08 : .02) * dt);
+-    this.result = {
+-      enabled: settings.civilizationMode === 'balanced', stable, score: clamp(this.score), health: this.health,
+-      canGrow: !hazard && finite && temperature >= low && temperature <= high && this.health >= .35,
+-      growth: stable ? 1 : rawScore,
+-      thermalFatal: this.health <= 1e-9,
+-      hazard, exposure, stableLow, stableHigh, low, high
+-    };
++  constructor(){this.reset();}
++  reset(){this.health=1;this.score=0;this.result=null;}
++  update(shared,settings,dt=1/60,context={}){
++    const temperature=Number(shared.tem),low=settings.newproperty45,high=settings.newproperty46;
++    const comfortable=Number.isFinite(temperature)&&temperature>=low&&temperature<=high;
++    const sleeping=['dormant','dehydrating','rehydrating'].includes(context.phase),terminal=!!context.terminal;
++    const excess=Number.isFinite(temperature)?Math.max(low-temperature,temperature-high,0):1000;
++    const storageExcess=Number.isFinite(temperature)?Math.max(settings.newproperty43-temperature,temperature-settings.newproperty44,0):1000;
++    const raw=comfortable&&!terminal?1:0;
++    if(!this.result)this.score=raw;else this.score+=(raw-this.score)*(1-Math.exp(-dt/1.2));
++    let exposure=0;
++    if(!comfortable)exposure=sleeping?(storageExcess>0?(.3+storageExcess/100)/settings.thermalGrace:.00025):(.15+excess/60)/settings.thermalGrace;
++    if(context.hazard==='tidal')exposure+=.05;
++    this.health=terminal?0:clamp(this.health+(comfortable?.06:-exposure)*dt);
++    this.result={enabled:settings.civilizationMode!=='legacy',comfortable,stable:comfortable,score:clamp(this.score),health:this.health,
++      canGrow:comfortable&&!terminal&&!context.hazard&&this.health>=.35,growth:comfortable?1:0,
++      thermalFatal:this.health<=1e-9,hazard:context.hazard||null,exposure,low,high,storageLow:settings.newproperty43,storageHigh:settings.newproperty44};
+     return this.result;
+   }
+ }
+diff --git a/src/main.js b/src/main.js
+index 4f60577..4de5cb4 100644
+--- a/src/main.js
++++ b/src/main.js
+@@ -1,5 +1,5 @@
+ import { SpaceRenderer } from './renderer.js';
+-import { propertySchema } from './original-data.js';
++import { effectivePropertySchema as propertySchema, migrateSettings } from './settings.js';
+ import { normalizeSettings, colorHex, fromHex, colorRGB, plainText, settingsFromInitial, algorithmId } from './settings.js';
+ import { LocalStore } from './storage.js';
+ import { AudioController } from './audio.js';
+@@ -7,13 +7,12 @@ import { installWallpaperBridge } from './bridge.js';
+ import './style.css';
+ 
+ const $ = selector => document.querySelector(selector);
+-const settingsKey = 'three-body.settings.v2';
++const settingsKey = 'three-body.settings.v3';
+ let settings;
+ try {
+-  const saved = localStorage.getItem(settingsKey);
+-  const previous = localStorage.getItem('three-body.settings.v1');
+-  settings = normalizeSettings(saved ? JSON.parse(saved) : { ...JSON.parse(previous || '{}'), newproperty14: true });
+-} catch { settings = normalizeSettings(); }
++  const saved=localStorage.getItem(settingsKey),v2=localStorage.getItem('three-body.settings.v2'),v1=localStorage.getItem('three-body.settings.v1');
++  settings=saved?migrateSettings(JSON.parse(saved),3):migrateSettings(JSON.parse(v2||v1||'{}'),2);
++} catch { settings=normalizeSettings(); }
+ const store = new LocalStore();
+ let state = null, userPaused = false, hostPaused = false, visibilityPaused = false, worker, renderer, lastEvent = 0, currentTab = 'settings';
+ let sessionId = crypto.randomUUID?.() || String(Date.now());
+@@ -68,8 +67,8 @@ const hintMap = {
+   cheatingcheck: '标记引力牢笼、温度距离倍数及非默认物理参数。',
+   custombg: '选择球面全景图。文件仅保存在本机；WE 中也可使用原生背景属性。',
+   newproperty63: '原版虚构账号与密码的视觉展示，不涉及实际账号登录。',
+-  civilizationMode: '优化模式：恒纪元恢复文明韧性；远处恒星事件不再立即毁灭行星文明。原版模式保留原有判定。',
+-  thermalGrace: '持续高温或严寒会消耗韧性；短暂越界可以恢复。极端温度消耗更快，行星碰撞和大撕裂仍立即毁灭。'
++  civilizationMode: '纪元由轨道稳定性判断；文明在 −20～40°C 活动，脱水保存、原编号复苏。行星毁坏后只能重建宇宙。原版模式保留旧判定。',
++  thermalGrace: '活动与干仓采用各自温度边界；持续极端温度会毁灭干仓。数值为模拟参数，可自行调整。'
+ };
+ function makeControl(key, def, extension = false) {
+   const container = document.createElement('div'); container.className = 'control'; container.dataset.key = key;
+@@ -117,10 +116,15 @@ function buildSettings() {
+   for (const [key, def] of Object.entries({
+     seed: { type: 'textinput', text: '随机初始化 Seed' },
+     physicsMode: { type: 'combo', text: '物理时钟', options: [{ value: 'reference', label: '原版节奏 · 固定 60 Hz（默认）' }, { value: 'realtime', label: '墙钟同步 · 修复原版每帧步数上限' }] },
+-    civilizationMode: { type: 'combo', text: '文明延续机制 / Civilization', options: [{ value: 'balanced', label: '优化延续 · 气候耐受与恢复（默认）' }, { value: 'legacy', label: '原版即时判定' }] },
++    civilizationMode: { type: 'combo', text: '文明延续机制 / Civilization', options: [{ value: 'balanced', label: '原著规则 · 脱水、休眠与复苏（默认）' }, { value: 'legacy', label: '原版即时判定' }] },
+     thermalGrace: { type: 'slider', text: '气候耐受时间 / Climate resilience (s)', min: 1, max: 60, step: 1 },
++    wakeDelay: { type: 'slider', text: '复苏安全窗口 / Safe window (s)', min: 1, max: 60, step: .5 },
++    epochWindow: { type: 'slider', text: '恒纪元轨道确认 / Orbital stability (s)', min: .25, max: 20, step: .25 },
++    climateInertia: { type: 'slider', text: '气候热惯性 / Thermal inertia (s)', min: .05, max: 30, step: .05 },
++    stellarBreathing: { type: 'bool', text: '恒星半径缓慢呼吸 / Stellar breathing' },
++    renderQuality: { type: 'combo', text: '渲染清晰度 / Render resolution', options: [{value:'native',label:'原生屏幕分辨率 · 8K 原图（默认）'},{value:'8k',label:'8K 超采样 · 最高 7680×4320'}] },
+     trailsLength: { type: 'slider', text: '轨迹长度 / Trail samples', min: 20, max: 2000, integer: true },
+-    pixelRatio: { type: 'slider', text: '最大渲染像素比 / Pixel ratio', min: .5, max: 2, step: .1 },
++    pixelRatio: { type: 'slider', text: '最大渲染像素比 / Pixel ratio', min: .5, max: 4, step: .1 },
+     bodyLabels: { type: 'bool', text: '显示天体标签 / Body labels' },
+     music: { type: 'bool', text: '播放原版音乐 · Ether' },
+     volume: { type: 'slider', text: '音乐音量 / Volume', min: 0, max: 1, step: .01 }
+@@ -236,9 +240,10 @@ function renderHistory() {
+ }
+ function renderState(s) {
+   const en = settings.cnen2;
+-  $('#universe-id').textContent = `UNIVERSE / ${String(s.generation).padStart(3, '0')}`; $('#seed-caption').textContent = s.seed;
+   $('#era').textContent = s.era; $('#temperature').textContent = s.temperature.toFixed(1);
+-  $('#hydration').textContent = s.temperature > settings.newproperty46 ? (en ? 'DEHYDRATE · HEAT' : '脱水 · 高温') : s.temperature < settings.newproperty45 ? (en ? 'DEHYDRATE · FREEZE' : '脱水 · 严寒') : (en ? 'REHYDRATE · HABITABLE' : '浸泡 · 适宜生存');
++  const condition=s.world?.planet.condition,planetLabels={temperate:['温带行星','Temperate'],hot:['高温行星','Overheated'],frozen:['冰封行星','Frozen'],molten:['熔融行星','Molten'],damaged:['行星结构受损','Planetary damage'],'tidal-stress':['行星结构受损','Tidal damage'],engulfed:['行星已被吞噬','Planet engulfed'],disrupted:['行星已被撕裂','Planet disrupted']};
++  $('#hydration').textContent=planetLabels[condition]?.[en?1:0]||'';
++  $('#phenomena').textContent=(s.world?.phenomena||[]).map(p=>en?p.en:p.zh).join(' · ');
+   const habitat = s.habitability;
+   $('#habitability-readout').hidden = !habitat?.enabled;
+   if (habitat?.enabled) {
+@@ -246,21 +251,29 @@ function renderState(s) {
+     $('#civilization-health').textContent = `${Math.round(habitat.health * 100)}%`;
+     $('#habitability-fill').style.width = `${habitat.score * 100}%`;
+     $('#health-fill').style.width = `${habitat.health * 100}%`;
+-    $('#habitability-warning').textContent = habitat.hazard ? (en ? 'PLANETARY PROXIMITY HAZARD' : '行星过近 · 灾变风险') : habitat.exposure ? (en ? 'CLIMATE STRESS · RESILIENCE FALLING' : '气候越界 · 韧性消耗中') : habitat.stable ? (en ? 'STABLE CLIMATE · RECOVERING' : '恒纪元 · 韧性恢复中') : (en ? 'DEHYDRATING · ENDURING' : '乱纪元 · 脱水维持');
++    $('#habitability-warning').textContent = s.world?.planet.terminal ? (en?'PLANET LOST · RESTART REQUIRED':'行星毁坏 · 需重建宇宙') : habitat.hazard ? (en?'TIDAL STRESS':'潮汐应力损伤') : (en?`Active range: ${habitat.low} to ${habitat.high} °C`:`活动适温：${habitat.low}～${habitat.high}°C`);
+   }
+   $('#temperature-indicator').style.left = `${(s.temperature + 270) / 1770 * 100}%`;
+-  $('.temperature').style.color = s.temperature > 70 ? '#dcb09c' : s.temperature < -50 ? '#8dbde5' : 'var(--accent)';
++  $('.temperature').style.color = s.temperature > settings.newproperty46 ? '#dcb09c' : s.temperature < settings.newproperty45 ? '#8dbde5' : 'var(--accent)';
+   $('#civilization-status').textContent = s.text[0]; $('#civilization-lifespan').textContent = s.text[6];
+-  const log = $('#civilization-log'); log.replaceChildren();
+-  s.log.forEach((text, i) => { const li = document.createElement('li'); li.textContent = text; li.style.opacity = settings[`t${i + 3}`] ?? 0; log.append(li); });
++  const log=$('#civilization-log'),items=s.logItems?.length?s.logItems:s.log.map((text,i)=>({id:text,zh:text,en:text,at:s.runtime-i*5,legacy:true}));
++  const retained=new Set();
++  items.forEach((entry,i)=>{
++    const id=String(entry.id);retained.add(id);let li=[...log.children].find(el=>el.dataset.id===id);
++    if(!li){li=document.createElement('li');li.dataset.id=id;log.append(li);}
++    li.textContent=entry.legacy?entry.zh:(en?`Year ${Math.floor(entry.year)} · ${entry.en}`:`第${Math.floor(entry.year)}年，${entry.zh}`);
++    li.style.opacity=(settings[`t${i+3}`]??.4)*Math.max(0,1-(s.runtime-entry.at)/45);
++    log.append(li);
++  });
++  [...log.children].forEach(li=>{if(!retained.has(li.dataset.id))li.remove();});
+   const rank = $('#ranking-list'); rank.replaceChildren();
+   for (let i = 0; i < 6; i++) { if (!s.text[8 + i]) continue; const li = document.createElement('li'); li.textContent = s.text[8 + i]; li.style.opacity = settings[['t9', 't10', 'tex4opacity', 'tex5opacity', 'tex6opacity', 'tex7opacity'][i]]; rank.append(li); }
+   $('#simulation-year').textContent = s.year >= 1e8 ? s.year.toExponential(2) : s.year.toFixed(2);
+-  $('#running-caption').textContent = en ? 'Every rebirth is another possibility.' : '每一次重生，都是一次新的可能。';
+-  $('#restart-prompt').hidden = !s.escaped || settings.autorestart;
++  $('#restart-prompt').hidden = !(s.escaped||s.world?.planet.terminal) || settings.autorestart;
++  $('#restart-prompt span').textContent=s.world?.planet.terminal?(en?s.world.planet.terminal.en:s.world.planet.terminal.zh):(en?'CELESTIAL ESCAPE':'天体已逃逸');
+   document.querySelectorAll('.distance-row').forEach((row, i) => { const d = s.distances[i] || 0; row.querySelector('b').textContent = d.toFixed(3); row.querySelector('i').style.width = `${Math.min(100, d / settings.newproperty13 * 100)}%`; });
+   if (settings.cheatingcheck) $('#physics-check').textContent = `${settings.newproperty60 ? 'CAGE ON / ' : ''}G × ${settings.newproperty52 / 1000} / T DIST × ${settings.newproperty69}\n${settings.physicsMode === 'reference' ? 'REFERENCE 60 Hz' : 'REAL TIME'}`;
+-  $('#runtime-diagnostics').textContent = `Three.js WebGL · ${fps} FPS · Worker 60 Hz · Tick ${s.tick} · ${s.bodies.length} bodies`;
++  $('#runtime-diagnostics').textContent = `Three.js WebGL · ${fps} FPS · Worker 60 Hz · Tick ${s.tick} · ${s.bodies.length} bodies · 宇宙 ${s.generation} · Seed ${s.seed} · ${renderer.canvas.width}×${renderer.canvas.height}`;
+ }
+ function handleEvents(events) {
+   for (const event of events) {
+@@ -329,4 +342,4 @@ try {
+ }
+ // Diagnostic readout for automated smoke checks and host integrations.
+ window.__threeBodyDiagnostics = () => ({ ready: !!state && !fatal, tick: lastTick, fps, paused: userPaused || hostPaused || visibilityPaused, controls: controlMap.size, history: history.length, worker: !!worker,
+-  scene: renderer ? { backgroundFollowsView: renderer.sky.parent === renderer.world, viewRotation: renderer.world.rotation.toArray().slice(0,3), skyRotation: renderer.sky.getWorldQuaternion(new renderer.camera.quaternion.constructor()).toArray(), bodyShapes: renderer.nodes.map(n => n.mesh.geometry.type), glowShape: 'radial-circle', trailSamples: renderer.trailBuffers.map(b => b.length), trailsVisible: renderer.trails.every(t => t.visible) } : null });
++  scene: renderer ? { canvas:[renderer.canvas.width,renderer.canvas.height], drawingBuffer:[renderer.renderer.getContext().drawingBufferWidth,renderer.renderer.getContext().drawingBufferHeight], renderedFrames:renderer.renderer.info.render.frame, compassVisible:renderer.compass.visible, maxTextureSize:renderer.renderer.capabilities.maxTextureSize, backgroundSizes:Object.fromEntries(Object.entries(renderer.bgTextures).map(([k,t])=>[k,[t.image?.width||0,t.image?.height||0]])), backgroundFollowsView: renderer.sky.parent === renderer.world, viewRotation: renderer.world.rotation.toArray().slice(0,3), skyRotation: renderer.sky.getWorldQuaternion(new renderer.camera.quaternion.constructor()).toArray(), bodyShapes: renderer.nodes.map(n => n.mesh.geometry.type), glowShape: 'radial-circle', trailSamples: renderer.trailBuffers.map(b => b.length), trailsVisible: renderer.trails.every(t => t.visible) } : null });
+diff --git a/src/renderer.js b/src/renderer.js
+index 86db123..a59b314 100644
+--- a/src/renderer.js
++++ b/src/renderer.js
+@@ -9,7 +9,7 @@ import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
+ import { colorRGB, seededRandom } from './settings.js';
+ 
+ const C = v => new THREE.Color(...colorRGB(v));
+-const sphere = new THREE.SphereGeometry(1, 48, 32);
++const sphere = new THREE.SphereGeometry(1, 96, 64);
+ const vec = new THREE.Vector3();
+ function roundGlow() {
+   const canvas = document.createElement('canvas'); canvas.width = canvas.height = 256;
+@@ -34,7 +34,7 @@ const postShader = {
+ export class SpaceRenderer {
+   constructor(canvas, labelRoot, settings) {
+     this.canvas = canvas; this.labels = labelRoot; this.settings = settings; this.snap = null; this.audioLevel = 0;
+-    this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'low-power' });
++    this.renderer = new THREE.WebGLRenderer({ canvas, antialias: settings.renderQuality !== '8k', powerPreference: 'high-performance' });
+     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
+     this.renderer.toneMapping = THREE.ACESFilmicToneMapping; this.renderer.toneMappingExposure = 1;
+     this.scene = new THREE.Scene(); this.camera = new THREE.PerspectiveCamera(50, 1, 0.01, 200);
+@@ -49,7 +49,7 @@ export class SpaceRenderer {
+     for (let i = 0; i < 120; i++) { const a = i / 120 * Math.PI * 2; const r = i % 10 ? 1.44 : 1.48; ticks.push(Math.cos(a) * 1.42, Math.sin(a) * 1.42, 0, Math.cos(a) * r, Math.sin(a) * r, 0); }
+     this.compass.add(new THREE.LineSegments(new THREE.BufferGeometry().setAttribute('position', new THREE.Float32BufferAttribute(ticks, 3)), new THREE.LineBasicMaterial({ color: 0x94b7d9, transparent: true, opacity: .2 })));
+     const textureLoader = new THREE.TextureLoader();
+-    const texture = name => { const t = textureLoader.load(`assets/original/${name}.webp`); t.colorSpace = THREE.SRGBColorSpace; return t; };
++    const texture = name => { const t = textureLoader.load(`assets/original/${name}.webp`); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy=Math.min(16,this.renderer.capabilities.getMaxAnisotropy()); return t; };
+     this.starTexture = texture('0aun'); this.planetTexture = texture('0dq'); this.spikeTexture = roundGlow();
+     this.bgTextures = { '1': texture('B8k'), '4': texture('st2') };
+     for (const t of Object.values(this.bgTextures)) t.mapping = THREE.EquirectangularReflectionMapping;
+@@ -81,27 +81,39 @@ export class SpaceRenderer {
+       this.world.add(dust); this.dustLayers.push(dust);
+     }
+     this.nebula = new THREE.Mesh(new THREE.SphereGeometry(70, 24, 16), new THREE.MeshBasicMaterial({ map: this.bgTextures['1'], side: THREE.BackSide, transparent: true, opacity: .35, color: 0x6e83a7, blending: THREE.AdditiveBlending, depthWrite: false })); this.world.add(this.nebula);
+-    this.composer = new EffectComposer(this.renderer); this.composer.addPass(new RenderPass(this.scene, this.camera));
++    this.composer = null;
+     // Small bright spheres become square impulses in a downsampled bloom pyramid.
+     // Explicit radial sprites provide the HDR halo without changing circular silhouettes.
+-    this.post = new ShaderPass(postShader); this.composer.addPass(this.post); this.composer.addPass(new OutputPass());
+-    this.mouse = { x: 0, y: 0, down: false, lastX: 0, lastY: 0 }; this.rot = { x: 0, y: 0, vx: 0, vy: 0 }; this.follow = { x: 0, y: 0 };
+-    canvas.addEventListener('pointerdown', e => { this.mouse.down = true; this.mouse.lastX = e.clientX; this.mouse.lastY = e.clientY; canvas.setPointerCapture(e.pointerId); });
++    this.post = new ShaderPass(postShader);
++    this.mouse = { x: 0, y: 0, down: false, dragging: false, startX: 0, startY: 0, lastX: 0, lastY: 0 }; this.rot = { x: 0, y: 0, vx: 0, vy: 0 }; this.follow = { x: 0, y: 0 };
++    canvas.addEventListener('pointerdown', e => { if(e.button!==0)return; this.mouse.down = true; this.mouse.dragging=false; this.mouse.startX=this.mouse.lastX = e.clientX; this.mouse.startY=this.mouse.lastY = e.clientY; canvas.setPointerCapture(e.pointerId); });
+     canvas.addEventListener('pointermove', e => {
+       this.mouse.x = e.clientX / innerWidth * 2 - 1; this.mouse.y = e.clientY / innerHeight * 2 - 1;
+       if (this.mouse.down && +this.settings.newproperty61 === 0) {
++        if(Math.hypot(e.clientX-this.mouse.startX,e.clientY-this.mouse.startY)>3)this.mouse.dragging=true;
+         this.rot.vy += (e.clientX - this.mouse.lastX) / innerWidth * this.settings.y5 * 10;
+         this.rot.x += (e.clientY - this.mouse.lastY) / innerHeight * this.settings.x5 * 2;
+       }
+       this.mouse.lastX = e.clientX; this.mouse.lastY = e.clientY;
+     });
+-    for (const type of ['pointerup', 'pointercancel', 'lostpointercapture']) canvas.addEventListener(type, () => { this.mouse.down = false; });
++    for (const type of ['pointerup', 'pointercancel', 'lostpointercapture']) canvas.addEventListener(type, () => { this.mouse.down = false; this.mouse.dragging=false; this.compass.visible=false; });
+     this.updateSettings(settings); this.resize();
+     this.onResize = () => this.resize(); addEventListener('resize', this.onResize);
+   }
+   resize() {
+-    this.renderer.setPixelRatio(Math.min(devicePixelRatio || 1, this.settings.pixelRatio));
+-    this.renderer.setSize(innerWidth, innerHeight, false); this.composer.setSize(innerWidth, innerHeight);
++    const gl=this.renderer.getContext(),limit=Math.min(this.renderer.capabilities.maxTextureSize,gl.getParameter(gl.MAX_RENDERBUFFER_SIZE));
++    const requested=this.settings.renderQuality==='8k'?Math.min(7680/innerWidth,4320/innerHeight):Math.min(devicePixelRatio||1,this.settings.pixelRatio);
++    const ratio=Math.min(requested,limit/innerWidth,limit/innerHeight);
++    if(this.drawWidth!==innerWidth||this.drawHeight!==innerHeight||this.drawRatio!==ratio){
++      this.renderer.setPixelRatio(ratio);this.renderer.setSize(innerWidth,innerHeight,false);
++      this.drawWidth=innerWidth;this.drawHeight=innerHeight;this.drawRatio=ratio;
++    }
++    if(this.settings.newproperty2&&!this.composer){
++      const target=new THREE.WebGLRenderTarget(1,1,{type:THREE.UnsignedByteType});
++      this.composer=new EffectComposer(this.renderer,target);this.composer.addPass(new RenderPass(this.scene,this.camera));this.composer.addPass(this.post);this.composer.addPass(new OutputPass());
++    }
++    if(this.composer){this.composer.setPixelRatio(ratio);this.composer.setSize(innerWidth,innerHeight);}
++
+     this.camera.aspect = innerWidth / innerHeight; this.camera.updateProjectionMatrix();
+     this.trails.forEach(line => line.material.resolution.set(innerWidth, innerHeight));
+   }
+@@ -119,7 +131,7 @@ export class SpaceRenderer {
+     this.sky.material.color.copy(C(mode === '3' ? s.newproperty55 : s.backgroundcolor)).multiplyScalar(mode === '3' ? s.newproperty56 : s.newproperty9);
+     this.sky.material.needsUpdate = true;
+     this.camera.fov = s.newproperty71; this.camera.position.z = Math.max(1.4, 5.2 - s.distance * .65); this.camera.updateProjectionMatrix();
+-    this.compass.visible = s.compass; this.compass.children.forEach(n => n.material?.color.copy(C(s.datacolor)));
++    this.compass.visible = !!s.compass && this.mouse.down && this.mouse.dragging && +s.newproperty61===0; this.compass.children.forEach(n => n.material?.color.copy(C(s.datacolor)));
+     this.nebula.visible = s.brfontcoloraaaaaabrnebularequirespostprocessingultrahighquality;
+     for (const [u, key] of Object.entries({ grain: 'newproperty68', crt: 'newproperty3', blur: 'newproperty23', pulse: 'newproperty54' })) this.post.uniforms[u].value = s[key];
+     const radii = [s._13, s._21, s._3, s.newproperty20];
+@@ -173,9 +185,13 @@ export class SpaceRenderer {
+     if (t <= -100) color.setRGB(THREE.MathUtils.clamp((t + 210) / 110, 0, 1), THREE.MathUtils.clamp((t + 210) / 110, 0, 1), 1);
+     else if (t >= 10) color.setRGB(1, Math.max(0, 1 - (t - 10) / 990), Math.max(0, 1 - (t - 10) / 990));
+     this.nodes[3].material.emissive.copy(color);
++    this.nodes[3].group.visible=!state.world?.planet.terminal;
++    this.nodes[3].label.hidden=!this.settings.newproperty65||!this.settings.bodyLabels||!!state.world?.planet.terminal;
++    this.nodes.slice(0,3).forEach((n,i)=>{const radius=state.world?.stars[i]?.radius;if(radius)n.mesh.scale.setScalar(radius);});
+   }
+   render(dt, elapsed) {
+     const s = this.settings;
++    this.compass.visible=!!s.compass&&this.mouse.down&&this.mouse.dragging&&+s.newproperty61===0;
+     if (+s.newproperty61 === 1) {
+       const a = Math.min(1, s.newproperty62 * dt * 60);
+       this.follow.x += (this.mouse.x - this.follow.x) * a; this.follow.y += (this.mouse.y - this.follow.y) * a;
+diff --git a/src/settings.js b/src/settings.js
+index f192a09..73d7fea 100644
+--- a/src/settings.js
++++ b/src/settings.js
+@@ -2,9 +2,21 @@ import { propertySchema } from './original-data.js';
+ 
+ export const defaults = Object.fromEntries(Object.entries(propertySchema)
+   .filter(([, d]) => d.type && d.type !== 'group').map(([k, d]) => [k, d.value]));
+-export const extraDefaults = { seed: 'TRISOLARIS', music: false, volume: 0.35, trailsLength: 400, physicsMode: 'reference', pixelRatio: 1.5, bodyLabels: true, civilizationMode: 'balanced', thermalGrace: 8 };
++export const extraDefaults = { seed: 'TRISOLARIS', music: false, volume: 0.35, trailsLength: 400, physicsMode: 'reference', pixelRatio: 4, bodyLabels: true, civilizationMode: 'balanced', thermalGrace: 8, wakeDelay: 3, epochWindow: 2, climateInertia: 1.5, stellarBreathing: true, renderQuality: 'native' };
+ // New installs show the requested tails; explicitly saved off/on preferences still win.
+ defaults.newproperty14 = true;
++defaults.newproperty45 = -20;
++defaults.newproperty46 = 40;
++defaults.newproperty51 = .35;
++defaults.newproperty3 = 0;
++defaults.newproperty68 = 0;
++export const effectivePropertySchema = { ...propertySchema,
++  newproperty45: {...propertySchema.newproperty45,text:'常态活动低温边界 / Active life minimum °C',value:-20},
++  newproperty46: {...propertySchema.newproperty46,text:'常态活动高温边界 / Active life maximum °C',value:40},
++  newproperty43: {...propertySchema.newproperty43,text:'干仓低温耐受 / Dry storage minimum °C'},
++  newproperty44: {...propertySchema.newproperty44,text:'干仓高温耐受 / Dry storage maximum °C'},
++  newproperty51: {...propertySchema.newproperty51,value:.35}
++};
+ export function normalizeSettings(source = {}, includeExtras = true) {
+   const out = { ...defaults, ...(includeExtras ? extraDefaults : {}) };
+   for (const [key, value] of Object.entries(source)) {
+@@ -21,10 +33,15 @@ export function normalizeSettings(source = {}, includeExtras = true) {
+     else if (key === 'volume' && Number.isFinite(+value)) out.volume = Math.min(1, Math.max(0, +value));
+     else if (key === 'trailsLength' && Number.isFinite(+value)) out.trailsLength = Math.round(Math.min(2000, Math.max(20, +value)));
+     else if (key === 'physicsMode' && ['reference', 'realtime'].includes(value)) out.physicsMode = value;
+-    else if (key === 'pixelRatio' && Number.isFinite(+value)) out.pixelRatio = Math.min(2, Math.max(0.5, +value));
++    else if (key === 'pixelRatio' && Number.isFinite(+value)) out.pixelRatio = Math.min(4, Math.max(0.5, +value));
+     else if (key === 'bodyLabels') out.bodyLabels = value === true;
+     else if (key === 'civilizationMode' && ['balanced', 'legacy'].includes(value)) out.civilizationMode = value;
+     else if (key === 'thermalGrace' && Number.isFinite(+value)) out.thermalGrace = Math.min(60, Math.max(1, +value));
++    else if (key === 'wakeDelay' && Number.isFinite(+value)) out.wakeDelay = Math.min(60,Math.max(1,+value));
++    else if (key === 'epochWindow' && Number.isFinite(+value)) out.epochWindow = Math.min(20,Math.max(.25,+value));
++    else if (key === 'climateInertia' && Number.isFinite(+value)) out.climateInertia = Math.min(30,Math.max(.05,+value));
++    else if (key === 'stellarBreathing') out.stellarBreathing=value===true;
++    else if (key === 'renderQuality' && ['native','8k'].includes(value)) out.renderQuality=value;
+   }
+   return out;
+ }
+@@ -32,7 +49,11 @@ export function colorRGB(s = '1 1 1') { return s.split(/\s+/).map(Number); }
+ export function colorHex(s) { return '#' + colorRGB(s).map(x => Math.round(x * 255).toString(16).padStart(2, '0')).join(''); }
+ export function fromHex(s) { return [1, 3, 5].map(i => parseInt(s.slice(i, i + 2), 16) / 255).join(' '); }
+ export function plainText(s = '') { return s.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' '); }
+-export function algorithmId(s) { return `sykm-scene-v3-${s.physicsMode}60-civ-${s.civilizationMode}-v2`; }
++export function algorithmId(s) { return `sykm-scene-v3-${s.physicsMode}60-civ-${s.civilizationMode}-v3`; }
++export function migrateSettings(saved={},version=3){
++  if(version<3)return normalizeSettings({...saved,newproperty45:-20,newproperty46:40,newproperty51:Math.abs(saved.newproperty51??3)>=2 ? .35 : (saved.newproperty51??.35),newproperty3:0,newproperty68:0});
++  return normalizeSettings(saved);
++}
+ export function seededRandom(seed) {
+   let h = 2166136261;
+   for (const c of String(seed)) h = Math.imul(h ^ c.charCodeAt(0), 16777619);
+diff --git a/src/simulation.js b/src/simulation.js
+index 0905ab8..76cb752 100644
+--- a/src/simulation.js
++++ b/src/simulation.js
+@@ -7,6 +7,8 @@ import loadingFactory from './legacy/156.js';
+ import { moduleBindings } from './original-data.js';
+ import { normalizeSettings, seededRandom, algorithmId } from './settings.js';
+ import { Habitability } from './habitability.js';
++import { WorldState } from './world-state.js';
++import { CivilizationState } from './civilization-state.js';
+ 
+ class Vec3 { constructor(x = 0, y = x, z = x) { this.x = x; this.y = y; this.z = z; } }
+ const plain = v => v && typeof v === 'object' ? structuredClone(v) : v;
+@@ -20,9 +22,11 @@ export class Simulation {
+     this.input = { cursorScreenPosition: new Vec3(960, 540, 0) };
+     this.generation = 1; this.tickCount = 0; this.revision = 0; this.events = []; this.eventSeq = 0;
+     this.habitability = new Habitability();
++    this.world = new WorldState(); this.terminalSince=null;
+     this.setRandom();
+     this.modules = {};
+     for (const [id, factory] of Object.entries({ '008': physicsFactory, '010': timeFactory, '042': civilizationFactory, '072': eraFactory, '079': temperatureFactory, '156': loadingFactory })) this.modules[id] = this.createModule(id, factory);
++    this.civilization = new CivilizationState(this.shared);
+     this.modules['008'].init();
+   }
+   setRandom() { this.random = seededRandom(`${this.settings.seed}:${this.generation}`); }
+@@ -39,13 +43,13 @@ export class Simulation {
+     builder.values = {};
+     builder.finish = function() { return Object.assign(this.values, overrides); };
+     const math = Object.create(Math); math.random = () => self.random();
+-    return factory({ shared: this.shared, engine: this.engine, input: this.input, thisScene: { createLayer: data => data }, Vec3, Math: math, createScriptProperties: () => builder, getHabitability: () => self.settings.civilizationMode === 'balanced' ? self.habitability.result : null, onInitialize: bodies => { self.initialBodies = plain(bodies); self.habitability.reset(); } });
++    return factory({ shared: this.shared, engine: this.engine, input: this.input, thisScene: { createLayer: data => data }, Vec3, Math: math, createScriptProperties: () => builder, getHabitability: () => null, onInitialize: bodies => { self.initialBodies = plain(bodies); self.habitability.reset(); self.world.reset(); self.civilization?.reset(); self.terminalSince=null; } });
+   }
+   configure(patch) {
+     const next = normalizeSettings({ ...this.settings, ...patch });
+     const changed = Object.keys(next).filter(k => next[k] !== this.settings[k]);
+     this.settings = next;
+-    if (changed.includes('civilizationMode')) { this.habitability.reset(); this.shared.suitablePeriodCount = 0; }
++    if (changed.includes('civilizationMode')) { this.habitability.reset(); this.civilization.reset(); this.shared.suitablePeriodCount = 0; }
+     const resetKeys = new Set(['seed', 'physicsMode', 'newproperty53']);
+     const mapped = {};
+     for (const [id, module] of Object.entries(this.modules)) {
+@@ -64,17 +68,20 @@ export class Simulation {
+     } else { this.modules['008'].applyUserProperties(mapped); if (Object.keys(mapped).length) this.revision++; }
+     return changed;
+   }
+-  restart() {
++  restart(reason='restart') {
++    this.pendingRestart=null;
+     this.shared.rst = 1;
+     // Original log's escape edge is observed before physics consumes rst.
+     const before = this.shared.civilizationRecords.length;
+-    this.modules['042'].update('');
++    if(this.settings.civilizationMode==='legacy')this.modules['042'].update('');
++    else this.civilization.destroy({zh:reason==='escape'?'天体逃逸':'宇宙重新初始化',en:reason==='escape'?'Celestial escape':'Universe reinitialized'},this.shared.xntime||0,this.engine.runtime,this.settings);
+     for (const record of this.shared.civilizationRecords.slice(before)) this.recordDeath(record);
+     this.generation++; this.setRandom();
+     this.modules['008'] = this.createModule('008', physicsFactory); this.modules['008'].init();
+     this.shared.rst = 0; this.shared.num = 0; this.revision++;
+   }
+   tick() {
++    if(this.pendingRestart)this.restart(this.pendingRestart);
+     this.engine.runtime = ++this.tickCount / 60;
+     this.modules['008'].update(true);
+     if (this.settings.physicsMode === 'realtime') {
+@@ -83,22 +90,33 @@ export class Simulation {
+       const steps = Math.ceil(remaining / p.state().step);
+       for (let i = 0; i < steps; i++) p.directStep(remaining / steps);
+     }
+-    const state = this.modules['008'].state();
++    const state = this.modules['008'].state(); this.lastPhysicsState=state;
+     for (let a = 0; a < 4; a++) for (let b = a + 1; b < 4; b++) {
+       const x = state.bodies[a], y = state.bodies[b];
+       this.shared[`d${a + 1}${b + 1}`] = Math.hypot(x.x - y.x, x.y - y.y, x.z - y.z);
+     }
+     this.modules['010'].update('');
+     this.modules['079'].update('');
+-    this.habitability.update(this.shared, this.settings);
+-    this.era = this.modules['072'].update('');
++    const equilibrium=Number(this.shared.tem);
++    const world=this.world.update(state.bodies,state.G,equilibrium,this.settings,this.engine.runtime);
++    const legacy=this.settings.civilizationMode==='legacy';
++    if(!legacy)this.shared.tem=world.planet.temperature;
++    this.habitability.update(this.shared,this.settings,1/60,{phase:this.civilization.phase,terminal:!legacy&&world.planet.terminal,hazard:!legacy&&world.planet.tideRatio>1?'tidal':null});
++    this.era = legacy?this.modules['072'].update(''):(world.epoch.kind==='stable'?(this.settings.cnen2?'Stable Era':'恒纪元'):(this.settings.cnen2?'Chaotic Era':'乱纪元'));
+     const previousAlive = this.shared.civilizationAlive;
+     const before = this.shared.civilizationRecords.length;
+     this.shared.text = `/Seed:${this.settings.seed}/Universe:${this.generation}`;
+-    this.modules['042'].update('');
++    if(legacy)this.modules['042'].update('');
++    else {
++      const previousPhase=this.civilization.result?.phase;
++      this.civilization.update(world,this.habitability.result,this.settings,this.shared.xntime,this.engine.runtime);
++      if(previousPhase!==this.civilization.phase)this.emit('civilization:phase',{phase:this.civilization.phase,number:this.shared.civilizationCount});
++    }
+     if (!previousAlive && this.shared.civilizationAlive) this.emit('civilization:birth', { number: this.shared.civilizationCount });
+     for (const record of this.shared.civilizationRecords.slice(before)) this.recordDeath(record);
+-    if (this.shared.tj === 1 && this.settings.autorestart) { this.emit('system:escape', {}); this.restart(); }
++    if(!legacy&&world.planet.terminal&&this.terminalSince===null){this.terminalSince=this.engine.runtime;this.emit('planet:destroyed',plain(world.planet.terminal));}
++    if (this.shared.tj === 1 && this.settings.autorestart) { this.emit('system:escape', {}); this.pendingRestart='escape'; }
++    else if(!legacy&&this.terminalSince!==null&&this.settings.autorestart&&this.engine.runtime-this.terminalSince>=4)this.pendingRestart='planet';
+     this.modules['156'].update('');
+     // Legacy ranked output reads the full list; a finite bound prevents days-long sessions growing forever.
+     if (this.shared.civilizationRecords.length > 1000) this.shared.civilizationRecords.splice(0, this.shared.civilizationRecords.length - 1000);
+@@ -110,11 +128,12 @@ export class Simulation {
+     if (this.events.length > 100) this.events.shift();
+   }
+   snapshot({ afterEvent = 0, compact = false } = {}) {
+-    const p = this.modules['008'].state(); const s = this.shared;
++    const current = this.modules['008'].state(); const p=current.bodies.length===4?current:this.lastPhysicsState||current; const s = this.shared;
+     return { tick: this.tickCount, revision: this.revision, runtime: this.engine.runtime, generation: this.generation, algorithm: algorithmId(this.settings),
+       seed: this.settings.seed, bodies: p.bodies, com: p.com, G: p.G, temperature: Number(s.tem || 0), year: s.xntime || 0,
+       era: this.era || '', escaped: s.tj === 1, alive: !!s.civilizationAlive, civilization: s.civilizationCount,
+       habitability: plain(this.habitability.result),
++      world: plain(this.world.state),civilizationState:plain(this.civilization.result),logItems:this.settings.civilizationMode==='legacy'?[]:plain(this.civilization.logs),
+       lifespan: s.civilizationAlive ? Math.floor(s.xntime) - s.civilizationStartTime : s.lastCivilizationLifespan,
+       initialBodies: plain(this.initialBodies),
+       log: [...(s.logEntries || [])], records: plain(compact ? [...(s.civilizationRecords || [])].sort((a,b) => b.lifespan-a.lifespan).slice(0,6) : s.civilizationRecords || []), events: plain(this.events.filter(e => e.id > afterEvent)),
+diff --git a/src/style.css b/src/style.css
+index 983ad56..08362f6 100644
+--- a/src/style.css
++++ b/src/style.css
+@@ -5,3 +5,11 @@
+ .habitability-readout{margin-top:22px;width:160px;font-size:9px;letter-spacing:1px;color:#8fa9c2}.habitability-readout>div:not(.habitat-bar){display:flex;justify-content:space-between;align-items:center}.habitability-readout b{font:12px Rajdhani;color:#b4d8e6}.habitat-bar{height:2px;background:#a9d8eb12;margin:6px 0 13px}.habitat-bar i{display:block;height:100%;width:0;background:#89b6ca;transition:width .25s}#health-fill{background:#9ab7a1}#habitability-warning{font-size:8px;letter-spacing:1px;line-height:1.8;color:#6f8ba2;margin:4px 0 0}
+ @media(max-width:600px){.habitability-readout{width:110px;margin-top:14px;font-size:8px}.habitat-bar{margin-bottom:9px}#habitability-warning{font-size:7px}.side-widget{bottom:25%}.era-widget{bottom:21%}}
+ @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
++
++/* Compact central HUD; log size stays constant while opacity ages. */
++.civilization-widget{top:calc(15% + 79px);font-size:11px;line-height:1.35;letter-spacing:.5px}
++#civilization-status{margin-bottom:4px}#civilization-lifespan{font-size:11px;margin-bottom:7px}
++.civilization-widget li{font-size:11px;line-height:1.35;margin-bottom:3px;transition:opacity .4s linear}
++.clock-calendar{margin-top:9px}#hydration{margin-bottom:8px;line-height:1.5;letter-spacing:1px}
++#phenomena{font-size:10px;line-height:1.5;opacity:.6;margin:0 0 16px;min-height:15px}
++@media(max-width:600px){.civilization-widget{top:calc(15% + 66px);max-width:88vw}.civilization-widget li,#civilization-lifespan{font-size:11px}#phenomena{font-size:8px;margin-bottom:10px}}
+diff --git a/src/world-state.js b/src/world-state.js
+new file mode 100644
+index 0000000..55123ff
+--- /dev/null
++++ b/src/world-state.js
+@@ -0,0 +1,66 @@
++const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
++const length=v=>Math.hypot(...v);
++const dot=(a,b)=>a.reduce((s,x,i)=>s+x*b[i],0);
++const sub=(a,b)=>[a.x-b.x,a.y-b.y,a.z-b.z];
++const velocity=(a,b)=>[a.vx-b.vx,a.vy-b.vy,a.vz-b.vz];
++const unit=v=>{const n=Math.max(length(v),1e-12);return v.map(x=>x/n);};
++
++// Differential gravity, normalized by planetary self-gravity. Net pull is not a tide.
++export function largestEigenvalue(matrix){
++  const a=matrix.map(row=>[...row]);
++  for(let k=0;k<12;k++){
++    let p=0,q=1;for(const[i,j]of[[0,2],[1,2]])if(Math.abs(a[i][j])>Math.abs(a[p][q])){p=i;q=j;}
++    if(Math.abs(a[p][q])<1e-12)break;
++    const angle=.5*Math.atan2(2*a[p][q],a[q][q]-a[p][p]),c=Math.cos(angle),s=Math.sin(angle);
++    const pp=a[p][p],qq=a[q][q],pq=a[p][q];
++    a[p][p]=c*c*pp-2*s*c*pq+s*s*qq;a[q][q]=s*s*pp+2*s*c*pq+c*c*qq;a[p][q]=a[q][p]=0;
++    for(let i=0;i<3;i++)if(i!==p&&i!==q){const ip=a[i][p],iq=a[i][q];a[i][p]=a[p][i]=c*ip-s*iq;a[i][q]=a[q][i]=s*ip+c*iq;}
++  }return Math.max(...a.map((r,i)=>r[i]));
++}
++export class WorldState{
++  constructor(){this.reset();}
++  reset(){this.primary=-1;this.candidate=-1;this.stableTime=0;this.unstableTime=0;this.epoch='chaotic';this.integrity=1;this.terminal=null;this.temperature=null;this.lastFlux=null;this.fluxChange=0;this.state=null;}
++  update(bodies,G,equilibrium,settings,runtime,dt=1/60){
++    const planet=bodies[3],radius=Math.max(settings.newproperty20,1e-5);
++    const stars=bodies.slice(0,3).map((body,i)=>{
++      const relative=sub(body,planet),distance=Math.max(length(relative),1e-6),v=velocity(body,planet),direction=unit(relative);
++      const stellarRadius=[settings._13,settings._21,settings._3][i]*(settings.stellarBreathing?1+.08*Math.sin(runtime/120+i*2):1);
++      const angularRadius=Math.asin(clamp(stellarRadius/distance)),radial=dot(v,direction),transverse=Math.sqrt(Math.max(0,dot(v,v)-radial*radial));
++      return{i,mass:body.mass,distance,direction,radial,angularRate:transverse/distance,radius:stellarRadius,angularRadius,force:G*body.mass/(distance*distance),energy:dot(v,v)/2-G*(body.mass+planet.mass)/distance,visibleFraction:1};
++    });
++    for(const back of stars)for(const front of stars)if(front.i!==back.i&&front.mass>0&&front.distance<back.distance){
++      const angle=Math.acos(clamp(dot(front.direction,back.direction),-1,1));if(front.angularRadius>=angle+back.angularRadius)back.visibleFraction=0;
++    }
++    const active=stars.filter(s=>s.mass>0),sorted=[...active].sort((a,b)=>b.force-a.force),main=sorted[0];let perturbation=Infinity,bound=false;
++    if(main){const otherTides=active.filter(s=>s!==main).reduce((n,s)=>n+2*G*s.mass*main.distance/Math.pow(s.distance,3),0);perturbation=otherTides/Math.max(main.force,1e-12);bound=main.energy<0;}
++    const dominance=main?main.force/Math.max(sorted[1]?.force||0,1e-12):0,candidate=!!main&&bound&&dominance>1.5&&perturbation<.35;
++    if(candidate&&this.candidate===main.i)this.stableTime+=dt;else{this.candidate=candidate?main.i:-1;this.stableTime=candidate?dt:0;}
++    if(candidate){this.unstableTime=0;if(this.stableTime>=settings.epochWindow){this.epoch='stable';this.primary=main.i;}}
++    else{this.unstableTime+=dt;if(this.unstableTime>=.5){this.epoch='chaotic';this.primary=-1;}}
++    if(this.epoch==='stable'&&main?.i!==this.primary){this.epoch='chaotic';this.primary=-1;}
++    const tensor=Array.from({length:3},()=>[0,0,0]);
++    for(const star of active){const strength=star.mass/Math.max(planet.mass,1)*Math.pow(radius/star.distance,3);for(let i=0;i<3;i++)for(let j=0;j<3;j++)tensor[i][j]+=strength*(3*star.direction[i]*star.direction[j]-(i===j?1:0));}
++    const tideRatio=Math.max(0,largestEigenvalue(tensor));if(tideRatio>1)this.integrity=clamp(this.integrity-dt*(tideRatio-1)/2);
++    const contact=active.find(s=>s.distance<=s.radius+radius);
++    if(!this.terminal&&contact)this.terminal={kind:'engulfed',zh:`行星被恒星${contact.i+1}吞噬`,en:`Planet engulfed by star ${contact.i+1}`};
++    if(!this.terminal&&this.integrity<=0)this.terminal={kind:'disrupted',zh:'大撕裂：行星结构崩溃',en:'Great Tear: planetary disruption'};
++    const flux=active.reduce((sum,s)=>sum+([settings._111lum_sun,settings._211lum_sun,settings._311lum_sun][s.i]||0)/Math.pow(s.distance,2),0);
++    if(this.lastFlux!==null){const change=Math.abs(flux-this.lastFlux)/Math.max(this.lastFlux,.01)/Math.max(dt,1e-6);this.fluxChange+=(change-this.fluxChange)*(1-Math.exp(-dt));}this.lastFlux=flux;
++    if(this.temperature===null)this.temperature=equilibrium;else this.temperature+=(equilibrium-this.temperature)*(1-Math.exp(-dt/settings.climateInertia));
++    const phenomena=[],add=(kind,zh,en,severity='observation')=>phenomena.push({kind,zh,en,severity});
++    const flying=active.filter(s=>s.distance>settings.newproperty31);
++    if(flying.length)add('flying',`${['','一颗','两颗','三颗'][flying.length]}飞星`,`${flying.length} flying star${flying.length>1?'s':''}`);
++    if(flying.some(s=>s.angularRate<.005&&s.radial<-.01))add('stationary','飞星不动 · 正在接近','Stationary flying star · approaching','warning');
++    const giant=active.filter(s=>s.visibleFraction>0&&s.distance<settings.newproperty30);
++    if(giant.length)add('overhead',giant.length===1?'巨日近掠':giant.length===2?'双日凌空':'三日凌空',giant.length===1?'Giant sun passage':giant.length===2?'Two suns overhead':'Three suns overhead',this.temperature>40?'warning':'observation');
++    const aligned=active.length===3&&active.every((s,i)=>active.slice(i+1).every(t=>dot(s.direction,t.direction)>Math.cos(5*Math.PI/180)));
++    if(aligned)add('alignment','三日连珠','Three-sun alignment',tideRatio>.5?'warning':'observation');
++    if(tideRatio>.5)add('tidal','潮汐应力上升','Rising tidal stress','warning');
++    if(this.terminal)add(this.terminal.kind,this.terminal.zh,this.terminal.en,'fatal');
++    const condition=this.terminal?.kind||(tideRatio>1?'tidal-stress':this.temperature>1000?'molten':this.integrity<.98?'damaged':this.temperature>settings.newproperty46?'hot':this.temperature<settings.newproperty45?'frozen':'temperate');
++    this.state={epoch:{kind:this.epoch,primary:this.primary,stableFor:this.stableTime,bound,dominance,perturbation},phenomena,
++      planet:{condition,intact:!this.terminal,terminal:this.terminal,integrity:this.integrity,tideRatio,temperature:this.temperature,equilibriumTemperature:equilibrium},
++      stars:stars.map(s=>({index:s.i,distance:s.distance,angularRate:s.angularRate,radialSpeed:s.radial,visibleFraction:s.visibleFraction,radius:s.radius,flying:s.distance>settings.newproperty31})),
++      fluxChange:this.fluxChange,safeToWake:!this.terminal&&tideRatio<.5&&(this.epoch==='stable'||this.fluxChange<.15)};return this.state;
++  }
++}
+diff --git a/tests/habitability.test.js b/tests/habitability.test.js
+index cb06e16..81ed870 100644
+--- a/tests/habitability.test.js
++++ b/tests/habitability.test.js
+@@ -1,87 +1,65 @@
+ import test from 'node:test';
+ import assert from 'node:assert/strict';
+ import { Habitability } from '../src/habitability.js';
++import { WorldState, largestEigenvalue } from '../src/world-state.js';
++import { CivilizationState } from '../src/civilization-state.js';
+ import { Simulation } from '../src/simulation.js';
+-import { normalizeSettings, algorithmId } from '../src/settings.js';
+-
+-const safe = () => ({ tem:20,d14:1,d24:1,d34:1,d12:1,d13:1,d23:1,xntime:0,ktime:1,rst:0 });
+-function climateTick(s, temperature, extra = {}) {
+-  Object.assign(s.shared,safe(),{tem:temperature},extra);
+-  s.habitability.update(s.shared,s.settings);
+-  s.modules['042'].update('');
++import { normalizeSettings, migrateSettings } from '../src/settings.js';
++const settings=normalizeSettings({stellarBreathing:false,autorestart:false});
++const body=(x,y=0,mass=1000,vx=0,vy=0)=>({x,y,z:0,mass,vx,vy,vz:0});
++const bodies=()=>[body(1,0,1e6,0,1),body(20,1,1e3),body(-20,2,1e3),body(0,0,5000)];
++function fixture(){
++ const shared={civilizationAlive:false,civilizationCount:1,civilizationStartTime:0,lastCivilizationLifespan:0,civilizationRecords:[]};
++ const civ=new CivilizationState(shared),hab=new Habitability();let runtime=0;
++ return {shared,civ,hab,tick(temperature=20,options={}){runtime+=1/60;const world={epoch:{kind:options.epoch||'stable'},planet:{temperature,terminal:options.terminal||null},phenomena:[],safeToWake:options.safe!==false};const h=hab.update({tem:temperature},settings,1/60,{phase:civ.phase,terminal:world.planet.terminal});return civ.update(world,h,settings,runtime,runtime);},run(n,t=20,o={}){for(let i=0;i<n;i++)this.tick(t,o);}};
+ }
+ 
+-test('stable climate supports continuous civilization despite distant stellar encounters', () => {
+-  const s = new Simulation();
+-  for(let i=0;i<6000;i++) climateTick(s,20,{d12:.1,xntime:i/60});
+-  assert.equal(s.shared.civilizationAlive,true); assert.equal(s.shared.civilizationCount,1);
+-  assert.equal(s.shared.civilizationRecords.length,0); assert.equal(s.habitability.health,1);
+-  assert.ok(s.habitability.result.score>.99);
++test('only -20 through 40 C supports activity, independently of era',()=>{
++ for(const [temperature,expected]of[[-21,false],[-20,true],[40,true],[41,false]])assert.equal(new Habitability().update({tem:temperature},settings).canGrow,expected);
++ const f=fixture();f.run(240,20,{epoch:'chaotic'});assert.equal(f.civ.phase,'active');assert.equal(f.shared.civilizationCount,1);
+ });
+-
+-test('the same distant encounter still destroys civilization in legacy mode', () => {
+-  const s = new Simulation({civilizationMode:'legacy'});
+-  for(let i=0;i<60;i++)climateTick(s,20);
+-  climateTick(s,20,{d12:.1}); assert.equal(s.shared.civilizationAlive,false);
+-  assert.match(s.shared.civilizationRecords.at(-1).destructionEvent,/恒星1与恒星2/);
++test('dehydration preserves the same civilization; safe rehydration resumes it',()=>{
++ const f=fixture();f.run(240);assert.equal(f.civ.phase,'active');f.run(180,100);assert.equal(f.civ.phase,'dormant');assert.equal(f.shared.civilizationAlive,true);
++ f.run(360);assert.equal(f.civ.phase,'active');assert.equal(f.shared.civilizationCount,1);assert.equal(f.shared.civilizationRecords.length,0);assert.ok(f.civ.logs.some(l=>l.kind==='wake'));
+ });
+-
+-test('brief climate spikes reduce resilience without instant extinction and stable climate recovers', () => {
+-  const s = new Simulation(); for(let i=0;i<60;i++)climateTick(s,20);
+-  for(let i=0;i<30;i++)climateTick(s,300);
+-  assert.equal(s.shared.civilizationAlive,true); const stressed=s.habitability.health;assert.ok(stressed<1&&stressed>0);
+-  for(let i=0;i<600;i++)climateTick(s,20);
+-  assert.equal(s.shared.civilizationAlive,true);assert.ok(s.habitability.health>stressed);assert.equal(s.shared.civilizationRecords.length,0);
++test('unsafe fluctuating climate interrupts rehydration instead of creating new civilizations',()=>{
++ const f=fixture();f.run(240);f.run(180,80);f.run(230);assert.equal(f.civ.phase,'rehydrating');f.tick(20,{safe:false});assert.equal(f.civ.phase,'dormant');assert.equal(f.shared.civilizationCount,1);
+ });
+-
+-test('sustained extreme heat and cold still destroy civilization', () => {
+-  for(const temperature of [-250,1000]) {
+-    const s=new Simulation();for(let i=0;i<60;i++)climateTick(s,20);
+-    for(let i=0;i<600;i++)climateTick(s,temperature);
+-    assert.equal(s.shared.civilizationAlive,false);assert.equal(s.shared.civilizationRecords.length,1);
+-    assert.match(s.shared.civilizationRecords[0].destructionEvent,temperature<0?/低温/:/高温/);
+-  }
++test('dry storage is finite and prolonged extreme heat or cold destroys it once',()=>{
++ for(const temp of[-250,1000]){const f=fixture();f.run(240);f.run(1800,temp);assert.equal(f.shared.civilizationAlive,false);assert.equal(f.shared.civilizationRecords.length,1);assert.equal(f.civ.phase,'destroyed');}
+ });
+-
+-test('planetary collision and tidal destruction stay immediate, and hazards block rebirth loops', () => {
+-  for(const [distance,cause]of [[.1,/大撕裂/],[.18,/相撞/]]){
+-    const s=new Simulation({brfontcoloraaaaaarochelimitt:.15});for(let i=0;i<60;i++)climateTick(s,20);
+-    for(let i=0;i<200;i++)climateTick(s,20,{d14:distance});
+-    assert.equal(s.shared.civilizationAlive,false);assert.equal(s.shared.civilizationRecords.length,1);
+-    assert.match(s.shared.civilizationRecords[0].destructionEvent,cause);
+-  }
++test('destroyed planet permanently blocks local rebirth even with comfortable temperature',()=>{
++ const f=fixture();f.run(240);const terminal={kind:'disrupted',zh:'大撕裂',en:'Great Tear'};f.run(2400,20,{terminal});assert.equal(f.shared.civilizationAlive,false);assert.equal(f.shared.civilizationRecords.length,1);assert.equal(f.civ.phase,'destroyed');
+ });
+-
+-test('edited stable thresholds remain consistent with climate habitability', () => {
+-  const s=new Simulation({newproperty43:-10,newproperty44:100,newproperty45:-55,newproperty46:70});
+-  for(let i=0;i<1200;i++)climateTick(s,-50);
+-  assert.equal(s.habitability.result.stable,true);assert.equal(s.shared.civilizationAlive,true);assert.equal(s.habitability.health,1);
++test('orbital stable era can be frozen; distant flying stars do not require cold weather',()=>{
++ const w=new WorldState();let state;for(let i=0;i<180;i++)state=w.update(bodies(),1e-6,-150,settings,i/60);
++ assert.equal(state.epoch.kind,'stable');assert.equal(state.planet.condition,'frozen');assert.ok(state.phenomena.some(p=>p.kind==='flying'));
++ const warm=new WorldState().update(bodies(),1e-6,20,settings,0);assert.ok(warm.phenomena.some(p=>p.kind==='flying'));assert.equal(warm.epoch.kind,'chaotic');assert.equal(warm.planet.condition,'temperate');
+ });
+-
+-test('climate exposure depends on elapsed simulation time, not integration sampling rate', () => {
+-  const config=normalizeSettings();const a=new Habitability(),b=new Habitability();
+-  for(let i=0;i<60;i++)a.update({...safe(),tem:300},config,1/60);
+-  for(let i=0;i<120;i++)b.update({...safe(),tem:300},config,1/120);
+-  assert.ok(Math.abs(a.health-b.health)<1e-12);
++test('stationary flying star requires a closing radial velocity, not zero camera motion',()=>{
++ const b=bodies();b[1]=body(20,0,1000,-1);let s=new WorldState().update(b,1e-6,20,settings,0);assert.ok(s.phenomena.some(p=>p.kind==='stationary'));
++ b[1].vx=1;s=new WorldState().update(b,1e-6,20,settings,0);assert.ok(!s.phenomena.some(p=>p.kind==='stationary'));
+ });
+-
+-test('tail visibility and color changes never reset the orbit', () => {
+-  const a=new Simulation(),b=new Simulation();for(let i=0;i<120;i++){a.tick();b.tick();}
+-  a.configure({newproperty14:false,brfontcoloraaaaaatrail1color:'1 0 0',trailsLength:120});
+-  for(let i=0;i<120;i++){a.tick();b.tick();}
+-  assert.deepEqual(a.snapshot().bodies,b.snapshot().bodies);assert.equal(a.revision,b.revision);
++test('alignment requires three stars on the same ray; opposite directions do not count',()=>{
++ const b=[body(2),body(3),body(4),body(0,0,5000)];let s=new WorldState().update(b,1e-6,20,settings,0);assert.ok(s.phenomena.some(p=>p.kind==='alignment'));assert.equal(s.planet.terminal,null);assert.equal(s.stars[1].visibleFraction,0);
++ b[2].x=-4;s=new WorldState().update(b,1e-6,20,settings,0);assert.ok(!s.phenomena.some(p=>p.kind==='alignment'));
+ });
+-
+-test('balanced simulation reduces stable-era extinction on the reported default Seed', () => {
+-  const counts=[];
+-  for(const civilizationMode of ['legacy','balanced']){
+-    const s=new Simulation({seed:'TRISOLARIS',civilizationMode});let deaths=0;
+-    for(let i=0;i<18000;i++){const before=s.shared.civilizationRecords.length;s.tick();if(s.era==='恒纪元')deaths+=s.shared.civilizationRecords.length-before;}
+-    counts.push(deaths);
+-  }
+-  assert.ok(counts[0]>20); assert.ok(counts[1]<counts[0]*.2,JSON.stringify(counts));
++test('differential gravity tensor is rotation invariant and combines all stellar tides',()=>{
++ assert.equal(largestEigenvalue([[2,0,0],[0,-1,0],[0,0,-1]]),2);assert.ok(Math.abs(largestEigenvalue([[.5,1.5,0],[1.5,.5,0],[0,0,-1]])-2)<1e-12);
++ const w=new WorldState(),b=[body(.2,0,1e7),body(10,0,0),body(-10,0,0),body(0,0,5000)];
++ const s=w.update(b,1e-6,20,{...settings,newproperty20:.02},0);assert.ok(Math.abs(s.planet.tideRatio-4)<1e-10);assert.ok(s.planet.integrity<1);
++ const integrity=s.planet.integrity;b[0].x=10;assert.equal(w.update(b,1e-6,20,settings,1).planet.integrity,integrity);
+ });
+-
+-test('seed identifiers distinguish optimized and legacy civilization policies', () => {
+-  assert.notEqual(algorithmId(normalizeSettings()),algorithmId(normalizeSettings({civilizationMode:'legacy'})));
++test('stellar contact is irreversible, and thermal inertia softens instantaneous radiative spikes',()=>{
++ const w=new WorldState(),b=bodies();w.update(b,1e-6,20,settings,0);let s=w.update(b,1e-6,1000,settings,1/60);assert.ok(s.planet.temperature>20&&s.planet.temperature<40);
++ b[0].x=.001;s=w.update(b,1e-6,20,settings,1);assert.equal(s.planet.terminal.kind,'engulfed');b[0].x=100;assert.equal(w.update(b,1e-6,20,settings,2).planet.terminal.kind,'engulfed');
++});
++test('climate damage depends on elapsed time instead of sampling frequency',()=>{
++ const a=new Habitability(),b=new Habitability();for(let i=0;i<60;i++)a.update({tem:300},settings,1/60);for(let i=0;i<120;i++)b.update({tem:300},settings,1/120);assert.ok(Math.abs(a.health-b.health)<1e-12);
++});
++test('tail visibility and color never reset physical trajectories',()=>{
++ const a=new Simulation(),b=new Simulation();for(let i=0;i<120;i++){a.tick();b.tick();}a.configure({newproperty14:false,brfontcoloraaaaaatrail1color:'1 0 0',trailsLength:120});for(let i=0;i<120;i++){a.tick();b.tick();}assert.deepEqual(a.snapshot().bodies,b.snapshot().bodies);
++});
++test('previous settings migrate the requested slow rotation, activity bounds and clarity',()=>{
++ const migrated=migrateSettings({newproperty51:3,newproperty45:-55,newproperty46:70},2);assert.equal(migrated.newproperty51,.35);assert.equal(migrated.newproperty45,-20);assert.equal(migrated.newproperty46,40);assert.equal(migrated.newproperty68,0);assert.equal(migrateSettings({newproperty51:.1},2).newproperty51,.1);
+ });
+diff --git a/tests/simulation.test.js b/tests/simulation.test.js
+index 77bba07..f6dd69b 100644
+--- a/tests/simulation.test.js
++++ b/tests/simulation.test.js
+@@ -18,7 +18,7 @@ test('183 original controls retain definitions, with the requested trails enable
+   const controls = Object.entries(propertySchema).filter(([, p]) => p.type && p.type !== 'group');
+   assert.equal(controls.length, 183);
+   const config = normalizeSettings();
+-  for (const [key, def] of controls) assert.deepEqual(config[key], key === 'newproperty14' ? true : def.value, key);
++  for (const [key, def] of controls) assert.deepEqual(config[key], ({newproperty14:true,newproperty45:-20,newproperty46:40,newproperty51:.35,newproperty3:0,newproperty68:0})[key] ?? def.value, key);
+   const sim = new Simulation();
+   assert.equal(sim.modules['008'].scriptProperties.fourthMass, 5000);
+   assert.equal(sim.modules['008'].scriptProperties.constraint_M, 15000000);
+@@ -98,7 +98,7 @@ test('legacy mode preserves original birth, thermal death and Roche priority', (
+ });
+ 
+ test('manual restart records one death and does not secretly reinitialize 120 ticks later', () => {
+-  const s=new Simulation({seed:'TRISOLARIS'});run(s,60);assert.equal(s.shared.civilizationAlive,true);
++  const s=new Simulation({seed:'TRISOLARIS',civilizationMode:'legacy'});run(s,60);assert.equal(s.shared.civilizationAlive,true);
+   s.restart();s.tick();const initial=structuredClone(s.initialBodies);run(s,140);
+   assert.deepEqual(s.initialBodies,initial);assert.equal(s.generation,2);
+   const event=s.events.find(e=>e.type==='civilization:death');assert.ok(event);assert.equal(event.detail.initialBodies.length,4);
+@@ -121,3 +121,18 @@ test('settings clamp malformed numeric values and reject invalid combo/color dat
+   const s=normalizeSettings({timespeed:Infinity,newproperty53:-100,newproperty17:'nope',datacolor:'bad bad bad',seed:99});
+   assert.equal(s.timespeed,1);assert.equal(s.newproperty53,propertySchema.newproperty53.min);assert.equal(s.newproperty17,'4');assert.equal(s.datacolor,propertySchema.datacolor.value);assert.equal(s.seed,'TRISOLARIS');
+ });
++
++// A terminal world remains visible while awaiting the explicit universe restart.
++test('planetary loss has one archive entry, no rebirth and a complete four-body snapshot through restart',()=>{
++  const s=new Simulation({autorestart:false});s.tick();
++  s.shared.civilizationAlive=true;s.shared.civilizationStartTime=0;s.civilization.reset();
++  s.world.terminal={kind:'disrupted',zh:'大撕裂',en:'Great Tear'};
++  run(s,360);assert.equal(s.snapshot().alive,false);assert.equal(s.shared.civilizationRecords.length,1);assert.equal(s.snapshot().world.planet.terminal.kind,'disrupted');assert.equal(s.generation,1);
++  s.restart();assert.equal(s.snapshot().bodies.length,4);s.tick();assert.equal(s.snapshot().world.planet.terminal,null);assert.equal(s.generation,2);
++});
++
++test('automatic planetary restart publishes a complete new generation on the next tick',()=>{
++  const s=new Simulation({autorestart:true});s.tick();s.world.terminal={kind:'disrupted',zh:'大撕裂',en:'Great Tear'};
++  let previous=s.snapshot();for(let i=0;i<250;i++){s.tick();const state=s.snapshot();assert.equal(state.bodies.length,4);if(state.generation!==previous.generation)assert.equal(state.world.planet.terminal,null);previous=state;}
++  assert.equal(s.generation,2);
++});
+diff --git a/tools/browser-smoke.mjs b/tools/browser-smoke.mjs
+index 38347e0..368f96c 100644
+--- a/tools/browser-smoke.mjs
++++ b/tools/browser-smoke.mjs
+@@ -8,13 +8,13 @@ const context = await browser.newContext({ viewport: { width: 1280, height: 800
+ const page = await context.newPage();
+ page.on('pageerror', e => errors.push(e.message)); page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
+ await page.addInitScript(() => {
+-  if (!localStorage.getItem('three-body.settings.v2')) localStorage.setItem('three-body.settings.v2', JSON.stringify({ newproperty63: false, newproperty64: false, pixelRatio: .5, newproperty2: false }));
++  if (!localStorage.getItem('three-body.settings.v3')) localStorage.setItem('three-body.settings.v3', JSON.stringify({ newproperty63: false, newproperty64: false, pixelRatio: .5, newproperty2: false }));
+   window.wallpaperRegisterAudioListener = callback => { window.__audioCallback = callback; };
+ });
+ try {
+   await page.goto('http://localhost:4173', { waitUntil: 'networkidle' });
+   await page.waitForFunction(() => window.__threeBodyDiagnostics?.().ready, { timeout: 30000 });
+-  assert.equal(await page.evaluate(() => window.__threeBodyDiagnostics().controls), 192); checks.push('183 original + 9 extension controls and worker ready');
++  assert.equal(await page.evaluate(() => window.__threeBodyDiagnostics().controls), 197); checks.push('183 original + 14 extension controls and worker ready');
+   await page.waitForFunction(() => window.__threeBodyDiagnostics().scene.trailSamples.every(n=>n>3));
+   assert.equal(await page.evaluate(() => window.__threeBodyDiagnostics().scene.trailsVisible),true); checks.push('fading tails are enabled and populated for all four bodies');
+   assert.equal(await page.evaluate(() => window.__threeBodyDiagnostics().scene.bodyShapes.every(s=>s==='SphereGeometry')),true); checks.push('all bodies use round sphere geometry and circular glow');
+@@ -39,7 +39,7 @@ try {
+   await page.locator('#restart-button').click(); await page.waitForFunction(generation => window.__threeBodyState.generation === generation + 1, gen); checks.push('manual restart generates exactly one next universe');
+   await page.locator('#settings-close').click(); await page.waitForTimeout(500); assert.equal(await page.locator('#settings-panel').getAttribute('aria-hidden'), 'true'); checks.push('closing settings restores uncluttered wallpaper');
+   await page.reload({ waitUntil: 'networkidle' }); await page.waitForFunction(() => window.__threeBodyDiagnostics?.().ready);
+-  assert.equal(await page.evaluate(() => JSON.parse(localStorage.getItem('three-body.settings.v2')).timespeed), 1.2); checks.push('settings survive reload');
++  assert.equal(await page.evaluate(() => JSON.parse(localStorage.getItem('three-body.settings.v3')).timespeed), 1.2); checks.push('settings survive reload');
+   await page.evaluate(() => window.threeBody.applySettings({newproperty16:false,newproperty61:1}));
+   const oldSky=await page.evaluate(()=>window.__threeBodyDiagnostics().scene.skyRotation);
+   await page.mouse.move(1000,600);await page.waitForTimeout(700);
+diff --git a/tools/build.mjs b/tools/build.mjs
+index fba6398..6bf1f66 100644
+--- a/tools/build.mjs
++++ b/tools/build.mjs
+@@ -1,4 +1,5 @@
+ import { build } from 'esbuild';
++import { defaults } from '../src/settings.js';
+ import { mkdir, rm, cp, readFile, writeFile } from 'node:fs/promises';
+ import path from 'node:path';
+ import { fileURLToPath } from 'node:url';
+@@ -15,7 +16,8 @@ const original = JSON.parse(await readFile(path.join(root, 'assets/original-proj
+ const properties = structuredClone(original.general.properties);
+ // Scene texture pickers are represented by Web wallpaper file pickers, retaining the original key.
+ properties.custombg = { ...properties.custombg, type: 'file', value: '' };
+-properties.newproperty14.value = true;
++for(const [key,value] of Object.entries(defaults))if(properties[key])properties[key].value=value;
++properties.newproperty45.text='常态活动低温边界 °C';properties.newproperty46.text='常态活动高温边界 °C';
+ const project = { title: '三体实时演算 · Web 重建', type: 'web', file: 'index.html', description: '基于用户提供的 SYKM 原版场景移植。Three.js + Worker，原版设置兼容。', version: 0, contentrating: 'Everyone', general: { ...original.general, supportsaudioprocessing: true, properties } };
+ await writeFile(path.join(dist, 'project.json'), JSON.stringify(project, null, 2));
+ await writeFile(path.join(dist, 'LICENSE-NOTICE.txt'), 'Original Wallpaper Engine scene: SYKM, workshop 3509243656. Music: Melodysheep - Ether. Original assets retained for the supplied authorized non-commercial use. See source docs/SOURCE-AUDIT.md and assets/original/manifest.json.\nThree.js: MIT.\n');
+diff --git a/tools/state-ui-8k-check.mjs b/tools/state-ui-8k-check.mjs
+new file mode 100644
+index 0000000..38eb854
+--- /dev/null
++++ b/tools/state-ui-8k-check.mjs
+@@ -0,0 +1,35 @@
++import { chromium } from 'playwright-core';
++import assert from 'node:assert/strict';
++import { mkdir,writeFile } from 'node:fs/promises';
++const browser=await chromium.launch({executablePath:'/usr/bin/chromium',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
++const page=await browser.newPage({viewport:{width:1280,height:720}}),checks=[],errors=[];
++page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
++await page.addInitScript(()=>{localStorage.setItem('three-body.settings.v3',JSON.stringify({newproperty63:false,newproperty64:false,newproperty2:false,pixelRatio:.5,dust:false,compass:true,newproperty61:'0'}));window.__wallpaperFPS=15;});
++const diag=()=>page.evaluate(()=>window.__threeBodyDiagnostics());
++try{
++ await page.goto('http://localhost:4173',{waitUntil:'networkidle'});await page.waitForFunction(()=>window.__threeBodyDiagnostics?.().ready);
++ assert.equal(await page.locator('.signature,.coordinates,#running-caption').count(),0);checks.push('removed upper-left/right text and sentence below YEARS');
++ assert.equal((await diag()).scene.compassVisible,false);await page.mouse.move(300,300);await page.mouse.down();await page.waitForTimeout(200);assert.equal((await diag()).scene.compassVisible,false);
++ await page.mouse.move(480,340,{steps:8});await page.waitForTimeout(200);assert.equal((await diag()).scene.compassVisible,true);
++ await page.mouse.up();await page.waitForTimeout(200);assert.equal((await diag()).scene.compassVisible,false);checks.push('rotation rings hidden at rest/click and visible only during actual drag, hidden during inertia');
++ await page.evaluate(()=>window.threeBody.applySettings({newproperty61:'1'}));await page.mouse.move(600,300);await page.waitForTimeout(300);assert.equal((await diag()).scene.compassVisible,false);checks.push('mouse-follow rotation does not expose rings');
++ assert.equal(await page.locator('#setting-newproperty51').inputValue(),'0.35');assert.equal(await page.locator('#setting-newproperty45').inputValue(),'-20');assert.equal(await page.locator('#setting-newproperty46').inputValue(),'40');checks.push('slow default rotation and -20 to 40 C activity thresholds');
++ const fontSizes=await page.locator('#civilization-log li').evaluateAll(items=>items.map(el=>getComputedStyle(el).fontSize));assert.ok(fontSizes.length>0);assert.equal(new Set(fontSizes).size,1);assert.equal(fontSizes[0],'11px');
++ await page.evaluate(()=>document.querySelector('#pause-button').click());
++ const before=await page.locator('#civilization-log li').first().evaluate(el=>({id:el.dataset.id,opacity:+el.style.opacity}));
++ await page.evaluate(()=>document.querySelector('#pause-button').click());await page.waitForTimeout(900);
++ const after=await page.locator('#civilization-log li').evaluateAll((els,id)=>{const e=els.find(e=>e.dataset.id===id);return e?+e.style.opacity:null;},before.id);
++ assert.ok(after===null||after<before.opacity);checks.push('civilization logs keep 11px type and fade with simulation age');
++ const bounds=await page.locator('#civilization-widget').boundingBox(),clock=await page.locator('#clock-widget').boundingBox();assert.ok(bounds.y>=clock.y+clock.height-2);checks.push('compact civilization block fits below the clock');
++ await page.waitForFunction(()=>Object.values(window.__threeBodyDiagnostics().scene.backgroundSizes).every(v=>v[0]===8192&&v[1]===4096));checks.push('both active background textures loaded at native 8192x4096');
++ await page.evaluate(()=>{window.__wallpaperFPS=2;window.threeBody.applySettings({renderQuality:'8k',newproperty17:'2',newproperty40:'0 0 0',newproperty14:false,newproperty16:false,newproperty61:'2'});});
++ await page.waitForFunction(()=>window.__threeBodyDiagnostics().scene.drawingBuffer[0]===7680&&window.__threeBodyDiagnostics().scene.drawingBuffer[1]===4320,{timeout:30000});
++ const first=(await diag()).scene.renderedFrames;await page.waitForFunction(n=>window.__threeBodyDiagnostics().scene.renderedFrames>n+1,first,{timeout:60000});
++ const eightK=await diag();assert.deepEqual(eightK.scene.canvas,[7680,4320]);assert.deepEqual(eightK.scene.drawingBuffer,[7680,4320]);checks.push('actual WebGL drawing buffer renders multiple frames at 7680x4320');
++ await page.evaluate(()=>window.threeBody.applySettings({newproperty2:true}));const postFirst=(await diag()).scene.renderedFrames;await page.waitForFunction(n=>window.__threeBodyDiagnostics().scene.renderedFrames>n+1,postFirst,{timeout:60000});assert.deepEqual((await diag()).scene.drawingBuffer,[7680,4320]);checks.push('8K render also completes frames with the postprocessing pipeline enabled');
++ await page.evaluate(()=>window.threeBody.applySettings({newproperty2:false}));
++ await page.evaluate(()=>window.threeBody.applySettings({renderQuality:'native',newproperty17:'4',newproperty14:true,newproperty16:true,newproperty61:'0',pixelRatio:1}));await page.waitForTimeout(700);
++ await mkdir('docs/qa',{recursive:true});await page.screenshot({path:'docs/qa/v3-overview.png'});
++ assert.deepEqual(errors,[]);const report={passed:checks.length,checks,errors,eightK,limits:['8K frame buffer verified using software WebGL; this is not a target GPU frame-rate benchmark.','Native Windows Wallpaper Engine host is unavailable in this environment.']};
++ await writeFile('docs/qa/state-ui-8k-report.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));
++}finally{await browser.close();}
+diff --git a/tools/tail-render-check.mjs b/tools/tail-render-check.mjs
+index 48b6944..63086b3 100644
+--- a/tools/tail-render-check.mjs
++++ b/tools/tail-render-check.mjs
+@@ -4,7 +4,7 @@ const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PAT
+   args: ['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader'] });
+ const page = await browser.newPage({ viewport: { width: 1100, height: 720 } });
+ const errors=[]; page.on('pageerror',e=>errors.push(e.message));
+-await page.addInitScript(() => localStorage.setItem('three-body.settings.v2', JSON.stringify({newproperty63:false,newproperty64:false,newproperty14:true,newproperty2:false,pixelRatio:1,newproperty17:'2',newproperty40:'0 0 0',dust:false,compass:false,newproperty16:false,newproperty61:2,timespeed:2.5,seed:'TAIL-CHECK'})));
++await page.addInitScript(() => localStorage.setItem('three-body.settings.v3', JSON.stringify({newproperty63:false,newproperty64:false,newproperty14:true,newproperty2:false,pixelRatio:1,newproperty17:'2',newproperty40:'0 0 0',dust:false,compass:false,newproperty16:false,newproperty61:2,timespeed:2.5,seed:'TAIL-CHECK'})));
+ try {
+   await page.goto('http://localhost:4173',{waitUntil:'networkidle'});
+   await page.waitForFunction(()=>window.__threeBodyDiagnostics?.().ready);

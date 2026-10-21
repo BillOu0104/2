@@ -5,27 +5,30 @@ import eraFactory from './legacy/072.js';
 import temperatureFactory from './legacy/079.js';
 import loadingFactory from './legacy/156.js';
 import { moduleBindings } from './original-data.js';
-import { normalizeSettings, seededRandom, algorithmId } from './settings.js';
+import { normalizeSettings, seededRandom, algorithmId,manualInitialKeys } from './settings.js';
 import { prepareOrbits } from './orbital-initialization.js';
 import { Habitability } from './habitability.js';
 import { RunStatistics } from './run-statistics.js';
 import { WorldState } from './world-state.js';
 import { CivilizationState } from './civilization-state.js';
+import { EscapeState } from './escape-state.js';
+import { OrbitTrace } from './orbit-trace.js';
 
 class Vec3 { constructor(x = 0, y = x, z = x) { this.x = x; this.y = y; this.z = z; } }
 const plain = v => v && typeof v === 'object' ? structuredClone(v) : v;
 
 // Backend independent of DOM, WebGL and transport. The Worker and Node use the same class.
 export class Simulation {
-  constructor(settings = {}, statistics = {}) {
+  constructor(settings = {}, statistics = {}, {trace=false} = {}) {
+    this.traceEnabled=trace;
     this.statistics=new RunStatistics(statistics);
     this.settings = normalizeSettings(settings);
     this.shared = { gjz: 0, rst: 0, cfw: 0, c_down: false, text: '',universeNumber:this.statistics.universeNumber,xntime:this.statistics.totalYears };
     this.engine = { runtime: 0, frametime: 1 / 60, screenResolution: new Vec3(1920, 1080, 0) };
     this.input = { cursorScreenPosition: new Vec3(960, 540, 0) };
     this.generation = this.statistics.universeNumber; this.tickCount = 0; this.revision = 0; this.events = []; this.eventSeq = 0;
-    this.habitability = new Habitability();
-    this.world = new WorldState(); this.terminalSince=null;this.restartSince=null;
+    this.habitability = new Habitability();this.orbitTrace=new OrbitTrace();
+    this.world = new WorldState();this.escape=new EscapeState(); this.terminalSince=null;this.restartSince=null;
     this.setRandom();
     this.modules = {};
     for (const [id, factory] of Object.entries({ '008': physicsFactory, '010': timeFactory, '042': civilizationFactory, '072': eraFactory, '079': temperatureFactory, '156': loadingFactory })) this.modules[id] = this.createModule(id, factory);
@@ -47,14 +50,17 @@ export class Simulation {
     builder.values = {};
     builder.finish = function() { return Object.assign(this.values, overrides); };
     const math = Object.create(Math); math.random = () => self.random();
-    return factory({ shared: this.shared, engine: this.engine, input: this.input, thisScene: { createLayer: data => data }, Vec3, Math: math, createScriptProperties: () => builder, getHabitability: () => null, prepareInitialBodies: (bodies,G,p) => prepareOrbits(bodies,G,p,self.settings,()=>self.random()), onInitialize: bodies => { self.initialBodies = plain(bodies); self.habitability.reset(); self.world.reset(); self.civilization?.reset(); self.terminalSince=null;self.restartSince=null; } });
+    return factory({ shared: this.shared, engine: this.engine, input: this.input, thisScene: { createLayer: data => data }, Vec3, Math: math, createScriptProperties: () => builder, getHabitability: () => null, getPhysicsSettings:()=>self.settings, observePhysicalStep:self.traceEnabled?(bodies,time)=>{if(self.settings.newproperty14)self.orbitTrace.observe(bodies,time);}:undefined, prepareManualBodies:bodies=>{self.initializationMetadata=null;if(self.settings.manualInitialBodies)for(let i=0;i<4;i++)Object.assign(bodies[i],self.settings.manualInitialBodies[i]);}, prepareInitialBodies: (bodies,G,p) => {const result=prepareOrbits(bodies,G,p,self.settings,()=>self.random());self.initializationMetadata=result?.metadata??null;return result;}, onInitialize: bodies => { self.initialBodies = plain(bodies);self.orbitTrace.reset(); self.habitability.reset(); self.world.reset();self.escape.reset(); self.civilization?.reset(); self.terminalSince=null;self.restartSince=null;self.observedContacts=new Set(); } });
   }
   configure(patch) {
     const next = normalizeSettings({ ...this.settings, ...patch });
-    const changed = Object.keys(next).filter(k => next[k] !== this.settings[k]);
+    if(next.manualInitialBodies&&manualInitialKeys.some(k=>next[k]!==this.settings[k])&&!('manualInitialBodies' in patch))next.manualInitialBodies=null;
+    const changed = Object.keys(next).filter(k => k==='manualInitialBodies'?JSON.stringify(next[k])!==JSON.stringify(this.settings[k]):next[k]!==this.settings[k]);
     this.settings = next;
+    if(!next.autorestart||(next.newproperty60&&next.civilizationMode!=='legacy'&&this.pendingRestart==='escape'))this.pendingRestart=null;
+    if(changed.includes('newproperty14'))this.orbitTrace.reset();
     if (changed.includes('civilizationMode')) { this.habitability.reset(); this.civilization.reset(); this.shared.suitablePeriodCount = 0; }
-    const resetKeys = new Set(['seed', 'physicsMode', 'newproperty53', 'orbitalInitialization']);
+    const resetKeys = new Set(['seed', 'physicsMode', 'newproperty53', 'orbitalInitialization','gravityModel','encounterAccuracy','manualInitialBodies']);
     const mapped = {};
     for (const [id, module] of Object.entries(this.modules)) {
       const changes = {};
@@ -67,14 +73,17 @@ export class Simulation {
     this.modules['008'].scriptProperties.trailen = false;
     for (const key of ['trailen', 'trailLength', 'trailStartSize', 'trailEndSize', 'color1', 'color2', 'color3', 'color4']) delete mapped[key];
     if (changed.some(k => resetKeys.has(k))) {
+      if(changed.includes('seed'))this.setRandom();
       this.modules['008'] = this.createModule('008', physicsFactory); this.modules['008'].init(); this.revision++;
       if (changed.includes('seed')) this.setRandom();
     } else { this.modules['008'].applyUserProperties(mapped); if (Object.keys(mapped).length) this.revision++; }
     return changed;
   }
   restart(reason='restart') {
+    if(reason==='restart'&&this.escape.result.confirmed)reason='escape';
     if(reason==='restart'&&this.world.state?.planet.damaged)reason='planet-damage';
     this.pendingRestart=null;
+    this.escape.reset();
     this.shared.rst = 1;
     // Original log's escape edge is observed before physics consumes rst.
     const before = this.shared.civilizationRecords.length;
@@ -89,8 +98,8 @@ export class Simulation {
   tick() {
     if(this.pendingRestart)this.restart(this.pendingRestart);
     this.engine.runtime = ++this.tickCount / 60;
-    this.modules['008'].update(true);
-    if (this.settings.physicsMode === 'realtime') {
+    try{this.modules['008'].update(true);}catch(error){this.emit('physics:numerical-error',{code:error.code||'physics-error',message:error.message});throw error;}
+    if (this.settings.physicsMode === 'realtime'&&this.settings.gravityModel==='legacy') {
       // Optional corrected wall-clock mode; reference mode preserves the original 60 Hz / 10-step behavior.
       const p = this.modules['008']; const remaining = Math.max(0, 1 / 60 - p.state().step * 10);
       const steps = Math.ceil(remaining / p.state().step);
@@ -107,7 +116,14 @@ export class Simulation {
     this.modules['079'].update('');
     const equilibrium=Number(this.shared.tem);
     const wasDamaged=this.world.state?.planet.damaged;
+    for(const contact of state.contacts??[]){
+      const key=contact.pair.join(':');if(!this.observedContacts)this.observedContacts=new Set();if(this.observedContacts.has(key))continue;this.observedContacts.add(key);
+      this.emit('physics:contact',plain(contact));
+      if(contact.pair.includes(3)&&!this.world.terminal){const star=contact.pair.find(i=>i!==3);this.world.terminal={kind:'engulfed',zh:`行星被恒星${star+1}吞噬`,en:`Planet engulfed by star ${star+1}`};}
+      else if(!contact.pair.includes(3))this.emit('system:stellar-contact',{...plain(contact),modelValid:false});
+    }
     const world=this.world.update(state.bodies,state.G,equilibrium,this.settings,this.engine.runtime,1/60,Math.max(0,this.shared.xntime-previousYear));
+    const escape=this.escape.update(state.bodies,state.G,this.settings,Math.max(0,this.shared.xntime-previousYear));
     const legacy=this.settings.civilizationMode==='legacy';
     if(!legacy)this.shared.tem=world.planet.temperature;
     this.habitability.update(this.shared,this.settings,1/60,{alive:!!this.shared.civilizationAlive,number:this.shared.civilizationCount,developmentYears:this.civilization.developmentYears,phase:this.civilization.phase,terminal:!legacy&&world.planet.terminal,damaged:!legacy&&!world.planet.canSupportLife,integrity:world.planet.integrity,tideRatio:legacy?0:world.planet.stressRatio,hazard:!legacy&&world.planet.stressRatio>1?'tidal':null});
@@ -134,6 +150,10 @@ export class Simulation {
     if(!legacy&&world.planet.restartRequired&&this.restartSince===null)this.restartSince=this.engine.runtime;
     if (legacy&&this.shared.tj === 1 && this.settings.autorestart) { this.emit('system:escape', {}); this.pendingRestart='escape'; }
     else if(!legacy&&world.planet.terminal&&this.restartSince!==null&&this.settings.autorestart&&this.engine.runtime-this.restartSince>=4)this.pendingRestart='planet';
+    else if(!legacy&&!world.planet.terminal&&escape.confirmed){
+      if(!this.escape.notified){this.escape.notified=true;this.emit('system:escape',plain(escape));}
+      if(this.settings.autorestart)this.pendingRestart='escape';
+    }
     this.modules['156'].update('');
     // Legacy ranked output reads the full list; a finite bound prevents days-long sessions growing forever.
     if (this.shared.civilizationRecords.length > 1000) this.shared.civilizationRecords.splice(0, this.shared.civilizationRecords.length - 1000);
@@ -152,7 +172,8 @@ export class Simulation {
       habitability: plain(this.habitability.result),statistics:plain(this.statistics.snapshot()),statisticsCheckpoint:plain(this.statistics.checkpoint()),
       world: plain(this.world.state),civilizationState:plain(this.civilization.result),logItems:this.settings.civilizationMode==='legacy'?[]:plain(this.civilization.logs),
       lifespan: s.civilizationAlive ? Math.floor(s.xntime) - s.civilizationStartTime : s.lastCivilizationLifespan,
-      initialBodies: plain(this.initialBodies),
+      physics:plain(p.diagnostics),initialization:plain(this.initializationMetadata),initialBodies: plain(this.initialBodies),
+      escapeStatus:plain(this.escape.result),
       log: [...(s.logEntries || [])], records: plain(compact ? [...(s.civilizationRecords || [])].sort((a,b) => b.lifespan-a.lifespan).slice(0,6) : s.civilizationRecords || []), events: plain(this.events.filter(e => e.id > afterEvent)),
       distances: [s.d14, s.d24, s.d34], text: Array.from({ length: 14 }, (_, i) => s[`txt${i + 1}`] || ''), loading: s.num || 0 };
   }

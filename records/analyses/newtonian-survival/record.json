@@ -1,0 +1,721 @@
+{
+  "format": 1,
+  "id": "newtonian-survival",
+  "path": "analyses/newtonian-survival",
+  "kind": "analysis",
+  "version": null,
+  "title": "无牢笼牛顿三星长期存活研究",
+  "summary": "完整保存研究分支的预注册、源码审计、阶段研究、消融、几何/混沌分析、数值验证、最终报告及原始实验数据。研究队列与v0.5.2实施后的新队列分开；没有把稳定8字轨道当作默认混沌方案。脚本与数据从原研究提交原样导出，复现实验应检出该提交根目录运行。",
+  "source_commit": "c1980201d11c7d0968d9039bfca4ad91383b27b0",
+  "previous_commit": "c7a53a01def5f9d60389ee20ec0f8bac5210ed69",
+  "source_repository": "https://github.com/BillOu0104/2",
+  "source_subject": "research: deliver final report, complete datasets and reproducibility audit",
+  "source_date": "2026-10-20T14:47:31Z",
+  "archived_at": "2026-10-21T10:08:37.119459+00:00",
+  "runtime_fingerprint": null,
+  "deleted_paths": [],
+  "files": [
+    {
+      "source_path": "FINAL_REPORT.md",
+      "archive_path": "snapshot/FINAL_REPORT.md",
+      "sha256": "463245cc30c29adf2fc3be465f749b1176d604ad25fd7c3a9a9d9ea8e4032d49",
+      "bytes": 18972
+    },
+    {
+      "source_path": "STATUS.md",
+      "archive_path": "snapshot/STATUS.md",
+      "sha256": "ec0ba8d8104f63cbdac78e008759f8724d360d25a6c2fa6061914816f1eafb40",
+      "bytes": 3327
+    },
+    {
+      "source_path": "docs/research/ABLATION.md",
+      "archive_path": "snapshot/docs/research/ABLATION.md",
+      "sha256": "0f03e68c4fedd919e9c0ffe94cd6b3469eb2d81af63610c6b156f263eeab996d",
+      "bytes": 1015
+    },
+    {
+      "source_path": "docs/research/GEOMETRY.md",
+      "archive_path": "snapshot/docs/research/GEOMETRY.md",
+      "sha256": "b5eb2491b891b952d5763e9fc36dbe486dcd7e361f0c3582d2263e9f91ef85c1",
+      "bytes": 1484
+    },
+    {
+      "source_path": "docs/research/GEOMETRY_PLAN.md",
+      "archive_path": "snapshot/docs/research/GEOMETRY_PLAN.md",
+      "sha256": "4521a626fd3e710ff327d0ace6662107aeb4558f0718644c9668b81ba7d335e6",
+      "bytes": 1541
+    },
+    {
+      "source_path": "docs/research/LOG.md",
+      "archive_path": "snapshot/docs/research/LOG.md",
+      "sha256": "188eca5883630d712d3294098a3df165cd45afeb863f067ed4ffd07dc2dfea6c",
+      "bytes": 3039
+    },
+    {
+      "source_path": "docs/research/NUMERICS.md",
+      "archive_path": "snapshot/docs/research/NUMERICS.md",
+      "sha256": "0fcf560a2197ad762af3bc8490fb02ba3042690992997d0239290da2e7aa89c4",
+      "bytes": 2045
+    },
+    {
+      "source_path": "docs/research/NUMERICS_PLAN.md",
+      "archive_path": "snapshot/docs/research/NUMERICS_PLAN.md",
+      "sha256": "9f1f765d810c46c97b9f60107cfd50e1ed126e054f84a43a10baebf29bddf5bd",
+      "bytes": 1268
+    },
+    {
+      "source_path": "docs/research/PHASE1.md",
+      "archive_path": "snapshot/docs/research/PHASE1.md",
+      "sha256": "c11eb87e33fc522a1d4492ba2edf2ee34f3c64c3b08ce86fdb4799346695568f",
+      "bytes": 2157
+    },
+    {
+      "source_path": "docs/research/PHASE2.md",
+      "archive_path": "snapshot/docs/research/PHASE2.md",
+      "sha256": "d14b189f5612e7fdbea8f6e7b000a998d2f4b028c1051936938c324b28a650ce",
+      "bytes": 2524
+    },
+    {
+      "source_path": "docs/research/PHASE3.md",
+      "archive_path": "snapshot/docs/research/PHASE3.md",
+      "sha256": "76d34eecc881cda1adfc66262e94d4a2d8ff86cdb7226995ccbed5c0526c680a",
+      "bytes": 2266
+    },
+    {
+      "source_path": "docs/research/PLAN.md",
+      "archive_path": "snapshot/docs/research/PLAN.md",
+      "sha256": "74308f79334639608bc70bdf96002599039f683c233e7d4ed748810bd4ac4a3f",
+      "bytes": 2960
+    },
+    {
+      "source_path": "docs/research/README.md",
+      "archive_path": "snapshot/docs/research/README.md",
+      "sha256": "9c5e1ddbd8b2e3fd4666f21c6a447393b65ddec01fbeac263d4e3e922ba68de1",
+      "bytes": 4276
+    },
+    {
+      "source_path": "docs/research/SOURCE_AUDIT.md",
+      "archive_path": "snapshot/docs/research/SOURCE_AUDIT.md",
+      "sha256": "6f69476d33d676eee52d109ac44fff13309ff3947c4a176e4e42109b11c8bbae",
+      "bytes": 3010
+    },
+    {
+      "source_path": "docs/research/ablation.json",
+      "archive_path": "snapshot/docs/research/ablation.json",
+      "sha256": "2dd00bd95bf2464b502221e63ec815d7bd610c1de3f0883fea20b98eae747d4b",
+      "bytes": 790
+    },
+    {
+      "source_path": "docs/research/analyze_holdout.py",
+      "archive_path": "snapshot/docs/research/analyze_holdout.py",
+      "sha256": "44473dc969f211efa5a849b3b5261d7dd6234094a2b728e4bf2409acab9b82bc",
+      "bytes": 3406
+    },
+    {
+      "source_path": "docs/research/audit_results.py",
+      "archive_path": "snapshot/docs/research/audit_results.py",
+      "sha256": "7d643f31f6ddd8e0d03c2c3bb19169671be395fe5404f293f8b922be28534546",
+      "bytes": 3690
+    },
+    {
+      "source_path": "docs/research/candidate-convergence-rest.json",
+      "archive_path": "snapshot/docs/research/candidate-convergence-rest.json",
+      "sha256": "2650831fb535ecbb441ca7a0777b4104c88aa8caff3c27c6b13716852ebffca8",
+      "bytes": 603
+    },
+    {
+      "source_path": "docs/research/candidate-convergence.json",
+      "archive_path": "snapshot/docs/research/candidate-convergence.json",
+      "sha256": "5265511a6091351d34cf19517f521440894d47b14cf3f69d336e79a80d3a2a88",
+      "bytes": 590
+    },
+    {
+      "source_path": "docs/research/chaos.json",
+      "archive_path": "snapshot/docs/research/chaos.json",
+      "sha256": "fb6c45224af6b35018be37f27f8bdb836cd5bcd64acaeddf154821e5f8f035c9",
+      "bytes": 592
+    },
+    {
+      "source_path": "docs/research/chaos.mjs",
+      "archive_path": "snapshot/docs/research/chaos.mjs",
+      "sha256": "1696dc123f73c53817113cae3192d1be6ad8df9babfc8be649bc0597f7eab615",
+      "bytes": 2483
+    },
+    {
+      "source_path": "docs/research/cohort_extend.mjs",
+      "archive_path": "snapshot/docs/research/cohort_extend.mjs",
+      "sha256": "a5beceaaa9e13ce5a07246e00c819338ac3293e54ee4bdf9ef7f64bc2dbc9f04",
+      "bytes": 2813
+    },
+    {
+      "source_path": "docs/research/engine-v2.mjs",
+      "archive_path": "snapshot/docs/research/engine-v2.mjs",
+      "sha256": "65924ec5bf90b49373d15fbc7a42d58ea49cab7793699ebb357b962656817b80",
+      "bytes": 13210
+    },
+    {
+      "source_path": "docs/research/engine-v3.mjs",
+      "archive_path": "snapshot/docs/research/engine-v3.mjs",
+      "sha256": "9f59f3107816c8728fd9927bf1c5a641fc8c222d8d4dfaf508158c225121e0c1",
+      "bytes": 13990
+    },
+    {
+      "source_path": "docs/research/engine-v4.mjs",
+      "archive_path": "snapshot/docs/research/engine-v4.mjs",
+      "sha256": "91dfd436a0edcd70ced0727603f12e721492d84c5c8092a6a5e0a280834ce46b",
+      "bytes": 14006
+    },
+    {
+      "source_path": "docs/research/engine.mjs",
+      "archive_path": "snapshot/docs/research/engine.mjs",
+      "sha256": "6536c36c6ad9ef1042a267582b81699de1537304160dfc53c62765429bd26908",
+      "bytes": 12899
+    },
+    {
+      "source_path": "docs/research/extend.mjs",
+      "archive_path": "snapshot/docs/research/extend.mjs",
+      "sha256": "3b6e12a27a0f0772f6c3fd818badd7bc8078e8de14533f80782cedcc345672a1",
+      "bytes": 2623
+    },
+    {
+      "source_path": "docs/research/figure8-validation.json",
+      "archive_path": "snapshot/docs/research/figure8-validation.json",
+      "sha256": "8b45e458d048dda7f200554323f6078d56c9d7fd8110df40e1f497cedb3995e3",
+      "bytes": 188
+    },
+    {
+      "source_path": "docs/research/figures/geometry-tradeoff.png",
+      "archive_path": "snapshot/docs/research/figures/geometry-tradeoff.png",
+      "sha256": "5de99d871800278b0a31e8d5d89c90ca34f250addd22d37e292a85496c8a57e1",
+      "bytes": 219817
+    },
+    {
+      "source_path": "docs/research/figures/holdout.png",
+      "archive_path": "snapshot/docs/research/figures/holdout.png",
+      "sha256": "5c0d1f0e6de071e5f89b1d2a42622cd6ae94e56b0ef5c6d8324414d78a393f45",
+      "bytes": 290092
+    },
+    {
+      "source_path": "docs/research/figures/long-horizon-and-convergence.png",
+      "archive_path": "snapshot/docs/research/figures/long-horizon-and-convergence.png",
+      "sha256": "f46508097773d08cca3ebf580c8b1a5dce907b821242b717284d5fc9d785b7c4",
+      "bytes": 141882
+    },
+    {
+      "source_path": "docs/research/figures/slingshot-work.png",
+      "archive_path": "snapshot/docs/research/figures/slingshot-work.png",
+      "sha256": "be68e88f70590caa94f77766781afa4a9eae00ecb8e90c5f0560c33ecfa9be7f",
+      "bytes": 104188
+    },
+    {
+      "source_path": "docs/research/fine-extend.json",
+      "archive_path": "snapshot/docs/research/fine-extend.json",
+      "sha256": "0f516f5650c0ffb8ceda7f3cee898495e579b969d1ec96ad14b64abbacc8d99a",
+      "bytes": 512
+    },
+    {
+      "source_path": "docs/research/geometry-confirm.json",
+      "archive_path": "snapshot/docs/research/geometry-confirm.json",
+      "sha256": "e010335645820c98912be9d06d60c130b34fe71ca9e3dde578c4a415f5456488",
+      "bytes": 871
+    },
+    {
+      "source_path": "docs/research/geometry-extend.json",
+      "archive_path": "snapshot/docs/research/geometry-extend.json",
+      "sha256": "c4a620e0f82a5a60e60192bfef37c2832be3e333701f418110aab7bcba022055",
+      "bytes": 767
+    },
+    {
+      "source_path": "docs/research/geometry.json",
+      "archive_path": "snapshot/docs/research/geometry.json",
+      "sha256": "0f613a962b29e34396d389184a854a7179827747486c63c8413c15bceda2ffbb",
+      "bytes": 1395
+    },
+    {
+      "source_path": "docs/research/geometry_shadow.mjs",
+      "archive_path": "snapshot/docs/research/geometry_shadow.mjs",
+      "sha256": "5c12a40d8f3cb5572c60ded5abdbebd34844ea968de466c8cbf5cdcb3466e234",
+      "bytes": 3556
+    },
+    {
+      "source_path": "docs/research/independent-validation.json",
+      "archive_path": "snapshot/docs/research/independent-validation.json",
+      "sha256": "680a6474a001ce3322a4267a6704c3ea94156badc366294a0a7d36ae4eb8fbfb",
+      "bytes": 1067
+    },
+    {
+      "source_path": "docs/research/independent_reference.py",
+      "archive_path": "snapshot/docs/research/independent_reference.py",
+      "sha256": "228e73daf3513fea7e81829a166ab56b3c199010a72f66703e91b1e798d2ab40",
+      "bytes": 2231
+    },
+    {
+      "source_path": "docs/research/metric-parity.json",
+      "archive_path": "snapshot/docs/research/metric-parity.json",
+      "sha256": "99bcbd3ceb43eab8bde9880651d9fbd4b7321ad6e45780d06bf33b6ec6f0e8ab",
+      "bytes": 552
+    },
+    {
+      "source_path": "docs/research/numerics.json",
+      "archive_path": "snapshot/docs/research/numerics.json",
+      "sha256": "1be9b7a63475f84af4729856ce1b2adac686614c83efc5898d5b6517cbb6ee87",
+      "bytes": 1289
+    },
+    {
+      "source_path": "docs/research/phase1.json",
+      "archive_path": "snapshot/docs/research/phase1.json",
+      "sha256": "0174c8a4a2eb93d05617e69a64eac48364192e066930026a2d9a21d12c8ab12e",
+      "bytes": 1830
+    },
+    {
+      "source_path": "docs/research/phase2.json",
+      "archive_path": "snapshot/docs/research/phase2.json",
+      "sha256": "88cee3339cff8bb18d82bf199576201b64d8e33e2da3f25b37996bf7e6011079",
+      "bytes": 2716
+    },
+    {
+      "source_path": "docs/research/phase3.json",
+      "archive_path": "snapshot/docs/research/phase3.json",
+      "sha256": "7a4a09519d9ba9a1dc405579ccf0be8e29aeece7a47797bf3bb9ef7be1a750e6",
+      "bytes": 775
+    },
+    {
+      "source_path": "docs/research/plot_geometry.py",
+      "archive_path": "snapshot/docs/research/plot_geometry.py",
+      "sha256": "a734da93c48808405e994ddb7cf7bc3c02359d3f1a476b983e4d8b18ab217169",
+      "bytes": 2409
+    },
+    {
+      "source_path": "docs/research/plot_results.py",
+      "archive_path": "snapshot/docs/research/plot_results.py",
+      "sha256": "ef96251609cba2c8ebd32d3ba608e1d1978003574738af071b311a3f3b2831fb",
+      "bytes": 4985
+    },
+    {
+      "source_path": "docs/research/repair_long.mjs",
+      "archive_path": "snapshot/docs/research/repair_long.mjs",
+      "sha256": "6eb53b9f6279636cc165050d94f8ed1bbfa760a65d7d5a130862d443bf28911e",
+      "bytes": 1821
+    },
+    {
+      "source_path": "docs/research/results/DATA_AUDIT.json",
+      "archive_path": "snapshot/docs/research/results/DATA_AUDIT.json",
+      "sha256": "22e86df86a16efa3cdd9544558af231bffd42ecf1f3637bce39918c64c267f6f",
+      "bytes": 2853
+    },
+    {
+      "source_path": "docs/research/results/DATA_AUDIT.log",
+      "archive_path": "snapshot/docs/research/results/DATA_AUDIT.log",
+      "sha256": "22e86df86a16efa3cdd9544558af231bffd42ecf1f3637bce39918c64c267f6f",
+      "bytes": 2853
+    },
+    {
+      "source_path": "docs/research/results/ablation.jsonl",
+      "archive_path": "snapshot/docs/research/results/ablation.jsonl",
+      "sha256": "2576b03a225de0e2195c8c7b5fa0d6993d0fc935c56cf16aaa9e98f036ea4f0c",
+      "bytes": 620025
+    },
+    {
+      "source_path": "docs/research/results/ablation.jsonl.manifest.json",
+      "archive_path": "snapshot/docs/research/results/ablation.jsonl.manifest.json",
+      "sha256": "784dd53ef3f01010bdd7ad1ee12214d736dc3f671587495eccc274b0329501b9",
+      "bytes": 1356
+    },
+    {
+      "source_path": "docs/research/results/ablation.summary.json",
+      "archive_path": "snapshot/docs/research/results/ablation.summary.json",
+      "sha256": "d37ae28e7d1537af91eaa7b4a6dd6a98d4a25ab674daddd9003e6cf116c85613",
+      "bytes": 15473
+    },
+    {
+      "source_path": "docs/research/results/candidate-convergence-rest.jsonl",
+      "archive_path": "snapshot/docs/research/results/candidate-convergence-rest.jsonl",
+      "sha256": "63905813b16dba50d180e9a45c36309578b2b163cbab826af194473168b4b0a1",
+      "bytes": 545197
+    },
+    {
+      "source_path": "docs/research/results/candidate-convergence-rest.jsonl.manifest.json",
+      "archive_path": "snapshot/docs/research/results/candidate-convergence-rest.jsonl.manifest.json",
+      "sha256": "ffdb83d8e610d955afea2efd2534143b0d7dbf5e9302c9249ec913aafb9ae23e",
+      "bytes": 974
+    },
+    {
+      "source_path": "docs/research/results/candidate-convergence.jsonl",
+      "archive_path": "snapshot/docs/research/results/candidate-convergence.jsonl",
+      "sha256": "4ce6b6f508ecb263fbf181f2abcc2482bf2224e9398e308f7e2157cd577f38ff",
+      "bytes": 77766
+    },
+    {
+      "source_path": "docs/research/results/candidate-convergence.jsonl.manifest.json",
+      "archive_path": "snapshot/docs/research/results/candidate-convergence.jsonl.manifest.json",
+      "sha256": "985498e42e4262b178adb268f2280b53ff5398cee8a2ce26a6dde475841f89af",
+      "bytes": 961
+    },
+    {
+      "source_path": "docs/research/results/candidate-convergence.summary.json",
+      "archive_path": "snapshot/docs/research/results/candidate-convergence.summary.json",
+      "sha256": "fc165d58fb013f81146f6093b92bf957674874ac5da8e44820022823ac83778f",
+      "bytes": 257
+    },
+    {
+      "source_path": "docs/research/results/candidate-fine-all.jsonl",
+      "archive_path": "snapshot/docs/research/results/candidate-fine-all.jsonl",
+      "sha256": "7493ef8593f3000b0aa1c499055d235e02f51415d0e4e6c1061ecb4f4265a1c0",
+      "bytes": 623115
+    },
+    {
+      "source_path": "docs/research/results/candidate-fine-all.provenance.json",
+      "archive_path": "snapshot/docs/research/results/candidate-fine-all.provenance.json",
+      "sha256": "cb31fcc819c62c3eedf1b3ed6d3712b32f88e51dbb78f5627dfd553106efe411",
+      "bytes": 195
+    },
+    {
+      "source_path": "docs/research/results/candidate-fine-all.summary.json",
+      "archive_path": "snapshot/docs/research/results/candidate-fine-all.summary.json",
+      "sha256": "2b0f9103243f44956e0fc66494b4ca8e7ef58f1532f22e0eb1aa408f92024947",
+      "bytes": 3150
+    },
+    {
+      "source_path": "docs/research/results/candidate-fine-extended-10000.jsonl",
+      "archive_path": "snapshot/docs/research/results/candidate-fine-extended-10000.jsonl",
+      "sha256": "b0a006824008f7ddee511a1f7d3b8ade2ac26eb4a358cac38b6c2c62de8e783f",
+      "bytes": 630880
+    },
+    {
+      "source_path": "docs/research/results/candidate-fine-extended-10000.jsonl.manifest.json",
+      "archive_path": "snapshot/docs/research/results/candidate-fine-extended-10000.jsonl.manifest.json",
+      "sha256": "8cf1fa919dff34c882a8a7445a5d9968bb5856826a525b3c30d47d76a5e8e308",
+      "bytes": 991
+    },
+    {
+      "source_path": "docs/research/results/candidate-fine-extended-10000.summary.json",
+      "archive_path": "snapshot/docs/research/results/candidate-fine-extended-10000.summary.json",
+      "sha256": "13f544403df50816b22b165f13b4952f288f9652954d3fd3988a64d2e50cc15e",
+      "bytes": 3129
+    },
+    {
+      "source_path": "docs/research/results/candidate-fine-extended-3000.jsonl",
+      "archive_path": "snapshot/docs/research/results/candidate-fine-extended-3000.jsonl",
+      "sha256": "e65f994e153108def5f916104bdd83a352e211ac16e59c42a34fa6f0b328e166",
+      "bytes": 631266
+    },
+    {
+      "source_path": "docs/research/results/candidate-fine-extended-3000.jsonl.manifest.json",
+      "archive_path": "snapshot/docs/research/results/candidate-fine-extended-3000.jsonl.manifest.json",
+      "sha256": "78883a847ca4c9526bb7b519658fd75016ebc38625b49af2868f787faf896478",
+      "bytes": 990
+    },
+    {
+      "source_path": "docs/research/results/candidate-fine-extended-3000.summary.json",
+      "archive_path": "snapshot/docs/research/results/candidate-fine-extended-3000.summary.json",
+      "sha256": "b7c35899d4398a67c01f15363f1fc31a073a941ddd57251f852bfeecfc1faef5",
+      "bytes": 3194
+    },
+    {
+      "source_path": "docs/research/results/candidate-full-convergence.summary.json",
+      "archive_path": "snapshot/docs/research/results/candidate-full-convergence.summary.json",
+      "sha256": "8450eee905b6b853ead106a906e3bda12b516f652e0989b9ca2a4eb27a587519",
+      "bytes": 269
+    },
+    {
+      "source_path": "docs/research/results/chaos.jsonl",
+      "archive_path": "snapshot/docs/research/results/chaos.jsonl",
+      "sha256": "ab7f6beb3a7557638a50d0ac9ce75f29ef5be0d4d5e216338a6a4684392183c1",
+      "bytes": 1449277
+    },
+    {
+      "source_path": "docs/research/results/chaos.jsonl.manifest.json",
+      "archive_path": "snapshot/docs/research/results/chaos.jsonl.manifest.json",
+      "sha256": "0b4527b0c0b940f10ec5e95a58686d4ad53d65380fde0694442aba2df75987b5",
+      "bytes": 889
+    },
+    {
+      "source_path": "docs/research/results/chaos.summary.json",
+      "archive_path": "snapshot/docs/research/results/chaos.summary.json",
+      "sha256": "6f67b2d56d5e0bf5956a4d897eeca0edd1e8c79e5844f9107a4a7c303f97f072",
+      "bytes": 510
+    },
+    {
+      "source_path": "docs/research/results/extended-10000-v2.jsonl",
+      "archive_path": "snapshot/docs/research/results/extended-10000-v2.jsonl",
+      "sha256": "722f68f3f20c01bdb2551f3b854a02c31ea5a0d786dc8ded54f72b4175d2e6e2",
+      "bytes": 2504473
+    },
+    {
+      "source_path": "docs/research/results/extended-10000-v2.jsonl.manifest.json",
+      "archive_path": "snapshot/docs/research/results/extended-10000-v2.jsonl.manifest.json",
+      "sha256": "b686aa668f4a0a5202bfd609e56ce5efabc658c196aba8a3bcce02d0ae923c83",
+      "bytes": 1466
+    },
+    {
+      "source_path": "docs/research/results/extended-10000-v2.summary.json",
+      "archive_path": "snapshot/docs/research/results/extended-10000-v2.summary.json",
+      "sha256": "eb4409e34d9a354a9c6562c94d6967c50db48cf95186893574ee82c6a2a4180c",
+      "bytes": 20406
+    },
+    {
+      "source_path": "docs/research/results/extended-10000.jsonl",
+      "archive_path": "snapshot/docs/research/results/extended-10000.jsonl",
+      "sha256": "370d620912a47bd03e6de3048c01efe82e5c8c6df836cd5c6662674ab63afe27",
+      "bytes": 2504553
+    },
+    {
+      "source_path": "docs/research/results/extended-10000.jsonl.manifest.json",
+      "archive_path": "snapshot/docs/research/results/extended-10000.jsonl.manifest.json",
+      "sha256": "65d7eb60615a643f2ee0012e388d4f975a8941860cef4e2fdd9a3063a6387f99",
+      "bytes": 1381
+    },
+    {
+      "source_path": "docs/research/results/extended-10000.summary.json",
+      "archive_path": "snapshot/docs/research/results/extended-10000.summary.json",
+      "sha256": "6422919bc9d538d2b138c9403d56e63064c9bb01c45b08340a756e05d17b122d",
+      "bytes": 14022
+    },
+    {
+      "source_path": "docs/research/results/extended-3000.jsonl",
+      "archive_path": "snapshot/docs/research/results/extended-3000.jsonl",
+      "sha256": "db4f3ebe675d422a6db664bc75db854306c81db990093751ab4b8218bd67bbe5",
+      "bytes": 2505914
+    },
+    {
+      "source_path": "docs/research/results/extended-3000.jsonl.manifest.json",
+      "archive_path": "snapshot/docs/research/results/extended-3000.jsonl.manifest.json",
+      "sha256": "f25d1dc1f3ffff646a11adc859e69cbc3007ae92114be0af0833e0753db0fbed",
+      "bytes": 1380
+    },
+    {
+      "source_path": "docs/research/results/extended-3000.summary.json",
+      "archive_path": "snapshot/docs/research/results/extended-3000.summary.json",
+      "sha256": "63d481c1d95a064b3053d30e3077b0f3c474d60413a7796e2857c0e4923a767b",
+      "bytes": 20767
+    },
+    {
+      "source_path": "docs/research/results/geometry-confirm.jsonl",
+      "archive_path": "snapshot/docs/research/results/geometry-confirm.jsonl",
+      "sha256": "a7868b1170f3423d37ab62991cca18fa396b7b8b836656418854bb6a9bd08dc3",
+      "bytes": 925337
+    },
+    {
+      "source_path": "docs/research/results/geometry-confirm.jsonl.manifest.json",
+      "archive_path": "snapshot/docs/research/results/geometry-confirm.jsonl.manifest.json",
+      "sha256": "031e3926bd50ff1859918bf43c20a86d55a5979a2bc6aaea5387e30baa3994ee",
+      "bytes": 1510
+    },
+    {
+      "source_path": "docs/research/results/geometry-confirm.summary.json",
+      "archive_path": "snapshot/docs/research/results/geometry-confirm.summary.json",
+      "sha256": "ecf51e10120821aaed01fd99d0115f19bd63830530baa8b4c11020c6d04b9582",
+      "bytes": 11109
+    },
+    {
+      "source_path": "docs/research/results/geometry-extended-10000.jsonl",
+      "archive_path": "snapshot/docs/research/results/geometry-extended-10000.jsonl",
+      "sha256": "5d42226c79ee35d7626058ec5017829f6d6d77b5358a020b1237ec68f745810d",
+      "bytes": 317085
+    },
+    {
+      "source_path": "docs/research/results/geometry-extended-10000.jsonl.manifest.json",
+      "archive_path": "snapshot/docs/research/results/geometry-extended-10000.jsonl.manifest.json",
+      "sha256": "70783f089b2637d2f4079caafb3717088cace2eac9a606fbf82ad21890c1ab53",
+      "bytes": 1463
+    },
+    {
+      "source_path": "docs/research/results/geometry-extended-10000.summary.json",
+      "archive_path": "snapshot/docs/research/results/geometry-extended-10000.summary.json",
+      "sha256": "f33bc25512b69743d57e82f2e1223d94ba471194986a20a6754aa023cccb1e45",
+      "bytes": 6099
+    },
+    {
+      "source_path": "docs/research/results/geometry-extended-3000.jsonl",
+      "archive_path": "snapshot/docs/research/results/geometry-extended-3000.jsonl",
+      "sha256": "76e9ef590983ce5c90da4912cce7e7a6c046b6f7ebe922e1fb8d82ff22bfbb3a",
+      "bytes": 318205
+    },
+    {
+      "source_path": "docs/research/results/geometry-extended-3000.jsonl.manifest.json",
+      "archive_path": "snapshot/docs/research/results/geometry-extended-3000.jsonl.manifest.json",
+      "sha256": "0b0f666fffa17b5c64759f69adfd0bfc576c519607609e28932503ca65820641",
+      "bytes": 1462
+    },
+    {
+      "source_path": "docs/research/results/geometry-extended-3000.summary.json",
+      "archive_path": "snapshot/docs/research/results/geometry-extended-3000.summary.json",
+      "sha256": "3b36888b2c7fceee5e19aca9c72fd4185c1012429c2db21f10786a8715be1a67",
+      "bytes": 6113
+    },
+    {
+      "source_path": "docs/research/results/geometry-shadow.jsonl",
+      "archive_path": "snapshot/docs/research/results/geometry-shadow.jsonl",
+      "sha256": "2f10b5ee8d9a627522fe3f55178c7ea3ee822b673ae32202ba2759448d0e8fcc",
+      "bytes": 2692916
+    },
+    {
+      "source_path": "docs/research/results/geometry-shadow.jsonl.manifest.json",
+      "archive_path": "snapshot/docs/research/results/geometry-shadow.jsonl.manifest.json",
+      "sha256": "b7cb895b8e746b652eefcd66391b7da55d1e0845b8a92cddd02631d164f906d4",
+      "bytes": 1400
+    },
+    {
+      "source_path": "docs/research/results/geometry-shadow.summary.json",
+      "archive_path": "snapshot/docs/research/results/geometry-shadow.summary.json",
+      "sha256": "83744c5a7b44ce1936f26e164c8b9e734bc225b9de0fd63d62ad3f3964745c74",
+      "bytes": 665
+    },
+    {
+      "source_path": "docs/research/results/geometry.jsonl",
+      "archive_path": "snapshot/docs/research/results/geometry.jsonl",
+      "sha256": "fc93e9e6dc8c985b4721dd4863e0b7d5888a7623ed82582cf703dbac3531be9a",
+      "bytes": 917754
+    },
+    {
+      "source_path": "docs/research/results/geometry.jsonl.manifest.json",
+      "archive_path": "snapshot/docs/research/results/geometry.jsonl.manifest.json",
+      "sha256": "8efc5578555f0b8dd0d8a12d902498fec929babc2095fa3f97e93b4a11281be4",
+      "bytes": 2449
+    },
+    {
+      "source_path": "docs/research/results/geometry.summary.json",
+      "archive_path": "snapshot/docs/research/results/geometry.summary.json",
+      "sha256": "76d9303bb0708958d36d97c9eeb0ed112e0348bb42df2946c8cec795b359d5c2",
+      "bytes": 28564
+    },
+    {
+      "source_path": "docs/research/results/holdout-diagnostics.json",
+      "archive_path": "snapshot/docs/research/results/holdout-diagnostics.json",
+      "sha256": "a585f47fc090a4a4ea436aaed92e289374b4b80841dd435d1a4d6e6bffcd4761",
+      "bytes": 13357
+    },
+    {
+      "source_path": "docs/research/results/holdout-diagnostics.log",
+      "archive_path": "snapshot/docs/research/results/holdout-diagnostics.log",
+      "sha256": "a585f47fc090a4a4ea436aaed92e289374b4b80841dd435d1a4d6e6bffcd4761",
+      "bytes": 13357
+    },
+    {
+      "source_path": "docs/research/results/numerics.jsonl",
+      "archive_path": "snapshot/docs/research/results/numerics.jsonl",
+      "sha256": "54024286edfab4ddc89629c06704fe49585b3bae591ddb70e4859299e729c54d",
+      "bytes": 1261014
+    },
+    {
+      "source_path": "docs/research/results/numerics.jsonl.manifest.json",
+      "archive_path": "snapshot/docs/research/results/numerics.jsonl.manifest.json",
+      "sha256": "f81047f556e48e783afe21a81055b6db3c7a860e6dae367d8c7e52d5810f1e88",
+      "bytes": 2246
+    },
+    {
+      "source_path": "docs/research/results/numerics.summary.json",
+      "archive_path": "snapshot/docs/research/results/numerics.summary.json",
+      "sha256": "3d05db0ad6a856eeed4dbdedd5d0ea74a5221e96ae1ea1122af99d334bbfb368",
+      "bytes": 67324
+    },
+    {
+      "source_path": "docs/research/results/phase1.jsonl",
+      "archive_path": "snapshot/docs/research/results/phase1.jsonl",
+      "sha256": "af91168bbd64e0b9d3fddee57980cd37555d7d29b917dc11746155ee827b3aaf",
+      "bytes": 2114505
+    },
+    {
+      "source_path": "docs/research/results/phase1.jsonl.manifest.json",
+      "archive_path": "snapshot/docs/research/results/phase1.jsonl.manifest.json",
+      "sha256": "971db2288895816cef1fac6b0dbda60924e770602ff7b5d00178ccebc013bef4",
+      "bytes": 3005
+    },
+    {
+      "source_path": "docs/research/results/phase1.summary.json",
+      "archive_path": "snapshot/docs/research/results/phase1.summary.json",
+      "sha256": "e304764d0b73c2bafbd1cf62be9f0a6ceb351237b7632d9141f7539f8e75b72e",
+      "bytes": 85769
+    },
+    {
+      "source_path": "docs/research/results/phase2.jsonl",
+      "archive_path": "snapshot/docs/research/results/phase2.jsonl",
+      "sha256": "1319fd530e425f5bc46b11f86343b82d55aebec6f0a4c7622fc3524523964f95",
+      "bytes": 2743107
+    },
+    {
+      "source_path": "docs/research/results/phase2.jsonl.manifest.json",
+      "archive_path": "snapshot/docs/research/results/phase2.jsonl.manifest.json",
+      "sha256": "8d633f9607e312985f5b1bf6476311372e10fee85e246af1020fcccb5f4a76f0",
+      "bytes": 4610
+    },
+    {
+      "source_path": "docs/research/results/phase2.summary.json",
+      "archive_path": "snapshot/docs/research/results/phase2.summary.json",
+      "sha256": "babdc9eeb47a9cb8a2a4a764b3f832c4b2dee1c209ca1ca368c26adc9bf46232",
+      "bytes": 92521
+    },
+    {
+      "source_path": "docs/research/results/phase3.jsonl",
+      "archive_path": "snapshot/docs/research/results/phase3.jsonl",
+      "sha256": "7ceee205cbbf7c6fcbc927a28861361bda49dedd97f567be8dd3e09a67649155",
+      "bytes": 2473400
+    },
+    {
+      "source_path": "docs/research/results/phase3.jsonl.manifest.json",
+      "archive_path": "snapshot/docs/research/results/phase3.jsonl.manifest.json",
+      "sha256": "5bd9eeadc870b53e2592dc3c42954c65d3e63fa24a3a3d1ca80f1411d6f41076",
+      "bytes": 1309
+    },
+    {
+      "source_path": "docs/research/results/phase3.summary.json",
+      "archive_path": "snapshot/docs/research/results/phase3.summary.json",
+      "sha256": "9a9fc5e8d6f2a617fd792e571fd7a39e619e56f4c3417dbcf6126c6bf7817aaf",
+      "bytes": 22436
+    },
+    {
+      "source_path": "docs/research/results/slingshot-EXPLORE-A-15.csv",
+      "archive_path": "snapshot/docs/research/results/slingshot-EXPLORE-A-15.csv",
+      "sha256": "10c32677861e0bdb6e9654dc2ddaf7cacdb0b49e886a10fb8a862f30fadacb17",
+      "bytes": 88595
+    },
+    {
+      "source_path": "docs/research/results/slingshot-EXPLORE-A-3.csv",
+      "archive_path": "snapshot/docs/research/results/slingshot-EXPLORE-A-3.csv",
+      "sha256": "c3c3eb23bd23c6abec1574b58309d7395d0784dedeed23f8d56f9f3e822ba8aa",
+      "bytes": 89729
+    },
+    {
+      "source_path": "docs/research/results/slingshot-summary.json",
+      "archive_path": "snapshot/docs/research/results/slingshot-summary.json",
+      "sha256": "6329cc0f6bcf8bc24aae429778513df037a372277114cee3db1fdbdd3858a97f",
+      "bytes": 1603
+    },
+    {
+      "source_path": "docs/research/run.mjs",
+      "archive_path": "snapshot/docs/research/run.mjs",
+      "sha256": "b07e3001b6dbb064f8f4f0e209021ba42840bc0343d18ca1e25af593d1af0c2c",
+      "bytes": 2015
+    },
+    {
+      "source_path": "docs/research/slingshot.mjs",
+      "archive_path": "snapshot/docs/research/slingshot.mjs",
+      "sha256": "4b0a7227ad59774fbb2c36f172091a94c939079a1031eabc845063691dd3adce",
+      "bytes": 2378
+    },
+    {
+      "source_path": "docs/research/summarize.py",
+      "archive_path": "snapshot/docs/research/summarize.py",
+      "sha256": "fc8081a4a13daac0b2f94bc208b2a463b3a579df6573839d4c319c0de8260631",
+      "bytes": 4562
+    },
+    {
+      "source_path": "docs/research/validate.mjs",
+      "archive_path": "snapshot/docs/research/validate.mjs",
+      "sha256": "659fbf81fa7271b90f3c6bd4a2c4ea1b75fdac0cc278124627e7effbdb5e3889",
+      "bytes": 2125
+    },
+    {
+      "source_path": "docs/research/validation.json",
+      "archive_path": "snapshot/docs/research/validation.json",
+      "sha256": "1c136a411c6cc2fe5e17788ad4b606f54e25e972668f90ff28c3c67bd1755787",
+      "bytes": 734
+    },
+    {
+      "source_path": null,
+      "archive_path": "changes.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ]
+}

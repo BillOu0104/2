@@ -1,0 +1,139 @@
+{
+  "passed": true,
+  "reference": "Independently written pairwise Newton force, SciPy DOP853; rtol=1e-12/1e-13, atol=1e-14/1e-15",
+  "seedPolicy": "First four predetermined V052-INDEPENDENT seeds, none filtered",
+  "results": [
+    {
+      "seed": "V052-INDEPENDENT-0",
+      "solverTime": 4.5,
+      "referenceEvaluations": 2000,
+      "referenceToleranceDifference": 3.2161384666551385e-11,
+      "differences": [
+        {
+          "maxStep": 0.00075,
+          "adaptive": false,
+          "maxStateDifference": 3.1625629892673146e-10
+        },
+        {
+          "maxStep": 0.000375,
+          "adaptive": false,
+          "maxStateDifference": 1.7651158312759208e-11
+        },
+        {
+          "maxStep": 0.0001875,
+          "adaptive": false,
+          "maxStateDifference": 4.797273689405301e-13
+        },
+        {
+          "maxStep": 0.00075,
+          "adaptive": true,
+          "maxStateDifference": 3.1625629892673146e-10
+        }
+      ],
+      "fixedStepRatios": [
+        17.91702806824436,
+        36.79414487387179
+      ],
+      "minimumNominalSurfaceGap": 0.12263479398064837
+    },
+    {
+      "seed": "V052-INDEPENDENT-1",
+      "solverTime": 4.5,
+      "referenceEvaluations": 812,
+      "referenceToleranceDifference": 6.5203259458357365e-12,
+      "differences": [
+        {
+          "maxStep": 0.00075,
+          "adaptive": false,
+          "maxStateDifference": 9.990133720272354e-12
+        },
+        {
+          "maxStep": 0.000375,
+          "adaptive": false,
+          "maxStateDifference": 1.1513012765362873e-13
+        },
+        {
+          "maxStep": 0.0001875,
+          "adaptive": false,
+          "maxStateDifference": 5.503930644579214e-13
+        },
+        {
+          "maxStep": 0.00075,
+          "adaptive": true,
+          "maxStateDifference": 9.990133720272354e-12
+        }
+      ],
+      "fixedStepRatios": [
+        86.77254098360656,
+        0.2091780131114473
+      ],
+      "minimumNominalSurfaceGap": 0.2344987169238386
+    },
+    {
+      "seed": "V052-INDEPENDENT-2",
+      "solverTime": 4.5,
+      "referenceEvaluations": 512,
+      "referenceToleranceDifference": 4.626049543432487e-12,
+      "differences": [
+        {
+          "maxStep": 0.00075,
+          "adaptive": false,
+          "maxStateDifference": 6.361300375345991e-13
+        },
+        {
+          "maxStep": 0.000375,
+          "adaptive": false,
+          "maxStateDifference": 5.057898544436057e-13
+        },
+        {
+          "maxStep": 0.0001875,
+          "adaptive": false,
+          "maxStateDifference": 6.327438573094923e-13
+        },
+        {
+          "maxStep": 0.00075,
+          "adaptive": true,
+          "maxStateDifference": 6.361300375345991e-13
+        }
+      ],
+      "fixedStepRatios": [
+        1.2576963178400922,
+        0.7993595648550248
+      ],
+      "minimumNominalSurfaceGap": 0.33284422716378886
+    },
+    {
+      "seed": "V052-INDEPENDENT-3",
+      "solverTime": 4.5,
+      "referenceEvaluations": 2576,
+      "referenceToleranceDifference": 3.2222668977510693e-11,
+      "differences": [
+        {
+          "maxStep": 0.00075,
+          "adaptive": false,
+          "maxStateDifference": 2.8692711540045934e-09
+        },
+        {
+          "maxStep": 0.000375,
+          "adaptive": false,
+          "maxStateDifference": 1.749808076212389e-10
+        },
+        {
+          "maxStep": 0.0001875,
+          "adaptive": false,
+          "maxStateDifference": 1.1140532940601133e-11
+        },
+        {
+          "maxStep": 0.00075,
+          "adaptive": true,
+          "maxStateDifference": 2.8692711540045934e-09
+        }
+      ],
+      "fixedStepRatios": [
+        16.39763350627218,
+        15.706681947281877
+      ],
+      "minimumNominalSurfaceGap": 0.08766157776302959
+    }
+  ]
+}

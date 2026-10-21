@@ -1,0 +1,30 @@
+{
+  "hash": "1d69ac1c8d278cdcf824ea00a1e4d8d94a63fe4e9bb393376499983e77c4d807",
+  "config": {
+    "input": "results/candidate-fine-all.jsonl",
+    "outputPrefix": "results/candidate-fine-extended",
+    "seeds": 128,
+    "horizons": [
+      3000,
+      10000
+    ],
+    "hypothesis": "Extend the entire refined128-seed candidate cohort, inheriting every known absorbing loss. Compare the ensemble rather than requiring long chaotic trajectories to match pointwise.",
+    "profiles": [
+      {
+        "id": "candidate-fine",
+        "force": "newton",
+        "dt": 0.000375,
+        "adaptive": true,
+        "eta": 0.00375,
+        "planet": "bound",
+        "inPlane": true,
+        "radiusFraction": 0.12,
+        "Q": 1,
+        "direction": -1
+      }
+    ]
+  },
+  "horizon": 3000,
+  "rule": "Keep the entire fixed cohort; inherit known absorbing losses, recompute only unresolved/surviving trajectories; numerical stops are unresolved, never physical loss.",
+  "maxSteps": 50000000
+}

@@ -1,0 +1,24 @@
+import { build } from 'esbuild';
+import { defaults } from '../src/settings.js';
+import { mkdir, rm, cp, readFile, writeFile } from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const dist = path.join(root, 'dist');
+await rm(dist, { recursive: true, force: true }); await mkdir(dist, { recursive: true });
+const worker = await build({ entryPoints: [path.join(root, 'src/simulation-worker.js')], bundle: true, minify: true, format: 'iife', target: 'chrome90', write: false });
+await build({ entryPoints: [path.join(root, 'src/main.js')], bundle: true, minify: true, format: 'iife', target: 'chrome90', outfile: path.join(dist, 'app.js'), external: ['assets/*'], define: { __WORKER_SOURCE__: JSON.stringify(worker.outputFiles[0].text) }, legalComments: 'eof' });
+await cp(path.join(dist, 'app.css'), path.join(dist, 'style.css'));
+await cp(path.join(root, 'index.html'), path.join(dist, 'index.html')); await cp(path.join(root, 'assets'), path.join(dist, 'assets'), { recursive: true });
+await mkdir(path.join(dist, '.openai'), { recursive: true });
+await cp(path.join(root, '.openai/hosting.json'), path.join(dist, '.openai/hosting.json'));
+const original = JSON.parse(await readFile(path.join(root, 'assets/original-project.json'), 'utf8'));
+const properties = structuredClone(original.general.properties);
+// Scene texture pickers are represented by Web wallpaper file pickers, retaining the original key.
+properties.custombg = { ...properties.custombg, type: 'file', value: '' };
+for(const [key,value] of Object.entries(defaults))if(properties[key])properties[key].value=value;
+properties.newproperty45.text='常态活动低温边界 °C';properties.newproperty46.text='常态活动高温边界 °C';
+const project = { title: '三体实时演算 · Web 重建', type: 'web', file: 'index.html', description: '基于用户提供的 SYKM 原版场景移植。Three.js + Worker，原版设置兼容。', version: 0, contentrating: 'Everyone', general: { ...original.general, supportsaudioprocessing: true, properties } };
+await writeFile(path.join(dist, 'project.json'), JSON.stringify(project, null, 2));
+await writeFile(path.join(dist, 'LICENSE-NOTICE.txt'), 'Original Wallpaper Engine scene: SYKM, workshop 3509243656. Music: Melodysheep - Ether. Original assets retained for the supplied authorized non-commercial use. See source docs/SOURCE-AUDIT.md and assets/original/manifest.json.\nThree.js: MIT.\n');
+console.log(`Built offline Wallpaper Engine / web project: ${dist}`);

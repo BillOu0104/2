@@ -1,0 +1,14 @@
+diff --git a/tests/simulation.test.js b/tests/simulation.test.js
+index a9dfd34..1ff1f65 100644
+--- a/tests/simulation.test.js
++++ b/tests/simulation.test.js
+@@ -11,7 +11,8 @@ function finite(s) { assert.ok(s.bodies.every(b => ['x','y','z','vx','vy','vz','
+ test('ported trajectories match independently executed original SceneScript reference', () => {
+   const fixture = JSON.parse(readFileSync(new URL('./fixtures/original-reference.json', import.meta.url), 'utf8'));
+   const state = run(new Simulation(fixture.settings), fixture.ticks);
+-  for (let i = 0; i < 4; i++) for (const key of ['x','y','z','vx','vy','vz','mass']) assert.equal(state.bodies[i][key], fixture.bodies[i][key], `body ${i} ${key}`);
++  // Independent fixtures may differ in the last bits across V8 versions.
++  for (let i = 0; i < 4; i++) for (const key of ['x','y','z','vx','vy','vz','mass']) assert.ok(Math.abs(state.bodies[i][key]-fixture.bodies[i][key])<=1e-12*Math.max(1,Math.abs(fixture.bodies[i][key])), `body ${i} ${key}`);
+ });
+ 
+ test('183 original controls retain definitions, with the requested trails enabled by default', () => {

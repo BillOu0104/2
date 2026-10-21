@@ -1,8 +1,9 @@
+import {replaySettings} from './seed-compatibility.js';
 import {settingsDefinitions,settingsCategories} from './settings-catalog.js';
 import { layoutWidgets,widgetPosition,clearLayoutStyles,applyLayout,installLayoutEditor } from './layout.js';
 import { SpaceRenderer } from './renderer.js';
 import { effectivePropertySchema as propertySchema, migrateSettings } from './settings.js';
-import { normalizeSettings, colorHex, fromHex, colorRGB, plainText, settingsFromInitial, algorithmId } from './settings.js';
+import { normalizeSettings, colorHex, fromHex, colorRGB, plainText, settingsFromInitial, algorithmId,manualInitialKeys } from './settings.js';
 import { LocalStore } from './storage.js';
 import { AudioController } from './audio.js';
 import { installWallpaperBridge } from './bridge.js';
@@ -11,8 +12,10 @@ import './style.css';
 const $ = selector => document.querySelector(selector);
 const settingsKey = 'three-body.settings.v3';
 const statisticsKey='three-body.statistics.v1';let lastStatisticsSave=0;
+const resetPendingKey='three-body.reset-pending.v1';
+let resetting=false,resetInProgress=false,startWorker;
 function persistStatistics(force=false){
-  if(!state?.statisticsCheckpoint||(!force&&performance.now()-lastStatisticsSave<1000))return;
+  if(resetting||!state?.statisticsCheckpoint||(!force&&performance.now()-lastStatisticsSave<1000))return;
   try{localStorage.setItem(statisticsKey,JSON.stringify(state.statisticsCheckpoint));lastStatisticsSave=performance.now();}catch{}
 }
 function savedStatistics(){try{return JSON.parse(localStorage.getItem(statisticsKey)||'null');}catch{return null;}}
@@ -39,6 +42,7 @@ function saveSettings() {
 }
 function changeSettings(patch, options = {}) {
   const previous = settings;
+  if(manualInitialKeys.some(k=>k in patch)&&!('manualInitialBodies' in patch))patch={...patch,manualInitialBodies:null};
   settings = normalizeSettings({ ...settings, ...patch });
   worker?.postMessage({ type: 'settings', patch: settings });
   renderer?.updateSettings(settings);
@@ -210,7 +214,7 @@ function applyAppearance() {
   const tabNames = en ? ['Settings', 'Archive', 'About'] : ['全部设置', '文明档案', '项目说明']; document.querySelectorAll('[data-tab]').forEach((b, i) => b.textContent = tabNames[i]);
 }
 
-function applyPause() { worker?.postMessage({ type: 'pause', value: userPaused || hostPaused || visibilityPaused }); }
+function applyPause() { worker?.postMessage({ type: 'pause', value: resetting || userPaused || hostPaused || visibilityPaused }); }
 $('#pause-button').onclick = () => { userPaused = !userPaused; applyPause(); applyAppearance(); };
 function restart() { worker?.postMessage({ type: 'restart' }); if (settings.newproperty64) showLoading(true); }
 $('#restart-button').onclick = restart; $('#restart-prompt').onclick = restart;
@@ -227,11 +231,34 @@ $('#import-settings').onchange = async e => {
   try {
     if (file.size > 1024 * 1024) throw new Error('配置文件过大');
     const data = JSON.parse(await file.text()); if (data.format !== 'three-body-seed' || data.version !== 1 || !data.settings || typeof data.settings !== 'object') throw new Error('种子格式不匹配');
-    changeSettings(data.initialBodies ? settingsFromInitial(data.settings, data.initialBodies) : data.settings); worker?.postMessage({ type: 'restart' }); notice('种子与设置已导入，宇宙已重新初始化');
+    changeSettings(data.initialBodies ? settingsFromInitial(replaySettings(data.settings), data.initialBodies) : replaySettings(data.settings)); worker?.postMessage({ type: 'restart' }); notice('种子与设置已导入，宇宙已重新初始化');
   } catch (error) { notice(`导入失败：${error.message}`, true); }
   e.target.value = '';
 };
 $('#reset-settings').onclick = () => { changeSettings(normalizeSettings()); worker?.postMessage({ type: 'restart' }); notice('已恢复默认设置：文明延续优化、尾迹开启；文明档案保留'); };
+// Keep the destructive action distinct from ordinary restart and settings reset.
+async function clearRunHistory(){
+  resetting=true;applyPause();
+  if(!await store.clearHistory())throw new Error('历史数据库暂不可写');
+  localStorage.removeItem(statisticsKey);
+  localStorage.removeItem(resetPendingKey);
+  worker?.terminate();history=[];state=null;window.__threeBodyState=null;lastEvent=lastTick=lastStatisticsSave=0;
+  sessionId=crypto.randomUUID?.()||String(Date.now());renderer.clearTrails();renderer.snap=null;
+  $('#civilization-log').replaceChildren();renderHistory();fatal=false;resetting=false;
+  startWorker({});
+}
+$('#reset-history').onclick=async()=>{
+  if(resetInProgress||!startWorker)return;
+  const en=settings.cnen2;
+  if(!confirm(en?'Erase all universe/civilization history, rankings and elapsed years? This cannot be undone. Settings and background will be kept.':'确定完全重置？将永久清空宇宙与文明历史、排行榜、累计年数，从第1号宇宙重新开始。设置与自定义背景保留。'))return;
+  resetInProgress=true;$('#reset-history').disabled=true;
+  try{
+    // A reload after an interrupted clear must complete the clear before loading old statistics.
+    localStorage.setItem(resetPendingKey,'1');await clearRunHistory();
+    notice(en?'History cleared. Starting universe 1.':'全部历史已清空，已从第1号宇宙重新开始');
+  }catch(error){notice(`完全重置未完成：${error.message}。${resetting?'模拟保持暂停，请重试完全重置。':'未清除记录，请检查浏览器存储权限后重试。'}`,true);}
+  finally{resetInProgress=false;$('#reset-history').disabled=false;}
+};
 $('#export-history').onclick = () => downloadJSON('three-body-civilization-archive.json', { version: 1, records: history });
 
 function renderHistory() {
@@ -242,7 +269,7 @@ function renderHistory() {
     title.textContent = `宇宙${entry.universe||entry.generation||'?'} · 文明${entry.number} · ${entry.lifespan} 年 · ${entry.destructionEvent}`;
     sub.textContent = `${entry.seed} / 宇宙 ${entry.generation}${entry.development?` / Lv.${entry.development.level} ${entry.development.zh} / 发展 ${entry.development.developmentYears.toFixed(1)}年`:''} / ${new Date(entry.savedAt).toLocaleString()}`;
     button.textContent = '复现初始种子'; button.onclick = () => {
-      const replay = entry.initialBodies ? settingsFromInitial(entry.settings, entry.initialBodies) : entry.settings;
+      const replay = entry.initialBodies ? settingsFromInitial(replaySettings(entry.settings), entry.initialBodies) : replaySettings(entry.settings);
       changeSettings(replay); worker?.postMessage({ type: 'restart' }); notice('已载入该文明完整初始条件');
     };
     li.append(title, sub, button); list.append(li);
@@ -295,12 +322,14 @@ function renderState(s) {
   [...log.children].forEach(li=>{if(!retained.has(li.dataset.id))li.remove();});
   renderStatistics(s);
   $('#simulation-year').textContent = s.year >= 1e8 ? s.year.toExponential(2) : s.year.toFixed(2);
-  $('#restart-prompt').hidden = !(s.world?.planet.restartRequired||(settings.civilizationMode==='legacy'&&s.escaped)) || settings.autorestart;
+  $('#restart-prompt').hidden = !(s.world?.planet.restartRequired||s.escapeStatus?.confirmed||(settings.civilizationMode==='legacy'&&s.escaped)) || settings.autorestart;
   $('#restart-prompt span').textContent=s.world?.planet.terminal?(en?s.world.planet.terminal.en:s.world.planet.terminal.zh):s.world?.planet.damaged?(en?'PLANETARY DAMAGE':'行星结构受损'):(en?'CELESTIAL ESCAPE':'天体已逃逸');
   $('#restart-prompt strong').textContent=en?`Start universe ${s.generation+1} ↻`:`开启第${s.generation+1}号宇宙 ↻`;
 
   if (settings.cheatingcheck) $('#physics-check').textContent = `${settings.newproperty60 ? 'CAGE ON / ' : ''}G × ${settings.newproperty52 / 1000} / T DIST × ${settings.newproperty69}\n${settings.physicsMode === 'reference' ? 'REFERENCE 60 Hz' : 'REAL TIME'}`;
-  $('#runtime-diagnostics').textContent = `Three.js WebGL · ${fps} FPS · Worker 60 Hz · Tick ${s.tick} · ${s.bodies.length} bodies · 宇宙 ${s.generation} · Seed ${s.seed} · ${renderer.canvas.width}×${renderer.canvas.height}`;
+  const physics=s.physics;
+  const conservationLabel=physics?.cageActive?'牢笼外力：不作孤立守恒判定':physics&&!physics.physicalModelValid?'星体已接触：点质量模型受限':'孤立系统';
+  $('#runtime-diagnostics').textContent = `Three.js WebGL · ${fps} FPS · Worker 60 Hz · Tick ${s.tick} · ${s.bodies.length} bodies · 宇宙 ${s.generation} · Seed ${s.seed} · ${renderer.canvas.width}×${renderer.canvas.height}${physics ? ` · ${physics.model} · ${conservationLabel} · ΔE惯性 ${physics.relativeInertialEnergyError.toExponential(2)} · ΔE内部 ${physics.relativeEnergyError.toExponential(2)} · ΔL ${physics.relativeAngularMomentumError.toExponential(2)} · ΔP ${physics.normalizedMomentumDrift.toExponential(2)} · 固定初始质心 / ΔR ${physics.centerPositionDrift.toExponential(2)} / ΔVcm ${physics.centerVelocityDrift.toExponential(2)}` : ''}`;
 }
 function handleEvents(events) {
   for (const event of events) {
@@ -338,12 +367,23 @@ const audio = new AudioController((values, average) => {
 try {
   renderer = new SpaceRenderer($('#universe'), $('#body-labels'), settings);
   const blob = new Blob([__WORKER_SOURCE__], { type: 'text/javascript' }); const workerURL = URL.createObjectURL(blob);
-  worker = new Worker(workerURL); worker.onmessage = ({ data }) => {
+  startWorker=statistics=>{
+  const activeWorker=new Worker(workerURL);worker=activeWorker;activeWorker.onmessage = ({ data }) => {
+    if(resetting||worker!==activeWorker)return;
     if (data.type === 'error') { fatal = true; console.error('Simulation worker:', data); notice(`模拟异常：${data.message}。请恢复默认设置后重试。`, true); return; }
     if (data.type === 'state') { state = data.state; lastTick = state.tick; window.__threeBodyState = state; renderer.ingest(state); renderState(state); handleEvents(state.events);persistStatistics(); }
   };
-  worker.onerror = event => { fatal = true; console.error(event); notice('后台模拟无法启动。请通过本地服务器或 Wallpaper Engine 打开此项目。', true); };
-  store.getAll('history').then(records=>{history=records.sort((a,b)=>a.savedAt-b.savedAt);worker.postMessage({type:'init',settings,statistics:{...(savedStatistics()||{}),legacyRecords:history}});});
+  worker.onerror = event => { if(resetting||worker!==activeWorker)return;fatal = true; console.error(event); notice('后台模拟无法启动。请通过本地服务器或 Wallpaper Engine 打开此项目。', true); };
+  worker.postMessage({type:'init',settings,statistics});applyPause();
+  };
+  (async()=>{
+    let interrupted=false;try{interrupted=!!localStorage.getItem(resetPendingKey);}catch{}
+    if(interrupted){resetInProgress=true;try{await clearRunHistory();}finally{resetInProgress=false;}return;}
+    const startupSession=sessionId,records=await store.getAll('history');
+    // A user may initiate reset while IndexedDB is still opening.
+    if(sessionId!==startupSession||resetting||resetInProgress)return;
+    history=records.sort((a,b)=>a.savedAt-b.savedAt);startWorker({...(savedStatistics()||{}),legacyRecords:history});
+  })().catch(error=>{notice(`历史载入未完成：${error.message}。请重试完全重置。`,true);});
   installWallpaperBridge({ changeSettings, renderer, audio, setHostPaused: value => { hostPaused = value; applyPause(); } });
   store.getAsset('background').then(file => { if (file) { customURL = URL.createObjectURL(file); renderer.setCustomBackground(customURL); } });
   let lastFrame = performance.now(), startTime = lastFrame, fpsStart = lastFrame, frames = 0, lastDraw = 0;
@@ -365,10 +405,10 @@ try {
   if (settings.newproperty64 || settings.newproperty63) showLoading(); else $('#loading-overlay').hidden = true;
   if (settings.menuinit) setPanel(true);
   addEventListener('pagehide',()=>persistStatistics(true));
-  addEventListener('beforeunload', () => { persistStatistics(true);worker.terminate(); URL.revokeObjectURL(workerURL); if (customURL) URL.revokeObjectURL(customURL); });
+  addEventListener('beforeunload', () => { persistStatistics(true);worker?.terminate(); URL.revokeObjectURL(workerURL); if (customURL) URL.revokeObjectURL(customURL); });
 } catch (error) {
   fatal = true; console.error(error); hideLoading(); notice(`无法初始化 3D 场景：${error.message}。请启用浏览器硬件加速。`, true);
 }
 // Diagnostic readout for automated smoke checks and host integrations.
 window.__threeBodyDiagnostics = () => ({ ready: !!state && !fatal, tick: lastTick, fps, paused: userPaused || hostPaused || visibilityPaused, controls: controlMap.size, history: history.length, worker: !!worker,
-  scene: renderer ? { canvas:[renderer.canvas.width,renderer.canvas.height], drawingBuffer:[renderer.renderer.getContext().drawingBufferWidth,renderer.renderer.getContext().drawingBufferHeight], renderedFrames:renderer.renderer.info.render.frame, viewVelocity:[renderer.rot.vx,renderer.rot.vy], speedLimited:false, compassOpacity:renderer.compass.children.map(n=>n.material.opacity), idleYaw:renderer.autoAngle, returningToGalaxy:renderer.returning, compassScale:renderer.compass.scale.x, compassTarget:renderer.compassTarget, compassFade:renderer.compassFade, viewSensitivity:settings.viewSensitivity, dragSensitivity:settings.dragSensitivity, dustLayers:renderer.dustLayers.map(d=>({visible:d.visible,count:d.geometry.drawRange.count,size:d.material.size,opacity:d.material.opacity,blending:d.material.blending,alphaTest:d.material.alphaTest})), pointerMode:+settings.newproperty61, galaxyCoreScreen:renderer.sky.localToWorld(renderer.galaxyDirection.clone().multiplyScalar(90)).project(renderer.camera).toArray(), layoutEditing:layoutEditor.editing, compassVisible:renderer.compass.visible, maxTextureSize:renderer.renderer.capabilities.maxTextureSize, backgroundSizes:Object.fromEntries(Object.entries(renderer.bgTextures).map(([k,t])=>[k,[t.image?.width||0,t.image?.height||0]])), backgroundFollowsView: renderer.sky.parent === renderer.world, viewRotation: renderer.world.rotation.toArray().slice(0,3), skyRotation: renderer.sky.getWorldQuaternion(new renderer.camera.quaternion.constructor()).toArray(), bodyShapes: renderer.nodes.map(n => n.mesh.geometry.type), glowShape: 'radial-circle', bodyLabelsVisible:renderer.nodes.some(n=>!n.label.hidden), trailSamples: renderer.trailBuffers.map(b => b.length), trailComplexity:renderer.trailComplexity||0, trailMetrics:renderer.trailMetrics||[], trailsVisible: renderer.trails.every(t => t.visible) } : null });
+  scene: renderer ? { canvas:[renderer.canvas.width,renderer.canvas.height], drawingBuffer:[renderer.renderer.getContext().drawingBufferWidth,renderer.renderer.getContext().drawingBufferHeight], renderedFrames:renderer.renderer.info.render.frame, viewVelocity:[renderer.rot.vx,renderer.rot.vy], speedLimited:false, compassOpacity:renderer.compass.children.map(n=>n.material.opacity), idleYaw:renderer.autoAngle, returningToGalaxy:renderer.returning, systemOffset:renderer.system.position.toArray(),displayOrigin:{...renderer.fixedFrame.origin},cameraPosition:renderer.camera.position.toArray(),renderTime:renderer.renderTime,trailStyle:"continuous-ribbon",trailHeads:renderer.trails.map(l=>l.segmentCount?Array.from(l.geometry.attributes.position.array.slice(l.segmentCount*6,l.segmentCount*6+3)):null),bodyLocalPositions:renderer.nodes.map(n=>n.group.position.toArray()),bodyWorldPositions:renderer.nodes.map(n=>n.group.getWorldPosition(new renderer.camera.position.constructor()).toArray()), compassScale:renderer.compass.scale.x, compassTarget:renderer.compassTarget, compassFade:renderer.compassFade, viewSensitivity:settings.viewSensitivity, dragSensitivity:settings.dragSensitivity, dustLayers:renderer.dustLayers.map(d=>({visible:d.visible,count:d.geometry.drawRange.count,size:d.material.size,opacity:d.material.opacity,blending:d.material.blending,alphaTest:d.material.alphaTest})), pointerMode:+settings.newproperty61, galaxyCoreScreen:renderer.sky.localToWorld(renderer.galaxyDirection.clone().multiplyScalar(90)).project(renderer.camera).toArray(), layoutEditing:layoutEditor.editing, compassVisible:renderer.compass.visible, maxTextureSize:renderer.renderer.capabilities.maxTextureSize, backgroundSizes:Object.fromEntries(Object.entries(renderer.bgTextures).map(([k,t])=>[k,[t.image?.width||0,t.image?.height||0]])), backgroundFollowsView: renderer.sky.parent === renderer.world, viewRotation: renderer.world.rotation.toArray().slice(0,3), skyRotation: renderer.sky.getWorldQuaternion(new renderer.camera.quaternion.constructor()).toArray(), bodyShapes: renderer.nodes.map(n => n.mesh.geometry.type), glowShape: 'radial-circle', bodyLabelsVisible:renderer.nodes.some(n=>!n.label.hidden), trailSamples: renderer.trailBuffers.map(b => b.length), trailComplexity:renderer.trailComplexity||0, trailMetrics:renderer.trailMetrics||[], trailsVisible: renderer.trails.every(t => t.visible) } : null });

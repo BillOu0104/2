@@ -1,0 +1,23 @@
+import {chromium} from 'playwright-core';
+import assert from 'node:assert/strict';
+import {writeFile} from 'node:fs/promises';
+const browser=await chromium.launch({executablePath:'/usr/bin/chromium',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+const page=await browser.newPage({viewport:{width:1280,height:800}}),checks=[],errors=[];
+page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
+await page.addInitScript(()=>{if(!localStorage.getItem('hotfix-seeded')){localStorage.setItem('three-body.settings.v3',JSON.stringify({presentationRevision:3,newproperty61:0,newproperty51:.08,newproperty63:false,newproperty64:false,newproperty2:false,pixelRatio:.5,dust:false,seed:'TRISOLARIS',layout:{years:{x:40,y:88}}}));localStorage.setItem('hotfix-seeded','1');}window.__wallpaperFPS=15;window.__pointerDowns=0;addEventListener('pointerdown',()=>window.__pointerDowns++);});
+const scene=()=>page.evaluate(()=>window.__threeBodyDiagnostics().scene);
+try{
+ await page.goto('http://localhost:4173',{waitUntil:'networkidle'});await page.waitForFunction(()=>window.__threeBodyDiagnostics?.().ready);
+ assert.equal((await scene()).pointerMode,1);assert.equal(await page.locator('#setting-newproperty51').inputValue(),'0.01');assert.equal(await page.locator('#setting-orbitalInitialization').inputValue(),'balanced');assert.equal((await scene()).compassScale,.3);assert.equal((await scene()).compassVisible,false);checks.push('existing v0.4.1 settings migrate to hover, 0.01 degree/sec return and bound initial orbits; ring scale is 0.3');
+ const original=await scene();await page.mouse.move(900,450);await page.waitForFunction(()=>window.__threeBodyDiagnostics().scene.compassVisible);await page.waitForTimeout(700);
+ const hover=await scene();assert.equal(await page.evaluate(()=>window.__pointerDowns),0);assert.ok(Math.abs(hover.viewRotation[1]-original.viewRotation[1])>.004);assert.ok(Math.abs(hover.viewRotation[1])<.12);assert.deepEqual(hover.compassOpacity,[.5,.5,.5]);checks.push('actual mouse hover moves the scene without any pointer press, with a small angle and half-transparent ring');
+ await page.mouse.move(1200,450);await page.waitForTimeout(1800);const atEdge=await scene();assert.ok(Math.abs(atEdge.viewRotation[1])<11*Math.PI/180);checks.push('moving nearly across the screen keeps hover travel below eleven degrees instead of the prior ninety-degree range');
+ await page.waitForFunction(()=>{const s=window.__threeBodyDiagnostics().scene;return s.returningToGalaxy&&!s.compassVisible;},null,{timeout:30000});
+ const a=await scene(),t0=Date.now();await page.waitForTimeout(5000);const b=await scene(),seconds=(Date.now()-t0)/1000,delta=Math.abs(a.viewRotation[1])-Math.abs(b.viewRotation[1]);
+ assert.ok(delta>0,JSON.stringify({a:a.viewRotation,b:b.viewRotation}));assert.ok(delta<seconds*.02*Math.PI/180);assert.equal(b.compassVisible,false);checks.push('idle view returns toward the galaxy monotonically at an extremely slow rate and does not show rings');
+ const clockLayout=await page.evaluate(()=>JSON.parse(localStorage.getItem('three-body.settings.v3')).layout.years);assert.deepEqual(clockLayout,{x:40,y:88});checks.push('camera migration preserves existing custom window positions');
+ await page.evaluate(()=>window.threeBody.applySettings({newproperty61:0,newproperty16:false}));await page.mouse.move(500,600);const beforeDrag=await scene();await page.mouse.down();await page.mouse.move(700,600,{steps:1});const drag=await scene();await page.mouse.up();assert.ok(Math.abs(drag.viewVelocity[1])<.8);assert.ok(Math.abs(drag.viewVelocity[1])>.05);checks.push('optional click-drag remains usable with greatly reduced impulse per pixel');
+ await page.evaluate(()=>window.threeBody.applySettings({newproperty61:1,newproperty16:true,pixelRatio:1}));await page.waitForTimeout(2500);await page.screenshot({path:'docs/qa/v041-hotfix-desktop.png'});
+ await page.reload({waitUntil:'networkidle'});await page.waitForFunction(()=>window.__threeBodyDiagnostics?.().ready);assert.equal((await scene()).pointerMode,1);checks.push('hover preference persists after reload');
+ assert.deepEqual(errors,[]);const report={passed:checks.length,checks,errors,hover,atEdge,returnMeasurement:{start:a.viewRotation,end:b.viewRotation,seconds,deltaRadians:delta},limits:['Measured real mouse and Worker behavior in software WebGL; native Windows Wallpaper Engine is unavailable.']};await writeFile('docs/qa/v041-hotfix-browser.json',JSON.stringify(report,null,2));console.log(JSON.stringify({passed:checks.length,checks,errors,returnMeasurement:report.returnMeasurement},null,2));
+}finally{await browser.close();}

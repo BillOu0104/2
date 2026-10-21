@@ -1,0 +1,23 @@
+{
+  "release": "v0.5.5",
+  "dateUtc": "2026-10-21",
+  "baseline": "472a7ee",
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.41",
+  "node": "v24.19.0",
+  "chromium": "Chromium 154.0.8037.57 built on Debian GNU/Linux 13 (trixie)",
+  "commands": [
+    "node tools/v055/conservation-audit.mjs /tmp/v055-baseline docs/v055/results/conservation-before.json",
+    "node tools/v055/conservation-audit.mjs /workspace/2 docs/v055/results/conservation-after.json",
+    "node --test --test-isolation=none --test-reporter=spec tests/*.test.js",
+    "npm test",
+    "npm run build",
+    "node tools/v055/browser-check.mjs"
+  ],
+  "limits": [
+    "Four predetermined seeds with before/after control; not a new 128-seed survival experiment.",
+    "Actual Chromium pointer, Worker and WebGL, software rendering.",
+    "Manual fast orbit and straight-line geometry used only as visual fixtures.",
+    "Native Windows Wallpaper Engine not available.",
+    "All browser tests use isolated profiles; user settings and history untouched."
+  ]
+}

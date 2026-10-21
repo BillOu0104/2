@@ -1,0 +1,77 @@
+{
+  "passed": 9,
+  "checks": [
+    "removed upper-left/right text and sentence below YEARS",
+    "rotation rings hidden at rest/click and visible only during actual drag, hidden during inertia",
+    "mouse-follow rotation does not expose rings",
+    "slow default rotation and -20 to 40 C activity thresholds",
+    "civilization logs keep 11px type and fade with simulation age",
+    "compact civilization block fits below the clock",
+    "both active background textures loaded at native 8192x4096",
+    "actual WebGL drawing buffer renders multiple frames at 7680x4320",
+    "8K render also completes frames with the postprocessing pipeline enabled"
+  ],
+  "errors": [],
+  "eightK": {
+    "ready": true,
+    "tick": 826,
+    "fps": 1,
+    "paused": false,
+    "controls": 197,
+    "history": 0,
+    "worker": true,
+    "scene": {
+      "canvas": [
+        7680,
+        4320
+      ],
+      "drawingBuffer": [
+        7680,
+        4320
+      ],
+      "renderedFrames": 22,
+      "compassVisible": false,
+      "maxTextureSize": 8192,
+      "backgroundSizes": {
+        "1": [
+          8192,
+          4096
+        ],
+        "4": [
+          8192,
+          4096
+        ]
+      },
+      "backgroundFollowsView": true,
+      "viewRotation": [
+        -0.04818504998905944,
+        13.221590075851353,
+        0
+      ],
+      "skyRotation": [
+        -0.022808937822437036,
+        0.32168742465077,
+        -0.007751762213040044,
+        0.9465394145832279
+      ],
+      "bodyShapes": [
+        "SphereGeometry",
+        "SphereGeometry",
+        "SphereGeometry",
+        "SphereGeometry"
+      ],
+      "glowShape": "radial-circle",
+      "trailSamples": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "trailsVisible": false
+    }
+  },
+  "limits": [
+    "8K frame buffer verified using software WebGL; this is not a target GPU frame-rate benchmark.",
+    "Native Windows Wallpaper Engine host is unavailable in this environment."
+  ]
+}

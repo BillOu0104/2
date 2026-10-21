@@ -1,0 +1,243 @@
+{
+  "passed": true,
+  "checks": [
+    "v0.5.4 real Worker starts and migrates the old default to 0.006 deg/s",
+    "left and right drag releases coast monotonically without a reverse rebound in hover+drag mode",
+    "holding a drag still for more than two seconds does not trigger immediate reverse auto-return upon release",
+    "fresh hover input resumes without requiring a click",
+    "idle return uses the slightly increased speed without residual inertia or overshoot",
+    "canceling complete reset retains archives, rankings and accumulated time",
+    "confirmed reset clears IndexedDB archives, pending writes, in-memory logs, rankings, numbering and statistics; settings/background survive",
+    "cleared history and old statistics do not return after reload",
+    "an interrupted reset is completed on startup before old checkpoints can load",
+    "real Worker exposes confirmed escape and manual restart when disabled, then rebuilds once automatic restart is enabled",
+    "denied localStorage access still allows the simulation to boot"
+  ],
+  "errors": [],
+  "motion": [
+    {
+      "direction": 1,
+      "samples": [
+        {
+          "yaw": 0.25648222749353705,
+          "velocity": 0.2492778357512332
+        },
+        {
+          "yaw": 0.25648222749353705,
+          "velocity": 0.2492778357512332
+        },
+        {
+          "yaw": 0.2859993421323102,
+          "velocity": 0.19574451816946253
+        },
+        {
+          "yaw": 0.2859993421323102,
+          "velocity": 0.19574451816946253
+        },
+        {
+          "yaw": 0.311705984158231,
+          "velocity": 0.14912201294238292
+        },
+        {
+          "yaw": 0.311705984158231,
+          "velocity": 0.14912201294238292
+        },
+        {
+          "yaw": 0.3293635971502563,
+          "velocity": 0.11709752086020628
+        },
+        {
+          "yaw": 0.3432291738339215,
+          "velocity": 0.09195040437728252
+        },
+        {
+          "yaw": 0.3432291738339215,
+          "velocity": 0.09195040437728252
+        },
+        {
+          "yaw": 0.3553047923573434,
+          "velocity": 0.07004962141384558
+        },
+        {
+          "yaw": 0.3553047923573434,
+          "velocity": 0.07004962141384558
+        },
+        {
+          "yaw": 0.3626667470047012,
+          "velocity": 0.05669771148014559
+        },
+        {
+          "yaw": 0.3626667470047012,
+          "velocity": 0.05669771148014559
+        },
+        {
+          "yaw": 0.3693848034675038,
+          "velocity": 0.044513598820195385
+        },
+        {
+          "yaw": 0.3693848034675038,
+          "velocity": 0.044513598820195385
+        },
+        {
+          "yaw": 0.3693848034675038,
+          "velocity": 0.044513598820195385
+        },
+        {
+          "yaw": 0.3757884929098199,
+          "velocity": 0.032899633674691925
+        },
+        {
+          "yaw": 0.37924612203242203,
+          "velocity": 0.02662875116583396
+        },
+        {
+          "yaw": 0.37924612203242203,
+          "velocity": 0.02662875116583396
+        },
+        {
+          "yaw": 0.37924612203242203,
+          "velocity": 0.02662875116583396
+        },
+        {
+          "yaw": 0.38274320987027804,
+          "velocity": 0.020286304889280307
+        },
+        {
+          "yaw": 0.38274320987027804,
+          "velocity": 0.020286304889280307
+        },
+        {
+          "yaw": 0.3854073599711046,
+          "velocity": 0.01545450492582083
+        },
+        {
+          "yaw": 0.3854073599711046,
+          "velocity": 0.01545450492582083
+        }
+      ]
+    },
+    {
+      "direction": -1,
+      "samples": [
+        {
+          "yaw": 0.11069855062665689,
+          "velocity": -0.25695178702382754
+        },
+        {
+          "yaw": 0.07373367945559757,
+          "velocity": -0.18991094607488967
+        },
+        {
+          "yaw": 0.07373367945559757,
+          "velocity": -0.18991094607488967
+        },
+        {
+          "yaw": 0.05124622825658878,
+          "velocity": -0.14912688295173535
+        },
+        {
+          "yaw": 0.05124622825658878,
+          "velocity": -0.14912688295173535
+        },
+        {
+          "yaw": 0.0316617646285304,
+          "velocity": -0.11360778415431097
+        },
+        {
+          "yaw": 0.0316617646285304,
+          "velocity": -0.11360778415431097
+        },
+        {
+          "yaw": 0.01674193614023222,
+          "velocity": -0.08654863807908968
+        },
+        {
+          "yaw": 0.01674193614023222,
+          "velocity": -0.08654863807908968
+        },
+        {
+          "yaw": 0.0076389916569662205,
+          "velocity": -0.07003920536808265
+        },
+        {
+          "yaw": 0.0076389916569662205,
+          "velocity": -0.07003920536808265
+        },
+        {
+          "yaw": -0.00243161338348093,
+          "velocity": -0.05177478811495899
+        },
+        {
+          "yaw": -0.00243161338348093,
+          "velocity": -0.05177478811495899
+        },
+        {
+          "yaw": -0.008562292236584234,
+          "velocity": -0.040655964949096
+        },
+        {
+          "yaw": -0.008562292236584234,
+          "velocity": -0.040655964949096
+        },
+        {
+          "yaw": -0.014411025666638443,
+          "velocity": -0.030048488303972786
+        },
+        {
+          "yaw": -0.014411025666638443,
+          "velocity": -0.030048488303972786
+        },
+        {
+          "yaw": -0.017971441700690226,
+          "velocity": -0.023591187696963164
+        },
+        {
+          "yaw": -0.017971441700690226,
+          "velocity": -0.023591187696963164
+        },
+        {
+          "yaw": -0.02106961386287111,
+          "velocity": -0.017972229465078076
+        },
+        {
+          "yaw": -0.02106961386287111,
+          "velocity": -0.017972229465078076
+        },
+        {
+          "yaw": -0.023197714645824194,
+          "velocity": -0.014112628130258131
+        },
+        {
+          "yaw": -0.023197714645824194,
+          "velocity": -0.014112628130258131
+        },
+        {
+          "yaw": -0.023197714645824194,
+          "velocity": -0.014112628130258131
+        }
+      ]
+    }
+  ],
+  "returnMotion": {
+    "elapsed": 0.903,
+    "travelRadians": 0.00009598612754263547,
+    "capRadians": 0.00009456193887305278
+  },
+  "storage": {
+    "records": 0,
+    "background": true,
+    "stats": {
+      "format": "three-body-statistics",
+      "version": 1,
+      "totalYears": 0.016666666666666666,
+      "universeNumber": 1,
+      "universeStart": 0,
+      "nextCivilization": 1,
+      "activeCivilization": null,
+      "universes": [],
+      "civilizations": []
+    },
+    "pending": null
+  },
+  "limits": "Chromium actual pointer/Worker/IndexedDB, software WebGL; native Wallpaper Engine unavailable"
+}

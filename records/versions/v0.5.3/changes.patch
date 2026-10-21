@@ -1,0 +1,611 @@
+diff --git a/.github/workflows/physics-acceptance.yml b/.github/workflows/physics-acceptance.yml
+index 9fabf8e..23e64c7 100644
+--- a/.github/workflows/physics-acceptance.yml
++++ b/.github/workflows/physics-acceptance.yml
+@@ -1,7 +1,7 @@
+-name: v0.5.2 acceptance build
++name: Wallpaper acceptance build
+ on:
+   push:
+-    branches: [fix/v0.5.2-newtonian]
++    branches: ['fix/**']
+   workflow_dispatch:
+ permissions:
+   contents: read
+@@ -19,6 +19,6 @@ jobs:
+       - run: npm run build
+       - uses: actions/upload-artifact@v4
+         with:
+-          name: three-body-v0.5.2-acceptance
++          name: three-body-acceptance
+           path: dist/
+           retention-days: 14
+diff --git a/index.html b/index.html
+index 185d67f..4946540 100644
+--- a/index.html
++++ b/index.html
+@@ -62,7 +62,7 @@
+     <div class="panel-tabs"><button class="active" data-tab="settings">全部设置</button><button data-tab="history">文明档案</button><button data-tab="about">项目说明</button></div>
+     <div id="settings-content" class="panel-scroll"><div id="extension-controls"></div><details id="advanced-controls" class="setting-group"><summary>原版高级设置 / Advanced</summary><div id="original-controls"></div></details><p id="search-empty" hidden>没有匹配的设置 / No matching settings</p></div>
+     <div id="history-content" class="panel-scroll" hidden><div class="section-intro"><h3>文明档案</h3><p>当前设备保存的文明死亡记录。完整参数随档案保留，方便复现与后续扩展。</p><button id="export-history">导出档案 JSON</button></div><ol id="history-list"></ol></div>
+-    <div id="about-content" class="panel-scroll" hidden><article class="about-copy"><h3>三体 · 实时演算 v0.5.2</h3><p>以你提供的 SYKM 原版 Wallpaper Engine 场景为基础。移植四体运动、温度、纪元与文明事件 SceneScript，并优化文明适宜度与延续机制，复用原版贴图、字体和音乐，天体采用圆形柔光与渐隐尾迹。</p><p><a href="settings-guide.html" target="_blank" rel="noopener">打开 v0.5 完整设置说明 ↗</a> · <a href="SETTINGS-GUIDE-v0.5.md" download>下载 Markdown 文档</a></p><p>v0.5.2：默认随机三星 Q=1，行星采用第三颗恒星周围 0.12D 逆向轨道；牛顿平方反比引力、近遇自适应 Yoshida 积分，默认关闭引力牢笼。旧模型与手动初值仍可选择。数值故障会暂停并提示；星体接触之后点质量模型的适用性受限。</p><h4>运行架构</h4><p>Three.js 渲染与后台 Web Worker 模拟独立运行；无需远程服务器，网页与 Wallpaper Engine 共用同一套内核。模拟事件可供未来通知与 Seed 排行榜订阅。</p><h4>还原边界</h4><p>默认按固定 60 Hz 复现原版物理节奏；根据提供的原著讲解区分轨道纪元、天象与文明延续。−20～40°C 为常态活动范围，干仓休眠后可恢复同一文明。修复步长设置不即时生效、恒星碰撞距离未赋值、隐藏 UI 影响计算等问题。模型使用球体和圆环重建，后处理为 Three.js 对应实现，效果尚不能声称与原版逐像素一致。</p><p>原版文明逻辑是适温诞生与灾变毁灭，没有人口或技术树。v0.5 增加人口储备、干仓质量与六级文明发展；休眠保留文明，实际生产时间推动升级。保留轨道稳定确认、差分潮汐与不可逆行星毁坏。具体阈值是可调模拟参数，非小说给定数值；完整算法依据、参数表和兼容差异随源码提供。原版背景已恢复为原生 8192×4096，并支持最高 7680×4320 渲染。</p><h4>来源</h4><p>原场景：SYKM ·《三体实时演算》<br>音乐：Melodysheep · Ether<br>保留原资源来源与非商用声明。</p><p class="muted">网页版音频须主动播放；Wallpaper Engine 可直接接收系统音频。自定义背景与历史保存在当前浏览器，不会上传。</p><div id="runtime-diagnostics"></div></article></div>
++    <div id="about-content" class="panel-scroll" hidden><article class="about-copy"><h3>三体 · 实时演算 v0.5.3</h3><p>以你提供的 SYKM 原版 Wallpaper Engine 场景为基础。移植四体运动、温度、纪元与文明事件 SceneScript，并优化文明适宜度与延续机制，复用原版贴图、字体和音乐，天体采用圆形柔光与渐隐尾迹。</p><p><a href="settings-guide.html" target="_blank" rel="noopener">打开 v0.5 完整设置说明 ↗</a> · <a href="SETTINGS-GUIDE-v0.5.md" download>下载 Markdown 文档</a></p><p>v0.5.3：修复显示中心跟随和银河归位，默认回中速度0.003°/秒；科技改为从旧石器时代开始的十二阶段。物理沿用v0.5.2：默认随机三星 Q=1，行星采用第三颗恒星周围 0.12D 逆向轨道；牛顿平方反比引力、近遇自适应 Yoshida 积分，默认关闭引力牢笼。旧模型与手动初值仍可选择。数值故障会暂停并提示；星体接触之后点质量模型的适用性受限。</p><h4>运行架构</h4><p>Three.js 渲染与后台 Web Worker 模拟独立运行；无需远程服务器，网页与 Wallpaper Engine 共用同一套内核。模拟事件可供未来通知与 Seed 排行榜订阅。</p><h4>还原边界</h4><p>默认按固定 60 Hz 复现原版物理节奏；根据提供的原著讲解区分轨道纪元、天象与文明延续。−20～40°C 为常态活动范围，干仓休眠后可恢复同一文明。修复步长设置不即时生效、恒星碰撞距离未赋值、隐藏 UI 影响计算等问题。模型使用球体和圆环重建，后处理为 Three.js 对应实现，效果尚不能声称与原版逐像素一致。</p><p>原版文明逻辑是适温诞生与灾变毁灭，没有人口或技术树。v0.5 增加人口储备、干仓质量与十二阶段文明发展；休眠保留文明，实际生产时间推动升级。保留轨道稳定确认、差分潮汐与不可逆行星毁坏。具体阈值是可调模拟参数，非小说给定数值；完整算法依据、参数表和兼容差异随源码提供。原版背景已恢复为原生 8192×4096，并支持最高 7680×4320 渲染。</p><h4>来源</h4><p>原场景：SYKM ·《三体实时演算》<br>音乐：Melodysheep · Ether<br>保留原资源来源与非商用声明。</p><p class="muted">网页版音频须主动播放；Wallpaper Engine 可直接接收系统音频。自定义背景与历史保存在当前浏览器，不会上传。</p><div id="runtime-diagnostics"></div></article></div>
+     <footer class="panel-footer"><button id="export-settings">导出种子</button><label class="file-button">导入种子<input id="import-settings" type="file" accept="application/json,.json" hidden></label><button id="reset-settings">恢复默认</button><span id="save-status">已保存到本机</span></footer>
+   </aside>
+ </body>
+diff --git a/package-lock.json b/package-lock.json
+index 4bf23ea..9650171 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -1,12 +1,12 @@
+ {
+   "name": "three-body-reconstruction",
+-  "version": "0.5.2",
++  "version": "0.5.3",
+   "lockfileVersion": 3,
+   "requires": true,
+   "packages": {
+     "": {
+       "name": "three-body-reconstruction",
+-      "version": "0.5.2",
++      "version": "0.5.3",
+       "dependencies": {
+         "three": "0.180.0"
+       },
+diff --git a/package.json b/package.json
+index 4863f8d..6de9b1b 100644
+--- a/package.json
++++ b/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "three-body-reconstruction",
+-  "version": "0.5.2",
++  "version": "0.5.3",
+   "private": true,
+   "type": "module",
+   "scripts": {
+diff --git a/src/bridge.js b/src/bridge.js
+index 6174963..e159b4c 100644
+--- a/src/bridge.js
++++ b/src/bridge.js
+@@ -13,6 +13,6 @@ export function installWallpaperBridge({ changeSettings, setHostPaused, audio, r
+     setPaused(paused) { setHostPaused(!!paused); }
+   };
+   // Stable public extension boundary: notifications and remote rankings can subscribe later.
+-  window.threeBody = { version: '0.5.2', get algorithm() { return window.__threeBodyState?.algorithm; }, getState: () => window.__threeBodyState ? structuredClone(window.__threeBodyState) : null, applySettings: patch => changeSettings(patch), subscribe(type, listener) { const fn = e => listener(e.detail); window.addEventListener(type, fn); return () => window.removeEventListener(type, fn); }, wallpaper: !!window.wallpaperRegisterAudioListener };
++  window.threeBody = { version: '0.5.3', get algorithm() { return window.__threeBodyState?.algorithm; }, getState: () => window.__threeBodyState ? structuredClone(window.__threeBodyState) : null, applySettings: patch => changeSettings(patch), subscribe(type, listener) { const fn = e => listener(e.detail); window.addEventListener(type, fn); return () => window.removeEventListener(type, fn); }, wallpaper: !!window.wallpaperRegisterAudioListener };
+   return () => { window.wallpaperPropertyListener = prior; };
+ }
+diff --git a/src/civilization-levels.js b/src/civilization-levels.js
+index e0c4f3c..e2b3a6a 100644
+--- a/src/civilization-levels.js
++++ b/src/civilization-levels.js
+@@ -1,15 +1,23 @@
+-// Inspired by the novel; numerical progression and tolerance values are adjustable game rules.
++// Inspired by the novel and historical eras; thresholds are wallpaper game rules.
++// Only actual safe production years count. Dormancy preserves progress without advancing it.
++export const technologyRevision=2;
+ export const civilizationLevels = [
+-  { level:1, years:0, zh:'初生聚落', en:'Early settlements', resilience:1, climate:0, storage:0 },
+-  { level:2, years:5, zh:'农耕文明', en:'Agrarian civilization', resilience:1.35, climate:3, storage:20 },
+-  { level:3, years:20, zh:'工业文明', en:'Industrial civilization', resilience:1.9, climate:8, storage:45 },
+-  { level:4, years:60, zh:'原子与信息文明', en:'Atomic and information age', resilience:2.8, climate:16, storage:80 },
+-  { level:5, years:150, zh:'航天文明', en:'Spaceflight civilization', resilience:4, climate:28, storage:130 },
+-  { level:6, years:350, zh:'星际远航准备', en:'Interstellar preparation', resilience:6, climate:45, storage:200 }
++  {level:1,years:0,zh:'旧石器时代',en:'Paleolithic age',resilience:1,climate:0,storage:0},
++  {level:2,years:200,zh:'新石器时代',en:'Neolithic age',resilience:1.08,climate:1,storage:5},
++  {level:3,years:800,zh:'青铜时代',en:'Bronze age',resilience:1.18,climate:2,storage:10},
++  {level:4,years:1800,zh:'铁器时代',en:'Iron age',resilience:1.35,climate:3,storage:20},
++  {level:5,years:3500,zh:'古典文明',en:'Classical civilization',resilience:1.55,climate:5,storage:30},
++  {level:6,years:6000,zh:'中世纪文明',en:'Medieval civilization',resilience:1.8,climate:8,storage:45},
++  {level:7,years:9000,zh:'蒸汽时代',en:'Steam age',resilience:2.1,climate:11,storage:60},
++  {level:8,years:12000,zh:'电气时代',en:'Electrical age',resilience:2.5,climate:15,storage:80},
++  {level:9,years:16000,zh:'原子时代',en:'Atomic age',resilience:3,climate:20,storage:105},
++  {level:10,years:21000,zh:'信息时代',en:'Information age',resilience:3.6,climate:27,storage:135},
++  {level:11,years:28000,zh:'航天时代',en:'Spaceflight age',resilience:4.6,climate:35,storage:165},
++  {level:12,years:40000,zh:'星际远航准备',en:'Interstellar preparation',resilience:6,climate:45,storage:200}
+ ];
+ export function levelFor(years=0,enabled=true){let stage=civilizationLevels[0];if(enabled)for(const candidate of civilizationLevels)if(years>=candidate.years)stage=candidate;return stage;}
+ export function developmentSnapshot(years,settings,alive){
+   if(!alive)return null;
+   const stage=levelFor(years,settings.civilizationLevels),next=settings.civilizationLevels?civilizationLevels[stage.level]:null;
+-  return {...stage,enabled:settings.civilizationLevels,label:settings.cnen2?stage.en:stage.zh,developmentYears:years,nextYears:next?.years??null,progress:next?Math.min(1,(years-stage.years)/(next.years-stage.years)):1};
++  return {...stage,technologyRevision,enabled:settings.civilizationLevels,label:settings.cnen2?stage.en:stage.zh,developmentYears:years,nextYears:next?.years??null,progress:next?Math.min(1,(years-stage.years)/(next.years-stage.years)):1};
+ }
+diff --git a/src/civilization-state.js b/src/civilization-state.js
+index 000f53f..ee68a00 100644
+--- a/src/civilization-state.js
++++ b/src/civilization-state.js
+@@ -13,7 +13,7 @@ export class CivilizationState{
+     const s=this.shared,en=settings.cnen2,planet=world.planet;
+     const elapsedYears=this.lastYear===null?0:Math.max(0,year-this.lastYear);this.lastYear=year;
+     const previousLevel=levelFor(this.developmentYears,settings.civilizationLevels).level;
+-    if(settings.civilizationLevels&&s.civilizationAlive&&this.phase==='active'&&habitat.canGrow&&world.safeToWake)this.developmentYears+=elapsedYears*settings.developmentRate;
++    if(settings.civilizationLevels&&s.civilizationAlive&&this.phase==='active'&&habitat.canGrow&&habitat.comfortable&&world.safeToWake&&!planet.terminal&&!habitat.thermalFatal)this.developmentYears+=elapsedYears*settings.developmentRate;
+     const development=developmentSnapshot(this.developmentYears,settings,s.civilizationAlive);
+     if(development&&development.level>previousLevel)this.log('level',`宇宙${s.universeNumber||1} · 文明${s.civilizationCount}发展为${development.zh}`,`Universe ${s.universeNumber||1} · Civilization ${s.civilizationCount}: ${development.en}`,year,runtime);
+     const rare=world.phenomena.filter(p=>['stationary','alignment'].includes(p.kind)||(p.kind==='overhead'&&p.count===3));
+diff --git a/src/display-center.js b/src/display-center.js
+new file mode 100644
+index 0000000..5c2b737
+--- /dev/null
++++ b/src/display-center.js
+@@ -0,0 +1,13 @@
++// Visual tracking only. Never write back into simulation coordinates or velocities.
++export function displayCenter(bodies,fallback={x:0,y:0,z:0}){
++ const stars=bodies.slice(0,3).filter(b=>b.mass>0&&['x','y','z'].every(k=>Number.isFinite(b[k])));
++ if(!stars.length)return {...fallback};
++ let tracked=stars;
++ if(stars.length===3){
++  const pairs=[[0,1],[0,2],[1,2]].map(pair=>({pair,distance:Math.hypot(...['x','y','z'].map(k=>stars[pair[0]][k]-stars[pair[1]][k]))})).sort((a,b)=>a.distance-b.distance);
++  // A distant runaway must not drag a compact surviving stellar pair off screen.
++  if(pairs[2].distance>4*Math.max(pairs[0].distance,1e-12))tracked=pairs[0].pair.map(i=>stars[i]);
++ }
++ const mass=tracked.reduce((n,b)=>n+b.mass,0);
++ return Object.fromEntries(['x','y','z'].map(k=>[k,tracked.reduce((n,b)=>n+b.mass*b[k],0)/mass]));
++}
+diff --git a/src/main.js b/src/main.js
+index daa004c..401cd84 100644
+--- a/src/main.js
++++ b/src/main.js
+@@ -303,7 +303,8 @@ function renderState(s) {
+ 
+   if (settings.cheatingcheck) $('#physics-check').textContent = `${settings.newproperty60 ? 'CAGE ON / ' : ''}G × ${settings.newproperty52 / 1000} / T DIST × ${settings.newproperty69}\n${settings.physicsMode === 'reference' ? 'REFERENCE 60 Hz' : 'REAL TIME'}`;
+   const physics=s.physics;
+-  $('#runtime-diagnostics').textContent = `Three.js WebGL · ${fps} FPS · Worker 60 Hz · Tick ${s.tick} · ${s.bodies.length} bodies · 宇宙 ${s.generation} · Seed ${s.seed} · ${renderer.canvas.width}×${renderer.canvas.height}${physics ? ` · ${physics.model} · ΔE ${physics.relativeEnergyError.toExponential(2)} · ΔL ${physics.relativeAngularMomentumError.toExponential(2)} · ΔP ${physics.normalizedMomentumDrift.toExponential(2)} · ${physics.cageActive?'牢笼开启：非孤立系统':'牢笼关闭'} · ${physics.physicalModelValid?'未检测到接触':'已接触：点质量模型受限'}` : ''}`;
++  const conservationLabel=physics?.cageActive?'牢笼外力：不作孤立守恒判定':physics&&!physics.physicalModelValid?'星体已接触：点质量模型受限':'孤立系统';
++  $('#runtime-diagnostics').textContent = `Three.js WebGL · ${fps} FPS · Worker 60 Hz · Tick ${s.tick} · ${s.bodies.length} bodies · 宇宙 ${s.generation} · Seed ${s.seed} · ${renderer.canvas.width}×${renderer.canvas.height}${physics ? ` · ${physics.model} · ${conservationLabel} · ΔE ${physics.relativeEnergyError.toExponential(2)} · ΔL ${physics.relativeAngularMomentumError.toExponential(2)} · ΔP ${physics.normalizedMomentumDrift.toExponential(2)} · ${settings.centerOnSystem?'显示中心跟随星群':'显示中心为物理质心'}` : ''}`;
+ }
+ function handleEvents(events) {
+   for (const event of events) {
+@@ -374,4 +375,4 @@ try {
+ }
+ // Diagnostic readout for automated smoke checks and host integrations.
+ window.__threeBodyDiagnostics = () => ({ ready: !!state && !fatal, tick: lastTick, fps, paused: userPaused || hostPaused || visibilityPaused, controls: controlMap.size, history: history.length, worker: !!worker,
+-  scene: renderer ? { canvas:[renderer.canvas.width,renderer.canvas.height], drawingBuffer:[renderer.renderer.getContext().drawingBufferWidth,renderer.renderer.getContext().drawingBufferHeight], renderedFrames:renderer.renderer.info.render.frame, viewVelocity:[renderer.rot.vx,renderer.rot.vy], speedLimited:false, compassOpacity:renderer.compass.children.map(n=>n.material.opacity), idleYaw:renderer.autoAngle, returningToGalaxy:renderer.returning, compassScale:renderer.compass.scale.x, compassTarget:renderer.compassTarget, compassFade:renderer.compassFade, viewSensitivity:settings.viewSensitivity, dragSensitivity:settings.dragSensitivity, dustLayers:renderer.dustLayers.map(d=>({visible:d.visible,count:d.geometry.drawRange.count,size:d.material.size,opacity:d.material.opacity,blending:d.material.blending,alphaTest:d.material.alphaTest})), pointerMode:+settings.newproperty61, galaxyCoreScreen:renderer.sky.localToWorld(renderer.galaxyDirection.clone().multiplyScalar(90)).project(renderer.camera).toArray(), layoutEditing:layoutEditor.editing, compassVisible:renderer.compass.visible, maxTextureSize:renderer.renderer.capabilities.maxTextureSize, backgroundSizes:Object.fromEntries(Object.entries(renderer.bgTextures).map(([k,t])=>[k,[t.image?.width||0,t.image?.height||0]])), backgroundFollowsView: renderer.sky.parent === renderer.world, viewRotation: renderer.world.rotation.toArray().slice(0,3), skyRotation: renderer.sky.getWorldQuaternion(new renderer.camera.quaternion.constructor()).toArray(), bodyShapes: renderer.nodes.map(n => n.mesh.geometry.type), glowShape: 'radial-circle', bodyLabelsVisible:renderer.nodes.some(n=>!n.label.hidden), trailSamples: renderer.trailBuffers.map(b => b.length), trailComplexity:renderer.trailComplexity||0, trailMetrics:renderer.trailMetrics||[], trailsVisible: renderer.trails.every(t => t.visible) } : null });
++  scene: renderer ? { canvas:[renderer.canvas.width,renderer.canvas.height], drawingBuffer:[renderer.renderer.getContext().drawingBufferWidth,renderer.renderer.getContext().drawingBufferHeight], renderedFrames:renderer.renderer.info.render.frame, viewVelocity:[renderer.rot.vx,renderer.rot.vy], speedLimited:false, compassOpacity:renderer.compass.children.map(n=>n.material.opacity), idleYaw:renderer.autoAngle, returningToGalaxy:renderer.returning, systemOffset:renderer.system.position.toArray(),systemFocusTarget:renderer.focusTarget.toArray(),bodyWorldPositions:renderer.nodes.map(n=>n.group.getWorldPosition(new renderer.camera.position.constructor()).toArray()), compassScale:renderer.compass.scale.x, compassTarget:renderer.compassTarget, compassFade:renderer.compassFade, viewSensitivity:settings.viewSensitivity, dragSensitivity:settings.dragSensitivity, dustLayers:renderer.dustLayers.map(d=>({visible:d.visible,count:d.geometry.drawRange.count,size:d.material.size,opacity:d.material.opacity,blending:d.material.blending,alphaTest:d.material.alphaTest})), pointerMode:+settings.newproperty61, galaxyCoreScreen:renderer.sky.localToWorld(renderer.galaxyDirection.clone().multiplyScalar(90)).project(renderer.camera).toArray(), layoutEditing:layoutEditor.editing, compassVisible:renderer.compass.visible, maxTextureSize:renderer.renderer.capabilities.maxTextureSize, backgroundSizes:Object.fromEntries(Object.entries(renderer.bgTextures).map(([k,t])=>[k,[t.image?.width||0,t.image?.height||0]])), backgroundFollowsView: renderer.sky.parent === renderer.world, viewRotation: renderer.world.rotation.toArray().slice(0,3), skyRotation: renderer.sky.getWorldQuaternion(new renderer.camera.quaternion.constructor()).toArray(), bodyShapes: renderer.nodes.map(n => n.mesh.geometry.type), glowShape: 'radial-circle', bodyLabelsVisible:renderer.nodes.some(n=>!n.label.hidden), trailSamples: renderer.trailBuffers.map(b => b.length), trailComplexity:renderer.trailComplexity||0, trailMetrics:renderer.trailMetrics||[], trailsVisible: renderer.trails.every(t => t.visible) } : null });
+diff --git a/src/renderer.js b/src/renderer.js
+index 8e6e816..9f83c4e 100644
+--- a/src/renderer.js
++++ b/src/renderer.js
+@@ -8,6 +8,7 @@ import { LineGeometry } from 'three/addons/lines/LineGeometry.js';
+ import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
+ import { colorRGB, seededRandom } from './settings.js';
+ import { fadeMotion } from './motion-visuals.js';
++import {displayCenter} from './display-center.js';
+ import { ViewMotion } from './view-motion.js';
+ import { TrailHistory, trailComplexity, selectTrail } from './adaptive-trails.js';
+ 
+@@ -46,7 +47,7 @@ export class SpaceRenderer {
+     this.renderer.toneMapping = THREE.ACESFilmicToneMapping; this.renderer.toneMappingExposure = 1;
+     this.scene = new THREE.Scene(); this.camera = new THREE.PerspectiveCamera(50, 1, 0.01, 200);
+     this.camera.position.set(0, 0.25, 5.2); this.camera.lookAt(0, 0, 0);
+-    this.world = new THREE.Group(); this.scene.add(this.world);
++    this.world = new THREE.Group(); this.scene.add(this.world);this.system=new THREE.Group();this.world.add(this.system);this.focusTarget=new THREE.Vector3();
+     this.compass = new THREE.Group(); this.world.add(this.compass);this.compass.scale.setScalar(.3);this.compass.visible=false;this.compassFade=0;this.compassTarget=false;
+     const ringGeometry = new THREE.BufferGeometry().setFromPoints(Array.from({ length: 257 }, (_, i) => new THREE.Vector3(Math.cos(i / 256 * Math.PI * 2) * 1.42, Math.sin(i / 256 * Math.PI * 2) * 1.42, 0)));
+     for (const [angle, opacity] of [[0, 0], [Math.PI / 2, 0]]) {
+@@ -69,7 +70,7 @@ export class SpaceRenderer {
+     this.scene.add(new THREE.AmbientLight(0x8297b4, 0.35));
+     this.nodes = []; this.trails = []; this.trailBuffers = [];
+     for (let i = 0; i < 4; i++) {
+-      const group = new THREE.Group(); this.world.add(group);
++      const group = new THREE.Group(); this.system.add(group);
+       const material = i < 3 ? new THREE.MeshStandardMaterial({ map: this.starTexture, emissiveMap: this.starTexture, emissive: 0xffffff, emissiveIntensity: 3, roughness: 1 }) : new THREE.MeshStandardMaterial({ map: this.planetTexture, roughness: .83, emissive: 0x91c6ff, emissiveIntensity: .15 });
+       const mesh = new THREE.Mesh(sphere, material); group.add(mesh);
+       const glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: this.spikeTexture, color: 0xffcba8, transparent: true, opacity: .7, blending: THREE.AdditiveBlending, depthWrite: false })); group.add(glow);
+@@ -81,7 +82,7 @@ export class SpaceRenderer {
+       // Growing a one-segment LineGeometry later silently clips rendering to that segment.
+       const geo = new LineGeometry(); geo.setPositions(new Float32Array(2000 * 3)); geo.setColors(new Float32Array(2000 * 3)); geo.instanceCount = 0;
+       const line = new Line2(geo, new LineMaterial({ linewidth: 2.2, vertexColors: true, transparent: true, opacity: .8, blending: THREE.AdditiveBlending, depthWrite: false }));
+-      line.frustumCulled = false; this.world.add(line); this.trails.push(line); this.trailBuffers.push(new TrailHistory());
++      line.frustumCulled = false; this.system.add(line); this.trails.push(line); this.trailBuffers.push(new TrailHistory());
+     }
+     this.dustLayers = [];this.dustTexture=crispParticle();
+     const rng = seededRandom('original-dust');
+@@ -103,7 +104,8 @@ export class SpaceRenderer {
+     this.mouse = { x: 0, y: 0, down: false, dragging: false, startX: 0, startY: 0, lastX: 0, lastY: 0, lastInput: -Infinity, inside:false }; this.rot = new ViewMotion();this.autoAngle=0;this.returning=false;this.hoverBase={x:0,y:0};
+     canvas.addEventListener('pointerdown', e => { if(e.button!==0)return; this.mouse.down = true; this.mouse.lastInput=performance.now();this.mouse.dragging=false; this.mouse.startX=this.mouse.lastX = e.clientX; this.mouse.startY=this.mouse.lastY = e.clientY; canvas.setPointerCapture(e.pointerId); });
+     canvas.addEventListener('pointermove', e => {
+-      this.mouse.inside=true;if(this.settings.viewSensitivity>0&&(+this.settings.newproperty61===1||this.mouse.down))this.mouse.lastInput=performance.now();
++      const moved=Math.hypot(e.clientX-this.mouse.lastX,e.clientY-this.mouse.lastY)>.1;
++      this.mouse.inside=true;if(moved&&this.settings.viewSensitivity>0&&(+this.settings.newproperty61===1||this.mouse.down))this.mouse.lastInput=performance.now();
+       this.mouse.x = e.clientX / innerWidth * 2 - 1; this.mouse.y = e.clientY / innerHeight * 2 - 1;
+       if (this.settings.viewSensitivity>0 && this.mouse.down && +this.settings.newproperty61 !== 2) {
+         if(Math.hypot(e.clientX-this.mouse.startX,e.clientY-this.mouse.startY)>3)this.mouse.dragging=true;
+@@ -176,6 +178,9 @@ export class SpaceRenderer {
+     if (this.snap && state.revision !== this.snap.revision) { this.clearTrails(); this.firstPosition = true; }
+     if (!this.snap) this.firstPosition = true;
+     this.snap = state;
++    const center=this.settings.centerOnSystem?displayCenter(state.bodies,state.com):state.com;
++    this.focusTarget.set((state.com.x-center.x)/this.spaceScale,(state.com.y-center.y)/this.spaceScale,(state.com.z-center.z)/this.spaceScale);
++    if(this.firstPosition)this.system.position.copy(this.focusTarget);
+     state.bodies.forEach((b, i) => {
+       const n = this.nodes[i]; n.target.set((b.x - state.com.x)/this.spaceScale,(b.y - state.com.y)/this.spaceScale,(b.z - state.com.z)/this.spaceScale);
+       if (this.firstPosition) n.group.position.copy(n.target);
+@@ -192,9 +197,9 @@ export class SpaceRenderer {
+     this.nodes.slice(0,3).forEach((n,i)=>{const radius=state.world?.stars[i]?.radius;if(radius)n.mesh.scale.setScalar(radius/this.spaceScale);});
+   }
+   updateTrails(dt) {
+-    this.world.updateWorldMatrix(true,false);this.camera.updateMatrixWorld();
++    this.system.updateWorldMatrix(true,false);this.camera.updateMatrixWorld();
+     const project=point=>{
+-      vec.set(point.x,point.y,point.z).applyMatrix4(this.world.matrixWorld).project(this.camera);
++      vec.set(point.x,point.y,point.z).applyMatrix4(this.system.matrixWorld).project(this.camera);
+       return{x:(vec.x*.5+.5)*innerWidth,y:(-.5*vec.y+.5)*innerHeight,z:vec.z};
+     };
+     const raw=trailComplexity(this.trailBuffers,project,this.snap.runtime);
+@@ -217,19 +222,24 @@ export class SpaceRenderer {
+   render(dt, elapsed, motionDt=dt) {
+     const s = this.settings;
+     const idle=(performance.now()-this.mouse.lastInput)/1000;
+-    if(s.viewSensitivity>0&&+s.newproperty61===1&&!this.mouse.down&&this.mouse.inside&&idle<2){
++    this.returning=!!s.newproperty16&&+s.newproperty61!==2&&!this.mouse.down&&idle>=2&&s.newproperty51>0;
++    if(this.returning){
++      // Return owns the motion during idle; coasting must not fight it.
++      this.rot.returnToOrigin(motionDt,s.newproperty51);
++      this.hoverBase.x=this.rot.x-this.mouse.y*s.y7*s.x5*s.viewSensitivity*Math.PI/180;
++      this.hoverBase.y=this.rot.y-this.mouse.x*s.x6*s.y5*s.viewSensitivity*Math.PI/180;
++    }else if(s.viewSensitivity>0&&+s.newproperty61===1&&!this.mouse.down&&this.mouse.inside&&idle<2){
+       for(let remaining=motionDt;remaining>1e-8;){const step=Math.min(1/60,remaining);this.rot.follow(this.hoverBase.x+this.mouse.y*s.y7*s.x5*s.viewSensitivity*Math.PI/180,this.hoverBase.y+this.mouse.x*s.x6*s.y5*s.viewSensitivity*Math.PI/180,step,Math.max(.25,s.newproperty62*12));remaining-=step;}
+-    }else this.rot.coast(motionDt,-Math.log(Math.min(.999,s.y6))*120);
+-    this.compassTarget=!!s.compass&&(this.mouse.dragging||Math.hypot(this.rot.vx,this.rot.vy)>.0005);
++    }else if(+s.newproperty61!==2)this.rot.coast(motionDt,-Math.log(Math.min(.999,s.y6))*120);
++    this.compassTarget=!!s.compass&&!this.returning&&+s.newproperty61!==2&&(this.mouse.dragging||(idle<2&&Math.hypot(this.rot.vx,this.rot.vy)>.0005));
+     this.compassFade=fadeMotion(this.compassFade,this.compassTarget,motionDt);this.compass.visible=this.compassFade>.002&&s.compassOpacity>0;
+     for(const child of this.compass.children)child.material.opacity=s.compassOpacity*this.compassFade;
+-    this.returning=!!s.newproperty16&&!this.mouse.down&&idle>=2;
+-    if(this.returning){this.rot.returnToOrigin(motionDt,s.newproperty51);this.hoverBase.x=this.rot.x-this.mouse.y*s.y7*s.x5*s.viewSensitivity*Math.PI/180;this.hoverBase.y=this.rot.y-this.mouse.x*s.x6*s.y5*s.viewSensitivity*Math.PI/180;}
+     this.world.rotation.set(this.rot.x,this.rot.y,0);
++    this.system.position.lerp(this.focusTarget,1-Math.exp(-motionDt/1.5));
+     this.nodes.forEach((n, i) => {
+       n.group.position.lerp(n.target, 1 - Math.exp(-dt * 22)); n.mesh.rotation.y += dt * .1;
+       if (i < 3) { n.glow.material.opacity = Math.min(1, .35 + s.newproperty49 * .3 + (s.newproperty2 ? s.hdr * .09 : 0) + this.audioLevel * .12); }
+-      vec.copy(n.group.position); this.world.localToWorld(vec); vec.project(this.camera);
++      n.group.getWorldPosition(vec);vec.project(this.camera);
+       n.label.style.transform = `translate(${(vec.x * .5 + .5) * innerWidth + 15}px,${(-vec.y * .5 + .5) * innerHeight - 9}px)`;
+       n.label.style.visibility = vec.z > 1 || vec.z < -1 ? 'hidden' : 'visible';
+       if (this.snap) n.label.querySelector('small').textContent = `${n.group.position.x.toFixed(2)} / ${n.group.position.y.toFixed(2)}`;
+diff --git a/src/settings-catalog.js b/src/settings-catalog.js
+index 3c58cc5..c35137e 100644
+--- a/src/settings-catalog.js
++++ b/src/settings-catalog.js
+@@ -6,6 +6,7 @@ export const settingsDefinitions={
+     birthDelay:{type:'slider',text:'文明诞生安全窗口 / Birth window (s)',min:.1,max:10,step:.1},
+     planetStrength:{type:'slider',text:'行星结构强度 / Structural strength',min:1,max:4,step:.1},
+     viewSensitivity:{type:'slider',text:'整体视角灵敏度 / Mouse sensitivity',min:0,max:2,step:.01},
++    centerOnSystem:{type:'bool',text:'自动居中星群 / Track stellar system'},
+     compassOpacity:{type:'slider',text:'旋转环不透明度 / Ring opacity',min:0,max:.5,step:.01},
+     orbitalInitialization:{type:'combo',text:'随机初始轨道 / Initial orbits',options:[{value:'research',label:'随机三星 Q=1 · 逆向行星 0.12D（默认）'},{value:'chaotic',label:'v0.5.1 随机四体 · 对照'},{value:'original',label:'原版完全随机'},{value:'balanced',label:'稳定轨道实验'}]},
+     gravityModel:{type:'combo',text:'引力模型 / Gravity',options:[{value:'newtonian',label:'牛顿平方反比 · 无软化（默认）'},{value:'plummer',label:'Plummer 一致软化 · 实验'},{value:'legacy',label:'旧近距引力 · 复现对照'}]},
+@@ -25,4 +26,4 @@ export const settingsDefinitions={
+     music: { type: 'bool', text: '播放原版音乐 · Ether' },
+     volume: { type: 'slider', text: '音乐音量 / Volume', min: 0, max: 1, step: .01 }
+   };
+-export const settingsCategories=[['layout','布局与窗口 / Layout',[]],['simulation','模拟与文明 / Simulation',['seed','orbitalInitialization','gravityModel','encounterAccuracy','physicsMode','civilizationMode','civilizationLevels','developmentRate','thermalGrace','birthDelay','wakeDelay','epochWindow','climateInertia','stellarBreathing','planetStrength']],['view','视角与银河 / View',['viewSensitivity','dragSensitivity','newproperty16','newproperty51','newproperty61','x5','y5','x6','y7','newproperty62','y6','compass','compassOpacity']],['visual','画面与轨迹 / Visual',['renderQuality','trailsLength','pixelRatio','bodyLabels','dust','_1dust1quantity','_1dust1size','_2dust2quantity','_2dust1size']],['audio','声音 / Audio',['music','volume']]];
++export const settingsCategories=[['layout','布局与窗口 / Layout',[]],['simulation','模拟与文明 / Simulation',['seed','orbitalInitialization','gravityModel','encounterAccuracy','physicsMode','civilizationMode','civilizationLevels','developmentRate','thermalGrace','birthDelay','wakeDelay','epochWindow','climateInertia','stellarBreathing','planetStrength']],['view','视角与银河 / View',['viewSensitivity','dragSensitivity','centerOnSystem','newproperty16','newproperty51','newproperty61','x5','y5','x6','y7','newproperty62','y6','compass','compassOpacity']],['visual','画面与轨迹 / Visual',['renderQuality','trailsLength','pixelRatio','bodyLabels','dust','_1dust1quantity','_1dust1size','_2dust2quantity','_2dust1size']],['audio','声音 / Audio',['music','volume']]];
+diff --git a/src/settings.js b/src/settings.js
+index dc5c19c..a373f6f 100644
+--- a/src/settings.js
++++ b/src/settings.js
+@@ -2,7 +2,7 @@ import { propertySchema } from './original-data.js';
+ 
+ export const defaults = Object.fromEntries(Object.entries(propertySchema)
+   .filter(([, d]) => d.type && d.type !== 'group').map(([k, d]) => [k, d.value]));
+-export const extraDefaults = { seed: 'TRISOLARIS', music: false, volume: 0.35, trailsLength: 400, orbitalInitialization: 'research', physicsMode: 'reference', pixelRatio: 4, bodyLabels: false, presentationRevision: 6, layout: {}, viewSensitivity: .12, compassOpacity: .12, planetStrength: 1.6, idleAmplitude: 6, civilizationMode: 'balanced', thermalGrace: 30, wakeDelay: 1, epochWindow: 1/12, epochTimebase: 'years', climateInertia: 1.5, stellarBreathing: true, renderQuality: 'native', dragSensitivity: 5, birthDelay: .5, civilizationLevels: true, developmentRate: 1, gravityModel: 'newtonian', encounterAccuracy: .0075, physicsRevision: 1, manualInitialBodies: null };
++export const extraDefaults = { seed: 'TRISOLARIS', music: false, volume: 0.35, trailsLength: 400, orbitalInitialization: 'research', physicsMode: 'reference', pixelRatio: 4, bodyLabels: false, presentationRevision: 6, layout: {}, viewSensitivity: .12, compassOpacity: .12, planetStrength: 1.6, idleAmplitude: 6, civilizationMode: 'balanced', thermalGrace: 30, wakeDelay: 1, epochWindow: 1/12, epochTimebase: 'years', climateInertia: 1.5, stellarBreathing: true, renderQuality: 'native', dragSensitivity: 5, birthDelay: .5, civilizationLevels: true, developmentRate: 1, gravityModel: 'newtonian', encounterAccuracy: .0075, physicsRevision: 1, manualInitialBodies: null, centerOnSystem: true, galaxyReturnRevision: 1 };
+ // New installs show the requested tails; explicitly saved off/on preferences still win.
+ defaults.newproperty14 = true;
+ defaults.newproperty60 = false;
+@@ -13,7 +13,7 @@ defaults.newproperty67 = 4;
+ defaults.newproperty39 = true;
+ defaults.newproperty45 = -20;
+ defaults.newproperty46 = 40;
+-defaults.newproperty51 = .01;
++defaults.newproperty51 = .003;
+ defaults.newproperty61 = 1;
+ defaults.newproperty3 = 0;
+ defaults.newproperty68 = 0;
+@@ -25,7 +25,7 @@ export const effectivePropertySchema = { ...propertySchema,
+   newproperty43: {...propertySchema.newproperty43,text:'干仓低温耐受 / Dry storage minimum °C'},
+   newproperty44: {...propertySchema.newproperty44,text:'干仓高温耐受 / Dry storage maximum °C'},
+   newproperty16:{...propertySchema.newproperty16,text:'闲置时缓慢回归银河 / Return to Milky Way'},
+-  newproperty51: {...propertySchema.newproperty51,text:'回归银河速度 °/s',value:.01},
++  newproperty51: {...propertySchema.newproperty51,text:'回归银河速度 °/s',value:.003},
+   newproperty61:{...propertySchema.newproperty61,text:'鼠标视角：0 按住拖动 / 1 悬停与拖动 / 2 固定',value:1}
+ };
+ export function normalizeSettings(source = {}, includeExtras = true) {
+@@ -47,6 +47,7 @@ export function normalizeSettings(source = {}, includeExtras = true) {
+     else if(key==='dragSensitivity'&&Number.isFinite(+value))out.dragSensitivity=Math.max(.1,Math.min(20,+value));
+     else if(key==='birthDelay'&&Number.isFinite(+value))out.birthDelay=Math.max(.1,Math.min(10,+value));
+     else if(key==='developmentRate'&&Number.isFinite(+value))out.developmentRate=Math.max(.1,Math.min(20,+value));
++    else if(key==='centerOnSystem')out.centerOnSystem=value===true;
+     else if(key==='civilizationLevels')out.civilizationLevels=value===true;
+     else if(key==='compassOpacity'&&Number.isFinite(+value))out.compassOpacity=Math.max(0,Math.min(.5,+value));
+     else if(key==='orbitalInitialization'&&['research','chaotic','balanced','original'].includes(value))out.orbitalInitialization=value;
+@@ -76,7 +77,7 @@ export function colorRGB(s = '1 1 1') { return s.split(/\s+/).map(Number); }
+ export function colorHex(s) { return '#' + colorRGB(s).map(x => Math.round(x * 255).toString(16).padStart(2, '0')).join(''); }
+ export function fromHex(s) { return [1, 3, 5].map(i => parseInt(s.slice(i, i + 2), 16) / 255).join(' '); }
+ export function plainText(s = '') { return s.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' '); }
+-export function algorithmId(s) { return `sykm-scene-v4-${s.physicsMode}60-civ-${s.civilizationMode}-v052-${s.gravityModel}-${s.orbitalInitialization}-eta${s.encounterAccuracy}-orbits`; }
++export function algorithmId(s) { return `sykm-scene-v4-${s.physicsMode}60-civ-${s.civilizationMode}-v053-tech2-${s.gravityModel}-${s.orbitalInitialization}-eta${s.encounterAccuracy}-orbits`; }
+ export function migrateSettings(saved={},version=3){
+   // v0.5.1: one simulated month replaces the former default two-second window.
+   if(saved.epochTimebase!=='years')saved={...saved,epochWindow:saved.epochWindow===undefined||Math.abs(saved.epochWindow-2)<1e-9?1/12:saved.epochWindow};
+@@ -93,6 +94,7 @@ export function migrateSettings(saved={},version=3){
+   // One-time presentation migration for v0.3 installations with labels enabled.
+   if(saved.presentationRevision!==extraDefaults.presentationRevision)saved={...saved,bodyLabels:saved.presentationRevision>=1?saved.bodyLabels:false,newproperty39:true};
+   if(!saved.physicsRevision)saved={...saved,orbitalInitialization:!saved.orbitalInitialization||saved.orbitalInitialization==='chaotic'?'research':saved.orbitalInitialization,newproperty60:false,gravityModel:'newtonian'};
++  if(!saved.galaxyReturnRevision&&Math.abs((saved.newproperty51??.01)-.01)<1e-9)saved={...saved,newproperty51:.003};
+   if(version<3)return normalizeSettings({...saved,newproperty45:-20,newproperty46:40,newproperty51:Math.abs(saved.newproperty51??3)>=2 ? .01 : (saved.newproperty51??.01),newproperty3:0,newproperty68:0});
+   return normalizeSettings(saved);
+ }
+diff --git a/src/view-motion.js b/src/view-motion.js
+index 622a4a8..222f208 100644
+--- a/src/view-motion.js
++++ b/src/view-motion.js
+@@ -11,10 +11,13 @@ export class ViewMotion {
+     const ax=clamp((x-this.x)*12*response-this.vx*7,-this.acceleration,this.acceleration),ay=clamp((y-this.y)*12*response-this.vy*7,-this.acceleration,this.acceleration);
+     this.vx+=ax*dt;this.vy+=ay*dt;this.x+=this.vx*dt;this.y+=this.vy*dt;this.bound();
+   }
+-  returnToOrigin(dt,speed=.01){
+-    if(dt<=0||speed<=0)return;const step=speed*Math.PI/180*dt;
++  returnToOrigin(dt,speed=.003){
++    if(dt<=0||speed<=0)return;
++    this.vx=0;this.vy=0;
+     this.y=Math.atan2(Math.sin(this.y),Math.cos(this.y));
+-    const approach=x=>Math.sign(x)*Math.max(0,Math.abs(x)-step);this.x=approach(this.x);this.y=approach(this.y);
++    const distance=Math.hypot(this.x,this.y),step=speed*Math.PI/180*dt;
++    if(distance<=step){this.x=0;this.y=0;return;}
++    const factor=1-step/distance;this.x*=factor;this.y*=factor;
+   }
+   bound(){const next=clamp(this.x,-Math.PI/6,Math.PI/6);if(next!==this.x)this.vx=0;this.x=next;}
+ }
+diff --git a/tests/habitability.test.js b/tests/habitability.test.js
+index 74602b9..9e72a81 100644
+--- a/tests/habitability.test.js
++++ b/tests/habitability.test.js
+@@ -61,5 +61,5 @@ test('tail visibility and color never reset physical trajectories',()=>{
+  const a=new Simulation(),b=new Simulation();for(let i=0;i<120;i++){a.tick();b.tick();}a.configure({newproperty14:false,brfontcoloraaaaaatrail1color:'1 0 0',trailsLength:120});for(let i=0;i<120;i++){a.tick();b.tick();}assert.deepEqual(a.snapshot().bodies,b.snapshot().bodies);
+ });
+ test('previous settings migrate the requested slow rotation, activity bounds and clarity',()=>{
+- const migrated=migrateSettings({newproperty51:3,newproperty45:-55,newproperty46:70},2);assert.equal(migrated.newproperty51,.01);assert.equal(migrated.newproperty45,-20);assert.equal(migrated.newproperty46,40);assert.equal(migrated.newproperty68,0);assert.equal(migrateSettings({newproperty51:.001},2).newproperty51,.001);
++ const migrated=migrateSettings({newproperty51:3,newproperty45:-55,newproperty46:70},2);assert.equal(migrated.newproperty51,.003);assert.equal(migrated.newproperty45,-20);assert.equal(migrated.newproperty46,40);assert.equal(migrated.newproperty68,0);assert.equal(migrateSettings({newproperty51:.001},2).newproperty51,.001);
+ });
+diff --git a/tests/simulation.test.js b/tests/simulation.test.js
+index 8208de8..ccd1247 100644
+--- a/tests/simulation.test.js
++++ b/tests/simulation.test.js
+@@ -19,7 +19,7 @@ test('183 original controls retain definitions, with the requested trails enable
+   const controls = Object.entries(propertySchema).filter(([, p]) => p.type && p.type !== 'group');
+   assert.equal(controls.length, 183);
+   const config = normalizeSettings();
+-  for (const [key, def] of controls) assert.deepEqual(config[key], ({newproperty60:false,newproperty14:true,brfontcoloraaaaaarandomposrange:3.2,rc:1.6,k2:.3,newproperty67:4,newproperty39:true,newproperty45:-20,newproperty46:40,newproperty51:.01,newproperty61:1,newproperty3:0,newproperty68:0})[key] ?? def.value, key);
++  for (const [key, def] of controls) assert.deepEqual(config[key], ({newproperty60:false,newproperty14:true,brfontcoloraaaaaarandomposrange:3.2,rc:1.6,k2:.3,newproperty67:4,newproperty39:true,newproperty45:-20,newproperty46:40,newproperty51:.003,newproperty61:1,newproperty3:0,newproperty68:0})[key] ?? def.value, key);
+   const sim = new Simulation();
+   assert.equal(sim.modules['008'].scriptProperties.fourthMass, 5000);
+   assert.equal(sim.modules['008'].scriptProperties.constraint_M, 15000000);
+diff --git a/tests/v041-hotfix.test.js b/tests/v041-hotfix.test.js
+index e0a5217..eea3a4d 100644
+--- a/tests/v041-hotfix.test.js
++++ b/tests/v041-hotfix.test.js
+@@ -6,7 +6,7 @@ import {measure} from '../tools/orbital-audit.mjs';
+ import {prepareBalancedOrbits} from '../src/orbital-initialization.js';
+ 
+ test('existing v0.4.1 profiles regain hover follow and slow galaxy return without losing layout',()=>{
+- const s=migrateSettings({presentationRevision:3,newproperty61:0,newproperty51:.08,layout:{right:{x:70,y:30}},seed:'KEEP',planetStrength:2});assert.equal(s.newproperty61,1);assert.equal(s.newproperty51,.01);assert.equal(s.orbitalInitialization,'research');assert.deepEqual(s.layout.right,{x:70,y:30});assert.equal(s.seed,'KEEP');assert.equal(s.planetStrength,2);
++ const s=migrateSettings({presentationRevision:3,newproperty61:0,newproperty51:.08,layout:{right:{x:70,y:30}},seed:'KEEP',planetStrength:2});assert.equal(s.newproperty61,1);assert.equal(s.newproperty51,.003);assert.equal(s.orbitalInitialization,'research');assert.deepEqual(s.layout.right,{x:70,y:30});assert.equal(s.seed,'KEEP');assert.equal(s.planetStrength,2);
+  const explicit=migrateSettings({...s,presentationRevision:4,newproperty61:0,newproperty51:.001,orbitalInitialization:'original'});assert.equal(explicit.newproperty61,0);assert.equal(explicit.newproperty51,.001);assert.equal(explicit.orbitalInitialization,'original');
+ });
+ test('historical v0.4.1 balanced cage profile permits sustained development and planetary passages inside the star system',()=>{
+diff --git a/tests/v041.test.js b/tests/v041.test.js
+index 301b343..6361fd6 100644
+--- a/tests/v041.test.js
++++ b/tests/v041.test.js
+@@ -47,9 +47,9 @@ test('drag no longer saturates, horizontal gain is lower and follow acceleration
+  const a=new ViewMotion();a.drag(.1,0);assert.equal(a.vy,.4);a.drag(.1,0);assert.equal(a.vy,.8);assert.ok(a.vy>.55);assert.equal(a.acceleration,.75);
+ });
+ test('idle return follows the nearest galaxy heading extremely slowly without overshoot',()=>{
+- const m=new ViewMotion();m.x=.1;m.y=2*Math.PI+.2;m.returnToOrigin(60);assert.ok(Math.abs(m.y-(.2-Math.PI/300))<1e-12);assert.ok(m.x>0&&m.x<.1);m.returnToOrigin(100000);assert.equal(m.x,0);assert.equal(m.y,0);m.returnToOrigin(1);assert.equal(m.y,0);
++ const m=new ViewMotion();m.x=.1;m.y=2*Math.PI+.2;m.returnToOrigin(60);assert.ok(Math.abs(Math.hypot(m.x,m.y)-(Math.hypot(.1,.2)-.003*Math.PI/3))<1e-12);assert.ok(m.x>0&&m.x<.1);m.returnToOrigin(100000);assert.equal(m.x,0);assert.equal(m.y,0);m.returnToOrigin(1);assert.equal(m.y,0);
+ });
+ test('window settings clamp coordinates and migrate defaults without losing custom layout',()=>{
+  assert.deepEqual(clampWindow(-10,900,200,100,800,600),{x:4,y:496});const config=normalizeSettings({layout:{left:{x:-10,y:200},bad:{x:10,y:10},clock:{x:NaN,y:1}}});assert.deepEqual(config.layout,{left:{x:0,y:100}});
+- const migrated=migrateSettings({presentationRevision:2,newproperty51:.35,newproperty61:'1',layout:{clock:{x:20,y:10}}});assert.equal(migrated.newproperty51,.01);assert.equal(migrated.newproperty61,1);assert.deepEqual(migrated.layout.clock,{x:20,y:10});
++ const migrated=migrateSettings({presentationRevision:2,newproperty51:.35,newproperty61:'1',layout:{clock:{x:20,y:10}}});assert.equal(migrated.newproperty51,.003);assert.equal(migrated.newproperty61,1);assert.deepEqual(migrated.layout.clock,{x:20,y:10});
+ });
+diff --git a/tests/v05.test.js b/tests/v05.test.js
+index 7630d75..0f771f2 100644
+--- a/tests/v05.test.js
++++ b/tests/v05.test.js
+@@ -10,31 +10,31 @@ import {RunStatistics} from '../src/run-statistics.js';
+ const settings=normalizeSettings({autorestart:false,stellarBreathing:false});
+ function fixture(overrides={}){
+  const config=normalizeSettings({...settings,...overrides}),shared={civilizationAlive:false,civilizationCount:1,civilizationStartTime:0,lastCivilizationLifespan:0,civilizationRecords:[],universeNumber:2};
+- const civ=new CivilizationState(shared),hab=new Habitability();let time=0;
+- return {civ,hab,shared,config,run(seconds,temperature=20,safe=true){for(let i=0;i<Math.round(seconds*60);i++){time+=1/60;const world={planet:{temperature,terminal:null},phenomena:[],safeToWake:safe};hab.update({tem:temperature},config,1/60,{alive:shared.civilizationAlive,number:shared.civilizationCount,phase:civ.phase,developmentYears:civ.developmentYears});civ.update(world,hab.result,config,time,time);}}};
++ const civ=new CivilizationState(shared),transitions=[];const originalLog=civ.log.bind(civ);civ.log=(kind,...args)=>{if(kind==='level')transitions.push(args);return originalLog(kind,...args);};const hab=new Habitability();let time=0;
++ return {civ,hab,shared,config,transitions,run(seconds,temperature=20,safe=true){for(let i=0;i<Math.round(seconds*60);i++){time+=1/60;const world={planet:{temperature,terminal:null},phenomena:[],safeToWake:safe};hab.update({tem:temperature},config,1/60,{alive:shared.civilizationAlive,number:shared.civilizationCount,phase:civ.phase,developmentYears:civ.developmentYears});civ.update(world,hab.result,config,time,time);}}};
+ }
+ test('empty worlds have no reserves; a late birth starts a fresh, healthy civilization',()=>{
+  const f=fixture();f.run(300,-250);assert.equal(f.hab.health,null);assert.equal(f.hab.population,null);assert.equal(f.civ.result.development,null);assert.equal(f.shared.civilizationAlive,false);
+  f.run(1);assert.equal(f.shared.civilizationAlive,true);assert.equal(f.hab.health,1);assert.equal(f.civ.result.development.level,1);
+ });
+ test('safe dry storage preserves population, quality, civilization identity and accumulated development',()=>{
+- const f=fixture();f.run(8);const stage=f.civ.result.development;assert.equal(stage.level,2);f.run(150,-80);assert.equal(f.shared.civilizationAlive,true);assert.equal(f.civ.phase,'dormant');assert.ok(f.hab.health>.98);assert.equal(f.civ.result.development.developmentYears,stage.developmentYears);
++ const f=fixture();f.run(205);const stage=f.civ.result.development;assert.equal(stage.level,2);f.run(150,-80);assert.equal(f.shared.civilizationAlive,true);assert.equal(f.civ.phase,'dormant');assert.ok(f.hab.health>.98);assert.equal(f.civ.result.development.developmentYears,stage.developmentYears);
+  f.run(4);assert.equal(f.civ.phase,'active');assert.equal(f.shared.civilizationCount,1);assert.equal(f.civ.logs.filter(x=>x.kind==='birth').length,1);assert.equal(f.civ.result.development.level,2);
+ });
+ test('population and dry quality measure different losses, with higher levels providing stronger climate protection',()=>{
+- const a=new Habitability(),b=new Habitability();for(let i=0;i<6000;i++){a.update({tem:-220},settings,1/60,{alive:true,number:1,phase:'dormant',developmentYears:0});b.update({tem:-220},settings,1/60,{alive:true,number:2,phase:'dormant',developmentYears:150});}
+- assert.ok(a.storageQuality<a.population);assert.ok(b.health>a.health);assert.equal(a.result.low,-20);assert.equal(b.result.low,-48);assert.equal(b.result.high,68);assert.equal(b.result.storageLow,settings.newproperty43-130);
++ const a=new Habitability(),b=new Habitability();for(let i=0;i<6000;i++){a.update({tem:-220},settings,1/60,{alive:true,number:1,phase:'dormant',developmentYears:0});b.update({tem:-220},settings,1/60,{alive:true,number:2,phase:'dormant',developmentYears:28000});}
++ assert.ok(a.storageQuality<a.population);assert.ok(b.health>a.health);assert.equal(a.result.low,-20);assert.equal(b.result.low,-55);assert.equal(b.result.high,75);assert.equal(b.result.storageLow,settings.newproperty43-165);
+ });
+ test('extended resilience remains finite in sustained extreme heat and resets only for the next civilization',()=>{
+  const f=fixture();f.run(2);f.run(180,1500);assert.equal(f.shared.civilizationAlive,false);assert.equal(f.shared.civilizationRecords.length,1);assert.equal(f.hab.health,null);f.run(1);assert.equal(f.shared.civilizationAlive,true);assert.equal(f.shared.civilizationCount,2);assert.equal(f.civ.result.development.level,1);assert.equal(f.hab.health,1);
+ });
+-test('only actual safe production drives all six technology stages, retaining maximum stage in death records',()=>{
+- const f=fixture();f.run(355);assert.equal(f.civ.result.development.level,6);assert.equal(f.civ.logs.filter(x=>x.kind==='level').length,5);assert.ok(f.civ.result.development.developmentYears>=350);
+- f.civ.destroy({zh:'测试',en:'Test'},400,400,f.config);assert.equal(f.shared.civilizationRecords[0].development.level,6);assert.equal(f.civ.result.development,null);
++test('only actual safe production drives all twelve technology stages, retaining maximum stage in death records',()=>{
++ const f=fixture({developmentRate:20});f.run(2002);assert.equal(f.civ.result.development.level,12);assert.equal(f.transitions.length,11);assert.ok(f.civ.result.development.developmentYears>=40000);
++ f.civ.destroy({zh:'测试',en:'Test'},400,400,f.config);assert.equal(f.shared.civilizationRecords[0].development.level,12);assert.equal(f.civ.result.development,null);
+  const g=fixture({civilizationLevels:false});g.run(30);assert.equal(g.civ.developmentYears,0);assert.equal(g.civ.result.development.level,1);
+ });
+ test('development multiplier affects progression but not lifespan or original physical trajectories',()=>{
+- const a=fixture(),b=fixture({developmentRate:4});a.run(7);b.run(7);assert.ok(b.civ.developmentYears>a.civ.developmentYears*3.99);assert.equal(a.shared.civilizationStartTime,b.shared.civilizationStartTime);assert.ok(levelFor(b.civ.developmentYears).level>levelFor(a.civ.developmentYears).level);
++ const a=fixture(),b=fixture({developmentRate:4});a.run(60);b.run(60);assert.ok(b.civ.developmentYears>a.civ.developmentYears*3.99);assert.equal(a.shared.civilizationStartTime,b.shared.civilizationStartTime);assert.ok(levelFor(b.civ.developmentYears).level>levelFor(a.civ.developmentYears).level);
+  const sa=new Simulation(),sb=new Simulation({developmentRate:4,dragSensitivity:11});for(let i=0;i<180;i++){sa.tick();sb.tick();}assert.deepEqual(sa.snapshot().bodies,sb.snapshot().bodies);
+ });
+ test('v0.5 migration upgrades old defaults while retaining custom survival, view and cage preferences',()=>{
+diff --git a/tests/v053.test.js b/tests/v053.test.js
+new file mode 100644
+index 0000000..30a3fd3
+--- /dev/null
++++ b/tests/v053.test.js
+@@ -0,0 +1,46 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {ViewMotion} from '../src/view-motion.js';
++import {displayCenter} from '../src/display-center.js';
++import {invariants} from '../src/physics/gravity.js';
++import {normalizeSettings,migrateSettings} from '../src/settings.js';
++import {civilizationLevels,levelFor} from '../src/civilization-levels.js';
++import {CivilizationState} from '../src/civilization-state.js';
++import {Simulation} from '../src/simulation.js';
++const body=(x,y=0,mass=5e6)=>({x,y,z:0,vx:0,vy:0,vz:0,mass});
++
++test('idle return cancels residual inertia and obeys one total angular-speed cap without overshoot',()=>{
++ const m=new ViewMotion();m.x=.1;m.y=2*Math.PI+.2;m.vx=2;m.vy=-4;
++ const distance=Math.hypot(.1,.2),speed=.003*Math.PI/180;
++ m.returnToOrigin(1,.003);assert.equal(m.vx,0);assert.equal(m.vy,0);assert.ok(Math.abs(Math.hypot(m.x,m.y)-(distance-speed))<1e-14);
++ let previous=Math.hypot(m.x,m.y);for(let i=0;i<100;i++){m.returnToOrigin(1/60,.003);const current=Math.hypot(m.x,m.y);assert.ok(current<=previous);assert.ok(previous-current<=speed/60+1e-14);previous=current;}
++ m.returnToOrigin(100000,.003);assert.equal(m.x,0);assert.equal(m.y,0);m.returnToOrigin(1);assert.equal(m.y,0);
++});
++test('galaxy-return migration is once-only and retains custom speeds and independent view preferences',()=>{
++ const old=migrateSettings({presentationRevision:6,newproperty51:.01,viewSensitivity:.04,layout:{clock:{x:20,y:12}}});assert.equal(old.newproperty51,.003);assert.equal(old.viewSensitivity,.04);assert.deepEqual(old.layout.clock,{x:20,y:12});
++ assert.equal(migrateSettings({presentationRevision:6,newproperty51:.001}).newproperty51,.001);
++ assert.equal(migrateSettings({...old,newproperty51:.01}).newproperty51,.01);assert.equal(normalizeSettings().newproperty51,.003);
++});
++test('a runaway planet cannot drag the tracked stellar center away; the physical state and invariants remain exact',()=>{
++ const b=[body(-2.3),body(-1.7),body(-2,.4),body(6000,0,5000)],copy=structuredClone(b),before=invariants(b,1.3275440274585598e-8),c=displayCenter(b);
++ assert.ok(Math.abs(c.x+2)<1e-14);assert.deepEqual(b,copy);assert.deepEqual(invariants(b,1.3275440274585598e-8),before);
++});
++test('stellar tracking follows the compact pair when a third star physically escapes, preserving the full state',()=>{
++ const b=[body(1000),body(-2.1),body(-1.9),body(2,0,5000)],copy=structuredClone(b);assert.equal(displayCenter(b).x,-2);assert.deepEqual(b,copy);
++ assert.deepEqual(displayCenter(b.map(x=>({...x,mass:0})),{x:1,y:2,z:3}),{x:1,y:2,z:3});
++});
++test('centering toggle and galaxy motion settings do not change trajectories or energy diagnostics',()=>{
++ const a=new Simulation({seed:'V053-RENDER-ONLY',autorestart:false}),b=new Simulation({seed:'V053-RENDER-ONLY',autorestart:false,centerOnSystem:false,newproperty51:.1});
++ for(let i=0;i<1200;i++){a.tick();b.tick();}assert.deepEqual(a.snapshot().bodies,b.snapshot().bodies);assert.deepEqual(a.snapshot().physics,b.snapshot().physics);
++});
++test('technology starts at the Paleolithic age and no longer reaches a space age after 350 production years',()=>{
++ assert.equal(civilizationLevels.length,12);assert.equal(levelFor(0).zh,'旧石器时代');assert.equal(levelFor(199.9).level,1);assert.equal(levelFor(200).zh,'新石器时代');assert.equal(levelFor(350).level,2);assert.equal(levelFor(800).zh,'青铜时代');assert.equal(levelFor(40000).level,12);
++ assert.equal(levelFor(40000,false).level,1);
++});
++test('technology never advances during current-frame unsafe climate, dormancy or terminal destruction',()=>{
++ const config=normalizeSettings(),shared={civilizationAlive:true,civilizationCount:1,civilizationStartTime:0,civilizationRecords:[],universeNumber:1},c=new CivilizationState(shared);
++ const safe={planet:{temperature:20,terminal:null},phenomena:[],safeToWake:true},hab={canGrow:true,comfortable:true,thermalFatal:false};c.update(safe,hab,config,0,0);
++ c.update({...safe,planet:{temperature:1500,terminal:null}},{...hab,canGrow:false,comfortable:false},config,100,1);assert.equal(c.developmentYears,0);
++ c.phase='dormant';c.update(safe,hab,config,200,2);assert.equal(c.developmentYears,0);
++ c.phase='active';c.update({...safe,planet:{temperature:20,terminal:{kind:'engulfed',zh:'测试',en:'Test'}}},hab,config,300,3);assert.equal(c.developmentYears,0);assert.equal(shared.civilizationAlive,false);
++});
+diff --git a/tools/generate-settings-guide.mjs b/tools/generate-settings-guide.mjs
+index 7d7a600..6756611 100644
+--- a/tools/generate-settings-guide.mjs
++++ b/tools/generate-settings-guide.mjs
+@@ -12,7 +12,8 @@ const descriptions={
+  orbitalInitialization:'research（默认）：随机三星 Q=1，第三颗恒星为宿主，0.12D 逆向近圆行星，包含反冲；不筛种子。chaotic：不规则三维四体、局部引力尺度初速；original：原版随机速度；balanced：可选稳定实验。兼容对照。手动初值开启时不使用这些随机准备步骤。',
+  physicsMode:'reference 每秒60次检测，每帧推进0.0075求解时间；realtime 每帧推进1/60。新引擎在此预算内自动增加近遇子步，最大步长不会改变时钟。legacy 保留旧的最多10次积分行为。',
+  civilizationMode:'balanced 使用人口、干仓、脱水和文明等级；legacy 使用原版适温计数/即时灾变。切换会重置当前文明状态机；不要用两种模式比较同一榜单的物理真实性。',
+- civilizationLevels:'启用六级文明发展与保护增益；关闭后科技积累暂停，采用Lv.1基础耐受。重新启用保留同一文明此前积累。原版即时判定模式不使用此系统。',
++ centerOnSystem:'仅调整渲染位置，使恒星系保持在画面中央；排除远抛行星的质心偏移，三星明显分离时跟随紧密恒星对。关闭后恢复四体物理质心视图。不会改变天体坐标、速度、引力或能量。',
++ civilizationLevels:'启用十二阶段文明发展与保护增益；关闭后科技积累暂停，采用Lv.1基础耐受。重新启用保留同一文明此前积累。原版即时判定模式不使用此系统。',
+  developmentRate:'仅放大实际安全生产时的科技积累；不会增加寿命读数或物理速度。默认1表示每个实际发展年积累1科技年。',
+  thermalGrace:'文明人口/干仓损耗的时间分母；越大越耐久。30是损耗基准，不是30秒必死倒计时。文明等级会再乘保护系数。',
+  birthDelay:'尚无文明时，适温且安全的连续窗口长度；默认0.5秒。出生时才建立100%人口储备和干仓质量。',
+@@ -26,7 +27,7 @@ const descriptions={
+  compassOpacity:'旋转环最大不透明度；0隐藏、0.12=12%不透明。实际值再乘淡入淡出系数；环大小固定为原尺寸0.3倍。',
+  newproperty61:'0只拖动；1悬停跟随与左键拖动同时可用；2固定视角。模式1拖动结束后将当前位置作为悬停基准，避免回跳。',
+  newproperty16:'连续2秒没有鼠标输入后，以设定的极慢速度回归银河最亮区域。不是持续绕圈，也不是自动左右摇摆。',
+- newproperty51:'闲置回归的每轴最大速度，单位度/秒；默认0.01°/s。保留鼠标惯性，未新增最高旋转速度限制。',
++ newproperty51:'银河归位的总角速度上限，单位度/秒；默认0.003°/s。无输入2秒后回中独立接管并清除残余惯性；手动操作仍保留惯性和原灵敏度。0或负值停止归位。',
+  x5:'俯仰轴灵敏度；同时影响悬停和拖动。最终俯仰仍有±30°范围保护。',
+  y5:'水平旋转轴灵敏度；同时影响悬停和拖动。水平角可连续旋转。',
+  x6:'横向鼠标位置对应的悬停目标角度范围；还要乘水平灵敏度与整体倍率。',
+@@ -113,13 +114,13 @@ export function guideControls(){
+ const format=value=>typeof value==='boolean'?(value?'开':'关'):String(value===''?'（空）':value);
+ const cell=v=>String(v).replaceAll('|',' / ').replaceAll('\n',' ');
+ export async function generateSettingsGuide(){
+- const controls=guideControls();let md=`# 三体实时演算 v0.5 完整设置说明\n\n本文更新到v0.5.2；恒纪元确认仍为一个模拟月，文明与视觉设置不变。物理与随机初始化升级，详见 docs/v052/ACCEPTANCE.md。本文对应实际界面中的 **${controls.length} 项控件**：183项原版兼容设置、${controls.length-193}项扩展设置和10项窗口坐标。控件目录直接由界面共用的 settings-catalog.js 和原版属性表生成，默认值来自 settings.js。\n\n## 1. 先看这张设置结构\n\n\`\`\`text\n右下角齿轮\n├─ 暂停 / 重启宇宙 / 全屏\n├─ 搜索：可以搜中文名称，也可以搜参数键（例如 k2）\n├─ 全部设置\n│  ├─ 布局与窗口：五个窗口位置、显隐、拖动编辑\n│  ├─ 模拟与文明：种子、轨道模式、韧性、等级和气候\n│  ├─ 视角与银河：悬停、拖拽、阻尼、旋转环、闲置回归\n│  ├─ 画面与轨迹：分辨率、尾迹、两层粒子\n│  ├─ 声音：音乐、音量\n│  └─ 原版高级设置：物理、牢笼、温度、手动初值、外观与旧UI参数\n├─ 文明档案：查看终结记录、等级、发展年数、导出和复现初值\n├─ 项目说明：版本、架构、本说明入口\n└─ 导出种子 / 导入种子 / 恢复默认\n\`\`\`\n\n改动通过本机 localStorage 保存；自定义背景和文明档案放在 IndexedDB。不同浏览器/设备不自动同步，没有在线排行榜。刷新会结算上一次运行并新开一个宇宙，当前人口和轨道不支持断点续跑。右侧累计年数和历史排行会保留。\n\n## 2. 最常用的调整\n\n| 想要什么 | 调哪里 | 建议与区别 |\n|---|---|---|\n| 文明更耐久 | 模拟与文明 → 文明耐受时间基准 | 增大 thermalGrace；延缓损耗，不让文明永生。 |\n| 先看到文明诞生 | 文明诞生安全窗口 | 默认0.5秒；和原文明复苏所需1秒分别设置。 |\n| 等级升级快一点 | 文明发展倍率 | 例如2；只放大发展进度，不把休眠计为生产。 |\n| 行星更常回到系统 | 高级 → 天体运动 → k2 | 默认关闭牢笼，此参数不生效；手动启用后默认0.30。提高会引入非牛顿约束，不能用于纯牛顿基准。 |\n| 鼠标整体更慢 | 视角与银河 → 整体视角灵敏度 | 0.12→0.06；悬停和拖动同时减半。 |\n| 只改拖动幅度 | 拖拽灵敏度倍率 | 默认5；改2会保持悬停原样、降低拖动。 |\n| 惯性更快停下 | y轴阻尼 | 减小 y6，越接近1越难停。 |\n| 环更透明 | 旋转环不透明度 | 0.12即12%不透明。0完全隐藏。 |\n| 银河回归更慢 | 回归银河速度 | 默认0.01度/秒；连续2秒无输入才回归。 |\n| 少一点粒子 | 画面与轨迹 → 尘埃1计数 | 只改近景；点大小另由尘埃1大小控制。 |\n| 让画面更清晰 | 原生分辨率/8K与高级后处理 | 胶片颗粒、CRT默认关闭；径向模糊仍可自行调整。 |\n\n## 3. 文明韧性、等级与死亡是怎样算的\n\n环境适宜度反映当前温度和潮汐，不等于文明还剩多少生命。文明没诞生前，人口、干仓质量、韧性和等级显示为“—”，不会被几百年的严寒提前扣光。短暂但连续安全的窗口满足 birthDelay 后才建立新文明，两个储备从100%开始。\n\n文明具有两种归一化储备，百分比不是虚构的精确人口普查：人口储备表示可延续的人口，干仓质量表示脱水生命和保存体系的完好程度。综合韧性=人口储备×干仓质量。安全且处于活动状态时，两者每模拟秒分别恢复1.5和1个百分点，最高100%。脱水储存范围以内不凭时间强制扣寿命；超出干仓耐受范围才持续损失保存质量，同时以较慢速度损失人口。已恢复的旧结构损伤不会继续作为固定伤害源。\n\n保护分母=thermalGrace×等级韧性倍率。休眠气候损耗率=(0.015+超出干仓温度范围的摄氏度/2000)/保护分母；没有越界时为0。人口承受此损耗的15%。尚未脱水的异常气候人口损耗=(0.05+超出活动温区的度数/300)/保护分母。当前有效潮汐应力超过1时另有结构损耗；不是一有“飞星”就杀死文明。任一储备降至1%或以下，文明终结。恒星吞噬、行星完整度归零则立即结束文明；高级文明也没有免疫这些事件。\n\n阶段流程：安全生产 → 不适宜时脱水（1秒）→ 干仓保存 → 连续安全 wakeDelay 秒 → 浸泡（0.5秒）→ 恢复同一文明。浸泡中环境再次不安全，回干仓；编号与等级保留。文明终结后再遇安全窗口才产生新编号，科技从头开始。\n\n| 等级 | 阶段 | 累计发展年数 | 损耗保护倍率 | 活动温区（默认） | 干仓温区（默认） |\n|---|---|---|---|---|---|\n`;
++ const controls=guideControls();let md=`# 三体实时演算 v0.5 完整设置说明\n\n本文更新到v0.5.3：修复显示中心和银河归位，科技从旧石器时代开始扩展为十二阶段并显著放慢。牛顿物理与v0.5.2一致；完整说明见docs/v053/RELEASE.md。本文对应实际界面中的 **${controls.length} 项控件**：183项原版兼容设置、${controls.length-193}项扩展设置和10项窗口坐标。控件目录直接由界面共用的 settings-catalog.js 和原版属性表生成，默认值来自 settings.js。\n\n## 1. 先看这张设置结构\n\n\`\`\`text\n右下角齿轮\n├─ 暂停 / 重启宇宙 / 全屏\n├─ 搜索：可以搜中文名称，也可以搜参数键（例如 k2）\n├─ 全部设置\n│  ├─ 布局与窗口：五个窗口位置、显隐、拖动编辑\n│  ├─ 模拟与文明：种子、轨道模式、韧性、等级和气候\n│  ├─ 视角与银河：悬停、拖拽、阻尼、旋转环、闲置回归\n│  ├─ 画面与轨迹：分辨率、尾迹、两层粒子\n│  ├─ 声音：音乐、音量\n│  └─ 原版高级设置：物理、牢笼、温度、手动初值、外观与旧UI参数\n├─ 文明档案：查看终结记录、等级、发展年数、导出和复现初值\n├─ 项目说明：版本、架构、本说明入口\n└─ 导出种子 / 导入种子 / 恢复默认\n\`\`\`\n\n改动通过本机 localStorage 保存；自定义背景和文明档案放在 IndexedDB。不同浏览器/设备不自动同步，没有在线排行榜。刷新会结算上一次运行并新开一个宇宙，当前人口和轨道不支持断点续跑。右侧累计年数和历史排行会保留。\n\n## 2. 最常用的调整\n\n| 想要什么 | 调哪里 | 建议与区别 |\n|---|---|---|\n| 文明更耐久 | 模拟与文明 → 文明耐受时间基准 | 增大 thermalGrace；延缓损耗，不让文明永生。 |\n| 先看到文明诞生 | 文明诞生安全窗口 | 默认0.5秒；和原文明复苏所需1秒分别设置。 |\n| 等级升级快一点 | 文明发展倍率 | 例如2；只放大发展进度，不把休眠计为生产。 |\n| 行星更常回到系统 | 高级 → 天体运动 → k2 | 默认关闭牢笼，此参数不生效；手动启用后默认0.30。提高会引入非牛顿约束，不能用于纯牛顿基准。 |\n| 鼠标整体更慢 | 视角与银河 → 整体视角灵敏度 | 0.12→0.06；悬停和拖动同时减半。 |\n| 只改拖动幅度 | 拖拽灵敏度倍率 | 默认5；改2会保持悬停原样、降低拖动。 |\n| 惯性更快停下 | y轴阻尼 | 减小 y6，越接近1越难停。 |\n| 环更透明 | 旋转环不透明度 | 0.12即12%不透明。0完全隐藏。 |\n| 银河回归更慢 | 回归银河速度 | 默认0.003度/秒；连续2秒无输入才回归。 |\n| 少一点粒子 | 画面与轨迹 → 尘埃1计数 | 只改近景；点大小另由尘埃1大小控制。 |\n| 让画面更清晰 | 原生分辨率/8K与高级后处理 | 胶片颗粒、CRT默认关闭；径向模糊仍可自行调整。 |\n\n## 3. 文明韧性、等级与死亡是怎样算的\n\n环境适宜度反映当前温度和潮汐，不等于文明还剩多少生命。文明没诞生前，人口、干仓质量、韧性和等级显示为“—”，不会被几百年的严寒提前扣光。短暂但连续安全的窗口满足 birthDelay 后才建立新文明，两个储备从100%开始。\n\n文明具有两种归一化储备，百分比不是虚构的精确人口普查：人口储备表示可延续的人口，干仓质量表示脱水生命和保存体系的完好程度。综合韧性=人口储备×干仓质量。安全且处于活动状态时，两者每模拟秒分别恢复1.5和1个百分点，最高100%。脱水储存范围以内不凭时间强制扣寿命；超出干仓耐受范围才持续损失保存质量，同时以较慢速度损失人口。已恢复的旧结构损伤不会继续作为固定伤害源。\n\n保护分母=thermalGrace×等级韧性倍率。休眠气候损耗率=(0.015+超出干仓温度范围的摄氏度/2000)/保护分母；没有越界时为0。人口承受此损耗的15%。尚未脱水的异常气候人口损耗=(0.05+超出活动温区的度数/300)/保护分母。当前有效潮汐应力超过1时另有结构损耗；不是一有“飞星”就杀死文明。任一储备降至1%或以下，文明终结。恒星吞噬、行星完整度归零则立即结束文明；高级文明也没有免疫这些事件。\n\n阶段流程：安全生产 → 不适宜时脱水（1秒）→ 干仓保存 → 连续安全 wakeDelay 秒 → 浸泡（0.5秒）→ 恢复同一文明。浸泡中环境再次不安全，回干仓；编号与等级保留。文明终结后再遇安全窗口才产生新编号，科技从头开始。\n\n| 等级 | 阶段 | 累计发展年数 | 损耗保护倍率 | 活动温区（默认） | 干仓温区（默认） |\n|---|---|---|---|---|---|\n`;
+  for(const s of civilizationLevels)md+=`| Lv.${s.level} | ${s.zh} | ${s.years} | ${s.resilience}× | ${defaults.newproperty45-s.climate}～${defaults.newproperty46+s.climate}°C | ${defaults.newproperty43-s.storage}～${defaults.newproperty44+s.storage}°C |\n`;
+- md+=`\n发展年数只在文明确实处于“恢复生产/发展”、温度合适且行星安全时积累，再乘 developmentRate。**文明寿命包含休眠，科技发展年数不包含休眠。** 如果改动基础温区，表中所有等级范围会随之平移/扩展。文明阶段参考原著展示的农业、工业、原子信息及远航发展方向；5/20/60/150/350年阈值与保护倍率都是本版本的设计，并非小说给定数值；没有假装已经实现智子制造或真实星际迁移。\n\n恒/乱纪元独立按轨道束缚与扰动判断。乱纪元可有短暂适温窗口，寒冷恒纪元也不一定适合生产。现代模式中，只要行星尚可恢复，就不因“飞得远”“文明死亡”或“气温极端”自动开新宇宙；结构可恢复与文明能否延续是两个不同问题。\n\n日志只保留最近12个事件、屏幕最多6行：文明启动、毁灭、每50年寿命里程碑、等级晋升，以及确认超过0.5秒的三日连珠/三日凌空/飞星不动，同类天象冷却60模拟秒。常规飞星、脱水切换等不逐条刷屏。\n\n## 4. 每个控件的完整参考\n\n“默认”指v0.5.2新安装值。v0.5.2 默认 research 初始化、newtonian 引力、牢笼关闭；旧配置升级会切换这些默认项。相同 Seed 的轨迹已改变，要复现 v0.5.1 必须显式选择 chaotic + legacy 并恢复旧牢笼与其余参数。升级时原有自定义值保留；仅识别到旧默认 k2=0.22、thermalGrace=8、wakeDelay=3 时迁移为0.30、30、1。v0.5.1还把旧默认epochWindow=2迁移为1/12模拟年；其他明确自定义值保留数值，按模拟年解释，并记录epochTimebase=years。已保存的灵敏度、窗口位置、背景、音量和档案继续保留。表内“兼容保留/不生效”项如实列出，避免误以为滑块必定改变现代逻辑。\n`;
++ md+=`\n发展年数只在文明确实处于“恢复生产/发展”、温度合适且行星安全时积累，再乘 developmentRate。**文明寿命包含休眠，科技发展年数不包含休眠。** 如果改动基础温区，表中所有等级范围会随之平移/扩展。文明阶段参考原著展示的农业、工业、原子信息及远航发展方向；200/800/1800/3500/6000/9000/12000/16000/21000/28000/40000生产年阈值与保护倍率都是本版本的设计，并非小说给定数值；没有假装已经实现智子制造或真实星际迁移。\n\n恒/乱纪元独立按轨道束缚与扰动判断。乱纪元可有短暂适温窗口，寒冷恒纪元也不一定适合生产。现代模式中，只要行星尚可恢复，就不因“飞得远”“文明死亡”或“气温极端”自动开新宇宙；结构可恢复与文明能否延续是两个不同问题。\n\n日志只保留最近12个事件、屏幕最多6行：文明启动、毁灭、每50年寿命里程碑、等级晋升，以及确认超过0.5秒的三日连珠/三日凌空/飞星不动，同类天象冷却60模拟秒。常规飞星、脱水切换等不逐条刷屏。\n\n## 4. 每个控件的完整参考\n\n“默认”指v0.5.3新安装值。银河归位原默认0.01一次迁移为0.003°/秒，自定义速度保留。v0.5.2 默认 research 初始化、newtonian 引力、牢笼关闭；旧配置升级会切换这些默认项。相同 Seed 的轨迹已改变，要复现 v0.5.1 必须显式选择 chaotic + legacy 并恢复旧牢笼与其余参数。升级时原有自定义值保留；仅识别到旧默认 k2=0.22、thermalGrace=8、wakeDelay=3 时迁移为0.30、30、1。v0.5.1还把旧默认epochWindow=2迁移为1/12模拟年；其他明确自定义值保留数值，按模拟年解释，并记录epochTimebase=years。已保存的灵敏度、窗口位置、背景、音量和档案继续保留。表内“兼容保留/不生效”项如实列出，避免误以为滑块必定改变现代逻辑。\n`;
+  let group='';for(const c of controls){if(c.group!==group){group=c.group;md+=`\n### ${group}\n\n| 名称 / 参数键 | 默认 | 范围 / 类型 | 实际作用 |\n|---|---|---|---|\n`;}
+  const d=c.def,range=d.type==='slider'?`${d.min}～${d.max}`:d.type==='combo'?d.options.map(o=>`${o.value}=${o.label}`).join('；'):({bool:'开关',color:'RGB，各0～1',textinput:'文字',scenetexture:'本地图片'}[d.type]||d.type);
+  md+=`| ${cell(plainText(d.text))}<br>\`${c.key}\` | ${cell(format(c.value))} | ${cell(range)} | ${cell(c.description)} |\n`;}
+- md+=`\n## 5. 修改如何生效、如何备份\n\n界面改动会立即保存，传给渲染器与Worker。画面、布局、视角、音量和科技倍率不重建轨道。Seed、初始化模式、物理时钟或积分步长会重建物理模块；原版映射的质量、初值、软化、牢笼和时间倍率也可能触发原版物理初始化。因此建议先导出种子，再调大范围物理参数，最后用“重启”明确开始一次新宇宙；不要在同一段观测中频繁改变物理设置后比较榜单。改变韧性、温区与科技倍率是即时作用，不恢复已经损失的人口，也不复活已经终结的文明。\n\n修改默认值不会覆盖所有用户保存值。默认常量在 src/settings.js 的 defaults / extraDefaults；控件名称、分类、范围在 src/settings-catalog.js（扩展）与 src/original-data.js（原版）；合法范围还需同步 normalizeSettings。升级旧默认须在 migrateSettings 添加一次迁移；presentationRevision 当前为6。直接随意增加此号可能触发现有迁移，应明确旧值与保留策略。\n\n导出种子包含完整配置、算法标识与四体初始坐标。导入会重新初始化，不是继续之前的位置。物理算法、气候与文明规则版本不同，旧种子的文明结果不能保证完全一致。手动初值范围受原版属性表限制。档案的“复现初始种子”重放初始条件，不提供整段历史回滚。\n\n可通过控制台试调并由正常接口持久保存：\n\n\`\`\`js\nwindow.threeBody.applySettings({\n  thermalGrace: 40,          // 更强的基础耐受\n  developmentRate: 2,        // 两倍科技积累，寿命读数不翻倍\n  viewSensitivity: 0.08,     // 整体鼠标倍率\n  dragSensitivity: 3,        // 只调拖动\n  compassOpacity: 0.08,      // 环8%不透明\n  layout: { left: {x: 8, y: 45}, clock: {x: 50, y: 10} }\n});\n\`\`\`\n\nlayout作为一个对象整体传入会替换旧的自定义坐标；界面单个滑块与拖动编辑器会自动合并其他窗口的坐标。所有位置都可能由layout.js做防越界处理，不必改CSS。想恢复默认布局用“恢复默认布局”；想恢复全部配置用面板底部“恢复默认”，文明档案仍保留。\n\nWallpaper Engine Web壁纸通过 wallpaperPropertyListener 接收原183个属性、暂停与音频；新增扩展项使用网页右下角面板，当前没有为每项扩展重复生成WE宿主侧控件。离线包解压后选择 project.json / index.html。网页版通过HTTP运行；实际WE本地文件宿主需在Windows环境验收。\n\n## 6. 代码结构：以后要改哪里\n\n| 文件 | 职责 | 常见改动 |\n|---|---|---|\n| src/settings.js | 默认、归一化、迁移、算法标识 | 改默认韧性/倍率；新增参数必须加校验 |\n| src/settings-catalog.js | 扩展控件定义和五大类 | 改名称、分类、范围、选项 |\n| src/original-data.js | 原183个属性和原场景绑定 | 原版属性兼容表，一般不手改 |\n| src/civilization-levels.js | 六级阈值和耐受增益 | 改升级科技年数、耐温扩展、保护倍率 |\n| src/habitability.js | 人口、干仓、适宜度与损耗 | 改保存质量、人口恢复、终结阈值 |\n| src/civilization-state.js | 诞生、脱水、浸泡、发展、精选日志 | 改阶段时长、日志筛选与里程碑 |\n| src/world-state.js | 温度惯性、纪元、天象、行星结构 | 改轨道稳定判断和结构损伤恢复 |\n| src/legacy/008.js | 原版四体积分、牢笼、软化 | 改力学要独立版本化与回归测试 |\n| src/orbital-initialization.js | 混沌/原版/稳定实验初值 | 改星系尺度与随机初速 |\n| src/simulation.js | Worker纯模拟内核、事件编排 | 联接新状态与事件，不依赖DOM |\n| src/run-statistics.js / storage.js | 累计年数、双榜、档案持久化 | 以后接文明记忆与榜单后端 |\n| src/renderer.js | 相机、星空、球体、尾迹、尘埃 | 粒子形状/大小、显示风格 |\n| src/view-motion.js | 惯性、拖动、跟随、银河回归 | 修改鼠标运动公式 |\n| src/motion-visuals.js | 环渐变公式 | 当前淡入时间常数0.65秒、淡出0.18秒 |\n| src/layout.js / style.css | 五窗口锚点、编辑器、排版 | 字号、行距、默认位置 |\n| src/main.js | 面板生成、HUD显示、历史/事件 | 新的文明信息展示 |\n| src/bridge.js | WE回调、对外接口与版本号 | 扩展通知/宿主适配 |\n| tools/generate-settings-guide.mjs | 完整设置目录和说明生成器 | 改说明并运行npm run build，保证随包更新 |\n\n环使用指数缓动：alpha += (target−alpha)×(1−exp(−dt/tau))。tau不是完成时间：淡入约1.95秒达到95%，淡出约0.54秒剩5%。环最终不透明度=compassOpacity×alpha，形状缩放0.3没有再次改变。鼠标视角水平不限最高速度，俯仰范围仍±30°；仅改变拖动额外倍率，悬停参数保留。\n\n未来系统通知可订阅 civilization:birth / civilization:death / civilization:phase / civilization:level / universe:restart 等事件。示例：window.threeBody.subscribe('civilization:level', console.log)。当前只提供扩展边界，未连接外部通知或网络榜单服务。\n\n## 7. 已知模型边界\n\n这是以原版算法和用户提供的原著讲解为基础的可调壁纸模拟，科技/人口为新增抽象模型。引力牢笼是额外力；提高k2只是有限时间内增加拉回，不保证永久不抛射。原版分段引力软化在外边界有不连续，仍按兼容公式保留，因此极近掠过可能有数值能量误差。温度有原版距离倍率与简化辐射模型，不是完整气候模型。长寿文明可能多数时间在干仓，而不是持续百年恒纪元；左侧实际发展年数用于区分。\n`;
++ md+=`\n## 5. 修改如何生效、如何备份\n\n界面改动会立即保存，传给渲染器与Worker。画面、布局、视角、音量和科技倍率不重建轨道。Seed、初始化模式、物理时钟或积分步长会重建物理模块；原版映射的质量、初值、软化、牢笼和时间倍率也可能触发原版物理初始化。因此建议先导出种子，再调大范围物理参数，最后用“重启”明确开始一次新宇宙；不要在同一段观测中频繁改变物理设置后比较榜单。改变韧性、温区与科技倍率是即时作用，不恢复已经损失的人口，也不复活已经终结的文明。\n\n修改默认值不会覆盖所有用户保存值。默认常量在 src/settings.js 的 defaults / extraDefaults；控件名称、分类、范围在 src/settings-catalog.js（扩展）与 src/original-data.js（原版）；合法范围还需同步 normalizeSettings。升级旧默认须在 migrateSettings 添加一次迁移；presentationRevision 当前为6；银河归位的默认值迁移单独使用galaxyReturnRevision=1。直接随意增加此号可能触发现有迁移，应明确旧值与保留策略。\n\n导出种子包含完整配置、算法标识与四体初始坐标。导入会重新初始化，不是继续之前的位置。物理算法、气候与文明规则版本不同，旧种子的文明结果不能保证完全一致。手动初值范围受原版属性表限制。档案的“复现初始种子”重放初始条件，不提供整段历史回滚。\n\n可通过控制台试调并由正常接口持久保存：\n\n\`\`\`js\nwindow.threeBody.applySettings({\n  thermalGrace: 40,          // 更强的基础耐受\n  developmentRate: 2,        // 两倍科技积累，寿命读数不翻倍\n  viewSensitivity: 0.08,     // 整体鼠标倍率\n  dragSensitivity: 3,        // 只调拖动\n  compassOpacity: 0.08,      // 环8%不透明\n  layout: { left: {x: 8, y: 45}, clock: {x: 50, y: 10} }\n});\n\`\`\`\n\nlayout作为一个对象整体传入会替换旧的自定义坐标；界面单个滑块与拖动编辑器会自动合并其他窗口的坐标。所有位置都可能由layout.js做防越界处理，不必改CSS。想恢复默认布局用“恢复默认布局”；想恢复全部配置用面板底部“恢复默认”，文明档案仍保留。\n\nWallpaper Engine Web壁纸通过 wallpaperPropertyListener 接收原183个属性、暂停与音频；新增扩展项使用网页右下角面板，当前没有为每项扩展重复生成WE宿主侧控件。离线包解压后选择 project.json / index.html。网页版通过HTTP运行；实际WE本地文件宿主需在Windows环境验收。\n\n## 6. 代码结构：以后要改哪里\n\n| 文件 | 职责 | 常见改动 |\n|---|---|---|\n| src/settings.js | 默认、归一化、迁移、算法标识 | 改默认韧性/倍率；新增参数必须加校验 |\n| src/settings-catalog.js | 扩展控件定义和五大类 | 改名称、分类、范围、选项 |\n| src/original-data.js | 原183个属性和原场景绑定 | 原版属性兼容表，一般不手改 |\n| src/civilization-levels.js | 十二阶段阈值和耐受增益 | 改升级科技年数、耐温扩展、保护倍率 |\n| src/habitability.js | 人口、干仓、适宜度与损耗 | 改保存质量、人口恢复、终结阈值 |\n| src/civilization-state.js | 诞生、脱水、浸泡、发展、精选日志 | 改阶段时长、日志筛选与里程碑 |\n| src/world-state.js | 温度惯性、纪元、天象、行星结构 | 改轨道稳定判断和结构损伤恢复 |\n| src/legacy/008.js | 原版四体积分、牢笼、软化 | 改力学要独立版本化与回归测试 |\n| src/orbital-initialization.js | 混沌/原版/稳定实验初值 | 改星系尺度与随机初速 |\n| src/simulation.js | Worker纯模拟内核、事件编排 | 联接新状态与事件，不依赖DOM |\n| src/run-statistics.js / storage.js | 累计年数、双榜、档案持久化 | 以后接文明记忆与榜单后端 |\n| src/renderer.js | 相机、星空、球体、尾迹、尘埃 | 粒子形状/大小、显示风格 |\n| src/view-motion.js | 惯性、拖动、跟随、银河回归 | 修改鼠标运动公式 |\n| src/motion-visuals.js | 环渐变公式 | 当前淡入时间常数0.65秒、淡出0.18秒 |\n| src/layout.js / style.css | 五窗口锚点、编辑器、排版 | 字号、行距、默认位置 |\n| src/main.js | 面板生成、HUD显示、历史/事件 | 新的文明信息展示 |\n| src/bridge.js | WE回调、对外接口与版本号 | 扩展通知/宿主适配 |\n| tools/generate-settings-guide.mjs | 完整设置目录和说明生成器 | 改说明并运行npm run build，保证随包更新 |\n\n环使用指数缓动：alpha += (target−alpha)×(1−exp(−dt/tau))。tau不是完成时间：淡入约1.95秒达到95%，淡出约0.54秒剩5%。环最终不透明度=compassOpacity×alpha，形状缩放0.3没有再次改变。鼠标视角水平不限最高速度，俯仰范围仍±30°；仅改变拖动额外倍率，悬停参数保留。\n\n未来系统通知可订阅 civilization:birth / civilization:death / civilization:phase / civilization:level / universe:restart 等事件。示例：window.threeBody.subscribe('civilization:level', console.log)。当前只提供扩展边界，未连接外部通知或网络榜单服务。\n\n## 7. 已知模型边界\n\n这是以原版算法和用户提供的原著讲解为基础的可调壁纸模拟，科技/人口为新增抽象模型。引力牢笼是额外力；提高k2只是有限时间内增加拉回，不保证永久不抛射。旧分段引力仅在legacy兼容模式保留；默认牛顿力与近遇自适应Yoshida来自v0.5.2。屏幕居中只影响渲染，不能据天体偏离画面判定能量不守恒；真实弹射仍可能发生。温度有原版距离倍率与简化辐射模型，不是完整气候模型。长寿文明可能多数时间在干仓，而不是持续百年恒纪元；左侧实际发展年数用于区分。\n`;
+  await writeFile(new URL('docs/SETTINGS-GUIDE-v0.5.md',root),md);
+  const escape=s=>s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
+  const inline=s=>escape(s).replace(/`([^`]+)`/g,'<code>$1</code>').replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>').replaceAll('&lt;br&gt;','<br>');
+diff --git a/tools/v053/browser-check.mjs b/tools/v053/browser-check.mjs
+new file mode 100644
+index 0000000..6986e0d
+--- /dev/null
++++ b/tools/v053/browser-check.mjs
+@@ -0,0 +1,28 @@
++import {chromium} from 'playwright-core';
++import assert from 'node:assert/strict';
++import {writeFile} from 'node:fs/promises';
++import {guideControls} from '../generate-settings-guide.mjs';
++const browser=await chromium.launch({executablePath:'/usr/bin/chromium',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
++const context=await browser.newContext({viewport:{width:1280,height:900}}),page=await context.newPage(),checks=[],errors=[];
++page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error'&&!m.text().startsWith('Failed to load resource:'))errors.push(m.text());});page.on('response',r=>{if(r.status()>=400&&!r.url().endsWith('/favicon.ico'))errors.push(`${r.status()} ${r.url()}`);});
++await page.addInitScript(()=>{localStorage.setItem('three-body.settings.v3',JSON.stringify({presentationRevision:6,physicsRevision:1,newproperty51:.01,viewSensitivity:.04,pixelRatio:.5,newproperty63:false,newproperty64:false,newproperty2:false}));window.__wallpaperFPS=30;});
++const scene=()=>page.evaluate(()=>window.__threeBodyDiagnostics().scene),apply=patch=>page.evaluate(p=>window.threeBody.applySettings(p),patch);
++try{
++ await page.goto('http://localhost:4173',{waitUntil:'networkidle'});await page.waitForFunction(()=>window.__threeBodyDiagnostics?.().ready);
++ assert.equal(await page.evaluate(()=>window.threeBody.version),'0.5.3');assert.equal(await page.locator('#setting-newproperty51').inputValue(),'0.003');checks.push('actual v0.5.3 Worker boots and migrates old default galaxy speed to 0.003 deg/s');
++ const controls=await page.locator('.control').evaluateAll(n=>n.map(x=>x.dataset.key));assert.deepEqual(controls.sort(),guideControls().map(x=>x.key).sort());assert.equal(controls.length,218);checks.push('all 218 real controls match the generated guide, including visual stellar tracking');
++ await page.mouse.move(900,430);await page.waitForTimeout(700);const moving=await scene();assert.ok(Math.hypot(...moving.viewVelocity)>0);
++ await page.waitForTimeout(3500);const start=await scene(),t0=Date.now();assert.ok(start.returningToGalaxy);assert.deepEqual(start.viewVelocity,[0,0]);assert.equal(start.compassTarget,false);assert.ok(start.compassOpacity[0]<.003);
++ await page.waitForTimeout(1200);const end=await scene(),elapsed=(Date.now()-t0)/1000,distance=x=>Math.hypot(...x.viewRotation.slice(0,2)),travel=distance(start)-distance(end),cap=.003*Math.PI/180*elapsed;
++ assert.ok(travel>cap*.4&&travel<cap*1.4,JSON.stringify({travel,cap,start:start.viewRotation,end:end.viewRotation}));checks.push('real mouse follow works, idle return cancels inertia, hides the ring and obeys the slower total angular-speed cap');
++ await apply({newproperty61:2});const fixed=await scene();await page.waitForTimeout(600);assert.deepEqual((await scene()).viewRotation,fixed.viewRotation);checks.push('fixed view suppresses both idle return and residual coast');
++ const mass=5e6,G=1.3275440274585598e-8,speed=Math.sqrt(G*mass/Math.sqrt(3)),bodies=Array.from({length:3},(_,i)=>{const a=i*2*Math.PI/3;return{x:-2+Math.cos(a),y:Math.sin(a),z:0,vx:-speed*Math.sin(a),vy:speed*Math.cos(a),vz:0,mass};});bodies.push({x:6000,y:0,z:0,vx:0,vy:0,vz:0,mass:5000});
++ await apply({newproperty50:true,manualInitialBodies:bodies,autorestart:false,centerOnSystem:true,newproperty16:false,bodyLabels:true});await page.waitForFunction(()=>window.threeBody.getState().initialBodies?.[3]?.x===6000);await page.waitForTimeout(400);
++ const focused=await scene(),center=s=>[0,1,2].map(k=>s.bodyWorldPositions.slice(0,3).reduce((n,p)=>n+p[k],0)/3),centered=center(focused);assert.ok(Math.hypot(...centered)<.1,JSON.stringify(centered));assert.ok(Math.abs((await page.evaluate(()=>window.threeBody.getState().bodies[3].x))-6000)<1);checks.push('runaway planet remains at its physical distance while the stellar group is centered through rendering only');
++ await page.screenshot({path:'docs/v053/results/centered-runaway-planet.png'});
++ await apply({centerOnSystem:false});await page.waitForTimeout(3000);const offCenter=center(await scene());assert.ok(Math.hypot(...offCenter)>.7,JSON.stringify(offCenter));
++ await page.locator('#settings-toggle').click();await page.locator('[data-category=view] summary').click();await page.locator('#setting-centerOnSystem').check();await page.waitForTimeout(3500);const restored=center(await scene());assert.ok(Math.hypot(...restored)<Math.hypot(...offCenter)*.2);checks.push('real tracking checkbox restores the center smoothly without restarting the universe or modifying physics');
++ await page.locator('#settings-close').click();await apply({newproperty50:false,manualInitialBodies:null,newproperty61:1,newproperty16:true,centerOnSystem:true});await page.waitForTimeout(500);await page.screenshot({path:'docs/v053/results/desktop.png'});
++ const response=await page.goto('http://localhost:4173/settings-guide.html');assert.equal(response.status(),200);const text=await page.textContent('body');assert.ok(text.includes('旧石器时代')&&text.includes('40000')&&text.includes('0.003'));checks.push('offline settings guide includes all twelve technology stages, slower return and tracking semantics');
++ assert.deepEqual(errors,[]);await writeFile('docs/v053/results/browser.json',JSON.stringify({passed:true,checks,errors,returnMotion:{elapsed,travelRadians:travel,capRadians:cap},tracking:{centered,offCenter,restored},limits:'Actual Chromium pointer events and Worker with software WebGL; native Windows Wallpaper Engine not available'},null,2)+'\n');console.log(JSON.stringify({passed:true,checks},null,2));
++}finally{await browser.close();}
+diff --git a/tools/v053/physical-parity.mjs b/tools/v053/physical-parity.mjs
+new file mode 100644
+index 0000000..cfaa8a6
+--- /dev/null
++++ b/tools/v053/physical-parity.mjs
+@@ -0,0 +1,18 @@
++import assert from 'node:assert/strict';
++import {pathToFileURL} from 'node:url';
++import {writeFile} from 'node:fs/promises';
++import {Simulation} from '../../src/simulation.js';
++const baseline=process.argv[2];if(!baseline)throw Error('Pass a clean worktree checked out at the v0.5.2 tag');
++const {Simulation:Previous}=await import(pathToFileURL(`${baseline}/src/simulation.js`));
++const results=[];const physical=bodies=>bodies.map(b=>Object.fromEntries(['x','y','z','vx','vy','vz','mass'].map(k=>[k,b[k]])));
++for(let i=0;i<8;i++){
++ const seed=`V053-PHYSICS-PARITY-${i}`,settings={seed,autorestart:false},old=new Previous(settings),current=new Simulation(settings);let ticks=0,error=null;
++ for(;ticks<12000;ticks++){
++  let a,b;try{old.tick();}catch(e){a=e;}try{current.tick();}catch(e){b=e;}
++  if(a||b){assert.equal(a?.code,b?.code);assert.equal(a?.message,b?.message);error=a?.message;break;}
++  if(ticks%120===0){assert.deepEqual(physical(old.snapshot().bodies),physical(current.snapshot().bodies));assert.deepEqual(old.snapshot().physics,current.snapshot().physics);}
++ }
++ const a=old.snapshot(),b=current.snapshot();assert.deepEqual(physical(a.bodies),physical(b.bodies));assert.deepEqual(a.physics,b.physics);
++ results.push({seed,ticks,years:a.year,exactStateParity:true,exactConservationDiagnosticParity:true,energy:a.physics?.energy,error});
++}
++await writeFile('docs/v053/results/physical-parity.json',JSON.stringify({passed:true,baseline:'v0.5.2 / a219cf9',source:'Actual production Simulation in both versions; no resets; eight predetermined seeds x 200 displayed years',results},null,2)+'\n');console.log(JSON.stringify({passed:true,seeds:results.length},null,2));

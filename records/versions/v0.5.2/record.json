@@ -1,0 +1,247 @@
+{
+  "format": 1,
+  "id": "v0.5.2",
+  "path": "versions/v0.5.2",
+  "kind": "version",
+  "version": "0.5.2",
+  "title": "牛顿引力修复与研究候选初始化",
+  "summary": "修复近距异常引力，保留Yoshida并加入近遇自适应、守恒和接触诊断；默认随机非层级三星Q=1、0.12D逆向宿主轨道与质量反冲。128个新匹配种子三组对照、细步长复算、一万年扩展及独立DOP853验证；完整保存原始数据，不掩盖长期存活失败。",
+  "source_commit": "a219cf9bad9b50da639cc1c4f42af65f2bc19721",
+  "previous_commit": "c7a53a01def5f9d60389ee20ec0f8bac5210ed69",
+  "source_repository": "https://github.com/BillOu0104/2",
+  "source_subject": "v0.5.2: repair Newtonian encounters and port Q1 retrograde initialization",
+  "source_date": "2026-10-21T09:53:53Z",
+  "archived_at": "2026-10-21T10:08:37.713069+00:00",
+  "runtime_fingerprint": "7b1b24cef1f3e5a2080f672c375b30be3dd88dbf44325fb07c03ad97a6afffe2",
+  "deleted_paths": [],
+  "files": [
+    {
+      "source_path": ".github/workflows/physics-acceptance.yml",
+      "archive_path": "snapshot/.github/workflows/physics-acceptance.yml",
+      "sha256": "3268204ac7cc05307833a0c5f02476a9527ffdeafec838926a2b56d7ee00d4de",
+      "bytes": 542
+    },
+    {
+      "source_path": "README.md",
+      "archive_path": "snapshot/README.md",
+      "sha256": "e77a143cc83681d09e13a21adfb22c864150a26d961da695581fe466c1c00fec",
+      "bytes": 11602
+    },
+    {
+      "source_path": "docs/SETTINGS-GUIDE-v0.5.md",
+      "archive_path": "snapshot/docs/SETTINGS-GUIDE-v0.5.md",
+      "sha256": "05add6738bb8486bc15e5442581f6bda1d71f55f71215d50599a6e74a3453bea",
+      "bytes": 52960
+    },
+    {
+      "source_path": "docs/settings-guide.html",
+      "archive_path": "snapshot/docs/settings-guide.html",
+      "sha256": "ffcc3782f7f11eb6620453e59293c427e4330fec873a5ce3c3e901ecf4ec44af",
+      "bytes": 65987
+    },
+    {
+      "source_path": "docs/v052/ACCEPTANCE.md",
+      "archive_path": "snapshot/docs/v052/ACCEPTANCE.md",
+      "sha256": "76cea54bf805fd2b347f4eedd249221c4fd7ce81b99ba64b42ca5a11e4d9c619",
+      "bytes": 12470
+    },
+    {
+      "source_path": "docs/v052/RESEARCH_FINAL_REPORT.md",
+      "archive_path": "snapshot/docs/v052/RESEARCH_FINAL_REPORT.md",
+      "sha256": "463245cc30c29adf2fc3be465f749b1176d604ad25fd7c3a9a9d9ea8e4032d49",
+      "bytes": 18972
+    },
+    {
+      "source_path": "docs/v052/results/acceptance.jsonl",
+      "archive_path": "snapshot/docs/v052/results/acceptance.jsonl",
+      "sha256": "6e44d4f0735215fad969a0e9fe5951c9378077f5049853969c1ebd9a9a1df485",
+      "bytes": 1989056
+    },
+    {
+      "source_path": "docs/v052/results/acceptance.jsonl.manifest.json",
+      "archive_path": "snapshot/docs/v052/results/acceptance.jsonl.manifest.json",
+      "sha256": "70d5c2737d896922d4e6f98001258830d138342ec3936c652bc562fa07314078",
+      "bytes": 1975
+    },
+    {
+      "source_path": "docs/v052/results/browser-desktop.png",
+      "archive_path": "snapshot/docs/v052/results/browser-desktop.png",
+      "sha256": "f5acc7faa21f92e27ad3bda88fb2dbf6c404d968a7636e34451e1b00eb2ccfa0",
+      "bytes": 914350
+    },
+    {
+      "source_path": "docs/v052/results/browser.json",
+      "archive_path": "snapshot/docs/v052/results/browser.json",
+      "sha256": "ec6e660ae4a74e289ace72e2b2a89b6997920d51e7f8ed680ec4d5184fdcfe96",
+      "bytes": 1985
+    },
+    {
+      "source_path": "docs/v052/results/build.txt",
+      "archive_path": "snapshot/docs/v052/results/build.txt",
+      "sha256": "6e9b29a7494ce4693f50c4c29e1094ef529f9107009e8dd011141766ec001f75",
+      "bytes": 129
+    },
+    {
+      "source_path": "docs/v052/results/convergence.jsonl",
+      "archive_path": "snapshot/docs/v052/results/convergence.jsonl",
+      "sha256": "3e65cc0bba4fc57ebfed418f12171184d7b64603e931e4f93d3a780ea7acfdb7",
+      "bytes": 649870
+    },
+    {
+      "source_path": "docs/v052/results/convergence.jsonl.manifest.json",
+      "archive_path": "snapshot/docs/v052/results/convergence.jsonl.manifest.json",
+      "sha256": "b7c8a4ed60e1adb6bbf243fc914392ff002f6689e6043e76450240f1b542a0d9",
+      "bytes": 1677
+    },
+    {
+      "source_path": "docs/v052/results/independent-validation.json",
+      "archive_path": "snapshot/docs/v052/results/independent-validation.json",
+      "sha256": "fd6c3a6bdc4d00360af5c1d39d21ef4c667f1ee6753917ffe7d5e4099d7fe548",
+      "bytes": 3777
+    },
+    {
+      "source_path": "docs/v052/results/long.jsonl",
+      "archive_path": "snapshot/docs/v052/results/long.jsonl",
+      "sha256": "a9d60346fc2066e67ee9b77998c8e7c60094ac46c3a13bbf41a1e7f2141f0a73",
+      "bytes": 650717
+    },
+    {
+      "source_path": "docs/v052/results/long.jsonl.manifest.json",
+      "archive_path": "snapshot/docs/v052/results/long.jsonl.manifest.json",
+      "sha256": "7e1e2e1ed6deba072bc6f125071b283fd3ed1d90e017e2e1963b68f9f6ea8455",
+      "bytes": 1669
+    },
+    {
+      "source_path": "docs/v052/results/summary.json",
+      "archive_path": "snapshot/docs/v052/results/summary.json",
+      "sha256": "11416581b06c0ba0ee972dcf0a4bc4e833889ac55525555ba6b0b68529e49f9d",
+      "bytes": 7756
+    },
+    {
+      "source_path": "docs/v052/results/unit-tests.txt",
+      "archive_path": "snapshot/docs/v052/results/unit-tests.txt",
+      "sha256": "8fe6f45199ed7d2c599fb49e0202b469d92072662c45eed3ef0ef4f2c84023a5",
+      "bytes": 10169
+    },
+    {
+      "source_path": "docs/v052/results/validation-samples.json",
+      "archive_path": "snapshot/docs/v052/results/validation-samples.json",
+      "sha256": "5befc47fda80aa8e8a72115386cdf2ca1d32b9c308d40dbc717cc525fa5ae8f5",
+      "bytes": 48211
+    },
+    {
+      "source_path": "package-lock.json",
+      "archive_path": "snapshot/package-lock.json",
+      "sha256": "6a1f49140652c0850103b18c507716ef4f4ea5e668521453943a1da7ff3c9863",
+      "bytes": 15394
+    },
+    {
+      "source_path": "package.json",
+      "archive_path": "snapshot/package.json",
+      "sha256": "80c859368c4f05f22f7096c05bf1be042ab29b923af4e70ce29e02ec4c720873",
+      "bytes": 415
+    },
+    {
+      "source_path": "tests/simulation.test.js",
+      "archive_path": "snapshot/tests/simulation.test.js",
+      "sha256": "6c766b9537d4500f709045e47abf21d624b2951d5a20e0e2c8bbf419e51f43f1",
+      "bytes": 8992
+    },
+    {
+      "source_path": "tests/v041-hotfix.test.js",
+      "archive_path": "snapshot/tests/v041-hotfix.test.js",
+      "sha256": "f4743c3492c0da88509ab81a475762e1cd3f97e563f3ad3a0b05207ff24c5daa",
+      "bytes": 2846
+    },
+    {
+      "source_path": "tests/v042.test.js",
+      "archive_path": "snapshot/tests/v042.test.js",
+      "sha256": "8624e6f30c58d579343a259b5330a97f9bdd4611d2be203164169e16bc7e0bfe",
+      "bytes": 2943
+    },
+    {
+      "source_path": "tests/v052-physics.test.js",
+      "archive_path": "snapshot/tests/v052-physics.test.js",
+      "sha256": "a60f3e02bfaaa6a2cb675d0e15e6ed10b87343d2a4e1257323ab0bb5f297d928",
+      "bytes": 8165
+    },
+    {
+      "source_path": "tools/generate-settings-guide.mjs",
+      "archive_path": "snapshot/tools/generate-settings-guide.mjs",
+      "sha256": "035bc34675dd19a1ee20d1ab64739d670d446c81c69168046d91899811800ad8",
+      "bytes": 36978
+    },
+    {
+      "source_path": "tools/v042-orbital-audit.mjs",
+      "archive_path": "snapshot/tools/v042-orbital-audit.mjs",
+      "sha256": "f6ebfc77bf245395cdf6a577ab3562d98c4682dde16264aeaadce6be3897c007",
+      "bytes": 4024
+    },
+    {
+      "source_path": "tools/v052/acceptance-config.json",
+      "archive_path": "snapshot/tools/v052/acceptance-config.json",
+      "sha256": "d80527f15a9686e7543f34a616bfedd5c918509ac0e4759deba2a04773675332",
+      "bytes": 436
+    },
+    {
+      "source_path": "tools/v052/benchmark-engine.mjs",
+      "archive_path": "snapshot/tools/v052/benchmark-engine.mjs",
+      "sha256": "3d2df78c051c67b02b29adf5c5501f32cbedee2f5f5471144dc047718bc7872e",
+      "bytes": 9332
+    },
+    {
+      "source_path": "tools/v052/browser-check.mjs",
+      "archive_path": "snapshot/tools/v052/browser-check.mjs",
+      "sha256": "40d7b79b0504b08537c28b8405e29e509d8485aa4e862bcc2bd4307dda64cb25",
+      "bytes": 4050
+    },
+    {
+      "source_path": "tools/v052/convergence-config.json",
+      "archive_path": "snapshot/tools/v052/convergence-config.json",
+      "sha256": "2b26050bf4b94803dc60f4fc52884e1c1e5f7f0cb5e0f5e572cb1501724a35f1",
+      "bytes": 255
+    },
+    {
+      "source_path": "tools/v052/independent-validation.py",
+      "archive_path": "snapshot/tools/v052/independent-validation.py",
+      "sha256": "7b5ab1ff5ec441c898e3a6c4c66c2bfacf0b2bbf028d3b3156c831226bd018e6",
+      "bytes": 2809
+    },
+    {
+      "source_path": "tools/v052/long-config.json",
+      "archive_path": "snapshot/tools/v052/long-config.json",
+      "sha256": "5909742a043988a49b76efe5a7826181861807a307d31e3fe5c29559ea254639",
+      "bytes": 247
+    },
+    {
+      "source_path": "tools/v052/research-reference.mjs",
+      "archive_path": "snapshot/tools/v052/research-reference.mjs",
+      "sha256": "91dfd436a0edcd70ced0727603f12e721492d84c5c8092a6a5e0a280834ce46b",
+      "bytes": 14006
+    },
+    {
+      "source_path": "tools/v052/run-benchmark.mjs",
+      "archive_path": "snapshot/tools/v052/run-benchmark.mjs",
+      "sha256": "2a1f5f5a13e88fed27e8ae3547607a58aefb537f8aee47a39e63e79f6f3aad1d",
+      "bytes": 2040
+    },
+    {
+      "source_path": "tools/v052/summarize.py",
+      "archive_path": "snapshot/tools/v052/summarize.py",
+      "sha256": "0bf953ea3631b5373f95c456f25f30d86ba16b1a5f775fe752824b9756bdf3f0",
+      "bytes": 3923
+    },
+    {
+      "source_path": "tools/v052/validation-samples.mjs",
+      "archive_path": "snapshot/tools/v052/validation-samples.mjs",
+      "sha256": "d364cb85eb1a98bb991e91ed660888d2c798b9ec37566727393451eb1579300f",
+      "bytes": 1025
+    },
+    {
+      "source_path": null,
+      "archive_path": "changes.patch",
+      "sha256": "b46a6e6ca7e91dda667a2b0a369a56519fc54d6d3923a84b7f718d03630f0940",
+      "bytes": 129665
+    }
+  ]
+}
