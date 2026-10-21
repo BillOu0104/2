@@ -22,6 +22,7 @@
 | [v0.5.4](versions/v0.5.4/README.md) | v0.5.4：松手回弹、完全重置与逃逸重建 | [de49389](https://github.com/BillOu0104/2/commit/de493891629800b8b70614f11915847a6594da9d) |
 | [v0.5.5](versions/v0.5.5/README.md) | v0.5.5：固定观察原点、守恒核查与连续尾迹 | [e62d7e8](https://github.com/BillOu0104/2/commit/e62d7e8761c1b318de23d600e121bee41907c0e2) |
 | [minimal-chaos-v2-canonical](analyses/minimal-chaos-v2-canonical/README.md) | V2 canonical contact-aware experiment and recoverable batches | [1a9de78](https://github.com/BillOu0104/2/commit/1a9de7889942f57fd0997943d99612096bced012) |
+| [minimal-chaos-v2-interim-audit](analyses/minimal-chaos-v2-interim-audit/README.md) | V2阶段证据与恢复审计 | [762eea4](https://github.com/BillOu0104/2/commit/762eea4eb4f3cf084048f00046330603841d2e1f) |
 | [minimal-chaos-v2-long30](analyses/minimal-chaos-v2-long30/README.md) | V2完整30000年探索与负对照校准 | [102339c](https://github.com/BillOu0104/2/commit/102339ca9efcfa3b575dab447645133cef18d59b) |
 | [minimal-chaos-v2-medium](analyses/minimal-chaos-v2-medium/README.md) | V2 complete10000-year comparison and predictive30000-year prototype | [8173521](https://github.com/BillOu0104/2/commit/8173521a4c1c28a98a29af41ae82871e1f3c0743) |
 | [minimal-chaos-v2-prototype](analyses/minimal-chaos-v2-prototype/README.md) | V2 validated driver, strict escape observer and controller experiments | [aba525d](https://github.com/BillOu0104/2/commit/aba525d5dd9ac69c451f58ed43b0f3037fe91b33) |
