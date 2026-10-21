@@ -1,0 +1,766 @@
+diff --git a/index.html b/index.html
+index ec754d1..48334d4 100644
+--- a/index.html
++++ b/index.html
+@@ -62,7 +62,7 @@
+     <div class="panel-tabs"><button class="active" data-tab="settings">全部设置</button><button data-tab="history">文明档案</button><button data-tab="about">项目说明</button></div>
+     <div id="settings-content" class="panel-scroll"><div id="extension-controls"></div><details id="advanced-controls" class="setting-group"><summary>原版高级设置 / Advanced</summary><div id="original-controls"></div></details><p id="search-empty" hidden>没有匹配的设置 / No matching settings</p></div>
+     <div id="history-content" class="panel-scroll" hidden><div class="section-intro"><h3>文明档案</h3><p>当前设备保存的文明死亡记录。完整参数随档案保留，方便复现与后续扩展。</p><button id="export-history">导出档案 JSON</button><button id="reset-history" data-zh="完全重置历史" data-en="Reset all history" title="清空宇宙与文明历史、排行榜和累计年份；保留设置与背景">完全重置历史</button></div><ol id="history-list"></ol></div>
+-    <div id="about-content" class="panel-scroll" hidden><article class="about-copy"><h3>三体 · 实时演算 v0.5.4</h3><p>以你提供的 SYKM 原版 Wallpaper Engine 场景为基础。移植四体运动、温度、纪元与文明事件 SceneScript，并优化文明适宜度与延续机制，复用原版贴图、字体和音乐，天体采用圆形柔光与渐隐尾迹。</p><p><a href="settings-guide.html" target="_blank" rel="noopener">打开 v0.5 完整设置说明 ↗</a> · <a href="SETTINGS-GUIDE-v0.5.md" download>下载 Markdown 文档</a></p><p>v0.5.4：修复拖动松手后的反向回弹，默认银河归位0.006°/秒；新增完全重置历史，以及持续确认逃逸后的宇宙重建。保留十二阶段科技与星群显示跟随。物理沿用v0.5.2：默认随机三星 Q=1，行星采用第三颗恒星周围 0.12D 逆向轨道；牛顿平方反比引力、近遇自适应 Yoshida 积分，默认关闭引力牢笼。旧模型与手动初值仍可选择。数值故障会暂停并提示；星体接触之后点质量模型的适用性受限。</p><h4>运行架构</h4><p>Three.js 渲染与后台 Web Worker 模拟独立运行；无需远程服务器，网页与 Wallpaper Engine 共用同一套内核。模拟事件可供未来通知与 Seed 排行榜订阅。</p><h4>还原边界</h4><p>默认按固定 60 Hz 复现原版物理节奏；根据提供的原著讲解区分轨道纪元、天象与文明延续。−20～40°C 为常态活动范围，干仓休眠后可恢复同一文明。修复步长设置不即时生效、恒星碰撞距离未赋值、隐藏 UI 影响计算等问题。模型使用球体和圆环重建，后处理为 Three.js 对应实现，效果尚不能声称与原版逐像素一致。</p><p>原版文明逻辑是适温诞生与灾变毁灭，没有人口或技术树。v0.5 增加人口储备、干仓质量与十二阶段文明发展；休眠保留文明，实际生产时间推动升级。保留轨道稳定确认、差分潮汐与不可逆行星毁坏。具体阈值是可调模拟参数，非小说给定数值；完整算法依据、参数表和兼容差异随源码提供。原版背景已恢复为原生 8192×4096，并支持最高 7680×4320 渲染。</p><h4>来源</h4><p>原场景：SYKM ·《三体实时演算》<br>音乐：Melodysheep · Ether<br>保留原资源来源与非商用声明。</p><p class="muted">网页版音频须主动播放；Wallpaper Engine 可直接接收系统音频。自定义背景与历史保存在当前浏览器，不会上传。</p><div id="runtime-diagnostics"></div></article></div>
++    <div id="about-content" class="panel-scroll" hidden><article class="about-copy"><h3>三体 · 实时演算 v0.5.5</h3><p>以你提供的 SYKM 原版 Wallpaper Engine 场景为基础。移植四体运动、温度、纪元与文明事件 SceneScript，并优化文明适宜度与延续机制，复用原版贴图、字体和音乐，天体采用圆形柔光与渐隐尾迹。</p><p><a href="settings-guide.html" target="_blank" rel="noopener">打开 v0.5 完整设置说明 ↗</a> · <a href="SETTINGS-GUIDE-v0.5.md" download>下载 Markdown 文档</a></p><p>v0.5.5：移除星群跟随，天体以每个宇宙的初始质心为固定显示原点；补充固定惯性系能量和质心漂移诊断。尾迹使用实际积分采样与连续带状绘制，减少亮点和高速分段；保留逃逸重建、鼠标转动与银河归位。物理沿用v0.5.2：默认随机三星 Q=1，行星采用第三颗恒星周围 0.12D 逆向轨道；牛顿平方反比引力、近遇自适应 Yoshida 积分，默认关闭引力牢笼。旧模型与手动初值仍可选择。数值故障会暂停并提示；星体接触之后点质量模型的适用性受限。</p><h4>运行架构</h4><p>Three.js 渲染与后台 Web Worker 模拟独立运行；无需远程服务器，网页与 Wallpaper Engine 共用同一套内核。模拟事件可供未来通知与 Seed 排行榜订阅。</p><h4>还原边界</h4><p>默认按固定 60 Hz 复现原版物理节奏；根据提供的原著讲解区分轨道纪元、天象与文明延续。−20～40°C 为常态活动范围，干仓休眠后可恢复同一文明。修复步长设置不即时生效、恒星碰撞距离未赋值、隐藏 UI 影响计算等问题。模型使用球体和圆环重建，后处理为 Three.js 对应实现，效果尚不能声称与原版逐像素一致。</p><p>原版文明逻辑是适温诞生与灾变毁灭，没有人口或技术树。v0.5 增加人口储备、干仓质量与十二阶段文明发展；休眠保留文明，实际生产时间推动升级。保留轨道稳定确认、差分潮汐与不可逆行星毁坏。具体阈值是可调模拟参数，非小说给定数值；完整算法依据、参数表和兼容差异随源码提供。原版背景已恢复为原生 8192×4096，并支持最高 7680×4320 渲染。</p><h4>来源</h4><p>原场景：SYKM ·《三体实时演算》<br>音乐：Melodysheep · Ether<br>保留原资源来源与非商用声明。</p><p class="muted">网页版音频须主动播放；Wallpaper Engine 可直接接收系统音频。自定义背景与历史保存在当前浏览器，不会上传。</p><div id="runtime-diagnostics"></div></article></div>
+     <footer class="panel-footer"><button id="export-settings">导出种子</button><label class="file-button">导入种子<input id="import-settings" type="file" accept="application/json,.json" hidden></label><button id="reset-settings">恢复默认</button><span id="save-status">已保存到本机</span></footer>
+   </aside>
+ </body>
+diff --git a/package-lock.json b/package-lock.json
+index 2bc1457..ee72124 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -1,12 +1,12 @@
+ {
+   "name": "three-body-reconstruction",
+-  "version": "0.5.4",
++  "version": "0.5.5",
+   "lockfileVersion": 3,
+   "requires": true,
+   "packages": {
+     "": {
+       "name": "three-body-reconstruction",
+-      "version": "0.5.4",
++      "version": "0.5.5",
+       "dependencies": {
+         "three": "0.180.0"
+       },
+diff --git a/package.json b/package.json
+index ad84dcc..a366d0f 100644
+--- a/package.json
++++ b/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "three-body-reconstruction",
+-  "version": "0.5.4",
++  "version": "0.5.5",
+   "private": true,
+   "type": "module",
+   "scripts": {
+diff --git a/src/adaptive-trails.js b/src/adaptive-trails.js
+index 85f1e6a..f6e272d 100644
+--- a/src/adaptive-trails.js
++++ b/src/adaptive-trails.js
+@@ -7,6 +7,16 @@ export class TrailHistory {
+   constructor(capacity=4096){this.capacity=capacity;this.buffer=Array.from({length:capacity},()=>({x:0,y:0,z:0,time:0}));this.clear();}
+   clear(){this.length=0;this.cursor=0;this.budget=null;}
+   get(age=0){return age<this.length?this.buffer[(this.cursor-1-age+this.capacity)%this.capacity]:null;}
++  atTime(time){
++    if(!this.length)return null;
++    let low=0,high=this.length-1;
++    const point=i=>this.get(this.length-1-i);
++    if(time<=point(0).time)return {...point(0)};
++    if(time>=point(high).time)return {...point(high)};
++    while(high-low>1){const mid=(low+high)>>1;if(point(mid).time<=time)low=mid;else high=mid;}
++    const a=point(low),b=point(high),t=(time-a.time)/(b.time-a.time);
++    return{x:a.x+(b.x-a.x)*t,y:a.y+(b.y-a.y)*t,z:a.z+(b.z-a.z)*t,time};
++  }
+   push(position,time){
+     if(![position.x,position.y,position.z,time].every(Number.isFinite))return;
+     const last=this.get();if(last&&time<=last.time)return;
+@@ -22,7 +32,7 @@ export function trailComplexity(histories,project,now){
+   for(const history of histories){
+     let previous=null,direction=null,turn=0,lastCell=null;
+     for(let age=0;age<history.length;age++){
+-      const p=history.get(age);if(now-p.time>8)break;
++      const p=history.get(age);if(p.time>now)continue;if(now-p.time>8)break;
+       const screen=project(p);if(!usable(screen))continue;
+       if(previous&&distance(screen,previous)<4)continue;
+       if(previous){
+@@ -44,10 +54,11 @@ export function trailComplexity(histories,project,now){
+ export function selectTrail(history,project,{now,viewport=720,baseLength=400,complexity=0,dt=1/30,maxPoints=2000,maxAge=120}={}){
+   const target=viewport*1.1*clamp(baseLength/400,.05,3)/(1+4.5*clamp(complexity));
+   history.budget=history.budget===null?target:history.budget+(target-history.budget)*(1-Math.exp(-Math.max(0,dt)/.7));
+-  const selected=[],head=history.get();let previous=null,previousPoint=null,arc=0;
++  const selected=[],head=history.atTime(now);let previous=null,previousPoint=null,arc=0;
+   if(!head)return{points:[],fractions:[],arcPixels:0,seconds:0,budget:history.budget};
++  const headScreen=project(head);if(usable(headScreen)){selected.push(head);previous=headScreen;previousPoint=head;}
+   for(let age=0;age<history.length;age++){
+-    const point=history.get(age);if(now-point.time>maxAge)break;
++    const point=history.get(age);if(point.time>=head.time)continue;if(now-point.time>maxAge)break;
+     const screen=project(point);if(!usable(screen))break;
+     if(!previous){selected.push(point);previous=screen;previousPoint=point;continue;}
+     const step=distance(screen,previous);if(step<1.25)continue;
+diff --git a/src/bridge.js b/src/bridge.js
+index e0715cb..fe659ee 100644
+--- a/src/bridge.js
++++ b/src/bridge.js
+@@ -13,6 +13,6 @@ export function installWallpaperBridge({ changeSettings, setHostPaused, audio, r
+     setPaused(paused) { setHostPaused(!!paused); }
+   };
+   // Stable public extension boundary: notifications and remote rankings can subscribe later.
+-  window.threeBody = { version: '0.5.4', get algorithm() { return window.__threeBodyState?.algorithm; }, getState: () => window.__threeBodyState ? structuredClone(window.__threeBodyState) : null, applySettings: patch => changeSettings(patch), subscribe(type, listener) { const fn = e => listener(e.detail); window.addEventListener(type, fn); return () => window.removeEventListener(type, fn); }, wallpaper: !!window.wallpaperRegisterAudioListener };
++  window.threeBody = { version: '0.5.5', get algorithm() { return window.__threeBodyState?.algorithm; }, getState: () => window.__threeBodyState ? structuredClone(window.__threeBodyState) : null, applySettings: patch => changeSettings(patch), subscribe(type, listener) { const fn = e => listener(e.detail); window.addEventListener(type, fn); return () => window.removeEventListener(type, fn); }, wallpaper: !!window.wallpaperRegisterAudioListener };
+   return () => { window.wallpaperPropertyListener = prior; };
+ }
+diff --git a/src/display-center.js b/src/display-center.js
+deleted file mode 100644
+index 5c2b737..0000000
+--- a/src/display-center.js
++++ /dev/null
+@@ -1,13 +0,0 @@
+-// Visual tracking only. Never write back into simulation coordinates or velocities.
+-export function displayCenter(bodies,fallback={x:0,y:0,z:0}){
+- const stars=bodies.slice(0,3).filter(b=>b.mass>0&&['x','y','z'].every(k=>Number.isFinite(b[k])));
+- if(!stars.length)return {...fallback};
+- let tracked=stars;
+- if(stars.length===3){
+-  const pairs=[[0,1],[0,2],[1,2]].map(pair=>({pair,distance:Math.hypot(...['x','y','z'].map(k=>stars[pair[0]][k]-stars[pair[1]][k]))})).sort((a,b)=>a.distance-b.distance);
+-  // A distant runaway must not drag a compact surviving stellar pair off screen.
+-  if(pairs[2].distance>4*Math.max(pairs[0].distance,1e-12))tracked=pairs[0].pair.map(i=>stars[i]);
+- }
+- const mass=tracked.reduce((n,b)=>n+b.mass,0);
+- return Object.fromEntries(['x','y','z'].map(k=>[k,tracked.reduce((n,b)=>n+b.mass*b[k],0)/mass]));
+-}
+diff --git a/src/fixed-display-frame.js b/src/fixed-display-frame.js
+new file mode 100644
+index 0000000..ce57787
+--- /dev/null
++++ b/src/fixed-display-frame.js
+@@ -0,0 +1,10 @@
++// A fixed inertial observation frame for each initialization. Never follows bodies.
++export class FixedDisplayFrame{
++  reset(initialBodies=[]){
++    const valid=initialBodies.filter(b=>b.mass>0&&['x','y','z'].every(k=>Number.isFinite(b[k]))),mass=valid.reduce((n,b)=>n+b.mass,0);
++    this.origin=Object.fromEntries(['x','y','z'].map(k=>[k,mass?valid.reduce((n,b)=>n+b.mass*b[k],0)/mass:0]));
++    return this.origin;
++  }
++  constructor(){this.reset();}
++  position(body,scale=1){return Object.fromEntries(['x','y','z'].map(k=>[k,(body[k]-this.origin[k])/scale]));}
++}
+diff --git a/src/legacy/008.js b/src/legacy/008.js
+index 0d48107..dbae731 100644
+--- a/src/legacy/008.js
++++ b/src/legacy/008.js
+@@ -1073,7 +1073,8 @@ function updatePhysics(timeStep) {
+     if(gravity){
+         for(const body of bodies){body.prevX=body.x;body.prevY=body.y;body.prevZ=body.z;}
+         const config=ctx.getPhysicsSettings();
+-        gravity.advance(kv*kv*timeStep,{maxStep:FIXED_TIMESTEP,eta:config.encounterAccuracy});
++        const start=gravity.time,duration=kv*kv*timeStep;
++        gravity.advance(duration,{maxStep:FIXED_TIMESTEP,eta:config.encounterAccuracy,onAcceptedStep:ctx.observePhysicalStep?(sample,time)=>ctx.observePhysicalStep(sample,engine.runtime-1/60+(time-start)/duration/60):null});
+         physicsCom=computeCenterOfMass();frameCount++;return;
+     }
+ 
+diff --git a/src/main.js b/src/main.js
+index 5556031..3e27ca9 100644
+--- a/src/main.js
++++ b/src/main.js
+@@ -329,7 +329,7 @@ function renderState(s) {
+   if (settings.cheatingcheck) $('#physics-check').textContent = `${settings.newproperty60 ? 'CAGE ON / ' : ''}G × ${settings.newproperty52 / 1000} / T DIST × ${settings.newproperty69}\n${settings.physicsMode === 'reference' ? 'REFERENCE 60 Hz' : 'REAL TIME'}`;
+   const physics=s.physics;
+   const conservationLabel=physics?.cageActive?'牢笼外力：不作孤立守恒判定':physics&&!physics.physicalModelValid?'星体已接触：点质量模型受限':'孤立系统';
+-  $('#runtime-diagnostics').textContent = `Three.js WebGL · ${fps} FPS · Worker 60 Hz · Tick ${s.tick} · ${s.bodies.length} bodies · 宇宙 ${s.generation} · Seed ${s.seed} · ${renderer.canvas.width}×${renderer.canvas.height}${physics ? ` · ${physics.model} · ${conservationLabel} · ΔE ${physics.relativeEnergyError.toExponential(2)} · ΔL ${physics.relativeAngularMomentumError.toExponential(2)} · ΔP ${physics.normalizedMomentumDrift.toExponential(2)} · ${settings.centerOnSystem?'显示中心跟随星群':'显示中心为物理质心'}` : ''}`;
++  $('#runtime-diagnostics').textContent = `Three.js WebGL · ${fps} FPS · Worker 60 Hz · Tick ${s.tick} · ${s.bodies.length} bodies · 宇宙 ${s.generation} · Seed ${s.seed} · ${renderer.canvas.width}×${renderer.canvas.height}${physics ? ` · ${physics.model} · ${conservationLabel} · ΔE惯性 ${physics.relativeInertialEnergyError.toExponential(2)} · ΔE内部 ${physics.relativeEnergyError.toExponential(2)} · ΔL ${physics.relativeAngularMomentumError.toExponential(2)} · ΔP ${physics.normalizedMomentumDrift.toExponential(2)} · 固定初始质心 / ΔR ${physics.centerPositionDrift.toExponential(2)} / ΔVcm ${physics.centerVelocityDrift.toExponential(2)}` : ''}`;
+ }
+ function handleEvents(events) {
+   for (const event of events) {
+@@ -411,4 +411,4 @@ try {
+ }
+ // Diagnostic readout for automated smoke checks and host integrations.
+ window.__threeBodyDiagnostics = () => ({ ready: !!state && !fatal, tick: lastTick, fps, paused: userPaused || hostPaused || visibilityPaused, controls: controlMap.size, history: history.length, worker: !!worker,
+-  scene: renderer ? { canvas:[renderer.canvas.width,renderer.canvas.height], drawingBuffer:[renderer.renderer.getContext().drawingBufferWidth,renderer.renderer.getContext().drawingBufferHeight], renderedFrames:renderer.renderer.info.render.frame, viewVelocity:[renderer.rot.vx,renderer.rot.vy], speedLimited:false, compassOpacity:renderer.compass.children.map(n=>n.material.opacity), idleYaw:renderer.autoAngle, returningToGalaxy:renderer.returning, systemOffset:renderer.system.position.toArray(),systemFocusTarget:renderer.focusTarget.toArray(),bodyWorldPositions:renderer.nodes.map(n=>n.group.getWorldPosition(new renderer.camera.position.constructor()).toArray()), compassScale:renderer.compass.scale.x, compassTarget:renderer.compassTarget, compassFade:renderer.compassFade, viewSensitivity:settings.viewSensitivity, dragSensitivity:settings.dragSensitivity, dustLayers:renderer.dustLayers.map(d=>({visible:d.visible,count:d.geometry.drawRange.count,size:d.material.size,opacity:d.material.opacity,blending:d.material.blending,alphaTest:d.material.alphaTest})), pointerMode:+settings.newproperty61, galaxyCoreScreen:renderer.sky.localToWorld(renderer.galaxyDirection.clone().multiplyScalar(90)).project(renderer.camera).toArray(), layoutEditing:layoutEditor.editing, compassVisible:renderer.compass.visible, maxTextureSize:renderer.renderer.capabilities.maxTextureSize, backgroundSizes:Object.fromEntries(Object.entries(renderer.bgTextures).map(([k,t])=>[k,[t.image?.width||0,t.image?.height||0]])), backgroundFollowsView: renderer.sky.parent === renderer.world, viewRotation: renderer.world.rotation.toArray().slice(0,3), skyRotation: renderer.sky.getWorldQuaternion(new renderer.camera.quaternion.constructor()).toArray(), bodyShapes: renderer.nodes.map(n => n.mesh.geometry.type), glowShape: 'radial-circle', bodyLabelsVisible:renderer.nodes.some(n=>!n.label.hidden), trailSamples: renderer.trailBuffers.map(b => b.length), trailComplexity:renderer.trailComplexity||0, trailMetrics:renderer.trailMetrics||[], trailsVisible: renderer.trails.every(t => t.visible) } : null });
++  scene: renderer ? { canvas:[renderer.canvas.width,renderer.canvas.height], drawingBuffer:[renderer.renderer.getContext().drawingBufferWidth,renderer.renderer.getContext().drawingBufferHeight], renderedFrames:renderer.renderer.info.render.frame, viewVelocity:[renderer.rot.vx,renderer.rot.vy], speedLimited:false, compassOpacity:renderer.compass.children.map(n=>n.material.opacity), idleYaw:renderer.autoAngle, returningToGalaxy:renderer.returning, systemOffset:renderer.system.position.toArray(),displayOrigin:{...renderer.fixedFrame.origin},cameraPosition:renderer.camera.position.toArray(),renderTime:renderer.renderTime,trailStyle:"continuous-ribbon",trailHeads:renderer.trails.map(l=>l.segmentCount?Array.from(l.geometry.attributes.position.array.slice(l.segmentCount*6,l.segmentCount*6+3)):null),bodyLocalPositions:renderer.nodes.map(n=>n.group.position.toArray()),bodyWorldPositions:renderer.nodes.map(n=>n.group.getWorldPosition(new renderer.camera.position.constructor()).toArray()), compassScale:renderer.compass.scale.x, compassTarget:renderer.compassTarget, compassFade:renderer.compassFade, viewSensitivity:settings.viewSensitivity, dragSensitivity:settings.dragSensitivity, dustLayers:renderer.dustLayers.map(d=>({visible:d.visible,count:d.geometry.drawRange.count,size:d.material.size,opacity:d.material.opacity,blending:d.material.blending,alphaTest:d.material.alphaTest})), pointerMode:+settings.newproperty61, galaxyCoreScreen:renderer.sky.localToWorld(renderer.galaxyDirection.clone().multiplyScalar(90)).project(renderer.camera).toArray(), layoutEditing:layoutEditor.editing, compassVisible:renderer.compass.visible, maxTextureSize:renderer.renderer.capabilities.maxTextureSize, backgroundSizes:Object.fromEntries(Object.entries(renderer.bgTextures).map(([k,t])=>[k,[t.image?.width||0,t.image?.height||0]])), backgroundFollowsView: renderer.sky.parent === renderer.world, viewRotation: renderer.world.rotation.toArray().slice(0,3), skyRotation: renderer.sky.getWorldQuaternion(new renderer.camera.quaternion.constructor()).toArray(), bodyShapes: renderer.nodes.map(n => n.mesh.geometry.type), glowShape: 'radial-circle', bodyLabelsVisible:renderer.nodes.some(n=>!n.label.hidden), trailSamples: renderer.trailBuffers.map(b => b.length), trailComplexity:renderer.trailComplexity||0, trailMetrics:renderer.trailMetrics||[], trailsVisible: renderer.trails.every(t => t.visible) } : null });
+diff --git a/src/orbit-trace.js b/src/orbit-trace.js
+new file mode 100644
+index 0000000..dafc1ec
+--- /dev/null
++++ b/src/orbit-trace.js
+@@ -0,0 +1,32 @@
++const distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y,a.z-b.z);
++const deviation=(b,a,c)=>{
++  const t=c.time>a.time?(b.time-a.time)/(c.time-a.time):0;
++  return Math.hypot(b.x-a.x-(c.x-a.x)*t,b.y-a.y-(c.y-a.y)*t,b.z-a.z-(c.z-a.z)*t);
++};
++// Samples accepted physical steps, not worker delivery frames. Only copies positions.
++export class OrbitTrace{
++  constructor(){this.reset();}
++  reset(){this.paths=Array.from({length:4},()=>({anchor:null,pending:null,raw:[],truncated:false}));}
++  observe(bodies,time){
++    bodies.forEach((body,i)=>{
++      const p={x:body.x,y:body.y,z:body.z,time},path=this.paths[i];
++      if(![p.x,p.y,p.z,time].every(Number.isFinite))return;
++      const last=path.raw.at(-1)||path.anchor;
++      if(last&&time<=last.time)return;
++      if(!last||distance(p,last)>.00025||time-last.time>.15)path.raw.push(p);
++      path.pending=p;
++      if(path.raw.length>4096){path.raw.splice(0,2048);path.truncated=true;}
++    });
++  }
++  drain(){return this.paths.map(path=>{
++    if(!path.pending)return [];
++    const points=path.truncated?[...path.raw]:[...(path.anchor?[path.anchor]:[]),...path.raw];
++    if(points.at(-1)?.time!==path.pending.time)points.push(path.pending);
++    const keep=new Set([0,points.length-1]),stack=[[0,points.length-1]];
++    while(stack.length){const [a,b]=stack.pop();let error=.0005,index=-1;for(let i=a+1;i<b;i++){const e=deviation(points[i],points[a],points[b]);if(e>error){error=e;index=i;}}if(index>=0){keep.add(index);stack.push([a,index],[index,b]);}}
++    let reduced=[...keep].sort((a,b)=>a-b).map(i=>points[i]).filter(Boolean);
++    if(reduced.length>512){reduced=reduced.slice(-512);path.truncated=true;}
++    if(path.truncated&&reduced.length)reduced[0]={...reduced[0],break:true};
++    path.anchor=path.pending;path.pending=null;path.raw=[];path.truncated=false;return reduced;
++  });}
++}
+diff --git a/src/physics/gravity.js b/src/physics/gravity.js
+index a56d400..409891c 100644
+--- a/src/physics/gravity.js
++++ b/src/physics/gravity.js
+@@ -17,10 +17,11 @@ export function pairPotential(r,{model='newtonian',softening=0,kSoft=2.8}={}){
+ export function invariants(bodies,G,options={}){
+  const mass=bodies.reduce((n,b)=>n+b.mass,0),com=[0,0,0,0,0,0];
+  if(mass>0)for(const b of bodies)axes.forEach((key,i)=>com[i]+=b.mass*b[key]/mass);
+- let kinetic=0,potential=0;const momentum=[0,0,0],angularMomentum=[0,0,0];
++ let kinetic=0,inertialKinetic=0,potential=0;const momentum=[0,0,0],angularMomentum=[0,0,0];
+  for(const b of bodies){const r=[b.x-com[0],b.y-com[1],b.z-com[2]],v=[b.vx-com[3],b.vy-com[4],b.vz-com[5]],h=cross(r,v);kinetic+=.5*b.mass*v.reduce((n,x)=>n+x*x,0);for(let i=0;i<3;i++){momentum[i]+=b.mass*b[axes[i+3]];angularMomentum[i]+=b.mass*h[i];}}
+  for(const[i,j]of pairs){const a=bodies[i],b=bodies[j];if(a.mass&&b.mass)potential+=G*a.mass*b.mass*pairPotential(Math.hypot(a.x-b.x,a.y-b.y,a.z-b.z),options);}
+- return {energy:kinetic+potential,kinetic,potential,momentum,angularMomentum,center:com,virialRatio:potential<0?2*kinetic/-potential:null,mass};
++ for(const b of bodies)inertialKinetic+=.5*b.mass*(b.vx*b.vx+b.vy*b.vy+b.vz*b.vz);
++ return {energy:kinetic+potential,inertialEnergy:inertialKinetic+potential,inertialKinetic,kinetic,potential,momentum,angularMomentum,center:com,virialRatio:potential<0?2*kinetic/-potential:null,mass};
+ }
+ export class GravityIntegrator{
+  constructor(bodies,G,{model='newtonian',softening=0,kSoft=2.8,cageAcceleration=null,radii=null}={}){
+@@ -55,20 +56,22 @@ export class GravityIntegrator{
+    if(d<=limit){this.contactKeys.add(key);this.contacts.push({pair:[i,j],time:this.time-h+fraction*h,distance:d,radius:limit,method:'accepted-step-segment'});}
+   }
+  }
+- advance(duration,{maxStep=.00075,eta=.0075,adaptive=true,minStep=1e-10,maxSteps=200000}={}){
++ advance(duration,{maxStep=.00075,eta=.0075,adaptive=true,minStep=1e-10,maxSteps=200000,onAcceptedStep=null}={}){
+   if(!Number.isFinite(duration)||!Number.isFinite(maxStep)||maxStep<=0||!Number.isFinite(eta)||eta<=0)throw new PhysicsError('invalid-step','物理步长或近遇精度参数无效');
+   const sign=Math.sign(duration);let remaining=Math.abs(duration),used=0;
+   try{while(remaining>1e-14){const limit=Math.min(maxStep,adaptive?eta*this.timescale():Infinity),magnitude=Math.min(remaining,limit);if(!(limit>minStep))throw new PhysicsError('minimum-step','近遇所需步长低于安全下限；数值中断不计为物理死亡');if(used++>=maxSteps)throw new PhysicsError('step-budget','单帧近遇计算预算耗尽；未跳过物理时间');
+     const h=sign*magnitude;this.save();const oldTime=this.time,oldSteps=this.steps;
+     try{this.step(h);if(this.bodies.some(b=>axes.some(k=>!Number.isFinite(b[k]))))throw new PhysicsError('non-finite','数值溢出；已恢复到最后有效状态');}
+     catch(error){this.restore();this.time=oldTime;this.steps=oldSteps;throw error;}
+-    this.detectContacts(h);remaining=Math.max(0,remaining-magnitude);
++    this.detectContacts(h);remaining=Math.max(0,remaining-magnitude);onAcceptedStep?.(this.bodies,this.time);
+    }}catch(error){this.numericalError={code:error.code||'numerical-error',message:error.message,time:this.time};throw error;}
+   return used;
+  }
+  diagnostics(){
+   const now=invariants(this.bodies,this.G,this),energyError=Math.abs(now.energy-this.baseline.energy)/Math.max(Math.abs(this.baseline.energy),1e-20),angularError=length(now.angularMomentum.map((x,i)=>x-this.baseline.angularMomentum[i]))/this.angularScale,momentumError=length(now.momentum.map((x,i)=>x-this.baseline.momentum[i]))/this.momentumScale;
+   this.maxEnergyError=Math.max(this.maxEnergyError,energyError);this.maxAngularError=Math.max(this.maxAngularError,angularError);this.maxMomentumError=Math.max(this.maxMomentumError,momentumError);if(!this.contacts.length)this.maxEnergyErrorBeforeContact=Math.max(this.maxEnergyErrorBeforeContact,energyError);
+-  return {...now,model:this.model,steps:this.steps,solverTime:this.time,relativeEnergyError:energyError,maxRelativeEnergyError:this.maxEnergyError,maxRelativeEnergyErrorBeforeContact:this.maxEnergyErrorBeforeContact,relativeAngularMomentumError:angularError,maxRelativeAngularMomentumError:this.maxAngularError,normalizedMomentumDrift:momentumError,maxNormalizedMomentumDrift:this.maxMomentumError,cageActive:!!this.cageAcceleration,conservationApplicable:!this.cageAcceleration,physicalModelValid:!this.contacts.length,contacts:this.contacts,numericalError:this.numericalError};
++  const expectedCenter=this.baseline.center.slice(0,3).map((x,i)=>x+this.baseline.center[i+3]*this.time);
++  const centerPositionDrift=length(expectedCenter.map((x,i)=>now.center[i]-x)),centerVelocityDrift=length(now.center.slice(3).map((x,i)=>x-this.baseline.center[i+3]));
++  return {...now,expectedCenter,initialCenter:[...this.baseline.center],centerPositionDrift,centerVelocityDrift,relativeInertialEnergyError:Math.abs(now.inertialEnergy-this.baseline.inertialEnergy)/Math.max(Math.abs(this.baseline.inertialEnergy),1e-20),model:this.model,steps:this.steps,solverTime:this.time,relativeEnergyError:energyError,maxRelativeEnergyError:this.maxEnergyError,maxRelativeEnergyErrorBeforeContact:this.maxEnergyErrorBeforeContact,relativeAngularMomentumError:angularError,maxRelativeAngularMomentumError:this.maxAngularError,normalizedMomentumDrift:momentumError,maxNormalizedMomentumDrift:this.maxMomentumError,cageActive:!!this.cageAcceleration,conservationApplicable:!this.cageAcceleration,physicalModelValid:!this.contacts.length,contacts:this.contacts,numericalError:this.numericalError};
+  }
+ }
+diff --git a/src/renderer.js b/src/renderer.js
+index b520b0e..43bbf99 100644
+--- a/src/renderer.js
++++ b/src/renderer.js
+@@ -3,12 +3,10 @@ import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+ import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+ import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
+ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+-import { Line2 } from 'three/addons/lines/Line2.js';
+-import { LineGeometry } from 'three/addons/lines/LineGeometry.js';
+-import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
+ import { colorRGB, seededRandom } from './settings.js';
+ import { fadeMotion } from './motion-visuals.js';
+-import {displayCenter} from './display-center.js';
++import {FixedDisplayFrame} from './fixed-display-frame.js';
++import {TrailRibbon} from './trail-ribbon.js';
+ import { ViewMotion } from './view-motion.js';
+ import { TrailHistory, trailComplexity, selectTrail } from './adaptive-trails.js';
+ 
+@@ -47,7 +45,7 @@ export class SpaceRenderer {
+     this.renderer.toneMapping = THREE.ACESFilmicToneMapping; this.renderer.toneMappingExposure = 1;
+     this.scene = new THREE.Scene(); this.camera = new THREE.PerspectiveCamera(50, 1, 0.01, 200);
+     this.camera.position.set(0, 0.25, 5.2); this.camera.lookAt(0, 0, 0);
+-    this.world = new THREE.Group(); this.scene.add(this.world);this.system=new THREE.Group();this.world.add(this.system);this.focusTarget=new THREE.Vector3();
++    this.world = new THREE.Group(); this.scene.add(this.world);this.system=new THREE.Group();this.world.add(this.system);this.fixedFrame=new FixedDisplayFrame();this.renderTime=0;
+     this.compass = new THREE.Group(); this.world.add(this.compass);this.compass.scale.setScalar(.3);this.compass.visible=false;this.compassFade=0;this.compassTarget=false;
+     const ringGeometry = new THREE.BufferGeometry().setFromPoints(Array.from({ length: 257 }, (_, i) => new THREE.Vector3(Math.cos(i / 256 * Math.PI * 2) * 1.42, Math.sin(i / 256 * Math.PI * 2) * 1.42, 0)));
+     for (const [angle, opacity] of [[0, 0], [Math.PI / 2, 0]]) {
+@@ -78,10 +76,7 @@ export class SpaceRenderer {
+       const light = new THREE.PointLight(0xffe2c3, i < 3 ? 5 : 0, 12, 1.3); group.add(light);
+       const label = document.createElement('div'); label.className = `body-label body-${i}`; label.innerHTML = `<span>${['α', 'β', 'γ', '○'][i]}</span><small></small>`; this.labels.append(label);
+       this.nodes.push({ group, mesh, material, glow, light, label, target: new THREE.Vector3() });
+-      // Keep one fixed GPU capacity: Three caches an instanced geometry's first capacity.
+-      // Growing a one-segment LineGeometry later silently clips rendering to that segment.
+-      const geo = new LineGeometry(); geo.setPositions(new Float32Array(2000 * 3)); geo.setColors(new Float32Array(2000 * 3)); geo.instanceCount = 0;
+-      const line = new Line2(geo, new LineMaterial({ linewidth: 2.2, vertexColors: true, transparent: true, opacity: .8, blending: THREE.AdditiveBlending, depthWrite: false }));
++      const line = new TrailRibbon();
+       line.frustumCulled = false; this.system.add(line); this.trails.push(line); this.trailBuffers.push(new TrailHistory());
+     }
+     this.dustLayers = [];this.dustTexture=crispParticle();
+@@ -179,19 +174,20 @@ export class SpaceRenderer {
+   clearTrails() {
+     this.trailBuffers.forEach(b => b.clear());
+     this.trailComplexity=0;this.trailMetrics=[];
+-    this.trails.forEach(line => { line.geometry.instanceCount = 0; });
++    this.trails.forEach(line => { line.segmentCount=0;line.geometry.setDrawRange(0,0); });
+   }
+   ingest(state) {
+     if (this.snap && state.revision !== this.snap.revision) { this.clearTrails(); this.firstPosition = true; }
+     if (!this.snap) this.firstPosition = true;
++    if(this.firstPosition){this.fixedFrame.reset(state.initialBodies);this.renderTime=Math.max(0,state.runtime-.05);}
+     this.snap = state;
+-    const center=this.settings.centerOnSystem?displayCenter(state.bodies,state.com):state.com;
+-    this.focusTarget.set((state.com.x-center.x)/this.spaceScale,(state.com.y-center.y)/this.spaceScale,(state.com.z-center.z)/this.spaceScale);
+-    if(this.firstPosition)this.system.position.copy(this.focusTarget);
++    if(state.runtime-this.renderTime>.15)this.renderTime=state.runtime-.05;
+     state.bodies.forEach((b, i) => {
+-      const n = this.nodes[i]; n.target.set((b.x - state.com.x)/this.spaceScale,(b.y - state.com.y)/this.spaceScale,(b.z - state.com.z)/this.spaceScale);
++      const n = this.nodes[i],position=this.fixedFrame.position(b,this.spaceScale);n.target.set(position.x,position.y,position.z);
+       if (this.firstPosition) n.group.position.copy(n.target);
+-      if (this.settings.newproperty14)this.trailBuffers[i].push(n.target,state.runtime);
++      const samples=state.trailSamples?.[i];
++      if(samples?.length)for(const p of samples){if(p.break)this.trailBuffers[i].clear();this.trailBuffers[i].push(this.fixedFrame.position(p,this.spaceScale),p.time);}
++      else this.trailBuffers[i].push(n.target,state.runtime);
+     });
+     this.lastTrailTick = state.tick;
+     this.firstPosition = false;
+@@ -209,21 +205,15 @@ export class SpaceRenderer {
+       vec.set(point.x,point.y,point.z).applyMatrix4(this.system.matrixWorld).project(this.camera);
+       return{x:(vec.x*.5+.5)*innerWidth,y:(-.5*vec.y+.5)*innerHeight,z:vec.z};
+     };
+-    const raw=trailComplexity(this.trailBuffers,project,this.snap.runtime);
++    const raw=trailComplexity(this.trailBuffers,project,this.renderTime);
+     this.trailComplexity=(this.trailComplexity||0)+(raw-(this.trailComplexity||0))*(1-Math.exp(-dt/.7));
+     const keys=['brfontcoloraaaaaatrail1color','brfontcoloraaaaaatrail2color','brfontcoloraaaaaatrail3color','brfontcoloraaaaaatrail4color'];
+     this.trailMetrics=this.trailBuffers.map((history,i)=>{
+-      const selection=selectTrail(history,project,{now:this.snap.runtime,viewport:Math.min(innerWidth,innerHeight),baseLength:this.settings.trailsLength,complexity:this.trailComplexity,dt});
+-      const {points,fractions}=selection,geometry=this.trails[i].geometry,positions=geometry.attributes.instanceStart.data,colors=geometry.attributes.instanceColorStart.data,color=C(this.settings[keys[i]]);
+-      for(let j=0;j<points.length-1;j++){
+-        const a=points[j],b=points[j+1],offset=j*6,fadeA=Math.pow(fractions[j],1.4),fadeB=Math.pow(fractions[j+1],1.4);
+-        positions.array.set([a.x,a.y,a.z,b.x,b.y,b.z],offset);
+-        colors.array.set([color.r*fadeA,color.g*fadeA,color.b*fadeA,color.r*fadeB,color.g*fadeB,color.b*fadeB],offset);
+-      }
+-      positions.needsUpdate=colors.needsUpdate=true;geometry.instanceCount=Math.max(0,points.length-1);
++      const selection=selectTrail(history,project,{now:this.renderTime,viewport:Math.min(innerWidth,innerHeight),baseLength:this.settings.trailsLength,complexity:this.trailComplexity,dt});
++      const {points,fractions}=selection;this.trails[i].setPath(points,fractions,C(this.settings[keys[i]]));
+       this.trails[i].material.opacity=.8-.25*this.trailComplexity;
+       this.trails[i].material.linewidth=2.2-.5*this.trailComplexity;
+-      return{arcPixels:selection.arcPixels,seconds:selection.seconds,budget:selection.budget,segments:geometry.instanceCount};
++      return{arcPixels:selection.arcPixels,seconds:selection.seconds,budget:selection.budget,segments:this.trails[i].segmentCount};
+     });
+   }
+   render(dt, elapsed, motionDt=dt) {
+@@ -242,17 +232,17 @@ export class SpaceRenderer {
+     this.compassFade=fadeMotion(this.compassFade,this.compassTarget,motionDt);this.compass.visible=this.compassFade>.002&&s.compassOpacity>0;
+     for(const child of this.compass.children)child.material.opacity=s.compassOpacity*this.compassFade;
+     this.world.rotation.set(this.rot.x,this.rot.y,0);
+-    this.system.position.lerp(this.focusTarget,1-Math.exp(-motionDt/1.5));
++    if(this.snap)this.renderTime=Math.min(this.snap.runtime,this.renderTime+dt);
+     this.nodes.forEach((n, i) => {
+-      n.group.position.lerp(n.target, 1 - Math.exp(-dt * 22)); n.mesh.rotation.y += dt * .1;
++      const p=this.trailBuffers[i].atTime(this.renderTime);if(p)n.group.position.set(p.x,p.y,p.z);n.mesh.rotation.y += dt * .1;
+       if (i < 3) { n.glow.material.opacity = Math.min(1, .35 + s.newproperty49 * .3 + (s.newproperty2 ? s.hdr * .09 : 0) + this.audioLevel * .12); }
+       n.group.getWorldPosition(vec);vec.project(this.camera);
+       n.label.style.transform = `translate(${(vec.x * .5 + .5) * innerWidth + 15}px,${(-vec.y * .5 + .5) * innerHeight - 9}px)`;
+       n.label.style.visibility = vec.z > 1 || vec.z < -1 ? 'hidden' : 'visible';
+       if (this.snap) n.label.querySelector('small').textContent = `${n.group.position.x.toFixed(2)} / ${n.group.position.y.toFixed(2)}`;
+     });
+-    if(s.newproperty14&&this.snap&&(this.lastTrailRender===undefined||elapsed-this.lastTrailRender>=.05)){
+-      this.updateTrails(Math.min(1,elapsed-(this.lastTrailRender??elapsed-.05)));this.lastTrailRender=elapsed;
++    if(s.newproperty14&&this.snap){
++      this.updateTrails(dt);
+     }
+     this.dustLayers.forEach((d, i) => { d.rotation.y = elapsed * .002 * (i + 1);d.position.x=Math.sin(elapsed*.06+i)*.12;d.position.y=Math.cos(elapsed*.04+i)*.08; });
+     this.post.uniforms.time.value = elapsed;
+diff --git a/src/settings-catalog.js b/src/settings-catalog.js
+index c35137e..3c58cc5 100644
+--- a/src/settings-catalog.js
++++ b/src/settings-catalog.js
+@@ -6,7 +6,6 @@ export const settingsDefinitions={
+     birthDelay:{type:'slider',text:'文明诞生安全窗口 / Birth window (s)',min:.1,max:10,step:.1},
+     planetStrength:{type:'slider',text:'行星结构强度 / Structural strength',min:1,max:4,step:.1},
+     viewSensitivity:{type:'slider',text:'整体视角灵敏度 / Mouse sensitivity',min:0,max:2,step:.01},
+-    centerOnSystem:{type:'bool',text:'自动居中星群 / Track stellar system'},
+     compassOpacity:{type:'slider',text:'旋转环不透明度 / Ring opacity',min:0,max:.5,step:.01},
+     orbitalInitialization:{type:'combo',text:'随机初始轨道 / Initial orbits',options:[{value:'research',label:'随机三星 Q=1 · 逆向行星 0.12D（默认）'},{value:'chaotic',label:'v0.5.1 随机四体 · 对照'},{value:'original',label:'原版完全随机'},{value:'balanced',label:'稳定轨道实验'}]},
+     gravityModel:{type:'combo',text:'引力模型 / Gravity',options:[{value:'newtonian',label:'牛顿平方反比 · 无软化（默认）'},{value:'plummer',label:'Plummer 一致软化 · 实验'},{value:'legacy',label:'旧近距引力 · 复现对照'}]},
+@@ -26,4 +25,4 @@ export const settingsDefinitions={
+     music: { type: 'bool', text: '播放原版音乐 · Ether' },
+     volume: { type: 'slider', text: '音乐音量 / Volume', min: 0, max: 1, step: .01 }
+   };
+-export const settingsCategories=[['layout','布局与窗口 / Layout',[]],['simulation','模拟与文明 / Simulation',['seed','orbitalInitialization','gravityModel','encounterAccuracy','physicsMode','civilizationMode','civilizationLevels','developmentRate','thermalGrace','birthDelay','wakeDelay','epochWindow','climateInertia','stellarBreathing','planetStrength']],['view','视角与银河 / View',['viewSensitivity','dragSensitivity','centerOnSystem','newproperty16','newproperty51','newproperty61','x5','y5','x6','y7','newproperty62','y6','compass','compassOpacity']],['visual','画面与轨迹 / Visual',['renderQuality','trailsLength','pixelRatio','bodyLabels','dust','_1dust1quantity','_1dust1size','_2dust2quantity','_2dust1size']],['audio','声音 / Audio',['music','volume']]];
++export const settingsCategories=[['layout','布局与窗口 / Layout',[]],['simulation','模拟与文明 / Simulation',['seed','orbitalInitialization','gravityModel','encounterAccuracy','physicsMode','civilizationMode','civilizationLevels','developmentRate','thermalGrace','birthDelay','wakeDelay','epochWindow','climateInertia','stellarBreathing','planetStrength']],['view','视角与银河 / View',['viewSensitivity','dragSensitivity','newproperty16','newproperty51','newproperty61','x5','y5','x6','y7','newproperty62','y6','compass','compassOpacity']],['visual','画面与轨迹 / Visual',['renderQuality','trailsLength','pixelRatio','bodyLabels','dust','_1dust1quantity','_1dust1size','_2dust2quantity','_2dust1size']],['audio','声音 / Audio',['music','volume']]];
+diff --git a/src/settings.js b/src/settings.js
+index f1595c5..a8c166a 100644
+--- a/src/settings.js
++++ b/src/settings.js
+@@ -2,7 +2,7 @@ import { propertySchema } from './original-data.js';
+ 
+ export const defaults = Object.fromEntries(Object.entries(propertySchema)
+   .filter(([, d]) => d.type && d.type !== 'group').map(([k, d]) => [k, d.value]));
+-export const extraDefaults = { seed: 'TRISOLARIS', music: false, volume: 0.35, trailsLength: 400, orbitalInitialization: 'research', physicsMode: 'reference', pixelRatio: 4, bodyLabels: false, presentationRevision: 6, layout: {}, viewSensitivity: .12, compassOpacity: .12, planetStrength: 1.6, idleAmplitude: 6, civilizationMode: 'balanced', thermalGrace: 30, wakeDelay: 1, epochWindow: 1/12, epochTimebase: 'years', climateInertia: 1.5, stellarBreathing: true, renderQuality: 'native', dragSensitivity: 5, birthDelay: .5, civilizationLevels: true, developmentRate: 1, gravityModel: 'newtonian', encounterAccuracy: .0075, physicsRevision: 1, manualInitialBodies: null, centerOnSystem: true, galaxyReturnRevision: 2 };
++export const extraDefaults = { seed: 'TRISOLARIS', music: false, volume: 0.35, trailsLength: 400, orbitalInitialization: 'research', physicsMode: 'reference', pixelRatio: 4, bodyLabels: false, presentationRevision: 6, layout: {}, viewSensitivity: .12, compassOpacity: .12, planetStrength: 1.6, idleAmplitude: 6, civilizationMode: 'balanced', thermalGrace: 30, wakeDelay: 1, epochWindow: 1/12, epochTimebase: 'years', climateInertia: 1.5, stellarBreathing: true, renderQuality: 'native', dragSensitivity: 5, birthDelay: .5, civilizationLevels: true, developmentRate: 1, gravityModel: 'newtonian', encounterAccuracy: .0075, physicsRevision: 1, manualInitialBodies: null, centerOnSystem: false, galaxyReturnRevision: 2 };
+ // New installs show the requested tails; explicitly saved off/on preferences still win.
+ defaults.newproperty14 = true;
+ defaults.newproperty60 = false;
+@@ -47,7 +47,7 @@ export function normalizeSettings(source = {}, includeExtras = true) {
+     else if(key==='dragSensitivity'&&Number.isFinite(+value))out.dragSensitivity=Math.max(.1,Math.min(20,+value));
+     else if(key==='birthDelay'&&Number.isFinite(+value))out.birthDelay=Math.max(.1,Math.min(10,+value));
+     else if(key==='developmentRate'&&Number.isFinite(+value))out.developmentRate=Math.max(.1,Math.min(20,+value));
+-    else if(key==='centerOnSystem')out.centerOnSystem=value===true;
++    else if(key==='centerOnSystem')out.centerOnSystem=false;
+     else if(key==='civilizationLevels')out.civilizationLevels=value===true;
+     else if(key==='compassOpacity'&&Number.isFinite(+value))out.compassOpacity=Math.max(0,Math.min(.5,+value));
+     else if(key==='orbitalInitialization'&&['research','chaotic','balanced','original'].includes(value))out.orbitalInitialization=value;
+@@ -77,7 +77,7 @@ export function colorRGB(s = '1 1 1') { return s.split(/\s+/).map(Number); }
+ export function colorHex(s) { return '#' + colorRGB(s).map(x => Math.round(x * 255).toString(16).padStart(2, '0')).join(''); }
+ export function fromHex(s) { return [1, 3, 5].map(i => parseInt(s.slice(i, i + 2), 16) / 255).join(' '); }
+ export function plainText(s = '') { return s.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' '); }
+-export function algorithmId(s) { return `sykm-scene-v4-${s.physicsMode}60-civ-${s.civilizationMode}-v054-tech2-escape1-${s.gravityModel}-${s.orbitalInitialization}-eta${s.encounterAccuracy}-orbits`; }
++export function algorithmId(s) { return `sykm-scene-v4-${s.physicsMode}60-civ-${s.civilizationMode}-v055-tech2-escape1-${s.gravityModel}-${s.orbitalInitialization}-eta${s.encounterAccuracy}-orbits`; }
+ export function migrateSettings(saved={},version=3){
+   // v0.5.1: one simulated month replaces the former default two-second window.
+   if(saved.epochTimebase!=='years')saved={...saved,epochWindow:saved.epochWindow===undefined||Math.abs(saved.epochWindow-2)<1e-9?1/12:saved.epochWindow};
+diff --git a/src/simulation-worker.js b/src/simulation-worker.js
+index 3f23480..bf09605 100644
+--- a/src/simulation-worker.js
++++ b/src/simulation-worker.js
+@@ -4,11 +4,11 @@ function sendState() {
+   const state = simulation.snapshot({ afterEvent: sentEvent, compact: true });
+   if (state.events.length) sentEvent = state.events.at(-1).id;
+   // The UI receives a compact rank; durable archive payloads are sent only once as events.
+-  self.postMessage({ type: 'state', state });
++  state.trailSamples=simulation.orbitTrace.drain();self.postMessage({ type: 'state', state });
+ }
+ self.onmessage = ({ data }) => {
+   try {
+-    if (data.type === 'init') { simulation = new Simulation(data.settings,data.statistics); simulation.tick(); sendState(); }
++    if (data.type === 'init') { simulation = new Simulation(data.settings,data.statistics,{trace:true}); simulation.tick(); sendState(); }
+     if (data.type === 'settings') simulation?.configure(data.patch);
+     if (data.type === 'restart') simulation?.restart();
+     if (data.type === 'pause') { paused = data.value; remainder = 0; lastTime = performance.now(); }
+diff --git a/src/simulation.js b/src/simulation.js
+index 2b1a4c3..487465b 100644
+--- a/src/simulation.js
++++ b/src/simulation.js
+@@ -12,20 +12,22 @@ import { RunStatistics } from './run-statistics.js';
+ import { WorldState } from './world-state.js';
+ import { CivilizationState } from './civilization-state.js';
+ import { EscapeState } from './escape-state.js';
++import { OrbitTrace } from './orbit-trace.js';
+ 
+ class Vec3 { constructor(x = 0, y = x, z = x) { this.x = x; this.y = y; this.z = z; } }
+ const plain = v => v && typeof v === 'object' ? structuredClone(v) : v;
+ 
+ // Backend independent of DOM, WebGL and transport. The Worker and Node use the same class.
+ export class Simulation {
+-  constructor(settings = {}, statistics = {}) {
++  constructor(settings = {}, statistics = {}, {trace=false} = {}) {
++    this.traceEnabled=trace;
+     this.statistics=new RunStatistics(statistics);
+     this.settings = normalizeSettings(settings);
+     this.shared = { gjz: 0, rst: 0, cfw: 0, c_down: false, text: '',universeNumber:this.statistics.universeNumber,xntime:this.statistics.totalYears };
+     this.engine = { runtime: 0, frametime: 1 / 60, screenResolution: new Vec3(1920, 1080, 0) };
+     this.input = { cursorScreenPosition: new Vec3(960, 540, 0) };
+     this.generation = this.statistics.universeNumber; this.tickCount = 0; this.revision = 0; this.events = []; this.eventSeq = 0;
+-    this.habitability = new Habitability();
++    this.habitability = new Habitability();this.orbitTrace=new OrbitTrace();
+     this.world = new WorldState();this.escape=new EscapeState(); this.terminalSince=null;this.restartSince=null;
+     this.setRandom();
+     this.modules = {};
+@@ -48,7 +50,7 @@ export class Simulation {
+     builder.values = {};
+     builder.finish = function() { return Object.assign(this.values, overrides); };
+     const math = Object.create(Math); math.random = () => self.random();
+-    return factory({ shared: this.shared, engine: this.engine, input: this.input, thisScene: { createLayer: data => data }, Vec3, Math: math, createScriptProperties: () => builder, getHabitability: () => null, getPhysicsSettings:()=>self.settings, prepareManualBodies:bodies=>{self.initializationMetadata=null;if(self.settings.manualInitialBodies)for(let i=0;i<4;i++)Object.assign(bodies[i],self.settings.manualInitialBodies[i]);}, prepareInitialBodies: (bodies,G,p) => {const result=prepareOrbits(bodies,G,p,self.settings,()=>self.random());self.initializationMetadata=result?.metadata??null;return result;}, onInitialize: bodies => { self.initialBodies = plain(bodies); self.habitability.reset(); self.world.reset();self.escape.reset(); self.civilization?.reset(); self.terminalSince=null;self.restartSince=null;self.observedContacts=new Set(); } });
++    return factory({ shared: this.shared, engine: this.engine, input: this.input, thisScene: { createLayer: data => data }, Vec3, Math: math, createScriptProperties: () => builder, getHabitability: () => null, getPhysicsSettings:()=>self.settings, observePhysicalStep:self.traceEnabled?(bodies,time)=>{if(self.settings.newproperty14)self.orbitTrace.observe(bodies,time);}:undefined, prepareManualBodies:bodies=>{self.initializationMetadata=null;if(self.settings.manualInitialBodies)for(let i=0;i<4;i++)Object.assign(bodies[i],self.settings.manualInitialBodies[i]);}, prepareInitialBodies: (bodies,G,p) => {const result=prepareOrbits(bodies,G,p,self.settings,()=>self.random());self.initializationMetadata=result?.metadata??null;return result;}, onInitialize: bodies => { self.initialBodies = plain(bodies);self.orbitTrace.reset(); self.habitability.reset(); self.world.reset();self.escape.reset(); self.civilization?.reset(); self.terminalSince=null;self.restartSince=null;self.observedContacts=new Set(); } });
+   }
+   configure(patch) {
+     const next = normalizeSettings({ ...this.settings, ...patch });
+@@ -56,6 +58,7 @@ export class Simulation {
+     const changed = Object.keys(next).filter(k => k==='manualInitialBodies'?JSON.stringify(next[k])!==JSON.stringify(this.settings[k]):next[k]!==this.settings[k]);
+     this.settings = next;
+     if(!next.autorestart||(next.newproperty60&&next.civilizationMode!=='legacy'&&this.pendingRestart==='escape'))this.pendingRestart=null;
++    if(changed.includes('newproperty14'))this.orbitTrace.reset();
+     if (changed.includes('civilizationMode')) { this.habitability.reset(); this.civilization.reset(); this.shared.suitablePeriodCount = 0; }
+     const resetKeys = new Set(['seed', 'physicsMode', 'newproperty53', 'orbitalInitialization','gravityModel','encounterAccuracy','manualInitialBodies']);
+     const mapped = {};
+diff --git a/src/trail-ribbon.js b/src/trail-ribbon.js
+new file mode 100644
+index 0000000..13384af
+--- /dev/null
++++ b/src/trail-ribbon.js
+@@ -0,0 +1,50 @@
++import * as THREE from 'three';
++
++// Adjacent segments share both edge vertices: no overlapping round caps or bright beads.
++export class TrailRibbon extends THREE.Mesh{
++  constructor(capacity=2000){
++    const geometry=new THREE.BufferGeometry();
++    for(const name of ['position','previous','next','color'])geometry.setAttribute(name,new THREE.BufferAttribute(new Float32Array(capacity*6),3).setUsage(THREE.DynamicDrawUsage));
++    const side=new Float32Array(capacity*2),indices=[];
++    for(let i=0;i<capacity;i++){side[i*2]=-1;side[i*2+1]=1;if(i<capacity-1){const a=i*2;indices.push(a,a+1,a+2,a+2,a+1,a+3);}}
++    geometry.setAttribute('side',new THREE.BufferAttribute(side,1));geometry.setIndex(indices);geometry.setDrawRange(0,0);
++    geometry.setAttribute('fade',new THREE.BufferAttribute(new Float32Array(capacity*2),1).setUsage(THREE.DynamicDrawUsage));
++    const uniforms={resolution:{value:new THREE.Vector2(1,1)},linewidth:{value:2.2},opacity:{value:.8}};
++    const material=new THREE.ShaderMaterial({uniforms,transparent:true,depthWrite:false,side:THREE.DoubleSide,blending:THREE.NormalBlending,
++      vertexShader:`attribute vec3 previous,next,color;attribute float side,fade;
++        uniform vec2 resolution;uniform float linewidth;varying vec3 vColor;varying float vSide,vFade;
++        vec2 screen(vec4 p){return p.xy/max(p.w,0.0001)*resolution;}
++        void main(){
++          vec4 p=projectionMatrix*modelViewMatrix*vec4(position,1.);
++          vec2 a=screen(projectionMatrix*modelViewMatrix*vec4(previous,1.)),b=screen(p),c=screen(projectionMatrix*modelViewMatrix*vec4(next,1.));
++          vec2 d0=b-a,d1=c-b;float l0=length(d0),l1=length(d1);
++          if(l0<0.00001)d0=d1;if(l1<0.00001)d1=d0;
++          d0=normalize(d0+vec2(0.0000001,0.));d1=normalize(d1+vec2(0.0000001,0.));
++          vec2 tangent=d0+d1;if(length(tangent)<0.001)tangent=d0;tangent=normalize(tangent);
++          vec2 miter=vec2(-tangent.y,tangent.x),normal=vec2(-d0.y,d0.x);
++          float scale=min(2.5,1./max(abs(dot(miter,normal)),0.4));
++          p.xy+=miter*side*linewidth*scale/resolution*p.w;
++          gl_Position=p;vColor=color;vSide=side;vFade=fade;
++        }`,
++      fragmentShader:`uniform float opacity;varying vec3 vColor;varying float vSide,vFade;
++        void main(){float edge=1.-smoothstep(1.-fwidth(vSide),1.,abs(vSide));gl_FragColor=vec4(vColor,opacity*edge*vFade);
++          #include <tonemapping_fragment>
++          #include <colorspace_fragment>
++        }`});
++    Object.defineProperties(material,{resolution:{get:()=>uniforms.resolution.value},linewidth:{get:()=>uniforms.linewidth.value,set:v=>uniforms.linewidth.value=v},opacity:{get:()=>uniforms.opacity.value,set:v=>uniforms.opacity.value=v}});
++    super(geometry,material);this.capacity=capacity;this.frustumCulled=false;this.segmentCount=0;
++  }
++  setPath(points,fractions,color){
++    const count=Math.min(points.length,this.capacity),attributes=this.geometry.attributes;
++    for(let i=0;i<count;i++){
++      const p=points[i],a=points[Math.max(0,i-1)],b=points[Math.min(count-1,i+1)],fade=Math.pow(fractions[i]??0,1.4);
++      for(let side=0;side<2;side++){
++        const offset=i*6+side*3;
++        attributes.position.array.set([p.x,p.y,p.z],offset);attributes.previous.array.set([a.x,a.y,a.z],offset);attributes.next.array.set([b.x,b.y,b.z],offset);
++        attributes.color.array.set([color.r,color.g,color.b],offset);attributes.fade.array[i*2+side]=fade;
++      }
++    }
++    for(const name of ['position','previous','next','color','fade'])attributes[name].needsUpdate=true;
++    this.segmentCount=Math.max(0,count-1);this.geometry.setDrawRange(0,this.segmentCount*6);
++  }
++}
+diff --git a/tests/v053.test.js b/tests/v053.test.js
+index 19188a7..c0d45b1 100644
+--- a/tests/v053.test.js
++++ b/tests/v053.test.js
+@@ -1,13 +1,10 @@
+ import test from 'node:test';
+ import assert from 'node:assert/strict';
+ import {ViewMotion} from '../src/view-motion.js';
+-import {displayCenter} from '../src/display-center.js';
+-import {invariants} from '../src/physics/gravity.js';
+ import {normalizeSettings,migrateSettings} from '../src/settings.js';
+ import {civilizationLevels,levelFor} from '../src/civilization-levels.js';
+ import {CivilizationState} from '../src/civilization-state.js';
+ import {Simulation} from '../src/simulation.js';
+-const body=(x,y=0,mass=5e6)=>({x,y,z:0,vx:0,vy:0,vz:0,mass});
+ 
+ test('idle return cancels residual inertia and obeys one total angular-speed cap without overshoot',()=>{
+  const m=new ViewMotion();m.x=.1;m.y=2*Math.PI+.2;m.vx=2;m.vy=-4;
+@@ -21,14 +18,6 @@ test('galaxy-return migration is once-only and retains custom speeds and indepen
+  assert.equal(migrateSettings({presentationRevision:6,newproperty51:.001}).newproperty51,.001);
+  assert.equal(migrateSettings({...old,newproperty51:.01}).newproperty51,.01);assert.equal(normalizeSettings().newproperty51,.006);
+ });
+-test('a runaway planet cannot drag the tracked stellar center away; the physical state and invariants remain exact',()=>{
+- const b=[body(-2.3),body(-1.7),body(-2,.4),body(6000,0,5000)],copy=structuredClone(b),before=invariants(b,1.3275440274585598e-8),c=displayCenter(b);
+- assert.ok(Math.abs(c.x+2)<1e-14);assert.deepEqual(b,copy);assert.deepEqual(invariants(b,1.3275440274585598e-8),before);
+-});
+-test('stellar tracking follows the compact pair when a third star physically escapes, preserving the full state',()=>{
+- const b=[body(1000),body(-2.1),body(-1.9),body(2,0,5000)],copy=structuredClone(b);assert.equal(displayCenter(b).x,-2);assert.deepEqual(b,copy);
+- assert.deepEqual(displayCenter(b.map(x=>({...x,mass:0})),{x:1,y:2,z:3}),{x:1,y:2,z:3});
+-});
+ test('centering toggle and galaxy motion settings do not change trajectories or energy diagnostics',()=>{
+  const a=new Simulation({seed:'V053-RENDER-ONLY',autorestart:false}),b=new Simulation({seed:'V053-RENDER-ONLY',autorestart:false,centerOnSystem:false,newproperty51:.1});
+  for(let i=0;i<1200;i++){a.tick();b.tick();}assert.deepEqual(a.snapshot().bodies,b.snapshot().bodies);assert.deepEqual(a.snapshot().physics,b.snapshot().physics);
+diff --git a/tests/v055.test.js b/tests/v055.test.js
+new file mode 100644
+index 0000000..da26270
+--- /dev/null
++++ b/tests/v055.test.js
+@@ -0,0 +1,56 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import * as THREE from 'three';
++import {GravityIntegrator} from '../src/physics/gravity.js';
++import {FixedDisplayFrame} from '../src/fixed-display-frame.js';
++import {TrailRibbon} from '../src/trail-ribbon.js';
++import {TrailHistory,selectTrail} from '../src/adaptive-trails.js';
++import {OrbitTrace} from '../src/orbit-trace.js';
++import {Simulation} from '../src/simulation.js';
++import {normalizeSettings,migrateSettings} from '../src/settings.js';
++const body=(x,y=0,mass=1)=>({x,y,z:0,vx:0,vy:0,vz:0,mass});
++
++test('fixed display frame remains at the initial four-body center during stellar and planetary recoil',()=>{
++ const initial=[body(-1),body(1),body(0,1),body(6000,0,.001)],before=structuredClone(initial),frame=new FixedDisplayFrame(),origin={...frame.reset(initial)};
++ const escaping=initial.map(b=>({...b,x:b.x+100}));const shown=frame.position(escaping[0]);assert.equal(shown.x,escaping[0].x-origin.x);assert.deepEqual(frame.origin,origin);assert.deepEqual(initial,before);
++ const reset=frame.reset(initial.map(b=>({...b,x:b.x-200})));assert.ok(Math.abs(reset.x-(origin.x-200))<1e-12);
++});
++test('legacy follow preferences cannot enable camera translation again',()=>{
++ assert.equal(normalizeSettings({centerOnSystem:true}).centerOnSystem,false);assert.equal(migrateSettings({centerOnSystem:true}).centerOnSystem,false);
++});
++test('inertial diagnostics reveal a common velocity injection that internal energy cannot see',()=>{
++ const b=[body(-1),body(1),body(0,1),body(0,-1)],integrator=new GravityIntegrator(b,1);
++ for(const p of b)p.vx+=2;
++ const d=integrator.diagnostics();assert.ok(d.relativeEnergyError<1e-14);assert.ok(d.relativeInertialEnergyError>1);assert.equal(d.centerVelocityDrift,2);assert.ok(d.normalizedMomentumDrift>1);
++});
++test('fixed-frame COM diagnostic allows correct inertial drift from explicit nonzero initial momentum',()=>{
++ const b=[body(-1),body(1),body(0,1),body(0,-1)];for(const p of b)p.vx=2;
++ const solver=new GravityIntegrator(b,0);solver.advance(2,{maxStep:.1,adaptive:false});const d=solver.diagnostics();
++ assert.ok(Math.abs(d.center[0]-4)<1e-12);assert.ok(d.centerPositionDrift<1e-12);assert.equal(d.centerVelocityDrift,0);assert.ok(d.relativeInertialEnergyError<1e-14);
++});
++test('physical step observers leave every trajectory and conservation value unchanged',()=>{
++ const a=new Simulation({seed:'V055-TRACE',autorestart:false}),b=new Simulation({seed:'V055-TRACE',autorestart:false},{},{trace:true});
++ for(let i=0;i<300;i++){a.tick();b.tick();}
++ assert.deepEqual(a.snapshot().bodies,b.snapshot().bodies);assert.deepEqual(a.snapshot().physics,b.snapshot().physics);assert.ok(b.orbitTrace.drain().some(p=>p.length>20));
++});
++test('fast orbit trace captures curvature between render messages and retains bounded queues',()=>{
++ const trace=new OrbitTrace();for(let i=0;i<10000;i++){const a=i*.02;trace.observe([body(Math.cos(a),Math.sin(a))],i/100000);}
++ const path=trace.drain()[0];assert.ok(path.length>100);assert.ok(path.length<=512);assert.ok(path.every(p=>Math.abs(Math.hypot(p.x,p.y)-1)<1e-12));assert.ok(trace.drain().every(p=>p.length===0));
++});
++test('trace simplification preserves both curved positions and accelerating straight motion at their timestamps',()=>{
++ for(const curved of [true,false]){
++  const trace=new OrbitTrace(),source=[];
++  for(let i=0;i<=2000;i++){const time=i/2000,p=curved?body(.3*Math.cos(time*2*Math.PI),.3*Math.sin(time*2*Math.PI)):body(time*time);source.push({...p,time});trace.observe([p],time);}
++  const h=new TrailHistory();for(const p of trace.drain()[0])h.push(p,p.time);
++  for(const p of source){const sample=h.atTime(p.time);assert.ok(Math.hypot(p.x-sample.x,p.y-sample.y)<.00076);}
++ }
++});
++test('interpolated trail head uses the same physical position as the body and never draws future samples',()=>{
++ const h=new TrailHistory();h.push({x:0,y:0,z:0},0);h.push({x:100,y:20,z:0},1);h.push({x:200,y:0,z:0},2);
++ const head=h.atTime(.5);assert.deepEqual(head,{x:50,y:10,z:0,time:.5});const trail=selectTrail(h,p=>p,{now:.5,viewport:1000});assert.deepEqual(trail.points.at(-1),head);assert.ok(trail.points.every(p=>p.time<=.5));assert.equal(trail.fractions.at(-1),1);
++});
++test('continuous ribbon shares join vertices, uses normal alpha blending and fades to transparency',()=>{
++ const ribbon=new TrailRibbon(8),p=[body(0),body(1),body(2,1)];ribbon.setPath(p,[0,.5,1],new THREE.Color(1,.5,.25));
++ assert.equal(ribbon.material.blending,THREE.NormalBlending);assert.equal(ribbon.geometry.drawRange.count,12);assert.deepEqual([...ribbon.geometry.index.array.slice(0,12)],[0,1,2,2,1,3,2,3,4,4,3,5]);assert.equal(ribbon.geometry.attributes.fade.array[0],0);assert.equal(ribbon.geometry.attributes.fade.array[4],1);
++ assert.equal(ribbon.geometry.attributes.color.array[0],1);ribbon.setPath([],[],new THREE.Color());assert.equal(ribbon.geometry.drawRange.count,0);ribbon.geometry.dispose();ribbon.material.dispose();
++});
+diff --git a/tools/generate-settings-guide.mjs b/tools/generate-settings-guide.mjs
+index 8490f8a..c5ab4e2 100644
+--- a/tools/generate-settings-guide.mjs
++++ b/tools/generate-settings-guide.mjs
+@@ -12,7 +12,7 @@ const descriptions={
+  orbitalInitialization:'research（默认）：随机三星 Q=1，第三颗恒星为宿主，0.12D 逆向近圆行星，包含反冲；不筛种子。chaotic：不规则三维四体、局部引力尺度初速；original：原版随机速度；balanced：可选稳定实验。兼容对照。手动初值开启时不使用这些随机准备步骤。',
+  physicsMode:'reference 每秒60次检测，每帧推进0.0075求解时间；realtime 每帧推进1/60。新引擎在此预算内自动增加近遇子步，最大步长不会改变时钟。legacy 保留旧的最多10次积分行为。',
+  civilizationMode:'balanced 使用人口、干仓、脱水和文明等级；legacy 使用原版适温计数/即时灾变。切换会重置当前文明状态机；不要用两种模式比较同一榜单的物理真实性。',
+- centerOnSystem:'仅调整渲染位置，使恒星系保持在画面中央；排除远抛行星的质心偏移，三星明显分离时跟随紧密恒星对。关闭后恢复四体物理质心视图。不会改变天体坐标、速度、引力或能量。',
++ centerOnSystem:'v0.5.5已停用旧星群跟随，兼容键固定为false，不再显示此控件。每个宇宙以其初始四体质心为固定显示原点，之后不追踪当前质心或剩余星群。',
+  civilizationLevels:'启用十二阶段文明发展与保护增益；关闭后科技积累暂停，采用Lv.1基础耐受。重新启用保留同一文明此前积累。原版即时判定模式不使用此系统。',
+  developmentRate:'仅放大实际安全生产时的科技积累；不会增加寿命读数或物理速度。默认1表示每个实际发展年积累1科技年。',
+  thermalGrace:'文明人口/干仓损耗的时间分母；越大越耐久。30是损耗基准，不是30秒必死倒计时。文明等级会再乘保护系数。',
+@@ -36,7 +36,7 @@ const descriptions={
+  newproperty62:'悬停追踪目标的响应系数；越大趋近越快，实际角加速度仍受基础0.75约束。拖动仍使用现有惯性规则。',
+  renderQuality:'native按屏幕尺寸与像素比渲染；8k尝试最高7680×4320超采样。受显卡最大纹理/渲染缓冲限制；背景原图为8192×4096。',
+  pixelRatio:'原生分辨率模式的设备像素比上限；不会把低像素密度显示器自动放大到此倍率。8K模式另按尺寸与GPU能力取值。',
+- trailsLength:'自适应尾迹长度基准，默认400；系统复杂时缩短、单调时保留更长历史。缓存最多4096点、单尾绘制最多自适应预算，避免无界增长。',
++ trailsLength:'自适应尾迹长度基准，默认400；系统复杂时缩短、单调时保留更长历史。缓存最多4096点、单尾最多1999段连续带状几何，避免无界增长。v0.5.5从实际积分步提取弯曲路径，普通透明混合，接头共用顶点；天体和尾迹头共享插值时间（约50ms缓冲），不外推或修改物理轨道。',
+  bodyLabels:'天体名字/坐标标签；必须同时开启原版“天体位置信息”才显示。默认关闭。',
+  dust:'显示两层尘埃；v0.5使用实心小圆点和普通透明混合，没有粒子光晕。与恒星柔光独立。',
+  _1dust1quantity:'近景数量倍率，实际点数=round(900×此值)，默认450，最多1800。',
+@@ -114,13 +114,13 @@ export function guideControls(){
+ const format=value=>typeof value==='boolean'?(value?'开':'关'):String(value===''?'（空）':value);
+ const cell=v=>String(v).replaceAll('|',' / ').replaceAll('\n',' ');
+ export async function generateSettingsGuide(){
+- const controls=guideControls();let md=`# 三体实时演算 v0.5 完整设置说明\n\n本文更新到v0.5.4：修复显示中心和银河归位，科技从旧石器时代开始扩展为十二阶段并显著放慢。牛顿物理与v0.5.2一致；完整说明见docs/v053/RELEASE.md。本文对应实际界面中的 **${controls.length} 项控件**：183项原版兼容设置、${controls.length-193}项扩展设置和10项窗口坐标。控件目录直接由界面共用的 settings-catalog.js 和原版属性表生成，默认值来自 settings.js。\n\n## 1. 先看这张设置结构\n\n\`\`\`text\n右下角齿轮\n├─ 暂停 / 重启宇宙 / 全屏\n├─ 搜索：可以搜中文名称，也可以搜参数键（例如 k2）\n├─ 全部设置\n│  ├─ 布局与窗口：五个窗口位置、显隐、拖动编辑\n│  ├─ 模拟与文明：种子、轨道模式、韧性、等级和气候\n│  ├─ 视角与银河：悬停、拖拽、阻尼、旋转环、闲置回归\n│  ├─ 画面与轨迹：分辨率、尾迹、两层粒子\n│  ├─ 声音：音乐、音量\n│  └─ 原版高级设置：物理、牢笼、温度、手动初值、外观与旧UI参数\n├─ 文明档案：查看终结记录、等级、发展年数、导出和复现初值\n├─ 项目说明：版本、架构、本说明入口\n└─ 导出种子 / 导入种子 / 恢复默认\n\`\`\`\n\n改动通过本机 localStorage 保存；自定义背景和文明档案放在 IndexedDB。不同浏览器/设备不自动同步，没有在线排行榜。刷新会结算上一次运行并新开一个宇宙，当前人口和轨道不支持断点续跑。右侧累计年数和历史排行会保留。\n\n## 2. 最常用的调整\n\n| 想要什么 | 调哪里 | 建议与区别 |\n|---|---|---|\n| 文明更耐久 | 模拟与文明 → 文明耐受时间基准 | 增大 thermalGrace；延缓损耗，不让文明永生。 |\n| 先看到文明诞生 | 文明诞生安全窗口 | 默认0.5秒；和原文明复苏所需1秒分别设置。 |\n| 等级升级快一点 | 文明发展倍率 | 例如2；只放大发展进度，不把休眠计为生产。 |\n| 行星更常回到系统 | 高级 → 天体运动 → k2 | 默认关闭牢笼，此参数不生效；手动启用后默认0.30。提高会引入非牛顿约束，不能用于纯牛顿基准。 |\n| 鼠标整体更慢 | 视角与银河 → 整体视角灵敏度 | 0.12→0.06；悬停和拖动同时减半。 |\n| 只改拖动幅度 | 拖拽灵敏度倍率 | 默认5；改2会保持悬停原样、降低拖动。 |\n| 惯性更快停下 | y轴阻尼 | 减小 y6，越接近1越难停。 |\n| 环更透明 | 旋转环不透明度 | 0.12即12%不透明。0完全隐藏。 |\n| 银河回归更慢 | 回归银河速度 | 默认0.006度/秒；连续2秒无输入才回归。 |\n| 少一点粒子 | 画面与轨迹 → 尘埃1计数 | 只改近景；点大小另由尘埃1大小控制。 |\n| 让画面更清晰 | 原生分辨率/8K与高级后处理 | 胶片颗粒、CRT默认关闭；径向模糊仍可自行调整。 |\n\n## 3. 文明韧性、等级与死亡是怎样算的\n\n环境适宜度反映当前温度和潮汐，不等于文明还剩多少生命。文明没诞生前，人口、干仓质量、韧性和等级显示为“—”，不会被几百年的严寒提前扣光。短暂但连续安全的窗口满足 birthDelay 后才建立新文明，两个储备从100%开始。\n\n文明具有两种归一化储备，百分比不是虚构的精确人口普查：人口储备表示可延续的人口，干仓质量表示脱水生命和保存体系的完好程度。综合韧性=人口储备×干仓质量。安全且处于活动状态时，两者每模拟秒分别恢复1.5和1个百分点，最高100%。脱水储存范围以内不凭时间强制扣寿命；超出干仓耐受范围才持续损失保存质量，同时以较慢速度损失人口。已恢复的旧结构损伤不会继续作为固定伤害源。\n\n保护分母=thermalGrace×等级韧性倍率。休眠气候损耗率=(0.015+超出干仓温度范围的摄氏度/2000)/保护分母；没有越界时为0。人口承受此损耗的15%。尚未脱水的异常气候人口损耗=(0.05+超出活动温区的度数/300)/保护分母。当前有效潮汐应力超过1时另有结构损耗；不是一有“飞星”就杀死文明。任一储备降至1%或以下，文明终结。恒星吞噬、行星完整度归零则立即结束文明；高级文明也没有免疫这些事件。\n\n阶段流程：安全生产 → 不适宜时脱水（1秒）→ 干仓保存 → 连续安全 wakeDelay 秒 → 浸泡（0.5秒）→ 恢复同一文明。浸泡中环境再次不安全，回干仓；编号与等级保留。文明终结后再遇安全窗口才产生新编号，科技从头开始。\n\n| 等级 | 阶段 | 累计发展年数 | 损耗保护倍率 | 活动温区（默认） | 干仓温区（默认） |\n|---|---|---|---|---|---|\n`;
++ const controls=guideControls();let md=`# 三体实时演算 v0.5 完整设置说明\n\n本文更新到v0.5.5：移除自动星群跟随，固定每个宇宙的初始质心显示原点；增加惯性系能量、质心位置/速度漂移诊断。连续带状尾迹采用实际积分采样与统一插值，减少接头亮点和高速分段。完整说明见docs/v055/RELEASE.md。本文对应实际界面中的 **${controls.length} 项控件**：183项原版兼容设置、${controls.length-193}项扩展设置和10项窗口坐标。控件目录直接由界面共用的 settings-catalog.js 和原版属性表生成，默认值来自 settings.js。\n\n## 1. 先看这张设置结构\n\n\`\`\`text\n右下角齿轮\n├─ 暂停 / 重启宇宙 / 全屏\n├─ 搜索：可以搜中文名称，也可以搜参数键（例如 k2）\n├─ 全部设置\n│  ├─ 布局与窗口：五个窗口位置、显隐、拖动编辑\n│  ├─ 模拟与文明：种子、轨道模式、韧性、等级和气候\n│  ├─ 视角与银河：悬停、拖拽、阻尼、旋转环、闲置回归\n│  ├─ 画面与轨迹：分辨率、尾迹、两层粒子\n│  ├─ 声音：音乐、音量\n│  └─ 原版高级设置：物理、牢笼、温度、手动初值、外观与旧UI参数\n├─ 文明档案：查看终结记录、等级、发展年数、导出和复现初值\n├─ 项目说明：版本、架构、本说明入口\n└─ 导出种子 / 导入种子 / 恢复默认\n\`\`\`\n\n改动通过本机 localStorage 保存；自定义背景和文明档案放在 IndexedDB。不同浏览器/设备不自动同步，没有在线排行榜。刷新会结算上一次运行并新开一个宇宙，当前人口和轨道不支持断点续跑。右侧累计年数和历史排行会保留。\n\n## 2. 最常用的调整\n\n| 想要什么 | 调哪里 | 建议与区别 |\n|---|---|---|\n| 文明更耐久 | 模拟与文明 → 文明耐受时间基准 | 增大 thermalGrace；延缓损耗，不让文明永生。 |\n| 先看到文明诞生 | 文明诞生安全窗口 | 默认0.5秒；和原文明复苏所需1秒分别设置。 |\n| 等级升级快一点 | 文明发展倍率 | 例如2；只放大发展进度，不把休眠计为生产。 |\n| 行星更常回到系统 | 高级 → 天体运动 → k2 | 默认关闭牢笼，此参数不生效；手动启用后默认0.30。提高会引入非牛顿约束，不能用于纯牛顿基准。 |\n| 鼠标整体更慢 | 视角与银河 → 整体视角灵敏度 | 0.12→0.06；悬停和拖动同时减半。 |\n| 只改拖动幅度 | 拖拽灵敏度倍率 | 默认5；改2会保持悬停原样、降低拖动。 |\n| 惯性更快停下 | y轴阻尼 | 减小 y6，越接近1越难停。 |\n| 环更透明 | 旋转环不透明度 | 0.12即12%不透明。0完全隐藏。 |\n| 银河回归更慢 | 回归银河速度 | 默认0.006度/秒；连续2秒无输入才回归。 |\n| 少一点粒子 | 画面与轨迹 → 尘埃1计数 | 只改近景；点大小另由尘埃1大小控制。 |\n| 让画面更清晰 | 原生分辨率/8K与高级后处理 | 胶片颗粒、CRT默认关闭；径向模糊仍可自行调整。 |\n\n## 3. 文明韧性、等级与死亡是怎样算的\n\n环境适宜度反映当前温度和潮汐，不等于文明还剩多少生命。文明没诞生前，人口、干仓质量、韧性和等级显示为“—”，不会被几百年的严寒提前扣光。短暂但连续安全的窗口满足 birthDelay 后才建立新文明，两个储备从100%开始。\n\n文明具有两种归一化储备，百分比不是虚构的精确人口普查：人口储备表示可延续的人口，干仓质量表示脱水生命和保存体系的完好程度。综合韧性=人口储备×干仓质量。安全且处于活动状态时，两者每模拟秒分别恢复1.5和1个百分点，最高100%。脱水储存范围以内不凭时间强制扣寿命；超出干仓耐受范围才持续损失保存质量，同时以较慢速度损失人口。已恢复的旧结构损伤不会继续作为固定伤害源。\n\n保护分母=thermalGrace×等级韧性倍率。休眠气候损耗率=(0.015+超出干仓温度范围的摄氏度/2000)/保护分母；没有越界时为0。人口承受此损耗的15%。尚未脱水的异常气候人口损耗=(0.05+超出活动温区的度数/300)/保护分母。当前有效潮汐应力超过1时另有结构损耗；不是一有“飞星”就杀死文明。任一储备降至1%或以下，文明终结。恒星吞噬、行星完整度归零则立即结束文明；高级文明也没有免疫这些事件。\n\n阶段流程：安全生产 → 不适宜时脱水（1秒）→ 干仓保存 → 连续安全 wakeDelay 秒 → 浸泡（0.5秒）→ 恢复同一文明。浸泡中环境再次不安全，回干仓；编号与等级保留。文明终结后再遇安全窗口才产生新编号，科技从头开始。\n\n| 等级 | 阶段 | 累计发展年数 | 损耗保护倍率 | 活动温区（默认） | 干仓温区（默认） |\n|---|---|---|---|---|---|\n`;
+  for(const s of civilizationLevels)md+=`| Lv.${s.level} | ${s.zh} | ${s.years} | ${s.resilience}× | ${defaults.newproperty45-s.climate}～${defaults.newproperty46+s.climate}°C | ${defaults.newproperty43-s.storage}～${defaults.newproperty44+s.storage}°C |\n`;
+  md+=`\n发展年数只在文明确实处于“恢复生产/发展”、温度合适且行星安全时积累，再乘 developmentRate。**文明寿命包含休眠，科技发展年数不包含休眠。** 如果改动基础温区，表中所有等级范围会随之平移/扩展。文明阶段参考原著展示的农业、工业、原子信息及远航发展方向；200/800/1800/3500/6000/9000/12000/16000/21000/28000/40000生产年阈值与保护倍率都是本版本的设计，并非小说给定数值；没有假装已经实现智子制造或真实星际迁移。\n\n恒/乱纪元独立按轨道束缚与扰动判断。乱纪元可有短暂适温窗口，寒冷恒纪元也不一定适合生产。现代模式不会只因“飞得远”“文明死亡”或“气温极端”自动开新宇宙；v0.5.4额外在未开启牢笼且保守逃逸条件持续3显示年时重建，不改变实际引力或轨道。设置→文明档案→完全重置历史可清除宇宙/文明档案、排行榜和累计年份，保留设置和背景；普通重启与恢复默认仍保留历史。\n\n日志只保留最近12个事件、屏幕最多6行：文明启动、毁灭、每50年寿命里程碑、等级晋升，以及确认超过0.5秒的三日连珠/三日凌空/飞星不动，同类天象冷却60模拟秒。常规飞星、脱水切换等不逐条刷屏。\n\n## 4. 每个控件的完整参考\n\n“默认”指v0.5.4新安装值。银河归位旧默认0.003迁移为0.006°/秒（更早默认0.01同样迁移），自定义速度保留。v0.5.2 默认 research 初始化、newtonian 引力、牢笼关闭；旧配置升级会切换这些默认项。相同 Seed 的轨迹已改变，要复现 v0.5.1 必须显式选择 chaotic + legacy 并恢复旧牢笼与其余参数。升级时原有自定义值保留；仅识别到旧默认 k2=0.22、thermalGrace=8、wakeDelay=3 时迁移为0.30、30、1。v0.5.1还把旧默认epochWindow=2迁移为1/12模拟年；其他明确自定义值保留数值，按模拟年解释，并记录epochTimebase=years。已保存的灵敏度、窗口位置、背景、音量和档案继续保留。表内“兼容保留/不生效”项如实列出，避免误以为滑块必定改变现代逻辑。\n`;
+  let group='';for(const c of controls){if(c.group!==group){group=c.group;md+=`\n### ${group}\n\n| 名称 / 参数键 | 默认 | 范围 / 类型 | 实际作用 |\n|---|---|---|---|\n`;}
+  const d=c.def,range=d.type==='slider'?`${d.min}～${d.max}`:d.type==='combo'?d.options.map(o=>`${o.value}=${o.label}`).join('；'):({bool:'开关',color:'RGB，各0～1',textinput:'文字',scenetexture:'本地图片'}[d.type]||d.type);
+  md+=`| ${cell(plainText(d.text))}<br>\`${c.key}\` | ${cell(format(c.value))} | ${cell(range)} | ${cell(c.description)} |\n`;}
+- md+=`\n## 5. 修改如何生效、如何备份\n\n界面改动会立即保存，传给渲染器与Worker。画面、布局、视角、音量和科技倍率不重建轨道。Seed、初始化模式、物理时钟或积分步长会重建物理模块；原版映射的质量、初值、软化、牢笼和时间倍率也可能触发原版物理初始化。因此建议先导出种子，再调大范围物理参数，最后用“重启”明确开始一次新宇宙；不要在同一段观测中频繁改变物理设置后比较榜单。改变韧性、温区与科技倍率是即时作用，不恢复已经损失的人口，也不复活已经终结的文明。\n\n修改默认值不会覆盖所有用户保存值。默认常量在 src/settings.js 的 defaults / extraDefaults；控件名称、分类、范围在 src/settings-catalog.js（扩展）与 src/original-data.js（原版）；合法范围还需同步 normalizeSettings。升级旧默认须在 migrateSettings 添加一次迁移；presentationRevision 当前为6；银河归位的默认值迁移单独使用galaxyReturnRevision=1。直接随意增加此号可能触发现有迁移，应明确旧值与保留策略。\n\n导出种子包含完整配置、算法标识与四体初始坐标。导入会重新初始化，不是继续之前的位置。物理算法、气候与文明规则版本不同，旧种子的文明结果不能保证完全一致。手动初值范围受原版属性表限制。档案的“复现初始种子”重放初始条件，不提供整段历史回滚。\n\n可通过控制台试调并由正常接口持久保存：\n\n\`\`\`js\nwindow.threeBody.applySettings({\n  thermalGrace: 40,          // 更强的基础耐受\n  developmentRate: 2,        // 两倍科技积累，寿命读数不翻倍\n  viewSensitivity: 0.08,     // 整体鼠标倍率\n  dragSensitivity: 3,        // 只调拖动\n  compassOpacity: 0.08,      // 环8%不透明\n  layout: { left: {x: 8, y: 45}, clock: {x: 50, y: 10} }\n});\n\`\`\`\n\nlayout作为一个对象整体传入会替换旧的自定义坐标；界面单个滑块与拖动编辑器会自动合并其他窗口的坐标。所有位置都可能由layout.js做防越界处理，不必改CSS。想恢复默认布局用“恢复默认布局”；想恢复全部配置用面板底部“恢复默认”，文明档案仍保留。\n\nWallpaper Engine Web壁纸通过 wallpaperPropertyListener 接收原183个属性、暂停与音频；新增扩展项使用网页右下角面板，当前没有为每项扩展重复生成WE宿主侧控件。离线包解压后选择 project.json / index.html。网页版通过HTTP运行；实际WE本地文件宿主需在Windows环境验收。\n\n## 6. 代码结构：以后要改哪里\n\n| 文件 | 职责 | 常见改动 |\n|---|---|---|\n| src/settings.js | 默认、归一化、迁移、算法标识 | 改默认韧性/倍率；新增参数必须加校验 |\n| src/settings-catalog.js | 扩展控件定义和五大类 | 改名称、分类、范围、选项 |\n| src/original-data.js | 原183个属性和原场景绑定 | 原版属性兼容表，一般不手改 |\n| src/civilization-levels.js | 十二阶段阈值和耐受增益 | 改升级科技年数、耐温扩展、保护倍率 |\n| src/habitability.js | 人口、干仓、适宜度与损耗 | 改保存质量、人口恢复、终结阈值 |\n| src/civilization-state.js | 诞生、脱水、浸泡、发展、精选日志 | 改阶段时长、日志筛选与里程碑 |\n| src/world-state.js | 温度惯性、纪元、天象、行星结构 | 改轨道稳定判断和结构损伤恢复 |\n| src/legacy/008.js | 原版四体积分、牢笼、软化 | 改力学要独立版本化与回归测试 |\n| src/orbital-initialization.js | 混沌/原版/稳定实验初值 | 改星系尺度与随机初速 |\n| src/simulation.js | Worker纯模拟内核、事件编排 | 联接新状态与事件，不依赖DOM |\n| src/run-statistics.js / storage.js | 累计年数、双榜、档案持久化 | 以后接文明记忆与榜单后端 |\n| src/renderer.js | 相机、星空、球体、尾迹、尘埃 | 粒子形状/大小、显示风格 |\n| src/view-motion.js | 惯性、拖动、跟随、银河回归 | 修改鼠标运动公式 |\n| src/motion-visuals.js | 环渐变公式 | 当前淡入时间常数0.65秒、淡出0.18秒 |\n| src/layout.js / style.css | 五窗口锚点、编辑器、排版 | 字号、行距、默认位置 |\n| src/main.js | 面板生成、HUD显示、历史/事件 | 新的文明信息展示 |\n| src/bridge.js | WE回调、对外接口与版本号 | 扩展通知/宿主适配 |\n| tools/generate-settings-guide.mjs | 完整设置目录和说明生成器 | 改说明并运行npm run build，保证随包更新 |\n\n环使用指数缓动：alpha += (target−alpha)×(1−exp(−dt/tau))。tau不是完成时间：淡入约1.95秒达到95%，淡出约0.54秒剩5%。环最终不透明度=compassOpacity×alpha，形状缩放0.3没有再次改变。鼠标视角水平不限最高速度，俯仰范围仍±30°；仅改变拖动额外倍率，悬停参数保留。\n\n未来系统通知可订阅 civilization:birth / civilization:death / civilization:phase / civilization:level / universe:restart 等事件。示例：window.threeBody.subscribe('civilization:level', console.log)。当前只提供扩展边界，未连接外部通知或网络榜单服务。\n\n## 7. 已知模型边界\n\n这是以原版算法和用户提供的原著讲解为基础的可调壁纸模拟，科技/人口为新增抽象模型。引力牢笼是额外力；提高k2只是有限时间内增加拉回，不保证永久不抛射。旧分段引力仅在legacy兼容模式保留；默认牛顿力与近遇自适应Yoshida来自v0.5.2。屏幕居中只影响渲染，不能据天体偏离画面判定能量不守恒；真实弹射仍可能发生。温度有原版距离倍率与简化辐射模型，不是完整气候模型。长寿文明可能多数时间在干仓，而不是持续百年恒纪元；左侧实际发展年数用于区分。\n`;
++ md+=`\n## 5. 修改如何生效、如何备份\n\n界面改动会立即保存，传给渲染器与Worker。画面、布局、视角、音量和科技倍率不重建轨道。Seed、初始化模式、物理时钟或积分步长会重建物理模块；原版映射的质量、初值、软化、牢笼和时间倍率也可能触发原版物理初始化。因此建议先导出种子，再调大范围物理参数，最后用“重启”明确开始一次新宇宙；不要在同一段观测中频繁改变物理设置后比较榜单。改变韧性、温区与科技倍率是即时作用，不恢复已经损失的人口，也不复活已经终结的文明。\n\n修改默认值不会覆盖所有用户保存值。默认常量在 src/settings.js 的 defaults / extraDefaults；控件名称、分类、范围在 src/settings-catalog.js（扩展）与 src/original-data.js（原版）；合法范围还需同步 normalizeSettings。升级旧默认须在 migrateSettings 添加一次迁移；presentationRevision 当前为6；银河归位的默认值迁移单独使用galaxyReturnRevision=1。直接随意增加此号可能触发现有迁移，应明确旧值与保留策略。\n\n导出种子包含完整配置、算法标识与四体初始坐标。导入会重新初始化，不是继续之前的位置。物理算法、气候与文明规则版本不同，旧种子的文明结果不能保证完全一致。手动初值范围受原版属性表限制。档案的“复现初始种子”重放初始条件，不提供整段历史回滚。\n\n可通过控制台试调并由正常接口持久保存：\n\n\`\`\`js\nwindow.threeBody.applySettings({\n  thermalGrace: 40,          // 更强的基础耐受\n  developmentRate: 2,        // 两倍科技积累，寿命读数不翻倍\n  viewSensitivity: 0.08,     // 整体鼠标倍率\n  dragSensitivity: 3,        // 只调拖动\n  compassOpacity: 0.08,      // 环8%不透明\n  layout: { left: {x: 8, y: 45}, clock: {x: 50, y: 10} }\n});\n\`\`\`\n\nlayout作为一个对象整体传入会替换旧的自定义坐标；界面单个滑块与拖动编辑器会自动合并其他窗口的坐标。所有位置都可能由layout.js做防越界处理，不必改CSS。想恢复默认布局用“恢复默认布局”；想恢复全部配置用面板底部“恢复默认”，文明档案仍保留。\n\nWallpaper Engine Web壁纸通过 wallpaperPropertyListener 接收原183个属性、暂停与音频；新增扩展项使用网页右下角面板，当前没有为每项扩展重复生成WE宿主侧控件。离线包解压后选择 project.json / index.html。网页版通过HTTP运行；实际WE本地文件宿主需在Windows环境验收。\n\n## 6. 代码结构：以后要改哪里\n\n| 文件 | 职责 | 常见改动 |\n|---|---|---|\n| src/settings.js | 默认、归一化、迁移、算法标识 | 改默认韧性/倍率；新增参数必须加校验 |\n| src/settings-catalog.js | 扩展控件定义和五大类 | 改名称、分类、范围、选项 |\n| src/original-data.js | 原183个属性和原场景绑定 | 原版属性兼容表，一般不手改 |\n| src/civilization-levels.js | 十二阶段阈值和耐受增益 | 改升级科技年数、耐温扩展、保护倍率 |\n| src/habitability.js | 人口、干仓、适宜度与损耗 | 改保存质量、人口恢复、终结阈值 |\n| src/civilization-state.js | 诞生、脱水、浸泡、发展、精选日志 | 改阶段时长、日志筛选与里程碑 |\n| src/world-state.js | 温度惯性、纪元、天象、行星结构 | 改轨道稳定判断和结构损伤恢复 |\n| src/legacy/008.js | 原版四体积分、牢笼、软化 | 改力学要独立版本化与回归测试 |\n| src/orbital-initialization.js | 混沌/原版/稳定实验初值 | 改星系尺度与随机初速 |\n| src/simulation.js | Worker纯模拟内核、事件编排 | 联接新状态与事件，不依赖DOM |\n| src/run-statistics.js / storage.js | 累计年数、双榜、档案持久化 | 以后接文明记忆与榜单后端 |\n| src/renderer.js | 相机、星空、球体、尾迹、尘埃 | 粒子形状/大小、显示风格 |\n| src/view-motion.js | 惯性、拖动、跟随、银河回归 | 修改鼠标运动公式 |\n| src/motion-visuals.js | 环渐变公式 | 当前淡入时间常数0.65秒、淡出0.18秒 |\n| src/layout.js / style.css | 五窗口锚点、编辑器、排版 | 字号、行距、默认位置 |\n| src/main.js | 面板生成、HUD显示、历史/事件 | 新的文明信息展示 |\n| src/bridge.js | WE回调、对外接口与版本号 | 扩展通知/宿主适配 |\n| tools/generate-settings-guide.mjs | 完整设置目录和说明生成器 | 改说明并运行npm run build，保证随包更新 |\n\n环使用指数缓动：alpha += (target−alpha)×(1−exp(−dt/tau))。tau不是完成时间：淡入约1.95秒达到95%，淡出约0.54秒剩5%。环最终不透明度=compassOpacity×alpha，形状缩放0.3没有再次改变。鼠标视角水平不限最高速度，俯仰范围仍±30°；仅改变拖动额外倍率，悬停参数保留。\n\n未来系统通知可订阅 civilization:birth / civilization:death / civilization:phase / civilization:level / universe:restart 等事件。示例：window.threeBody.subscribe('civilization:level', console.log)。当前只提供扩展边界，未连接外部通知或网络榜单服务。\n\n## 7. 已知模型边界\n\n这是以原版算法和用户提供的原著讲解为基础的可调壁纸模拟，科技/人口为新增抽象模型。引力牢笼是额外力；提高k2只是有限时间内增加拉回，不保证永久不抛射。旧分段引力仅在legacy兼容模式保留；默认牛顿力与近遇自适应Yoshida来自v0.5.2。v0.5.5固定每个宇宙的初始质心显示原点，不跟随当前质心或星群。初始总动量非零的自定义配置会真实平移，不会暗中清零；真实弹射仍可能发生。温度有原版距离倍率与简化辐射模型，不是完整气候模型。长寿文明可能多数时间在干仓，而不是持续百年恒纪元；左侧实际发展年数用于区分。\n`;
+  await writeFile(new URL('docs/SETTINGS-GUIDE-v0.5.md',root),md);
+  const escape=s=>s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
+  const inline=s=>escape(s).replace(/`([^`]+)`/g,'<code>$1</code>').replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>').replaceAll('&lt;br&gt;','<br>');
+diff --git a/tools/v055/browser-check.mjs b/tools/v055/browser-check.mjs
+new file mode 100644
+index 0000000..28bb549
+--- /dev/null
++++ b/tools/v055/browser-check.mjs
+@@ -0,0 +1,38 @@
++import {chromium} from 'playwright-core';
++import {build} from 'esbuild';
++import {writeFile,rm} from 'node:fs/promises';
++import assert from 'node:assert/strict';
++import {guideControls} from '../generate-settings-guide.mjs';
++const fixtureFiles=['dist/qa-v055-ribbon.js','dist/qa-v055-ribbon.html'];
++await build({entryPoints:['tools/v055/ribbon-fixture.mjs'],bundle:true,format:'iife',outfile:fixtureFiles[0]});
++await writeFile(fixtureFiles[1],'<html><head><link rel="icon" href="data:,"></head><body style="margin:0;background:black"><script src="qa-v055-ribbon.js"></script></body></html>');
++const browser=await chromium.launch({executablePath:'/usr/bin/chromium',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
++const context=await browser.newContext({viewport:{width:1280,height:900}}),page=await context.newPage(),checks=[],errors=[];
++page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error'&&!m.text().startsWith('Failed to load resource:'))errors.push(m.text());});
++await page.addInitScript(()=>{if(!localStorage.getItem('qa055')){localStorage.setItem('qa055','1');localStorage.setItem('three-body.settings.v3',JSON.stringify({presentationRevision:6,physicsRevision:1,galaxyReturnRevision:2,centerOnSystem:true,viewSensitivity:.04,pixelRatio:1,newproperty63:false,newproperty64:false,newproperty2:false,newproperty61:2,newproperty16:false,autorestart:false,seed:'V055-BROWSER'}));}window.__wallpaperFPS=30;});
++const scene=()=>page.evaluate(()=>window.__threeBodyDiagnostics().scene),apply=patch=>page.evaluate(p=>window.threeBody.applySettings(p),patch);
++try{
++ await page.goto('http://localhost:4173',{waitUntil:'networkidle'});await page.waitForFunction(()=>window.__threeBodyDiagnostics?.().ready);
++ assert.equal(await page.evaluate(()=>window.threeBody.version),'0.5.5');assert.deepEqual((await page.locator('.control').evaluateAll(nodes=>nodes.map(n=>n.dataset.key))).sort(),guideControls().map(x=>x.key).sort());assert.equal(await page.locator('#setting-centerOnSystem').count(),0);checks.push('v0.5.5 Worker boots; all 217 controls match the guide and stellar-follow control is removed');
++ const mass=5e6,star=(x,y)=>({x,y,z:0,vx:2,vy:0,vz:0,mass}),moving=[star(-.7,-.5),star(.7,-.5),star(0,.7),{...star(.2,.7),mass:1000,vy:.58}];
++ await apply({newproperty50:true,manualInitialBodies:moving,newproperty61:2,newproperty16:false,centerOnSystem:true});await page.waitForFunction(()=>window.threeBody.getState()?.initialBodies?.[0]?.vx===2);await page.waitForTimeout(150);
++ const a=await scene(),center=s=>s.bodyLocalPositions.reduce((n,p,i)=>n+p[0]*moving[i].mass,0)/(3*mass+1000);
++ await page.waitForFunction(start=>{const s=window.__threeBodyDiagnostics().scene;return s.bodyLocalPositions.reduce((n,p,i)=>n+p[0]*(i===3?1000:5e6),0)/(15e6+1000)>start+.15;},center(a),{timeout:15000});const b=await scene();
++ await writeFile('docs/v055/results/fixed-frame-motion.json',JSON.stringify({before:a,after:b,start:center(a),end:center(b)},null,2)+'\n');
++ assert.deepEqual(a.systemOffset,[0,0,0]);assert.deepEqual(b.systemOffset,[0,0,0]);assert.deepEqual(b.cameraPosition,a.cameraPosition);assert.deepEqual(b.displayOrigin,a.displayOrigin);assert.ok(center(b)-center(a)>.1);assert.equal(JSON.parse(await page.evaluate(()=>localStorage.getItem('three-body.settings.v3'))).centerOnSystem,false);checks.push('actual common-velocity motion remains visible while camera, system translation and initial display origin remain fixed; old follow preference cannot override this');
++ const state=await page.evaluate(()=>window.threeBody.getState());assert.ok(state.physics.centerPositionDrift<1e-9);assert.ok(state.physics.initialCenter[3]>1.9);assert.ok(state.physics.relativeInertialEnergyError<1e-5);checks.push('real Worker reports inertial energy and expected nonzero-COM motion without secretly zeroing custom velocities');
++ const G=1.3275440274585598e-8,radius=.3,speed=Math.sqrt(G*mass/(Math.sqrt(3)*radius)),fast=Array.from({length:3},(_,i)=>{const phi=i*2*Math.PI/3;return{x:radius*Math.cos(phi),y:radius*Math.sin(phi),z:0,vx:-speed*Math.sin(phi),vy:speed*Math.cos(phi),vz:0,mass};});fast.push({x:0,y:0,z:0,vx:0,vy:0,vz:0,mass:1000});
++ await apply({newproperty50:true,manualInitialBodies:fast,timespeed:3,newproperty14:true});await page.waitForFunction(()=>window.threeBody.getState()?.initialBodies?.[0]?.vx===0);await page.waitForFunction(()=>window.__threeBodyDiagnostics().scene.trailSamples.some(n=>n>100),{},{timeout:15000});
++ const tails=await scene();await writeFile('docs/v055/results/fast-trail-metrics.json',JSON.stringify(tails,null,2)+'\n');assert.equal(tails.trailStyle,'continuous-ribbon');assert.ok(tails.trailMetrics.some(t=>t.segments>20));assert.ok(tails.trailSamples.some(n=>n>100),JSON.stringify({samples:tails.trailSamples,metrics:tails.trailMetrics}));
++ const gaps=tails.trailHeads.map((head,i)=>head?Math.hypot(...head.map((x,k)=>x-tails.bodyLocalPositions[i][k])):0);assert.ok(Math.max(...gaps)<1e-5,JSON.stringify(gaps));assert.ok(tails.trailMetrics.every(t=>t.segments<=1999));checks.push('maximum 3x speed and compact fast-orbit fixture use dense physical paths, continuous geometry and shared interpolation; all trail heads remain attached and budgets bounded');
++ await page.screenshot({path:'docs/v055/results/fast-trails.png'});
++ await apply({newproperty14:false});await page.waitForTimeout(150);assert.equal((await scene()).trailsVisible,false);await apply({newproperty14:true,timespeed:1,newproperty50:false,manualInitialBodies:null});await page.waitForTimeout(200);assert.equal((await scene()).trailsVisible,true);checks.push('trail toggle remains functional and switching initial states clears old paths');
++ await apply({newproperty61:1,newproperty16:true});await page.mouse.move(450,620);await page.mouse.down();await page.mouse.move(600,620,{steps:10});await page.mouse.up();const yaw=await scene();await page.waitForTimeout(500);const coast=await scene();assert.ok(coast.viewRotation[1]>=yaw.viewRotation[1]-1e-9);assert.deepEqual(coast.systemOffset,[0,0,0]);await page.waitForTimeout(1800);assert.equal((await scene()).returningToGalaxy,true);checks.push('existing mouse drag, release coast and idle galaxy orientation return work without translating the system');
++ // Compare the same straight path with/without intermediate joints in actual WebGL pixels.
++ const fixture=await context.newPage();fixture.on('pageerror',e=>errors.push(e.message));fixture.on('console',m=>{if(m.type()==='error')errors.push(m.text());});await fixture.goto('http://localhost:4173/qa-v055-ribbon.html');await fixture.waitForFunction(()=>window.ribbonFixture);
++ const pixels=await fixture.evaluate(()=>({simple:window.ribbonFixture.draw(2),joined:window.ribbonFixture.draw(32),oldJoined:window.ribbonFixture.draw(32,true)}));
++ assert.ok(pixels.joined.max-pixels.joined.min<=1,JSON.stringify({min:pixels.joined.min,max:pixels.joined.max}));assert.ok(pixels.oldJoined.max-pixels.oldJoined.min>30);assert.ok(pixels.simple.values.every((v,i)=>Math.abs(v-pixels.joined.values[i])<=1));
++ await fixture.evaluate(()=>window.ribbonFixture.draw(32,true));await fixture.screenshot({path:'docs/v055/results/joints-before.png'});await fixture.evaluate(()=>window.ribbonFixture.draw(32));await fixture.screenshot({path:'docs/v055/results/joints-after.png'});await fixture.close();checks.push('pixel comparison: adding 30 joints produces no bright beads; the legacy additive round-cap path reproduces the brightness spikes');
++ assert.deepEqual(errors,[]);await writeFile('docs/v055/results/browser.json',JSON.stringify({passed:true,checks,errors,fixedFrame:{before:a,after:b},fastTrails:{samples:tails.trailSamples,metrics:tails.trailMetrics,headGaps:gaps},pixelComparison:pixels,limits:'Actual Chromium WebGL/Worker; synthetic manual trajectories are visual fixtures, not default initialization or survival evidence; native Wallpaper Engine unavailable'},null,2)+'\n');console.log(JSON.stringify({passed:true,checks},null,2));
++}catch(error){await writeFile('docs/v055/results/browser-failure.json',JSON.stringify({passed:false,checks,errors,error:error.stack},null,2)+'\n');throw error;}
++finally{await browser.close();for(const file of fixtureFiles)await rm(file,{force:true});}
+diff --git a/tools/v055/conservation-audit.mjs b/tools/v055/conservation-audit.mjs
+new file mode 100644
+index 0000000..c81856a
+--- /dev/null
++++ b/tools/v055/conservation-audit.mjs
+@@ -0,0 +1,27 @@
++import {pathToFileURL} from 'node:url';
++import {writeFile} from 'node:fs/promises';
++const root=process.argv[2]||process.cwd(),output=process.argv[3]||'docs/v055/results/conservation-before.json';
++const {Simulation}=await import(pathToFileURL(`${root}/src/simulation.js`));
++const axes=['x','y','z'],norm=x=>Math.hypot(...x);
++function measure(bodies,G){
++ const mass=bodies.reduce((n,b)=>n+b.mass,0),position=axes.map(k=>bodies.reduce((n,b)=>n+b.mass*b[k],0)/mass),momentum=axes.map(k=>bodies.reduce((n,b)=>n+b.mass*b['v'+k],0));
++ let energy=bodies.reduce((n,b)=>n+.5*b.mass*axes.reduce((s,k)=>s+b['v'+k]**2,0),0);
++ for(let i=0;i<4;i++)for(let j=i+1;j<4;j++)energy-=G*bodies[i].mass*bodies[j].mass/norm(axes.map(k=>bodies[i][k]-bodies[j][k]));
++ return{mass,position,momentum,energy};
++}
++const results=[];
++for(let i=0;i<4;i++){
++ const seed=`V055-CONSERVATION-${i}`,s=new Simulation({seed,newproperty60:false,autorestart:false});s.tick();let state=s.snapshot(),initial=measure(s.initialBodies,state.G),maxCenterDrift=0,maxMomentumError=0,maxEnergyError=0,maxEnergyErrorBeforeContact=0,firstContactYear=null,error=null;
++ const momentumScale=Math.max(1,...s.initialBodies.map(b=>b.mass*norm(axes.map(k=>b['v'+k]))));
++ for(let n=1;n<60000;n++){
++  try{s.tick();}catch(e){error={code:e.code,message:e.message,year:s.shared.xntime};break;}
++  state=s.snapshot();const v=measure(state.bodies,state.G),time=state.physics.solverTime;
++  maxCenterDrift=Math.max(maxCenterDrift,norm(v.position.map((x,k)=>x-initial.position[k]-initial.momentum[k]/initial.mass*time)));
++  maxMomentumError=Math.max(maxMomentumError,norm(v.momentum.map((x,k)=>x-initial.momentum[k]))/momentumScale);
++  const de=Math.abs((v.energy-initial.energy)/initial.energy);maxEnergyError=Math.max(maxEnergyError,de);
++  if(!state.physics.contacts.length)maxEnergyErrorBeforeContact=Math.max(maxEnergyErrorBeforeContact,de);else if(firstContactYear===null)firstContactYear=state.year;
++ }
++ const end=measure(state.bodies,state.G);results.push({seed,years:state.year,initialCenter:initial.position,initialCenterVelocity:initial.momentum.map(x=>x/initial.mass),finalCenter:end.position,maxCenterDrift,maxNormalizedMomentumError:maxMomentumError,maxRelativeInertialEnergyError:maxEnergyError,maxRelativeInertialEnergyErrorBeforeContact:maxEnergyErrorBeforeContact,firstContactYear,bodies:state.bodies.map(b=>({position:axes.map(k=>b[k]),velocity:axes.map(k=>b['v'+k]),mass:b.mass})),error});
++}
++await writeFile(output,JSON.stringify({source:root,protocol:'Four predetermined seeds, 1000 displayed years each; default research/Newtonian, cage and restart off. Inertial energy, momentum and predicted COM computed independently from all physical bodies every tick. Contact errors separated; no seed filtering.',results},null,2)+'\n');
++console.log(JSON.stringify(results.map(({seed,years,maxCenterDrift,maxNormalizedMomentumError,maxRelativeInertialEnergyError,maxRelativeInertialEnergyErrorBeforeContact,firstContactYear,error})=>({seed,years,maxCenterDrift,maxNormalizedMomentumError,maxRelativeInertialEnergyError,maxRelativeInertialEnergyErrorBeforeContact,firstContactYear,error})),null,2));
+diff --git a/tools/v055/ribbon-fixture.mjs b/tools/v055/ribbon-fixture.mjs
+new file mode 100644
+index 0000000..7f9d9e2
+--- /dev/null
++++ b/tools/v055/ribbon-fixture.mjs
+@@ -0,0 +1,16 @@
++import * as THREE from 'three';
++import {TrailRibbon} from '../../src/trail-ribbon.js';
++import {Line2} from 'three/addons/lines/Line2.js';
++import {LineGeometry} from 'three/addons/lines/LineGeometry.js';
++import {LineMaterial} from 'three/addons/lines/LineMaterial.js';
++const renderer=new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});renderer.setSize(600,200);renderer.setClearColor(0);document.body.append(renderer.domElement);
++const camera=new THREE.OrthographicCamera(-2,2,2/3,-2/3,.1,10);camera.position.z=5;
++const scene=new THREE.Scene();let previous;
++window.ribbonFixture={draw(count,legacy=false){
++ if(previous){scene.remove(previous);previous.geometry.dispose();previous.material.dispose();}
++ const points=Array.from({length:count},(_,i)=>({x:-1+2*i/(count-1),y:0,z:0}));
++ if(legacy){const geometry=new LineGeometry();geometry.setPositions(points.flatMap(p=>[p.x,p.y,p.z]));const material=new LineMaterial({color:0xffffff,linewidth:6,transparent:true,opacity:.6,depthWrite:false,blending:THREE.AdditiveBlending});material.resolution.set(600,200);previous=new Line2(geometry,material);}
++ else{previous=new TrailRibbon();previous.material.resolution.set(600,200);previous.material.linewidth=6;previous.material.opacity=.6;previous.setPath(points,points.map(()=>1),new THREE.Color(1,1,1));}
++ scene.add(previous);renderer.render(scene,camera);const gl=renderer.getContext(),pixels=new Uint8Array(600*200*4);gl.readPixels(0,0,600,200,gl.RGBA,gl.UNSIGNED_BYTE,pixels);
++ const values=Array.from({length:280},(_,i)=>pixels[(100*600+160+i)*4]);return{values,min:Math.min(...values),max:Math.max(...values)};
++}};

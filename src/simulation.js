@@ -12,20 +12,22 @@ import { RunStatistics } from './run-statistics.js';
 import { WorldState } from './world-state.js';
 import { CivilizationState } from './civilization-state.js';
 import { EscapeState } from './escape-state.js';
+import { OrbitTrace } from './orbit-trace.js';
 
 class Vec3 { constructor(x = 0, y = x, z = x) { this.x = x; this.y = y; this.z = z; } }
 const plain = v => v && typeof v === 'object' ? structuredClone(v) : v;
 
 // Backend independent of DOM, WebGL and transport. The Worker and Node use the same class.
 export class Simulation {
-  constructor(settings = {}, statistics = {}) {
+  constructor(settings = {}, statistics = {}, {trace=false} = {}) {
+    this.traceEnabled=trace;
     this.statistics=new RunStatistics(statistics);
     this.settings = normalizeSettings(settings);
     this.shared = { gjz: 0, rst: 0, cfw: 0, c_down: false, text: '',universeNumber:this.statistics.universeNumber,xntime:this.statistics.totalYears };
     this.engine = { runtime: 0, frametime: 1 / 60, screenResolution: new Vec3(1920, 1080, 0) };
     this.input = { cursorScreenPosition: new Vec3(960, 540, 0) };
     this.generation = this.statistics.universeNumber; this.tickCount = 0; this.revision = 0; this.events = []; this.eventSeq = 0;
-    this.habitability = new Habitability();
+    this.habitability = new Habitability();this.orbitTrace=new OrbitTrace();
     this.world = new WorldState();this.escape=new EscapeState(); this.terminalSince=null;this.restartSince=null;
     this.setRandom();
     this.modules = {};
@@ -48,7 +50,7 @@ export class Simulation {
     builder.values = {};
     builder.finish = function() { return Object.assign(this.values, overrides); };
     const math = Object.create(Math); math.random = () => self.random();
-    return factory({ shared: this.shared, engine: this.engine, input: this.input, thisScene: { createLayer: data => data }, Vec3, Math: math, createScriptProperties: () => builder, getHabitability: () => null, getPhysicsSettings:()=>self.settings, prepareManualBodies:bodies=>{self.initializationMetadata=null;if(self.settings.manualInitialBodies)for(let i=0;i<4;i++)Object.assign(bodies[i],self.settings.manualInitialBodies[i]);}, prepareInitialBodies: (bodies,G,p) => {const result=prepareOrbits(bodies,G,p,self.settings,()=>self.random());self.initializationMetadata=result?.metadata??null;return result;}, onInitialize: bodies => { self.initialBodies = plain(bodies); self.habitability.reset(); self.world.reset();self.escape.reset(); self.civilization?.reset(); self.terminalSince=null;self.restartSince=null;self.observedContacts=new Set(); } });
+    return factory({ shared: this.shared, engine: this.engine, input: this.input, thisScene: { createLayer: data => data }, Vec3, Math: math, createScriptProperties: () => builder, getHabitability: () => null, getPhysicsSettings:()=>self.settings, observePhysicalStep:self.traceEnabled?(bodies,time)=>{if(self.settings.newproperty14)self.orbitTrace.observe(bodies,time);}:undefined, prepareManualBodies:bodies=>{self.initializationMetadata=null;if(self.settings.manualInitialBodies)for(let i=0;i<4;i++)Object.assign(bodies[i],self.settings.manualInitialBodies[i]);}, prepareInitialBodies: (bodies,G,p) => {const result=prepareOrbits(bodies,G,p,self.settings,()=>self.random());self.initializationMetadata=result?.metadata??null;return result;}, onInitialize: bodies => { self.initialBodies = plain(bodies);self.orbitTrace.reset(); self.habitability.reset(); self.world.reset();self.escape.reset(); self.civilization?.reset(); self.terminalSince=null;self.restartSince=null;self.observedContacts=new Set(); } });
   }
   configure(patch) {
     const next = normalizeSettings({ ...this.settings, ...patch });
@@ -56,6 +58,7 @@ export class Simulation {
     const changed = Object.keys(next).filter(k => k==='manualInitialBodies'?JSON.stringify(next[k])!==JSON.stringify(this.settings[k]):next[k]!==this.settings[k]);
     this.settings = next;
     if(!next.autorestart||(next.newproperty60&&next.civilizationMode!=='legacy'&&this.pendingRestart==='escape'))this.pendingRestart=null;
+    if(changed.includes('newproperty14'))this.orbitTrace.reset();
     if (changed.includes('civilizationMode')) { this.habitability.reset(); this.civilization.reset(); this.shared.suitablePeriodCount = 0; }
     const resetKeys = new Set(['seed', 'physicsMode', 'newproperty53', 'orbitalInitialization','gravityModel','encounterAccuracy','manualInitialBodies']);
     const mapped = {};

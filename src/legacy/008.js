@@ -1073,7 +1073,8 @@ function updatePhysics(timeStep) {
     if(gravity){
         for(const body of bodies){body.prevX=body.x;body.prevY=body.y;body.prevZ=body.z;}
         const config=ctx.getPhysicsSettings();
-        gravity.advance(kv*kv*timeStep,{maxStep:FIXED_TIMESTEP,eta:config.encounterAccuracy});
+        const start=gravity.time,duration=kv*kv*timeStep;
+        gravity.advance(duration,{maxStep:FIXED_TIMESTEP,eta:config.encounterAccuracy,onAcceptedStep:ctx.observePhysicalStep?(sample,time)=>ctx.observePhysicalStep(sample,engine.runtime-1/60+(time-start)/duration/60):null});
         physicsCom=computeCenterOfMass();frameCount++;return;
     }
 
