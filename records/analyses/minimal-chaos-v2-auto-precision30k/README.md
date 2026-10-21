@@ -1,0 +1,81 @@
+# minimal-chaos-v2-auto-precision30k — V2自动阶段 precision30k
+
+已注册探索阶段原始结果、失败与UNKNOWN、源码/配置/检查点哈希和统计；不是正式确认，不更改main。详见阶段series.json及对应协议。
+
+原始提交：[f637f9f](https://github.com/BillOu0104/2/commit/f637f9fd4d8537e76cb62889cd7991a3f278292f)；提交时间：2026-10-21T18:55:23Z。
+
+这是历史文件归档，本次未重跑该版本。原始测试的环境、条件与限制以当时报告为准；没有Windows Wallpaper Engine实机证据的版本不声称已完成该宿主验收。
+
+[源码修改差异](changes.patch) · [来源及SHA256清单](record.json) · [总目录](../../README.md)
+
+## 修改、分析和说明
+
+- [docs/research-v2/EXPERIMENT_LOG.md](snapshot/docs/research-v2/EXPERIMENT_LOG.md)
+## 测试结果、截图与实验数据
+
+- [docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-0-deflect4-trigger8__h2.input.json](snapshot/docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-0-deflect4-trigger8__h2.input.json)
+- [docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-0-deflect4-trigger8__h2.state.json.gz](snapshot/docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-0-deflect4-trigger8__h2.state.json.gz)
+- [docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-0-reflect-trigger8__h2.input.json](snapshot/docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-0-reflect-trigger8__h2.input.json)
+- [docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-0-reflect-trigger8__h2.state.json.gz](snapshot/docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-0-reflect-trigger8__h2.state.json.gz)
+- [docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-1-deflect4-trigger8__h2.input.json](snapshot/docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-1-deflect4-trigger8__h2.input.json)
+- [docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-1-deflect4-trigger8__h2.state.json.gz](snapshot/docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-1-deflect4-trigger8__h2.state.json.gz)
+- [docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-1-reflect-trigger8__h2.input.json](snapshot/docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-1-reflect-trigger8__h2.input.json)
+- [docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-1-reflect-trigger8__h2.state.json.gz](snapshot/docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-1-reflect-trigger8__h2.state.json.gz)
+- [docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-2-deflect4-trigger8__h2.input.json](snapshot/docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-2-deflect4-trigger8__h2.input.json)
+- [docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-2-deflect4-trigger8__h2.state.json.gz](snapshot/docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-2-deflect4-trigger8__h2.state.json.gz)
+- [docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-2-reflect-trigger8__h2.input.json](snapshot/docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-2-reflect-trigger8__h2.input.json)
+- [docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-2-reflect-trigger8__h2.state.json.gz](snapshot/docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-2-reflect-trigger8__h2.state.json.gz)
+- [docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-3-deflect4-trigger8__h2.input.json](snapshot/docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-3-deflect4-trigger8__h2.input.json)
+- [docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-3-deflect4-trigger8__h2.state.json.gz](snapshot/docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-3-deflect4-trigger8__h2.state.json.gz)
+- [docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-3-reflect-trigger8__h2.input.json](snapshot/docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-3-reflect-trigger8__h2.input.json)
+- [docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-3-reflect-trigger8__h2.state.json.gz](snapshot/docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-3-reflect-trigger8__h2.state.json.gz)
+- [docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-4-deflect4-trigger8__h2.input.json](snapshot/docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-4-deflect4-trigger8__h2.input.json)
+- [docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-4-deflect4-trigger8__h2.state.json.gz](snapshot/docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-4-deflect4-trigger8__h2.state.json.gz)
+- [docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-4-reflect-trigger8__h2.input.json](snapshot/docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-4-reflect-trigger8__h2.input.json)
+- [docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-4-reflect-trigger8__h2.state.json.gz](snapshot/docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-4-reflect-trigger8__h2.state.json.gz)
+- [docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-5-deflect4-trigger8__h2.input.json](snapshot/docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-5-deflect4-trigger8__h2.input.json)
+- [docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-5-deflect4-trigger8__h2.state.json.gz](snapshot/docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-5-deflect4-trigger8__h2.state.json.gz)
+- [docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-5-reflect-trigger8__h2.input.json](snapshot/docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-5-reflect-trigger8__h2.input.json)
+- [docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-5-reflect-trigger8__h2.state.json.gz](snapshot/docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-5-reflect-trigger8__h2.state.json.gz)
+- [docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-6-deflect4-trigger8__h2.input.json](snapshot/docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-6-deflect4-trigger8__h2.input.json)
+- [docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-6-deflect4-trigger8__h2.state.json.gz](snapshot/docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-6-deflect4-trigger8__h2.state.json.gz)
+- [docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-6-reflect-trigger8__h2.input.json](snapshot/docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-6-reflect-trigger8__h2.input.json)
+- [docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-6-reflect-trigger8__h2.state.json.gz](snapshot/docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-6-reflect-trigger8__h2.state.json.gz)
+- [docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-7-deflect4-trigger8__h2.input.json](snapshot/docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-7-deflect4-trigger8__h2.input.json)
+- [docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-7-deflect4-trigger8__h2.state.json.gz](snapshot/docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-7-deflect4-trigger8__h2.state.json.gz)
+- [docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-7-reflect-trigger8__h2.input.json](snapshot/docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-7-reflect-trigger8__h2.input.json)
+- [docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-7-reflect-trigger8__h2.state.json.gz](snapshot/docs/research-v2/results/checkpoints/dd9de546d74b6248-21a9050affad98e8/V2-D-7-reflect-trigger8__h2.state.json.gz)
+- [docs/research-v2/results/precision30k-worker0.log](snapshot/docs/research-v2/results/precision30k-worker0.log)
+- [docs/research-v2/results/precision30k-worker1.log](snapshot/docs/research-v2/results/precision30k-worker1.log)
+- [docs/research-v2/results/precision30k.audit.json](snapshot/docs/research-v2/results/precision30k.audit.json)
+- [docs/research-v2/results/precision30k.chaos-analysis.json](snapshot/docs/research-v2/results/precision30k.chaos-analysis.json)
+- [docs/research-v2/results/precision30k.initial-state-audit.json](snapshot/docs/research-v2/results/precision30k.initial-state-audit.json)
+- [docs/research-v2/results/precision30k.interventions.json](snapshot/docs/research-v2/results/precision30k.interventions.json)
+- [docs/research-v2/results/precision30k.paired.json](snapshot/docs/research-v2/results/precision30k.paired.json)
+- [docs/research-v2/results/precision30k.provenance.json](snapshot/docs/research-v2/results/precision30k.provenance.json)
+- [docs/research-v2/results/precision30k.seeds.csv](snapshot/docs/research-v2/results/precision30k.seeds.csv)
+- [docs/research-v2/results/precision30k.series.json](snapshot/docs/research-v2/results/precision30k.series.json)
+- [docs/research-v2/results/precision30k.shard0.jsonl](snapshot/docs/research-v2/results/precision30k.shard0.jsonl)
+- [docs/research-v2/results/precision30k.shard0.jsonl.manifest.json](snapshot/docs/research-v2/results/precision30k.shard0.jsonl.manifest.json)
+- [docs/research-v2/results/precision30k.shard1.jsonl](snapshot/docs/research-v2/results/precision30k.shard1.jsonl)
+- [docs/research-v2/results/precision30k.shard1.jsonl.manifest.json](snapshot/docs/research-v2/results/precision30k.shard1.jsonl.manifest.json)
+- [docs/research-v2/results/precision30k.summary.json](snapshot/docs/research-v2/results/precision30k.summary.json)
+- [docs/research-v2/results/raw/dd9de546d74b6248-21a9050affad98e8/V2-D-0-deflect4-trigger8__h2.json.gz](snapshot/docs/research-v2/results/raw/dd9de546d74b6248-21a9050affad98e8/V2-D-0-deflect4-trigger8__h2.json.gz)
+- [docs/research-v2/results/raw/dd9de546d74b6248-21a9050affad98e8/V2-D-0-reflect-trigger8__h2.json.gz](snapshot/docs/research-v2/results/raw/dd9de546d74b6248-21a9050affad98e8/V2-D-0-reflect-trigger8__h2.json.gz)
+- [docs/research-v2/results/raw/dd9de546d74b6248-21a9050affad98e8/V2-D-1-deflect4-trigger8__h2.json.gz](snapshot/docs/research-v2/results/raw/dd9de546d74b6248-21a9050affad98e8/V2-D-1-deflect4-trigger8__h2.json.gz)
+- [docs/research-v2/results/raw/dd9de546d74b6248-21a9050affad98e8/V2-D-1-reflect-trigger8__h2.json.gz](snapshot/docs/research-v2/results/raw/dd9de546d74b6248-21a9050affad98e8/V2-D-1-reflect-trigger8__h2.json.gz)
+- [docs/research-v2/results/raw/dd9de546d74b6248-21a9050affad98e8/V2-D-2-deflect4-trigger8__h2.json.gz](snapshot/docs/research-v2/results/raw/dd9de546d74b6248-21a9050affad98e8/V2-D-2-deflect4-trigger8__h2.json.gz)
+- [docs/research-v2/results/raw/dd9de546d74b6248-21a9050affad98e8/V2-D-2-reflect-trigger8__h2.json.gz](snapshot/docs/research-v2/results/raw/dd9de546d74b6248-21a9050affad98e8/V2-D-2-reflect-trigger8__h2.json.gz)
+- [docs/research-v2/results/raw/dd9de546d74b6248-21a9050affad98e8/V2-D-3-deflect4-trigger8__h2.json.gz](snapshot/docs/research-v2/results/raw/dd9de546d74b6248-21a9050affad98e8/V2-D-3-deflect4-trigger8__h2.json.gz)
+- [docs/research-v2/results/raw/dd9de546d74b6248-21a9050affad98e8/V2-D-3-reflect-trigger8__h2.json.gz](snapshot/docs/research-v2/results/raw/dd9de546d74b6248-21a9050affad98e8/V2-D-3-reflect-trigger8__h2.json.gz)
+- [docs/research-v2/results/raw/dd9de546d74b6248-21a9050affad98e8/V2-D-4-deflect4-trigger8__h2.json.gz](snapshot/docs/research-v2/results/raw/dd9de546d74b6248-21a9050affad98e8/V2-D-4-deflect4-trigger8__h2.json.gz)
+- [docs/research-v2/results/raw/dd9de546d74b6248-21a9050affad98e8/V2-D-4-reflect-trigger8__h2.json.gz](snapshot/docs/research-v2/results/raw/dd9de546d74b6248-21a9050affad98e8/V2-D-4-reflect-trigger8__h2.json.gz)
+- [docs/research-v2/results/raw/dd9de546d74b6248-21a9050affad98e8/V2-D-5-deflect4-trigger8__h2.json.gz](snapshot/docs/research-v2/results/raw/dd9de546d74b6248-21a9050affad98e8/V2-D-5-deflect4-trigger8__h2.json.gz)
+- [docs/research-v2/results/raw/dd9de546d74b6248-21a9050affad98e8/V2-D-5-reflect-trigger8__h2.json.gz](snapshot/docs/research-v2/results/raw/dd9de546d74b6248-21a9050affad98e8/V2-D-5-reflect-trigger8__h2.json.gz)
+- [docs/research-v2/results/raw/dd9de546d74b6248-21a9050affad98e8/V2-D-6-deflect4-trigger8__h2.json.gz](snapshot/docs/research-v2/results/raw/dd9de546d74b6248-21a9050affad98e8/V2-D-6-deflect4-trigger8__h2.json.gz)
+- [docs/research-v2/results/raw/dd9de546d74b6248-21a9050affad98e8/V2-D-6-reflect-trigger8__h2.json.gz](snapshot/docs/research-v2/results/raw/dd9de546d74b6248-21a9050affad98e8/V2-D-6-reflect-trigger8__h2.json.gz)
+- [docs/research-v2/results/raw/dd9de546d74b6248-21a9050affad98e8/V2-D-7-deflect4-trigger8__h2.json.gz](snapshot/docs/research-v2/results/raw/dd9de546d74b6248-21a9050affad98e8/V2-D-7-deflect4-trigger8__h2.json.gz)
+- [docs/research-v2/results/raw/dd9de546d74b6248-21a9050affad98e8/V2-D-7-reflect-trigger8__h2.json.gz](snapshot/docs/research-v2/results/raw/dd9de546d74b6248-21a9050affad98e8/V2-D-7-reflect-trigger8__h2.json.gz)
+- [docs/research-v2/results/series-v1.state.json](snapshot/docs/research-v2/results/series-v1.state.json)
+
+仅归档相对 [c06c004](https://github.com/BillOu0104/2/commit/c06c004640379ccab11efb468f301c3e34205a84) 新增或修改的证据；未变的历史文件沿前一版本查阅，不代表每份继承报告均在本次重跑。
