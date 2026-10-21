@@ -26,6 +26,7 @@
 | [minimal-chaos-v2-auto-precision30k](analyses/minimal-chaos-v2-auto-precision30k/README.md) | V2自动阶段 precision30k | [f637f9f](https://github.com/BillOu0104/2/commit/f637f9fd4d8537e76cb62889cd7991a3f278292f) |
 | [minimal-chaos-v2-auto-shadow30k](analyses/minimal-chaos-v2-auto-shadow30k/README.md) | V2自动阶段 shadow30k | [723922d](https://github.com/BillOu0104/2/commit/723922d875869f86f7d43f950ea1b003a05ed657) |
 | [minimal-chaos-v2-canonical](analyses/minimal-chaos-v2-canonical/README.md) | V2 canonical contact-aware experiment and recoverable batches | [1a9de78](https://github.com/BillOu0104/2/commit/1a9de7889942f57fd0997943d99612096bced012) |
+| [minimal-chaos-v2-confirmation-gates](analyses/minimal-chaos-v2-confirmation-gates/README.md) | 独立确认启动门禁实测 | [311fca7](https://github.com/BillOu0104/2/commit/311fca71b571e056934e25672a226f3957209b5c) |
 | [minimal-chaos-v2-confirmation-protocol](analyses/minimal-chaos-v2-confirmation-protocol/README.md) | V2独立128Seed确认预注册与探索结论 | [923ea09](https://github.com/BillOu0104/2/commit/923ea09c5571e6e74fbe4ca2acfad902cfe0100e) |
 | [minimal-chaos-v2-interim-audit](analyses/minimal-chaos-v2-interim-audit/README.md) | V2阶段证据与恢复审计 | [762eea4](https://github.com/BillOu0104/2/commit/762eea4eb4f3cf084048f00046330603841d2e1f) |
 | [minimal-chaos-v2-long30](analyses/minimal-chaos-v2-long30/README.md) | V2完整30000年探索与负对照校准 | [102339c](https://github.com/BillOu0104/2/commit/102339ca9efcfa3b575dab447645133cef18d59b) |

@@ -1,0 +1,37 @@
+{
+  "format": 1,
+  "id": "minimal-chaos-v2-confirmation-gates",
+  "path": "analyses/minimal-chaos-v2-confirmation-gates",
+  "kind": "analysis",
+  "version": null,
+  "title": "独立确认启动门禁实测",
+  "summary": "128初值注册、空队列pending576与原始汇总一致性检查已保存；实际持有全局锁时确认驱动正确跳过，不启动物理worker。澄清四阶段192条的报告措辞。",
+  "source_commit": "311fca71b571e056934e25672a226f3957209b5c",
+  "previous_commit": "923ea09c5571e6e74fbe4ca2acfad902cfe0100e",
+  "source_repository": "https://github.com/BillOu0104/2",
+  "source_subject": "research: verify confirmation duplicate lock before first integration",
+  "source_date": "2026-10-21T20:47:14Z",
+  "archived_at": "2026-10-21T20:47:14.268205+00:00",
+  "runtime_fingerprint": null,
+  "deleted_paths": [],
+  "files": [
+    {
+      "source_path": "docs/research-v2/INTERIM_REPORT.md",
+      "archive_path": "snapshot/docs/research-v2/INTERIM_REPORT.md",
+      "sha256": "4e69475407d7949cfa402e57545bbba7fe0e0f12aab9d74d4ddec56ad872523a",
+      "bytes": 3684
+    },
+    {
+      "source_path": "docs/research-v2/results/confirmation-gate-validation.json",
+      "archive_path": "snapshot/docs/research-v2/results/confirmation-gate-validation.json",
+      "sha256": "f2a907fc7376251b9b566ee7d74bb940dddab93b419ed1f956c9b45a31d4dac2",
+      "bytes": 606
+    },
+    {
+      "source_path": null,
+      "archive_path": "changes.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ]
+}
