@@ -1,0 +1,1214 @@
+diff --git a/.github/workflows/physics-acceptance.yml b/.github/workflows/physics-acceptance.yml
+new file mode 100644
+index 0000000..9fabf8e
+--- /dev/null
++++ b/.github/workflows/physics-acceptance.yml
+@@ -0,0 +1,24 @@
++name: v0.5.2 acceptance build
++on:
++  push:
++    branches: [fix/v0.5.2-newtonian]
++  workflow_dispatch:
++permissions:
++  contents: read
++jobs:
++  test-build:
++    runs-on: ubuntu-latest
++    steps:
++      - uses: actions/checkout@v4
++      - uses: actions/setup-node@v4
++        with:
++          node-version: '22'
++          cache: npm
++      - run: npm ci
++      - run: npm test
++      - run: npm run build
++      - uses: actions/upload-artifact@v4
++        with:
++          name: three-body-v0.5.2-acceptance
++          path: dist/
++          retention-days: 14
+diff --git a/index.html b/index.html
+index 3837d75..185d67f 100644
+--- a/index.html
++++ b/index.html
+@@ -62,7 +62,7 @@
+     <div class="panel-tabs"><button class="active" data-tab="settings">全部设置</button><button data-tab="history">文明档案</button><button data-tab="about">项目说明</button></div>
+     <div id="settings-content" class="panel-scroll"><div id="extension-controls"></div><details id="advanced-controls" class="setting-group"><summary>原版高级设置 / Advanced</summary><div id="original-controls"></div></details><p id="search-empty" hidden>没有匹配的设置 / No matching settings</p></div>
+     <div id="history-content" class="panel-scroll" hidden><div class="section-intro"><h3>文明档案</h3><p>当前设备保存的文明死亡记录。完整参数随档案保留，方便复现与后续扩展。</p><button id="export-history">导出档案 JSON</button></div><ol id="history-list"></ol></div>
+-    <div id="about-content" class="panel-scroll" hidden><article class="about-copy"><h3>三体 · 实时演算 v0.5.1</h3><p>以你提供的 SYKM 原版 Wallpaper Engine 场景为基础。移植四体运动、温度、纪元与文明事件 SceneScript，并优化文明适宜度与延续机制，复用原版贴图、字体和音乐，天体采用圆形柔光与渐隐尾迹。</p><p><a href="settings-guide.html" target="_blank" rel="noopener">打开 v0.5 完整设置说明 ↗</a> · <a href="SETTINGS-GUIDE-v0.5.md" download>下载 Markdown 文档</a></p><h4>运行架构</h4><p>Three.js 渲染与后台 Web Worker 模拟独立运行；无需远程服务器，网页与 Wallpaper Engine 共用同一套内核。模拟事件可供未来通知与 Seed 排行榜订阅。</p><h4>还原边界</h4><p>默认按固定 60 Hz 复现原版物理节奏；根据提供的原著讲解区分轨道纪元、天象与文明延续。−20～40°C 为常态活动范围，干仓休眠后可恢复同一文明。修复步长设置不即时生效、恒星碰撞距离未赋值、隐藏 UI 影响计算等问题。模型使用球体和圆环重建，后处理为 Three.js 对应实现，效果尚不能声称与原版逐像素一致。</p><p>原版文明逻辑是适温诞生与灾变毁灭，没有人口或技术树。v0.5 增加人口储备、干仓质量与六级文明发展；休眠保留文明，实际生产时间推动升级。保留轨道稳定确认、差分潮汐与不可逆行星毁坏。具体阈值是可调模拟参数，非小说给定数值；完整算法依据、参数表和兼容差异随源码提供。原版背景已恢复为原生 8192×4096，并支持最高 7680×4320 渲染。</p><h4>来源</h4><p>原场景：SYKM ·《三体实时演算》<br>音乐：Melodysheep · Ether<br>保留原资源来源与非商用声明。</p><p class="muted">网页版音频须主动播放；Wallpaper Engine 可直接接收系统音频。自定义背景与历史保存在当前浏览器，不会上传。</p><div id="runtime-diagnostics"></div></article></div>
++    <div id="about-content" class="panel-scroll" hidden><article class="about-copy"><h3>三体 · 实时演算 v0.5.2</h3><p>以你提供的 SYKM 原版 Wallpaper Engine 场景为基础。移植四体运动、温度、纪元与文明事件 SceneScript，并优化文明适宜度与延续机制，复用原版贴图、字体和音乐，天体采用圆形柔光与渐隐尾迹。</p><p><a href="settings-guide.html" target="_blank" rel="noopener">打开 v0.5 完整设置说明 ↗</a> · <a href="SETTINGS-GUIDE-v0.5.md" download>下载 Markdown 文档</a></p><p>v0.5.2：默认随机三星 Q=1，行星采用第三颗恒星周围 0.12D 逆向轨道；牛顿平方反比引力、近遇自适应 Yoshida 积分，默认关闭引力牢笼。旧模型与手动初值仍可选择。数值故障会暂停并提示；星体接触之后点质量模型的适用性受限。</p><h4>运行架构</h4><p>Three.js 渲染与后台 Web Worker 模拟独立运行；无需远程服务器，网页与 Wallpaper Engine 共用同一套内核。模拟事件可供未来通知与 Seed 排行榜订阅。</p><h4>还原边界</h4><p>默认按固定 60 Hz 复现原版物理节奏；根据提供的原著讲解区分轨道纪元、天象与文明延续。−20～40°C 为常态活动范围，干仓休眠后可恢复同一文明。修复步长设置不即时生效、恒星碰撞距离未赋值、隐藏 UI 影响计算等问题。模型使用球体和圆环重建，后处理为 Three.js 对应实现，效果尚不能声称与原版逐像素一致。</p><p>原版文明逻辑是适温诞生与灾变毁灭，没有人口或技术树。v0.5 增加人口储备、干仓质量与六级文明发展；休眠保留文明，实际生产时间推动升级。保留轨道稳定确认、差分潮汐与不可逆行星毁坏。具体阈值是可调模拟参数，非小说给定数值；完整算法依据、参数表和兼容差异随源码提供。原版背景已恢复为原生 8192×4096，并支持最高 7680×4320 渲染。</p><h4>来源</h4><p>原场景：SYKM ·《三体实时演算》<br>音乐：Melodysheep · Ether<br>保留原资源来源与非商用声明。</p><p class="muted">网页版音频须主动播放；Wallpaper Engine 可直接接收系统音频。自定义背景与历史保存在当前浏览器，不会上传。</p><div id="runtime-diagnostics"></div></article></div>
+     <footer class="panel-footer"><button id="export-settings">导出种子</button><label class="file-button">导入种子<input id="import-settings" type="file" accept="application/json,.json" hidden></label><button id="reset-settings">恢复默认</button><span id="save-status">已保存到本机</span></footer>
+   </aside>
+ </body>
+diff --git a/package-lock.json b/package-lock.json
+index dab0a3d..4bf23ea 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -1,12 +1,12 @@
+ {
+   "name": "three-body-reconstruction",
+-  "version": "0.5.1",
++  "version": "0.5.2",
+   "lockfileVersion": 3,
+   "requires": true,
+   "packages": {
+     "": {
+       "name": "three-body-reconstruction",
+-      "version": "0.5.1",
++      "version": "0.5.2",
+       "dependencies": {
+         "three": "0.180.0"
+       },
+diff --git a/package.json b/package.json
+index 616be05..4863f8d 100644
+--- a/package.json
++++ b/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "three-body-reconstruction",
+-  "version": "0.5.1",
++  "version": "0.5.2",
+   "private": true,
+   "type": "module",
+   "scripts": {
+diff --git a/src/bridge.js b/src/bridge.js
+index 001b2b0..6174963 100644
+--- a/src/bridge.js
++++ b/src/bridge.js
+@@ -13,6 +13,6 @@ export function installWallpaperBridge({ changeSettings, setHostPaused, audio, r
+     setPaused(paused) { setHostPaused(!!paused); }
+   };
+   // Stable public extension boundary: notifications and remote rankings can subscribe later.
+-  window.threeBody = { version: '0.5.1', get algorithm() { return window.__threeBodyState?.algorithm; }, getState: () => window.__threeBodyState ? structuredClone(window.__threeBodyState) : null, applySettings: patch => changeSettings(patch), subscribe(type, listener) { const fn = e => listener(e.detail); window.addEventListener(type, fn); return () => window.removeEventListener(type, fn); }, wallpaper: !!window.wallpaperRegisterAudioListener };
++  window.threeBody = { version: '0.5.2', get algorithm() { return window.__threeBodyState?.algorithm; }, getState: () => window.__threeBodyState ? structuredClone(window.__threeBodyState) : null, applySettings: patch => changeSettings(patch), subscribe(type, listener) { const fn = e => listener(e.detail); window.addEventListener(type, fn); return () => window.removeEventListener(type, fn); }, wallpaper: !!window.wallpaperRegisterAudioListener };
+   return () => { window.wallpaperPropertyListener = prior; };
+ }
+diff --git a/src/legacy/008.js b/src/legacy/008.js
+index 58bbb9f..0d48107 100644
+--- a/src/legacy/008.js
++++ b/src/legacy/008.js
+@@ -1,3 +1,4 @@
++import {GravityIntegrator} from '../physics/gravity.js';
+ // Adapted from supplied SYKM SceneScript. See docs/SOURCE-AUDIT.md.
+ export default function createLegacy(ctx) {
+ const {shared,engine,input,thisScene,Vec3,createScriptProperties,Math} = ctx;
+@@ -530,6 +531,8 @@ const d3 = w1;
+ 
+ // 初始化天体数组
+ let bodies = [];
++let gravity = null;
++let physicsMonitor = null;
+ 
+ let frameCount = 0;
+ let lastTrailenState = scriptProperties.trailen;
+@@ -1021,12 +1024,18 @@ function resetSystem() {
+     }
+     
+     if (!scriptProperties.cus_en) ctx.prepareInitialBodies?.(bodies, G, scriptProperties);
++    else ctx.prepareManualBodies?.(bodies,G,scriptProperties);
+     // 初始化前一个位置
+     for (let i = 0; i < bodies.length; i++) {
+         bodies[i].prevX = bodies[i].x;
+         bodies[i].prevY = bodies[i].y;
+         bodies[i].prevZ = bodies[i].z;
+     }
++    const config=ctx.getPhysicsSettings?.();
++    physicsMonitor=config?new GravityIntegrator(bodies,G,{model:config.gravityModel,softening:scriptProperties.ras,kSoft:scriptProperties.kSoft,
++        cageAcceleration:scriptProperties.constraint_En?body=>computeConstraintAcceleration(body,computeCenterOfMass()):null,
++        radii:()=>{const c=ctx.getPhysicsSettings();return [c._13,c._21,c._3,c.newproperty20].map((r,i)=>i<3?r*(c.stellarBreathing?1+.08*Math.sin(engine.runtime/120+i*2):1):r);}}):null;
++    gravity=config?.gravityModel!=='legacy'?physicsMonitor:null;
+     ctx.onInitialize?.(bodies.map(b => ({ x:b.x, y:b.y, z:b.z, vx:b.vx, vy:b.vy, vz:b.vz, mass:b.mass })));
+ }
+ 
+@@ -1051,11 +1060,27 @@ function init(value) {
+     needsReset = true;
+ }
+ 
++// Also used by the offline benchmark to execute the unchanged legacy solver.
++function initializePhysics(){
++    lamT=60*60*24*365/t_sim;
++    G=(scriptProperties.kg/1000)*6.67430e-11*lamM*Math.pow(lamT,2)/Math.pow(lamR,3);
++    kv=scriptProperties.ktime;
++    resetSystem();resetPhysicsState();physicsCom={...computeCenterOfMass()};resetTrails(physicsCom);needsReset=false;
++}
++
+ // 物理更新函数
+ function updatePhysics(timeStep) {
++    if(gravity){
++        for(const body of bodies){body.prevX=body.x;body.prevY=body.y;body.prevZ=body.z;}
++        const config=ctx.getPhysicsSettings();
++        gravity.advance(kv*kv*timeStep,{maxStep:FIXED_TIMESTEP,eta:config.encounterAccuracy});
++        physicsCom=computeCenterOfMass();frameCount++;return;
++    }
++
+ 
+     //const k = scriptProperties.ktime;
+     const dtimeStep = kv * kv * timeStep
++    physicsMonitor?.save();
+     // 保存当前位置作为前一个位置（用于插值）
+     for (const body of bodies) {
+         body.prevX = body.x;
+@@ -1127,6 +1152,7 @@ function updatePhysics(timeStep) {
+     // 更新物理质心
+     physicsCom = computeCenterOfMass();
+     
++    if(physicsMonitor){physicsMonitor.time+=dtimeStep;physicsMonitor.steps++;physicsMonitor.detectContacts(dtimeStep);}
+     frameCount++;
+ }
+ 
+@@ -1272,7 +1298,11 @@ function update(value) {
+     const MAX_PHYSICS_STEPS = 10; // 防止螺旋死亡
+     let steps = 0;
+     
+-    while (accumulatedTime >= FIXED_TIMESTEP && steps < MAX_PHYSICS_STEPS) {
++    if(gravity){
++        updatePhysics(ctx.getPhysicsSettings().physicsMode==='realtime'?1/60:.0075);
++        accumulatedTime=0;
++    }
++    while (!gravity && accumulatedTime >= FIXED_TIMESTEP && steps < MAX_PHYSICS_STEPS) {
+         // 执行固定步长的物理更新
+         updatePhysics(FIXED_TIMESTEP);
+         
+@@ -1362,8 +1392,8 @@ function update(value) {
+     return value;
+ }
+ 
+-function state() { return { bodies: bodies.map(b => ({x:b.x,y:b.y,z:b.z,vx:b.vx,vy:b.vy,vz:b.vz,mass:b.mass,color:b.color,trail:b.trailPositions})), com:physicsCom, G, step:FIXED_TIMESTEP }; }
++function state() { return { bodies: bodies.map(b => ({x:b.x,y:b.y,z:b.z,vx:b.vx,vy:b.vy,vz:b.vz,mass:b.mass,color:b.color,trail:b.trailPositions})), com:physicsCom, G, step:FIXED_TIMESTEP, diagnostics:physicsMonitor?.diagnostics()??null, contacts:physicsMonitor?.contacts??[] }; }
+ function directStep(dt) { updatePhysics(dt); }
+ 
+-return {update,scriptProperties,init,applyUserProperties,state,directStep};
++return {update,scriptProperties,init,applyUserProperties,state,directStep,initializePhysics};
+ }
+diff --git a/src/main.js b/src/main.js
+index ee7c5de..daa004c 100644
+--- a/src/main.js
++++ b/src/main.js
+@@ -1,8 +1,9 @@
++import {replaySettings} from './seed-compatibility.js';
+ import {settingsDefinitions,settingsCategories} from './settings-catalog.js';
+ import { layoutWidgets,widgetPosition,clearLayoutStyles,applyLayout,installLayoutEditor } from './layout.js';
+ import { SpaceRenderer } from './renderer.js';
+ import { effectivePropertySchema as propertySchema, migrateSettings } from './settings.js';
+-import { normalizeSettings, colorHex, fromHex, colorRGB, plainText, settingsFromInitial, algorithmId } from './settings.js';
++import { normalizeSettings, colorHex, fromHex, colorRGB, plainText, settingsFromInitial, algorithmId,manualInitialKeys } from './settings.js';
+ import { LocalStore } from './storage.js';
+ import { AudioController } from './audio.js';
+ import { installWallpaperBridge } from './bridge.js';
+@@ -39,6 +40,7 @@ function saveSettings() {
+ }
+ function changeSettings(patch, options = {}) {
+   const previous = settings;
++  if(manualInitialKeys.some(k=>k in patch)&&!('manualInitialBodies' in patch))patch={...patch,manualInitialBodies:null};
+   settings = normalizeSettings({ ...settings, ...patch });
+   worker?.postMessage({ type: 'settings', patch: settings });
+   renderer?.updateSettings(settings);
+@@ -227,7 +229,7 @@ $('#import-settings').onchange = async e => {
+   try {
+     if (file.size > 1024 * 1024) throw new Error('配置文件过大');
+     const data = JSON.parse(await file.text()); if (data.format !== 'three-body-seed' || data.version !== 1 || !data.settings || typeof data.settings !== 'object') throw new Error('种子格式不匹配');
+-    changeSettings(data.initialBodies ? settingsFromInitial(data.settings, data.initialBodies) : data.settings); worker?.postMessage({ type: 'restart' }); notice('种子与设置已导入，宇宙已重新初始化');
++    changeSettings(data.initialBodies ? settingsFromInitial(replaySettings(data.settings), data.initialBodies) : replaySettings(data.settings)); worker?.postMessage({ type: 'restart' }); notice('种子与设置已导入，宇宙已重新初始化');
+   } catch (error) { notice(`导入失败：${error.message}`, true); }
+   e.target.value = '';
+ };
+@@ -242,7 +244,7 @@ function renderHistory() {
+     title.textContent = `宇宙${entry.universe||entry.generation||'?'} · 文明${entry.number} · ${entry.lifespan} 年 · ${entry.destructionEvent}`;
+     sub.textContent = `${entry.seed} / 宇宙 ${entry.generation}${entry.development?` / Lv.${entry.development.level} ${entry.development.zh} / 发展 ${entry.development.developmentYears.toFixed(1)}年`:''} / ${new Date(entry.savedAt).toLocaleString()}`;
+     button.textContent = '复现初始种子'; button.onclick = () => {
+-      const replay = entry.initialBodies ? settingsFromInitial(entry.settings, entry.initialBodies) : entry.settings;
++      const replay = entry.initialBodies ? settingsFromInitial(replaySettings(entry.settings), entry.initialBodies) : replaySettings(entry.settings);
+       changeSettings(replay); worker?.postMessage({ type: 'restart' }); notice('已载入该文明完整初始条件');
+     };
+     li.append(title, sub, button); list.append(li);
+@@ -300,7 +302,8 @@ function renderState(s) {
+   $('#restart-prompt strong').textContent=en?`Start universe ${s.generation+1} ↻`:`开启第${s.generation+1}号宇宙 ↻`;
+ 
+   if (settings.cheatingcheck) $('#physics-check').textContent = `${settings.newproperty60 ? 'CAGE ON / ' : ''}G × ${settings.newproperty52 / 1000} / T DIST × ${settings.newproperty69}\n${settings.physicsMode === 'reference' ? 'REFERENCE 60 Hz' : 'REAL TIME'}`;
+-  $('#runtime-diagnostics').textContent = `Three.js WebGL · ${fps} FPS · Worker 60 Hz · Tick ${s.tick} · ${s.bodies.length} bodies · 宇宙 ${s.generation} · Seed ${s.seed} · ${renderer.canvas.width}×${renderer.canvas.height}`;
++  const physics=s.physics;
++  $('#runtime-diagnostics').textContent = `Three.js WebGL · ${fps} FPS · Worker 60 Hz · Tick ${s.tick} · ${s.bodies.length} bodies · 宇宙 ${s.generation} · Seed ${s.seed} · ${renderer.canvas.width}×${renderer.canvas.height}${physics ? ` · ${physics.model} · ΔE ${physics.relativeEnergyError.toExponential(2)} · ΔL ${physics.relativeAngularMomentumError.toExponential(2)} · ΔP ${physics.normalizedMomentumDrift.toExponential(2)} · ${physics.cageActive?'牢笼开启：非孤立系统':'牢笼关闭'} · ${physics.physicalModelValid?'未检测到接触':'已接触：点质量模型受限'}` : ''}`;
+ }
+ function handleEvents(events) {
+   for (const event of events) {
+diff --git a/src/orbital-initialization.js b/src/orbital-initialization.js
+index 7d12f14..4c60bc4 100644
+--- a/src/orbital-initialization.js
++++ b/src/orbital-initialization.js
+@@ -62,4 +62,34 @@ export function prepareChaoticOrbits(bodies,G,p,settings,random){
+   const total=mass+planet.mass;for(const k of ['vx','vy','vz']){const drift=bodies.reduce((n,b)=>n+b.mass*b[k],0)/total;for(const b of bodies)b[k]-=drift;}
+   return true;
+ }
+-export function prepareOrbits(...args){return prepareChaoticOrbits(...args)||prepareBalancedOrbits(...args);}
++export function prepareOrbits(...args){return prepareResearchOrbits(...args)||prepareChaoticOrbits(...args)||prepareBalancedOrbits(...args);}
++
++// Frozen research candidate: random nonhierarchical stars, Q=1, host 3, retrograde .12D.
++// No trajectory is integrated or scored while generating an initial state.
++export function prepareResearchOrbits(bodies,G,p,settings,random){
++ if(settings.orbitalInitialization!=='research')return false;
++ if(!(G>0)||bodies.some(b=>!(b.mass>0))||p.xcxc<.5)return {metadata:{version:'original-fallback',reason:'Q=1 host initialization requires positive G/masses and extent >= 0.5'}};
++ prepareChaoticOrbits(bodies,G,p,{...settings,orbitalInitialization:'chaotic'},random);
++ const stars=bodies.slice(0,3),keys=['x','y','z','vx','vy','vz'],velKeys=keys.slice(3),distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y,a.z-b.z);
++ const center=items=>{const m=items.reduce((n,b)=>n+b.mass,0);return keys.map(k=>items.reduce((n,b)=>n+b.mass*b[k],0)/m);};
++ const recenter=items=>{const c=center(items);for(const b of items)keys.forEach((k,i)=>b[k]-=c[i]);};
++ const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],dot=(a,b)=>a.reduce((n,x,i)=>n+x*b[i],0),unit=a=>{const n=Math.hypot(...a);return n>1e-14?a.map(x=>x/n):[0,0,1];};
++ const radii=[settings._13,settings._21,settings._3];
++ for(let i=0;i<3;i++)for(let j=i+1;j<3;j++)if(distance(stars[i],stars[j])<=radii[i]+radii[j])throw new Error('随机位置范围过小或恒星半径过大，初始恒星重叠；请扩大范围或使用自定义初值');
++ // Match the validated protocol, including its origin choice before planet placement.
++ recenter(stars);let kinetic=0,potential=0;
++ for(const b of stars)kinetic+=.5*b.mass*velKeys.reduce((n,k)=>n+b[k]**2,0);
++ for(let i=0;i<3;i++)for(let j=i+1;j<3;j++)potential+=G*stars[i].mass*stars[j].mass/distance(stars[i],stars[j]);
++ if(!(kinetic>0&&potential>0))throw new Error('随机恒星初速度退化；请使用非零随机速度范围');
++ const multiplier=Math.sqrt(potential/(2*kinetic));for(const b of stars)for(const k of velKeys)b[k]*=multiplier;
++ const angular=[0,0,0];for(const b of stars){const h=cross([b.x,b.y,b.z],[b.vx,b.vy,b.vz]);h.forEach((x,i)=>angular[i]+=b.mass*x);}
++ const hostIndex=2,host=stars[hostIndex],planet=bodies[3],nearest=Math.min(...stars.filter(b=>b!==host).map(b=>distance(host,b))),radius=.12*nearest;
++ if(radius<=radii[hostIndex]+settings.newproperty20)throw new Error('0.12D行星轨道位于恒星表面以内；请增大位置范围或缩小天体半径');
++ const normal=unit(angular),offset=[planet.x-host.x,planet.y-host.y,planet.z-host.z],raw=unit(offset),projection=raw.map((x,i)=>x-normal[i]*dot(raw,normal));
++ if(Math.hypot(...projection)<1e-12){const least=normal.map(Math.abs).indexOf(Math.min(...normal.map(Math.abs))),basis=[0,0,0];basis[least]=1;for(let i=0;i<3;i++)projection[i]=basis[i]-normal[i]*dot(basis,normal);}
++ const radial=unit(projection),tangent=unit(cross(normal,radial)),speed=Math.sqrt(G*(host.mass+planet.mass)/radius),hostShare=host.mass/(host.mass+planet.mass),planetShare=1-hostShare;
++ for(let i=0;i<3;i++){planet[keys[i]]=host[keys[i]]+radius*radial[i];const v=-speed*tangent[i];planet[velKeys[i]]=host[velKeys[i]]+hostShare*v;host[velKeys[i]]-=planetShare*v;}
++ recenter(bodies);
++ for(let i=0;i<3;i++)if(distance(planet,stars[i])<=radii[i]+settings.newproperty20)throw new Error('初始行星与恒星重叠；请调整天体半径或星系尺度');
++ return {metadata:{version:'research-q1-retro12-v1',host:hostIndex,nearestStellarDistance:nearest,planetRadius:radius,stellarVirialRatio:1,direction:'retrograde',stellarAngularMomentum:angular}};
++}
+diff --git a/src/physics/gravity.js b/src/physics/gravity.js
+new file mode 100644
+index 0000000..a56d400
+--- /dev/null
++++ b/src/physics/gravity.js
+@@ -0,0 +1,74 @@
++// Newtonian/Yoshida kernel ported from research/newtonian-survival, engine-v4.mjs.
++// Variable steps follow encounter time scales; global symplecticity is not claimed.
++export const axes=['x','y','z','vx','vy','vz'];
++const pairs=[[0,1],[0,2],[1,2],[0,3],[1,3],[2,3]];
++const w1=1/(2-2**(1/3)),w0=-(2**(1/3))*w1;
++const length=v=>Math.hypot(...v);
++const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
++export class PhysicsError extends Error{constructor(code,message){super(message);this.name='PhysicsError';this.code=code;}}
++export function pairPotential(r,{model='newtonian',softening=0,kSoft=2.8}={}){
++ if(model==='plummer')return -1/Math.sqrt(r*r+softening*softening);
++ if(model!=='legacy'||softening<=0)return -1/r;
++ if(r>=kSoft*softening)return -1/r;
++ const beta=3/(kSoft-1),alpha=1-beta;
++ const middle=s=>-1/(kSoft*softening)+alpha*(1/(kSoft*softening)-1/s)+beta/softening*Math.log(s/(kSoft*softening));
++ return r>softening?middle(r):middle(softening)+(r*r-softening*softening)/(2*softening**3);
++}
++export function invariants(bodies,G,options={}){
++ const mass=bodies.reduce((n,b)=>n+b.mass,0),com=[0,0,0,0,0,0];
++ if(mass>0)for(const b of bodies)axes.forEach((key,i)=>com[i]+=b.mass*b[key]/mass);
++ let kinetic=0,potential=0;const momentum=[0,0,0],angularMomentum=[0,0,0];
++ for(const b of bodies){const r=[b.x-com[0],b.y-com[1],b.z-com[2]],v=[b.vx-com[3],b.vy-com[4],b.vz-com[5]],h=cross(r,v);kinetic+=.5*b.mass*v.reduce((n,x)=>n+x*x,0);for(let i=0;i<3;i++){momentum[i]+=b.mass*b[axes[i+3]];angularMomentum[i]+=b.mass*h[i];}}
++ for(const[i,j]of pairs){const a=bodies[i],b=bodies[j];if(a.mass&&b.mass)potential+=G*a.mass*b.mass*pairPotential(Math.hypot(a.x-b.x,a.y-b.y,a.z-b.z),options);}
++ return {energy:kinetic+potential,kinetic,potential,momentum,angularMomentum,center:com,virialRatio:potential<0?2*kinetic/-potential:null,mass};
++}
++export class GravityIntegrator{
++ constructor(bodies,G,{model='newtonian',softening=0,kSoft=2.8,cageAcceleration=null,radii=null}={}){
++  this.bodies=bodies;this.G=G;this.model=model;this.softening=softening;this.kSoft=kSoft;this.cageAcceleration=cageAcceleration;this.radii=radii;
++  this.steps=0;this.time=0;this.contacts=[];this.contactKeys=new Set();this.numericalError=null;this.saved=new Float64Array(24);this.baseline=invariants(bodies,G,this);this.maxEnergyError=0;this.maxAngularError=0;this.maxMomentumError=0;this.maxEnergyErrorBeforeContact=0;
++  this.angularScale=Math.max(length(this.baseline.angularMomentum),Math.sqrt(Math.abs(G)*Math.max(this.baseline.mass,1)**3)*1e-12,1e-20);this.momentumScale=Math.max(Math.sqrt(2*this.baseline.mass*this.baseline.kinetic),1);
++ }
++ drift(h){for(const b of this.bodies){b.x+=h*b.vx;b.y+=h*b.vy;b.z+=h*b.vz;}}
++ kick(h){
++  const b=this.bodies;
++  for(const[i,j]of pairs){const a=b[i],c=b[j];if(a.mass<=0||c.mass<=0)continue;const x=c.x-a.x,y=c.y-a.y,z=c.z-a.z,r2=x*x+y*y+z*z;
++   if(!Number.isFinite(r2))throw new PhysicsError('non-finite','天体坐标溢出；已停止数值推进');
++   if(r2===0&&!(this.model==='plummer'&&this.softening>0))throw new PhysicsError('singularity','天体中心完全重合；点质量模型不能继续');
++   let factor;
++   if(this.model==='plummer')factor=this.G*h/(r2+this.softening**2)**1.5;
++   else{const r=Math.sqrt(r2);let scale=1;if(this.model==='legacy'&&this.softening>0){if(r<=this.softening)scale=(r/this.softening)**3;else if(r<this.kSoft*this.softening)scale=1-3/(this.kSoft-1)+3*r/((this.kSoft-1)*this.softening);}factor=this.G*h*scale/(r2*r);}
++   // Both members use the same pair force: equal and opposite momentum increments.
++   if(a.mass>0){a.vx+=factor*c.mass*x;a.vy+=factor*c.mass*y;a.vz+=factor*c.mass*z;}
++   if(c.mass>0){c.vx-=factor*a.mass*x;c.vy-=factor*a.mass*y;c.vz-=factor*a.mass*z;}
++  }
++  if(this.cageAcceleration)for(let i=0;i<b.length;i++){const a=this.cageAcceleration(b[i]);b[i].vx+=h*a.x;b[i].vy+=h*a.y;b[i].vz+=h*a.z;}
++ }
++ step(h){this.drift(w1*h/2);this.kick(w1*h);this.drift((w0+w1)*h/2);this.kick(w0*h);this.drift((w0+w1)*h/2);this.kick(w1*h);this.drift(w1*h/2);this.steps++;this.time+=h;}
++ timescale(){let t=Infinity;for(const[i,j]of pairs){const a=this.bodies[i],b=this.bodies[j];if(a.mass<=0||b.mass<=0)continue;const separation=Math.hypot(a.x-b.x,a.y-b.y,a.z-b.z),r=this.model==='plummer'?Math.hypot(separation,this.softening):separation,v=Math.hypot(a.vx-b.vx,a.vy-b.vy,a.vz-b.vz),mu=Math.abs(this.G)*(a.mass+b.mass);if(mu>0)t=Math.min(t,Math.sqrt(r*r*r/mu));if(v>0)t=Math.min(t,r/v);}return t;}
++ save(){for(let i=0;i<4;i++)for(let j=0;j<6;j++)this.saved[i*6+j]=this.bodies[i][axes[j]];}
++ restore(){for(let i=0;i<4;i++)for(let j=0;j<6;j++)this.bodies[i][axes[j]]=this.saved[i*6+j];}
++ detectContacts(h){
++  const radii=typeof this.radii==='function'?this.radii():this.radii;if(!radii)return;
++  for(const[i,j]of pairs){const key=`${i}:${j}`;if(this.contactKeys.has(key)||this.bodies[i].mass<=0||this.bodies[j].mass<=0)continue;
++   const a=this.bodies[i],b=this.bodies[j],old=[0,1,2].map(k=>this.saved[j*6+k]-this.saved[i*6+k]),change=[b.x-a.x-old[0],b.y-a.y-old[1],b.z-a.z-old[2]],den=change.reduce((n,x)=>n+x*x,0),fraction=den>0?Math.max(0,Math.min(1,-old.reduce((n,x,k)=>n+x*change[k],0)/den)):0;
++   const d=Math.hypot(...old.map((x,k)=>x+fraction*change[k])),limit=radii[i]+radii[j];
++   if(d<=limit){this.contactKeys.add(key);this.contacts.push({pair:[i,j],time:this.time-h+fraction*h,distance:d,radius:limit,method:'accepted-step-segment'});}
++  }
++ }
++ advance(duration,{maxStep=.00075,eta=.0075,adaptive=true,minStep=1e-10,maxSteps=200000}={}){
++  if(!Number.isFinite(duration)||!Number.isFinite(maxStep)||maxStep<=0||!Number.isFinite(eta)||eta<=0)throw new PhysicsError('invalid-step','物理步长或近遇精度参数无效');
++  const sign=Math.sign(duration);let remaining=Math.abs(duration),used=0;
++  try{while(remaining>1e-14){const limit=Math.min(maxStep,adaptive?eta*this.timescale():Infinity),magnitude=Math.min(remaining,limit);if(!(limit>minStep))throw new PhysicsError('minimum-step','近遇所需步长低于安全下限；数值中断不计为物理死亡');if(used++>=maxSteps)throw new PhysicsError('step-budget','单帧近遇计算预算耗尽；未跳过物理时间');
++    const h=sign*magnitude;this.save();const oldTime=this.time,oldSteps=this.steps;
++    try{this.step(h);if(this.bodies.some(b=>axes.some(k=>!Number.isFinite(b[k]))))throw new PhysicsError('non-finite','数值溢出；已恢复到最后有效状态');}
++    catch(error){this.restore();this.time=oldTime;this.steps=oldSteps;throw error;}
++    this.detectContacts(h);remaining=Math.max(0,remaining-magnitude);
++   }}catch(error){this.numericalError={code:error.code||'numerical-error',message:error.message,time:this.time};throw error;}
++  return used;
++ }
++ diagnostics(){
++  const now=invariants(this.bodies,this.G,this),energyError=Math.abs(now.energy-this.baseline.energy)/Math.max(Math.abs(this.baseline.energy),1e-20),angularError=length(now.angularMomentum.map((x,i)=>x-this.baseline.angularMomentum[i]))/this.angularScale,momentumError=length(now.momentum.map((x,i)=>x-this.baseline.momentum[i]))/this.momentumScale;
++  this.maxEnergyError=Math.max(this.maxEnergyError,energyError);this.maxAngularError=Math.max(this.maxAngularError,angularError);this.maxMomentumError=Math.max(this.maxMomentumError,momentumError);if(!this.contacts.length)this.maxEnergyErrorBeforeContact=Math.max(this.maxEnergyErrorBeforeContact,energyError);
++  return {...now,model:this.model,steps:this.steps,solverTime:this.time,relativeEnergyError:energyError,maxRelativeEnergyError:this.maxEnergyError,maxRelativeEnergyErrorBeforeContact:this.maxEnergyErrorBeforeContact,relativeAngularMomentumError:angularError,maxRelativeAngularMomentumError:this.maxAngularError,normalizedMomentumDrift:momentumError,maxNormalizedMomentumDrift:this.maxMomentumError,cageActive:!!this.cageAcceleration,conservationApplicable:!this.cageAcceleration,physicalModelValid:!this.contacts.length,contacts:this.contacts,numericalError:this.numericalError};
++ }
++}
+diff --git a/src/renderer.js b/src/renderer.js
+index dea7b03..8e6e816 100644
+--- a/src/renderer.js
++++ b/src/renderer.js
+@@ -140,7 +140,7 @@ export class SpaceRenderer {
+   updateSettings(s) {
+     if (this.settings?.newproperty14 !== s.newproperty14) this.clearTrails();
+     this.settings = s;
+-    this.spaceScale=s.orbitalInitialization==='chaotic'?Math.max(1,s.brfontcoloraaaaaarandomposrange/2):1;
++    this.spaceScale=['chaotic','research'].includes(s.orbitalInitialization)?Math.max(1,s.brfontcoloraaaaaarandomposrange/2):1;
+     const mode = String(s.newproperty17);
+     this.scene.background = mode === '2' ? C(s.newproperty40).multiplyScalar(s.newproperty57) : C(s.schemecolor);
+     this.sky.visible = mode !== '2' && (mode !== '3' || !!this.customBackground);
+diff --git a/src/seed-compatibility.js b/src/seed-compatibility.js
+new file mode 100644
+index 0000000..071bd05
+--- /dev/null
++++ b/src/seed-compatibility.js
+@@ -0,0 +1,6 @@
++import {normalizeSettings} from './settings.js';
++// Loading an old archive is an explicit replay request, unlike upgrading startup defaults.
++export function replaySettings(source={}){
++ const legacy=!source.physicsRevision&&!source.gravityModel;
++ return normalizeSettings(legacy?{...source,gravityModel:'legacy',orbitalInitialization:source.orbitalInitialization??'original',newproperty60:source.newproperty60??true}:source);
++}
+diff --git a/src/settings-catalog.js b/src/settings-catalog.js
+index 4a9b1fb..3c58cc5 100644
+--- a/src/settings-catalog.js
++++ b/src/settings-catalog.js
+@@ -7,7 +7,9 @@ export const settingsDefinitions={
+     planetStrength:{type:'slider',text:'行星结构强度 / Structural strength',min:1,max:4,step:.1},
+     viewSensitivity:{type:'slider',text:'整体视角灵敏度 / Mouse sensitivity',min:0,max:2,step:.01},
+     compassOpacity:{type:'slider',text:'旋转环不透明度 / Ring opacity',min:0,max:.5,step:.01},
+-    orbitalInitialization:{type:'combo',text:'随机初始轨道 / Initial orbits',options:[{value:'chaotic',label:'混沌星系 · 三维随机（默认）'},{value:'original',label:'原版完全随机'},{value:'balanced',label:'稳定轨道实验'}]},
++    orbitalInitialization:{type:'combo',text:'随机初始轨道 / Initial orbits',options:[{value:'research',label:'随机三星 Q=1 · 逆向行星 0.12D（默认）'},{value:'chaotic',label:'v0.5.1 随机四体 · 对照'},{value:'original',label:'原版完全随机'},{value:'balanced',label:'稳定轨道实验'}]},
++    gravityModel:{type:'combo',text:'引力模型 / Gravity',options:[{value:'newtonian',label:'牛顿平方反比 · 无软化（默认）'},{value:'plummer',label:'Plummer 一致软化 · 实验'},{value:'legacy',label:'旧近距引力 · 复现对照'}]},
++    encounterAccuracy:{type:'slider',text:'近遇时间尺度系数 η（越小越精确）',min:.001,max:.03,step:.0005},
+     seed: { type: 'textinput', text: '随机初始化 Seed' },
+     physicsMode: { type: 'combo', text: '物理时钟', options: [{ value: 'reference', label: '原版节奏 · 固定 60 Hz（默认）' }, { value: 'realtime', label: '墙钟同步 · 修复原版每帧步数上限' }] },
+     civilizationMode: { type: 'combo', text: '文明延续机制 / Civilization', options: [{ value: 'balanced', label: '韧性与文明等级（默认）' }, { value: 'legacy', label: '原版即时判定' }] },
+@@ -23,4 +25,4 @@ export const settingsDefinitions={
+     music: { type: 'bool', text: '播放原版音乐 · Ether' },
+     volume: { type: 'slider', text: '音乐音量 / Volume', min: 0, max: 1, step: .01 }
+   };
+-export const settingsCategories=[['layout','布局与窗口 / Layout',[]],['simulation','模拟与文明 / Simulation',['seed','orbitalInitialization','physicsMode','civilizationMode','civilizationLevels','developmentRate','thermalGrace','birthDelay','wakeDelay','epochWindow','climateInertia','stellarBreathing','planetStrength']],['view','视角与银河 / View',['viewSensitivity','dragSensitivity','newproperty16','newproperty51','newproperty61','x5','y5','x6','y7','newproperty62','y6','compass','compassOpacity']],['visual','画面与轨迹 / Visual',['renderQuality','trailsLength','pixelRatio','bodyLabels','dust','_1dust1quantity','_1dust1size','_2dust2quantity','_2dust1size']],['audio','声音 / Audio',['music','volume']]];
++export const settingsCategories=[['layout','布局与窗口 / Layout',[]],['simulation','模拟与文明 / Simulation',['seed','orbitalInitialization','gravityModel','encounterAccuracy','physicsMode','civilizationMode','civilizationLevels','developmentRate','thermalGrace','birthDelay','wakeDelay','epochWindow','climateInertia','stellarBreathing','planetStrength']],['view','视角与银河 / View',['viewSensitivity','dragSensitivity','newproperty16','newproperty51','newproperty61','x5','y5','x6','y7','newproperty62','y6','compass','compassOpacity']],['visual','画面与轨迹 / Visual',['renderQuality','trailsLength','pixelRatio','bodyLabels','dust','_1dust1quantity','_1dust1size','_2dust2quantity','_2dust1size']],['audio','声音 / Audio',['music','volume']]];
+diff --git a/src/settings.js b/src/settings.js
+index d3779eb..dc5c19c 100644
+--- a/src/settings.js
++++ b/src/settings.js
+@@ -2,9 +2,10 @@ import { propertySchema } from './original-data.js';
+ 
+ export const defaults = Object.fromEntries(Object.entries(propertySchema)
+   .filter(([, d]) => d.type && d.type !== 'group').map(([k, d]) => [k, d.value]));
+-export const extraDefaults = { seed: 'TRISOLARIS', music: false, volume: 0.35, trailsLength: 400, orbitalInitialization: 'chaotic', physicsMode: 'reference', pixelRatio: 4, bodyLabels: false, presentationRevision: 6, layout: {}, viewSensitivity: .12, compassOpacity: .12, planetStrength: 1.6, idleAmplitude: 6, civilizationMode: 'balanced', thermalGrace: 30, wakeDelay: 1, epochWindow: 1/12, epochTimebase: 'years', climateInertia: 1.5, stellarBreathing: true, renderQuality: 'native', dragSensitivity: 5, birthDelay: .5, civilizationLevels: true, developmentRate: 1 };
++export const extraDefaults = { seed: 'TRISOLARIS', music: false, volume: 0.35, trailsLength: 400, orbitalInitialization: 'research', physicsMode: 'reference', pixelRatio: 4, bodyLabels: false, presentationRevision: 6, layout: {}, viewSensitivity: .12, compassOpacity: .12, planetStrength: 1.6, idleAmplitude: 6, civilizationMode: 'balanced', thermalGrace: 30, wakeDelay: 1, epochWindow: 1/12, epochTimebase: 'years', climateInertia: 1.5, stellarBreathing: true, renderQuality: 'native', dragSensitivity: 5, birthDelay: .5, civilizationLevels: true, developmentRate: 1, gravityModel: 'newtonian', encounterAccuracy: .0075, physicsRevision: 1, manualInitialBodies: null };
+ // New installs show the requested tails; explicitly saved off/on preferences still win.
+ defaults.newproperty14 = true;
++defaults.newproperty60 = false;
+ defaults.brfontcoloraaaaaarandomposrange = 3.2;
+ defaults.rc = 1.6;
+ defaults.k2 = .3;
+@@ -48,7 +49,11 @@ export function normalizeSettings(source = {}, includeExtras = true) {
+     else if(key==='developmentRate'&&Number.isFinite(+value))out.developmentRate=Math.max(.1,Math.min(20,+value));
+     else if(key==='civilizationLevels')out.civilizationLevels=value===true;
+     else if(key==='compassOpacity'&&Number.isFinite(+value))out.compassOpacity=Math.max(0,Math.min(.5,+value));
+-    else if(key==='orbitalInitialization'&&['chaotic','balanced','original'].includes(value))out.orbitalInitialization=value;
++    else if(key==='orbitalInitialization'&&['research','chaotic','balanced','original'].includes(value))out.orbitalInitialization=value;
++    else if(key==='gravityModel'&&['newtonian','plummer','legacy'].includes(value))out.gravityModel=value;
++    else if(key==='encounterAccuracy'&&Number.isFinite(+value))out.encounterAccuracy=Math.max(.001,Math.min(.03,+value));
++    else if(key==='manualInitialBodies'&&value===null)out.manualInitialBodies=null;
++    else if(key==='manualInitialBodies'&&Array.isArray(value)&&value.length===4&&value.every(b=>['x','y','z','vx','vy','vz','mass'].every(k=>Number.isFinite(b[k])&&Math.abs(b[k])<=1e8)&&b.mass>=0))out.manualInitialBodies=value.map(b=>Object.fromEntries(['x','y','z','vx','vy','vz','mass'].map(k=>[k,b[k]])));
+     else if (key === 'physicsMode' && ['reference', 'realtime'].includes(value)) out.physicsMode = value;
+     else if (key === 'pixelRatio' && Number.isFinite(+value)) out.pixelRatio = Math.min(4, Math.max(0.5, +value));
+     else if (key === 'bodyLabels') out.bodyLabels = value === true;
+@@ -71,7 +76,7 @@ export function colorRGB(s = '1 1 1') { return s.split(/\s+/).map(Number); }
+ export function colorHex(s) { return '#' + colorRGB(s).map(x => Math.round(x * 255).toString(16).padStart(2, '0')).join(''); }
+ export function fromHex(s) { return [1, 3, 5].map(i => parseInt(s.slice(i, i + 2), 16) / 255).join(' '); }
+ export function plainText(s = '') { return s.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' '); }
+-export function algorithmId(s) { return `sykm-scene-v4-${s.physicsMode}60-civ-${s.civilizationMode}-v051-${s.orbitalInitialization}-orbits`; }
++export function algorithmId(s) { return `sykm-scene-v4-${s.physicsMode}60-civ-${s.civilizationMode}-v052-${s.gravityModel}-${s.orbitalInitialization}-eta${s.encounterAccuracy}-orbits`; }
+ export function migrateSettings(saved={},version=3){
+   // v0.5.1: one simulated month replaces the former default two-second window.
+   if(saved.epochTimebase!=='years')saved={...saved,epochWindow:saved.epochWindow===undefined||Math.abs(saved.epochWindow-2)<1e-9?1/12:saved.epochWindow};
+@@ -87,6 +92,7 @@ export function migrateSettings(saved={},version=3){
+   }
+   // One-time presentation migration for v0.3 installations with labels enabled.
+   if(saved.presentationRevision!==extraDefaults.presentationRevision)saved={...saved,bodyLabels:saved.presentationRevision>=1?saved.bodyLabels:false,newproperty39:true};
++  if(!saved.physicsRevision)saved={...saved,orbitalInitialization:!saved.orbitalInitialization||saved.orbitalInitialization==='chaotic'?'research':saved.orbitalInitialization,newproperty60:false,gravityModel:'newtonian'};
+   if(version<3)return normalizeSettings({...saved,newproperty45:-20,newproperty46:40,newproperty51:Math.abs(saved.newproperty51??3)>=2 ? .01 : (saved.newproperty51??.01),newproperty3:0,newproperty68:0});
+   return normalizeSettings(saved);
+ }
+@@ -98,7 +104,7 @@ export function seededRandom(seed) {
+ 
+ export function settingsFromInitial(settings, bodies) {
+   if (!Array.isArray(bodies) || bodies.length !== 4 || bodies.some(b => !['x','y','z','vx','vy','vz','mass'].every(k => Number.isFinite(b?.[k])))) throw new Error('初始四体参数无效');
+-  const result = { ...settings, newproperty50: true };
++  const result = { ...settings, newproperty50: true, manualInitialBodies: bodies };
+   const keys = [['x11','y11','z1','v1','vy1','vz1'],['x21','y21','z2','vx2','vy2','vz2'],['x3','y3','z3','vx3','vy3','vz3'],['x4','y4','z4','vx4','vy4','vz4']];
+   bodies.forEach((b,i) => {
+     ['x','y','z','vx','vy','vz'].forEach((axis,j) => result[keys[i][j]] = b[axis]);
+@@ -106,3 +112,5 @@ export function settingsFromInitial(settings, bodies) {
+   });
+   return normalizeSettings(result);
+ }
++
++export const manualInitialKeys=['x11','y11','z1','v1','vy1','vz1','x21','y21','z2','vx2','vy2','vz2','x3','y3','z3','vx3','vy3','vz3','x4','y4','z4','vx4','vy4','vz4','_110','_26','_34','newproperty8'];
+diff --git a/src/simulation.js b/src/simulation.js
+index 7d66b94..59a0df2 100644
+--- a/src/simulation.js
++++ b/src/simulation.js
+@@ -5,7 +5,7 @@ import eraFactory from './legacy/072.js';
+ import temperatureFactory from './legacy/079.js';
+ import loadingFactory from './legacy/156.js';
+ import { moduleBindings } from './original-data.js';
+-import { normalizeSettings, seededRandom, algorithmId } from './settings.js';
++import { normalizeSettings, seededRandom, algorithmId,manualInitialKeys } from './settings.js';
+ import { prepareOrbits } from './orbital-initialization.js';
+ import { Habitability } from './habitability.js';
+ import { RunStatistics } from './run-statistics.js';
+@@ -47,14 +47,15 @@ export class Simulation {
+     builder.values = {};
+     builder.finish = function() { return Object.assign(this.values, overrides); };
+     const math = Object.create(Math); math.random = () => self.random();
+-    return factory({ shared: this.shared, engine: this.engine, input: this.input, thisScene: { createLayer: data => data }, Vec3, Math: math, createScriptProperties: () => builder, getHabitability: () => null, prepareInitialBodies: (bodies,G,p) => prepareOrbits(bodies,G,p,self.settings,()=>self.random()), onInitialize: bodies => { self.initialBodies = plain(bodies); self.habitability.reset(); self.world.reset(); self.civilization?.reset(); self.terminalSince=null;self.restartSince=null; } });
++    return factory({ shared: this.shared, engine: this.engine, input: this.input, thisScene: { createLayer: data => data }, Vec3, Math: math, createScriptProperties: () => builder, getHabitability: () => null, getPhysicsSettings:()=>self.settings, prepareManualBodies:bodies=>{self.initializationMetadata=null;if(self.settings.manualInitialBodies)for(let i=0;i<4;i++)Object.assign(bodies[i],self.settings.manualInitialBodies[i]);}, prepareInitialBodies: (bodies,G,p) => {const result=prepareOrbits(bodies,G,p,self.settings,()=>self.random());self.initializationMetadata=result?.metadata??null;return result;}, onInitialize: bodies => { self.initialBodies = plain(bodies); self.habitability.reset(); self.world.reset(); self.civilization?.reset(); self.terminalSince=null;self.restartSince=null;self.observedContacts=new Set(); } });
+   }
+   configure(patch) {
+     const next = normalizeSettings({ ...this.settings, ...patch });
+-    const changed = Object.keys(next).filter(k => next[k] !== this.settings[k]);
++    if(next.manualInitialBodies&&manualInitialKeys.some(k=>next[k]!==this.settings[k])&&!('manualInitialBodies' in patch))next.manualInitialBodies=null;
++    const changed = Object.keys(next).filter(k => k==='manualInitialBodies'?JSON.stringify(next[k])!==JSON.stringify(this.settings[k]):next[k]!==this.settings[k]);
+     this.settings = next;
+     if (changed.includes('civilizationMode')) { this.habitability.reset(); this.civilization.reset(); this.shared.suitablePeriodCount = 0; }
+-    const resetKeys = new Set(['seed', 'physicsMode', 'newproperty53', 'orbitalInitialization']);
++    const resetKeys = new Set(['seed', 'physicsMode', 'newproperty53', 'orbitalInitialization','gravityModel','encounterAccuracy','manualInitialBodies']);
+     const mapped = {};
+     for (const [id, module] of Object.entries(this.modules)) {
+       const changes = {};
+@@ -67,6 +68,7 @@ export class Simulation {
+     this.modules['008'].scriptProperties.trailen = false;
+     for (const key of ['trailen', 'trailLength', 'trailStartSize', 'trailEndSize', 'color1', 'color2', 'color3', 'color4']) delete mapped[key];
+     if (changed.some(k => resetKeys.has(k))) {
++      if(changed.includes('seed'))this.setRandom();
+       this.modules['008'] = this.createModule('008', physicsFactory); this.modules['008'].init(); this.revision++;
+       if (changed.includes('seed')) this.setRandom();
+     } else { this.modules['008'].applyUserProperties(mapped); if (Object.keys(mapped).length) this.revision++; }
+@@ -89,8 +91,8 @@ export class Simulation {
+   tick() {
+     if(this.pendingRestart)this.restart(this.pendingRestart);
+     this.engine.runtime = ++this.tickCount / 60;
+-    this.modules['008'].update(true);
+-    if (this.settings.physicsMode === 'realtime') {
++    try{this.modules['008'].update(true);}catch(error){this.emit('physics:numerical-error',{code:error.code||'physics-error',message:error.message});throw error;}
++    if (this.settings.physicsMode === 'realtime'&&this.settings.gravityModel==='legacy') {
+       // Optional corrected wall-clock mode; reference mode preserves the original 60 Hz / 10-step behavior.
+       const p = this.modules['008']; const remaining = Math.max(0, 1 / 60 - p.state().step * 10);
+       const steps = Math.ceil(remaining / p.state().step);
+@@ -107,6 +109,12 @@ export class Simulation {
+     this.modules['079'].update('');
+     const equilibrium=Number(this.shared.tem);
+     const wasDamaged=this.world.state?.planet.damaged;
++    for(const contact of state.contacts??[]){
++      const key=contact.pair.join(':');if(!this.observedContacts)this.observedContacts=new Set();if(this.observedContacts.has(key))continue;this.observedContacts.add(key);
++      this.emit('physics:contact',plain(contact));
++      if(contact.pair.includes(3)&&!this.world.terminal){const star=contact.pair.find(i=>i!==3);this.world.terminal={kind:'engulfed',zh:`行星被恒星${star+1}吞噬`,en:`Planet engulfed by star ${star+1}`};}
++      else if(!contact.pair.includes(3))this.emit('system:stellar-contact',{...plain(contact),modelValid:false});
++    }
+     const world=this.world.update(state.bodies,state.G,equilibrium,this.settings,this.engine.runtime,1/60,Math.max(0,this.shared.xntime-previousYear));
+     const legacy=this.settings.civilizationMode==='legacy';
+     if(!legacy)this.shared.tem=world.planet.temperature;
+@@ -152,7 +160,7 @@ export class Simulation {
+       habitability: plain(this.habitability.result),statistics:plain(this.statistics.snapshot()),statisticsCheckpoint:plain(this.statistics.checkpoint()),
+       world: plain(this.world.state),civilizationState:plain(this.civilization.result),logItems:this.settings.civilizationMode==='legacy'?[]:plain(this.civilization.logs),
+       lifespan: s.civilizationAlive ? Math.floor(s.xntime) - s.civilizationStartTime : s.lastCivilizationLifespan,
+-      initialBodies: plain(this.initialBodies),
++      physics:plain(p.diagnostics),initialization:plain(this.initializationMetadata),initialBodies: plain(this.initialBodies),
+       log: [...(s.logEntries || [])], records: plain(compact ? [...(s.civilizationRecords || [])].sort((a,b) => b.lifespan-a.lifespan).slice(0,6) : s.civilizationRecords || []), events: plain(this.events.filter(e => e.id > afterEvent)),
+       distances: [s.d14, s.d24, s.d34], text: Array.from({ length: 14 }, (_, i) => s[`txt${i + 1}`] || ''), loading: s.num || 0 };
+   }
+diff --git a/tests/simulation.test.js b/tests/simulation.test.js
+index 1ff1f65..8208de8 100644
+--- a/tests/simulation.test.js
++++ b/tests/simulation.test.js
+@@ -10,7 +10,7 @@ function finite(s) { assert.ok(s.bodies.every(b => ['x','y','z','vx','vy','vz','
+ 
+ test('ported trajectories match independently executed original SceneScript reference', () => {
+   const fixture = JSON.parse(readFileSync(new URL('./fixtures/original-reference.json', import.meta.url), 'utf8'));
+-  const state = run(new Simulation(fixture.settings), fixture.ticks);
++  const state = run(new Simulation({...fixture.settings,gravityModel:'legacy'}), fixture.ticks);
+   // Independent fixtures may differ in the last bits across V8 versions.
+   for (let i = 0; i < 4; i++) for (const key of ['x','y','z','vx','vy','vz','mass']) assert.ok(Math.abs(state.bodies[i][key]-fixture.bodies[i][key])<=1e-12*Math.max(1,Math.abs(fixture.bodies[i][key])), `body ${i} ${key}`);
+ });
+@@ -19,7 +19,7 @@ test('183 original controls retain definitions, with the requested trails enable
+   const controls = Object.entries(propertySchema).filter(([, p]) => p.type && p.type !== 'group');
+   assert.equal(controls.length, 183);
+   const config = normalizeSettings();
+-  for (const [key, def] of controls) assert.deepEqual(config[key], ({newproperty14:true,brfontcoloraaaaaarandomposrange:3.2,rc:1.6,k2:.3,newproperty67:4,newproperty39:true,newproperty45:-20,newproperty46:40,newproperty51:.01,newproperty61:1,newproperty3:0,newproperty68:0})[key] ?? def.value, key);
++  for (const [key, def] of controls) assert.deepEqual(config[key], ({newproperty60:false,newproperty14:true,brfontcoloraaaaaarandomposrange:3.2,rc:1.6,k2:.3,newproperty67:4,newproperty39:true,newproperty45:-20,newproperty46:40,newproperty51:.01,newproperty61:1,newproperty3:0,newproperty68:0})[key] ?? def.value, key);
+   const sim = new Simulation();
+   assert.equal(sim.modules['008'].scriptProperties.fourthMass, 5000);
+   assert.equal(sim.modules['008'].scriptProperties.constraint_M, 15000000);
+@@ -105,10 +105,9 @@ test('manual restart records one death and does not secretly reinitialize 120 ti
+   const event=s.events.find(e=>e.type==='civilization:death');assert.ok(event);assert.equal(event.detail.initialBodies.length,4);
+ });
+ 
+-test('zero masses, coincident initial bodies and zero softening remain finite', () => {
++test('zero masses and unsoftened noncoincident initial bodies remain finite', () => {
+   for(const config of [
+     {_110:0,_26:0,_34:0,newproperty8:0},
+-    {newproperty50:true,x11:0,y11:0,x21:0,y21:0,x3:0,y3:0,x4:0,y4:0},
+     {newproperty28:0,newproperty60:false}
+   ]) finite(run(new Simulation(config),300));
+ });
+diff --git a/tests/v041-hotfix.test.js b/tests/v041-hotfix.test.js
+index a5f9bd3..e0a5217 100644
+--- a/tests/v041-hotfix.test.js
++++ b/tests/v041-hotfix.test.js
+@@ -6,18 +6,18 @@ import {measure} from '../tools/orbital-audit.mjs';
+ import {prepareBalancedOrbits} from '../src/orbital-initialization.js';
+ 
+ test('existing v0.4.1 profiles regain hover follow and slow galaxy return without losing layout',()=>{
+- const s=migrateSettings({presentationRevision:3,newproperty61:0,newproperty51:.08,layout:{right:{x:70,y:30}},seed:'KEEP',planetStrength:2});assert.equal(s.newproperty61,1);assert.equal(s.newproperty51,.01);assert.equal(s.orbitalInitialization,'chaotic');assert.deepEqual(s.layout.right,{x:70,y:30});assert.equal(s.seed,'KEEP');assert.equal(s.planetStrength,2);
++ const s=migrateSettings({presentationRevision:3,newproperty61:0,newproperty51:.08,layout:{right:{x:70,y:30}},seed:'KEEP',planetStrength:2});assert.equal(s.newproperty61,1);assert.equal(s.newproperty51,.01);assert.equal(s.orbitalInitialization,'research');assert.deepEqual(s.layout.right,{x:70,y:30});assert.equal(s.seed,'KEEP');assert.equal(s.planetStrength,2);
+  const explicit=migrateSettings({...s,presentationRevision:4,newproperty61:0,newproperty51:.001,orbitalInitialization:'original'});assert.equal(explicit.newproperty61,0);assert.equal(explicit.newproperty51,.001);assert.equal(explicit.orbitalInitialization,'original');
+ });
+-test('default random systems permit sustained development and planetary passages inside the star system',()=>{
+- for(const seed of ['TRISOLARIS','A','B','C','D']){const r=measure(seed,'balanced',6000,{brfontcoloraaaaaarandomposrange:2,rc:.2,k2:.5,newproperty67:2.1});assert.ok(r.stableFraction>.4,JSON.stringify(r));assert.ok(r.maxContinuousDevelopmentYears>3,JSON.stringify(r));assert.ok(r.insideStellarExtentFraction>.2,JSON.stringify(r));assert.ok(r.maxPlanetRadius<2);assert.equal(r.terminalAtSeconds,null);}
++test('historical v0.4.1 balanced cage profile permits sustained development and planetary passages inside the star system',()=>{
++ for(const seed of ['TRISOLARIS','A','B','C','D']){const r=measure(seed,'balanced',6000,{gravityModel:'legacy',newproperty60:true,brfontcoloraaaaaarandomposrange:2,rc:.2,k2:.5,newproperty67:2.1});assert.ok(r.stableFraction>.4,JSON.stringify(r));assert.ok(r.maxContinuousDevelopmentYears>3,JSON.stringify(r));assert.ok(r.insideStellarExtentFraction>.2,JSON.stringify(r));assert.ok(r.maxPlanetRadius<2);assert.equal(r.terminalAtSeconds,null);}
+ });
+ test('bound random initial conditions replay exactly through the manual initial-condition pathway',()=>{
+  const a=new Simulation({seed:'HOTFIX-REPLAY'});for(let i=0;i<120;i++)a.tick();const b=new Simulation(settingsFromInitial(a.settings,a.initialBodies));for(let i=0;i<120;i++)b.tick();assert.deepEqual(a.snapshot().bodies,b.snapshot().bodies);
+ });
+ test('initialization retains zero center-of-mass momentum and the original mode is reproducible',()=>{
+  const a=new Simulation({seed:'MOMENTUM'});a.tick();for(const key of ['vx','vy','vz'])assert.ok(Math.abs(a.initialBodies.reduce((n,b)=>n+b[key]*b.mass,0))<1e-7);
+- const original=new Simulation({orbitalInitialization:'original'});original.tick();assert.notDeepEqual(a.initialBodies,original.initialBodies);assert.equal(normalizeSettings({orbitalInitialization:'invalid'}).orbitalInitialization,'chaotic');
++ const original=new Simulation({orbitalInitialization:'original'});original.tick();assert.notDeepEqual(a.initialBodies,original.initialBodies);assert.equal(normalizeSettings({orbitalInitialization:'invalid'}).orbitalInitialization,'research');
+ });
+ test('nonphysical gravity or zero masses leave the supplied original initialization intact',()=>{
+  const bodies=Array.from({length:4},(_,i)=>({x:i,y:0,z:0,vx:0,vy:0,vz:0,mass:i===0?0:1})),copy=structuredClone(bodies);assert.equal(prepareBalancedOrbits(bodies,1,{},normalizeSettings(),()=>.5),false);assert.deepEqual(bodies,copy);
+diff --git a/tests/v042.test.js b/tests/v042.test.js
+index 1bb363b..3b3ed19 100644
+--- a/tests/v042.test.js
++++ b/tests/v042.test.js
+@@ -6,14 +6,14 @@ import {fadeMotion} from '../src/motion-visuals.js';
+ import {sensitiveDependence} from '../tools/v042-orbital-audit.mjs';
+ 
+ test('v0.4.2 migrates the regular orbit default to a larger chaotic system and preserves UI preferences',()=>{
+- const s=migrateSettings({presentationRevision:4,orbitalInitialization:'balanced',brfontcoloraaaaaarandomposrange:2,rc:.2,k2:.5,newproperty67:2.1,layout:{left:{x:4,y:30}},music:true});assert.equal(s.orbitalInitialization,'chaotic');assert.equal(s.brfontcoloraaaaaarandomposrange,3.2);assert.equal(s.rc,1.6);assert.equal(s.k2,.3);assert.deepEqual(s.layout.left,{x:4,y:30});assert.equal(s.music,true);
++ const s=migrateSettings({presentationRevision:4,orbitalInitialization:'balanced',brfontcoloraaaaaarandomposrange:2,rc:.2,k2:.5,newproperty67:2.1,layout:{left:{x:4,y:30}},music:true});assert.equal(s.orbitalInitialization,'research');assert.equal(s.brfontcoloraaaaaarandomposrange,3.2);assert.equal(s.rc,1.6);assert.equal(s.k2,.3);assert.deepEqual(s.layout.left,{x:4,y:30});assert.equal(s.music,true);
+  const custom=migrateSettings({...s,presentationRevision:5,orbitalInitialization:'balanced',viewSensitivity:.04,compassOpacity:.08});assert.equal(custom.orbitalInitialization,'balanced');assert.equal(custom.viewSensitivity,.04);assert.equal(custom.compassOpacity,.08);
+ });
+ test('chaotic initial positions are irregular in 3D and exactly replayable',()=>{
+- const s=new Simulation({seed:'V042-REPLAY'});for(let i=0;i<120;i++)s.tick();const b=s.initialBodies;assert.ok(b.every(b=>[b.x,b.y,b.z].every(v=>Math.abs(v)<=2)));const edges=[[0,1],[1,2],[0,2]].map(([i,j])=>Math.hypot(b[i].x-b[j].x,b[i].y-b[j].y,b[i].z-b[j].z));assert.ok(Math.max(...edges)/Math.min(...edges)>1.1);
++ const s=new Simulation({seed:'V042-REPLAY',orbitalInitialization:'chaotic',gravityModel:'legacy'});for(let i=0;i<120;i++)s.tick();const b=s.initialBodies;assert.ok(b.every(b=>[b.x,b.y,b.z].every(v=>Math.abs(v)<=2)));const edges=[[0,1],[1,2],[0,2]].map(([i,j])=>Math.hypot(b[i].x-b[j].x,b[i].y-b[j].y,b[i].z-b[j].z));assert.ok(Math.max(...edges)/Math.min(...edges)>1.1);
+  const replay=new Simulation(settingsFromInitial(s.settings,b));for(let i=0;i<120;i++)replay.tick();assert.deepEqual(replay.snapshot().bodies,s.snapshot().bodies);
+ });
+-test('chaotic trajectories show strong finite-time dependence on a tiny velocity change',()=>{const result=sensitiveDependence();assert.ok(result.maxStellarRmsSeparation>.01);assert.equal(result.initialVelocityPerturbation,1e-7);});
++test('chaotic trajectories show strong finite-time dependence on a tiny velocity change',()=>{const result=sensitiveDependence(12000,{orbitalInitialization:'chaotic',gravityModel:'legacy',newproperty60:true});assert.ok(result.maxStellarRmsSeparation>.01);assert.equal(result.initialVelocityPerturbation,1e-7);});
+ test('ring fade eases both directions and remains independent of frame rate',()=>{
+  let a=0,b=0;for(let i=0;i<30;i++)a=fadeMotion(a,true,1/30);for(let i=0;i<120;i++)b=fadeMotion(b,true,1/120);assert.ok(a>.78&&a<.8);assert.ok(Math.abs(a-b)<1e-12);const before=a;a=fadeMotion(a,false,.1);assert.ok(a>0&&a<before);assert.ok(a<before*.6);assert.equal(fadeMotion(a,false,0),a);
+ });
+diff --git a/tests/v052-physics.test.js b/tests/v052-physics.test.js
+new file mode 100644
+index 0000000..2e9e614
+--- /dev/null
++++ b/tests/v052-physics.test.js
+@@ -0,0 +1,83 @@
++import test from 'node:test';
++import {replaySettings} from '../src/seed-compatibility.js';
++import assert from 'node:assert/strict';
++import {GravityIntegrator,invariants,pairPotential,PhysicsError} from '../src/physics/gravity.js';
++import {Simulation} from '../src/simulation.js';
++import {normalizeSettings,settingsFromInitial,migrateSettings} from '../src/settings.js';
++import {initial as researchInitial,planetOrbit,angular,G,runTrial as referenceTrial} from '../tools/v052/research-reference.mjs';
++import {runTrial} from '../tools/v052/benchmark-engine.mjs';
++const body=(x,mass=1,vx=0,vy=0)=>({x,y:0,z:0,vx,vy,vz:0,mass});
++const binary=()=>[body(-.5,1,0,-Math.sqrt(.5)),body(.5,1,0,Math.sqrt(.5)),body(8,0),body(-8,0)];
++const norm=v=>Math.hypot(...v),fields=['x','y','z','vx','vy','vz'];
++
++test('Newton pair force has no former .1/.28 amplification or discontinuity and conserves momentum',()=>{
++ for(const r of [.099999,.1,.100001,.279999,.28,.280001,.5]){
++  const b=[body(0,2),body(r,3),body(8,0),body(-8,0)],p=new GravityIntegrator(b,1);p.kick(1e-6);
++  assert.ok(Math.abs(b[0].vx/(3e-6/r**2)-1)<1e-14);
++  assert.ok(Math.abs(2*b[0].vx+3*b[1].vx)<1e-18);
++ }
++});
++test('Plummer acceleration is continuous and is the gradient of its stated potential',()=>{
++ for(const r of [0,.05,.099999,.1,.100001,.279999,.28,.280001,.5]){
++  const b=[body(0),body(r),body(8,0),body(-8,0)],p=new GravityIntegrator(b,1,{model:'plummer',softening:.1});p.kick(1);
++  const derivative=(pairPotential(r+1e-7,p)-pairPotential(r-1e-7,p))/2e-7;
++  assert.ok(Math.abs(b[0].vx-derivative)<1e-6);
++ }
++});
++test('softened coincident bodies remain finite without a singular artificial radius',()=>{const p=new GravityIntegrator([body(0),body(0),body(8,0),body(-8,0)],1,{model:'plummer',softening:.1});p.advance(.01);assert.ok(Number.isFinite(p.diagnostics().energy));});
++test('Yoshida conserves energy/L/P, and decreasing fixed step shows fourth order convergence',()=>{
++ const errors=[],stateErrors=[];
++ for(const h of [.04,.02,.01]){
++  const p=new GravityIntegrator(binary(),1);p.advance(1,{maxStep:h,adaptive:false});const d=p.diagnostics();errors.push(d.relativeEnergyError);stateErrors.push(Math.abs(p.bodies[0].x+.5*Math.cos(Math.sqrt(2))));
++  assert.ok(d.relativeAngularMomentumError<2e-14);assert.ok(d.normalizedMomentumDrift<2e-14);
++ }
++ assert.ok(stateErrors[0]/stateErrors[1]>14&&stateErrors[1]/stateErrors[2]>14,JSON.stringify(stateErrors));
++ assert.ok(errors[2]<1e-12);
++ const p=new GravityIntegrator(binary(),1);p.advance(10);assert.ok(p.diagnostics().maxRelativeEnergyError<1e-10);
++});
++test('adaptive substeps resolve close approaches without changing elapsed physical time',()=>{
++ const b=binary();b[0].x=-.01;b[1].x=.01;
++ const p=new GravityIntegrator(b,1);const n=p.advance(.002,{maxStep:.00075});assert.ok(n>3);assert.ok(Math.abs(p.time-.002)<1e-15);
++ assert.ok(p.diagnostics().relativeEnergyError<1e-6);
++});
++test('contact detection uses accepted segments; singularity/resource failures are explicit, never velocity corrections',()=>{
++ const b=[body(-.1,1,1),body(.1,1,-1),body(8,0),body(-8,0)],p=new GravityIntegrator(b,0,{radii:[.05,.05,0,0]});p.advance(.08,{maxStep:.08,adaptive:false});assert.equal(p.contacts.length,1);assert.equal(p.diagnostics().physicalModelValid,false);
++ const coincident=[body(0),body(0),body(8,0),body(-8,0)],copy=structuredClone(coincident),bad=new GravityIntegrator(coincident,1);
++ assert.throws(()=>bad.advance(.1),PhysicsError);assert.deepEqual(coincident,copy);assert.ok(bad.numericalError);
++ const small=new GravityIntegrator(binary(),1);assert.throws(()=>small.advance(.1,{maxSteps:1}),/预算/);assert.ok(small.time<.1);assert.equal(small.numericalError.code,'step-budget');
++});
++test('cage remains available, but diagnostics label its nonisolated energy budget',()=>{
++ const p=new GravityIntegrator(binary(),1,{cageAcceleration:b=>({x:-b.x,y:-b.y,z:-b.z})});p.advance(.01);assert.equal(p.diagnostics().conservationApplicable,false);
++ const s=new Simulation({newproperty60:true});s.tick();assert.equal(s.snapshot().physics.cageActive,true);s.configure({newproperty60:false});s.tick();assert.equal(s.snapshot().physics.cageActive,false);
++});
++test('default research initialization matches validated candidate for predetermined seeds, with recoil, Q≈1 and retrograde circular orbit',()=>{
++ for(let i=0;i<16;i++){
++  const seed=`V052-INITIAL-${i}`,s=new Simulation({seed,autorestart:false});s.tick();
++  const expected=researchInitial(seed,{mode:'chaotic',Q:1,planet:'bound',inPlane:true,radiusFraction:.12,direction:-1}).bodies;
++  for(let j=0;j<4;j++)for(const k of [...fields,'mass'])assert.ok(Math.abs(s.initialBodies[j][k]-expected[j][k])<1e-13,`${seed}:${j}:${k}`);
++  const d=invariants(s.initialBodies,G),orbit=planetOrbit(s.initialBodies),stars=s.initialBodies.slice(0,3),L=angular(stars),p=s.initialBodies[3],h=stars[2],r=[p.x-h.x,p.y-h.y,p.z-h.z],v=[p.vx-h.vx,p.vy-h.vy,p.vz-h.vz],cross=[r[1]*v[2]-r[2]*v[1],r[2]*v[0]-r[0]*v[2],r[0]*v[1]-r[1]*v[0]];
++  assert.ok(norm(d.momentum)<1e-7);assert.ok(norm(d.center)<1e-14);const beforeRecoil=structuredClone(stars);['vx','vy','vz'].forEach((k,j)=>beforeRecoil[2][k]+=p.mass/(h.mass+p.mass)*v[j]);assert.ok(Math.abs(invariants([...beforeRecoil,body(8,0)],G).virialRatio-1)<1e-13);assert.ok(orbit.eccentricity<1e-7);assert.ok(cross.reduce((n,x,j)=>n+x*L[j],0)<0);
++  const D=Math.min(...stars.slice(0,2).map(b=>Math.hypot(b.x-h.x,b.y-h.y,b.z-h.z)));assert.ok(Math.abs(orbit.radius/D-.12)<1e-14);
++ }
++});
++test('exact manual initial states beyond legacy slider ranges survive UI changes and are never auto-regenerated',()=>{
++ const source=new Simulation({seed:'MANUAL-V052'});source.tick();const initial=structuredClone(source.initialBodies);initial[0].x=4.5;initial[0].vx=3;
++ const settings=settingsFromInitial(source.settings,initial),s=new Simulation(settings);s.tick();assert.deepEqual(s.initialBodies,initial);
++ const control=new Simulation(settings);control.tick();s.configure({viewSensitivity:.04,dust:false});s.tick();control.tick();assert.deepEqual(s.snapshot().bodies,control.snapshot().bodies);
++ assert.equal(s.configure({x11:.25}).includes('manualInitialBodies'),true);s.tick();assert.equal(s.initialBodies[0].x,.25);
++});
++test('new defaults migrate even oldest profiles while explicit compatibility choices remain available',()=>{
++ const s=migrateSettings({seed:'OLD'},2);assert.equal(s.orbitalInitialization,'research');assert.equal(s.gravityModel,'newtonian');assert.equal(s.newproperty60,false);assert.equal(s.epochWindow,1/12);
++ const keep=migrateSettings({...normalizeSettings(),orbitalInitialization:'chaotic',gravityModel:'legacy',newproperty60:true});assert.equal(keep.gravityModel,'legacy');assert.equal(keep.orbitalInitialization,'chaotic');assert.equal(keep.newproperty60,true);
++ const bad=new Simulation({newproperty50:true,x11:0,y11:0,z1:0,x21:0,y21:0,z2:0});assert.throws(()=>bad.tick(),PhysicsError);assert.equal(bad.events.at(-1).type,'physics:numerical-error');
++});
++test('production benchmark preserves research first-loss, era denominator and three-arm reference parity',()=>{
++ for(const cfg of [{id:'legacy',force:'legacy',dt:.00075},{id:'newton',force:'newton',adaptive:true,eta:.0075}]){
++  const a=runTrial('V052-METRIC-0',cfg,10),b=referenceTrial('V052-METRIC-0',{...cfg,mode:'chaotic'},10);
++  assert.equal(a.lossAt,b.lossAt);assert.equal(a.stableFraction,b.stableFraction);assert.equal(a.survived,b.survived);assert.equal(a.jointSurvived,b.jointSurvived);
++ }
++});
++
++test('explicit old Seed/archive imports retain the old force and cage, while new exports retain new physics',()=>{const old=replaySettings({orbitalInitialization:'chaotic',newproperty60:true,seed:'OLD'});assert.equal(old.gravityModel,'legacy');assert.equal(old.newproperty60,true);assert.equal(old.orbitalInitialization,'chaotic');const fresh=replaySettings(normalizeSettings());assert.equal(fresh.gravityModel,'newtonian');assert.equal(fresh.newproperty60,false);});
++
++test('tiny final remainders do not falsely signal an unresolved close encounter',()=>{const p=new GravityIntegrator(binary(),1);p.advance(1.000000000005,{maxStep:.1,adaptive:false});assert.ok(Math.abs(p.time-1.000000000005)<1e-14);});
+diff --git a/tools/generate-settings-guide.mjs b/tools/generate-settings-guide.mjs
+index d0491b1..7d7a600 100644
+--- a/tools/generate-settings-guide.mjs
++++ b/tools/generate-settings-guide.mjs
+@@ -7,8 +7,10 @@ const root=new URL('../',import.meta.url),allDefaults={...defaults,...extraDefau
+ const descriptions={
+  datacolor:'界面主色与旋转环颜色，影响HUD显示，不改变恒星光度或气候。',
+  seed:'随机初值的文字种子；与宇宙编号共同确定随机序列。重建初值，不是文明随机加分。',
+- orbitalInitialization:'chaotic：不规则三维四体、局部引力尺度初速；original：原版随机速度；balanced：可选稳定实验。默认保持混沌。手动初值开启时不使用这些随机准备步骤。',
+- physicsMode:'reference 每秒60次检测、每帧最多10次原版积分；realtime 额外补足物理子步，轨迹会变化。两者都在 Worker 中运行。',
++ gravityModel:'newtonian（默认）采用无软化平方反比引力。plummer 使用与势能一致的软化；legacy 精确保留旧近距异常，仅作复现。牢笼独立开关，默认关闭。更改模型重置轨道。',
++ encounterAccuracy:'η=0.0075；子步不超过 η×最短引力/穿越时间，也不超过高级物理步长。越小计算越多；不会减慢模拟时钟。数值预算或精度下限触发时暂停并报错，不改变轨道。',
++ orbitalInitialization:'research（默认）：随机三星 Q=1，第三颗恒星为宿主，0.12D 逆向近圆行星，包含反冲；不筛种子。chaotic：不规则三维四体、局部引力尺度初速；original：原版随机速度；balanced：可选稳定实验。兼容对照。手动初值开启时不使用这些随机准备步骤。',
++ physicsMode:'reference 每秒60次检测，每帧推进0.0075求解时间；realtime 每帧推进1/60。新引擎在此预算内自动增加近遇子步，最大步长不会改变时钟。legacy 保留旧的最多10次积分行为。',
+  civilizationMode:'balanced 使用人口、干仓、脱水和文明等级；legacy 使用原版适温计数/即时灾变。切换会重置当前文明状态机；不要用两种模式比较同一榜单的物理真实性。',
+  civilizationLevels:'启用六级文明发展与保护增益；关闭后科技积累暂停，采用Lv.1基础耐受。重新启用保留同一文明此前积累。原版即时判定模式不使用此系统。',
+  developmentRate:'仅放大实际安全生产时的科技积累；不会增加寿命读数或物理速度。默认1表示每个实际发展年积累1科技年。',
+@@ -47,7 +49,7 @@ const descriptions={
+  newproperty71:'相机视场角；越大显示范围越广、天体看起来越小。',distance:'相机z=max(1.4,5.2−0.65×此值)，越大越靠近系统；不改变真实天体距离。',
+  newproperty17:'1预置背景一、2纯色、3自定义全景图、4原生8K银河。初始化朝向银河亮部；预置图片均使用本地资源。',
+  custombg:'选择本机全景图，保存在IndexedDB，自动切换到自定义模式。WE可用文件选择属性；文件不上传。',
+- newproperty50:'开启后直接使用24项位置/速度初值；随机种子与随机轨道准备不再决定初值。手动输入超出属性范围会被钳制。',
++ newproperty50:'开启后直接使用24项位置/速度初值；随机种子与随机轨道准备不再决定初值。手动滑块仍按属性范围钳制；导入完整初始四体数组则保留精确值（每分量绝对值≤1e8），避免新轨道导出后被旧滑块范围截断。编辑任一手动坐标/质量后切回滑块数据。',
+  autorestart:'现代模式只在行星不可逆被吞噬/撕毁后延时4模拟秒重建宇宙；远抛、寒冷、可恢复损伤不会单独重置。关闭后显示手动重启入口。legacy沿用原版逃逸重启。',
+  newproperty60:'开关原版质心引力牢笼；它是额外约束力，并非真实天体。默认仍开。',
+  newproperty13:'原版任一天体超出质心距离D的逃逸阈值；现代模式保留逃逸标志但不因其自动重启完整行星。',
+@@ -63,8 +65,8 @@ const descriptions={
+  k2:'超出rc后的向内约束系数；v0.5默认0.22→0.30。略增强回拉，不绑定某颗恒星；过高可能使回落和近接更激烈。',
+  rc:'外侧回拉开始的质心距离；小于此值有中性区/内侧斥力，不是恒星系统的硬边界。',newproperty66:'开=原版硬牢笼，关=幂函数软牢笼。硬牢笼也施加力，不是反弹墙。',
+  newproperty67:'硬牢笼强约束阈值；只在硬牢笼模式使用。应大于rc，过近会产生陡峭加速度。',expc:'软牢笼回拉随超出距离增长的幂指数；大则远处拉回更陡。',
+- newproperty28:'近距离引力软化尺度，减轻近距离奇异加速度；原版分段函数仍有边界不连续，不能把它当严格守能模型。',newproperty29:'原版软化过渡区的扩展倍数；会改变近接加速与能量误差，不是行星结构强度。',
+- newproperty52:'真实G的倍率×1/1000；默认1000。改变它同时改变恒星/行星相互引力及牢笼作用。',newproperty53:'积分步长，单位毫秒；小通常提高近接精度但增加计算量。原版节奏每60Hz帧最多10子步，减小步长也会减慢实际物理推进。',newproperty7:'原版恒定引力指数2；控件禁用，当前不支持任意引力指数。',
++ newproperty28:'newtonian 模式不使用此值；plummer 模式作为 ε，势能为 −Gm₁m₂/√(r²+ε²)；legacy 使用旧分段函数，仅供兼容对照。',newproperty29:'仅 legacy 旧分段引力使用；newtonian/plummer 不使用。不是行星结构强度。',
++ newproperty52:'真实G的倍率×1/1000；默认1000。改变它同时改变恒星/行星相互引力及牢笼作用。',newproperty53:'最大积分子步，单位毫秒；新引擎近遇会进一步细分，减小不会改变模拟时钟。仅 legacy 保留最多10子步并随步长减慢的旧行为。',newproperty7:'原版恒定引力指数2；控件禁用，当前不支持任意引力指数。',
+  newproperty69:'温度计算使用的距离缩放；越大，等效受照距离越短，温度越高。默认7带有视觉/演化调节性质。',
+  _111lum_sun:'恒星1辐射光度，以太阳光度为1；只影响温度，不影响引力质量。',_211lum_sun:'恒星2辐射光度；增大会提高行星受热。',_311lum_sun:'恒星3辐射光度；与质量和球面颜色独立。',
+  brfontcoloraaaaaarandomposrange:'随机位置立方体边长，默认3.2，每轴±1.6；混沌模式同时按尺度调整显示。增大尺度必须配合牢笼与温度距离设置，不能保证寿命增加。',
+@@ -111,9 +113,9 @@ export function guideControls(){
+ const format=value=>typeof value==='boolean'?(value?'开':'关'):String(value===''?'（空）':value);
+ const cell=v=>String(v).replaceAll('|',' / ').replaceAll('\n',' ');
+ export async function generateSettingsGuide(){
+- const controls=guideControls();let md=`# 三体实时演算 v0.5 完整设置说明\n\n本文对应v0.5.1的恒纪元确认规则（一个模拟月）；其他设置沿用v0.5。本文对应实际界面中的 **${controls.length} 项控件**：183项原版兼容设置、22项扩展设置和10项窗口坐标。控件目录直接由界面共用的 settings-catalog.js 和原版属性表生成，默认值来自 settings.js。\n\n## 1. 先看这张设置结构\n\n\`\`\`text\n右下角齿轮\n├─ 暂停 / 重启宇宙 / 全屏\n├─ 搜索：可以搜中文名称，也可以搜参数键（例如 k2）\n├─ 全部设置\n│  ├─ 布局与窗口：五个窗口位置、显隐、拖动编辑\n│  ├─ 模拟与文明：种子、轨道模式、韧性、等级和气候\n│  ├─ 视角与银河：悬停、拖拽、阻尼、旋转环、闲置回归\n│  ├─ 画面与轨迹：分辨率、尾迹、两层粒子\n│  ├─ 声音：音乐、音量\n│  └─ 原版高级设置：物理、牢笼、温度、手动初值、外观与旧UI参数\n├─ 文明档案：查看终结记录、等级、发展年数、导出和复现初值\n├─ 项目说明：版本、架构、本说明入口\n└─ 导出种子 / 导入种子 / 恢复默认\n\`\`\`\n\n改动通过本机 localStorage 保存；自定义背景和文明档案放在 IndexedDB。不同浏览器/设备不自动同步，没有在线排行榜。刷新会结算上一次运行并新开一个宇宙，当前人口和轨道不支持断点续跑。右侧累计年数和历史排行会保留。\n\n## 2. 最常用的调整\n\n| 想要什么 | 调哪里 | 建议与区别 |\n|---|---|---|\n| 文明更耐久 | 模拟与文明 → 文明耐受时间基准 | 增大 thermalGrace；延缓损耗，不让文明永生。 |\n| 先看到文明诞生 | 文明诞生安全窗口 | 默认0.5秒；和原文明复苏所需1秒分别设置。 |\n| 等级升级快一点 | 文明发展倍率 | 例如2；只放大发展进度，不把休眠计为生产。 |\n| 行星更常回到系统 | 高级 → 天体运动 → k2 | 默认0.30，v0.4.2为0.22；过高会加剧回落和近距离相遇。 |\n| 鼠标整体更慢 | 视角与银河 → 整体视角灵敏度 | 0.12→0.06；悬停和拖动同时减半。 |\n| 只改拖动幅度 | 拖拽灵敏度倍率 | 默认5；改2会保持悬停原样、降低拖动。 |\n| 惯性更快停下 | y轴阻尼 | 减小 y6，越接近1越难停。 |\n| 环更透明 | 旋转环不透明度 | 0.12即12%不透明。0完全隐藏。 |\n| 银河回归更慢 | 回归银河速度 | 默认0.01度/秒；连续2秒无输入才回归。 |\n| 少一点粒子 | 画面与轨迹 → 尘埃1计数 | 只改近景；点大小另由尘埃1大小控制。 |\n| 让画面更清晰 | 原生分辨率/8K与高级后处理 | 胶片颗粒、CRT默认关闭；径向模糊仍可自行调整。 |\n\n## 3. 文明韧性、等级与死亡是怎样算的\n\n环境适宜度反映当前温度和潮汐，不等于文明还剩多少生命。文明没诞生前，人口、干仓质量、韧性和等级显示为“—”，不会被几百年的严寒提前扣光。短暂但连续安全的窗口满足 birthDelay 后才建立新文明，两个储备从100%开始。\n\n文明具有两种归一化储备，百分比不是虚构的精确人口普查：人口储备表示可延续的人口，干仓质量表示脱水生命和保存体系的完好程度。综合韧性=人口储备×干仓质量。安全且处于活动状态时，两者每模拟秒分别恢复1.5和1个百分点，最高100%。脱水储存范围以内不凭时间强制扣寿命；超出干仓耐受范围才持续损失保存质量，同时以较慢速度损失人口。已恢复的旧结构损伤不会继续作为固定伤害源。\n\n保护分母=thermalGrace×等级韧性倍率。休眠气候损耗率=(0.015+超出干仓温度范围的摄氏度/2000)/保护分母；没有越界时为0。人口承受此损耗的15%。尚未脱水的异常气候人口损耗=(0.05+超出活动温区的度数/300)/保护分母。当前有效潮汐应力超过1时另有结构损耗；不是一有“飞星”就杀死文明。任一储备降至1%或以下，文明终结。恒星吞噬、行星完整度归零则立即结束文明；高级文明也没有免疫这些事件。\n\n阶段流程：安全生产 → 不适宜时脱水（1秒）→ 干仓保存 → 连续安全 wakeDelay 秒 → 浸泡（0.5秒）→ 恢复同一文明。浸泡中环境再次不安全，回干仓；编号与等级保留。文明终结后再遇安全窗口才产生新编号，科技从头开始。\n\n| 等级 | 阶段 | 累计发展年数 | 损耗保护倍率 | 活动温区（默认） | 干仓温区（默认） |\n|---|---|---|---|---|---|\n`;
++ const controls=guideControls();let md=`# 三体实时演算 v0.5 完整设置说明\n\n本文更新到v0.5.2；恒纪元确认仍为一个模拟月，文明与视觉设置不变。物理与随机初始化升级，详见 docs/v052/ACCEPTANCE.md。本文对应实际界面中的 **${controls.length} 项控件**：183项原版兼容设置、${controls.length-193}项扩展设置和10项窗口坐标。控件目录直接由界面共用的 settings-catalog.js 和原版属性表生成，默认值来自 settings.js。\n\n## 1. 先看这张设置结构\n\n\`\`\`text\n右下角齿轮\n├─ 暂停 / 重启宇宙 / 全屏\n├─ 搜索：可以搜中文名称，也可以搜参数键（例如 k2）\n├─ 全部设置\n│  ├─ 布局与窗口：五个窗口位置、显隐、拖动编辑\n│  ├─ 模拟与文明：种子、轨道模式、韧性、等级和气候\n│  ├─ 视角与银河：悬停、拖拽、阻尼、旋转环、闲置回归\n│  ├─ 画面与轨迹：分辨率、尾迹、两层粒子\n│  ├─ 声音：音乐、音量\n│  └─ 原版高级设置：物理、牢笼、温度、手动初值、外观与旧UI参数\n├─ 文明档案：查看终结记录、等级、发展年数、导出和复现初值\n├─ 项目说明：版本、架构、本说明入口\n└─ 导出种子 / 导入种子 / 恢复默认\n\`\`\`\n\n改动通过本机 localStorage 保存；自定义背景和文明档案放在 IndexedDB。不同浏览器/设备不自动同步，没有在线排行榜。刷新会结算上一次运行并新开一个宇宙，当前人口和轨道不支持断点续跑。右侧累计年数和历史排行会保留。\n\n## 2. 最常用的调整\n\n| 想要什么 | 调哪里 | 建议与区别 |\n|---|---|---|\n| 文明更耐久 | 模拟与文明 → 文明耐受时间基准 | 增大 thermalGrace；延缓损耗，不让文明永生。 |\n| 先看到文明诞生 | 文明诞生安全窗口 | 默认0.5秒；和原文明复苏所需1秒分别设置。 |\n| 等级升级快一点 | 文明发展倍率 | 例如2；只放大发展进度，不把休眠计为生产。 |\n| 行星更常回到系统 | 高级 → 天体运动 → k2 | 默认关闭牢笼，此参数不生效；手动启用后默认0.30。提高会引入非牛顿约束，不能用于纯牛顿基准。 |\n| 鼠标整体更慢 | 视角与银河 → 整体视角灵敏度 | 0.12→0.06；悬停和拖动同时减半。 |\n| 只改拖动幅度 | 拖拽灵敏度倍率 | 默认5；改2会保持悬停原样、降低拖动。 |\n| 惯性更快停下 | y轴阻尼 | 减小 y6，越接近1越难停。 |\n| 环更透明 | 旋转环不透明度 | 0.12即12%不透明。0完全隐藏。 |\n| 银河回归更慢 | 回归银河速度 | 默认0.01度/秒；连续2秒无输入才回归。 |\n| 少一点粒子 | 画面与轨迹 → 尘埃1计数 | 只改近景；点大小另由尘埃1大小控制。 |\n| 让画面更清晰 | 原生分辨率/8K与高级后处理 | 胶片颗粒、CRT默认关闭；径向模糊仍可自行调整。 |\n\n## 3. 文明韧性、等级与死亡是怎样算的\n\n环境适宜度反映当前温度和潮汐，不等于文明还剩多少生命。文明没诞生前，人口、干仓质量、韧性和等级显示为“—”，不会被几百年的严寒提前扣光。短暂但连续安全的窗口满足 birthDelay 后才建立新文明，两个储备从100%开始。\n\n文明具有两种归一化储备，百分比不是虚构的精确人口普查：人口储备表示可延续的人口，干仓质量表示脱水生命和保存体系的完好程度。综合韧性=人口储备×干仓质量。安全且处于活动状态时，两者每模拟秒分别恢复1.5和1个百分点，最高100%。脱水储存范围以内不凭时间强制扣寿命；超出干仓耐受范围才持续损失保存质量，同时以较慢速度损失人口。已恢复的旧结构损伤不会继续作为固定伤害源。\n\n保护分母=thermalGrace×等级韧性倍率。休眠气候损耗率=(0.015+超出干仓温度范围的摄氏度/2000)/保护分母；没有越界时为0。人口承受此损耗的15%。尚未脱水的异常气候人口损耗=(0.05+超出活动温区的度数/300)/保护分母。当前有效潮汐应力超过1时另有结构损耗；不是一有“飞星”就杀死文明。任一储备降至1%或以下，文明终结。恒星吞噬、行星完整度归零则立即结束文明；高级文明也没有免疫这些事件。\n\n阶段流程：安全生产 → 不适宜时脱水（1秒）→ 干仓保存 → 连续安全 wakeDelay 秒 → 浸泡（0.5秒）→ 恢复同一文明。浸泡中环境再次不安全，回干仓；编号与等级保留。文明终结后再遇安全窗口才产生新编号，科技从头开始。\n\n| 等级 | 阶段 | 累计发展年数 | 损耗保护倍率 | 活动温区（默认） | 干仓温区（默认） |\n|---|---|---|---|---|---|\n`;
+  for(const s of civilizationLevels)md+=`| Lv.${s.level} | ${s.zh} | ${s.years} | ${s.resilience}× | ${defaults.newproperty45-s.climate}～${defaults.newproperty46+s.climate}°C | ${defaults.newproperty43-s.storage}～${defaults.newproperty44+s.storage}°C |\n`;
+- md+=`\n发展年数只在文明确实处于“恢复生产/发展”、温度合适且行星安全时积累，再乘 developmentRate。**文明寿命包含休眠，科技发展年数不包含休眠。** 如果改动基础温区，表中所有等级范围会随之平移/扩展。文明阶段参考原著展示的农业、工业、原子信息及远航发展方向；5/20/60/150/350年阈值与保护倍率都是本版本的设计，并非小说给定数值；没有假装已经实现智子制造或真实星际迁移。\n\n恒/乱纪元独立按轨道束缚与扰动判断。乱纪元可有短暂适温窗口，寒冷恒纪元也不一定适合生产。现代模式中，只要行星尚可恢复，就不因“飞得远”“文明死亡”或“气温极端”自动开新宇宙；结构可恢复与文明能否延续是两个不同问题。\n\n日志只保留最近12个事件、屏幕最多6行：文明启动、毁灭、每50年寿命里程碑、等级晋升，以及确认超过0.5秒的三日连珠/三日凌空/飞星不动，同类天象冷却60模拟秒。常规飞星、脱水切换等不逐条刷屏。\n\n## 4. 每个控件的完整参考\n\n“默认”指v0.5新安装值。升级时原有自定义值保留；仅识别到旧默认 k2=0.22、thermalGrace=8、wakeDelay=3 时迁移为0.30、30、1。v0.5.1还把旧默认epochWindow=2迁移为1/12模拟年；其他明确自定义值保留数值，按模拟年解释，并记录epochTimebase=years。已保存的灵敏度、窗口位置、背景、音量和档案继续保留。表内“兼容保留/不生效”项如实列出，避免误以为滑块必定改变现代逻辑。\n`;
++ md+=`\n发展年数只在文明确实处于“恢复生产/发展”、温度合适且行星安全时积累，再乘 developmentRate。**文明寿命包含休眠，科技发展年数不包含休眠。** 如果改动基础温区，表中所有等级范围会随之平移/扩展。文明阶段参考原著展示的农业、工业、原子信息及远航发展方向；5/20/60/150/350年阈值与保护倍率都是本版本的设计，并非小说给定数值；没有假装已经实现智子制造或真实星际迁移。\n\n恒/乱纪元独立按轨道束缚与扰动判断。乱纪元可有短暂适温窗口，寒冷恒纪元也不一定适合生产。现代模式中，只要行星尚可恢复，就不因“飞得远”“文明死亡”或“气温极端”自动开新宇宙；结构可恢复与文明能否延续是两个不同问题。\n\n日志只保留最近12个事件、屏幕最多6行：文明启动、毁灭、每50年寿命里程碑、等级晋升，以及确认超过0.5秒的三日连珠/三日凌空/飞星不动，同类天象冷却60模拟秒。常规飞星、脱水切换等不逐条刷屏。\n\n## 4. 每个控件的完整参考\n\n“默认”指v0.5.2新安装值。v0.5.2 默认 research 初始化、newtonian 引力、牢笼关闭；旧配置升级会切换这些默认项。相同 Seed 的轨迹已改变，要复现 v0.5.1 必须显式选择 chaotic + legacy 并恢复旧牢笼与其余参数。升级时原有自定义值保留；仅识别到旧默认 k2=0.22、thermalGrace=8、wakeDelay=3 时迁移为0.30、30、1。v0.5.1还把旧默认epochWindow=2迁移为1/12模拟年；其他明确自定义值保留数值，按模拟年解释，并记录epochTimebase=years。已保存的灵敏度、窗口位置、背景、音量和档案继续保留。表内“兼容保留/不生效”项如实列出，避免误以为滑块必定改变现代逻辑。\n`;
+  let group='';for(const c of controls){if(c.group!==group){group=c.group;md+=`\n### ${group}\n\n| 名称 / 参数键 | 默认 | 范围 / 类型 | 实际作用 |\n|---|---|---|---|\n`;}
+  const d=c.def,range=d.type==='slider'?`${d.min}～${d.max}`:d.type==='combo'?d.options.map(o=>`${o.value}=${o.label}`).join('；'):({bool:'开关',color:'RGB，各0～1',textinput:'文字',scenetexture:'本地图片'}[d.type]||d.type);
+  md+=`| ${cell(plainText(d.text))}<br>\`${c.key}\` | ${cell(format(c.value))} | ${cell(range)} | ${cell(c.description)} |\n`;}
+diff --git a/tools/v042-orbital-audit.mjs b/tools/v042-orbital-audit.mjs
+index ce8668c..4c2bc91 100644
+--- a/tools/v042-orbital-audit.mjs
++++ b/tools/v042-orbital-audit.mjs
+@@ -14,8 +14,8 @@ export function measureChaotic(seed,mode='chaotic',ticks=12000,profile={}){
+  }
+  return{seed,years:sim.shared.xntime,farFraction:far/Math.max(1,intact),unboundFarFraction:unbound/Math.max(1,intact),insideFraction:inner/Math.max(1,intact),stableFraction:stable/ticks,developmentFraction:development/ticks,survivingPlanet:!terminal,stellarDistanceRatios:max.map((m,i)=>m/Math.max(1e-8,min[i]))};
+ }
+-export function sensitiveDependence(ticks=12000){
+- const s=new Simulation({seed:'TRISOLARIS',autorestart:false});s.tick();const first=s.initialBodies,second=structuredClone(first);second[0].vx+=1e-7;
++export function sensitiveDependence(ticks=12000,profile={}){
++ const s=new Simulation({seed:'TRISOLARIS',autorestart:false,...profile});s.tick();const first=s.initialBodies,second=structuredClone(first);second[0].vx+=1e-7;
+  const a=new Simulation(settingsFromInitial(s.settings,first)),b=new Simulation(settingsFromInitial(s.settings,second));let maxSeparation=0;
+  for(let i=0;i<ticks;i++){a.tick();b.tick();if(i%60===0){const x=a.lastPhysicsState,y=b.lastPhysicsState;maxSeparation=Math.max(maxSeparation,Math.sqrt(x.bodies.slice(0,3).reduce((n,p,j)=>n+(p.x-x.com.x-y.bodies[j].x+y.com.x)**2+(p.y-x.com.y-y.bodies[j].y+y.com.y)**2+(p.z-x.com.z-y.bodies[j].z+y.com.z)**2,0)/3));}}
+  return{initialVelocityPerturbation:1e-7,years:a.shared.xntime,maxStellarRmsSeparation:maxSeparation};
+diff --git a/tools/v052/acceptance-config.json b/tools/v052/acceptance-config.json
+new file mode 100644
+index 0000000..ed2711d
+--- /dev/null
++++ b/tools/v052/acceptance-config.json
+@@ -0,0 +1,9 @@
++{
++ "prefix":"V052-ACCEPTANCE", "start":0, "seeds":128, "horizon":1000,
++ "output":"docs/v052/results/acceptance.jsonl",
++ "profiles":[
++  {"id":"old-init-old-engine","force":"legacy","dt":0.00075,"eps":0.1,"adaptive":false},
++  {"id":"old-init-new-engine","force":"newton","dt":0.00075,"eta":0.0075,"adaptive":true},
++  {"id":"new-init-new-engine","initialization":"research","force":"newton","dt":0.00075,"eta":0.0075,"adaptive":true}
++ ]
++}
+diff --git a/tools/v052/benchmark-engine.mjs b/tools/v052/benchmark-engine.mjs
+new file mode 100644
+index 0000000..6779b18
+--- /dev/null
++++ b/tools/v052/benchmark-engine.mjs
+@@ -0,0 +1,80 @@
++// Measurement protocol ported verbatim except: production kernel/initialization,
++// explicit numerical censoring, and early termination after an absorbing planet loss.
++import {Simulation} from '../../src/simulation.js';
++import {settingsFromInitial} from '../../src/settings.js';
++import {WorldState} from '../../src/world-state.js';
++import {GravityIntegrator} from '../../src/physics/gravity.js';
++import {initial as referenceInitial,energy,angular,planetOrbit,center,G} from './research-reference.mjs';
++const pairs=[[0,1],[0,2],[1,2],[0,3],[1,3],[2,3]];
++const dot=(a,b)=>a.reduce((n,x,i)=>n+x*b[i],0),norm=a=>Math.hypot(...a),pos=b=>[b.x,b.y,b.z],vel=b=>[b.vx,b.vy,b.vz],sub=(a,b)=>a.map((x,i)=>x-b[i]),distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y,a.z-b.z);
++function initial(seed,cfg){
++ if(cfg.initialization==='research'){const s=new Simulation({seed,autorestart:false,newproperty60:false,gravityModel:'newtonian',orbitalInitialization:'research'});s.tick();return {bodies:structuredClone(s.initialBodies),settings:s.settings};}
++ return referenceInitial(seed,{mode:'chaotic',...cfg});
++}
++class LegacyDriver{
++ constructor(bodies,cfg){this.bodies=bodies;const s=new Simulation(settingsFromInitial({gravityModel:'legacy',newproperty60:false,autorestart:false,newproperty28:cfg.eps??.1,newproperty29:cfg.k??2.8},bodies));this.physics=s.modules['008'];this.physics.initializePhysics();this.steps=0;}
++ advance(duration,cfg){const n=Math.ceil(duration/(cfg.dt??.00075));for(let i=0;i<n;i++){this.physics.directStep(duration/n);this.steps++;}const current=this.physics.state().bodies;this.bodies.forEach((b,i)=>Object.assign(b,current[i]));}
++}
++class Integrator{
++ constructor(bodies,cfg){this.inner=cfg.force==='legacy'?new LegacyDriver(bodies,cfg):new GravityIntegrator(bodies,G,{model:'newtonian'});this.bodies=bodies;}
++ get steps(){return this.inner.steps;}
++ advance(duration,cfg){if(cfg.force==='legacy')this.inner.advance(duration,cfg);else this.inner.advance(duration,{maxStep:cfg.dt??.00075,eta:cfg.eta??.0075,adaptive:cfg.adaptive!==false,maxSteps:200000});}
++}
++function diagnostics(b){
++ const stars=b.slice(0,3),c=center(stars),planet=b[3],r=sub(pos(planet),c.slice(0,3)),v=sub(vel(planet),c.slice(3));
++ const ss=pairs.slice(0,3).map(([i,j])=>distance(b[i],b[j])),sp=stars.map(s=>distance(s,planet));
++ const Eplanet=dot(v,v)/2-G*stars.reduce((n,s,i)=>n+s.mass/sp[i],0),outward=dot(r,v)>0;
++ return {ss,sp,minSS:Math.min(...ss),minSP:Math.min(...sp),planetRadius:norm(r),Eplanet,outward,shape:Math.max(...ss)/Math.min(...ss),starRadii:stars.map(s=>norm(sub(pos(s),c.slice(0,3)))),hostEnergies:stars.map((_,i)=>planetOrbit(b,i).energy)};
++}
++export function runTrial(seed,cfg,horizon){
++ const start=performance.now(),{bodies,settings}=initial(seed,cfg),world=new WorldState(),integrator=new Integrator(bodies,cfg);
++ const initialBodies=structuredClone(bodies),e0=energy(bodies,cfg.force,cfg.eps),en0=energy(bodies),L0=angular(bodies),sE=energy(bodies.slice(0,3)),d0=diagnostics(bodies);
++ const Lscale=Math.sqrt(G*bodies.reduce((s,b)=>s+b.mass,0)**3*Math.max(...d0.ss));
++ const initialMetrics={stars:sE,L:angular(bodies.slice(0,3)),dimensionlessL:norm(angular(bodies.slice(0,3)))/Lscale,planet:planetOrbit(bodies,cfg.host??2),hostEnergies:d0.hostEnergies,shape:d0.shape,crossingTime:Math.sqrt((d0.ss.reduce((a,b)=>a+b,0)/3)**3/(G*bodies.slice(0,3).reduce((n,b)=>n+b.mass,0)))/.45};
++ let lossAt=null,lossReason=null,planetBoundaryAt=null,systemBoundaryAt=null,starBoundaryAt=null,positiveEscapeAt=null,terminalAt=null,starContactAt=null;
++ let stableFrames=0,stableAlive=0,aliveFrames=0,temperate=0,compactNonhierFrames=0,jointStableFrames=0,hierFrames=0,boundPlanetAtEnd=false;
++ let maxEnergyError=0,maxEnergyErrorBeforeLoss=0,maxEnergyErrorBeforeContact=0,maxNewtonEnergyChange=0,maxLError=0,maxLErrorBeforeLoss=0,maxMomentumErrorBeforeLoss=0,minSS=Infinity,minSP=Infinity,closestEncounter=null,lastEp=d0.Eplanet;
++ const events=[],trajectory=[];let frames=0,error=null;
++ const totalFrames=Math.round(horizon*60);
++ for(let f=0;f<=totalFrames;f++){
++  const years=f/60;
++  if(f){try{integrator.advance(.0075,cfg);}catch(e){error=e.message;break;}}
++  frames=f;
++  const d=diagnostics(bodies),c=center(bodies),radii=bodies.map(b=>Math.hypot(b.x-c[0],b.y-c[1],b.z-c[2]));
++  if(!Number.isFinite(d.Eplanet)){error='non-finite';break;}
++  if(d.minSS<minSS){minSS=d.minSS;closestEncounter={years,starDistances:d.ss,planetEnergy:d.Eplanet};}minSP=Math.min(minSP,d.minSP);
++  if(starContactAt===null&&pairs.slice(0,3).some(([i,j],k)=>d.ss[k]<[settings._13,settings._21,settings._3][i]+[settings._13,settings._21,settings._3][j]))starContactAt=years;
++  if(planetBoundaryAt===null&&radii[3]>settings.newproperty13)planetBoundaryAt=years;
++  if(systemBoundaryAt===null&&radii.some(r=>r>settings.newproperty13))systemBoundaryAt=years;
++  if(starBoundaryAt===null&&radii.slice(0,3).some(r=>r>settings.newproperty13))starBoundaryAt=years;
++  if(positiveEscapeAt===null&&radii[3]>settings.newproperty13&&d.Eplanet>0&&d.outward)positiveEscapeAt=years;
++  const flux=1361*bodies.slice(0,3).reduce((s,b,i)=>s+[settings._111lum_sun,settings._211lum_sun,settings._311lum_sun][i]/(Math.max(d.sp[i],.01)*1e12/settings.newproperty69/1.496e11)**2,0);
++  const base=(flux*.7/(4*5.67e-8))**.25-273.15,albedo=base<0?.3+.3*Math.min(1,-base/20):.3;
++  const equilibrium=Math.max(-270,Math.min(1500,(flux*(1-albedo)/(4*5.67e-8))**.25-273.15+10*Math.sin(years)));
++  const w=world.update(bodies,G,Number(equilibrium.toFixed(2)),settings,years,f?1/60:0,f?1/60:0);
++  if(terminalAt===null&&w.planet.terminal)terminalAt=years;
++  if(lossAt===null){if(w.planet.terminal){lossAt=years;lossReason=w.planet.terminal.kind;}else if(planetBoundaryAt!==null){lossAt=planetBoundaryAt;lossReason=positiveEscapeAt!==null?'positive-energy-escape':'boundary-crossing';}}
++  const compact=d.starRadii.every(r=>r<=settings.newproperty13),nonhier=d.shape<3;
++  if(f){
++   if(lossAt===null){aliveFrames++;if(w.epoch.kind==='stable')stableAlive++;}
++   if(lossAt===null&&w.epoch.kind==='stable')stableFrames++;
++   if(lossAt===null&&w.planet.temperature>=settings.newproperty45&&w.planet.temperature<=settings.newproperty46)temperate++;
++   if(compact&&nonhier&&starContactAt===null){compactNonhierFrames++;if(lossAt===null&&w.epoch.kind==='stable')jointStableFrames++;}
++   if(!nonhier)hierFrames++;
++  }
++  const E=energy(bodies,cfg.force,cfg.eps),En=energy(bodies),L=angular(bodies);
++  maxEnergyError=Math.max(maxEnergyError,Math.abs(E.E-e0.E)/Math.max(Math.abs(e0.E),1e-20));
++  if(lossAt===null&&starContactAt===null)maxEnergyErrorBeforeLoss=Math.max(maxEnergyErrorBeforeLoss,Math.abs(E.E-e0.E)/Math.max(Math.abs(e0.E),1e-20));
++  if(starContactAt===null)maxEnergyErrorBeforeContact=Math.max(maxEnergyErrorBeforeContact,Math.abs(E.E-e0.E)/Math.max(Math.abs(e0.E),1e-20));
++  maxNewtonEnergyChange=Math.max(maxNewtonEnergyChange,Math.abs(En.E-en0.E)/Math.max(Math.abs(en0.E),1e-20));
++  maxLError=Math.max(maxLError,norm(sub(L,L0))/Math.max(norm(L0),Lscale*1e-12));
++  if(lossAt===null&&starContactAt===null){maxLErrorBeforeLoss=Math.max(maxLErrorBeforeLoss,norm(sub(L,L0))/Math.max(norm(L0),Lscale*1e-12));const c0=center(initialBodies),mass=bodies.reduce((n,b)=>n+b.mass,0),momentum=center(bodies).slice(3).map((v,i)=>(v-c0[i+3])*mass);maxMomentumErrorBeforeLoss=Math.max(maxMomentumErrorBeforeLoss,norm(momentum)/Math.max(1,Math.sqrt(2*mass*e0.K)));}
++  const jump=d.Eplanet-lastEp;
++  if(jump>0&&d.minSP<.6){events.push({years,deltaPlanetSpecificEnergy:jump,planetSpecificEnergyBefore:lastEp,planetSpecificEnergyAfter:d.Eplanet,totalEnergyRelativeError:Math.abs(E.E-e0.E)/Math.max(Math.abs(e0.E),1e-20),minSS:d.minSS,minSP:d.minSP,stellarSpeeds:bodies.slice(0,3).map(b=>norm(sub(vel(b),center(bodies.slice(0,3)).slice(3))))});events.sort((a,b)=>b.deltaPlanetSpecificEnergy-a.deltaPlanetSpecificEnergy);events.length=Math.min(events.length,5);}lastEp=d.Eplanet;
++  if(cfg.trace&&f%60===0)trajectory.push({years,positions:bodies.flatMap(b=>pos(b)),E:E.E,shape:d.shape,planetEnergy:d.Eplanet});
++  boundPlanetAtEnd=d.hostEnergies.some(e=>e<0);
++  if(lossAt!==null)break;
++ }
++ const completed=frames===totalFrames||lossAt!==null;
++ return {source:'v0.5.2-production-kernel',integratedYears:frames/60,numericallyCensored:!!error&&lossAt===null,stoppedAtAbsorbingLoss:lossAt!==null,seed,profile:cfg.id,horizon,initial:initialMetrics,initialBodies,finalBodies:structuredClone(bodies),lossAt,lossReason,survived:lossAt===null&&completed,restrictedLife:lossAt??frames/60,planetBoundaryAt,systemBoundaryAt,starBoundaryAt,positiveEscapeAt,terminalAt,starContactAt,jointSurvived:lossAt===null&&starBoundaryAt===null&&starContactAt===null&&completed,stableFraction:stableFrames/totalFrames,stableConditional:aliveFrames?stableAlive/aliveFrames:0,temperateFraction:temperate/totalFrames,compactNonhierFraction:compactNonhierFrames/totalFrames,jointStableFraction:jointStableFrames/totalFrames,hierFraction:hierFrames/totalFrames,allStarsWithinBoundaryAtEnd:diagnostics(bodies).starRadii.every(r=>r<=settings.newproperty13),boundPlanetAtEnd,minSS,minSP,maxEnergyError,maxEnergyErrorBeforeLoss,maxEnergyErrorBeforeContact,maxNewtonEnergyChange,maxLError,maxLErrorBeforeLoss,maxMomentumErrorBeforeLoss,closestEncounter,energyGainEvents:events,trajectory,steps:integrator.steps,completed,error,wallSeconds:(performance.now()-start)/1000};
++}
+diff --git a/tools/v052/browser-check.mjs b/tools/v052/browser-check.mjs
+new file mode 100644
+index 0000000..153f05f
+--- /dev/null
++++ b/tools/v052/browser-check.mjs
+@@ -0,0 +1,22 @@
++import {chromium} from 'playwright-core';
++import assert from 'node:assert/strict';
++import {writeFile} from 'node:fs/promises';
++import {guideControls} from '../generate-settings-guide.mjs';
++const browser=await chromium.launch({executablePath:'/usr/bin/chromium',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
++const context=await browser.newContext({viewport:{width:1280,height:900}}),page=await context.newPage(),errors=[],checks=[];
++page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error'&&!m.text().startsWith('Failed to load resource:'))errors.push(m.text());});
++page.on('response',r=>{if(r.status()>=400&&!r.url().endsWith('/favicon.ico'))errors.push(`${r.status()} ${r.url()}`);});
++await page.addInitScript(()=>{localStorage.setItem('three-body.settings.v3',JSON.stringify({physicsRevision:1,presentationRevision:6,pixelRatio:.5,newproperty63:false,newproperty64:false,newproperty2:false}));window.__wallpaperFPS=20;});
++try{
++ await page.goto('http://localhost:4173');await page.waitForFunction(()=>window.__threeBodyDiagnostics?.().ready);
++ const first=await page.evaluate(()=>window.threeBody.getState());assert.equal(await page.evaluate(()=>window.threeBody.version),'0.5.2');assert.equal(first.physics.model,'newtonian');assert.equal(first.physics.cageActive,false);assert.equal(first.initialization.version,'research-q1-retro12-v1');checks.push('v0.5.2 boots actual Worker with random Q=1/retrograde candidate, Newton gravity and cage off');
++ const controls=await page.locator('.control').evaluateAll(nodes=>nodes.map(n=>n.dataset.key));assert.deepEqual(controls.sort(),guideControls().map(c=>c.key).sort());assert.equal(controls.length,217);checks.push('all 217 controls match the generated guide, including gravity model and encounter precision');
++ await page.locator('#settings-toggle').click();await page.locator('[data-category=simulation] summary').click();await page.selectOption('#setting-gravityModel','plummer');await page.waitForFunction(()=>window.threeBody.getState().physics.model==='plummer');checks.push('gravity dropdown changes running Worker to consistent Plummer model');
++ await page.selectOption('#setting-gravityModel','newtonian');await page.waitForFunction(()=>window.threeBody.getState().physics.model==='newtonian');
++ await page.evaluate(()=>window.threeBody.applySettings({newproperty60:true}));await page.waitForFunction(()=>window.threeBody.getState().physics.cageActive);await page.evaluate(()=>window.threeBody.applySettings({newproperty60:false}));await page.waitForFunction(()=>!window.threeBody.getState().physics.cageActive);checks.push('existing cage toggle can be enabled and disabled without deleting its parameters');
++ await page.evaluate(()=>window.threeBody.applySettings({encounterAccuracy:.00375}));await page.waitForFunction(()=>window.threeBody.getState().algorithm.includes('eta0.00375'));checks.push('encounter precision setting reaches the production kernel');
++ await page.locator('#settings-close').click();await page.waitForTimeout(700);await page.screenshot({path:'docs/v052/results/browser-desktop.png'});
++ const latest=await page.evaluate(()=>window.threeBody.getState());assert.ok(Number.isFinite(latest.physics.relativeEnergyError));assert.ok(latest.tick>first.tick);checks.push('Worker advances with finite conservation diagnostics and renders the existing scene');
++ const response=await page.goto('http://localhost:4173/settings-guide.html');assert.equal(response.status(),200);assert.ok((await page.textContent('body')).includes('gravityModel'));checks.push('updated standalone settings guide is included in offline build');
++ assert.deepEqual(errors,[]);await writeFile('docs/v052/results/browser.json',JSON.stringify({passed:true,checks,errors,controls:controls.length,physics:latest.physics,limits:'Chromium with software WebGL; native Wallpaper Engine/Windows not available'},null,2)+'\n');console.log(JSON.stringify({passed:true,checks},null,2));
++}finally{await browser.close();}
+diff --git a/tools/v052/convergence-config.json b/tools/v052/convergence-config.json
+new file mode 100644
+index 0000000..f73c722
+--- /dev/null
++++ b/tools/v052/convergence-config.json
+@@ -0,0 +1,5 @@
++{
++ "prefix":"V052-ACCEPTANCE", "start":0, "seeds":128, "horizon":1000,
++ "output":"docs/v052/results/convergence.jsonl",
++ "profiles":[{"id":"new-init-fine-engine","initialization":"research","force":"newton","dt":0.000375,"eta":0.00375,"adaptive":true}]
++}
+diff --git a/tools/v052/independent-validation.py b/tools/v052/independent-validation.py
+new file mode 100644
+index 0000000..2b3a0b6
+--- /dev/null
++++ b/tools/v052/independent-validation.py
+@@ -0,0 +1,38 @@
++"""Independent force + SciPy DOP853; only initial states are imported from JS."""
++import json,pathlib,numpy as np
++from scipy.integrate import solve_ivp
++root=pathlib.Path(__file__).resolve().parents[2]
++samples=json.loads((root/'docs/v052/results/validation-samples.json').read_text())
++keys=['x','y','z','vx','vy','vz'];results=[]
++for sample in samples:
++    masses=np.array([b['mass'] for b in sample['initial']]);G=sample['G'];end=sample['solverTime']
++    y0=np.array([[b[k] for k in keys] for b in sample['initial']]).ravel()
++    def rhs(t,y):
++        bodies=y.reshape(4,6);acceleration=np.zeros((4,3))
++        for i in range(4):
++            for j in range(i+1,4):
++                delta=bodies[j,:3]-bodies[i,:3]
++                force_per_mass=G*delta/np.linalg.norm(delta)**3
++                acceleration[i]+=masses[j]*force_per_mass
++                acceleration[j]-=masses[i]*force_per_mass
++        return np.concatenate((bodies[:,3:],acceleration),axis=1).ravel()
++    ref=solve_ivp(rhs,(0,end),y0,method='DOP853',rtol=1e-12,atol=1e-14,dense_output=True)
++    finer=solve_ivp(rhs,(0,end),y0,method='DOP853',rtol=1e-13,atol=1e-15)
++    assert ref.success and finer.success
++    reference_difference=float(np.max(np.abs(ref.y[:,-1]-finer.y[:,-1])))
++    differences=[]
++    for final in sample['finals']:
++        state=np.array([[b[k] for k in keys] for b in final['bodies']]).ravel()
++        differences.append({'maxStep':final['maxStep'],'adaptive':final['adaptive'],'maxStateDifference':float(np.max(np.abs(state-finer.y[:,-1])))})
++    ratios=[differences[i]['maxStateDifference']/differences[i+1]['maxStateDifference'] for i in range(2)]
++    assert differences[2]['maxStateDifference']<1e-7,(sample['seed'],differences)
++    assert differences[3]['maxStateDifference']<1e-7,(sample['seed'],differences)
++    if differences[0]['maxStateDifference']>1e-9:
++        assert min(ratios)>10,(sample['seed'],ratios)
++    # Audit contact validity independently on a dense reference trajectory.
++    b=ref.sol(np.linspace(0,end,20001)).T.reshape(-1,4,6)
++    minimum_surface_gap=min(float(np.min(np.linalg.norm(b[:,j,:3]-b[:,i,:3],axis=1)))-sample['radii'][i]-sample['radii'][j] for i in range(4) for j in range(i+1,4))
++    results.append({'seed':sample['seed'],'solverTime':end,'referenceEvaluations':ref.nfev,'referenceToleranceDifference':reference_difference,'differences':differences,'fixedStepRatios':ratios,'minimumNominalSurfaceGap':minimum_surface_gap})
++report={'passed':True,'reference':'Independently written pairwise Newton force, SciPy DOP853; rtol=1e-12/1e-13, atol=1e-14/1e-15','seedPolicy':'First four predetermined V052-INDEPENDENT seeds, none filtered','results':results}
++(root/'docs/v052/results/independent-validation.json').write_text(json.dumps(report,indent=2)+'\n')
++print(json.dumps(report,indent=2))
+diff --git a/tools/v052/long-config.json b/tools/v052/long-config.json
+new file mode 100644
+index 0000000..bca2aac
+--- /dev/null
++++ b/tools/v052/long-config.json
+@@ -0,0 +1,5 @@
++{
++ "prefix":"V052-ACCEPTANCE", "start":0, "seeds":128, "horizon":10000,
++ "output":"docs/v052/results/long.jsonl",
++ "profiles":[{"id":"new-init-long-window","initialization":"research","force":"newton","dt":0.00075,"eta":0.0075,"adaptive":true}]
++}
+diff --git a/tools/v052/research-reference.mjs b/tools/v052/research-reference.mjs
+new file mode 100644
+index 0000000..5dcd943
+--- /dev/null
++++ b/tools/v052/research-reference.mjs
+@@ -0,0 +1,158 @@
++import {Simulation} from '../../src/simulation.js';
++import {WorldState} from '../../src/world-state.js';
++import {seededRandom} from '../../src/settings.js';
++
++export const G=1.3275440274585598e-8;
++export const FIELDS=['x','y','z','vx','vy','vz'];
++const pairs=[[0,1],[0,2],[1,2],[0,3],[1,3],[2,3]];
++const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
++const dot=(a,b)=>a.reduce((n,x,i)=>n+x*b[i],0);
++const norm=a=>Math.hypot(...a);
++const unit=a=>{const n=norm(a);return n>1e-14?a.map(x=>x/n):[0,0,1];};
++const pos=b=>[b.x,b.y,b.z],vel=b=>[b.vx,b.vy,b.vz];
++const sub=(a,b)=>a.map((v,i)=>v-b[i]);
++const distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y,a.z-b.z);
++export function center(bodies){const m=bodies.reduce((n,b)=>n+b.mass,0);return FIELDS.map(k=>bodies.reduce((n,b)=>n+b.mass*b[k],0)/m);}
++export function recenter(bodies){const c=center(bodies);for(const b of bodies)FIELDS.forEach((k,i)=>b[k]-=c[i]);return bodies;}
++export function angular(bodies){const c=center(bodies),L=[0,0,0];for(const b of bodies){const h=cross(sub(pos(b),c.slice(0,3)),sub(vel(b),c.slice(3)));h.forEach((x,i)=>L[i]+=b.mass*x);}return L;}
++export function energy(bodies,force='newton',eps=.1,k=2.8){
++ const c=center(bodies);let K=0,U=0;
++ for(const b of bodies)K+=.5*b.mass*((b.vx-c[3])**2+(b.vy-c[4])**2+(b.vz-c[5])**2);
++ for(let i=0;i<bodies.length;i++)for(let j=i+1;j<bodies.length;j++)U+=G*bodies[i].mass*bodies[j].mass*potential(distance(bodies[i],bodies[j]),force,eps,k);
++ return {K,U,E:K+U,Q:2*K/-U};
++}
++export function potential(r,force,eps,k){
++ if(force!=='legacy'||eps<=0)return -1/Math.max(r,1e-15);
++ if(r>=k*eps)return -1/r;
++ const beta=3/(k-1),alpha=1-beta;
++ const middle=s=>-1/(k*eps)+alpha*(1/(k*eps)-1/s)+beta/eps*Math.log(s/(k*eps));
++ return r>eps?middle(r):middle(eps)+(r*r-eps*eps)/(2*eps**3);
++}
++export function planetOrbit(bodies,host=2){
++ const a=bodies[3],b=bodies[host],r=sub(pos(a),pos(b)),v=sub(vel(a),vel(b)),R=norm(r),mu=G*(a.mass+b.mass),e=dot(v,v)/2-mu/R,h=norm(cross(r,v));
++ const eccentricity=Math.sqrt(Math.max(0,1+2*e*h*h/(mu*mu)));
++ return {host,radius:R,energy:e,angularMomentum:h,semimajor:e<0?-mu/(2*e):null,eccentricity,pericenter:h*h/(mu*(1+eccentricity)),radialSpeed:dot(r,v)/R};
++}
++export function initial(seed,cfg={}){
++ const settings={seed,newproperty60:false,autorestart:false,...cfg.settings};
++ if(cfg.mode)settings.orbitalInitialization=cfg.mode;
++ const s=new Simulation(settings);s.tick();
++ const bodies=structuredClone(s.initialBodies),stars=bodies.slice(0,3);
++ if(cfg.massRatios){const total=stars.reduce((n,b)=>n+b.mass,0),sum=cfg.massRatios.reduce((a,b)=>a+b,0);stars.forEach((b,i)=>b.mass=total*cfg.massRatios[i]/sum);}
++ if(cfg.massScale)stars.forEach(b=>b.mass*=cfg.massScale);
++ if(cfg.planetMass)bodies[3].mass=cfg.planetMass;
++ if(cfg.scale){const c=center(stars);for(const b of stars)FIELDS.forEach((k,i)=>b[k]=c[i]+(b[k]-c[i])*(i<3?cfg.scale:1/Math.sqrt(cfg.scale)));}
++ if(cfg.geometry==='hierarchical'){
++  const c=center(stars);Object.assign(stars[0],{x:-.3,y:0,z:0,vx:0,vy:-Math.sqrt(G*stars[1].mass/.6/2),vz:0});Object.assign(stars[1],{x:.3,y:0,z:0,vx:0,vy:Math.sqrt(G*stars[0].mass/.6/2),vz:0});
++  Object.assign(stars[2],{x:4,y:0,z:0,vx:0,vy:Math.sqrt(G*stars.reduce((n,b)=>n+b.mass,0)/4),vz:0});recenter(stars);
++ }
++ if(cfg.geometry==='figure-eight'){
++  // Moore/Chenciner-Montgomery equal-mass dimensionless figure-eight initial state.
++  // A periodic nonhierarchical control, never automatically classified as chaotic success.
++  const scale=1.6,vscale=Math.sqrt(G*stars[0].mass/scale),r=[[-.97000436,.24308753],[.97000436,-.24308753],[0,0]],v=[[.466203685,.43236573],[.466203685,.43236573],[-.93240737,-.86473146]],random=seededRandom(seed+':figure-eight-perturbation');
++  stars.forEach((b,i)=>{
++   ['x','y','z'].forEach((k,j)=>b[k]=scale*((r[i][j]??0)+(cfg.geometryPerturb??0)*(2*random()-1)));
++   ['vx','vy','vz'].forEach((k,j)=>b[k]=vscale*((v[i][j]??0)+(cfg.geometryPerturb??0)*(2*random()-1)));
++  });recenter(stars);
++ }
++ if(cfg.spin!==undefined){
++  const c=center(stars),n=unit(angular(stars)),K=energy(stars).K;
++  const raw=stars.map(b=>cross(n,sub(pos(b),c.slice(0,3))));
++  const rawK=stars.reduce((sum,b,i)=>sum+.5*b.mass*dot(raw[i],raw[i]),0),scale=Math.sqrt(K/rawK);
++  stars.forEach((b,i)=>['vx','vy','vz'].forEach((k,j)=>b[k]=(1-cfg.spin)*(b[k]-c[j+3])+cfg.spin*raw[i][j]*scale));
++  recenter(stars);const multiplier=Math.sqrt(K/energy(stars).K);stars.forEach(b=>['vx','vy','vz'].forEach(k=>b[k]*=multiplier));
++ }
++ if(cfg.Q){recenter(stars);const vscale=Math.sqrt(cfg.Q/energy(stars).Q);for(const b of stars)for(const k of ['vx','vy','vz'])b[k]*=vscale;}
++ if(cfg.planet==='bound'||cfg.planet==='position-only'){
++  const h=cfg.host??2,host=bodies[h],planet=bodies[3],nearest=Math.min(...stars.filter((_,i)=>i!==h).map(b=>distance(b,host)));
++  const r=cfg.keepPlanetPosition?distance(planet,host):(cfg.fixedRadius??nearest*(cfg.radiusFraction??.2));
++  const normal=cfg.orbitNormal??unit(angular(stars));let radial=unit(sub(pos(planet),pos(host)));
++  if(cfg.inPlane){radial=unit(sub(radial,normal.map(x=>x*dot(radial,normal))));}
++  const tangent=unit(cross(normal,radial)),mu=G*(host.mass+planet.mass),speed=Math.sqrt(mu/r),direction=cfg.direction??1;
++  const v=radial.map((x,i)=>speed*(direction*(cfg.speed??1)*tangent[i]+(cfg.radial??0)*x));
++  const hostShare=host.mass/(host.mass+planet.mass),planetShare=1-hostShare;
++  ['x','y','z'].forEach((k,i)=>planet[k]=host[k]+r*radial[i]);
++  if(cfg.planet!=='position-only')['vx','vy','vz'].forEach((k,i)=>{planet[k]=host[k]+hostShare*v[i];host[k]-=planetShare*v[i];});
++ }
++ recenter(bodies);
++ if(cfg.perturb)bodies[0].x+=cfg.perturb;
++ return {bodies,settings:s.settings};
++}
++
++const w1=1/(2-2**(1/3)),w0=-(2**(1/3))*w1;
++export class Integrator{
++ constructor(bodies,{force='newton',eps=.1,k=2.8,method='yoshida'}={}){this.bodies=bodies;this.force=force;this.eps=eps;this.k=k;this.method=method;this.steps=0;}
++ drift(h){for(const b of this.bodies){b.x+=h*b.vx;b.y+=h*b.vy;b.z+=h*b.vz;}}
++ kick(h){
++  const b=this.bodies;
++  for(const [i,j] of pairs){const a=b[i],c=b[j],x=c.x-a.x,y=c.y-a.y,z=c.z-a.z,r=Math.max(Math.sqrt(x*x+y*y+z*z),1e-5);let factor=1;
++   if(this.force==='legacy'&&this.eps>0){if(r<=this.eps)factor=(r/this.eps)**3;else if(r<this.k*this.eps)factor=1-3/(this.k-1)+3/(this.k-1)*r/this.eps;}
++   const f=h*G*factor/(r*r*r),am=f*c.mass,bm=f*a.mass;
++   a.vx+=am*x;a.vy+=am*y;a.vz+=am*z;c.vx-=bm*x;c.vy-=bm*y;c.vz-=bm*z;
++  }
++ }
++ step(h){if(this.method==='verlet'){this.kick(h/2);this.drift(h);this.kick(h/2);}else{this.drift(w1*h/2);this.kick(w1*h);this.drift((w0+w1)*h/2);this.kick(w0*h);this.drift((w0+w1)*h/2);this.kick(w1*h);this.drift(w1*h/2);}this.steps++;}
++ timescale(){let t=Infinity;for(const[i,j]of pairs){const a=this.bodies[i],b=this.bodies[j],r=distance(a,b),v=Math.hypot(a.vx-b.vx,a.vy-b.vy,a.vz-b.vz);t=Math.min(t,Math.sqrt(r*r*r/(G*(a.mass+b.mass))),r/Math.max(v,1e-20));}return t;}
++ advance(duration,cfg){
++  let remaining=duration;
++  if(!cfg.adaptive){const n=Math.ceil(duration/(cfg.dt??.00075));for(let i=0;i<n;i++)this.step(duration/n);return;}
++  while(remaining>1e-14){const h=Math.min(remaining,cfg.dt??.00075,(cfg.eta??.03)*this.timescale());if(!(h>1e-10)||this.steps>(cfg.maxSteps??5e7))throw Error('numerical-resource-limit');this.step(h);remaining-=h;}
++ }
++}
++
++function diagnostics(b){
++ const stars=b.slice(0,3),c=center(stars),planet=b[3],r=sub(pos(planet),c.slice(0,3)),v=sub(vel(planet),c.slice(3));
++ const ss=pairs.slice(0,3).map(([i,j])=>distance(b[i],b[j])),sp=stars.map(s=>distance(s,planet));
++ const Eplanet=dot(v,v)/2-G*stars.reduce((n,s,i)=>n+s.mass/sp[i],0),outward=dot(r,v)>0;
++ return {ss,sp,minSS:Math.min(...ss),minSP:Math.min(...sp),planetRadius:norm(r),Eplanet,outward,shape:Math.max(...ss)/Math.min(...ss),starRadii:stars.map(s=>norm(sub(pos(s),c.slice(0,3)))),hostEnergies:stars.map((_,i)=>planetOrbit(b,i).energy)};
++}
++export function runTrial(seed,cfg,horizon){
++ const start=performance.now(),{bodies,settings}=initial(seed,cfg),world=new WorldState(),integrator=new Integrator(bodies,cfg);
++ const initialBodies=structuredClone(bodies),e0=energy(bodies,cfg.force,cfg.eps),en0=energy(bodies),L0=angular(bodies),sE=energy(bodies.slice(0,3)),d0=diagnostics(bodies);
++ const Lscale=Math.sqrt(G*bodies.reduce((s,b)=>s+b.mass,0)**3*Math.max(...d0.ss));
++ const initialMetrics={stars:sE,L:angular(bodies.slice(0,3)),dimensionlessL:norm(angular(bodies.slice(0,3)))/Lscale,planet:planetOrbit(bodies,cfg.host??2),hostEnergies:d0.hostEnergies,shape:d0.shape,crossingTime:Math.sqrt((d0.ss.reduce((a,b)=>a+b,0)/3)**3/(G*bodies.slice(0,3).reduce((n,b)=>n+b.mass,0)))/.45};
++ let lossAt=null,lossReason=null,planetBoundaryAt=null,systemBoundaryAt=null,starBoundaryAt=null,positiveEscapeAt=null,terminalAt=null,starContactAt=null;
++ let stableFrames=0,stableAlive=0,aliveFrames=0,temperate=0,compactNonhierFrames=0,jointStableFrames=0,hierFrames=0,boundPlanetAtEnd=false;
++ let maxEnergyError=0,maxEnergyErrorBeforeLoss=0,maxEnergyErrorBeforeContact=0,maxNewtonEnergyChange=0,maxLError=0,minSS=Infinity,minSP=Infinity,closestEncounter=null,lastEp=d0.Eplanet;
++ const events=[],trajectory=[];let frames=0,error=null;
++ const totalFrames=Math.round(horizon*60);
++ for(let f=0;f<=totalFrames;f++){
++  const years=f/60;
++  if(f){try{integrator.advance(.0075,cfg);}catch(e){error=e.message;if(lossAt===null){lossAt=years;lossReason=error;}break;}}
++  frames=f;
++  const d=diagnostics(bodies),c=center(bodies),radii=bodies.map(b=>Math.hypot(b.x-c[0],b.y-c[1],b.z-c[2]));
++  if(!Number.isFinite(d.Eplanet)){error='non-finite';if(lossAt===null){lossAt=years;lossReason=error;}break;}
++  if(d.minSS<minSS){minSS=d.minSS;closestEncounter={years,starDistances:d.ss,planetEnergy:d.Eplanet};}minSP=Math.min(minSP,d.minSP);
++  if(starContactAt===null&&pairs.slice(0,3).some(([i,j],k)=>d.ss[k]<[settings._13,settings._21,settings._3][i]+[settings._13,settings._21,settings._3][j]))starContactAt=years;
++  if(planetBoundaryAt===null&&radii[3]>settings.newproperty13)planetBoundaryAt=years;
++  if(systemBoundaryAt===null&&radii.some(r=>r>settings.newproperty13))systemBoundaryAt=years;
++  if(starBoundaryAt===null&&radii.slice(0,3).some(r=>r>settings.newproperty13))starBoundaryAt=years;
++  if(positiveEscapeAt===null&&radii[3]>settings.newproperty13&&d.Eplanet>0&&d.outward)positiveEscapeAt=years;
++  const flux=1361*bodies.slice(0,3).reduce((s,b,i)=>s+[settings._111lum_sun,settings._211lum_sun,settings._311lum_sun][i]/(Math.max(d.sp[i],.01)*1e12/settings.newproperty69/1.496e11)**2,0);
++  const base=(flux*.7/(4*5.67e-8))**.25-273.15,albedo=base<0?.3+.3*Math.min(1,-base/20):.3;
++  const equilibrium=Math.max(-270,Math.min(1500,(flux*(1-albedo)/(4*5.67e-8))**.25-273.15+10*Math.sin(years)));
++  const w=world.update(bodies,G,Number(equilibrium.toFixed(2)),settings,years,f?1/60:0,f?1/60:0);
++  if(terminalAt===null&&w.planet.terminal)terminalAt=years;
++  if(lossAt===null){if(w.planet.terminal){lossAt=years;lossReason=w.planet.terminal.kind;}else if(planetBoundaryAt!==null){lossAt=planetBoundaryAt;lossReason=positiveEscapeAt!==null?'positive-energy-escape':'boundary-crossing';}}
++  const compact=d.starRadii.every(r=>r<=settings.newproperty13),nonhier=d.shape<3;
++  if(f){
++   if(lossAt===null){aliveFrames++;if(w.epoch.kind==='stable')stableAlive++;}
++   if(lossAt===null&&w.epoch.kind==='stable')stableFrames++;
++   if(lossAt===null&&w.planet.temperature>=settings.newproperty45&&w.planet.temperature<=settings.newproperty46)temperate++;
++   if(compact&&nonhier&&starContactAt===null){compactNonhierFrames++;if(lossAt===null&&w.epoch.kind==='stable')jointStableFrames++;}
++   if(!nonhier)hierFrames++;
++  }
++  const E=energy(bodies,cfg.force,cfg.eps),En=energy(bodies),L=angular(bodies);
++  maxEnergyError=Math.max(maxEnergyError,Math.abs(E.E-e0.E)/Math.max(Math.abs(e0.E),1e-20));
++  if(lossAt===null&&starContactAt===null)maxEnergyErrorBeforeLoss=Math.max(maxEnergyErrorBeforeLoss,Math.abs(E.E-e0.E)/Math.max(Math.abs(e0.E),1e-20));
++  if(starContactAt===null)maxEnergyErrorBeforeContact=Math.max(maxEnergyErrorBeforeContact,Math.abs(E.E-e0.E)/Math.max(Math.abs(e0.E),1e-20));
++  maxNewtonEnergyChange=Math.max(maxNewtonEnergyChange,Math.abs(En.E-en0.E)/Math.max(Math.abs(en0.E),1e-20));
++  maxLError=Math.max(maxLError,norm(sub(L,L0))/Math.max(norm(L0),Lscale*1e-12));
++  const jump=d.Eplanet-lastEp;
++  if(jump>0&&d.minSP<.6){events.push({years,deltaPlanetSpecificEnergy:jump,planetSpecificEnergyBefore:lastEp,planetSpecificEnergyAfter:d.Eplanet,totalEnergyRelativeError:Math.abs(E.E-e0.E)/Math.max(Math.abs(e0.E),1e-20),minSS:d.minSS,minSP:d.minSP,stellarSpeeds:bodies.slice(0,3).map(b=>norm(sub(vel(b),center(bodies.slice(0,3)).slice(3))))});events.sort((a,b)=>b.deltaPlanetSpecificEnergy-a.deltaPlanetSpecificEnergy);events.length=Math.min(events.length,5);}lastEp=d.Eplanet;
++  if(cfg.trace&&f%60===0)trajectory.push({years,positions:bodies.flatMap(b=>pos(b)),E:E.E,shape:d.shape,planetEnergy:d.Eplanet});
++  boundPlanetAtEnd=d.hostEnergies.some(e=>e<0);
++ }
++ const completed=frames===totalFrames;
++ return {seed,profile:cfg.id,horizon,initial:initialMetrics,initialBodies,finalBodies:structuredClone(bodies),lossAt,lossReason,survived:lossAt===null&&completed,restrictedLife:lossAt??frames/60,planetBoundaryAt,systemBoundaryAt,starBoundaryAt,positiveEscapeAt,terminalAt,starContactAt,jointSurvived:lossAt===null&&starBoundaryAt===null&&starContactAt===null&&completed,stableFraction:stableFrames/totalFrames,stableConditional:aliveFrames?stableAlive/aliveFrames:0,temperateFraction:temperate/totalFrames,compactNonhierFraction:compactNonhierFrames/totalFrames,jointStableFraction:jointStableFrames/totalFrames,hierFraction:hierFrames/totalFrames,allStarsWithinBoundaryAtEnd:diagnostics(bodies).starRadii.every(r=>r<=settings.newproperty13),boundPlanetAtEnd,minSS,minSP,maxEnergyError,maxEnergyErrorBeforeLoss,maxEnergyErrorBeforeContact,maxNewtonEnergyChange,maxLError,closestEncounter,energyGainEvents:events,trajectory,steps:integrator.steps,completed,error,wallSeconds:(performance.now()-start)/1000};
++}
+diff --git a/tools/v052/run-benchmark.mjs b/tools/v052/run-benchmark.mjs
+new file mode 100644
+index 0000000..ac7db0e
+--- /dev/null
++++ b/tools/v052/run-benchmark.mjs
+@@ -0,0 +1,21 @@
++import {runTrial} from './benchmark-engine.mjs';
++import {readFile,writeFile,mkdir,appendFile} from 'node:fs/promises';
++import {createHash} from 'node:crypto';
++const config=JSON.parse(await readFile(process.argv[2]??'tools/v052/acceptance-config.json','utf8'));
++await mkdir('docs/v052/results',{recursive:true});
++const files=['src/physics/gravity.js','src/orbital-initialization.js','src/legacy/008.js','src/settings.js','src/world-state.js','tools/v052/research-reference.mjs','tools/v052/benchmark-engine.mjs','tools/v052/run-benchmark.mjs'];
++const hashes=Object.fromEntries(await Promise.all(files.map(async f=>[f,createHash('sha256').update(await readFile(f)).digest('hex')])));
++const out=config.output,manifest={config,hashes,baseCommit:'c7a53a01def5f9d60389ee20ec0f8bac5210ed69',researchCommit:'c198020',node:process.version,started:new Date().toISOString(),protocol:'Research first-loss endpoints; absorbing planet losses terminate integration. All seeds retained, no trajectory selection. Full-window stable fraction after first loss is zero. Numerical failure is separately censored, never a physical death.'};
++// Refuse to overwrite results. A new prefix/file is required for a distinct experiment.
++await writeFile(out,'',{flag:'wx'});
++await writeFile(out+'.manifest.json',JSON.stringify(manifest,null,2)+'\n');
++let count=0;
++for(let n=config.start??0;n<(config.start??0)+config.seeds;n++)for(const profile of config.profiles){
++ const row=runTrial(`${config.prefix}-${n}`,profile,config.horizon);
++ await appendFile(out,JSON.stringify(row)+'\n');
++ if(++count%24===0)console.log(`${count}/${config.seeds*config.profiles.length} observations complete`);
++}
++for(const [file,hash]of Object.entries(hashes))if(createHash('sha256').update(await readFile(file)).digest('hex')!==hash)throw Error(`Source changed during experiment: ${file}`);
++manifest.finished=new Date().toISOString();manifest.observations=count;
++await writeFile(out+'.manifest.json',JSON.stringify(manifest,null,2)+'\n');
++console.log(`Saved ${count} observations: ${out}`);
+diff --git a/tools/v052/summarize.py b/tools/v052/summarize.py
+new file mode 100644
+index 0000000..c782b00
+--- /dev/null
++++ b/tools/v052/summarize.py
+@@ -0,0 +1,32 @@
++import json,pathlib,collections,math,statistics,numpy as np
++root=pathlib.Path(__file__).resolve().parents[2];folder=root/'docs/v052/results'
++def read(name):return [json.loads(x) for x in (folder/f'{name}.jsonl').read_text().splitlines()]
++def wilson(k,n):
++ z=1.95996398454;p=k/n;d=1+z*z/n;c=(p+z*z/(2*n))/d;h=z*math.sqrt(p*(1-p)/n+z*z/(4*n*n))/d;return [c-h,c+h]
++def describe(rows):
++ n=len(rows);faults=[r for r in rows if r['error']];censored=[r for r in rows if r['numericallyCensored']]
++ assert n==128 and not censored,(n,censored)
++ return {'n':n,'windowYears':rows[0]['horizon'],'meanRestrictedLifeYears':statistics.mean(r['restrictedLife'] for r in rows),'planetSurvivors':sum(r['survived'] for r in rows),'planetSurvivalWilson95':wilson(sum(r['survived'] for r in rows),n),'jointSurvivors':sum(r['jointSurvived'] for r in rows),'jointSurvivalWilson95':wilson(sum(r['jointSurvived'] for r in rows),n),'stableFractionFullWindow':statistics.mean(r['stableFraction'] for r in rows),'lossCounts':dict(collections.Counter(r['lossReason'] or 'survived' for r in rows)),'stellarContactBeforePlanetEndpoint':sum(r['starContactAt'] is not None for r in rows),'numericalFaults':len(faults),'numericallyCensored':len(censored),'energyErrorBeforeLossOrContact':{'median':statistics.median(r['maxEnergyErrorBeforeLoss'] for r in rows),'max':max(r['maxEnergyErrorBeforeLoss'] for r in rows)},'angularErrorBeforeLossOrContact':{'median':statistics.median(r['maxLErrorBeforeLoss'] for r in rows),'max':max(r['maxLErrorBeforeLoss'] for r in rows)},'normalizedMomentumErrorBeforeLossOrContact':{'median':statistics.median(r['maxMomentumErrorBeforeLoss'] for r in rows),'max':max(r['maxMomentumErrorBeforeLoss'] for r in rows)}}
++rows=read('acceptance');assert len(rows)==384
++profiles={p:[r for r in rows if r['profile']==p] for p in dict.fromkeys(r['profile'] for r in rows)}
++assert all([r['seed'] for r in a]==[f'V052-ACCEPTANCE-{i}' for i in range(128)] for a in profiles.values())
++a,b,c=profiles.values();report={'cohort':'V052-ACCEPTANCE-0..127; fresh implementation experiment, separate from historical HOLDOUT-C','profiles':{p:describe(r) for p,r in profiles.items()}}
++rng=np.random.default_rng(52021);indices=rng.integers(0,128,(10000,128));comparisons={}
++for label,first,last in [('engineOnly',a,b),('newDefaultVsOld',a,c),('initializationOnly',b,c)]:
++ comparisons[label]={}
++ for key in ['restrictedLife','stableFraction','survived','jointSurvived']:
++  delta=np.array([float(y[key])-float(x[key]) for x,y in zip(first,last)])
++  comparisons[label][key]={'difference':float(np.mean(delta)),'pairedSeedBootstrap95':[float(x) for x in np.quantile(delta[indices].mean(axis=1),[.025,.975])]}
++report['pairedComparisons']=comparisons
++fine=read('convergence');long=read('long');report['fine']=describe(fine);report['long']=describe(long)
++report['convergenceComparison']={'survivalClassificationsChanged':sum(r['survived']!=s['survived'] for r,s in zip(c,fine)),'jointClassificationsChanged':sum(r['jointSurvived']!=s['jointSurvived'] for r,s in zip(c,fine)),'maxFirstLossTimeDifferenceYears':max(abs(r['restrictedLife']-s['restrictedLife']) for r,s in zip(c,fine)),'meanAbsoluteFirstLossTimeDifferenceYears':statistics.mean(abs(r['restrictedLife']-s['restrictedLife']) for r,s in zip(c,fine))}
++# Full cohort includes failures; the long experiment is never used to select initial conditions.
++assert [r['seed'] for r in fine]==[r['seed'] for r in c]==[r['seed'] for r in long]
++# Verify every hashed production source is exactly the tested source.
++import hashlib
++for name in ['acceptance','convergence','long']:
++ m=json.loads((folder/f'{name}.jsonl.manifest.json').read_text());assert m.get('finished'),name
++ for f,h in m['hashes'].items():assert hashlib.sha256((root/f).read_bytes()).hexdigest()==h,f
++report['sourceHashesVerified']=True
++(folder/'summary.json').write_text(json.dumps(report,indent=2)+'\n')
++print(json.dumps(report,indent=2))
+diff --git a/tools/v052/validation-samples.mjs b/tools/v052/validation-samples.mjs
+new file mode 100644
+index 0000000..11e5892
+--- /dev/null
++++ b/tools/v052/validation-samples.mjs
+@@ -0,0 +1,14 @@
++import {Simulation} from '../../src/simulation.js';
++import {GravityIntegrator,invariants} from '../../src/physics/gravity.js';
++import {G} from './research-reference.mjs';
++import {writeFile} from 'node:fs/promises';
++const samples=[];
++for(let i=0;i<4;i++){
++ const seed=`V052-INDEPENDENT-${i}`,s=new Simulation({seed,autorestart:false});s.tick();const initial=s.initialBodies,finals=[];
++ for(const maxStep of [.00075,.000375,.0001875]){
++  const p=new GravityIntegrator(structuredClone(initial),G);p.advance(4.5,{maxStep,adaptive:false});finals.push({maxStep,adaptive:false,bodies:p.bodies,diagnostics:p.diagnostics()});
++ }
++ const p=new GravityIntegrator(structuredClone(initial),G);p.advance(4.5);finals.push({maxStep:.00075,eta:.0075,adaptive:true,bodies:p.bodies,diagnostics:p.diagnostics()});
++ samples.push({seed,G,solverTime:4.5,initial,finals,radii:[s.settings._13,s.settings._21,s.settings._3,s.settings.newproperty20]});
++}
++await writeFile('docs/v052/results/validation-samples.json',JSON.stringify(samples,null,2)+'\n');

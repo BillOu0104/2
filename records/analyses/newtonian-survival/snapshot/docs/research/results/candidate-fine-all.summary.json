@@ -1,0 +1,115 @@
+{
+  "source": "docs/research/results/candidate-fine-all.jsonl",
+  "seedIndependentUnit": true,
+  "bootstrapDraws": 10000,
+  "summary": {
+    "candidate-fine": {
+      "n": 128,
+      "survivors": 6,
+      "survival": 0.046875,
+      "survival95": [
+        0.02165784417192422,
+        0.09849752245094139
+      ],
+      "jointSurvivors": 5,
+      "stellarContacts": 68,
+      "stellarBoundaryCrossings": 61,
+      "positiveEscapes": 94,
+      "lossReasons": {
+        "boundary-crossing": 24,
+        "positive-energy-escape": 44,
+        "disrupted": 26,
+        "engulfed": 28,
+        "null": 6
+      },
+      "errors": 0,
+      "cpuWallSeconds": 222.035299745,
+      "unresolvedPrimaryOutcomes": 0,
+      "survivalBoundsWithUnresolved": [
+        0.046875,
+        0.046875
+      ],
+      "restrictedLife": {
+        "nKnown": 128,
+        "mean": 244.97734375,
+        "median": 169.21666666666667,
+        "p90": 548.3333333333334,
+        "max": 1000.0
+      },
+      "stableFraction": {
+        "nKnown": 128,
+        "mean": 0.20967174479166667,
+        "median": 0.13999166666666668,
+        "p90": 0.48207666666666654,
+        "max": 0.9999333333333333
+      },
+      "stableConditional": {
+        "nKnown": 128,
+        "mean": 0.8135746673689161,
+        "median": 0.9358546631127556,
+        "p90": 0.9993713318023166,
+        "max": 0.9999333333333333
+      },
+      "temperateFraction": {
+        "nKnown": 128,
+        "mean": 0.055421744791666665,
+        "median": 0.003925,
+        "p90": 0.14258333333333328,
+        "max": 0.8563
+      },
+      "compactNonhierFraction": {
+        "nKnown": 128,
+        "mean": 0.2980184895833333,
+        "median": 0.22626666666666667,
+        "p90": 0.6999066666666667,
+        "max": 1.0
+      },
+      "jointStableFraction": {
+        "nKnown": 128,
+        "mean": 0.13038984374999998,
+        "median": 0.07045833333333333,
+        "p90": 0.314925,
+        "max": 0.9999333333333333
+      },
+      "maxEnergyError": {
+        "nKnown": 128,
+        "mean": 1.4619566131143046e-09,
+        "median": 5.546443119314566e-10,
+        "p90": 3.234068963310572e-09,
+        "max": 2.367253179387906e-08
+      },
+      "maxEnergyErrorBeforeContact": {
+        "nKnown": 128,
+        "mean": 3.5799079687104527e-10,
+        "median": 3.1723657669843173e-10,
+        "p90": 7.720464000039406e-10,
+        "max": 1.5640134651931176e-09
+      },
+      "maxLError": {
+        "nKnown": 128,
+        "mean": 3.961874428618756e-12,
+        "median": 3.21845177830795e-13,
+        "p90": 3.3700767164252336e-12,
+        "max": 3.302626295165901e-10
+      },
+      "minSS": {
+        "nKnown": 128,
+        "mean": 0.07940880714017806,
+        "median": 0.031033914521114602,
+        "p90": 0.18253971017401333,
+        "max": 1.2264030549803493
+      },
+      "minSP": {
+        "nKnown": 128,
+        "mean": 0.07948023895778145,
+        "median": 0.05017871864384858,
+        "p90": 0.18009130093524178,
+        "max": 0.37377597966424375
+      },
+      "initialBoundAnyHost": 128,
+      "initialMeanQ": 0.9990842209346384,
+      "initialMeanL": 0.17829542336608917
+    }
+  },
+  "comparisons": {}
+}

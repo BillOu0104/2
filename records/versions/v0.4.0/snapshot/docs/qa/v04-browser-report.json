@@ -1,0 +1,27 @@
+{
+  "passed": 9,
+  "checks": [
+    "clock moves upward, date/week align directly under it with equal font sizes; log is smaller",
+    "old alpha/beta/gamma distance rows and the dotted audio line are removed",
+    "upgraded settings show both top-five rankings by default",
+    "simulation-year totals and current universe age freeze while paused",
+    "total, universe and civilization ages use separate simulation-year counters",
+    "reload preserves cumulative years and rankings while starting the next numbered universe",
+    "real pointer drag obeys the angular-speed cap and stronger release damping",
+    "10 compact log rows and the requested runtime fields render with active ranking markers",
+    "mobile runtime overview and both rankings fit above the bottom controls"
+  ],
+  "errors": [],
+  "layout": {
+    "clockTop": 79.1875,
+    "calendarGap": 2,
+    "date": "11px",
+    "day": "11px",
+    "log": "9.5px",
+    "height": 800
+  },
+  "limits": [
+    "A controlled Worker snapshot populates the final screenshot; counters, reload and pointer motion were verified with the real Worker beforehand.",
+    "Actual Windows Wallpaper Engine and target GPU performance are not available in this environment."
+  ]
+}

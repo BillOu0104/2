@@ -1,0 +1,9 @@
+{
+ "prefix":"V052-ACCEPTANCE", "start":0, "seeds":128, "horizon":1000,
+ "output":"docs/v052/results/acceptance.jsonl",
+ "profiles":[
+  {"id":"old-init-old-engine","force":"legacy","dt":0.00075,"eps":0.1,"adaptive":false},
+  {"id":"old-init-new-engine","force":"newton","dt":0.00075,"eta":0.0075,"adaptive":true},
+  {"id":"new-init-new-engine","initialization":"research","force":"newton","dt":0.00075,"eta":0.0075,"adaptive":true}
+ ]
+}

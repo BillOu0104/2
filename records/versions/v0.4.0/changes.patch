@@ -1,0 +1,1091 @@
+diff --git a/index.html b/index.html
+index 1cf1de7..b6167f4 100644
+--- a/index.html
++++ b/index.html
+@@ -26,20 +26,25 @@
+       <div id="habitability-readout" class="habitability-readout">
+         <div><span data-zh="环境适宜度" data-en="HABITABILITY">环境适宜度</span><b id="habitability-score">—</b></div><div class="habitat-bar"><i id="habitability-fill"></i></div>
+         <div><span data-zh="文明韧性" data-en="RESILIENCE">文明韧性</span><b id="civilization-health">—</b></div><div class="habitat-bar"><i id="health-fill"></i></div>
+-        <p id="habitability-warning"></p>
+       </div>
+       <div id="physics-check" hidden></div>
+     </section>
+-    <section id="distance-widget" class="side-widget distance-widget">
+-      <div class="eyebrow" data-zh="恒星距离" data-en="STELLAR DISTANCES">恒星距离</div><div class="widget-rule"></div>
+-      <div class="distance-row"><span>α</span><div><small>ALPHA</small><div class="distance-bar"><i></i></div></div><b>—</b></div>
+-      <div class="distance-row"><span>β</span><div><small>BETA</small><div class="distance-bar"><i></i></div></div><b>—</b></div>
+-      <div class="distance-row"><span>γ</span><div><small>GAMMA</small><div class="distance-bar"><i></i></div></div><b>—</b></div>
+-      <div class="distance-unit">1 UNIT = 10¹² m</div>
++    <section id="distance-widget" class="side-widget distance-widget runtime-widget">
++      <div class="eyebrow" data-zh="基础信息" data-en="RUNTIME OVERVIEW">基础信息</div><div class="widget-rule"></div>
++      <dl class="runtime-info">
++        <div><dt data-zh="累计运行" data-en="Total elapsed">累计运行</dt><dd id="total-years">—</dd></div>
++        <div><dt data-zh="当前宇宙" data-en="Universe">当前宇宙</dt><dd id="current-universe">—</dd></div>
++        <div><dt data-zh="宇宙已运行" data-en="Universe age">宇宙已运行</dt><dd id="universe-years">—</dd></div>
++        <div><dt data-zh="当前文明" data-en="Civilization">当前文明</dt><dd id="current-civilization">—</dd></div>
++        <div><dt data-zh="文明已延续" data-en="Civilization age">文明已延续</dt><dd id="civilization-years">—</dd></div>
++      </dl>
++      <div id="ranking-widget" class="runtime-rankings">
++        <section><h2 class="eyebrow" data-zh="文明延续排行" data-en="LONGEST CIVILIZATIONS">文明延续排行</h2><ol id="civilization-ranking"></ol></section>
++        <section><h2 class="eyebrow" data-zh="宇宙寿命排行" data-en="LONGEST UNIVERSES">宇宙寿命排行</h2><ol id="universe-ranking"></ol></section>
++      </div>
+     </section>
+     <section id="civilization-widget" class="civilization-widget"><div id="civilization-status"></div><div id="civilization-lifespan"></div><ol id="civilization-log"></ol></section>
+-    <section id="ranking-widget" class="ranking-widget" hidden><div class="eyebrow" data-zh="文明存活排行" data-en="CIVILIZATION LONGEVITY">文明存活排行</div><ol id="ranking-list"></ol></section>
+-    <section class="simulation-time"><div id="audio-bars" aria-hidden="true"></div><div><span id="simulation-year">0.00</span><span class="year-unit">YEARS</span></div></section>
++    <section class="simulation-time"><div><span id="simulation-year">0.00</span><span class="year-unit">YEARS</span></div></section>
+     <div id="decor" aria-hidden="true"></div>
+     <button id="restart-prompt" hidden><span data-zh="天体已逃逸" data-en="CELESTIAL ESCAPE">天体已逃逸</span><strong data-zh="重启宇宙 ↻" data-en="RESTART UNIVERSE ↻">重启宇宙 ↻</strong></button>
+   </main>
+@@ -53,7 +58,7 @@
+     <div class="panel-tabs"><button class="active" data-tab="settings">全部设置</button><button data-tab="history">文明档案</button><button data-tab="about">项目说明</button></div>
+     <div id="settings-content" class="panel-scroll"><div id="extension-controls"></div><div id="original-controls"></div><p id="search-empty" hidden>没有匹配的设置 / No matching settings</p></div>
+     <div id="history-content" class="panel-scroll" hidden><div class="section-intro"><h3>文明档案</h3><p>当前设备保存的文明死亡记录。完整参数随档案保留，方便复现与后续扩展。</p><button id="export-history">导出档案 JSON</button></div><ol id="history-list"></ol></div>
+-    <div id="about-content" class="panel-scroll" hidden><article class="about-copy"><h3>三体 · 实时演算</h3><p>以你提供的 SYKM 原版 Wallpaper Engine 场景为基础。移植四体运动、温度、纪元与文明事件 SceneScript，并优化文明适宜度与延续机制，复用原版贴图、字体和音乐，天体采用圆形柔光与渐隐尾迹。</p><h4>运行架构</h4><p>Three.js 渲染与后台 Web Worker 模拟独立运行；无需远程服务器，网页与 Wallpaper Engine 共用同一套内核。模拟事件可供未来通知与 Seed 排行榜订阅。</p><h4>还原边界</h4><p>默认按固定 60 Hz 复现原版物理节奏；根据提供的原著讲解区分轨道纪元、天象与文明延续。−20～40°C 为常态活动范围，干仓休眠后可恢复同一文明。修复步长设置不即时生效、恒星碰撞距离未赋值、隐藏 UI 影响计算等问题。模型使用球体和圆环重建，后处理为 Three.js 对应实现，效果尚不能声称与原版逐像素一致。</p><p>原版文明逻辑是适温诞生与灾变毁灭，没有人口或技术树。新增轨道稳定确认、有限干仓耐受、差分潮汐与不可逆行星毁坏。具体阈值是可调模拟参数，非小说给定数值；完整算法依据、参数表和兼容差异随源码提供。原版背景已恢复为原生 8192×4096，并支持最高 7680×4320 渲染。</p><h4>来源</h4><p>原场景：SYKM ·《三体实时演算》<br>音乐：Melodysheep · Ether<br>保留原资源来源与非商用声明。</p><p class="muted">网页版音频须主动播放；Wallpaper Engine 可直接接收系统音频。自定义背景与历史保存在当前浏览器，不会上传。</p><div id="runtime-diagnostics"></div></article></div>
++    <div id="about-content" class="panel-scroll" hidden><article class="about-copy"><h3>三体 · 实时演算 v0.4</h3><p>以你提供的 SYKM 原版 Wallpaper Engine 场景为基础。移植四体运动、温度、纪元与文明事件 SceneScript，并优化文明适宜度与延续机制，复用原版贴图、字体和音乐，天体采用圆形柔光与渐隐尾迹。</p><h4>运行架构</h4><p>Three.js 渲染与后台 Web Worker 模拟独立运行；无需远程服务器，网页与 Wallpaper Engine 共用同一套内核。模拟事件可供未来通知与 Seed 排行榜订阅。</p><h4>还原边界</h4><p>默认按固定 60 Hz 复现原版物理节奏；根据提供的原著讲解区分轨道纪元、天象与文明延续。−20～40°C 为常态活动范围，干仓休眠后可恢复同一文明。修复步长设置不即时生效、恒星碰撞距离未赋值、隐藏 UI 影响计算等问题。模型使用球体和圆环重建，后处理为 Three.js 对应实现，效果尚不能声称与原版逐像素一致。</p><p>原版文明逻辑是适温诞生与灾变毁灭，没有人口或技术树。新增轨道稳定确认、有限干仓耐受、差分潮汐与不可逆行星毁坏。具体阈值是可调模拟参数，非小说给定数值；完整算法依据、参数表和兼容差异随源码提供。原版背景已恢复为原生 8192×4096，并支持最高 7680×4320 渲染。</p><h4>来源</h4><p>原场景：SYKM ·《三体实时演算》<br>音乐：Melodysheep · Ether<br>保留原资源来源与非商用声明。</p><p class="muted">网页版音频须主动播放；Wallpaper Engine 可直接接收系统音频。自定义背景与历史保存在当前浏览器，不会上传。</p><div id="runtime-diagnostics"></div></article></div>
+     <footer class="panel-footer"><button id="export-settings">导出种子</button><label class="file-button">导入种子<input id="import-settings" type="file" accept="application/json,.json" hidden></label><button id="reset-settings">恢复默认</button><span id="save-status">已保存到本机</span></footer>
+   </aside>
+ </body>
+diff --git a/package-lock.json b/package-lock.json
+index 4247abe..f2e5e8c 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -1,12 +1,12 @@
+ {
+   "name": "three-body-reconstruction",
+-  "version": "0.3.0",
++  "version": "0.4.0",
+   "lockfileVersion": 3,
+   "requires": true,
+   "packages": {
+     "": {
+       "name": "three-body-reconstruction",
+-      "version": "0.3.0",
++      "version": "0.4.0",
+       "dependencies": {
+         "three": "0.180.0"
+       },
+diff --git a/package.json b/package.json
+index 5ece5db..ab6f84a 100644
+--- a/package.json
++++ b/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "three-body-reconstruction",
+-  "version": "0.3.0",
++  "version": "0.4.0",
+   "private": true,
+   "type": "module",
+   "scripts": {
+diff --git a/src/adaptive-trails.js b/src/adaptive-trails.js
+new file mode 100644
+index 0000000..85f1e6a
+--- /dev/null
++++ b/src/adaptive-trails.js
+@@ -0,0 +1,71 @@
++const clamp=(x,low=0,high=1)=>Math.max(low,Math.min(high,x));
++const distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
++const usable=p=>p&&Number.isFinite(p.x)&&Number.isFinite(p.y)&&Number.isFinite(p.z)&&p.z>=-1&&p.z<=1;
++
++// Bounded physical history, independent of frame rate and the visible trail budget.
++export class TrailHistory {
++  constructor(capacity=4096){this.capacity=capacity;this.buffer=Array.from({length:capacity},()=>({x:0,y:0,z:0,time:0}));this.clear();}
++  clear(){this.length=0;this.cursor=0;this.budget=null;}
++  get(age=0){return age<this.length?this.buffer[(this.cursor-1-age+this.capacity)%this.capacity]:null;}
++  push(position,time){
++    if(![position.x,position.y,position.z,time].every(Number.isFinite))return;
++    const last=this.get();if(last&&time<=last.time)return;
++    Object.assign(this.buffer[this.cursor],{x:position.x,y:position.y,z:position.z,time});
++    this.cursor=(this.cursor+1)%this.capacity;this.length=Math.min(this.capacity,this.length+1);
++  }
++}
++
++// Frequent turns and repeated visits to the same screen cells indicate clutter.
++// Ignore subpixel motion; a stationary body must not count as a tangled trajectory.
++export function trailComplexity(histories,project,now){
++  const cells=new Map();let anchors=0,revisits=0,turning=0;
++  for(const history of histories){
++    let previous=null,direction=null,turn=0,lastCell=null;
++    for(let age=0;age<history.length;age++){
++      const p=history.get(age);if(now-p.time>8)break;
++      const screen=project(p);if(!usable(screen))continue;
++      if(previous&&distance(screen,previous)<4)continue;
++      if(previous){
++        const dx=screen.x-previous.x,dy=screen.y-previous.y,n=Math.hypot(dx,dy),next=[dx/n,dy/n];
++        if(direction)turn+=Math.acos(clamp(next[0]*direction[0]+next[1]*direction[1],-1,1));
++        direction=next;
++      }
++      const cell=`${Math.floor(screen.x/28)},${Math.floor(screen.y/28)}`;
++      if(cell!==lastCell){if(cells.has(cell))revisits++;cells.set(cell,true);anchors++;lastCell=cell;}
++      previous=screen;
++    }
++    turning=Math.max(turning,clamp((turn-4)/16));
++  }
++  const crowding=anchors>16?clamp((revisits/anchors-.15)/.55):0;
++  return Math.max(turning,crowding);
++}
++
++// Keep a consistent visible arc, looking further into history when motion is slow.
++export function selectTrail(history,project,{now,viewport=720,baseLength=400,complexity=0,dt=1/30,maxPoints=2000,maxAge=120}={}){
++  const target=viewport*1.1*clamp(baseLength/400,.05,3)/(1+4.5*clamp(complexity));
++  history.budget=history.budget===null?target:history.budget+(target-history.budget)*(1-Math.exp(-Math.max(0,dt)/.7));
++  const selected=[],head=history.get();let previous=null,previousPoint=null,arc=0;
++  if(!head)return{points:[],fractions:[],arcPixels:0,seconds:0,budget:history.budget};
++  for(let age=0;age<history.length;age++){
++    const point=history.get(age);if(now-point.time>maxAge)break;
++    const screen=project(point);if(!usable(screen))break;
++    if(!previous){selected.push(point);previous=screen;previousPoint=point;continue;}
++    const step=distance(screen,previous);if(step<1.25)continue;
++    const remaining=history.budget-arc;
++    if(step>remaining){
++      const t=remaining/step;
++      selected.push({x:previousPoint.x+(point.x-previousPoint.x)*t,y:previousPoint.y+(point.y-previousPoint.y)*t,z:previousPoint.z+(point.z-previousPoint.z)*t,time:previousPoint.time+(point.time-previousPoint.time)*t});
++      arc=history.budget;break;
++    }
++    arc+=step;selected.push(point);previous=screen;previousPoint=point;
++  }
++  // One fixed GPU capacity, even for long-running, very slow orbits.
++  const points=[];
++  if(selected.length>maxPoints){for(let i=0;i<maxPoints;i++)points.push(selected[Math.round(i*(selected.length-1)/(maxPoints-1))]);}
++  else points.push(...selected);
++  points.reverse();
++  let total=0;const fractions=[0];
++  for(let i=1;i<points.length;i++){total+=distance(project(points[i-1]),project(points[i]));fractions.push(total);}
++  if(total)for(let i=0;i<fractions.length;i++)fractions[i]/=total;
++  return{points,fractions,arcPixels:total,seconds:points.length?head.time-points[0].time:0,budget:history.budget};
++}
+diff --git a/src/bridge.js b/src/bridge.js
+index 4db5be7..9f43299 100644
+--- a/src/bridge.js
++++ b/src/bridge.js
+@@ -13,6 +13,6 @@ export function installWallpaperBridge({ changeSettings, setHostPaused, audio, r
+     setPaused(paused) { setHostPaused(!!paused); }
+   };
+   // Stable public extension boundary: notifications and remote rankings can subscribe later.
+-  window.threeBody = { version: '0.3.0', get algorithm() { return window.__threeBodyState?.algorithm; }, getState: () => window.__threeBodyState ? structuredClone(window.__threeBodyState) : null, applySettings: patch => changeSettings(patch), subscribe(type, listener) { const fn = e => listener(e.detail); window.addEventListener(type, fn); return () => window.removeEventListener(type, fn); }, wallpaper: !!window.wallpaperRegisterAudioListener };
++  window.threeBody = { version: '0.4.0', get algorithm() { return window.__threeBodyState?.algorithm; }, getState: () => window.__threeBodyState ? structuredClone(window.__threeBodyState) : null, applySettings: patch => changeSettings(patch), subscribe(type, listener) { const fn = e => listener(e.detail); window.addEventListener(type, fn); return () => window.removeEventListener(type, fn); }, wallpaper: !!window.wallpaperRegisterAudioListener };
+   return () => { window.wallpaperPropertyListener = prior; };
+ }
+diff --git a/src/civilization-state.js b/src/civilization-state.js
+index 04d1489..29da21c 100644
+--- a/src/civilization-state.js
++++ b/src/civilization-state.js
+@@ -1,7 +1,7 @@
+ export class CivilizationState{
+   constructor(shared){this.shared=shared;this.logs=[];this.serial=0;this.reset();}
+   reset(){this.phase=this.shared.civilizationAlive?'active':'empty';this.progress=0;this.safeTime=0;this.lastPhenomena='';this.lastEpoch=null;this.result=null;}
+-  log(kind,zh,en,year,runtime){this.logs.unshift({id:++this.serial,kind,zh,en,year,at:runtime});this.logs.length=Math.min(5,this.logs.length);}
++  log(kind,zh,en,year,runtime){this.logs.unshift({id:++this.serial,kind,zh,en,year,at:runtime});this.logs.length=Math.min(12,this.logs.length);}
+   destroy(cause,year,runtime,settings){
+     const s=this.shared;if(s.civilizationAlive){const number=s.civilizationCount,life=Math.max(0,Math.floor(year)-s.civilizationStartTime);s.lastCivilizationLifespan=life;s.civilizationAlive=false;
+       s.civilizationRecords.push({number,lifespan:life,destructionEvent:settings.cnen2?cause.en:cause.zh,text:s.text});
+diff --git a/src/habitability.js b/src/habitability.js
+index 073014c..5e8aedc 100644
+--- a/src/habitability.js
++++ b/src/habitability.js
+@@ -7,17 +7,19 @@ export class Habitability {
+     const temperature=Number(shared.tem),low=settings.newproperty45,high=settings.newproperty46;
+     const comfortable=Number.isFinite(temperature)&&temperature>=low&&temperature<=high;
+     const sleeping=['dormant','dehydrating','rehydrating'].includes(context.phase),terminal=!!context.terminal;
++    const damaged=!!context.damaged,tideRatio=context.tideRatio??0;
++    const hazard=damaged?'damaged':context.hazard|| (tideRatio>=.5?'tidal':null);
+     const excess=Number.isFinite(temperature)?Math.max(low-temperature,temperature-high,0):1000;
+     const storageExcess=Number.isFinite(temperature)?Math.max(settings.newproperty43-temperature,temperature-settings.newproperty44,0):1000;
+-    const raw=comfortable&&!terminal?1:0;
+-    if(!this.result)this.score=raw;else this.score+=(raw-this.score)*(1-Math.exp(-dt/1.2));
++    // This is current environmental suitability, not a moving average of past weather.
++    this.score=comfortable&&!terminal&&!damaged?clamp((1-tideRatio)/.5):0;
+     let exposure=0;
+     if(!comfortable)exposure=sleeping?(storageExcess>0?(.3+storageExcess/100)/settings.thermalGrace:.00025):(.15+excess/60)/settings.thermalGrace;
+-    if(context.hazard==='tidal')exposure+=.05;
+-    this.health=terminal?0:clamp(this.health+(comfortable?.06:-exposure)*dt);
++    if(hazard)exposure+=.05;
++    this.health=terminal?0:clamp(this.health+(comfortable && !hazard ? .06 : -exposure)*dt);
+     this.result={enabled:settings.civilizationMode!=='legacy',comfortable,stable:comfortable,score:clamp(this.score),health:this.health,
+-      canGrow:comfortable&&!terminal&&!context.hazard&&this.health>=.35,growth:comfortable?1:0,
+-      thermalFatal:this.health<=1e-9,hazard:context.hazard||null,exposure,low,high,storageLow:settings.newproperty43,storageHigh:settings.newproperty44};
++      canGrow:comfortable&&!terminal&&!hazard&&this.health>=.35,growth:this.score,
++      thermalFatal:this.health<=1e-9,hazard,exposure,low,high,storageLow:settings.newproperty43,storageHigh:settings.newproperty44};
+     return this.result;
+   }
+ }
+diff --git a/src/legacy/010.js b/src/legacy/010.js
+index 4dfcb75..8bd9b97 100644
+--- a/src/legacy/010.js
++++ b/src/legacy/010.js
+@@ -15,7 +15,7 @@ var scriptProperties = createScriptProperties()
+ 	.finish()
+ 
+ const TIME_PER_FRAME = 1;
+-let xntime = 0;
++let xntime = Number(shared.xntime) || 0;
+ 
+ function update(value) {
+     shared.kt= scriptProperties.kt;
+@@ -26,12 +26,12 @@ function update(value) {
+     }
+     
+     // 计算每帧增加的时间量
+-    const frameTime = TIME_PER_FRAME * shared.kt/10 * shared.ktime;
++    const frameTime = TIME_PER_FRAME * Math.pow(shared.kt / 10 * shared.ktime, 2) / 60;
+     
+     // 累积时间
+     xntime += frameTime;
+     //shared.xntime = 2.422209 * Math.sqrt(shared.kg/1000) * xntime / 60;
+-    shared.xntime = shared.kt/10 * xntime * shared.ktime / 60;
++    shared.xntime = xntime; // Keep elapsed years continuous when time factors change.
+     // 根据数值大小选择显示格式
+     let displayTime;
+     if (shared.xntime < 1e8) {  // 小于100,000,000
+diff --git a/src/main.js b/src/main.js
+index 4de5cb4..923a02b 100644
+--- a/src/main.js
++++ b/src/main.js
+@@ -8,6 +8,12 @@ import './style.css';
+ 
+ const $ = selector => document.querySelector(selector);
+ const settingsKey = 'three-body.settings.v3';
++const statisticsKey='three-body.statistics.v1';let lastStatisticsSave=0;
++function persistStatistics(force=false){
++  if(!state?.statisticsCheckpoint||(!force&&performance.now()-lastStatisticsSave<1000))return;
++  try{localStorage.setItem(statisticsKey,JSON.stringify(state.statisticsCheckpoint));lastStatisticsSave=performance.now();}catch{}
++}
++function savedStatistics(){try{return JSON.parse(localStorage.getItem(statisticsKey)||'null');}catch{return null;}}
+ let settings;
+ try {
+   const saved=localStorage.getItem(settingsKey),v2=localStorage.getItem('three-body.settings.v2'),v1=localStorage.getItem('three-body.settings.v1');
+@@ -123,7 +129,7 @@ function buildSettings() {
+     climateInertia: { type: 'slider', text: '气候热惯性 / Thermal inertia (s)', min: .05, max: 30, step: .05 },
+     stellarBreathing: { type: 'bool', text: '恒星半径缓慢呼吸 / Stellar breathing' },
+     renderQuality: { type: 'combo', text: '渲染清晰度 / Render resolution', options: [{value:'native',label:'原生屏幕分辨率 · 8K 原图（默认）'},{value:'8k',label:'8K 超采样 · 最高 7680×4320'}] },
+-    trailsLength: { type: 'slider', text: '轨迹长度 / Trail samples', min: 20, max: 2000, integer: true },
++    trailsLength: { type: 'slider', text: '自适应尾迹长度基准 / Trail length', min: 20, max: 2000, integer: true },
+     pixelRatio: { type: 'slider', text: '最大渲染像素比 / Pixel ratio', min: .5, max: 4, step: .1 },
+     bodyLabels: { type: 'bool', text: '显示天体标签 / Body labels' },
+     music: { type: 'bool', text: '播放原版音乐 · Ether' },
+@@ -179,18 +185,17 @@ function applyAppearance() {
+   $('#clock-widget').hidden = !s.clock;
+   $('#clock-time').hidden = !s.clock2; $('#clock-time').style.color = colorHex(s.clockcolor);
+   $('#clock-day').hidden = !s.day; $('#clock-day').style.color = colorHex(s.daycolor); $('#clock-date').hidden = !s.date;
+-  $('#clock-widget').style.top = `${15 - s.cly * 15}%`; $('#clock-widget').style.left = `${50 + s.clx * 16}%`; $('#clock-widget').style.scale = s.clocksize / .9;
++  $('#clock-widget').style.top = `${12 - s.cly * 15}%`; $('#clock-widget').style.left = `${50 + s.clx * 16}%`; $('#clock-widget').style.scale = s.clocksize / .9;
+   $('#era-widget').hidden = !s.menul; $('#era-widget').style.left = `${50 + s.mlx * 88}%`; $('#era-widget').style.marginTop = `${-(s.mly + .22) * 100}px`; $('#era-widget').style.scale = s.size2;
+   $('#era').style.opacity = s._19; $('#hydration').style.opacity = s._25; $('.temperature').style.opacity = s.newproperty21;
+   $('#distance-widget').hidden = !s.audiobar; $('#distance-widget').style.right = `${50 - s.mrx * 88}%`; $('#distance-widget').style.marginTop = `${-(s.mry + .22) * 100}px`; $('#distance-widget').style.scale = s.size;
+-  document.querySelectorAll('.distance-row b,.distance-row small,.distance-row>span').forEach(el => el.style.opacity = s.newproperty25);
+-  document.querySelectorAll('.distance-bar').forEach(el => el.style.opacity = s.newproperty24 * 3);
++  $('.runtime-info').style.opacity=s.newproperty25;
++  $('#distance-widget .widget-rule').style.opacity=Math.min(1,s.newproperty24*3);
+   $('#civilization-widget').hidden = !s.newproperty38; $('#civilization-widget').style.left = `${50 + s.x1 * 12}%`; $('#civilization-widget').style.marginTop = `${-(s.y1 - .36) * 90}px`; $('#civilization-widget').style.scale = s.size1 / .9;
+   $('#civilization-status').style.opacity = s.t1; $('#civilization-lifespan').style.opacity = s.t2;
+-  $('#ranking-widget').hidden = !s.newproperty39; $('#ranking-widget').style.left = `${50 + s.x2 * 12}%`; $('#ranking-widget').style.marginTop = `${-(s.y2 - 1.8) * 90}px`; $('#ranking-widget').style.scale = s.size3;
+-  $('#ranking-widget .eyebrow').style.opacity = s.t8;
+-  $('#audio-bars').hidden = !s.audioresponse; $('#audio-bars').style.scale = `${s.sizex / .6} ${s.sizey / .4}`;
+-  $('.simulation-time').style.left = `${50 + s.x * 12}%`; $('.simulation-time').style.marginBottom = `${(s.y + 1.3) * 70}px`; $('.simulation-time>div:nth-child(2)').style.opacity = s.newproperty22;
++  $('#ranking-widget').hidden = !s.newproperty39; $('#ranking-widget').style.transform=`translate(${s.x2*12}px,${-(s.y2-1.8)*90}px)`; $('#ranking-widget').style.scale=s.size3;
++  $('#ranking-widget').querySelectorAll('.eyebrow').forEach(el=>el.style.opacity=s.t8);
++  $('.simulation-time').style.left = `${50 + s.x * 12}%`; $('.simulation-time').style.marginBottom = `${(s.y + 1.3) * 70}px`; $('.simulation-time>div').style.opacity = s.newproperty22;
+   $('#decor').className = `${s.newproperty6 === '2' ? 'square' : s.newproperty6 === '3' ? 'none' : ''} ${s.newproperty4 !== '4' ? 'lines' : ''}`;
+   $('#physics-check').hidden = !s.cheatingcheck;
+   $('#login-title').textContent = s.newproperty58; $('#login-password').textContent = s.newproperty59; $('.loading-card>.eyebrow').textContent = s.customtex1;
+@@ -205,7 +210,7 @@ $('#pause-button').onclick = () => { userPaused = !userPaused; applyPause(); app
+ function restart() { worker?.postMessage({ type: 'restart' }); if (settings.newproperty64) showLoading(true); }
+ $('#restart-button').onclick = restart; $('#restart-prompt').onclick = restart;
+ $('#fullscreen-button').onclick = async () => { try { if (document.fullscreenElement) await document.exitFullscreen(); else await document.documentElement.requestFullscreen(); } catch { notice('当前宿主不支持网页全屏。'); } };
+-document.addEventListener('visibilitychange', () => { visibilityPaused = document.hidden; applyPause(); });
++document.addEventListener('visibilitychange', () => { persistStatistics(true);visibilityPaused = document.hidden; applyPause(); });
+ 
+ function downloadJSON(name, data) {
+   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }); const url = URL.createObjectURL(blob);
+@@ -238,10 +243,22 @@ function renderHistory() {
+     li.append(title, sub, button); list.append(li);
+   }
+ }
++function renderStatistics(s){
++  const stats=s.statistics;if(!stats)return;const en=settings.cnen2;
++  const years=n=>`${n>=1e7?n.toExponential(1):n.toFixed(1)}${en?' yr':'年'}`;
++  $('#total-years').textContent=years(stats.totalYears);$('#current-universe').textContent=`#${stats.universe.number}`;
++  $('#universe-years').textContent=years(stats.universe.lifespan);
++  $('#current-civilization').textContent=stats.civilization?`#${stats.civilization.number}`:(en?'Awaiting birth':'等待诞生');
++  $('#civilization-years').textContent=stats.civilization?years(stats.civilization.lifespan):'—';
++  for(const [id,records]of[['civilization-ranking',stats.civilizationRanking],['universe-ranking',stats.universeRanking]]){
++    const list=$(`#${id}`);if(list.children.length!==5){list.replaceChildren();for(let i=0;i<5;i++){const li=document.createElement('li');li.innerHTML='<span class="rank-number"></span><span class="rank-id"></span><span class="rank-years"></span>';list.append(li);}}
++    [...list.children].forEach((li,i)=>{const entry=records[i];li.dataset.active=String(!!entry?.active);li.querySelector('.rank-number').textContent=String(i+1).padStart(2,'0');li.querySelector('.rank-id').textContent=entry?`#${entry.number}${entry.active?' ·':''}`:'—';li.querySelector('.rank-years').textContent=entry?years(entry.lifespan):'—';const opacityKey=['t9','t10','tex4opacity','tex5opacity','tex6opacity'][i];li.style.opacity=Math.min(1,(entry?.active ? .85 : .58)*settings[opacityKey]/propertySchema[opacityKey].value);li.title=entry?.active?(en?'Still running':'仍在运行'):'';});
++  }
++}
+ function renderState(s) {
+   const en = settings.cnen2;
+   $('#era').textContent = s.era; $('#temperature').textContent = s.temperature.toFixed(1);
+-  const condition=s.world?.planet.condition,planetLabels={temperate:['温带行星','Temperate'],hot:['高温行星','Overheated'],frozen:['冰封行星','Frozen'],molten:['熔融行星','Molten'],damaged:['行星结构受损','Planetary damage'],'tidal-stress':['行星结构受损','Tidal damage'],engulfed:['行星已被吞噬','Planet engulfed'],disrupted:['行星已被撕裂','Planet disrupted']};
++  const condition=s.world?.planet.condition,planetLabels={temperate:['温带行星','Temperate'],hot:['高温行星','Overheated'],frozen:['冰封行星','Frozen'],molten:['熔融行星','Molten'],damaged:['行星结构受损','Planetary damage'],'tidal-stress':['潮汐应力过高','High tidal stress'],engulfed:['行星已被吞噬','Planet engulfed'],disrupted:['行星已被撕裂','Planet disrupted']};
+   $('#hydration').textContent=planetLabels[condition]?.[en?1:0]||'';
+   $('#phenomena').textContent=(s.world?.phenomena||[]).map(p=>en?p.en:p.zh).join(' · ');
+   const habitat = s.habitability;
+@@ -251,27 +268,26 @@ function renderState(s) {
+     $('#civilization-health').textContent = `${Math.round(habitat.health * 100)}%`;
+     $('#habitability-fill').style.width = `${habitat.score * 100}%`;
+     $('#health-fill').style.width = `${habitat.health * 100}%`;
+-    $('#habitability-warning').textContent = s.world?.planet.terminal ? (en?'PLANET LOST · RESTART REQUIRED':'行星毁坏 · 需重建宇宙') : habitat.hazard ? (en?'TIDAL STRESS':'潮汐应力损伤') : (en?`Active range: ${habitat.low} to ${habitat.high} °C`:`活动适温：${habitat.low}～${habitat.high}°C`);
+   }
+   $('#temperature-indicator').style.left = `${(s.temperature + 270) / 1770 * 100}%`;
+   $('.temperature').style.color = s.temperature > settings.newproperty46 ? '#dcb09c' : s.temperature < settings.newproperty45 ? '#8dbde5' : 'var(--accent)';
+   $('#civilization-status').textContent = s.text[0]; $('#civilization-lifespan').textContent = s.text[6];
+   const log=$('#civilization-log'),items=s.logItems?.length?s.logItems:s.log.map((text,i)=>({id:text,zh:text,en:text,at:s.runtime-i*5,legacy:true}));
+   const retained=new Set();
+-  items.forEach((entry,i)=>{
++  items.slice(0,10).forEach((entry,i)=>{
+     const id=String(entry.id);retained.add(id);let li=[...log.children].find(el=>el.dataset.id===id);
+     if(!li){li=document.createElement('li');li.dataset.id=id;log.append(li);}
+     li.textContent=entry.legacy?entry.zh:(en?`Year ${Math.floor(entry.year)} · ${entry.en}`:`第${Math.floor(entry.year)}年，${entry.zh}`);
+-    li.style.opacity=(settings[`t${i+3}`]??.4)*Math.max(0,1-(s.runtime-entry.at)/45);
++    li.style.opacity=Math.min(1,settings.t3*1.8)*Math.pow(.94,i)*Math.max(0,1-(s.runtime-entry.at)/120);
+     log.append(li);
+   });
+   [...log.children].forEach(li=>{if(!retained.has(li.dataset.id))li.remove();});
+-  const rank = $('#ranking-list'); rank.replaceChildren();
+-  for (let i = 0; i < 6; i++) { if (!s.text[8 + i]) continue; const li = document.createElement('li'); li.textContent = s.text[8 + i]; li.style.opacity = settings[['t9', 't10', 'tex4opacity', 'tex5opacity', 'tex6opacity', 'tex7opacity'][i]]; rank.append(li); }
++  renderStatistics(s);
+   $('#simulation-year').textContent = s.year >= 1e8 ? s.year.toExponential(2) : s.year.toFixed(2);
+-  $('#restart-prompt').hidden = !(s.escaped||s.world?.planet.terminal) || settings.autorestart;
+-  $('#restart-prompt span').textContent=s.world?.planet.terminal?(en?s.world.planet.terminal.en:s.world.planet.terminal.zh):(en?'CELESTIAL ESCAPE':'天体已逃逸');
+-  document.querySelectorAll('.distance-row').forEach((row, i) => { const d = s.distances[i] || 0; row.querySelector('b').textContent = d.toFixed(3); row.querySelector('i').style.width = `${Math.min(100, d / settings.newproperty13 * 100)}%`; });
++  $('#restart-prompt').hidden = !(s.escaped||s.world?.planet.restartRequired) || settings.autorestart;
++  $('#restart-prompt span').textContent=s.world?.planet.terminal?(en?s.world.planet.terminal.en:s.world.planet.terminal.zh):s.world?.planet.damaged?(en?'PLANETARY DAMAGE':'行星结构受损'):(en?'CELESTIAL ESCAPE':'天体已逃逸');
++  $('#restart-prompt strong').textContent=en?`Start universe ${s.generation+1} ↻`:`开启第${s.generation+1}号宇宙 ↻`;
++
+   if (settings.cheatingcheck) $('#physics-check').textContent = `${settings.newproperty60 ? 'CAGE ON / ' : ''}G × ${settings.newproperty52 / 1000} / T DIST × ${settings.newproperty69}\n${settings.physicsMode === 'reference' ? 'REFERENCE 60 Hz' : 'REAL TIME'}`;
+   $('#runtime-diagnostics').textContent = `Three.js WebGL · ${fps} FPS · Worker 60 Hz · Tick ${s.tick} · ${s.bodies.length} bodies · 宇宙 ${s.generation} · Seed ${s.seed} · ${renderer.canvas.width}×${renderer.canvas.height}`;
+ }
+@@ -300,10 +316,9 @@ function hideLoading() { clearTimeout(loadingTimer); $('#loading-overlay').class
+ $('#enter-universe').onclick = hideLoading;
+ 
+ buildSettings(); applyAppearance();
+-const bands = $('#audio-bars'); for (let i = 0; i < 48; i++) bands.append(document.createElement('i'));
+ const audio = new AudioController((values, average) => {
+   if (renderer) renderer.audioLevel = settings.audioresponse ? average : 0;
+-  if (settings.audioresponse) [...bands.children].forEach((bar, i) => { bar.style.height = `${1 + values[Math.min(15, Math.floor(Math.abs(i - 23.5) / 1.5))] * 25}px`; });
++
+ });
+ 
+ try {
+@@ -311,20 +326,19 @@ try {
+   const blob = new Blob([__WORKER_SOURCE__], { type: 'text/javascript' }); const workerURL = URL.createObjectURL(blob);
+   worker = new Worker(workerURL); worker.onmessage = ({ data }) => {
+     if (data.type === 'error') { fatal = true; console.error('Simulation worker:', data); notice(`模拟异常：${data.message}。请恢复默认设置后重试。`, true); return; }
+-    if (data.type === 'state') { state = data.state; lastTick = state.tick; window.__threeBodyState = state; renderer.ingest(state); renderState(state); handleEvents(state.events); }
++    if (data.type === 'state') { state = data.state; lastTick = state.tick; window.__threeBodyState = state; renderer.ingest(state); renderState(state); handleEvents(state.events);persistStatistics(); }
+   };
+   worker.onerror = event => { fatal = true; console.error(event); notice('后台模拟无法启动。请通过本地服务器或 Wallpaper Engine 打开此项目。', true); };
+-  worker.postMessage({ type: 'init', settings });
++  store.getAll('history').then(records=>{history=records.sort((a,b)=>a.savedAt-b.savedAt);worker.postMessage({type:'init',settings,statistics:savedStatistics()||{legacyRecords:history}});});
+   installWallpaperBridge({ changeSettings, renderer, audio, setHostPaused: value => { hostPaused = value; applyPause(); } });
+   store.getAsset('background').then(file => { if (file) { customURL = URL.createObjectURL(file); renderer.setCustomBackground(customURL); } });
+-  store.getAll('history').then(records => { history = [...records, ...history].sort((a, b) => a.savedAt - b.savedAt); });
+   let lastFrame = performance.now(), startTime = lastFrame, fpsStart = lastFrame, frames = 0, lastDraw = 0;
+   const animate = now => {
+     requestAnimationFrame(animate);
+     const cap = window.__wallpaperFPS || 60; if (now - lastDraw < 1000 / cap - 1) return;
+-    lastDraw = now; const dt = Math.min(.1, (now - lastFrame) / 1000); lastFrame = now;
++    lastDraw = now; const frameDt=(now-lastFrame)/1000,dt=Math.min(.1,frameDt); lastFrame = now;
+     if (hostPaused || visibilityPaused) return;
+-    audio.tick(); renderer.render(userPaused ? 0 : dt, (now - startTime) / 1000);
++    audio.tick(); renderer.render(userPaused ? 0 : dt, (now - startTime) / 1000,userPaused?0:Math.min(1,frameDt));
+     frames++; if (now - fpsStart > 1000) { fps = Math.round(frames * 1000 / (now - fpsStart)); frames = 0; fpsStart = now; }
+   };
+   requestAnimationFrame(animate);
+@@ -336,10 +350,11 @@ try {
+   }, 1000);
+   if (settings.newproperty64 || settings.newproperty63) showLoading(); else $('#loading-overlay').hidden = true;
+   if (settings.menuinit) setPanel(true);
+-  addEventListener('beforeunload', () => { worker.terminate(); URL.revokeObjectURL(workerURL); if (customURL) URL.revokeObjectURL(customURL); });
++  addEventListener('pagehide',()=>persistStatistics(true));
++  addEventListener('beforeunload', () => { persistStatistics(true);worker.terminate(); URL.revokeObjectURL(workerURL); if (customURL) URL.revokeObjectURL(customURL); });
+ } catch (error) {
+   fatal = true; console.error(error); hideLoading(); notice(`无法初始化 3D 场景：${error.message}。请启用浏览器硬件加速。`, true);
+ }
+ // Diagnostic readout for automated smoke checks and host integrations.
+ window.__threeBodyDiagnostics = () => ({ ready: !!state && !fatal, tick: lastTick, fps, paused: userPaused || hostPaused || visibilityPaused, controls: controlMap.size, history: history.length, worker: !!worker,
+-  scene: renderer ? { canvas:[renderer.canvas.width,renderer.canvas.height], drawingBuffer:[renderer.renderer.getContext().drawingBufferWidth,renderer.renderer.getContext().drawingBufferHeight], renderedFrames:renderer.renderer.info.render.frame, compassVisible:renderer.compass.visible, maxTextureSize:renderer.renderer.capabilities.maxTextureSize, backgroundSizes:Object.fromEntries(Object.entries(renderer.bgTextures).map(([k,t])=>[k,[t.image?.width||0,t.image?.height||0]])), backgroundFollowsView: renderer.sky.parent === renderer.world, viewRotation: renderer.world.rotation.toArray().slice(0,3), skyRotation: renderer.sky.getWorldQuaternion(new renderer.camera.quaternion.constructor()).toArray(), bodyShapes: renderer.nodes.map(n => n.mesh.geometry.type), glowShape: 'radial-circle', trailSamples: renderer.trailBuffers.map(b => b.length), trailsVisible: renderer.trails.every(t => t.visible) } : null });
++  scene: renderer ? { canvas:[renderer.canvas.width,renderer.canvas.height], drawingBuffer:[renderer.renderer.getContext().drawingBufferWidth,renderer.renderer.getContext().drawingBufferHeight], renderedFrames:renderer.renderer.info.render.frame, viewVelocity:[renderer.rot.vx,renderer.rot.vy], maxAngularSpeed:renderer.rot.maxSpeed, compassVisible:renderer.compass.visible, maxTextureSize:renderer.renderer.capabilities.maxTextureSize, backgroundSizes:Object.fromEntries(Object.entries(renderer.bgTextures).map(([k,t])=>[k,[t.image?.width||0,t.image?.height||0]])), backgroundFollowsView: renderer.sky.parent === renderer.world, viewRotation: renderer.world.rotation.toArray().slice(0,3), skyRotation: renderer.sky.getWorldQuaternion(new renderer.camera.quaternion.constructor()).toArray(), bodyShapes: renderer.nodes.map(n => n.mesh.geometry.type), glowShape: 'radial-circle', bodyLabelsVisible:renderer.nodes.some(n=>!n.label.hidden), trailSamples: renderer.trailBuffers.map(b => b.length), trailComplexity:renderer.trailComplexity||0, trailMetrics:renderer.trailMetrics||[], trailsVisible: renderer.trails.every(t => t.visible) } : null });
+diff --git a/src/renderer.js b/src/renderer.js
+index a59b314..9719d9b 100644
+--- a/src/renderer.js
++++ b/src/renderer.js
+@@ -7,6 +7,8 @@ import { Line2 } from 'three/addons/lines/Line2.js';
+ import { LineGeometry } from 'three/addons/lines/LineGeometry.js';
+ import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
+ import { colorRGB, seededRandom } from './settings.js';
++import { ViewMotion } from './view-motion.js';
++import { TrailHistory, trailComplexity, selectTrail } from './adaptive-trails.js';
+ 
+ const C = v => new THREE.Color(...colorRGB(v));
+ const sphere = new THREE.SphereGeometry(1, 96, 64);
+@@ -70,7 +72,7 @@ export class SpaceRenderer {
+       // Growing a one-segment LineGeometry later silently clips rendering to that segment.
+       const geo = new LineGeometry(); geo.setPositions(new Float32Array(2000 * 3)); geo.setColors(new Float32Array(2000 * 3)); geo.instanceCount = 0;
+       const line = new Line2(geo, new LineMaterial({ linewidth: 2.2, vertexColors: true, transparent: true, opacity: .8, blending: THREE.AdditiveBlending, depthWrite: false }));
+-      line.frustumCulled = false; this.world.add(line); this.trails.push(line); this.trailBuffers.push([]);
++      line.frustumCulled = false; this.world.add(line); this.trails.push(line); this.trailBuffers.push(new TrailHistory());
+     }
+     this.dustLayers = [];
+     const rng = seededRandom('original-dust');
+@@ -85,14 +87,13 @@ export class SpaceRenderer {
+     // Small bright spheres become square impulses in a downsampled bloom pyramid.
+     // Explicit radial sprites provide the HDR halo without changing circular silhouettes.
+     this.post = new ShaderPass(postShader);
+-    this.mouse = { x: 0, y: 0, down: false, dragging: false, startX: 0, startY: 0, lastX: 0, lastY: 0 }; this.rot = { x: 0, y: 0, vx: 0, vy: 0 }; this.follow = { x: 0, y: 0 };
++    this.mouse = { x: 0, y: 0, down: false, dragging: false, startX: 0, startY: 0, lastX: 0, lastY: 0 }; this.rot = new ViewMotion();this.autoAngle=0;
+     canvas.addEventListener('pointerdown', e => { if(e.button!==0)return; this.mouse.down = true; this.mouse.dragging=false; this.mouse.startX=this.mouse.lastX = e.clientX; this.mouse.startY=this.mouse.lastY = e.clientY; canvas.setPointerCapture(e.pointerId); });
+     canvas.addEventListener('pointermove', e => {
+       this.mouse.x = e.clientX / innerWidth * 2 - 1; this.mouse.y = e.clientY / innerHeight * 2 - 1;
+       if (this.mouse.down && +this.settings.newproperty61 === 0) {
+         if(Math.hypot(e.clientX-this.mouse.startX,e.clientY-this.mouse.startY)>3)this.mouse.dragging=true;
+-        this.rot.vy += (e.clientX - this.mouse.lastX) / innerWidth * this.settings.y5 * 10;
+-        this.rot.x += (e.clientY - this.mouse.lastY) / innerHeight * this.settings.x5 * 2;
++        this.rot.drag((e.clientX-this.mouse.lastX)/innerWidth,(e.clientY-this.mouse.lastY)/innerHeight,this.settings.x5,this.settings.y5);
+       }
+       this.mouse.lastX = e.clientX; this.mouse.lastY = e.clientY;
+     });
+@@ -151,33 +152,18 @@ export class SpaceRenderer {
+     this.resize();
+   }
+   clearTrails() {
+-    this.trailBuffers.forEach(b => b.length = 0);
++    this.trailBuffers.forEach(b => b.clear());
++    this.trailComplexity=0;this.trailMetrics=[];
+     this.trails.forEach(line => { line.geometry.instanceCount = 0; });
+   }
+   ingest(state) {
+     if (this.snap && state.revision !== this.snap.revision) { this.clearTrails(); this.firstPosition = true; }
+     if (!this.snap) this.firstPosition = true;
+     this.snap = state;
+-    const keys = ['brfontcoloraaaaaatrail1color', 'brfontcoloraaaaaatrail2color', 'brfontcoloraaaaaatrail3color', 'brfontcoloraaaaaatrail4color'];
+     state.bodies.forEach((b, i) => {
+-      const n = this.nodes[i]; const previous = n.target.clone(); n.target.set(b.x - state.com.x, b.y - state.com.y, b.z - state.com.z);
++      const n = this.nodes[i]; n.target.set(b.x - state.com.x, b.y - state.com.y, b.z - state.com.z);
+       if (this.firstPosition) n.group.position.copy(n.target);
+-      if (this.settings.newproperty14) {
+-        const trail = this.trailBuffers[i];
+-        const samples = this.firstPosition ? 1 : Math.max(1, Math.min(15, state.tick - (this.lastTrailTick || state.tick)));
+-        for (let j = 1; j <= samples; j++) trail.push((this.firstPosition ? n.target : previous).clone().lerp(n.target, j / samples));
+-        if (trail.length > this.settings.trailsLength) trail.splice(0, trail.length - this.settings.trailsLength);
+-        const geometry = this.trails[i].geometry, positions = geometry.attributes.instanceStart.data, colors = geometry.attributes.instanceColorStart.data;
+-        const color = C(this.settings[keys[i]]);
+-        for (let j = 0; j < trail.length - 1; j++) {
+-          const a = trail[j], b = trail[j + 1], offset = j * 6;
+-          positions.array.set([a.x,a.y,a.z,b.x,b.y,b.z],offset);
+-          const fadeA = Math.pow(j / (trail.length - 1),1.6), fadeB = Math.pow((j+1)/(trail.length-1),1.6);
+-          colors.array.set([color.r*fadeA,color.g*fadeA,color.b*fadeA,color.r*fadeB,color.g*fadeB,color.b*fadeB],offset);
+-        }
+-        positions.needsUpdate = colors.needsUpdate = true;
+-        geometry.instanceCount = Math.max(0,trail.length-1);
+-      }
++      if (this.settings.newproperty14)this.trailBuffers[i].push(n.target,state.runtime);
+     });
+     this.lastTrailTick = state.tick;
+     this.firstPosition = false;
+@@ -189,20 +175,37 @@ export class SpaceRenderer {
+     this.nodes[3].label.hidden=!this.settings.newproperty65||!this.settings.bodyLabels||!!state.world?.planet.terminal;
+     this.nodes.slice(0,3).forEach((n,i)=>{const radius=state.world?.stars[i]?.radius;if(radius)n.mesh.scale.setScalar(radius);});
+   }
+-  render(dt, elapsed) {
++  updateTrails(dt) {
++    this.world.updateWorldMatrix(true,false);this.camera.updateMatrixWorld();
++    const project=point=>{
++      vec.set(point.x,point.y,point.z).applyMatrix4(this.world.matrixWorld).project(this.camera);
++      return{x:(vec.x*.5+.5)*innerWidth,y:(-.5*vec.y+.5)*innerHeight,z:vec.z};
++    };
++    const raw=trailComplexity(this.trailBuffers,project,this.snap.runtime);
++    this.trailComplexity=(this.trailComplexity||0)+(raw-(this.trailComplexity||0))*(1-Math.exp(-dt/.7));
++    const keys=['brfontcoloraaaaaatrail1color','brfontcoloraaaaaatrail2color','brfontcoloraaaaaatrail3color','brfontcoloraaaaaatrail4color'];
++    this.trailMetrics=this.trailBuffers.map((history,i)=>{
++      const selection=selectTrail(history,project,{now:this.snap.runtime,viewport:Math.min(innerWidth,innerHeight),baseLength:this.settings.trailsLength,complexity:this.trailComplexity,dt});
++      const {points,fractions}=selection,geometry=this.trails[i].geometry,positions=geometry.attributes.instanceStart.data,colors=geometry.attributes.instanceColorStart.data,color=C(this.settings[keys[i]]);
++      for(let j=0;j<points.length-1;j++){
++        const a=points[j],b=points[j+1],offset=j*6,fadeA=Math.pow(fractions[j],1.4),fadeB=Math.pow(fractions[j+1],1.4);
++        positions.array.set([a.x,a.y,a.z,b.x,b.y,b.z],offset);
++        colors.array.set([color.r*fadeA,color.g*fadeA,color.b*fadeA,color.r*fadeB,color.g*fadeB,color.b*fadeB],offset);
++      }
++      positions.needsUpdate=colors.needsUpdate=true;geometry.instanceCount=Math.max(0,points.length-1);
++      this.trails[i].material.opacity=.8-.25*this.trailComplexity;
++      this.trails[i].material.linewidth=2.2-.5*this.trailComplexity;
++      return{arcPixels:selection.arcPixels,seconds:selection.seconds,budget:selection.budget,segments:geometry.instanceCount};
++    });
++  }
++  render(dt, elapsed, motionDt=dt) {
+     const s = this.settings;
+     this.compass.visible=!!s.compass&&this.mouse.down&&this.mouse.dragging&&+s.newproperty61===0;
+-    if (+s.newproperty61 === 1) {
+-      const a = Math.min(1, s.newproperty62 * dt * 60);
+-      this.follow.x += (this.mouse.x - this.follow.x) * a; this.follow.y += (this.mouse.y - this.follow.y) * a;
+-      this.rot.y = this.follow.x * s.x6 * Math.PI / 180 + (s.newproperty16 ? elapsed * s.newproperty51 * Math.PI / 180 : 0);
+-      this.rot.x = this.follow.y * s.y7 * Math.PI / 180;
+-    } else {
+-      this.rot.vy *= Math.pow(s.y6, dt * 60);
+-      this.rot.y += this.rot.vy * dt * 60 + (s.newproperty16 ? s.newproperty51 * dt * Math.PI / 180 : 0);
+-      this.rot.x = THREE.MathUtils.clamp(this.rot.x, -Math.PI / 6, Math.PI / 6);
+-    }
+-    this.world.rotation.set(this.rot.x + (s.newproperty16 ? Math.sin(elapsed * .1) * s.brfontcoloraaaaaaxspinangle * Math.PI / 180 : 0), this.rot.y, 0);
++    if(s.newproperty16)this.autoAngle+=s.newproperty51*motionDt*Math.PI/180;
++    if(+s.newproperty61===1){
++      for(let remaining=motionDt;remaining>1e-8;){const step=Math.min(1/60,remaining);this.rot.follow(this.mouse.y*s.y7*Math.PI/180,this.mouse.x*s.x6*Math.PI/180,step,Math.max(.25,s.newproperty62*12));remaining-=step;}
++    }else this.rot.coast(motionDt,-Math.log(Math.min(.999,s.y6))*120);
++    this.world.rotation.set(this.rot.x+(s.newproperty16?Math.sin(elapsed*.1)*s.brfontcoloraaaaaaxspinangle*Math.PI/180:0),this.rot.y+this.autoAngle,0);
+     this.nodes.forEach((n, i) => {
+       n.group.position.lerp(n.target, 1 - Math.exp(-dt * 22)); n.mesh.rotation.y += dt * .1;
+       if (i < 3) { n.glow.material.opacity = Math.min(1, .35 + s.newproperty49 * .3 + (s.newproperty2 ? s.hdr * .09 : 0) + this.audioLevel * .12); }
+@@ -211,6 +214,9 @@ export class SpaceRenderer {
+       n.label.style.visibility = vec.z > 1 || vec.z < -1 ? 'hidden' : 'visible';
+       if (this.snap) n.label.querySelector('small').textContent = `${n.group.position.x.toFixed(2)} / ${n.group.position.y.toFixed(2)}`;
+     });
++    if(s.newproperty14&&this.snap&&(this.lastTrailRender===undefined||elapsed-this.lastTrailRender>=.05)){
++      this.updateTrails(Math.min(1,elapsed-(this.lastTrailRender??elapsed-.05)));this.lastTrailRender=elapsed;
++    }
+     this.dustLayers.forEach((d, i) => { d.rotation.y = elapsed * .002 * (i + 1); });
+     this.post.uniforms.time.value = elapsed;
+     if (s.newproperty2) this.composer.render(dt); else this.renderer.render(this.scene, this.camera);
+diff --git a/src/run-statistics.js b/src/run-statistics.js
+new file mode 100644
+index 0000000..9cd387f
+--- /dev/null
++++ b/src/run-statistics.js
+@@ -0,0 +1,44 @@
++const number=(value,fallback=0)=>Number.isFinite(value)&&value>=0?value:fallback;
++const top=records=>[...new Map(records.filter(r=>r&&Number.isSafeInteger(r.number)&&r.number>0&&Number.isFinite(r.lifespan)&&r.lifespan>=0).map(r=>[r.id??r.number,r])).values()].sort((a,b)=>b.lifespan-a.lifespan||a.number-b.number).slice(0,5);
++
++// Counts simulated years, never wall-clock seconds. Checkpoints close the old run on reload.
++export class RunStatistics {
++  constructor(saved={}){
++    const valid=saved?.format==='three-body-statistics'&&saved.version===1;
++    this.totalYears=valid?number(saved.totalYears):0;
++    this.universeNumber=valid?Math.max(1,Math.floor(number(saved.universeNumber,1))):1;
++    this.universeStart=valid?Math.min(this.totalYears,number(saved.universeStart)):0;
++    this.universes=valid?top((Array.isArray(saved.universes)?saved.universes:[]).slice(0,10)):[];
++    this.civilizations=valid?top((Array.isArray(saved.civilizations)?saved.civilizations:[]).slice(0,10)):[];
++    this.nextCivilization=valid?Math.max(1,Math.floor(number(saved.nextCivilization,1))):1;
++    this.activeCivilization=valid&&saved.activeCivilization&&Number.isSafeInteger(saved.activeCivilization.number)&&saved.activeCivilization.number>0?{number:saved.activeCivilization.number,start:Math.min(this.totalYears,number(saved.activeCivilization.start))}:null;
++    if(valid){if(this.activeCivilization)this.finishCivilization({number:this.activeCivilization.number,destructionEvent:'结束上次运行'});this.finishUniverse('reload');}
++    else if(Array.isArray(saved?.legacyRecords)){
++      // Old archives may reuse numbers across sessions; give each retained record its own ID.
++      const records=saved.legacyRecords.filter(r=>r&&Number.isFinite(r.lifespan)&&r.lifespan>=0);
++      records.forEach((r,i)=>this.civilizations.push({number:Number.isSafeInteger(r.number)&&r.number>0?r.number:i+1,id:r.key||`legacy-${i}`,lifespan:r.lifespan,legacy:true}));
++      this.nextCivilization=Math.max(1,...this.civilizations.map(r=>r.number+1));this.civilizations=top(this.civilizations);
++    }
++  }
++  observe(year,shared){
++    this.totalYears=Math.max(this.totalYears,number(year));
++    this.nextCivilization=Math.max(this.nextCivilization,shared.civilizationCount||1);
++    if(shared.civilizationAlive&&!this.activeCivilization)this.activeCivilization={number:shared.civilizationCount,start:this.totalYears};
++  }
++  finishCivilization(record){
++    const lifespan=this.activeCivilization?.number===record.number?Math.max(0,this.totalYears-this.activeCivilization.start):number(record.lifespan);
++    this.civilizations=top([...this.civilizations,{number:record.number,lifespan}]);
++    this.nextCivilization=Math.max(this.nextCivilization,record.number+1);
++    if(this.activeCivilization?.number===record.number)this.activeCivilization=null;
++  }
++  finishUniverse(reason){
++    this.universes=top([...this.universes,{number:this.universeNumber,lifespan:Math.max(0,this.totalYears-this.universeStart),reason}]);
++    this.universeNumber++;this.universeStart=this.totalYears;
++  }
++  snapshot(){
++    const universe={number:this.universeNumber,lifespan:Math.max(0,this.totalYears-this.universeStart),active:true};
++    const civilization=this.activeCivilization?{number:this.activeCivilization.number,lifespan:Math.max(0,this.totalYears-this.activeCivilization.start),active:true}:null;
++    return{totalYears:this.totalYears,universe,civilization,universeRanking:top([...this.universes,universe]),civilizationRanking:top([...this.civilizations,...(civilization?[civilization]:[])])};
++  }
++  checkpoint(){return{format:'three-body-statistics',version:1,totalYears:this.totalYears,universeNumber:this.universeNumber,universeStart:this.universeStart,nextCivilization:this.nextCivilization,activeCivilization:this.activeCivilization,universes:this.universes,civilizations:this.civilizations};}
++}
+diff --git a/src/settings.js b/src/settings.js
+index 73d7fea..bec72e6 100644
+--- a/src/settings.js
++++ b/src/settings.js
+@@ -2,15 +2,18 @@ import { propertySchema } from './original-data.js';
+ 
+ export const defaults = Object.fromEntries(Object.entries(propertySchema)
+   .filter(([, d]) => d.type && d.type !== 'group').map(([k, d]) => [k, d.value]));
+-export const extraDefaults = { seed: 'TRISOLARIS', music: false, volume: 0.35, trailsLength: 400, physicsMode: 'reference', pixelRatio: 4, bodyLabels: true, civilizationMode: 'balanced', thermalGrace: 8, wakeDelay: 3, epochWindow: 2, climateInertia: 1.5, stellarBreathing: true, renderQuality: 'native' };
++export const extraDefaults = { seed: 'TRISOLARIS', music: false, volume: 0.35, trailsLength: 400, physicsMode: 'reference', pixelRatio: 4, bodyLabels: false, presentationRevision: 2, civilizationMode: 'balanced', thermalGrace: 8, wakeDelay: 3, epochWindow: 2, climateInertia: 1.5, stellarBreathing: true, renderQuality: 'native' };
+ // New installs show the requested tails; explicitly saved off/on preferences still win.
+ defaults.newproperty14 = true;
++defaults.newproperty39 = true;
+ defaults.newproperty45 = -20;
+ defaults.newproperty46 = 40;
+ defaults.newproperty51 = .35;
+ defaults.newproperty3 = 0;
+ defaults.newproperty68 = 0;
+ export const effectivePropertySchema = { ...propertySchema,
++  newproperty39:{...propertySchema.newproperty39,text:'显示右侧双排行 / Rankings',value:true},
++  audiobar:{...propertySchema.audiobar,text:'显示基础信息与排行 / Runtime overview'},
+   newproperty45: {...propertySchema.newproperty45,text:'常态活动低温边界 / Active life minimum °C',value:-20},
+   newproperty46: {...propertySchema.newproperty46,text:'常态活动高温边界 / Active life maximum °C',value:40},
+   newproperty43: {...propertySchema.newproperty43,text:'干仓低温耐受 / Dry storage minimum °C'},
+@@ -49,8 +52,10 @@ export function colorRGB(s = '1 1 1') { return s.split(/\s+/).map(Number); }
+ export function colorHex(s) { return '#' + colorRGB(s).map(x => Math.round(x * 255).toString(16).padStart(2, '0')).join(''); }
+ export function fromHex(s) { return [1, 3, 5].map(i => parseInt(s.slice(i, i + 2), 16) / 255).join(' '); }
+ export function plainText(s = '') { return s.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' '); }
+-export function algorithmId(s) { return `sykm-scene-v3-${s.physicsMode}60-civ-${s.civilizationMode}-v3`; }
++export function algorithmId(s) { return `sykm-scene-v4-${s.physicsMode}60-civ-${s.civilizationMode}-v3-damage1`; }
+ export function migrateSettings(saved={},version=3){
++  // One-time presentation migration for v0.3 installations with labels enabled.
++  if(saved.presentationRevision!==extraDefaults.presentationRevision)saved={...saved,bodyLabels:saved.presentationRevision>=1?saved.bodyLabels:false,newproperty39:true};
+   if(version<3)return normalizeSettings({...saved,newproperty45:-20,newproperty46:40,newproperty51:Math.abs(saved.newproperty51??3)>=2 ? .35 : (saved.newproperty51??.35),newproperty3:0,newproperty68:0});
+   return normalizeSettings(saved);
+ }
+diff --git a/src/simulation-worker.js b/src/simulation-worker.js
+index 744375c..3f23480 100644
+--- a/src/simulation-worker.js
++++ b/src/simulation-worker.js
+@@ -8,7 +8,7 @@ function sendState() {
+ }
+ self.onmessage = ({ data }) => {
+   try {
+-    if (data.type === 'init') { simulation = new Simulation(data.settings); simulation.tick(); sendState(); }
++    if (data.type === 'init') { simulation = new Simulation(data.settings,data.statistics); simulation.tick(); sendState(); }
+     if (data.type === 'settings') simulation?.configure(data.patch);
+     if (data.type === 'restart') simulation?.restart();
+     if (data.type === 'pause') { paused = data.value; remainder = 0; lastTime = performance.now(); }
+diff --git a/src/simulation.js b/src/simulation.js
+index 76cb752..057ca32 100644
+--- a/src/simulation.js
++++ b/src/simulation.js
+@@ -7,6 +7,7 @@ import loadingFactory from './legacy/156.js';
+ import { moduleBindings } from './original-data.js';
+ import { normalizeSettings, seededRandom, algorithmId } from './settings.js';
+ import { Habitability } from './habitability.js';
++import { RunStatistics } from './run-statistics.js';
+ import { WorldState } from './world-state.js';
+ import { CivilizationState } from './civilization-state.js';
+ 
+@@ -15,17 +16,19 @@ const plain = v => v && typeof v === 'object' ? structuredClone(v) : v;
+ 
+ // Backend independent of DOM, WebGL and transport. The Worker and Node use the same class.
+ export class Simulation {
+-  constructor(settings = {}) {
++  constructor(settings = {}, statistics = {}) {
++    this.statistics=new RunStatistics(statistics);
+     this.settings = normalizeSettings(settings);
+-    this.shared = { gjz: 0, rst: 0, cfw: 0, c_down: false, text: '' };
++    this.shared = { gjz: 0, rst: 0, cfw: 0, c_down: false, text: '',xntime:this.statistics.totalYears };
+     this.engine = { runtime: 0, frametime: 1 / 60, screenResolution: new Vec3(1920, 1080, 0) };
+     this.input = { cursorScreenPosition: new Vec3(960, 540, 0) };
+-    this.generation = 1; this.tickCount = 0; this.revision = 0; this.events = []; this.eventSeq = 0;
++    this.generation = this.statistics.universeNumber; this.tickCount = 0; this.revision = 0; this.events = []; this.eventSeq = 0;
+     this.habitability = new Habitability();
+-    this.world = new WorldState(); this.terminalSince=null;
++    this.world = new WorldState(); this.terminalSince=null;this.restartSince=null;
+     this.setRandom();
+     this.modules = {};
+     for (const [id, factory] of Object.entries({ '008': physicsFactory, '010': timeFactory, '042': civilizationFactory, '072': eraFactory, '079': temperatureFactory, '156': loadingFactory })) this.modules[id] = this.createModule(id, factory);
++    this.shared.civilizationCount=this.statistics.nextCivilization;
+     this.civilization = new CivilizationState(this.shared);
+     this.modules['008'].init();
+   }
+@@ -43,7 +46,7 @@ export class Simulation {
+     builder.values = {};
+     builder.finish = function() { return Object.assign(this.values, overrides); };
+     const math = Object.create(Math); math.random = () => self.random();
+-    return factory({ shared: this.shared, engine: this.engine, input: this.input, thisScene: { createLayer: data => data }, Vec3, Math: math, createScriptProperties: () => builder, getHabitability: () => null, onInitialize: bodies => { self.initialBodies = plain(bodies); self.habitability.reset(); self.world.reset(); self.civilization?.reset(); self.terminalSince=null; } });
++    return factory({ shared: this.shared, engine: this.engine, input: this.input, thisScene: { createLayer: data => data }, Vec3, Math: math, createScriptProperties: () => builder, getHabitability: () => null, onInitialize: bodies => { self.initialBodies = plain(bodies); self.habitability.reset(); self.world.reset(); self.civilization?.reset(); self.terminalSince=null;self.restartSince=null; } });
+   }
+   configure(patch) {
+     const next = normalizeSettings({ ...this.settings, ...patch });
+@@ -69,14 +72,16 @@ export class Simulation {
+     return changed;
+   }
+   restart(reason='restart') {
++    if(reason==='restart'&&this.world.state?.planet.damaged)reason='planet-damage';
+     this.pendingRestart=null;
+     this.shared.rst = 1;
+     // Original log's escape edge is observed before physics consumes rst.
+     const before = this.shared.civilizationRecords.length;
+     if(this.settings.civilizationMode==='legacy')this.modules['042'].update('');
+-    else this.civilization.destroy({zh:reason==='escape'?'天体逃逸':'宇宙重新初始化',en:reason==='escape'?'Celestial escape':'Universe reinitialized'},this.shared.xntime||0,this.engine.runtime,this.settings);
++    else this.civilization.destroy({zh:reason==='escape'?'天体逃逸':reason==='planet-damage'?'行星结构受损':'宇宙重新初始化',en:reason==='escape'?'Celestial escape':reason==='planet-damage'?'Planetary damage':'Universe reinitialized'},this.shared.xntime||0,this.engine.runtime,this.settings);
+     for (const record of this.shared.civilizationRecords.slice(before)) this.recordDeath(record);
+-    this.generation++; this.setRandom();
++    this.statistics.finishUniverse(reason);this.generation=this.statistics.universeNumber;this.setRandom();
++    this.emit('universe:restart',{number:this.generation,reason});
+     this.modules['008'] = this.createModule('008', physicsFactory); this.modules['008'].init();
+     this.shared.rst = 0; this.shared.num = 0; this.revision++;
+   }
+@@ -96,12 +101,13 @@ export class Simulation {
+       this.shared[`d${a + 1}${b + 1}`] = Math.hypot(x.x - y.x, x.y - y.y, x.z - y.z);
+     }
+     this.modules['010'].update('');
++    this.statistics.totalYears=this.shared.xntime;
+     this.modules['079'].update('');
+     const equilibrium=Number(this.shared.tem);
+     const world=this.world.update(state.bodies,state.G,equilibrium,this.settings,this.engine.runtime);
+     const legacy=this.settings.civilizationMode==='legacy';
+     if(!legacy)this.shared.tem=world.planet.temperature;
+-    this.habitability.update(this.shared,this.settings,1/60,{phase:this.civilization.phase,terminal:!legacy&&world.planet.terminal,hazard:!legacy&&world.planet.tideRatio>1?'tidal':null});
++    this.habitability.update(this.shared,this.settings,1/60,{phase:this.civilization.phase,terminal:!legacy&&world.planet.terminal,damaged:!legacy&&world.planet.damaged,tideRatio:legacy?0:world.planet.tideRatio,hazard:!legacy&&world.planet.tideRatio>1?'tidal':null});
+     this.era = legacy?this.modules['072'].update(''):(world.epoch.kind==='stable'?(this.settings.cnen2?'Stable Era':'恒纪元'):(this.settings.cnen2?'Chaotic Era':'乱纪元'));
+     const previousAlive = this.shared.civilizationAlive;
+     const before = this.shared.civilizationRecords.length;
+@@ -112,17 +118,22 @@ export class Simulation {
+       this.civilization.update(world,this.habitability.result,this.settings,this.shared.xntime,this.engine.runtime);
+       if(previousPhase!==this.civilization.phase)this.emit('civilization:phase',{phase:this.civilization.phase,number:this.shared.civilizationCount});
+     }
++    this.statistics.observe(this.shared.xntime,this.shared);
+     if (!previousAlive && this.shared.civilizationAlive) this.emit('civilization:birth', { number: this.shared.civilizationCount });
+     for (const record of this.shared.civilizationRecords.slice(before)) this.recordDeath(record);
+     if(!legacy&&world.planet.terminal&&this.terminalSince===null){this.terminalSince=this.engine.runtime;this.emit('planet:destroyed',plain(world.planet.terminal));}
++    if(!legacy&&world.planet.restartRequired&&this.restartSince===null){
++      this.restartSince=this.engine.runtime;
++      if(!world.planet.terminal)this.emit('planet:damaged',{integrity:world.planet.integrity,nextGeneration:this.generation+1});
++    }
+     if (this.shared.tj === 1 && this.settings.autorestart) { this.emit('system:escape', {}); this.pendingRestart='escape'; }
+-    else if(!legacy&&this.terminalSince!==null&&this.settings.autorestart&&this.engine.runtime-this.terminalSince>=4)this.pendingRestart='planet';
++    else if(!legacy&&this.restartSince!==null&&this.settings.autorestart&&this.engine.runtime-this.restartSince>=(world.planet.terminal?4:2))this.pendingRestart=world.planet.terminal?'planet':'planet-damage';
+     this.modules['156'].update('');
+     // Legacy ranked output reads the full list; a finite bound prevents days-long sessions growing forever.
+     if (this.shared.civilizationRecords.length > 1000) this.shared.civilizationRecords.splice(0, this.shared.civilizationRecords.length - 1000);
+     return state;
+   }
+-  recordDeath(record) { this.emit('civilization:death', { ...plain(record), seed: this.settings.seed, generation: this.generation, settings: plain(this.settings), initialBodies: plain(this.initialBodies), algorithm: algorithmId(this.settings) }); }
++  recordDeath(record) { this.statistics.finishCivilization(record); this.emit('civilization:death', { ...plain(record), seed: this.settings.seed, generation: this.generation, settings: plain(this.settings), initialBodies: plain(this.initialBodies), algorithm: algorithmId(this.settings) }); }
+   emit(type, detail) {
+     this.events.push({ id: ++this.eventSeq, type, year: this.shared.xntime || 0, detail });
+     if (this.events.length > 100) this.events.shift();
+@@ -132,7 +143,7 @@ export class Simulation {
+     return { tick: this.tickCount, revision: this.revision, runtime: this.engine.runtime, generation: this.generation, algorithm: algorithmId(this.settings),
+       seed: this.settings.seed, bodies: p.bodies, com: p.com, G: p.G, temperature: Number(s.tem || 0), year: s.xntime || 0,
+       era: this.era || '', escaped: s.tj === 1, alive: !!s.civilizationAlive, civilization: s.civilizationCount,
+-      habitability: plain(this.habitability.result),
++      habitability: plain(this.habitability.result),statistics:plain(this.statistics.snapshot()),statisticsCheckpoint:plain(this.statistics.checkpoint()),
+       world: plain(this.world.state),civilizationState:plain(this.civilization.result),logItems:this.settings.civilizationMode==='legacy'?[]:plain(this.civilization.logs),
+       lifespan: s.civilizationAlive ? Math.floor(s.xntime) - s.civilizationStartTime : s.lastCivilizationLifespan,
+       initialBodies: plain(this.initialBodies),
+diff --git a/src/style.css b/src/style.css
+index 08362f6..81a3976 100644
+--- a/src/style.css
++++ b/src/style.css
+@@ -13,3 +13,21 @@
+ .clock-calendar{margin-top:9px}#hydration{margin-bottom:8px;line-height:1.5;letter-spacing:1px}
+ #phenomena{font-size:10px;line-height:1.5;opacity:.6;margin:0 0 16px;min-height:15px}
+ @media(max-width:600px){.civilization-widget{top:calc(15% + 66px);max-width:88vw}.civilization-widget li,#civilization-lifespan{font-size:11px}#phenomena{font-size:8px;margin-bottom:10px}}
++/* v0.4 clock, compact event log, and right-hand runtime overview. */
++.clock-calendar{margin-top:2px;gap:16px;line-height:1.2}
++#clock-day,#clock-date{font-family:Title,Rajdhani,system-ui,sans-serif;font-size:11px;letter-spacing:2px}
++.civilization-widget{top:calc(12% + 79px);line-height:1.25}
++#civilization-status{margin-bottom:3px}#civilization-lifespan{margin-bottom:5px}
++#civilization-log li{font-size:9.5px;line-height:1.25;margin-bottom:2px;letter-spacing:.35px}
++.runtime-widget{top:32%;transform:none;width:218px;font-size:11px}
++.runtime-widget .widget-rule{margin:10px 0 12px}
++.runtime-info{margin:0 0 21px;padding:0;font-size:10px;line-height:1.5;letter-spacing:.7px}
++.runtime-info>div{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:6px}
++.runtime-info dt{opacity:.62}.runtime-info dd{margin:0;text-align:right;font-size:12px;font-variant-numeric:tabular-nums}
++.runtime-rankings{transform-origin:top right}.runtime-rankings section+section{margin-top:21px}
++.runtime-rankings h2{font-size:9px;letter-spacing:2px;margin:0 0 10px;font-weight:400}
++.runtime-rankings ol{list-style:none;padding:0;margin:0}
++.runtime-rankings li{display:grid;grid-template-columns:21px 1fr auto;gap:9px;align-items:baseline;margin:0 0 5px;font-size:11px;line-height:1.3;font-variant-numeric:tabular-nums;opacity:.58}
++.runtime-rankings li[data-active=true]{opacity:.85}.rank-number{font-size:8px;opacity:.4}.rank-years{text-align:right}
++@media(max-width:900px){.runtime-widget{top:34%;width:170px}.runtime-info>div{gap:6px}.runtime-info{font-size:9px}.runtime-info dd{font-size:11px}}
++@media(max-width:600px){.civilization-widget{top:calc(12% + 65px)}#civilization-log li{font-size:9px;line-height:1.25;margin-bottom:2px}.clock-calendar{gap:10px}#clock-day,#clock-date{font-size:10px;letter-spacing:1px}.runtime-widget{top:43%;bottom:auto;right:5%;width:134px}.runtime-info{font-size:8px;letter-spacing:0;margin-bottom:15px}.runtime-info dd{font-size:10px}.runtime-info>div{gap:4px;margin-bottom:5px}.runtime-rankings h2{font-size:8px;letter-spacing:1px;margin-bottom:7px}.runtime-rankings li{grid-template-columns:14px 1fr auto;gap:4px;font-size:10px;margin-bottom:4px}.runtime-rankings section+section{margin-top:15px}}
+diff --git a/src/view-motion.js b/src/view-motion.js
+new file mode 100644
+index 0000000..2e84888
+--- /dev/null
++++ b/src/view-motion.js
+@@ -0,0 +1,18 @@
++const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
++export class ViewMotion {
++  constructor(){this.x=0;this.y=0;this.vx=0;this.vy=0;this.maxSpeed=.55;this.acceleration=4;}
++  limit(){const speed=Math.hypot(this.vx,this.vy);if(speed>this.maxSpeed){this.vx*=this.maxSpeed/speed;this.vy*=this.maxSpeed/speed;}}
++  drag(dx,dy,sensitivityX=1,sensitivityY=1){this.vy+=dx*sensitivityY*40;this.vx+=dy*sensitivityX*20;this.limit();}
++  coast(dt,friction=1.8){
++    if(dt<=0)return;const decay=Math.exp(-friction*dt),step=friction>1e-6?(1-decay)/friction:dt;
++    this.x+=this.vx*step;this.y+=this.vy*step;this.vx*=decay;this.vy*=decay;this.bound();
++  }
++  follow(x,y,dt,response=1){
++    if(dt<=0)return;
++    let dx=(x-this.x)*8*response,dy=(y-this.y)*8*response;const speed=Math.hypot(dx,dy);
++    if(speed>this.maxSpeed){dx*=this.maxSpeed/speed;dy*=this.maxSpeed/speed;}
++    const vx=dx-this.vx,vy=dy-this.vy,change=Math.hypot(vx,vy),step=Math.min(1,this.acceleration*dt/Math.max(change,1e-12));
++    this.vx+=vx*step;this.vy+=vy*step;this.limit();this.x+=this.vx*dt;this.y+=this.vy*dt;this.bound();
++  }
++  bound(){const next=clamp(this.x,-Math.PI/6,Math.PI/6);if(next!==this.x)this.vx=0;this.x=next;}
++}
+diff --git a/src/world-state.js b/src/world-state.js
+index 55123ff..53e9056 100644
+--- a/src/world-state.js
++++ b/src/world-state.js
+@@ -57,10 +57,11 @@ export class WorldState{
+     if(aligned)add('alignment','三日连珠','Three-sun alignment',tideRatio>.5?'warning':'observation');
+     if(tideRatio>.5)add('tidal','潮汐应力上升','Rising tidal stress','warning');
+     if(this.terminal)add(this.terminal.kind,this.terminal.zh,this.terminal.en,'fatal');
+-    const condition=this.terminal?.kind||(tideRatio>1?'tidal-stress':this.temperature>1000?'molten':this.integrity<.98?'damaged':this.temperature>settings.newproperty46?'hot':this.temperature<settings.newproperty45?'frozen':'temperate');
++    const damaged=this.integrity<.98;
++    const condition=this.terminal?.kind||(damaged?'damaged':tideRatio>1?'tidal-stress':this.temperature>1000?'molten':this.temperature>settings.newproperty46?'hot':this.temperature<settings.newproperty45?'frozen':'temperate');
+     this.state={epoch:{kind:this.epoch,primary:this.primary,stableFor:this.stableTime,bound,dominance,perturbation},phenomena,
+-      planet:{condition,intact:!this.terminal,terminal:this.terminal,integrity:this.integrity,tideRatio,temperature:this.temperature,equilibriumTemperature:equilibrium},
++      planet:{condition,damaged,restartRequired:damaged||!!this.terminal,intact:!this.terminal,terminal:this.terminal,integrity:this.integrity,tideRatio,temperature:this.temperature,equilibriumTemperature:equilibrium},
+       stars:stars.map(s=>({index:s.i,distance:s.distance,angularRate:s.angularRate,radialSpeed:s.radial,visibleFraction:s.visibleFraction,radius:s.radius,flying:s.distance>settings.newproperty31})),
+-      fluxChange:this.fluxChange,safeToWake:!this.terminal&&tideRatio<.5&&(this.epoch==='stable'||this.fluxChange<.15)};return this.state;
++      fluxChange:this.fluxChange,safeToWake:!this.terminal&&!damaged&&tideRatio<.5&&(this.epoch==='stable'||this.fluxChange<.15)};return this.state;
+   }
+ }
+diff --git a/tests/simulation.test.js b/tests/simulation.test.js
+index f6dd69b..d86e186 100644
+--- a/tests/simulation.test.js
++++ b/tests/simulation.test.js
+@@ -18,7 +18,7 @@ test('183 original controls retain definitions, with the requested trails enable
+   const controls = Object.entries(propertySchema).filter(([, p]) => p.type && p.type !== 'group');
+   assert.equal(controls.length, 183);
+   const config = normalizeSettings();
+-  for (const [key, def] of controls) assert.deepEqual(config[key], ({newproperty14:true,newproperty45:-20,newproperty46:40,newproperty51:.35,newproperty3:0,newproperty68:0})[key] ?? def.value, key);
++  for (const [key, def] of controls) assert.deepEqual(config[key], ({newproperty14:true,newproperty39:true,newproperty45:-20,newproperty46:40,newproperty51:.35,newproperty3:0,newproperty68:0})[key] ?? def.value, key);
+   const sim = new Simulation();
+   assert.equal(sim.modules['008'].scriptProperties.fourthMass, 5000);
+   assert.equal(sim.modules['008'].scriptProperties.constraint_M, 15000000);
+diff --git a/tests/v03-adjustments.test.js b/tests/v03-adjustments.test.js
+new file mode 100644
+index 0000000..50d21f8
+--- /dev/null
++++ b/tests/v03-adjustments.test.js
+@@ -0,0 +1,57 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { Habitability } from '../src/habitability.js';
++import { Simulation } from '../src/simulation.js';
++import { normalizeSettings,migrateSettings } from '../src/settings.js';
++import { TrailHistory,trailComplexity,selectTrail } from '../src/adaptive-trails.js';
++const settings=normalizeSettings();
++const project=p=>({x:p.x,y:p.y,z:p.z});
++function straight(count,step){const h=new TrailHistory();for(let i=0;i<count;i++)h.push({x:i*step,y:0,z:0},i/30);return h;}
++
++test('22.6 C immediately reports fully suitable climate after a cold or hot interval',()=>{
++ const h=new Habitability();h.update({tem:-100},settings);assert.equal(h.update({tem:22.6},settings).score,1);assert.equal(h.result.canGrow,true);
++ assert.equal(h.update({tem:41},settings).score,0);assert.equal(h.result.canGrow,false);
++});
++test('warm damaged planets cannot show a suitable score or heal civilization',()=>{
++ const h=new Habitability();h.health=.7;const result=h.update({tem:22.6},settings,1/60,{damaged:true});assert.equal(result.score,0);assert.equal(result.canGrow,false);assert.ok(result.health<.7);
++ assert.equal(h.update({tem:22.6},settings,1/60,{terminal:true}).score,0);
++});
++test('tidal danger reduces suitability and blocks growth before structural failure',()=>{
++ const result=new Habitability().update({tem:22.6},settings,1/60,{tideRatio:.75});assert.equal(result.score,.5);assert.equal(result.canGrow,false);
++});
++test('labels default off; existing v0.3 preferences migrate once, optional opt-in persists',()=>{
++ assert.equal(settings.bodyLabels,false);assert.equal(migrateSettings({bodyLabels:true},3).bodyLabels,false);
++ assert.equal(migrateSettings({presentationRevision:2,bodyLabels:true},3).bodyLabels,true);
++});
++test('damaged world offers restart before terminal loss and stays uninhabitable',()=>{
++ const s=new Simulation({autorestart:false});s.tick();s.world.integrity=.97;s.world.temperature=22.6;s.tick();
++ const state=s.snapshot();assert.equal(state.world.planet.restartRequired,true);assert.equal(state.world.planet.terminal,null);assert.equal(state.habitability.score,0);assert.equal(state.habitability.canGrow,false);assert.equal(state.world.safeToWake,false);
++ for(let i=0;i<200;i++)s.tick();assert.equal(s.generation,1);assert.equal(s.events.filter(e=>e.type==='planet:damaged').length,1);
++});
++test('automatic next universe archives damage once and clears it on the generation boundary',()=>{
++ const s=new Simulation({autorestart:true});s.tick();s.shared.civilizationAlive=true;s.shared.civilizationStartTime=0;s.civilization.reset();s.world.integrity=.97;
++ for(let i=0;i<130;i++){s.tick();if(s.generation===2)break;}
++ assert.equal(s.generation,2);assert.equal(s.snapshot().bodies.length,4);assert.equal(s.snapshot().world.planet.damaged,false);
++ const deaths=s.events.filter(e=>e.type==='civilization:death');assert.equal(deaths.length,1);assert.equal(deaths[0].detail.destructionEvent,'行星结构受损');
++});
++test('slow and fast simple trajectories have comparable visible lengths but different history spans',()=>{
++ const slow=straight(3600,.25),fast=straight(600,2);
++ const a=selectTrail(slow,project,{now:slow.get().time}),b=selectTrail(fast,project,{now:fast.get().time});
++ assert.ok(Math.abs(a.arcPixels-b.arcPixels)<.01);assert.ok(a.arcPixels>700);assert.ok(a.seconds>b.seconds*6);assert.ok(a.seconds<=120);
++});
++test('rapid turns and revisits raise complexity, plain translation does not',()=>{
++ const calm=straight(600,2),chaotic=new TrailHistory();
++ for(let i=0;i<600;i++)chaotic.push({x:(i%30)*8,y:(i%2)*70,z:0},i/30);
++ assert.equal(trailComplexity([calm],project,calm.get().time),0);assert.ok(trailComplexity([chaotic],project,chaotic.get().time)>.9);
++});
++test('complex motion shortens trails and can later restore long history without clearing samples',()=>{
++ const h=straight(3000,1),now=h.get().time;const before=selectTrail(h,project,{now});
++ let complex;for(let i=0;i<150;i++)complex=selectTrail(h,project,{now,complexity:1});assert.ok(complex.arcPixels<before.arcPixels*.25);
++ let recovered;for(let i=0;i<150;i++)recovered=selectTrail(h,project,{now,complexity:0});assert.ok(recovered.arcPixels>before.arcPixels*.99);assert.equal(h.length,3000);
++});
++test('history, GPU budget and discontinuities stay bounded during long or paused runs',()=>{
++ const h=straight(10000,1);assert.equal(h.length,4096);h.push({x:0,y:0,z:0},h.get().time);assert.equal(h.length,4096);
++ const trail=selectTrail(h,project,{now:h.get().time,baseLength:2000,maxPoints:64});assert.ok(trail.points.length<=64);assert.equal(trail.fractions.at(-1),1);assert.ok(trail.fractions.every(Number.isFinite));
++ h.clear();assert.equal(h.length,0);assert.equal(selectTrail(h,project,{now:0}).points.length,0);
++ h.push({x:Infinity,y:0,z:0},1);assert.equal(h.length,0);
++});
+diff --git a/tests/v04.test.js b/tests/v04.test.js
+new file mode 100644
+index 0000000..2e8fdb6
+--- /dev/null
++++ b/tests/v04.test.js
+@@ -0,0 +1,48 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { RunStatistics } from '../src/run-statistics.js';
++import { Simulation } from '../src/simulation.js';
++import { ViewMotion } from '../src/view-motion.js';
++const close=(a,b)=>assert.ok(Math.abs(a-b)<1e-9,`${a} != ${b}`);
++const tick=(s,n)=>{for(let i=0;i<n;i++)s.tick();return s.snapshot();};
++
++test('total years survive universe restarts while universe age resets',()=>{
++ const s=new Simulation({autorestart:false});const a=tick(s,600).statistics;close(a.totalYears,10);close(a.universe.lifespan,10);
++ s.restart();const b=tick(s,1).statistics;assert.equal(b.universe.number,2);close(b.totalYears,10+1/60);close(b.universe.lifespan,1/60);close(b.universeRanking[0].lifespan,10);
++});
++test('time factor changes preserve continuity and apply the original squared rate only to new years',()=>{
++ const s=new Simulation({autorestart:false});tick(s,60);s.configure({timespeed:3});close(tick(s,60).statistics.totalYears,10);
++ s.configure({timespeed:1,newproperty26:20});close(tick(s,60).statistics.totalYears,14);
++ const before=s.snapshot();assert.deepEqual(s.snapshot().statistics,before.statistics);
++});
++test('both top-five rankings sort descending and include the running entries',()=>{
++ const s=new RunStatistics();for(let i=1;i<=8;i++){s.observe(s.totalYears+i,{civilizationAlive:true,civilizationCount:i});s.observe(s.totalYears+i,{civilizationAlive:true,civilizationCount:i});s.finishCivilization({number:i});s.finishUniverse('test');}
++ s.observe(s.totalYears+20,{civilizationAlive:true,civilizationCount:9});s.observe(s.totalYears+30,{civilizationAlive:true,civilizationCount:9});
++ const result=s.snapshot();for(const list of[result.universeRanking,result.civilizationRanking]){assert.equal(list.length,5);assert.equal(list[0].number,9);assert.equal(list[0].active,true);assert.ok(list.every((r,i)=>i===0||list[i-1].lifespan>=r.lifespan));}
++});
++test('reload closes the checkpointed run once, preserving totals, best runs and sequential IDs',()=>{
++ const s=new RunStatistics();s.observe(3,{civilizationAlive:true,civilizationCount:1});s.observe(20,{civilizationAlive:true,civilizationCount:1});
++ const resumed=new RunStatistics(s.checkpoint()),state=resumed.snapshot();close(state.totalYears,20);assert.equal(state.universe.number,2);assert.equal(state.universe.lifespan,0);assert.equal(state.universeRanking[0].number,1);close(state.civilizationRanking[0].lifespan,17);assert.equal(resumed.nextCivilization,2);
++ const simulation=new Simulation({},s.checkpoint());simulation.tick();assert.equal(simulation.snapshot().generation,2);assert.equal(simulation.shared.civilizationCount,2);assert.ok(simulation.snapshot().year>20);
++});
++test('old civilization archives retain numbers, lifetime and distinct session records',()=>{
++ const s=new RunStatistics({legacyRecords:[{number:50,lifespan:216,key:'a'},{number:50,lifespan:200,key:'b'},{number:7,lifespan:70,key:'c'}]});assert.equal(s.nextCivilization,51);assert.deepEqual(s.snapshot().civilizationRanking.map(r=>r.lifespan),[216,200,70]);
++});
++test('corrupt checkpoint fields do not break simulation startup',()=>{
++ const saved={format:'three-body-statistics',version:1,totalYears:-10,universeNumber:NaN,universes:'broken',civilizations:[null,{number:1,lifespan:Infinity}]};
++ const s=new Simulation({},saved);s.tick();assert.ok(Number.isFinite(s.snapshot().year));assert.ok(s.snapshot().statistics.universeRanking.every(r=>Number.isFinite(r.lifespan)));
++});
++test('drag accelerates promptly, caps combined angular speed and dissipates inertia faster',()=>{
++ const m=new ViewMotion();m.drag(1,1);close(Math.hypot(m.vx,m.vy),m.maxSpeed);const initial=Math.hypot(m.vx,m.vy);m.coast(.5);assert.ok(Math.hypot(m.vx,m.vy)<initial*.5);
++ for(let i=0;i<100;i++){m.drag(1,-1);m.coast(1/60);assert.ok(Math.hypot(m.vx,m.vy)<=.55+1e-12);}
++});
++test('follow mode shares the speed cap and bounded acceleration, and pause freezes movement',()=>{
++ const m=new ViewMotion();for(let i=0;i<180;i++){const a=[m.vx,m.vy];m.follow(.2,Math.PI/2,1/60);assert.ok(Math.hypot(m.vx,m.vy)<=m.maxSpeed+1e-12);assert.ok(Math.hypot(m.vx-a[0],m.vy-a[1])<=m.acceleration/60+1e-12);}
++ const before={...m};m.follow(-1,-5,0);m.coast(0);assert.deepEqual({...m},before);
++});
++test('inertial motion gives equal results at 30 Hz and 120 Hz',()=>{
++ const a=new ViewMotion(),b=new ViewMotion();a.drag(.1,0);b.drag(.1,0);for(let i=0;i<30;i++)a.coast(1/30);for(let i=0;i<120;i++)b.coast(1/120);close(a.y,b.y);close(a.vy,b.vy);
++});
++test('event history retains twelve log entries for the expanded central display',()=>{
++ const s=new Simulation();for(let i=0;i<20;i++)s.civilization.log('test',`事件${i}`,`event ${i}`,i,i);assert.equal(s.civilization.logs.length,12);assert.equal(s.civilization.logs[0].zh,'事件19');
++});
+diff --git a/tools/build.mjs b/tools/build.mjs
+index 6bf1f66..d1fef8d 100644
+--- a/tools/build.mjs
++++ b/tools/build.mjs
+@@ -17,6 +17,7 @@ const properties = structuredClone(original.general.properties);
+ // Scene texture pickers are represented by Web wallpaper file pickers, retaining the original key.
+ properties.custombg = { ...properties.custombg, type: 'file', value: '' };
+ for(const [key,value] of Object.entries(defaults))if(properties[key])properties[key].value=value;
++properties.audiobar.text='基础信息与排行';properties.newproperty39.text='显示文明与宇宙排行';
+ properties.newproperty45.text='常态活动低温边界 °C';properties.newproperty46.text='常态活动高温边界 °C';
+ const project = { title: '三体实时演算 · Web 重建', type: 'web', file: 'index.html', description: '基于用户提供的 SYKM 原版场景移植。Three.js + Worker，原版设置兼容。', version: 0, contentrating: 'Everyone', general: { ...original.general, supportsaudioprocessing: true, properties } };
+ await writeFile(path.join(dist, 'project.json'), JSON.stringify(project, null, 2));
+diff --git a/tools/state-ui-8k-check.mjs b/tools/state-ui-8k-check.mjs
+index 38eb854..d6c07b3 100644
+--- a/tools/state-ui-8k-check.mjs
++++ b/tools/state-ui-8k-check.mjs
+@@ -14,12 +14,12 @@ try{
+  await page.mouse.up();await page.waitForTimeout(200);assert.equal((await diag()).scene.compassVisible,false);checks.push('rotation rings hidden at rest/click and visible only during actual drag, hidden during inertia');
+  await page.evaluate(()=>window.threeBody.applySettings({newproperty61:'1'}));await page.mouse.move(600,300);await page.waitForTimeout(300);assert.equal((await diag()).scene.compassVisible,false);checks.push('mouse-follow rotation does not expose rings');
+  assert.equal(await page.locator('#setting-newproperty51').inputValue(),'0.35');assert.equal(await page.locator('#setting-newproperty45').inputValue(),'-20');assert.equal(await page.locator('#setting-newproperty46').inputValue(),'40');checks.push('slow default rotation and -20 to 40 C activity thresholds');
+- const fontSizes=await page.locator('#civilization-log li').evaluateAll(items=>items.map(el=>getComputedStyle(el).fontSize));assert.ok(fontSizes.length>0);assert.equal(new Set(fontSizes).size,1);assert.equal(fontSizes[0],'11px');
++ const fontSizes=await page.locator('#civilization-log li').evaluateAll(items=>items.map(el=>getComputedStyle(el).fontSize));assert.ok(fontSizes.length>0);assert.equal(new Set(fontSizes).size,1);assert.equal(fontSizes[0],'9.5px');
+  await page.evaluate(()=>document.querySelector('#pause-button').click());
+  const before=await page.locator('#civilization-log li').first().evaluate(el=>({id:el.dataset.id,opacity:+el.style.opacity}));
+  await page.evaluate(()=>document.querySelector('#pause-button').click());await page.waitForTimeout(900);
+  const after=await page.locator('#civilization-log li').evaluateAll((els,id)=>{const e=els.find(e=>e.dataset.id===id);return e?+e.style.opacity:null;},before.id);
+- assert.ok(after===null||after<before.opacity);checks.push('civilization logs keep 11px type and fade with simulation age');
++ assert.ok(after===null||after<before.opacity);checks.push('civilization logs keep 9.5px type and fade with simulation age');
+  const bounds=await page.locator('#civilization-widget').boundingBox(),clock=await page.locator('#clock-widget').boundingBox();assert.ok(bounds.y>=clock.y+clock.height-2);checks.push('compact civilization block fits below the clock');
+  await page.waitForFunction(()=>Object.values(window.__threeBodyDiagnostics().scene.backgroundSizes).every(v=>v[0]===8192&&v[1]===4096));checks.push('both active background textures loaded at native 8192x4096');
+  await page.evaluate(()=>{window.__wallpaperFPS=2;window.threeBody.applySettings({renderQuality:'8k',newproperty17:'2',newproperty40:'0 0 0',newproperty14:false,newproperty16:false,newproperty61:'2'});});
+diff --git a/tools/v03-local-check.mjs b/tools/v03-local-check.mjs
+new file mode 100644
+index 0000000..3e9b317
+--- /dev/null
++++ b/tools/v03-local-check.mjs
+@@ -0,0 +1,46 @@
++import { chromium } from 'playwright-core';
++import assert from 'node:assert/strict';
++import {mkdir,writeFile} from 'node:fs/promises';
++const browser=await chromium.launch({executablePath:'/usr/bin/chromium',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
++const page=await browser.newPage({viewport:{width:1280,height:720}}),errors=[],checks=[];
++page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
++await page.addInitScript(()=>{
++ localStorage.setItem('three-body.settings.v3',JSON.stringify({bodyLabels:true,newproperty63:false,newproperty64:false,pixelRatio:.5,newproperty2:false,newproperty17:'2',newproperty40:'0 0 0',dust:false,newproperty16:false,newproperty61:'2',autorestart:false}));
++ const NativeWorker=window.Worker;window.Worker=class extends NativeWorker{constructor(...args){super(...args);window.__fixtureWorker=this;}};
++});
++try{
++ await page.goto('http://localhost:4173',{waitUntil:'networkidle'});await page.waitForFunction(()=>window.__threeBodyDiagnostics?.().ready);
++ assert.equal(await page.evaluate(()=>window.__threeBodyDiagnostics().scene.bodyLabelsVisible),false);checks.push('old v0.3 settings migrate to hidden body labels');
++ assert.equal(await page.locator('#habitability-warning').count(),0);checks.push('activity-temperature small print removed from HUD');
++ // A real, stationary close passage with zero integration gravity makes repeatable damage.
++ await page.evaluate(()=>{
++  const patch={newproperty50:true,newproperty60:false,newproperty52:0,_110:5000000,_26:0,_34:0,x11:.12,y11:0,z1:0,x21:10,y21:0,z2:0,x3:-10,y3:0,z3:0,x4:0,y4:0,z4:0,v1:0,vy1:0,vz1:0,vx2:0,vy2:0,vz2:0,vx3:0,vy3:0,vz3:0,vx4:0,vy4:0,vz4:0};
++  window.threeBody.applySettings(patch);
++ });
++ await page.waitForFunction(()=>window.__threeBodyState.world.planet.damaged&&window.__threeBodyState.habitability.score===0);
++ assert.equal(await page.evaluate(()=>window.__threeBodyState.world.planet.terminal),null);assert.equal(await page.locator('#habitability-score').textContent(),'0%');await page.waitForFunction(()=>!document.querySelector('#restart-prompt').hidden&&document.querySelector('#restart-prompt strong').textContent.includes('第2号宇宙'));
++ checks.push('actual worker damage shows zero suitability and enables the next universe before terminal destruction');
++ await page.locator('#restart-prompt').click();await page.waitForFunction(()=>window.__threeBodyState.generation===2);checks.push('manual damaged-planet action starts universe 2');
++ // Feed deterministic trajectories through the real Worker message handler and real GPU renderer.
++ // This fixture changes only the QA page; no production test API is shipped.
++ await page.evaluate(()=>{window.__fixtureWorker.terminate();window.__trailFixture=structuredClone(window.__threeBodyState);window.__trailFixture.revision++;window.__trailFixture.events=[];window.__trailFixture.world.planet.terminal=null;window.__trailFixture.world.planet.damaged=false;window.__trailFixture.world.planet.restartRequired=false;window.__trailFixture.com={x:0,y:0,z:0};window.threeBody.applySettings({trailsLength:400});});
++ async function feed(kind,count){
++  await page.evaluate(async({kind,count})=>{
++   const s=window.__trailFixture;
++   for(let i=0;i<count;i++){
++    s.tick+=2;s.runtime+=1/30;
++    s.bodies=s.bodies.map((body,b)=>({...body,x:kind==='calm'?-1.65+i*.003:Math.sin(i*.7+b*.3)*.5,y:kind==='calm'?(b-1.5)*.45:((i+b)%2?1:-1)*.38,z:0}));
++    window.__fixtureWorker.dispatchEvent(new MessageEvent('message',{data:{type:'state',state:structuredClone(s)}}));
++    if(i%50===0)await new Promise(requestAnimationFrame);
++   }
++  },{kind,count});
++ }
++ await mkdir('docs/qa',{recursive:true});await feed('calm',1100);await page.waitForTimeout(1500);
++ const calm=await page.evaluate(()=>window.__threeBodyDiagnostics().scene);assert.ok(calm.trailMetrics.every(m=>m.seconds>20&&m.arcPixels>250));await page.screenshot({path:'docs/qa/v03-local-calm.png'});checks.push('slow simple motion retains more than 20 seconds of visible physical history');
++ await feed('complex',240);await page.waitForTimeout(3500);
++ const complex=await page.evaluate(()=>window.__threeBodyDiagnostics().scene);assert.ok(complex.trailComplexity>.8);
++ assert.ok(complex.trailMetrics.every((m,i)=>m.arcPixels<calm.trailMetrics[i].arcPixels*.65&&m.arcPixels<=m.budget+1));
++ assert.ok(complex.trailMetrics.every(m=>m.segments<=1999));await page.screenshot({path:'docs/qa/v03-local-complex.png'});checks.push('complex crossing motion reduces actual on-screen trail arcs within fixed GPU capacity');
++ assert.deepEqual(errors,[]);const report={passed:checks.length,checks,errors,calm,complex,fixture:'real worker for damage/restart; controlled Worker messages for repeatable visual trail comparison',publication:'local v0.3 work only, no source push or deployment'};
++ await writeFile('docs/qa/v03-local-report.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));
++}finally{await browser.close();}
+diff --git a/tools/v04-browser-check.mjs b/tools/v04-browser-check.mjs
+new file mode 100644
+index 0000000..f1bd5df
+--- /dev/null
++++ b/tools/v04-browser-check.mjs
+@@ -0,0 +1,45 @@
++import { chromium } from 'playwright-core';
++import assert from 'node:assert/strict';
++import {mkdir,writeFile} from 'node:fs/promises';
++const browser=await chromium.launch({executablePath:'/usr/bin/chromium',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
++const page=await browser.newPage({viewport:{width:1280,height:800}}),checks=[],errors=[];
++page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
++await page.addInitScript(()=>{
++ if(!localStorage.getItem('v04-qa-seeded')){
++  localStorage.setItem('three-body.settings.v3',JSON.stringify({newproperty63:false,newproperty64:false,newproperty2:false,pixelRatio:.5,dust:false,autorestart:false,newproperty39:false}));
++  localStorage.setItem('three-body.statistics.v1',JSON.stringify({format:'three-body-statistics',version:1,totalYears:150,universeNumber:7,universeStart:130,nextCivilization:100,activeCivilization:{number:99,start:120},universes:[{number:1,lifespan:70},{number:2,lifespan:40},{number:3,lifespan:15},{number:4,lifespan:5},{number:5,lifespan:4}],civilizations:[{number:10,lifespan:70},{number:20,lifespan:40},{number:30,lifespan:20},{number:40,lifespan:15},{number:50,lifespan:8}]}));
++  localStorage.setItem('v04-qa-seeded','true');
++ }
++ const NativeWorker=window.Worker;window.Worker=class extends NativeWorker{constructor(...args){super(...args);window.__fixtureWorker=this;}};
++});
++try{
++ await page.goto('http://localhost:4173',{waitUntil:'networkidle'});await page.waitForFunction(()=>window.__threeBodyDiagnostics?.().ready);
++ const layout=await page.evaluate(()=>{const $=id=>document.querySelector(id),probe=document.createElement('li');$('#civilization-log').append(probe);const logSize=getComputedStyle(probe).fontSize;probe.remove();const clock=$('#clock-widget').getBoundingClientRect(),time=$('#clock-time').getBoundingClientRect(),calendar=$('.clock-calendar').getBoundingClientRect();return{clockTop:clock.y,calendarGap:calendar.y-time.bottom,date:getComputedStyle($('#clock-date')).fontSize,day:getComputedStyle($('#clock-day')).fontSize,log:logSize,height:innerHeight};});
++ assert.ok(layout.clockTop<layout.height*.12);assert.ok(layout.calendarGap<=3);assert.equal(layout.date,layout.day);assert.equal(layout.log,'9.5px');checks.push('clock moves upward, date/week align directly under it with equal font sizes; log is smaller');
++ assert.equal(await page.locator('.distance-row,#audio-bars').count(),0);checks.push('old alpha/beta/gamma distance rows and the dotted audio line are removed');
++ assert.equal(await page.locator('#ranking-widget').isVisible(),true);assert.equal(await page.locator('#civilization-ranking li').count(),5);assert.equal(await page.locator('#universe-ranking li').count(),5);checks.push('upgraded settings show both top-five rankings by default');
++ await page.evaluate(()=>document.querySelector('#pause-button').click());await page.waitForTimeout(250);
++ const before=await page.evaluate(()=>window.__threeBodyState);assert.equal(before.generation,8);assert.ok(before.statistics.totalYears>150);
++ const visible=await page.locator('#total-years').textContent();await page.waitForTimeout(450);assert.equal(await page.locator('#total-years').textContent(),visible);checks.push('simulation-year totals and current universe age freeze while paused');
++ await page.evaluate(()=>{window.wallpaperPropertyListener.applyUserProperties({timespeed:{value:2}});document.querySelector('#pause-button').click();});
++ await page.waitForFunction(year=>window.__threeBodyState.statistics.totalYears>year+.5,before.statistics.totalYears);
++ const running=await page.evaluate(()=>window.__threeBodyState);assert.ok(running.statistics.universe.lifespan<running.statistics.totalYears);checks.push('total, universe and civilization ages use separate simulation-year counters');
++ await page.reload({waitUntil:'networkidle'});await page.waitForFunction(()=>window.__threeBodyDiagnostics?.().ready);
++ const restored=await page.evaluate(()=>window.__threeBodyState);assert.equal(restored.generation,running.generation+1);assert.ok(restored.statistics.totalYears>=running.statistics.totalYears);assert.ok(restored.statistics.universe.lifespan<restored.statistics.totalYears-running.statistics.totalYears+2);checks.push('reload preserves cumulative years and rankings while starting the next numbered universe');
++ await page.evaluate(()=>window.threeBody.applySettings({newproperty61:'0',newproperty16:false}));await page.mouse.move(300,400);await page.mouse.down();await page.mouse.move(900,420,{steps:15});await page.waitForTimeout(150);
++ const drag=await page.evaluate(()=>window.__threeBodyDiagnostics().scene);assert.ok(Math.hypot(...drag.viewVelocity)<=drag.maxAngularSpeed+1e-10);await page.mouse.up();await page.waitForTimeout(900);
++ const stopped=await page.evaluate(()=>window.__threeBodyDiagnostics().scene);assert.ok(Math.hypot(...stopped.viewVelocity)<.3);checks.push('real pointer drag obeys the angular-speed cap and stronger release damping');
++ // Inject a complete, documented snapshot to inspect a populated 10-line HUD and active ranks.
++ await page.evaluate(()=>{
++  window.__fixtureWorker.terminate();const s=structuredClone(window.__threeBodyState);s.events=[];s.year=260;s.temperature=22.6;s.era='恒纪元';s.alive=true;s.generation=9;s.world.planet={...s.world.planet,temperature:22.6,terminal:null,condition:'temperate',damaged:false,restartRequired:false,integrity:1};s.world.phenomena=[];s.habitability={...s.habitability,score:1,health:1};s.text[0]='第101号文明 · 正常活动';s.text[6]='文明已延续：75年';window.threeBody.applySettings({pixelRatio:1});
++  s.logItems=Array.from({length:12},(_,i)=>({id:1000+i,kind:'test',zh:`第${12-i}次天象观测：文明状态已记录`,en:`Observation ${12-i}: civilization state recorded`,year:100-i,at:s.runtime-i*.5}));
++  s.statistics={totalYears:260,universe:{number:9,lifespan:80,active:true},civilization:{number:101,lifespan:75,active:true},civilizationRanking:[{number:101,lifespan:75,active:true},{number:10,lifespan:70},{number:20,lifespan:40},{number:99,lifespan:30},{number:30,lifespan:20}],universeRanking:[{number:9,lifespan:80,active:true},{number:1,lifespan:70},{number:2,lifespan:40},{number:7,lifespan:20},{number:3,lifespan:15}]};
++  window.__fixtureWorker.dispatchEvent(new MessageEvent('message',{data:{type:'state',state:s}}));
++ });
++ assert.equal(await page.locator('#civilization-log li').count(),10);assert.equal(await page.locator('#current-universe').textContent(),'#9');assert.equal(await page.locator('#current-civilization').textContent(),'#101');
++ assert.equal(await page.locator('#civilization-ranking li').first().getAttribute('data-active'),'true');assert.equal(await page.locator('#universe-ranking li').first().getAttribute('data-active'),'true');checks.push('10 compact log rows and the requested runtime fields render with active ranking markers');
++ await mkdir('docs/qa',{recursive:true});await page.screenshot({path:'docs/qa/v04-desktop.png'});
++ await page.setViewportSize({width:390,height:844});await page.waitForTimeout(700);
++ const mobile=await page.locator('#distance-widget').boundingBox();assert.ok(mobile.x>=0&&mobile.x+mobile.width<=390&&mobile.y+mobile.height<800);await page.screenshot({path:'docs/qa/v04-mobile.png'});checks.push('mobile runtime overview and both rankings fit above the bottom controls');
++ assert.deepEqual(errors,[]);const report={passed:checks.length,checks,errors,layout,limits:['A controlled Worker snapshot populates the final screenshot; counters, reload and pointer motion were verified with the real Worker beforehand.','Actual Windows Wallpaper Engine and target GPU performance are not available in this environment.']};await writeFile('docs/qa/v04-browser-report.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));
++}finally{await browser.close();}

@@ -1,0 +1,292 @@
+{
+  "cohort": "V052-ACCEPTANCE-0..127; fresh implementation experiment, separate from historical HOLDOUT-C",
+  "profiles": {
+    "old-init-old-engine": {
+      "n": 128,
+      "windowYears": 1000,
+      "meanRestrictedLifeYears": 129.67747395833334,
+      "planetSurvivors": 0,
+      "planetSurvivalWilson95": [
+        0.0,
+        0.02913695627350686
+      ],
+      "jointSurvivors": 0,
+      "jointSurvivalWilson95": [
+        0.0,
+        0.02913695627350686
+      ],
+      "stableFractionFullWindow": 0.030059114583333334,
+      "lossCounts": {
+        "boundary-crossing": 47,
+        "engulfed": 21,
+        "positive-energy-escape": 59,
+        "disrupted": 1
+      },
+      "stellarContactBeforePlanetEndpoint": 29,
+      "numericalFaults": 0,
+      "numericallyCensored": 0,
+      "energyErrorBeforeLossOrContact": {
+        "median": 0.012385677214759333,
+        "max": 0.09396880429674236
+      },
+      "angularErrorBeforeLossOrContact": {
+        "median": 3.183378460469025e-14,
+        "max": 3.5466335827174427e-13
+      },
+      "normalizedMomentumErrorBeforeLossOrContact": {
+        "median": 1.360384379603124e-14,
+        "max": 3.7227978527352e-14
+      }
+    },
+    "old-init-new-engine": {
+      "n": 128,
+      "windowYears": 1000,
+      "meanRestrictedLifeYears": 151.1875,
+      "planetSurvivors": 1,
+      "planetSurvivalWilson95": [
+        0.0013804318928742967,
+        0.04292625943885903
+      ],
+      "jointSurvivors": 0,
+      "jointSurvivalWilson95": [
+        0.0,
+        0.02913695627350686
+      ],
+      "stableFractionFullWindow": 0.03630794270833333,
+      "lossCounts": {
+        "boundary-crossing": 52,
+        "engulfed": 29,
+        "positive-energy-escape": 45,
+        "disrupted": 1,
+        "survived": 1
+      },
+      "stellarContactBeforePlanetEndpoint": 37,
+      "numericalFaults": 0,
+      "numericallyCensored": 0,
+      "energyErrorBeforeLossOrContact": {
+        "median": 3.9693354762274825e-10,
+        "max": 1.6272117858716128e-08
+      },
+      "angularErrorBeforeLossOrContact": {
+        "median": 4.0569873675200294e-14,
+        "max": 3.4948467702744943e-13
+      },
+      "normalizedMomentumErrorBeforeLossOrContact": {
+        "median": 1.9365655089687218e-14,
+        "max": 7.541196028223642e-14
+      }
+    },
+    "new-init-new-engine": {
+      "n": 128,
+      "windowYears": 1000,
+      "meanRestrictedLifeYears": 235.62903645833333,
+      "planetSurvivors": 5,
+      "planetSurvivalWilson95": [
+        0.01679861079780408,
+        0.08818702076683507
+      ],
+      "jointSurvivors": 3,
+      "jointSurvivalWilson95": [
+        0.008002416396755693,
+        0.06664374505143053
+      ],
+      "stableFractionFullWindow": 0.20704466145833333,
+      "lossCounts": {
+        "boundary-crossing": 31,
+        "disrupted": 34,
+        "engulfed": 33,
+        "positive-energy-escape": 25,
+        "survived": 5
+      },
+      "stellarContactBeforePlanetEndpoint": 34,
+      "numericalFaults": 0,
+      "numericallyCensored": 0,
+      "energyErrorBeforeLossOrContact": {
+        "median": 4.512071682308815e-10,
+        "max": 1.8495026623621787e-08
+      },
+      "angularErrorBeforeLossOrContact": {
+        "median": 5.658749039873593e-14,
+        "max": 4.867577257519152e-13
+      },
+      "normalizedMomentumErrorBeforeLossOrContact": {
+        "median": 2.2970170093465887e-14,
+        "max": 1.0769758734782e-13
+      }
+    }
+  },
+  "pairedComparisons": {
+    "engineOnly": {
+      "restrictedLife": {
+        "difference": 21.510026041666666,
+        "pairedSeedBootstrap95": [
+          -5.983382161458333,
+          51.47803059895831
+        ]
+      },
+      "stableFraction": {
+        "difference": 0.006248828125000001,
+        "pairedSeedBootstrap95": [
+          -0.0009436881510416674,
+          0.013767740885416666
+        ]
+      },
+      "survived": {
+        "difference": 0.0078125,
+        "pairedSeedBootstrap95": [
+          0.0,
+          0.0234375
+        ]
+      },
+      "jointSurvived": {
+        "difference": 0.0,
+        "pairedSeedBootstrap95": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "newDefaultVsOld": {
+      "restrictedLife": {
+        "difference": 105.9515625,
+        "pairedSeedBootstrap95": [
+          61.532054036458334,
+          152.54826171874998
+        ]
+      },
+      "stableFraction": {
+        "difference": 0.17698554687499998,
+        "pairedSeedBootstrap95": [
+          0.13763362630208334,
+          0.218590576171875
+        ]
+      },
+      "survived": {
+        "difference": 0.0390625,
+        "pairedSeedBootstrap95": [
+          0.0078125,
+          0.078125
+        ]
+      },
+      "jointSurvived": {
+        "difference": 0.0234375,
+        "pairedSeedBootstrap95": [
+          0.0,
+          0.0546875
+        ]
+      }
+    },
+    "initializationOnly": {
+      "restrictedLife": {
+        "difference": 84.44153645833333,
+        "pairedSeedBootstrap95": [
+          36.61376953125,
+          132.84997070312502
+        ]
+      },
+      "stableFraction": {
+        "difference": 0.17073671875000002,
+        "pairedSeedBootstrap95": [
+          0.13161023437499997,
+          0.21281890625
+        ]
+      },
+      "survived": {
+        "difference": 0.03125,
+        "pairedSeedBootstrap95": [
+          0.0,
+          0.0703125
+        ]
+      },
+      "jointSurvived": {
+        "difference": 0.0234375,
+        "pairedSeedBootstrap95": [
+          0.0,
+          0.0546875
+        ]
+      }
+    }
+  },
+  "fine": {
+    "n": 128,
+    "windowYears": 1000,
+    "meanRestrictedLifeYears": 235.62799479166668,
+    "planetSurvivors": 5,
+    "planetSurvivalWilson95": [
+      0.01679861079780408,
+      0.08818702076683507
+    ],
+    "jointSurvivors": 3,
+    "jointSurvivalWilson95": [
+      0.008002416396755693,
+      0.06664374505143053
+    ],
+    "stableFractionFullWindow": 0.20704479166666667,
+    "lossCounts": {
+      "boundary-crossing": 31,
+      "disrupted": 34,
+      "engulfed": 33,
+      "positive-energy-escape": 25,
+      "survived": 5
+    },
+    "stellarContactBeforePlanetEndpoint": 34,
+    "numericalFaults": 0,
+    "numericallyCensored": 0,
+    "energyErrorBeforeLossOrContact": {
+      "median": 2.848433684603835e-11,
+      "max": 1.1565905318857953e-09
+    },
+    "angularErrorBeforeLossOrContact": {
+      "median": 8.298576830942679e-14,
+      "max": 6.516521092024008e-13
+    },
+    "normalizedMomentumErrorBeforeLossOrContact": {
+      "median": 3.3062257246542254e-14,
+      "max": 1.328033659037162e-13
+    }
+  },
+  "long": {
+    "n": 128,
+    "windowYears": 10000,
+    "meanRestrictedLifeYears": 291.783984375,
+    "planetSurvivors": 0,
+    "planetSurvivalWilson95": [
+      0.0,
+      0.02913695627350686
+    ],
+    "jointSurvivors": 0,
+    "jointSurvivalWilson95": [
+      0.0,
+      0.02913695627350686
+    ],
+    "stableFractionFullWindow": 0.026246510416666667,
+    "lossCounts": {
+      "boundary-crossing": 34,
+      "disrupted": 35,
+      "engulfed": 34,
+      "positive-energy-escape": 25
+    },
+    "stellarContactBeforePlanetEndpoint": 34,
+    "numericalFaults": 0,
+    "numericallyCensored": 0,
+    "energyErrorBeforeLossOrContact": {
+      "median": 4.512071682308815e-10,
+      "max": 1.8495026623621787e-08
+    },
+    "angularErrorBeforeLossOrContact": {
+      "median": 5.658749039873593e-14,
+      "max": 4.867577257519152e-13
+    },
+    "normalizedMomentumErrorBeforeLossOrContact": {
+      "median": 2.2970170093465887e-14,
+      "max": 2.038094129821278e-13
+    }
+  },
+  "convergenceComparison": {
+    "survivalClassificationsChanged": 0,
+    "jointClassificationsChanged": 0,
+    "maxFirstLossTimeDifferenceYears": 0.08333333333331439,
+    "meanAbsoluteFirstLossTimeDifferenceYears": 0.0015624999999999112
+  },
+  "sourceHashesVerified": true
+}

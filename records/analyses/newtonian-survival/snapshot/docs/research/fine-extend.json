@@ -1,0 +1,7 @@
+{
+ "input":"results/candidate-fine-all.jsonl","outputPrefix":"results/candidate-fine-extended","seeds":128,"horizons":[3000,10000],
+ "hypothesis":"Extend the entire refined128-seed candidate cohort, inheriting every known absorbing loss. Compare the ensemble rather than requiring long chaotic trajectories to match pointwise.",
+ "profiles":[
+  {"id":"candidate-fine","force":"newton","dt":0.000375,"adaptive":true,"eta":0.00375,"planet":"bound","inPlane":true,"radiusFraction":0.12,"Q":1.0,"direction":-1}
+ ]
+}

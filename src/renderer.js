@@ -140,7 +140,7 @@ export class SpaceRenderer {
   updateSettings(s) {
     if (this.settings?.newproperty14 !== s.newproperty14) this.clearTrails();
     this.settings = s;
-    this.spaceScale=s.orbitalInitialization==='chaotic'?Math.max(1,s.brfontcoloraaaaaarandomposrange/2):1;
+    this.spaceScale=['chaotic','research'].includes(s.orbitalInitialization)?Math.max(1,s.brfontcoloraaaaaarandomposrange/2):1;
     const mode = String(s.newproperty17);
     this.scene.background = mode === '2' ? C(s.newproperty40).multiplyScalar(s.newproperty57) : C(s.schemecolor);
     this.sky.visible = mode !== '2' && (mode !== '3' || !!this.customBackground);

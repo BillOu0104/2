@@ -5,7 +5,7 @@ import eraFactory from './legacy/072.js';
 import temperatureFactory from './legacy/079.js';
 import loadingFactory from './legacy/156.js';
 import { moduleBindings } from './original-data.js';
-import { normalizeSettings, seededRandom, algorithmId } from './settings.js';
+import { normalizeSettings, seededRandom, algorithmId,manualInitialKeys } from './settings.js';
 import { prepareOrbits } from './orbital-initialization.js';
 import { Habitability } from './habitability.js';
 import { RunStatistics } from './run-statistics.js';
@@ -47,14 +47,15 @@ export class Simulation {
     builder.values = {};
     builder.finish = function() { return Object.assign(this.values, overrides); };
     const math = Object.create(Math); math.random = () => self.random();
-    return factory({ shared: this.shared, engine: this.engine, input: this.input, thisScene: { createLayer: data => data }, Vec3, Math: math, createScriptProperties: () => builder, getHabitability: () => null, prepareInitialBodies: (bodies,G,p) => prepareOrbits(bodies,G,p,self.settings,()=>self.random()), onInitialize: bodies => { self.initialBodies = plain(bodies); self.habitability.reset(); self.world.reset(); self.civilization?.reset(); self.terminalSince=null;self.restartSince=null; } });
+    return factory({ shared: this.shared, engine: this.engine, input: this.input, thisScene: { createLayer: data => data }, Vec3, Math: math, createScriptProperties: () => builder, getHabitability: () => null, getPhysicsSettings:()=>self.settings, prepareManualBodies:bodies=>{self.initializationMetadata=null;if(self.settings.manualInitialBodies)for(let i=0;i<4;i++)Object.assign(bodies[i],self.settings.manualInitialBodies[i]);}, prepareInitialBodies: (bodies,G,p) => {const result=prepareOrbits(bodies,G,p,self.settings,()=>self.random());self.initializationMetadata=result?.metadata??null;return result;}, onInitialize: bodies => { self.initialBodies = plain(bodies); self.habitability.reset(); self.world.reset(); self.civilization?.reset(); self.terminalSince=null;self.restartSince=null;self.observedContacts=new Set(); } });
   }
   configure(patch) {
     const next = normalizeSettings({ ...this.settings, ...patch });
-    const changed = Object.keys(next).filter(k => next[k] !== this.settings[k]);
+    if(next.manualInitialBodies&&manualInitialKeys.some(k=>next[k]!==this.settings[k])&&!('manualInitialBodies' in patch))next.manualInitialBodies=null;
+    const changed = Object.keys(next).filter(k => k==='manualInitialBodies'?JSON.stringify(next[k])!==JSON.stringify(this.settings[k]):next[k]!==this.settings[k]);
     this.settings = next;
     if (changed.includes('civilizationMode')) { this.habitability.reset(); this.civilization.reset(); this.shared.suitablePeriodCount = 0; }
-    const resetKeys = new Set(['seed', 'physicsMode', 'newproperty53', 'orbitalInitialization']);
+    const resetKeys = new Set(['seed', 'physicsMode', 'newproperty53', 'orbitalInitialization','gravityModel','encounterAccuracy','manualInitialBodies']);
     const mapped = {};
     for (const [id, module] of Object.entries(this.modules)) {
       const changes = {};
@@ -67,6 +68,7 @@ export class Simulation {
     this.modules['008'].scriptProperties.trailen = false;
     for (const key of ['trailen', 'trailLength', 'trailStartSize', 'trailEndSize', 'color1', 'color2', 'color3', 'color4']) delete mapped[key];
     if (changed.some(k => resetKeys.has(k))) {
+      if(changed.includes('seed'))this.setRandom();
       this.modules['008'] = this.createModule('008', physicsFactory); this.modules['008'].init(); this.revision++;
       if (changed.includes('seed')) this.setRandom();
     } else { this.modules['008'].applyUserProperties(mapped); if (Object.keys(mapped).length) this.revision++; }
@@ -89,8 +91,8 @@ export class Simulation {
   tick() {
     if(this.pendingRestart)this.restart(this.pendingRestart);
     this.engine.runtime = ++this.tickCount / 60;
-    this.modules['008'].update(true);
-    if (this.settings.physicsMode === 'realtime') {
+    try{this.modules['008'].update(true);}catch(error){this.emit('physics:numerical-error',{code:error.code||'physics-error',message:error.message});throw error;}
+    if (this.settings.physicsMode === 'realtime'&&this.settings.gravityModel==='legacy') {
       // Optional corrected wall-clock mode; reference mode preserves the original 60 Hz / 10-step behavior.
       const p = this.modules['008']; const remaining = Math.max(0, 1 / 60 - p.state().step * 10);
       const steps = Math.ceil(remaining / p.state().step);
@@ -107,6 +109,12 @@ export class Simulation {
     this.modules['079'].update('');
     const equilibrium=Number(this.shared.tem);
     const wasDamaged=this.world.state?.planet.damaged;
+    for(const contact of state.contacts??[]){
+      const key=contact.pair.join(':');if(!this.observedContacts)this.observedContacts=new Set();if(this.observedContacts.has(key))continue;this.observedContacts.add(key);
+      this.emit('physics:contact',plain(contact));
+      if(contact.pair.includes(3)&&!this.world.terminal){const star=contact.pair.find(i=>i!==3);this.world.terminal={kind:'engulfed',zh:`行星被恒星${star+1}吞噬`,en:`Planet engulfed by star ${star+1}`};}
+      else if(!contact.pair.includes(3))this.emit('system:stellar-contact',{...plain(contact),modelValid:false});
+    }
     const world=this.world.update(state.bodies,state.G,equilibrium,this.settings,this.engine.runtime,1/60,Math.max(0,this.shared.xntime-previousYear));
     const legacy=this.settings.civilizationMode==='legacy';
     if(!legacy)this.shared.tem=world.planet.temperature;
@@ -152,7 +160,7 @@ export class Simulation {
       habitability: plain(this.habitability.result),statistics:plain(this.statistics.snapshot()),statisticsCheckpoint:plain(this.statistics.checkpoint()),
       world: plain(this.world.state),civilizationState:plain(this.civilization.result),logItems:this.settings.civilizationMode==='legacy'?[]:plain(this.civilization.logs),
       lifespan: s.civilizationAlive ? Math.floor(s.xntime) - s.civilizationStartTime : s.lastCivilizationLifespan,
-      initialBodies: plain(this.initialBodies),
+      physics:plain(p.diagnostics),initialization:plain(this.initializationMetadata),initialBodies: plain(this.initialBodies),
       log: [...(s.logEntries || [])], records: plain(compact ? [...(s.civilizationRecords || [])].sort((a,b) => b.lifespan-a.lifespan).slice(0,6) : s.civilizationRecords || []), events: plain(this.events.filter(e => e.id > afterEvent)),
       distances: [s.d14, s.d24, s.d34], text: Array.from({ length: 14 }, (_, i) => s[`txt${i + 1}`] || ''), loading: s.num || 0 };
   }
