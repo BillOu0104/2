@@ -1,0 +1,154 @@
+{
+  "passed": 17,
+  "checks": [
+    "183 original + 32 extension/layout controls and worker ready",
+    "fading tails are enabled and populated for all four bodies",
+    "all bodies use round sphere geometry and circular glow",
+    "habitability and resilience are visible in optimized mode",
+    "single settings button opens accessible full panel",
+    "settings search filters original controls",
+    "language control updates the interface",
+    "user pause stops backend simulation",
+    "Wallpaper Engine property callbacks update controls and UI",
+    "Wallpaper Engine pause/resume preserves state",
+    "Wallpaper Engine audio callback accepts stereo spectrum",
+    "manual restart generates exactly one next universe",
+    "closing settings restores uncluttered wallpaper",
+    "settings survive reload",
+    "skybox follows the actual interactive view rotation",
+    "mobile panel fits 390px viewport",
+    "no browser JavaScript errors"
+  ],
+  "skipped": [
+    "Actual Wallpaper Engine file entry is not available in this environment; the existing browser policy blocks file:// navigation."
+  ],
+  "errors": [],
+  "diagnostics": {
+    "ready": true,
+    "tick": 904,
+    "fps": 4,
+    "paused": false,
+    "controls": 215,
+    "history": 1,
+    "worker": true,
+    "scene": {
+      "canvas": [
+        390,
+        844
+      ],
+      "drawingBuffer": [
+        390,
+        844
+      ],
+      "renderedFrames": 43,
+      "viewVelocity": [
+        8.585366835321915e-14,
+        6.877550327024226e-13
+      ],
+      "speedLimited": false,
+      "compassOpacity": [
+        7.558916068240525e-28,
+        7.558916068240525e-28,
+        7.558916068240525e-28
+      ],
+      "idleYaw": 0,
+      "returningToGalaxy": false,
+      "compassScale": 0.3,
+      "compassTarget": false,
+      "compassFade": 6.299096723533771e-27,
+      "viewSensitivity": 0.12,
+      "dragSensitivity": 5,
+      "dustLayers": [
+        {
+          "visible": true,
+          "count": 450,
+          "size": 0.034999999999999996,
+          "opacity": 0.5,
+          "blending": 1,
+          "alphaTest": 0.1
+        },
+        {
+          "visible": true,
+          "count": 900,
+          "size": 0.042,
+          "opacity": 0.42,
+          "blending": 1,
+          "alphaTest": 0.1
+        }
+      ],
+      "pointerMode": 1,
+      "galaxyCoreScreen": [
+        -0.4665609593963428,
+        0.035548446881636546,
+        0.9998887731370448
+      ],
+      "layoutEditing": false,
+      "compassVisible": false,
+      "maxTextureSize": 8192,
+      "backgroundSizes": {
+        "1": [
+          8192,
+          4096
+        ],
+        "4": [
+          8192,
+          4096
+        ]
+      },
+      "backgroundFollowsView": true,
+      "viewRotation": [
+        0.017810324295214317,
+        0.10608870905446215,
+        0
+      ],
+      "skyRotation": [
+        -0.021967848403347118,
+        0.8245234118370339,
+        -0.029411117441208955,
+        0.5646357614781444
+      ],
+      "bodyShapes": [
+        "SphereGeometry",
+        "SphereGeometry",
+        "SphereGeometry",
+        "SphereGeometry"
+      ],
+      "glowShape": "radial-circle",
+      "bodyLabelsVisible": false,
+      "trailSamples": [
+        329,
+        329,
+        329,
+        329
+      ],
+      "trailComplexity": 0,
+      "trailMetrics": [
+        {
+          "arcPixels": 94.21387366017512,
+          "seconds": 11.583333333333332,
+          "budget": 430.5980003298981,
+          "segments": 66
+        },
+        {
+          "arcPixels": 69.21861476903766,
+          "seconds": 11.516666666666666,
+          "budget": 430.5980003298981,
+          "segments": 50
+        },
+        {
+          "arcPixels": 64.12435026817708,
+          "seconds": 11.583333333333332,
+          "budget": 430.5980003298981,
+          "segments": 47
+        },
+        {
+          "arcPixels": 142.80551302111934,
+          "seconds": 11.516666666666666,
+          "budget": 430.5980003298981,
+          "segments": 93
+        }
+      ],
+      "trailsVisible": true
+    }
+  }
+}

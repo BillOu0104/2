@@ -1,0 +1,55 @@
+{
+  "passed": true,
+  "checks": [
+    "v0.5.2 boots actual Worker with random Q=1/retrograde candidate, Newton gravity and cage off",
+    "all 217 controls match the generated guide, including gravity model and encounter precision",
+    "gravity dropdown changes running Worker to consistent Plummer model",
+    "existing cage toggle can be enabled and disabled without deleting its parameters",
+    "encounter precision setting reaches the production kernel",
+    "Worker advances with finite conservation diagnostics and renders the existing scene",
+    "updated standalone settings guide is included in offline build"
+  ],
+  "errors": [],
+  "controls": 217,
+  "physics": {
+    "energy": -185518.40092016375,
+    "kinetic": 248664.88145115637,
+    "potential": -434183.2823713201,
+    "momentum": [
+      4.031790012959391e-9,
+      8.469896783935837e-9,
+      -3.586137609090656e-9
+    ],
+    "angularMomentum": [
+      -748979.833126106,
+      -548620.5535705963,
+      533402.0125024009
+    ],
+    "center": [
+      -1.1995206260564939e-15,
+      9.405453846311751e-17,
+      -4.054645074552665e-16,
+      2.6759464869657856e-16,
+      5.613998849129942e-16,
+      -2.3981874429021555e-16
+    ],
+    "virialRatio": 1.1454373834619196,
+    "mass": 15005000,
+    "model": "newtonian",
+    "steps": 2030,
+    "solverTime": 1.52250000000003,
+    "relativeEnergyError": 6.275136118547781e-16,
+    "maxRelativeEnergyError": 6.1182577155840866e-15,
+    "maxRelativeEnergyErrorBeforeContact": 6.1182577155840866e-15,
+    "relativeAngularMomentumError": 1.2253616379761958e-14,
+    "maxRelativeAngularMomentumError": 1.7749120274859436e-14,
+    "normalizedMomentumDrift": 4.249379295864263e-15,
+    "maxNormalizedMomentumDrift": 5.548361380861636e-15,
+    "cageActive": false,
+    "conservationApplicable": true,
+    "physicalModelValid": true,
+    "contacts": [],
+    "numericalError": null
+  },
+  "limits": "Chromium with software WebGL; native Wallpaper Engine/Windows not available"
+}

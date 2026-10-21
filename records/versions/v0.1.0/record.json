@@ -1,0 +1,121 @@
+{
+  "format": 1,
+  "id": "v0.1.0",
+  "path": "versions/v0.1.0",
+  "kind": "version",
+  "version": "0.1.0",
+  "title": "原版解包、源码审计与首版移植",
+  "summary": "首次将原SceneScript四体、温度、纪元和文明事件接入Three.js与Worker；保留原设置、资源、手动初值及WE回调。归档当时的源码审计、独立轨迹基准、Node测试和浏览器报告。",
+  "source_commit": "c7f0db5e62d141db51fde5fa5e222985bc47354e",
+  "previous_commit": null,
+  "source_repository": "https://github.com/BillOu0104/2",
+  "source_subject": "Build Three.js wallpaper from original four-body SceneScript",
+  "source_date": "2026-10-19T12:41:25Z",
+  "archived_at": "2026-10-21T10:08:37.902812+00:00",
+  "runtime_fingerprint": "d308dd0fc477399c82136a65a6517ae9751d471415cb85ecd7e1092580cb81a3",
+  "deleted_paths": [],
+  "files": [
+    {
+      "source_path": "README.md",
+      "archive_path": "snapshot/README.md",
+      "sha256": "77b55e6d025b4c256388263d7ffb680396bfbd591415a54d1c20434be4144cb9",
+      "bytes": 6874
+    },
+    {
+      "source_path": "docs/SOURCE-AUDIT.md",
+      "archive_path": "snapshot/docs/SOURCE-AUDIT.md",
+      "sha256": "b6f96a579b6c1b96e60f45803178d6197e5ecc57ce6370aff7e035adb9718fe1",
+      "bytes": 28957
+    },
+    {
+      "source_path": "docs/qa/browser-report.json",
+      "archive_path": "snapshot/docs/qa/browser-report.json",
+      "sha256": "90e8ccdc58afc88e0de40962dcf5082ae6f2e10b7f3c7debc78fe6609a257320",
+      "bytes": 1029
+    },
+    {
+      "source_path": "docs/qa/desktop.png",
+      "archive_path": "snapshot/docs/qa/desktop.png",
+      "sha256": "f3c370ef5e456367cb348fdaa6e9e9b1134e8db4100411e4e16083acfa813b87",
+      "bytes": 639289
+    },
+    {
+      "source_path": "docs/qa/mobile.png",
+      "archive_path": "snapshot/docs/qa/mobile.png",
+      "sha256": "570890cbe189512dcec7d8cbdada765d150f31251d07cd39e1889e398cbc7b9e",
+      "bytes": 101075
+    },
+    {
+      "source_path": "docs/qa/settings.png",
+      "archive_path": "snapshot/docs/qa/settings.png",
+      "sha256": "43f07fcce298bc6295b3c62de99a135ee2c3ffb62aca282138c1f08c87b260ca",
+      "bytes": 694719
+    },
+    {
+      "source_path": "docs/qa/simulation-report.txt",
+      "archive_path": "snapshot/docs/qa/simulation-report.txt",
+      "sha256": "b0e772955e8098846955759b14ed2be02e8db2deed50d28d4a523e1339cbd217",
+      "bytes": 1488
+    },
+    {
+      "source_path": "docs/scene-bindings.json",
+      "archive_path": "snapshot/docs/scene-bindings.json",
+      "sha256": "c6e8d4028eaf7d6d08df169f2c216955b15c37f53d54bc7e5aaf7b769dafe6c4",
+      "bytes": 117742
+    },
+    {
+      "source_path": "package-lock.json",
+      "archive_path": "snapshot/package-lock.json",
+      "sha256": "ce43875e778bdfac8e0970f0f49e11b20859927c68c73077c80b06fb0e5d735e",
+      "bytes": 15394
+    },
+    {
+      "source_path": "package.json",
+      "archive_path": "snapshot/package.json",
+      "sha256": "486769b10c7e54390f4ff21039216102f3e60fd2d055c15eaf188514e82b824a",
+      "bytes": 399
+    },
+    {
+      "source_path": "tests/fixtures/original-reference.json",
+      "archive_path": "snapshot/tests/fixtures/original-reference.json",
+      "sha256": "c2088c30aa9fbc1977bf102197716d0582d51dfdf76cb1b36c393c1f61e3b2d0",
+      "bytes": 1230
+    },
+    {
+      "source_path": "tests/simulation.test.js",
+      "archive_path": "snapshot/tests/simulation.test.js",
+      "sha256": "43a66e59183abc9d9b8063ca99f3b6be74db917c70f8825dd61850cbde62b7e8",
+      "bytes": 7362
+    },
+    {
+      "source_path": "tools/browser-smoke.mjs",
+      "archive_path": "snapshot/tools/browser-smoke.mjs",
+      "sha256": "e193b1f8eb9b3f743ddb79cf066051a47ba39f8b55357156cd50917f0ef89b3f",
+      "bytes": 6459
+    },
+    {
+      "source_path": "tools/build.mjs",
+      "archive_path": "snapshot/tools/build.mjs",
+      "sha256": "c8b1d574099535380573773d737e9e5139d3d3757b002f34398d9fac0855f2d9",
+      "bytes": 2336
+    },
+    {
+      "source_path": "tools/extract-textures.py",
+      "archive_path": "snapshot/tools/extract-textures.py",
+      "sha256": "da19457aad7b461116042c398586aa946cb4c9a3e0c251ef885e0a728c216869",
+      "bytes": 4320
+    },
+    {
+      "source_path": "tools/serve.mjs",
+      "archive_path": "snapshot/tools/serve.mjs",
+      "sha256": "981fad5a06ff1c0a5945a444fcd8e424f83cebdbd93e607901e80eeb43f09dd3",
+      "bytes": 1474
+    },
+    {
+      "source_path": null,
+      "archive_path": "changes.patch",
+      "sha256": "1e5f1ba79a90e5e2d04726fe30073584d564c44ed0ac717d560b91448bb7af26",
+      "bytes": 253719
+    }
+  ]
+}

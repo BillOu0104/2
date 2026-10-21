@@ -1,0 +1,110 @@
+{
+  "pass": true,
+  "freshPrimaryTrials": 2440,
+  "checks": [
+    {
+      "config": "phase1",
+      "rows": 448,
+      "cohortComplete": true,
+      "noDuplicates": true,
+      "sourceHashVerified": true
+    },
+    {
+      "config": "phase2",
+      "rows": 576,
+      "cohortComplete": true,
+      "noDuplicates": true,
+      "sourceHashVerified": true
+    },
+    {
+      "config": "numerics",
+      "rows": 264,
+      "cohortComplete": true,
+      "noDuplicates": true,
+      "sourceHashVerified": true
+    },
+    {
+      "config": "ablation",
+      "rows": 128,
+      "cohortComplete": true,
+      "noDuplicates": true,
+      "sourceHashVerified": true
+    },
+    {
+      "config": "phase3",
+      "rows": 512,
+      "cohortComplete": true,
+      "noDuplicates": true,
+      "sourceHashVerified": true
+    },
+    {
+      "config": "candidate-convergence",
+      "rows": 16,
+      "cohortComplete": true,
+      "noDuplicates": true,
+      "sourceHashVerified": true
+    },
+    {
+      "config": "candidate-convergence-rest",
+      "rows": 112,
+      "cohortComplete": true,
+      "noDuplicates": true,
+      "sourceHashVerified": true
+    },
+    {
+      "config": "geometry",
+      "rows": 192,
+      "cohortComplete": true,
+      "noDuplicates": true,
+      "sourceHashVerified": true
+    },
+    {
+      "config": "geometry-confirm",
+      "rows": 192,
+      "cohortComplete": true,
+      "noDuplicates": true,
+      "sourceHashVerified": true
+    }
+  ],
+  "extensions": {
+    "extended-3000": {
+      "rows": 512,
+      "allPrimaryOutcomesKnown": true,
+      "numericalStopsAfterKnownPhysicalLoss": 0,
+      "fullyRecomputedThisStage": 11
+    },
+    "extended-10000-v2": {
+      "rows": 512,
+      "allPrimaryOutcomesKnown": true,
+      "numericalStopsAfterKnownPhysicalLoss": 0,
+      "fullyRecomputedThisStage": 2
+    },
+    "candidate-fine-extended-3000": {
+      "rows": 128,
+      "allPrimaryOutcomesKnown": true,
+      "numericalStopsAfterKnownPhysicalLoss": 0,
+      "fullyRecomputedThisStage": 6
+    },
+    "candidate-fine-extended-10000": {
+      "rows": 128,
+      "allPrimaryOutcomesKnown": true,
+      "numericalStopsAfterKnownPhysicalLoss": 0,
+      "fullyRecomputedThisStage": 1
+    },
+    "geometry-extended-3000": {
+      "rows": 64,
+      "allPrimaryOutcomesKnown": true,
+      "numericalStopsAfterKnownPhysicalLoss": 0,
+      "fullyRecomputedThisStage": 41
+    },
+    "geometry-extended-10000": {
+      "rows": 64,
+      "allPrimaryOutcomesKnown": true,
+      "numericalStopsAfterKnownPhysicalLoss": 1,
+      "fullyRecomputedThisStage": 8
+    }
+  },
+  "supersededOriginal10000YearFileContainsTwoBudgetStops": true,
+  "canonical10000File": "extended-10000-v2.jsonl",
+  "note": "The geometry long run has one numerical stop AFTER an observed positive-energy escape; primary outcome known, later point-mass continuation unverified."
+}

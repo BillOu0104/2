@@ -1,0 +1,24 @@
+name: v0.5.2 acceptance build
+on:
+  push:
+    branches: [fix/v0.5.2-newtonian]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: three-body-v0.5.2-acceptance
+          path: dist/
+          retention-days: 14

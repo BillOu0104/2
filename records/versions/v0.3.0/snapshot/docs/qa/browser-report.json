@@ -1,0 +1,84 @@
+{
+  "passed": 17,
+  "checks": [
+    "183 original + 14 extension controls and worker ready",
+    "fading tails are enabled and populated for all four bodies",
+    "all bodies use round sphere geometry and circular glow",
+    "habitability and resilience are visible in optimized mode",
+    "single settings button opens accessible full panel",
+    "settings search filters original controls",
+    "language control updates the interface",
+    "user pause stops backend simulation",
+    "Wallpaper Engine property callbacks update controls and UI",
+    "Wallpaper Engine pause/resume preserves state",
+    "Wallpaper Engine audio callback accepts stereo spectrum",
+    "manual restart generates exactly one next universe",
+    "closing settings restores uncluttered wallpaper",
+    "settings survive reload",
+    "skybox follows the actual interactive view rotation",
+    "mobile panel fits 390px viewport",
+    "no browser JavaScript errors"
+  ],
+  "skipped": [
+    "Actual Wallpaper Engine file entry is not available in this environment; the existing browser policy blocks file:// navigation."
+  ],
+  "errors": [],
+  "diagnostics": {
+    "ready": true,
+    "tick": 930,
+    "fps": 3,
+    "paused": false,
+    "controls": 197,
+    "history": 1,
+    "worker": true,
+    "scene": {
+      "canvas": [
+        390,
+        844
+      ],
+      "drawingBuffer": [
+        390,
+        844
+      ],
+      "renderedFrames": 36,
+      "compassVisible": false,
+      "maxTextureSize": 8192,
+      "backgroundSizes": {
+        "1": [
+          8192,
+          4096
+        ],
+        "4": [
+          8192,
+          4096
+        ]
+      },
+      "backgroundFollowsView": true,
+      "viewRotation": [
+        0.14835298641917133,
+        0.8835729338200645,
+        0
+      ],
+      "skyRotation": [
+        0.06699328166606104,
+        0.42637939606265146,
+        0.03168546244932799,
+        0.9015034898957589
+      ],
+      "bodyShapes": [
+        "SphereGeometry",
+        "SphereGeometry",
+        "SphereGeometry",
+        "SphereGeometry"
+      ],
+      "glowShape": "radial-circle",
+      "trailSamples": [
+        319,
+        319,
+        319,
+        319
+      ],
+      "trailsVisible": true
+    }
+  }
+}

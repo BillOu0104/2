@@ -8,7 +8,9 @@
 
 源码仓库：https://github.com/BillOu0104/2 。其他agent可直接clone后运行 `npm ci && npm run build`。
 
-GitHub Actions工作流 `.github/workflows/pages.yml` 在main推送后测试和部署GitHub Pages。首次发布须在仓库 Settings → Pages 把Source选为 **GitHub Actions**。确认部署成功后，以工作流输出的 `page_url` 为准；不要把预期URL当成已经上线。
+历史更新、分析、测试源码/输出、截图和实验数据集中保存在 [records/](records/README.md)，以后每次交付同步维护，见 [维护规范](records/POLICY.md)。原私有站点v0.1–v0.5完整提交历史保存在 `history/sites-v0.1-v0.5` 分支。
+
+后续源码和记录上传GitHub，默认查看仍使用原私有网页：https://trisolaris-reconstruction-20261019.wittylark8.chatgpt.site/ 。GitHub Pages仅保留手动触发，推送main不再自动部署；私有预览实际更新须另行核实。本次归档没有发布或改变网页访问权限。
 
 ## 运行
 

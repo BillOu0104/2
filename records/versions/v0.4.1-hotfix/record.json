@@ -1,0 +1,199 @@
+{
+  "format": 1,
+  "id": "v0.4.1-hotfix",
+  "path": "versions/v0.4.1-hotfix",
+  "kind": "version",
+  "version": "0.4.1",
+  "title": "悬停视角、缓慢归位与束缚初值",
+  "summary": "同版本修复：恢复不点击的悬停旋转，进一步降低灵敏度，旋转环缩至0.3倍；停止输入后极慢回归银河。实验性束缚初始化提高恒纪元和发展时间，并保留逐种子轨道对照和鼠标专项报告。后续v0.4.2恢复混沌，不把本版规则轨道视为最终方案。",
+  "source_commit": "7fe7fed36881c9eecbac2149a47bb57fb40e00e1",
+  "previous_commit": "49047ad621da970afe68ada7357252f10ad1e634",
+  "source_repository": "https://github.com/BillOu0104/2",
+  "source_subject": "Fix v0.4.1 hover sensitivity, galaxy return and bound initial orbits",
+  "source_date": "2026-10-20T08:48:31Z",
+  "archived_at": "2026-10-21T10:08:37.321874+00:00",
+  "runtime_fingerprint": "1bec296909ef30cbb7695f3f283c61f6b3617ab54965ef6ad3a6f9ddf2b259fa",
+  "deleted_paths": [],
+  "files": [
+    {
+      "source_path": "README.md",
+      "archive_path": "snapshot/README.md",
+      "sha256": "ecbb1c43b7e0a7d820fb053a406574b3b067f03792a1bfd8987da32528f4df34",
+      "bytes": 10499
+    },
+    {
+      "source_path": "docs/REFERENCE-MODEL.md",
+      "archive_path": "snapshot/docs/REFERENCE-MODEL.md",
+      "sha256": "1aa325dafa1f4ab2c4fce981319e1528454351230acdf69567187f41e53c3532",
+      "bytes": 11351
+    },
+    {
+      "source_path": "docs/V041-UPDATE.md",
+      "archive_path": "snapshot/docs/V041-UPDATE.md",
+      "sha256": "6fb2e90f74e6feeaaf86ab4ed6c646c2b7a7168c50b424fb8514b29239a6849a",
+      "bytes": 3310
+    },
+    {
+      "source_path": "docs/qa/browser-report.json",
+      "archive_path": "snapshot/docs/qa/browser-report.json",
+      "sha256": "7fe6685541bf22caaa3529399022f07832b80e30eeca70a67e51700fa71d7a02",
+      "bytes": 3464
+    },
+    {
+      "source_path": "docs/qa/desktop.png",
+      "archive_path": "snapshot/docs/qa/desktop.png",
+      "sha256": "42e2064871c9c6587df2d422d14505a89abc3266de6b3e03b6bae100fe806025",
+      "bytes": 1314196
+    },
+    {
+      "source_path": "docs/qa/mobile.png",
+      "archive_path": "snapshot/docs/qa/mobile.png",
+      "sha256": "bdb4317e08c6fdac31f88f830cbe7513b408c37247a71ed75a0e6dd8ce0b16b1",
+      "bytes": 116140
+    },
+    {
+      "source_path": "docs/qa/settings.png",
+      "archive_path": "snapshot/docs/qa/settings.png",
+      "sha256": "2b8ffadf88c04101e850eb99a0ce806253817272936a28bcfc2b2133afd1dfea",
+      "bytes": 1317244
+    },
+    {
+      "source_path": "docs/qa/state-ui-8k-report.json",
+      "archive_path": "snapshot/docs/qa/state-ui-8k-report.json",
+      "sha256": "dc1903d25a27dadd7e67492737c79f4699407d90deac85bc8f8c7ba60f156a80",
+      "bytes": 2261
+    },
+    {
+      "source_path": "docs/qa/tail-render-report.json",
+      "archive_path": "snapshot/docs/qa/tail-render-report.json",
+      "sha256": "75ea1105b8cd258021ca1a2a40bcf9f8f78fb4a30f9028915cf9ff769e3766d9",
+      "bytes": 120
+    },
+    {
+      "source_path": "docs/qa/tails-off.png",
+      "archive_path": "snapshot/docs/qa/tails-off.png",
+      "sha256": "6b965942d92f150f2f9761d45522cdf4e8218c7114701a2fa8e0c9f5a5c41c6c",
+      "bytes": 6597
+    },
+    {
+      "source_path": "docs/qa/tails-on.png",
+      "archive_path": "snapshot/docs/qa/tails-on.png",
+      "sha256": "a98bf851ca86cc93604a0f68cf29859257bd634afe29f72204ff2582d7e8aacd",
+      "bytes": 20034
+    },
+    {
+      "source_path": "docs/qa/v041-browser-report.json",
+      "archive_path": "snapshot/docs/qa/v041-browser-report.json",
+      "sha256": "546a89dc8449cc1f88543ab07d51bb8b18536f8be06a2c80f931c2830448df82",
+      "bytes": 3156
+    },
+    {
+      "source_path": "docs/qa/v041-desktop.png",
+      "archive_path": "snapshot/docs/qa/v041-desktop.png",
+      "sha256": "0ca6fec3e599a991a4f61d17bafb019d67d891461f739041a79514f1e75b159e",
+      "bytes": 1651038
+    },
+    {
+      "source_path": "docs/qa/v041-galaxy-default.png",
+      "archive_path": "snapshot/docs/qa/v041-galaxy-default.png",
+      "sha256": "ab7870ac6a82871792ca7974cf76f4bd795f67890db0aa928a7b1db52687ee28",
+      "bytes": 1002980
+    },
+    {
+      "source_path": "docs/qa/v041-hotfix-browser.json",
+      "archive_path": "snapshot/docs/qa/v041-hotfix-browser.json",
+      "sha256": "b94cb9837f764bb7ee505b167512925794931b85bfab8c3996b3802616e22c65",
+      "bytes": 5063
+    },
+    {
+      "source_path": "docs/qa/v041-hotfix-desktop.png",
+      "archive_path": "snapshot/docs/qa/v041-hotfix-desktop.png",
+      "sha256": "6be38d4d5c49cc266a598aef0bd085b16fe048f09d657002e185f735a20c8432",
+      "bytes": 1314685
+    },
+    {
+      "source_path": "docs/qa/v041-hotfix-orbits.json",
+      "archive_path": "snapshot/docs/qa/v041-hotfix-orbits.json",
+      "sha256": "bc616e1e933e064814e7fbab0fb48024f281e3a7737615dec2e3445705c351d8",
+      "bytes": 17186
+    },
+    {
+      "source_path": "docs/qa/v041-hotfix-simulation.txt",
+      "archive_path": "snapshot/docs/qa/v041-hotfix-simulation.txt",
+      "sha256": "999032a66d793163ba4259614f59ad4cdb08d361ab70445204ae8764b3a18e9f",
+      "bytes": 6526
+    },
+    {
+      "source_path": "docs/qa/v041-mobile.png",
+      "archive_path": "snapshot/docs/qa/v041-mobile.png",
+      "sha256": "107417f24d1196d11b09959631c8784076e3649723a61971b5aba12e761948ad",
+      "bytes": 425437
+    },
+    {
+      "source_path": "docs/qa/v3-overview.png",
+      "archive_path": "snapshot/docs/qa/v3-overview.png",
+      "sha256": "81905246b7faa73db19a5afadac9b7ab747fb7188dbbf70cfa1f4dd99434712d",
+      "bytes": 1175044
+    },
+    {
+      "source_path": "tests/habitability.test.js",
+      "archive_path": "snapshot/tests/habitability.test.js",
+      "sha256": "1d7c92832c86ed4ad016bba4f01fa8268ab4a7c4f34ab5882d85769f5c1e1c49",
+      "bytes": 6586
+    },
+    {
+      "source_path": "tests/simulation.test.js",
+      "archive_path": "snapshot/tests/simulation.test.js",
+      "sha256": "4056d83826383b54e1fad93a93cd35ac7145b752c3b61d3653eb7647117c2377",
+      "bytes": 8820
+    },
+    {
+      "source_path": "tests/v04.test.js",
+      "archive_path": "snapshot/tests/v04.test.js",
+      "sha256": "d0c0041f21c42bee9ebfcbf967511f5dd18533ddbf75bb7b43215c014f694769",
+      "bytes": 4774
+    },
+    {
+      "source_path": "tests/v041-hotfix.test.js",
+      "archive_path": "snapshot/tests/v041-hotfix.test.js",
+      "sha256": "4fba12f8b74cfbfe6f7c5f85d28811118552b3372915a9726c4864117dfc7935",
+      "bytes": 2716
+    },
+    {
+      "source_path": "tests/v041.test.js",
+      "archive_path": "snapshot/tests/v041.test.js",
+      "sha256": "279a5b3d8144d163a2ef69f1000091f0b6faaa40f552e293e2e2c33421046b45",
+      "bytes": 6084
+    },
+    {
+      "source_path": "tools/build.mjs",
+      "archive_path": "snapshot/tools/build.mjs",
+      "sha256": "9fd894f8599dc293cadbc6996f1aab23da9ef8d3e6d6ba384e62a2f7773972d0",
+      "bytes": 2830
+    },
+    {
+      "source_path": "tools/orbital-audit.mjs",
+      "archive_path": "snapshot/tools/orbital-audit.mjs",
+      "sha256": "8ea85b2a4a10e46ff974d4b377d331dd20b3f8f8da4cba9210266e447ba25344",
+      "bytes": 2646
+    },
+    {
+      "source_path": "tools/state-ui-8k-check.mjs",
+      "archive_path": "snapshot/tools/state-ui-8k-check.mjs",
+      "sha256": "9c1f9981551d773413831c1d8ec9cce956da0e0ceb0db4a1567657faf51bc221",
+      "bytes": 3977
+    },
+    {
+      "source_path": "tools/v041-hotfix-browser.mjs",
+      "archive_path": "snapshot/tools/v041-hotfix-browser.mjs",
+      "sha256": "0d4bef8b7900ec6b22b325e0b6418520ff35ebc4ced7cb314511f61824288e20",
+      "bytes": 4732
+    },
+    {
+      "source_path": null,
+      "archive_path": "changes.patch",
+      "sha256": "93a4ac0f82957c77bc26af2a756c45c27440d4207a76dcbc4812b7c0686e6ca7",
+      "bytes": 46475
+    }
+  ]
+}

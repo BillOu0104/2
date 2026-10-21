@@ -1,0 +1,29 @@
+{
+  "hash": "8a9e6a99f3e63dd5033c11dfeedc8d003334569e38ccf27c8d76940221ab8f96",
+  "config": {
+    "hypothesis": "A successful short-window initializer should retain stellar sensitivity and compact nonhierarchical episodes; compare it with a deliberately hierarchical stable control. Finite-time separation is a diagnostic, not a proof of an asymptotic Lyapunov exponent.",
+    "profiles": [
+      {
+        "id": "candidate",
+        "force": "newton",
+        "adaptive": true,
+        "eta": 0.0075,
+        "planet": "bound",
+        "inPlane": true,
+        "radiusFraction": 0.12,
+        "Q": 1,
+        "direction": -1
+      },
+      {
+        "id": "hierarchy-control",
+        "geometry": "hierarchical",
+        "force": "newton",
+        "adaptive": true,
+        "eta": 0.0075,
+        "planet": "bound",
+        "inPlane": true,
+        "fixedRadius": 0.5
+      }
+    ]
+  }
+}
