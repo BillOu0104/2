@@ -14,8 +14,8 @@ export function measureChaotic(seed,mode='chaotic',ticks=12000,profile={}){
  }
  return{seed,years:sim.shared.xntime,farFraction:far/Math.max(1,intact),unboundFarFraction:unbound/Math.max(1,intact),insideFraction:inner/Math.max(1,intact),stableFraction:stable/ticks,developmentFraction:development/ticks,survivingPlanet:!terminal,stellarDistanceRatios:max.map((m,i)=>m/Math.max(1e-8,min[i]))};
 }
-export function sensitiveDependence(ticks=12000){
- const s=new Simulation({seed:'TRISOLARIS',autorestart:false});s.tick();const first=s.initialBodies,second=structuredClone(first);second[0].vx+=1e-7;
+export function sensitiveDependence(ticks=12000,profile={}){
+ const s=new Simulation({seed:'TRISOLARIS',autorestart:false,...profile});s.tick();const first=s.initialBodies,second=structuredClone(first);second[0].vx+=1e-7;
  const a=new Simulation(settingsFromInitial(s.settings,first)),b=new Simulation(settingsFromInitial(s.settings,second));let maxSeparation=0;
  for(let i=0;i<ticks;i++){a.tick();b.tick();if(i%60===0){const x=a.lastPhysicsState,y=b.lastPhysicsState;maxSeparation=Math.max(maxSeparation,Math.sqrt(x.bodies.slice(0,3).reduce((n,p,j)=>n+(p.x-x.com.x-y.bodies[j].x+y.com.x)**2+(p.y-x.com.y-y.bodies[j].y+y.com.y)**2+(p.z-x.com.z-y.bodies[j].z+y.com.z)**2,0)/3));}}
  return{initialVelocityPerturbation:1e-7,years:a.shared.xntime,maxStellarRmsSeparation:maxSeparation};

@@ -62,4 +62,34 @@ export function prepareChaoticOrbits(bodies,G,p,settings,random){
   const total=mass+planet.mass;for(const k of ['vx','vy','vz']){const drift=bodies.reduce((n,b)=>n+b.mass*b[k],0)/total;for(const b of bodies)b[k]-=drift;}
   return true;
 }
-export function prepareOrbits(...args){return prepareChaoticOrbits(...args)||prepareBalancedOrbits(...args);}
+export function prepareOrbits(...args){return prepareResearchOrbits(...args)||prepareChaoticOrbits(...args)||prepareBalancedOrbits(...args);}
+
+// Frozen research candidate: random nonhierarchical stars, Q=1, host 3, retrograde .12D.
+// No trajectory is integrated or scored while generating an initial state.
+export function prepareResearchOrbits(bodies,G,p,settings,random){
+ if(settings.orbitalInitialization!=='research')return false;
+ if(!(G>0)||bodies.some(b=>!(b.mass>0))||p.xcxc<.5)return {metadata:{version:'original-fallback',reason:'Q=1 host initialization requires positive G/masses and extent >= 0.5'}};
+ prepareChaoticOrbits(bodies,G,p,{...settings,orbitalInitialization:'chaotic'},random);
+ const stars=bodies.slice(0,3),keys=['x','y','z','vx','vy','vz'],velKeys=keys.slice(3),distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y,a.z-b.z);
+ const center=items=>{const m=items.reduce((n,b)=>n+b.mass,0);return keys.map(k=>items.reduce((n,b)=>n+b.mass*b[k],0)/m);};
+ const recenter=items=>{const c=center(items);for(const b of items)keys.forEach((k,i)=>b[k]-=c[i]);};
+ const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],dot=(a,b)=>a.reduce((n,x,i)=>n+x*b[i],0),unit=a=>{const n=Math.hypot(...a);return n>1e-14?a.map(x=>x/n):[0,0,1];};
+ const radii=[settings._13,settings._21,settings._3];
+ for(let i=0;i<3;i++)for(let j=i+1;j<3;j++)if(distance(stars[i],stars[j])<=radii[i]+radii[j])throw new Error('随机位置范围过小或恒星半径过大，初始恒星重叠；请扩大范围或使用自定义初值');
+ // Match the validated protocol, including its origin choice before planet placement.
+ recenter(stars);let kinetic=0,potential=0;
+ for(const b of stars)kinetic+=.5*b.mass*velKeys.reduce((n,k)=>n+b[k]**2,0);
+ for(let i=0;i<3;i++)for(let j=i+1;j<3;j++)potential+=G*stars[i].mass*stars[j].mass/distance(stars[i],stars[j]);
+ if(!(kinetic>0&&potential>0))throw new Error('随机恒星初速度退化；请使用非零随机速度范围');
+ const multiplier=Math.sqrt(potential/(2*kinetic));for(const b of stars)for(const k of velKeys)b[k]*=multiplier;
+ const angular=[0,0,0];for(const b of stars){const h=cross([b.x,b.y,b.z],[b.vx,b.vy,b.vz]);h.forEach((x,i)=>angular[i]+=b.mass*x);}
+ const hostIndex=2,host=stars[hostIndex],planet=bodies[3],nearest=Math.min(...stars.filter(b=>b!==host).map(b=>distance(host,b))),radius=.12*nearest;
+ if(radius<=radii[hostIndex]+settings.newproperty20)throw new Error('0.12D行星轨道位于恒星表面以内；请增大位置范围或缩小天体半径');
+ const normal=unit(angular),offset=[planet.x-host.x,planet.y-host.y,planet.z-host.z],raw=unit(offset),projection=raw.map((x,i)=>x-normal[i]*dot(raw,normal));
+ if(Math.hypot(...projection)<1e-12){const least=normal.map(Math.abs).indexOf(Math.min(...normal.map(Math.abs))),basis=[0,0,0];basis[least]=1;for(let i=0;i<3;i++)projection[i]=basis[i]-normal[i]*dot(basis,normal);}
+ const radial=unit(projection),tangent=unit(cross(normal,radial)),speed=Math.sqrt(G*(host.mass+planet.mass)/radius),hostShare=host.mass/(host.mass+planet.mass),planetShare=1-hostShare;
+ for(let i=0;i<3;i++){planet[keys[i]]=host[keys[i]]+radius*radial[i];const v=-speed*tangent[i];planet[velKeys[i]]=host[velKeys[i]]+hostShare*v;host[velKeys[i]]-=planetShare*v;}
+ recenter(bodies);
+ for(let i=0;i<3;i++)if(distance(planet,stars[i])<=radii[i]+settings.newproperty20)throw new Error('初始行星与恒星重叠；请调整天体半径或星系尺度');
+ return {metadata:{version:'research-q1-retro12-v1',host:hostIndex,nearestStellarDistance:nearest,planetRadius:radius,stellarVirialRatio:1,direction:'retrograde',stellarAngularMomentum:angular}};
+}

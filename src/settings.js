@@ -2,9 +2,10 @@ import { propertySchema } from './original-data.js';
 
 export const defaults = Object.fromEntries(Object.entries(propertySchema)
   .filter(([, d]) => d.type && d.type !== 'group').map(([k, d]) => [k, d.value]));
-export const extraDefaults = { seed: 'TRISOLARIS', music: false, volume: 0.35, trailsLength: 400, orbitalInitialization: 'chaotic', physicsMode: 'reference', pixelRatio: 4, bodyLabels: false, presentationRevision: 6, layout: {}, viewSensitivity: .12, compassOpacity: .12, planetStrength: 1.6, idleAmplitude: 6, civilizationMode: 'balanced', thermalGrace: 30, wakeDelay: 1, epochWindow: 1/12, epochTimebase: 'years', climateInertia: 1.5, stellarBreathing: true, renderQuality: 'native', dragSensitivity: 5, birthDelay: .5, civilizationLevels: true, developmentRate: 1 };
+export const extraDefaults = { seed: 'TRISOLARIS', music: false, volume: 0.35, trailsLength: 400, orbitalInitialization: 'research', physicsMode: 'reference', pixelRatio: 4, bodyLabels: false, presentationRevision: 6, layout: {}, viewSensitivity: .12, compassOpacity: .12, planetStrength: 1.6, idleAmplitude: 6, civilizationMode: 'balanced', thermalGrace: 30, wakeDelay: 1, epochWindow: 1/12, epochTimebase: 'years', climateInertia: 1.5, stellarBreathing: true, renderQuality: 'native', dragSensitivity: 5, birthDelay: .5, civilizationLevels: true, developmentRate: 1, gravityModel: 'newtonian', encounterAccuracy: .0075, physicsRevision: 1, manualInitialBodies: null };
 // New installs show the requested tails; explicitly saved off/on preferences still win.
 defaults.newproperty14 = true;
+defaults.newproperty60 = false;
 defaults.brfontcoloraaaaaarandomposrange = 3.2;
 defaults.rc = 1.6;
 defaults.k2 = .3;
@@ -48,7 +49,11 @@ export function normalizeSettings(source = {}, includeExtras = true) {
     else if(key==='developmentRate'&&Number.isFinite(+value))out.developmentRate=Math.max(.1,Math.min(20,+value));
     else if(key==='civilizationLevels')out.civilizationLevels=value===true;
     else if(key==='compassOpacity'&&Number.isFinite(+value))out.compassOpacity=Math.max(0,Math.min(.5,+value));
-    else if(key==='orbitalInitialization'&&['chaotic','balanced','original'].includes(value))out.orbitalInitialization=value;
+    else if(key==='orbitalInitialization'&&['research','chaotic','balanced','original'].includes(value))out.orbitalInitialization=value;
+    else if(key==='gravityModel'&&['newtonian','plummer','legacy'].includes(value))out.gravityModel=value;
+    else if(key==='encounterAccuracy'&&Number.isFinite(+value))out.encounterAccuracy=Math.max(.001,Math.min(.03,+value));
+    else if(key==='manualInitialBodies'&&value===null)out.manualInitialBodies=null;
+    else if(key==='manualInitialBodies'&&Array.isArray(value)&&value.length===4&&value.every(b=>['x','y','z','vx','vy','vz','mass'].every(k=>Number.isFinite(b[k])&&Math.abs(b[k])<=1e8)&&b.mass>=0))out.manualInitialBodies=value.map(b=>Object.fromEntries(['x','y','z','vx','vy','vz','mass'].map(k=>[k,b[k]])));
     else if (key === 'physicsMode' && ['reference', 'realtime'].includes(value)) out.physicsMode = value;
     else if (key === 'pixelRatio' && Number.isFinite(+value)) out.pixelRatio = Math.min(4, Math.max(0.5, +value));
     else if (key === 'bodyLabels') out.bodyLabels = value === true;
@@ -71,7 +76,7 @@ export function colorRGB(s = '1 1 1') { return s.split(/\s+/).map(Number); }
 export function colorHex(s) { return '#' + colorRGB(s).map(x => Math.round(x * 255).toString(16).padStart(2, '0')).join(''); }
 export function fromHex(s) { return [1, 3, 5].map(i => parseInt(s.slice(i, i + 2), 16) / 255).join(' '); }
 export function plainText(s = '') { return s.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' '); }
-export function algorithmId(s) { return `sykm-scene-v4-${s.physicsMode}60-civ-${s.civilizationMode}-v051-${s.orbitalInitialization}-orbits`; }
+export function algorithmId(s) { return `sykm-scene-v4-${s.physicsMode}60-civ-${s.civilizationMode}-v052-${s.gravityModel}-${s.orbitalInitialization}-eta${s.encounterAccuracy}-orbits`; }
 export function migrateSettings(saved={},version=3){
   // v0.5.1: one simulated month replaces the former default two-second window.
   if(saved.epochTimebase!=='years')saved={...saved,epochWindow:saved.epochWindow===undefined||Math.abs(saved.epochWindow-2)<1e-9?1/12:saved.epochWindow};
@@ -87,6 +92,7 @@ export function migrateSettings(saved={},version=3){
   }
   // One-time presentation migration for v0.3 installations with labels enabled.
   if(saved.presentationRevision!==extraDefaults.presentationRevision)saved={...saved,bodyLabels:saved.presentationRevision>=1?saved.bodyLabels:false,newproperty39:true};
+  if(!saved.physicsRevision)saved={...saved,orbitalInitialization:!saved.orbitalInitialization||saved.orbitalInitialization==='chaotic'?'research':saved.orbitalInitialization,newproperty60:false,gravityModel:'newtonian'};
   if(version<3)return normalizeSettings({...saved,newproperty45:-20,newproperty46:40,newproperty51:Math.abs(saved.newproperty51??3)>=2 ? .01 : (saved.newproperty51??.01),newproperty3:0,newproperty68:0});
   return normalizeSettings(saved);
 }
@@ -98,7 +104,7 @@ export function seededRandom(seed) {
 
 export function settingsFromInitial(settings, bodies) {
   if (!Array.isArray(bodies) || bodies.length !== 4 || bodies.some(b => !['x','y','z','vx','vy','vz','mass'].every(k => Number.isFinite(b?.[k])))) throw new Error('初始四体参数无效');
-  const result = { ...settings, newproperty50: true };
+  const result = { ...settings, newproperty50: true, manualInitialBodies: bodies };
   const keys = [['x11','y11','z1','v1','vy1','vz1'],['x21','y21','z2','vx2','vy2','vz2'],['x3','y3','z3','vx3','vy3','vz3'],['x4','y4','z4','vx4','vy4','vz4']];
   bodies.forEach((b,i) => {
     ['x','y','z','vx','vy','vz'].forEach((axis,j) => result[keys[i][j]] = b[axis]);
@@ -106,3 +112,5 @@ export function settingsFromInitial(settings, bodies) {
   });
   return normalizeSettings(result);
 }
+
+export const manualInitialKeys=['x11','y11','z1','v1','vy1','vz1','x21','y21','z2','vx2','vy2','vz2','x3','y3','z3','vx3','vy3','vz3','x4','y4','z4','vx4','vy4','vz4','_110','_26','_34','newproperty8'];

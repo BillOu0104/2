@@ -1,8 +1,9 @@
+import {replaySettings} from './seed-compatibility.js';
 import {settingsDefinitions,settingsCategories} from './settings-catalog.js';
 import { layoutWidgets,widgetPosition,clearLayoutStyles,applyLayout,installLayoutEditor } from './layout.js';
 import { SpaceRenderer } from './renderer.js';
 import { effectivePropertySchema as propertySchema, migrateSettings } from './settings.js';
-import { normalizeSettings, colorHex, fromHex, colorRGB, plainText, settingsFromInitial, algorithmId } from './settings.js';
+import { normalizeSettings, colorHex, fromHex, colorRGB, plainText, settingsFromInitial, algorithmId,manualInitialKeys } from './settings.js';
 import { LocalStore } from './storage.js';
 import { AudioController } from './audio.js';
 import { installWallpaperBridge } from './bridge.js';
@@ -39,6 +40,7 @@ function saveSettings() {
 }
 function changeSettings(patch, options = {}) {
   const previous = settings;
+  if(manualInitialKeys.some(k=>k in patch)&&!('manualInitialBodies' in patch))patch={...patch,manualInitialBodies:null};
   settings = normalizeSettings({ ...settings, ...patch });
   worker?.postMessage({ type: 'settings', patch: settings });
   renderer?.updateSettings(settings);
@@ -227,7 +229,7 @@ $('#import-settings').onchange = async e => {
   try {
     if (file.size > 1024 * 1024) throw new Error('配置文件过大');
     const data = JSON.parse(await file.text()); if (data.format !== 'three-body-seed' || data.version !== 1 || !data.settings || typeof data.settings !== 'object') throw new Error('种子格式不匹配');
-    changeSettings(data.initialBodies ? settingsFromInitial(data.settings, data.initialBodies) : data.settings); worker?.postMessage({ type: 'restart' }); notice('种子与设置已导入，宇宙已重新初始化');
+    changeSettings(data.initialBodies ? settingsFromInitial(replaySettings(data.settings), data.initialBodies) : replaySettings(data.settings)); worker?.postMessage({ type: 'restart' }); notice('种子与设置已导入，宇宙已重新初始化');
   } catch (error) { notice(`导入失败：${error.message}`, true); }
   e.target.value = '';
 };
@@ -242,7 +244,7 @@ function renderHistory() {
     title.textContent = `宇宙${entry.universe||entry.generation||'?'} · 文明${entry.number} · ${entry.lifespan} 年 · ${entry.destructionEvent}`;
     sub.textContent = `${entry.seed} / 宇宙 ${entry.generation}${entry.development?` / Lv.${entry.development.level} ${entry.development.zh} / 发展 ${entry.development.developmentYears.toFixed(1)}年`:''} / ${new Date(entry.savedAt).toLocaleString()}`;
     button.textContent = '复现初始种子'; button.onclick = () => {
-      const replay = entry.initialBodies ? settingsFromInitial(entry.settings, entry.initialBodies) : entry.settings;
+      const replay = entry.initialBodies ? settingsFromInitial(replaySettings(entry.settings), entry.initialBodies) : replaySettings(entry.settings);
       changeSettings(replay); worker?.postMessage({ type: 'restart' }); notice('已载入该文明完整初始条件');
     };
     li.append(title, sub, button); list.append(li);
@@ -300,7 +302,8 @@ function renderState(s) {
   $('#restart-prompt strong').textContent=en?`Start universe ${s.generation+1} ↻`:`开启第${s.generation+1}号宇宙 ↻`;
 
   if (settings.cheatingcheck) $('#physics-check').textContent = `${settings.newproperty60 ? 'CAGE ON / ' : ''}G × ${settings.newproperty52 / 1000} / T DIST × ${settings.newproperty69}\n${settings.physicsMode === 'reference' ? 'REFERENCE 60 Hz' : 'REAL TIME'}`;
-  $('#runtime-diagnostics').textContent = `Three.js WebGL · ${fps} FPS · Worker 60 Hz · Tick ${s.tick} · ${s.bodies.length} bodies · 宇宙 ${s.generation} · Seed ${s.seed} · ${renderer.canvas.width}×${renderer.canvas.height}`;
+  const physics=s.physics;
+  $('#runtime-diagnostics').textContent = `Three.js WebGL · ${fps} FPS · Worker 60 Hz · Tick ${s.tick} · ${s.bodies.length} bodies · 宇宙 ${s.generation} · Seed ${s.seed} · ${renderer.canvas.width}×${renderer.canvas.height}${physics ? ` · ${physics.model} · ΔE ${physics.relativeEnergyError.toExponential(2)} · ΔL ${physics.relativeAngularMomentumError.toExponential(2)} · ΔP ${physics.normalizedMomentumDrift.toExponential(2)} · ${physics.cageActive?'牢笼开启：非孤立系统':'牢笼关闭'} · ${physics.physicalModelValid?'未检测到接触':'已接触：点质量模型受限'}` : ''}`;
 }
 function handleEvents(events) {
   for (const event of events) {

@@ -1,3 +1,4 @@
+import {GravityIntegrator} from '../physics/gravity.js';
 // Adapted from supplied SYKM SceneScript. See docs/SOURCE-AUDIT.md.
 export default function createLegacy(ctx) {
 const {shared,engine,input,thisScene,Vec3,createScriptProperties,Math} = ctx;
@@ -530,6 +531,8 @@ const d3 = w1;
 
 // 初始化天体数组
 let bodies = [];
+let gravity = null;
+let physicsMonitor = null;
 
 let frameCount = 0;
 let lastTrailenState = scriptProperties.trailen;
@@ -1021,12 +1024,18 @@ function resetSystem() {
     }
     
     if (!scriptProperties.cus_en) ctx.prepareInitialBodies?.(bodies, G, scriptProperties);
+    else ctx.prepareManualBodies?.(bodies,G,scriptProperties);
     // 初始化前一个位置
     for (let i = 0; i < bodies.length; i++) {
         bodies[i].prevX = bodies[i].x;
         bodies[i].prevY = bodies[i].y;
         bodies[i].prevZ = bodies[i].z;
     }
+    const config=ctx.getPhysicsSettings?.();
+    physicsMonitor=config?new GravityIntegrator(bodies,G,{model:config.gravityModel,softening:scriptProperties.ras,kSoft:scriptProperties.kSoft,
+        cageAcceleration:scriptProperties.constraint_En?body=>computeConstraintAcceleration(body,computeCenterOfMass()):null,
+        radii:()=>{const c=ctx.getPhysicsSettings();return [c._13,c._21,c._3,c.newproperty20].map((r,i)=>i<3?r*(c.stellarBreathing?1+.08*Math.sin(engine.runtime/120+i*2):1):r);}}):null;
+    gravity=config?.gravityModel!=='legacy'?physicsMonitor:null;
     ctx.onInitialize?.(bodies.map(b => ({ x:b.x, y:b.y, z:b.z, vx:b.vx, vy:b.vy, vz:b.vz, mass:b.mass })));
 }
 
@@ -1051,11 +1060,27 @@ function init(value) {
     needsReset = true;
 }
 
+// Also used by the offline benchmark to execute the unchanged legacy solver.
+function initializePhysics(){
+    lamT=60*60*24*365/t_sim;
+    G=(scriptProperties.kg/1000)*6.67430e-11*lamM*Math.pow(lamT,2)/Math.pow(lamR,3);
+    kv=scriptProperties.ktime;
+    resetSystem();resetPhysicsState();physicsCom={...computeCenterOfMass()};resetTrails(physicsCom);needsReset=false;
+}
+
 // 物理更新函数
 function updatePhysics(timeStep) {
+    if(gravity){
+        for(const body of bodies){body.prevX=body.x;body.prevY=body.y;body.prevZ=body.z;}
+        const config=ctx.getPhysicsSettings();
+        gravity.advance(kv*kv*timeStep,{maxStep:FIXED_TIMESTEP,eta:config.encounterAccuracy});
+        physicsCom=computeCenterOfMass();frameCount++;return;
+    }
+
 
     //const k = scriptProperties.ktime;
     const dtimeStep = kv * kv * timeStep
+    physicsMonitor?.save();
     // 保存当前位置作为前一个位置（用于插值）
     for (const body of bodies) {
         body.prevX = body.x;
@@ -1127,6 +1152,7 @@ function updatePhysics(timeStep) {
     // 更新物理质心
     physicsCom = computeCenterOfMass();
     
+    if(physicsMonitor){physicsMonitor.time+=dtimeStep;physicsMonitor.steps++;physicsMonitor.detectContacts(dtimeStep);}
     frameCount++;
 }
 
@@ -1272,7 +1298,11 @@ function update(value) {
     const MAX_PHYSICS_STEPS = 10; // 防止螺旋死亡
     let steps = 0;
     
-    while (accumulatedTime >= FIXED_TIMESTEP && steps < MAX_PHYSICS_STEPS) {
+    if(gravity){
+        updatePhysics(ctx.getPhysicsSettings().physicsMode==='realtime'?1/60:.0075);
+        accumulatedTime=0;
+    }
+    while (!gravity && accumulatedTime >= FIXED_TIMESTEP && steps < MAX_PHYSICS_STEPS) {
         // 执行固定步长的物理更新
         updatePhysics(FIXED_TIMESTEP);
         
@@ -1362,8 +1392,8 @@ function update(value) {
     return value;
 }
 
-function state() { return { bodies: bodies.map(b => ({x:b.x,y:b.y,z:b.z,vx:b.vx,vy:b.vy,vz:b.vz,mass:b.mass,color:b.color,trail:b.trailPositions})), com:physicsCom, G, step:FIXED_TIMESTEP }; }
+function state() { return { bodies: bodies.map(b => ({x:b.x,y:b.y,z:b.z,vx:b.vx,vy:b.vy,vz:b.vz,mass:b.mass,color:b.color,trail:b.trailPositions})), com:physicsCom, G, step:FIXED_TIMESTEP, diagnostics:physicsMonitor?.diagnostics()??null, contacts:physicsMonitor?.contacts??[] }; }
 function directStep(dt) { updatePhysics(dt); }
 
-return {update,scriptProperties,init,applyUserProperties,state,directStep};
+return {update,scriptProperties,init,applyUserProperties,state,directStep,initializePhysics};
 }
