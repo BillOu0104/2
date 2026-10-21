@@ -1,0 +1,30 @@
+{
+  "seed": "V2-INDEPENDENT-0",
+  "solverTime": 4.5,
+  "displayYears": 10,
+  "independentMethod": "SciPy DOP853",
+  "rtol": 2.3e-14,
+  "atol": 1e-15,
+  "referenceSteps": 134,
+  "convergence": [
+    {
+      "stepFactor": 1,
+      "maxStateError": 1.9686474672653276e-10,
+      "energyResidual": 1.0985690928676019e-14,
+      "steps": 6000
+    },
+    {
+      "stepFactor": 0.5,
+      "maxStateError": 1.156363893528578e-11,
+      "energyResidual": 3.255019534422524e-15,
+      "steps": 12000
+    },
+    {
+      "stepFactor": 0.25,
+      "maxStateError": 2.6884050541298166e-13,
+      "energyResidual": 1.5868220230309804e-14,
+      "steps": 24000
+    }
+  ],
+  "note": "Smooth short-window Newtonian consistency; controlled event convergence requires matched ensembles separately."
+}
