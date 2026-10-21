@@ -1,0 +1,102 @@
+{
+  "sourceHash": "300cfba6d0a5b353f168e6ac29995be957c76cab83eff55a50db114809ff5e27",
+  "configHash": "d1a67e2efe2ee897d07da75fef2235a5526ec27942287c42e7d2d8b3dae66056",
+  "binaryHash": "c8fbd1cf063194d7d31223ccc18936178f0db55857246c49a7be9db6098d47a4",
+  "sourceFiles": [
+    "docs/research-v2/native.cpp",
+    "docs/research-v2/vendor/json.hpp",
+    "docs/research-v2/build-native.sh",
+    "docs/research-v2/run-native.mjs",
+    "docs/research-v2/engine.mjs",
+    "docs/research-v2/controllers/index.mjs",
+    "src/adaptive-trails.js",
+    "src/audio.js",
+    "src/bridge.js",
+    "src/civilization-levels.js",
+    "src/civilization-state.js",
+    "src/escape-state.js",
+    "src/fixed-display-frame.js",
+    "src/habitability.js",
+    "src/layout.js",
+    "src/main.js",
+    "src/motion-visuals.js",
+    "src/orbit-trace.js",
+    "src/orbital-initialization.js",
+    "src/original-data.js",
+    "src/renderer.js",
+    "src/run-statistics.js",
+    "src/seed-compatibility.js",
+    "src/settings-catalog.js",
+    "src/settings.js",
+    "src/simulation-worker.js",
+    "src/simulation.js",
+    "src/storage.js",
+    "src/trail-ribbon.js",
+    "src/view-motion.js",
+    "src/world-state.js",
+    "src/physics/gravity.js",
+    "src/legacy/008.js",
+    "src/legacy/079.js",
+    "src/legacy/010.js"
+  ],
+  "config": {
+    "prefix": "V2-C",
+    "seeds": 16,
+    "horizon": 30000,
+    "saveCheckpoints": true,
+    "output": "docs/research-v2/results/long30.jsonl",
+    "profiles": [
+      {
+        "id": "newton"
+      },
+      {
+        "id": "legacy-cage",
+        "cage": true
+      },
+      {
+        "id": "reflect-positive-transfer",
+        "reflect": true,
+        "capture": true,
+        "redistribute": true,
+        "capturePositiveOnly": true,
+        "captureSeparationFactor": 1.5,
+        "shadow": true
+      },
+      {
+        "id": "reflect-positive-cap",
+        "reflect": true,
+        "capture": true,
+        "capturePositiveOnly": true,
+        "captureSeparationFactor": 1.5,
+        "shadow": true
+      },
+      {
+        "id": "deflect4-transfer",
+        "reflect": true,
+        "deflect": true,
+        "deflectionFactor": 4,
+        "capture": true,
+        "redistribute": true,
+        "capturePositiveOnly": true,
+        "captureSeparationFactor": 1.5,
+        "shadow": true
+      },
+      {
+        "id": "deflect8-transfer",
+        "reflect": true,
+        "deflect": true,
+        "deflectionFactor": 8,
+        "capture": true,
+        "redistribute": true,
+        "capturePositiveOnly": true,
+        "captureSeparationFactor": 1.5,
+        "shadow": true
+      }
+    ]
+  },
+  "shard": 0,
+  "shards": 2,
+  "createdAt": "2026-10-21T16:23:15.638505+00:00",
+  "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+  "flags": "-std=c++17 -O3 -ffp-contract=off -Wall -Wextra -pedantic"
+}
