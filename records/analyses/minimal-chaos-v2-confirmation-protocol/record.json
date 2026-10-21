@@ -1,0 +1,253 @@
+{
+  "format": 1,
+  "id": "minimal-chaos-v2-confirmation-protocol",
+  "path": "analyses/minimal-chaos-v2-confirmation-protocol",
+  "kind": "analysis",
+  "version": null,
+  "title": "V2独立128Seed确认预注册与探索结论",
+  "summary": "已有80条真实100000年探索及完整稳健性/消融；冻结两个候选、两基准的128新Seed和32Seed精细辅助，计划576条。仅初始化检查无寿命筛种；此提交尚无正式确认积分结论。",
+  "source_commit": "923ea09c5571e6e74fbe4ca2acfad902cfe0100e",
+  "previous_commit": "54802b4a4525190bd3e9354e260bf341e1d5dc2a",
+  "source_repository": "https://github.com/BillOu0104/2",
+  "source_subject": "research: preregister independent 128-seed confirmation after true 100000-year exploration",
+  "source_date": "2026-10-21T20:46:14Z",
+  "archived_at": "2026-10-21T20:46:14.266292+00:00",
+  "runtime_fingerprint": null,
+  "deleted_paths": [],
+  "files": [
+    {
+      "source_path": "docs/research-v2/CONFIRMATION_PROTOCOL.md",
+      "archive_path": "snapshot/docs/research-v2/CONFIRMATION_PROTOCOL.md",
+      "sha256": "7acb76d64a0b9083e144c64feb9e9a3c6ba773bafcf656229df1e326a20e0bac",
+      "bytes": 5378
+    },
+    {
+      "source_path": "docs/research-v2/EXPERIMENT_LOG.md",
+      "archive_path": "snapshot/docs/research-v2/EXPERIMENT_LOG.md",
+      "sha256": "c5103b2eee753f4fca59a1b894984d251f90968123fe92c015966abba42a45af",
+      "bytes": 9183
+    },
+    {
+      "source_path": "docs/research-v2/EXPLORATION100K_RESULTS.md",
+      "archive_path": "snapshot/docs/research-v2/EXPLORATION100K_RESULTS.md",
+      "sha256": "59b7dd8ff33050cb717eaa8f5c58df27edfc24fafe747ff7900d9845ab93965b",
+      "bytes": 3811
+    },
+    {
+      "source_path": "docs/research-v2/INTERIM_REPORT.md",
+      "archive_path": "snapshot/docs/research-v2/INTERIM_REPORT.md",
+      "sha256": "21313e53cf1e44effac70091754e5743be3dd871cd89d0a63d75a49f17dbdb5e",
+      "bytes": 3660
+    },
+    {
+      "source_path": "docs/research-v2/STATUS.md",
+      "archive_path": "snapshot/docs/research-v2/STATUS.md",
+      "sha256": "749c17f76efd4edc97c564a75dacbc182cc2b5ce181fde40994ffc1b95d35cb4",
+      "bytes": 6959
+    },
+    {
+      "source_path": "docs/research-v2/audit-confirmation.py",
+      "archive_path": "snapshot/docs/research-v2/audit-confirmation.py",
+      "sha256": "d0705056308e4d0836e18e67776cf1b0849ad1ba3ad65e22747eedac65847252",
+      "bytes": 6711
+    },
+    {
+      "source_path": "docs/research-v2/confirmation-v1/b00.json",
+      "archive_path": "snapshot/docs/research-v2/confirmation-v1/b00.json",
+      "sha256": "0bec2173856a50fe58f1bbc0d9366140acb5b07ca54b767eddc805fa3afe84b7",
+      "bytes": 1519
+    },
+    {
+      "source_path": "docs/research-v2/confirmation-v1/b01.json",
+      "archive_path": "snapshot/docs/research-v2/confirmation-v1/b01.json",
+      "sha256": "a1db22335eb1a333c09df63d5e17864cf4cbe5c3bbb675cabfc1d419bcb49f69",
+      "bytes": 1519
+    },
+    {
+      "source_path": "docs/research-v2/confirmation-v1/b02.json",
+      "archive_path": "snapshot/docs/research-v2/confirmation-v1/b02.json",
+      "sha256": "c9130532e614faeb46356bd0290ff01096d841211cfdf671e9d6a78fc0e51f91",
+      "bytes": 1520
+    },
+    {
+      "source_path": "docs/research-v2/confirmation-v1/b03.json",
+      "archive_path": "snapshot/docs/research-v2/confirmation-v1/b03.json",
+      "sha256": "f977150089a0296f582b1af4002d26e00d28d0079f58ebd58ffd9b01b4279ffe",
+      "bytes": 1520
+    },
+    {
+      "source_path": "docs/research-v2/confirmation-v1/b04.json",
+      "archive_path": "snapshot/docs/research-v2/confirmation-v1/b04.json",
+      "sha256": "a1e9461e2509a57101f2f38984144081971d6bb8f19a7a16ed132c745e28cf39",
+      "bytes": 881
+    },
+    {
+      "source_path": "docs/research-v2/confirmation-v1/b05.json",
+      "archive_path": "snapshot/docs/research-v2/confirmation-v1/b05.json",
+      "sha256": "55a30ae8d26175f15b0e67d2ebb96c9e959dedd57e3783ad71648f0d642d7c2c",
+      "bytes": 881
+    },
+    {
+      "source_path": "docs/research-v2/confirmation-v1/b06.json",
+      "archive_path": "snapshot/docs/research-v2/confirmation-v1/b06.json",
+      "sha256": "84edccb7425891a1c0746bc06a305de2423ca01928cf6eaefda9d7c5710f98a4",
+      "bytes": 881
+    },
+    {
+      "source_path": "docs/research-v2/confirmation-v1/b07.json",
+      "archive_path": "snapshot/docs/research-v2/confirmation-v1/b07.json",
+      "sha256": "7927e4f4d17fd975a85d6dcb0a826556232bcf328e7cd3c4bd421ee67ae2d444",
+      "bytes": 881
+    },
+    {
+      "source_path": "docs/research-v2/confirmation-v1/b08.json",
+      "archive_path": "snapshot/docs/research-v2/confirmation-v1/b08.json",
+      "sha256": "0cce89a3167a3672f6441a7ee9687c7b7289e894235d7226ceaab145e674f3a5",
+      "bytes": 881
+    },
+    {
+      "source_path": "docs/research-v2/confirmation-v1/b09.json",
+      "archive_path": "snapshot/docs/research-v2/confirmation-v1/b09.json",
+      "sha256": "a02f1f2900584116f630ebbfd9545cdba5f57a91a1b18b8d2158f51b0ded334c",
+      "bytes": 881
+    },
+    {
+      "source_path": "docs/research-v2/confirmation-v1/b10.json",
+      "archive_path": "snapshot/docs/research-v2/confirmation-v1/b10.json",
+      "sha256": "27b9500cf7b26f8a22a7241c70e8744e7fb2612916ddb6a06624e40cf295294c",
+      "bytes": 881
+    },
+    {
+      "source_path": "docs/research-v2/confirmation-v1/b11.json",
+      "archive_path": "snapshot/docs/research-v2/confirmation-v1/b11.json",
+      "sha256": "b1b741c5bc393ca8bd1c954828b6e3af5af51c26738c50beea935b6bf2bccac6",
+      "bytes": 881
+    },
+    {
+      "source_path": "docs/research-v2/confirmation-v1/b12.json",
+      "archive_path": "snapshot/docs/research-v2/confirmation-v1/b12.json",
+      "sha256": "fe5ecf745268faf8c15b7ef808a42ca12bf3604301db884f6375f269e2d637b2",
+      "bytes": 881
+    },
+    {
+      "source_path": "docs/research-v2/confirmation-v1/b13.json",
+      "archive_path": "snapshot/docs/research-v2/confirmation-v1/b13.json",
+      "sha256": "b150b27ef70fe317d22e74320dbb687eea2b6ab7b2086bba9d6b166f9142b6f0",
+      "bytes": 882
+    },
+    {
+      "source_path": "docs/research-v2/confirmation-v1/b14.json",
+      "archive_path": "snapshot/docs/research-v2/confirmation-v1/b14.json",
+      "sha256": "07b1958a3ceff99c997d16fd3662796fcff42935344d08b6556758c488ffa421",
+      "bytes": 882
+    },
+    {
+      "source_path": "docs/research-v2/confirmation-v1/b15.json",
+      "archive_path": "snapshot/docs/research-v2/confirmation-v1/b15.json",
+      "sha256": "3c47f7c293399c73057675c41650ddd7e6d8fdbd59b7cb1667f977dd63e156f7",
+      "bytes": 882
+    },
+    {
+      "source_path": "docs/research-v2/confirmation-v1/initial-state-audit.json",
+      "archive_path": "snapshot/docs/research-v2/confirmation-v1/initial-state-audit.json",
+      "sha256": "c98007fed92db63e07b040bc044cfe499baed1111c982f356f89f98a3bc7c4bf",
+      "bytes": 175950
+    },
+    {
+      "source_path": "docs/research-v2/confirmation-v1/study.json",
+      "archive_path": "snapshot/docs/research-v2/confirmation-v1/study.json",
+      "sha256": "8c1982db75139da869c287d8a7729241867a0eaa9a0f4c1d9222699627d8cbc4",
+      "bytes": 2543
+    },
+    {
+      "source_path": "docs/research-v2/results/ablation30k.restore-audit.log",
+      "archive_path": "snapshot/docs/research-v2/results/ablation30k.restore-audit.log",
+      "sha256": "fabbb597ccf137e8bcaf222dd93c6b0000863b38f8eaa98c3212cac77cf620ce",
+      "bytes": 144
+    },
+    {
+      "source_path": "docs/research-v2/results/confirmation-gate-validation.json",
+      "archive_path": "snapshot/docs/research-v2/results/confirmation-gate-validation.json",
+      "sha256": "b74ca7bd312531c50df3eefa83ba6fe26b39d0e8f319e790f66b927b8c6baffd",
+      "bytes": 480
+    },
+    {
+      "source_path": "docs/research-v2/results/confirmation-preflight.json",
+      "archive_path": "snapshot/docs/research-v2/results/confirmation-preflight.json",
+      "sha256": "35499905ea94eea4aeb31ac83fd3cdd06d275c9b7a4e824dfb9443d3842b8d48",
+      "bytes": 3435
+    },
+    {
+      "source_path": "docs/research-v2/results/confirmation-v1.manifest.json",
+      "archive_path": "snapshot/docs/research-v2/results/confirmation-v1.manifest.json",
+      "sha256": "af8b5ce6970c6d11b053ef65616ddba2b9b5d99e414d33410ea921eed7e6783b",
+      "bytes": 3332
+    },
+    {
+      "source_path": "docs/research-v2/results/confirmation-v1/cohort.endpoints.json",
+      "archive_path": "snapshot/docs/research-v2/results/confirmation-v1/cohort.endpoints.json",
+      "sha256": "c1f89d734f2a1c62145cfed1c11cea85cde5fd1bbee1f79f63c4f0e77b34e323",
+      "bytes": 3240
+    },
+    {
+      "source_path": "docs/research-v2/results/confirmation-v1/cohort.jsonl",
+      "archive_path": "snapshot/docs/research-v2/results/confirmation-v1/cohort.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source_path": "docs/research-v2/results/explore100k.png",
+      "archive_path": "snapshot/docs/research-v2/results/explore100k.png",
+      "sha256": "109807b23fd63356d82ef075305ec7618665f2b168044ecc88db4b340c61e3dd",
+      "bytes": 156785
+    },
+    {
+      "source_path": "docs/research-v2/results/explore100k.restore-audit.log",
+      "archive_path": "snapshot/docs/research-v2/results/explore100k.restore-audit.log",
+      "sha256": "8dc7bd41a2ff1af8d1d630ba58548aff95151e397b67fc68f690688cc2303159",
+      "bytes": 144
+    },
+    {
+      "source_path": "docs/research-v2/results/explore100k.svg",
+      "archive_path": "snapshot/docs/research-v2/results/explore100k.svg",
+      "sha256": "6069a4b27ce7f8cea8ad5afd521dffdd7ba8fcac4db447c32b734d261b85dacc",
+      "bytes": 98478
+    },
+    {
+      "source_path": "docs/research-v2/results/precision30k.restore-audit.log",
+      "archive_path": "snapshot/docs/research-v2/results/precision30k.restore-audit.log",
+      "sha256": "71ebbcd5adf6b5192e38420f27d59d4b0f4b7169cd097b607b00e501b68d3088",
+      "bytes": 144
+    },
+    {
+      "source_path": "docs/research-v2/results/series-v1.log",
+      "archive_path": "snapshot/docs/research-v2/results/series-v1.log",
+      "sha256": "b72cec742c04e76039df8d0558d97c392e246d14e961a2d069700ad1b96bee6e",
+      "bytes": 8305
+    },
+    {
+      "source_path": "docs/research-v2/results/series-v1.state.json",
+      "archive_path": "snapshot/docs/research-v2/results/series-v1.state.json",
+      "sha256": "abb4411f35087c3004ffa0d87cd9d4000fdebe1fddc48374098af879ab9d7bcc",
+      "bytes": 1191
+    },
+    {
+      "source_path": "docs/research-v2/results/shadow30k.restore-audit.log",
+      "archive_path": "snapshot/docs/research-v2/results/shadow30k.restore-audit.log",
+      "sha256": "59f6b93ac46d48ff8bc06b5f11b460b78d9735cee1807140a8b2e068d5239646",
+      "bytes": 144
+    },
+    {
+      "source_path": "docs/research-v2/run-confirmation.py",
+      "archive_path": "snapshot/docs/research-v2/run-confirmation.py",
+      "sha256": "c2687f58ef413719b9b23ed834c7415aaed5e4365018188e18b61f345f2aafd4",
+      "bytes": 8414
+    },
+    {
+      "source_path": null,
+      "archive_path": "changes.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ]
+}
