@@ -2,35 +2,35 @@
   "researchComplete": false,
   "study": "docs/research-v2/confirmation-v1/study.json",
   "expectedRows": 576,
-  "observedRows": 352,
-  "pendingRows": 224,
+  "observedRows": 384,
+  "pendingRows": 192,
   "numericalUnknowns": 0,
   "status": "IN_PROGRESS_OR_REVIEW_REQUIRED",
   "scope": "Pending seeds are not failures; no full confirmatory conclusion until registered cohort and numerical review complete.",
   "groups": {
     "deflect4-trigger8": {
       "planned": 128,
-      "observed": 72,
-      "pending": 56,
+      "observed": 80,
+      "pending": 48,
       "numericalUnknowns": 0,
-      "stellarSuccesses": 72,
-      "oldDiagnosticJointSuccesses": 68,
-      "continuousParticipationJointSuccesses": 68,
+      "stellarSuccesses": 80,
+      "oldDiagnosticJointSuccesses": 76,
+      "continuousParticipationJointSuccesses": 76,
       "stellarWilson95KnownOnly": [
-        0.9493488274035422,
-        1.0
+        0.9541818704644728,
+        0.9999999999999999
       ],
       "jointWilson95KnownOnly": [
-        0.8656798403400208,
-        0.9781857840186834
+        0.8783772379535698,
+        0.9803864454644556
       ],
       "stellarUnknownWorstBestWithinObserved": [
         1.0,
         1.0
       ],
       "jointUnknownWorstBestWithinObserved": [
-        0.9444444444444444,
-        0.9444444444444444
+        0.95,
+        0.95
       ],
       "seeds": {
         "V2-CONFIRM-20261021-0": {
@@ -608,15 +608,79 @@
           "continuousJoint": true,
           "fullStableFraction": 0.026330333333333334,
           "matureStableFraction": 0.0
+        },
+        "V2-CONFIRM-20261021-72": {
+          "stellarIntact": true,
+          "numericUnknown": false,
+          "oldDiagnostic": true,
+          "continuousJoint": true,
+          "fullStableFraction": 0.10228483333333334,
+          "matureStableFraction": 0.029148888888888887
+        },
+        "V2-CONFIRM-20261021-73": {
+          "stellarIntact": true,
+          "numericUnknown": false,
+          "oldDiagnostic": true,
+          "continuousJoint": true,
+          "fullStableFraction": 0.08171916666666666,
+          "matureStableFraction": 0.05172148148148148
+        },
+        "V2-CONFIRM-20261021-74": {
+          "stellarIntact": true,
+          "numericUnknown": false,
+          "oldDiagnostic": true,
+          "continuousJoint": true,
+          "fullStableFraction": 0.008541333333333333,
+          "matureStableFraction": 0.0
+        },
+        "V2-CONFIRM-20261021-75": {
+          "stellarIntact": true,
+          "numericUnknown": false,
+          "oldDiagnostic": true,
+          "continuousJoint": true,
+          "fullStableFraction": 0.19128766666666666,
+          "matureStableFraction": 0.1606824074074074
+        },
+        "V2-CONFIRM-20261021-76": {
+          "stellarIntact": true,
+          "numericUnknown": false,
+          "oldDiagnostic": true,
+          "continuousJoint": true,
+          "fullStableFraction": 0.05699283333333333,
+          "matureStableFraction": 0.03861574074074074
+        },
+        "V2-CONFIRM-20261021-77": {
+          "stellarIntact": true,
+          "numericUnknown": false,
+          "oldDiagnostic": true,
+          "continuousJoint": true,
+          "fullStableFraction": 0.307293,
+          "matureStableFraction": 0.26543685185185184
+        },
+        "V2-CONFIRM-20261021-78": {
+          "stellarIntact": true,
+          "numericUnknown": false,
+          "oldDiagnostic": true,
+          "continuousJoint": true,
+          "fullStableFraction": 0.6682341666666667,
+          "matureStableFraction": 0.6857509259259259
+        },
+        "V2-CONFIRM-20261021-79": {
+          "stellarIntact": true,
+          "numericUnknown": false,
+          "oldDiagnostic": true,
+          "continuousJoint": true,
+          "fullStableFraction": 0.305075,
+          "matureStableFraction": 0.2704114814814815
         }
       },
       "stellarClopperPearsonBonferroni4": [
-        0.9319384332607873,
+        0.9385307366271576,
         1
       ],
       "jointClopperPearsonBonferroni4": [
-        0.8390195400880716,
-        0.9898797134168016
+        0.8542767935752054,
+        0.9909066275381427
       ]
     },
     "deflect4-trigger8__h2": {
@@ -1002,23 +1066,23 @@
     },
     "legacy-cage": {
       "planned": 128,
-      "observed": 72,
-      "pending": 56,
+      "observed": 80,
+      "pending": 48,
       "numericalUnknowns": 0,
       "stellarSuccesses": 2,
       "oldDiagnosticJointSuccesses": 0,
       "continuousParticipationJointSuccesses": 0,
       "stellarWilson95KnownOnly": [
-        0.007651021904494577,
-        0.09574175221438225
+        0.006882893202970648,
+        0.0866443298557801
       ],
       "jointWilson95KnownOnly": [
         0.0,
-        0.05065117259645781
+        0.0458181295355271
       ],
       "stellarUnknownWorstBestWithinObserved": [
-        0.027777777777777776,
-        0.027777777777777776
+        0.025,
+        0.025
       ],
       "jointUnknownWorstBestWithinObserved": [
         0.0,
@@ -1600,28 +1664,92 @@
           "continuousJoint": false,
           "fullStableFraction": 0.0007843333333333333,
           "matureStableFraction": 0.0
+        },
+        "V2-CONFIRM-20261021-72": {
+          "stellarIntact": false,
+          "numericUnknown": false,
+          "oldDiagnostic": false,
+          "continuousJoint": false,
+          "fullStableFraction": 0.0095535,
+          "matureStableFraction": 0.0
+        },
+        "V2-CONFIRM-20261021-73": {
+          "stellarIntact": false,
+          "numericUnknown": false,
+          "oldDiagnostic": false,
+          "continuousJoint": false,
+          "fullStableFraction": 0.014844666666666667,
+          "matureStableFraction": 0.0
+        },
+        "V2-CONFIRM-20261021-74": {
+          "stellarIntact": false,
+          "numericUnknown": false,
+          "oldDiagnostic": false,
+          "continuousJoint": false,
+          "fullStableFraction": 0.0005738333333333333,
+          "matureStableFraction": 0.0
+        },
+        "V2-CONFIRM-20261021-75": {
+          "stellarIntact": false,
+          "numericUnknown": false,
+          "oldDiagnostic": false,
+          "continuousJoint": false,
+          "fullStableFraction": 0.0029156666666666667,
+          "matureStableFraction": 0.0
+        },
+        "V2-CONFIRM-20261021-76": {
+          "stellarIntact": false,
+          "numericUnknown": false,
+          "oldDiagnostic": false,
+          "continuousJoint": false,
+          "fullStableFraction": 0.005832,
+          "matureStableFraction": 0.0
+        },
+        "V2-CONFIRM-20261021-77": {
+          "stellarIntact": false,
+          "numericUnknown": false,
+          "oldDiagnostic": false,
+          "continuousJoint": false,
+          "fullStableFraction": 0.000917,
+          "matureStableFraction": 0.0
+        },
+        "V2-CONFIRM-20261021-78": {
+          "stellarIntact": false,
+          "numericUnknown": false,
+          "oldDiagnostic": false,
+          "continuousJoint": false,
+          "fullStableFraction": 0.006833833333333333,
+          "matureStableFraction": 0.0
+        },
+        "V2-CONFIRM-20261021-79": {
+          "stellarIntact": false,
+          "numericUnknown": false,
+          "oldDiagnostic": false,
+          "continuousJoint": false,
+          "fullStableFraction": 0.001495,
+          "matureStableFraction": 0.0
         }
       }
     },
     "newton": {
       "planned": 128,
-      "observed": 72,
-      "pending": 56,
+      "observed": 80,
+      "pending": 48,
       "numericalUnknowns": 0,
       "stellarSuccesses": 2,
       "oldDiagnosticJointSuccesses": 0,
       "continuousParticipationJointSuccesses": 0,
       "stellarWilson95KnownOnly": [
-        0.007651021904494577,
-        0.09574175221438225
+        0.006882893202970648,
+        0.0866443298557801
       ],
       "jointWilson95KnownOnly": [
         0.0,
-        0.05065117259645781
+        0.0458181295355271
       ],
       "stellarUnknownWorstBestWithinObserved": [
-        0.027777777777777776,
-        0.027777777777777776
+        0.025,
+        0.025
       ],
       "jointUnknownWorstBestWithinObserved": [
         0.0,
@@ -2203,32 +2331,96 @@
           "continuousJoint": false,
           "fullStableFraction": 0.0009283333333333333,
           "matureStableFraction": 0.0
+        },
+        "V2-CONFIRM-20261021-72": {
+          "stellarIntact": false,
+          "numericUnknown": false,
+          "oldDiagnostic": false,
+          "continuousJoint": false,
+          "fullStableFraction": 0.076645,
+          "matureStableFraction": 0.0
+        },
+        "V2-CONFIRM-20261021-73": {
+          "stellarIntact": false,
+          "numericUnknown": false,
+          "oldDiagnostic": false,
+          "continuousJoint": false,
+          "fullStableFraction": 0.003920166666666666,
+          "matureStableFraction": 0.0
+        },
+        "V2-CONFIRM-20261021-74": {
+          "stellarIntact": false,
+          "numericUnknown": false,
+          "oldDiagnostic": false,
+          "continuousJoint": false,
+          "fullStableFraction": 0.008457833333333333,
+          "matureStableFraction": 0.0
+        },
+        "V2-CONFIRM-20261021-75": {
+          "stellarIntact": false,
+          "numericUnknown": false,
+          "oldDiagnostic": false,
+          "continuousJoint": false,
+          "fullStableFraction": 0.005373833333333334,
+          "matureStableFraction": 0.0
+        },
+        "V2-CONFIRM-20261021-76": {
+          "stellarIntact": false,
+          "numericUnknown": false,
+          "oldDiagnostic": false,
+          "continuousJoint": false,
+          "fullStableFraction": 0.0014375,
+          "matureStableFraction": 0.0
+        },
+        "V2-CONFIRM-20261021-77": {
+          "stellarIntact": false,
+          "numericUnknown": false,
+          "oldDiagnostic": false,
+          "continuousJoint": false,
+          "fullStableFraction": 0.0010851666666666666,
+          "matureStableFraction": 0.0
+        },
+        "V2-CONFIRM-20261021-78": {
+          "stellarIntact": false,
+          "numericUnknown": false,
+          "oldDiagnostic": false,
+          "continuousJoint": false,
+          "fullStableFraction": 0.006378666666666667,
+          "matureStableFraction": 0.0
+        },
+        "V2-CONFIRM-20261021-79": {
+          "stellarIntact": false,
+          "numericUnknown": false,
+          "oldDiagnostic": false,
+          "continuousJoint": false,
+          "fullStableFraction": 0.006219666666666667,
+          "matureStableFraction": 0.0
         }
       }
     },
     "reflect-trigger8": {
       "planned": 128,
-      "observed": 72,
-      "pending": 56,
+      "observed": 80,
+      "pending": 48,
       "numericalUnknowns": 0,
-      "stellarSuccesses": 72,
-      "oldDiagnosticJointSuccesses": 69,
-      "continuousParticipationJointSuccesses": 69,
+      "stellarSuccesses": 80,
+      "oldDiagnosticJointSuccesses": 77,
+      "continuousParticipationJointSuccesses": 77,
       "stellarWilson95KnownOnly": [
-        0.9493488274035422,
-        1.0
+        0.9541818704644728,
+        0.9999999999999999
       ],
       "jointWilson95KnownOnly": [
-        0.8845072325868389,
-        0.9857291925330748
+        0.8954527990995489,
+        0.9871654310800886
       ],
       "stellarUnknownWorstBestWithinObserved": [
         1.0,
         1.0
       ],
       "jointUnknownWorstBestWithinObserved": [
-        0.9583333333333334,
-        0.9583333333333334
+        0.9625,
+        0.9625
       ],
       "seeds": {
         "V2-CONFIRM-20261021-0": {
@@ -2806,15 +2998,79 @@
           "continuousJoint": true,
           "fullStableFraction": 0.039918833333333334,
           "matureStableFraction": 0.013883333333333333
+        },
+        "V2-CONFIRM-20261021-72": {
+          "stellarIntact": true,
+          "numericUnknown": false,
+          "oldDiagnostic": true,
+          "continuousJoint": true,
+          "fullStableFraction": 0.12186833333333333,
+          "matureStableFraction": 0.04199648148148148
+        },
+        "V2-CONFIRM-20261021-73": {
+          "stellarIntact": true,
+          "numericUnknown": false,
+          "oldDiagnostic": true,
+          "continuousJoint": true,
+          "fullStableFraction": 0.039814,
+          "matureStableFraction": 0.03136851851851852
+        },
+        "V2-CONFIRM-20261021-74": {
+          "stellarIntact": true,
+          "numericUnknown": false,
+          "oldDiagnostic": true,
+          "continuousJoint": true,
+          "fullStableFraction": 0.04741783333333333,
+          "matureStableFraction": 0.007261296296296296
+        },
+        "V2-CONFIRM-20261021-75": {
+          "stellarIntact": true,
+          "numericUnknown": false,
+          "oldDiagnostic": true,
+          "continuousJoint": true,
+          "fullStableFraction": 0.08596266666666667,
+          "matureStableFraction": 3.203703703703704e-05
+        },
+        "V2-CONFIRM-20261021-76": {
+          "stellarIntact": true,
+          "numericUnknown": false,
+          "oldDiagnostic": true,
+          "continuousJoint": true,
+          "fullStableFraction": 0.06419766666666667,
+          "matureStableFraction": 0.042150185185185186
+        },
+        "V2-CONFIRM-20261021-77": {
+          "stellarIntact": true,
+          "numericUnknown": false,
+          "oldDiagnostic": true,
+          "continuousJoint": true,
+          "fullStableFraction": 0.10283233333333333,
+          "matureStableFraction": 0.07067037037037037
+        },
+        "V2-CONFIRM-20261021-78": {
+          "stellarIntact": true,
+          "numericUnknown": false,
+          "oldDiagnostic": true,
+          "continuousJoint": true,
+          "fullStableFraction": 0.29816533333333334,
+          "matureStableFraction": 0.2474362962962963
+        },
+        "V2-CONFIRM-20261021-79": {
+          "stellarIntact": true,
+          "numericUnknown": false,
+          "oldDiagnostic": true,
+          "continuousJoint": true,
+          "fullStableFraction": 0.14056666666666667,
+          "matureStableFraction": 0.09472018518518519
         }
       },
       "stellarClopperPearsonBonferroni4": [
-        0.9319384332607873,
+        0.9385307366271576,
         1
       ],
       "jointClopperPearsonBonferroni4": [
-        0.8593752035697233,
-        0.9948506545774117
+        0.8727599588462037,
+        0.9953709624886039
       ]
     },
     "reflect-trigger8__h2": {
