@@ -35,6 +35,7 @@
 | [minimal-chaos-v2-confirmation-b06](analyses/minimal-chaos-v2-confirmation-b06/README.md) | 独立确认批次 b06 | [2626560](https://github.com/BillOu0104/2/commit/2626560c16e669b797f503fe2bdb680dc2686532) |
 | [minimal-chaos-v2-confirmation-b07](analyses/minimal-chaos-v2-confirmation-b07/README.md) | 独立确认批次 b07 | [1f7e92f](https://github.com/BillOu0104/2/commit/1f7e92f76688ea6714860cd724d4faed57dea001) |
 | [minimal-chaos-v2-confirmation-b08](analyses/minimal-chaos-v2-confirmation-b08/README.md) | 独立确认批次 b08 | [9c060e7](https://github.com/BillOu0104/2/commit/9c060e7bd0a6178804d63f8736c3bb850d152d50) |
+| [minimal-chaos-v2-confirmation-b09](analyses/minimal-chaos-v2-confirmation-b09/README.md) | 独立确认批次 b09 | [fd58989](https://github.com/BillOu0104/2/commit/fd58989f360d2b9385225a71e9acbce84ca26aff) |
 | [minimal-chaos-v2-confirmation-gates](analyses/minimal-chaos-v2-confirmation-gates/README.md) | 独立确认启动门禁实测 | [311fca7](https://github.com/BillOu0104/2/commit/311fca71b571e056934e25672a226f3957209b5c) |
 | [minimal-chaos-v2-confirmation-protocol](analyses/minimal-chaos-v2-confirmation-protocol/README.md) | V2独立128Seed确认预注册与探索结论 | [923ea09](https://github.com/BillOu0104/2/commit/923ea09c5571e6e74fbe4ca2acfad902cfe0100e) |
 | [minimal-chaos-v2-confirmation-start](analyses/minimal-chaos-v2-confirmation-start/README.md) | 独立128Seed确认已实际启动 | [9114932](https://github.com/BillOu0104/2/commit/91149321e89c6bcff1804cd8a5b49000f8c8c062) |
