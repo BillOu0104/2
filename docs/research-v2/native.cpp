@@ -37,8 +37,8 @@ struct Civ{bool alive=false;int phase=0,number=1,level=1;double development=0,sa
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Civ,alive,phase,number,level,development,safeTime,progress,population,storage,startYear,maxLife,births,deaths,aliveFrames,activeFrames)
 struct Inv{double E=0,K=0,U=0;V P{},L{},R{},vcm{};};
 Inv invariant(const Bodies& b){Inv e;double m=0;for(auto x:b){m+=x.mass;e.R=add(e.R,mul(x.r,x.mass));e.P=add(e.P,mul(x.v,x.mass));e.L=add(e.L,mul(cross(x.r,x.v),x.mass));e.K+=.5*x.mass*dot(x.v,x.v);}e.R=mul(e.R,1/m);e.vcm=mul(e.P,1/m);for(int p=0;p<6;p++){auto a=b[pi[p]],c=b[pj[p]];if(a.mass&&c.mass)e.U-=G*a.mass*c.mass/norm(sub(a.r,c.r));}e.E=e.K+e.U;return e;}
-struct Config{bool cage=false,hardCage=false,barrier=false,capture=false,noRespawn=false,shadow=false,reflect=false,redistribute=false,capturePositiveOnly=false,deflect=false;double barrierRadius=.25,barrierAlpha=.1,apocenterScale=4,captureRadiusScale=1.5,captureSeparationFactor=0,reflectionMargin=1.15,shadowEps=1e-8,shadowWindowYears=10,deflectionFactor=4,deflectionTarget=1.3,dt=.00075,eta=.0075;};
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(Config,cage,hardCage,barrier,capture,noRespawn,shadow,reflect,redistribute,capturePositiveOnly,deflect,barrierRadius,barrierAlpha,apocenterScale,captureRadiusScale,captureSeparationFactor,reflectionMargin,shadowEps,shadowWindowYears,deflectionFactor,deflectionTarget,dt,eta)
+struct Config{bool cage=false,hardCage=false,barrier=false,capture=false,noRespawn=false,shadow=false,reflect=false,redistribute=false,capturePositiveOnly=false,deflect=false;double barrierRadius=.25,barrierAlpha=.1,apocenterScale=4,captureRadiusScale=1.5,captureSeparationFactor=0,captureTriggerScale=0,reflectionMargin=1.15,shadowEps=1e-8,shadowWindowYears=10,deflectionFactor=4,deflectionTarget=1.3,dt=.00075,eta=.0075;};
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(Config,cage,hardCage,barrier,capture,noRespawn,shadow,reflect,redistribute,capturePositiveOnly,deflect,barrierRadius,barrierAlpha,apocenterScale,captureRadiusScale,captureSeparationFactor,captureTriggerScale,reflectionMargin,shadowEps,shadowWindowYears,deflectionFactor,deflectionTarget,dt,eta)
 struct PlanetStats{long long lastRespawnFrame=0,stableYoungFrames=0,matureStableYoungFrames=0,presentFrames=0,maturePresentFrames=0;};
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(PlanetStats,lastRespawnFrame,stableYoungFrames,matureStableYoungFrames,presentFrames,maturePresentFrames)
 struct Encounters{std::array<bool,3> active{},protectedEncounter{};std::array<long long,3> count{};std::array<double,3> start{},minimum{};};
@@ -116,7 +116,8 @@ int capture(Bodies& b,const Config& cfg,double scale,Cost& c){
  for(int i=0;i<3;i++){
   Body other=center(b,7^(1<<i));V r=sub(b[i].r,other.r),v=sub(b[i].v,other.v);double R=norm(r),vr=dot(r,v)/R,mu=G*(other.mass+b[i].mass),E=.5*dot(v,v)-mu/R,target=-mu/(cfg.apocenterScale*scale);
   int a=(i+1)%3,bb=(i+2)%3;
-  if(!(vr>0&&R>cfg.captureRadiusScale*scale&&R>cfg.captureSeparationFactor*norm(sub(b[a].r,b[bb].r))&&E>(cfg.capturePositiveOnly?0:target)+1e-14*mu/scale))continue;
+  double trigger=cfg.captureTriggerScale>0?-mu/(cfg.captureTriggerScale*scale):(cfg.capturePositiveOnly?0:target);
+  if(!(vr>0&&R>cfg.captureRadiusScale*scale&&R>cfg.captureSeparationFactor*norm(sub(b[a].r,b[bb].r))&&E>trigger+1e-14*mu/scale))continue;
   double vt2=std::max(0.0,dot(v,v)-vr*vr),available=std::max(0.0,2*(mu/R+target));V dv;
   if(available>=vt2)dv=mul(r,(std::sqrt(available-vt2)-vr)/R);else dv=mul(v,std::sqrt(available/dot(v,v))-1);
   double share=other.mass/(other.mass+b[i].mass),reaction=-b[i].mass/(other.mass+b[i].mass),oldWork=c.work;
