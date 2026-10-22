@@ -1,0 +1,14 @@
+
+> three-body-reconstruction@0.5.5 build
+> node tools/build.mjs
+
+file:///workspace/2-integration/tools/generate-settings-guide.mjs:111
+ for(const c of controls){c.value??=c.key==='epochWindow'?allDefaults.epochWindow*12:allDefaults[c.key];c.description??=descriptions[c.key];if(!c.description)throw new Error(`Missing setting explanation: ${c.key}`);}
+                                                                                                                                                                    ^
+
+Error: Missing setting explanation: stabilityMode
+    at guideControls (file:///workspace/2-integration/tools/generate-settings-guide.mjs:111:165)
+    at generateSettingsGuide (file:///workspace/2-integration/tools/generate-settings-guide.mjs:117:17)
+    at file:///workspace/2-integration/tools/build.mjs:13:7
+
+Node.js v24.19.0

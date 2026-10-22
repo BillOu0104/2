@@ -1,0 +1,21 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ '0.002'
+- '0.001875'
+       ^
+
+    at file:///workspace/2-integration/tools/v2/browser-check.mjs:16:316 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '0.002',
+  expected: '0.001875',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

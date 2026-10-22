@@ -5,7 +5,7 @@ function absentWorld(sim){
  return {...old,epoch:{kind:'chaotic',primary:-1,stableFor:0,stableForUnit:'years'},phenomena:[],safeToWake:false,
   planet:{...old.planet,present:false,intact:false,terminal,canSupportLife:false,restartRequired:false,damaged:true,recoverable:false,integrity:0,condition:'absent',temperature:old.planet.temperature??-270,stressRatio:0,tideRatio:0}};
 }
-function createSystem(sim){
+export function createControlledSystem(sim){
  // The existing initializer owns Seed/manual inputs. Initialize without taking
  // an extra physical frame; then the V2 runtime alone advances those bodies.
  sim.modules['008'].initializePhysics();sim.v2YearOrigin=sim.shared.xntime||0;
@@ -14,17 +14,17 @@ function createSystem(sim){
   onEvent:e=>sim.emit('physics:'+e.kind,e),
   onPlanetLoss:e=>{
    const cause={kind:e.kind,zh:e.kind==='confirmed-escape'?'行星逃逸':'行星毁灭',en:e.kind==='confirmed-escape'?'Planet escaped':'Planet destroyed'};
-   sim.civilization.destroy(cause,sim.v2YearOrigin+e.year,sim.engine.runtime,sim.settings);sim.habitability.reset();sim.world.terminal=cause;sim.emit('planet:destroyed',cause);
+   sim.civilization.destroy(cause,sim.v2YearOrigin+e.year,sim.engine.runtime,sim.settings);sim.habitability.reset();sim.orbitTrace.resetBody(3);sim.world.terminal=cause;sim.emit('planet:destroyed',cause);
   },
-  onRespawn:()=>{sim.world.reset();sim.habitability.reset();sim.civilization.reset();sim.emit('planet:respawn',{number:sim.controlled.planetRespawns});},
+  onRespawn:()=>{sim.orbitTrace.resetBody(3);sim.world.reset();sim.habitability.reset();sim.civilization.reset();sim.emit('planet:respawn',{number:sim.controlled.planetRespawns});},
   onStep:sim.traceEnabled?(b,time)=>{if(sim.settings.newproperty14)sim.orbitTrace.observe(b,sim.engine.runtime-1/60+(time-sim.controlled.frameStartTime)/.0075/60);}:null
  });
 }
 export function tickControlled(sim){
  if(sim.pendingRestart)sim.restart(sim.pendingRestart);
- if(!sim.controlled)sim.controlled=createSystem(sim);
+ if(!sim.controlled)sim.controlled=createControlledSystem(sim);
  const c=sim.controlled;c.settings=sim.settings;
- if(c.stellarFailure)return sim.lastPhysicsState??c.state();
+ if(c.stellarFailure||c.numericalUnknown)return sim.lastPhysicsState??c.state();
  if(sim.settings.gravityModel!=='newtonian'||sim.settings.civilizationMode!=='balanced'||sim.settings.physicsMode!=='reference')throw new Error('长期三星原型需要牛顿引力、文明延续模式和参考时钟；请切回现行模式使用其他组合');
  sim.engine.runtime=++sim.tickCount/60;
  const before=sim.shared.civilizationRecords.length,alive=sim.shared.civilizationAlive;
@@ -40,8 +40,8 @@ export function tickControlled(sim){
   const wasAlive=sim.shared.civilizationAlive,phase=sim.civilization.phase,level=sim.civilization.result?.development?.level;
   sim.habitability.update(sim.shared,sim.settings,1/60,{alive:wasAlive,number:sim.shared.civilizationCount,developmentYears:sim.civilization.developmentYears,phase,terminal:w.planet.terminal,damaged:!w.planet.canSupportLife,integrity:w.planet.integrity,tideRatio:w.planet.stressRatio,hazard:w.planet.stressRatio>1?'tidal':null});
   sim.civilization.update(w,sim.habitability.result,sim.settings,sim.shared.xntime,sim.engine.runtime,1/60);
-  if(!wasAlive&&sim.shared.civilizationAlive)sim.habitability.begin(sim.shared.civilizationCount);
-  if(wasAlive&&!sim.shared.civilizationAlive)sim.habitability.reset();
+  if(!wasAlive&&sim.shared.civilizationAlive){sim.habitability.begin(sim.shared.civilizationCount);Object.assign(sim.habitability.result,{health:1,population:1,storageQuality:1,level:1});}
+  if(wasAlive&&!sim.shared.civilizationAlive){sim.habitability.reset();sim.habitability.update(sim.shared,sim.settings,0,{terminal:w.planet.terminal,damaged:!w.planet.canSupportLife,tideRatio:w.planet.stressRatio,integrity:w.planet.integrity});}
   sim.shared.civilizationDevelopment=sim.civilization.result?.development;
   if(level&&sim.shared.civilizationDevelopment?.level>level)sim.emit('civilization:level',{number:sim.shared.civilizationCount,universe:sim.generation,development:sim.shared.civilizationDevelopment});
   if(phase!==sim.civilization.phase)sim.emit('civilization:phase',{phase:sim.civilization.phase,number:sim.shared.civilizationCount});

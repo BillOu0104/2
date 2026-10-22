@@ -63,6 +63,7 @@ export class Simulation {
     if(changed.includes('newproperty14'))this.orbitTrace.reset();
     if (changed.includes('civilizationMode')) { this.habitability.reset(); this.civilization.reset(); this.shared.suitablePeriodCount = 0; }
     const resetKeys = new Set(['stabilityMode','seed', 'physicsMode', 'newproperty53', 'orbitalInitialization','gravityModel','encounterAccuracy','manualInitialBodies']);
+    if(next.stabilityMode!=='off')for(const key of [...manualInitialKeys,'newproperty50','newproperty52','newproperty48','brfontcoloraaaaaarandomposrange'])resetKeys.add(key);
     const mapped = {};
     for (const [id, module] of Object.entries(this.modules)) {
       const changes = {};

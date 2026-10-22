@@ -10,7 +10,7 @@ export const settingsDefinitions={
     compassOpacity:{type:'slider',text:'旋转环不透明度 / Ring opacity',min:0,max:.5,step:.01},
     orbitalInitialization:{type:'combo',text:'随机初始轨道 / Initial orbits',options:[{value:'research',label:'随机三星 Q=1 · 逆向行星 0.12D（默认）'},{value:'chaotic',label:'v0.5.1 随机四体 · 对照'},{value:'original',label:'原版完全随机'},{value:'balanced',label:'稳定轨道实验'}]},
     gravityModel:{type:'combo',text:'引力模型 / Gravity',options:[{value:'newtonian',label:'牛顿平方反比 · 无软化（默认）'},{value:'plummer',label:'Plummer 一致软化 · 实验'},{value:'legacy',label:'旧近距引力 · 复现对照'}]},
-    encounterAccuracy:{type:'slider',text:'近遇时间尺度系数 η（越小越精确）',min:.001,max:.03,step:.0005},
+    encounterAccuracy:{type:'slider',text:'近遇时间尺度系数 η（越小越精确）',min:.001,max:.03,step:.000001},
     seed: { type: 'textinput', text: '随机初始化 Seed' },
     physicsMode: { type: 'combo', text: '物理时钟', options: [{ value: 'reference', label: '原版节奏 · 固定 60 Hz（默认）' }, { value: 'realtime', label: '墙钟同步 · 修复原版每帧步数上限' }] },
     civilizationMode: { type: 'combo', text: '文明延续机制 / Civilization', options: [{ value: 'balanced', label: '韧性与文明等级（默认）' }, { value: 'legacy', label: '原版即时判定' }] },

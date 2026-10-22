@@ -199,7 +199,7 @@ export class SpaceRenderer {
     if (t <= -100) color.setRGB(THREE.MathUtils.clamp((t + 210) / 110, 0, 1), THREE.MathUtils.clamp((t + 210) / 110, 0, 1), 1);
     else if (t >= 10) color.setRGB(1, Math.max(0, 1 - (t - 10) / 990), Math.max(0, 1 - (t - 10) / 990));
     this.nodes[3].material.emissive.copy(color);
-    this.nodes[3].group.visible=!state.world?.planet.terminal;
+    this.nodes[3].group.visible=state.bodies[3].mass>0&&!state.world?.planet.terminal;
     this.nodes[3].label.hidden=!this.settings.newproperty65||!this.settings.bodyLabels||!!state.world?.planet.terminal;
     this.nodes.slice(0,3).forEach((n,i)=>{const radius=state.world?.stars[i]?.radius;if(radius)n.mesh.scale.setScalar(radius/this.spaceScale);});
   }

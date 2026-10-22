@@ -7,6 +7,7 @@ const deviation=(b,a,c)=>{
 export class OrbitTrace{
   constructor(){this.reset();}
   reset(){this.paths=Array.from({length:4},()=>({anchor:null,pending:null,raw:[],truncated:false}));}
+  resetBody(i){this.paths[i]={anchor:null,pending:null,raw:[],truncated:false};}
   observe(bodies,time){
     bodies.forEach((body,i)=>{
       const p={x:body.x,y:body.y,z:body.z,time},path=this.paths[i];

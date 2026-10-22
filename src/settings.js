@@ -73,6 +73,7 @@ export function normalizeSettings(source = {}, includeExtras = true) {
     }
     else if (key === 'renderQuality' && ['native','8k'].includes(value)) out.renderQuality=value;
   }
+  if(out.stabilityMode&&out.stabilityMode!=='off')Object.assign(out,{gravityModel:'newtonian',civilizationMode:'balanced',physicsMode:'reference',newproperty53:.1875,encounterAccuracy:.001875,timespeed:1,newproperty26:10});
   return out;
 }
 export function colorRGB(s = '1 1 1') { return s.split(/\s+/).map(Number); }
@@ -104,7 +105,8 @@ export function migrateSettings(saved={},version=3){
 export function seededRandom(seed) {
   let h = 2166136261;
   for (const c of String(seed)) h = Math.imul(h ^ c.charCodeAt(0), 16777619);
-  return () => { h += 0x6d2b79f5; let t = h; t = Math.imul(t ^ t >>> 15, t | 1); t ^= t + Math.imul(t ^ t >>> 7, t | 61); return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+  const random = () => { h += 0x6d2b79f5; let t = h; t = Math.imul(t ^ t >>> 15, t | 1); t ^= t + Math.imul(t ^ t >>> 7, t | 61); return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+  random.checkpoint=()=>h;random.restore=value=>{if(!Number.isFinite(value))throw new Error('Invalid RNG state');h=value;};return random;
 }
 
 export function settingsFromInitial(settings, bodies) {
