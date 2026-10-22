@@ -1,0 +1,23 @@
+{
+  "prefix": "V2-CONFIRM-20261021",
+  "start": 64,
+  "seeds": 8,
+  "horizon": 100000,
+  "saveCheckpoints": true,
+  "output": "docs/research-v2/results/precision-baselines/p08.jsonl",
+  "profiles": [
+    {
+      "id": "newton__h4",
+      "shadow": true,
+      "dt": 0.0001875,
+      "eta": 0.001875
+    },
+    {
+      "id": "legacy-cage__h4",
+      "cage": true,
+      "shadow": true,
+      "dt": 0.0001875,
+      "eta": 0.001875
+    }
+  ]
+}
