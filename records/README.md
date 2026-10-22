@@ -46,6 +46,7 @@
 | [minimal-chaos-v2-confirmation-protocol](analyses/minimal-chaos-v2-confirmation-protocol/README.md) | V2独立128Seed确认预注册与探索结论 | [923ea09](https://github.com/BillOu0104/2/commit/923ea09c5571e6e74fbe4ca2acfad902cfe0100e) |
 | [minimal-chaos-v2-confirmation-review-20261022](analyses/minimal-chaos-v2-confirmation-review-20261022/README.md) | 完整独立确认评审与精度扩展注册 | [e3694e1](https://github.com/BillOu0104/2/commit/e3694e19f70a8e4687cca0d852a225a22a7dc514) |
 | [minimal-chaos-v2-confirmation-start](analyses/minimal-chaos-v2-confirmation-start/README.md) | 独立128Seed确认已实际启动 | [9114932](https://github.com/BillOu0104/2/commit/91149321e89c6bcff1804cd8a5b49000f8c8c062) |
+| [minimal-chaos-v2-h4-baselines-p00](analyses/minimal-chaos-v2-h4-baselines-p00/README.md) | 确认后精度诊断 p00 | [4cb10d1](https://github.com/BillOu0104/2/commit/4cb10d1aa74316c88adbdb8e1587654a66fa38b0) |
 | [minimal-chaos-v2-h4-p00](analyses/minimal-chaos-v2-h4-p00/README.md) | 确认后精度诊断 p00 | [28cab09](https://github.com/BillOu0104/2/commit/28cab09a91f806e00ffec035f1d932dcb0488edd) |
 | [minimal-chaos-v2-h4-p01](analyses/minimal-chaos-v2-h4-p01/README.md) | 确认后精度诊断 p01 | [547f556](https://github.com/BillOu0104/2/commit/547f556fe9b0ca2364d52206a8cb4658fb5553fa) |
 | [minimal-chaos-v2-h4-p02](analyses/minimal-chaos-v2-h4-p02/README.md) | 确认后精度诊断 p02 | [4f07a50](https://github.com/BillOu0104/2/commit/4f07a500c49096836a6aed227210963cb170c342) |
