@@ -53,6 +53,7 @@
 | [minimal-chaos-v2-h4-p04](analyses/minimal-chaos-v2-h4-p04/README.md) | 确认后精度诊断 p04 | [989f57c](https://github.com/BillOu0104/2/commit/989f57c889a98f0209146a9086c78d268c2326ee) |
 | [minimal-chaos-v2-h4-p05](analyses/minimal-chaos-v2-h4-p05/README.md) | 确认后精度诊断 p05 | [a8f763f](https://github.com/BillOu0104/2/commit/a8f763febaf634966faf85ba6d19760db30d760c) |
 | [minimal-chaos-v2-h4-p06](analyses/minimal-chaos-v2-h4-p06/README.md) | 确认后精度诊断 p06 | [ba989ef](https://github.com/BillOu0104/2/commit/ba989ef551592e641de16b732e37b8000b71170e) |
+| [minimal-chaos-v2-h4-p07](analyses/minimal-chaos-v2-h4-p07/README.md) | 确认后精度诊断 p07 | [2011651](https://github.com/BillOu0104/2/commit/2011651f759536863be990674804683af1afb5e8) |
 | [minimal-chaos-v2-interim-audit](analyses/minimal-chaos-v2-interim-audit/README.md) | V2阶段证据与恢复审计 | [762eea4](https://github.com/BillOu0104/2/commit/762eea4eb4f3cf084048f00046330603841d2e1f) |
 | [minimal-chaos-v2-long30](analyses/minimal-chaos-v2-long30/README.md) | V2完整30000年探索与负对照校准 | [102339c](https://github.com/BillOu0104/2/commit/102339ca9efcfa3b575dab447645133cef18d59b) |
 | [minimal-chaos-v2-medium](analyses/minimal-chaos-v2-medium/README.md) | V2 complete10000-year comparison and predictive30000-year prototype | [8173521](https://github.com/BillOu0104/2/commit/8173521a4c1c28a98a29af41ae82871e1f3c0743) |
