@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {Simulation} from '../src/simulation.js';
+import {createControlledSystem} from '../src/v2-simulation.js';
+import {ChaosObserver} from '../tools/v2/chaos-observer.mjs';
+import {checkpointV2,restoreV2,encodeV2,decodeV2} from '../src/v2-checkpoint.js';
+const create=()=>{const s=new Simulation({seed:'V2-SHADOW-RESTORE',stabilityMode:'deflect-v2'});s.controlled=createControlledSystem(s);return s;};
+test('conditional shadow does not alter any primary state or ledger',()=>{const a=create(),b=create(),shadow=new ChaosObserver(a.controlled);for(let i=0;i<1200;i++){a.tick();shadow.observe(a.controlled);b.tick();}assert.deepEqual(a.snapshot(),b.snapshot());assert.equal(shadow.windows.length,2);assert.ok(Number.isFinite(shadow.result(20,true).fullConditionalFTLE));assert.equal(shadow.result(20,true).matureConditionalFTLE,null);assert.equal(shadow.result(20,true).joint,false);});
+test('primary plus shadow resume is bitwise including renormalization windows and geometry',()=>{const a=create(),shadow=new ChaosObserver(a.controlled);for(let i=0;i<380;i++){a.tick();shadow.observe(a.controlled);}const b=restoreV2(decodeV2(encodeV2(checkpointV2(a)))),resumed=ChaosObserver.restore(decodeV2(encodeV2(shadow.checkpoint())));for(let i=0;i<900;i++){a.tick();shadow.observe(a.controlled);b.tick();resumed.observe(b.controlled);}assert.deepEqual(a.snapshot(),b.snapshot());assert.deepEqual(shadow.checkpoint(),resumed.checkpoint());});
+test('missing or duplicate frames are rejected; a zero perturbation is an observer UNKNOWN',()=>{const a=create(),shadow=new ChaosObserver(a.controlled,{epsilon:0});assert.throws(()=>shadow.observe(a.controlled),/skipped or repeated/);for(let i=0;i<599;i++){a.tick();shadow.observe(a.controlled);}a.tick();assert.throws(()=>shadow.observe(a.controlled),/collapsed/);assert.equal(a.controlled.stellarFailure,null);assert.equal(a.controlled.numericalUnknown,null);});

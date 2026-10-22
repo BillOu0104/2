@@ -1,0 +1,37 @@
+✔ V2 control off uses the identical Newtonian integrator with zero external control (86.203968ms)
+✔ physical planet loss and P5 respawn do not reset the universe even with autorestart enabled (178.815602ms)
+✔ stellar contact is absorbing and never becomes an automatic new universe or numerical UNKNOWN (2.564524ms)
+✔ numerical inability remains UNKNOWN with original physical failure field empty (1.361656ms)
+✔ Seed replay, physical changes and display-only changes preserve the intended boundaries (17.508809ms)
+✖ every capture/near-encounter projection has an explicit velocity and cost event (738.83188ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 5
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1034.424805
+
+✖ failing tests:
+
+test at tests/v2-integration.test.js:50:1
+✖ every capture/near-encounter projection has an explicit velocity and cost event (738.83188ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(captures.some(e=>e.kind==='capture'&&e.deltaVelocity))
+  
+      at TestContext.<anonymous> (file:///workspace/2-integration/tests/v2-integration.test.js:54:292)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

@@ -1,0 +1,578 @@
+diff --git a/src/physics/controlled-system.js b/src/physics/controlled-system.js
+index be1bc7b..a93feac 100644
+--- a/src/physics/controlled-system.js
++++ b/src/physics/controlled-system.js
+@@ -13,7 +13,7 @@ function budget(b,G){const e=invariants(b,G);return {...e,L:b.reduce((s,x)=>{con
+ export class ControlledSystem{
+  constructor(bodies,G,settings,{onEvent=()=>{},onPlanetLoss=()=>{},onRespawn=()=>{},onStep=null}={}){
+   if(!(G>0)||bodies.length!==4||bodies.slice(0,3).some(b=>!(b.mass>0)))throw new PhysicsError('v2-initial-state','长期三星模式需要三颗正质量恒星');
+-  this.bodies=structuredClone(bodies);this.G=G;this.settings=settings;this.onEvent=onEvent;this.onPlanetLoss=onPlanetLoss;this.onRespawn=onRespawn;this.onStep=onStep;
++  this.bodies=structuredClone(bodies);this.G=G;this.settings=settings;this.onEvent=onEvent;this.onProjection=e=>this.event(e.kind,{...e,solverTime:this.integrator.time});this.onPlanetLoss=onPlanetLoss;this.onRespawn=onRespawn;this.onStep=onStep;
+   this.scale=pairs.reduce((sum,[i,j])=>sum+distance(bodies[i],bodies[j]),0)/3;
+   this.initialEnergy=invariants(bodies,G).inertialEnergy;this.cost=emptyCost();this.external=emptyCost();this.frame=0;this.returnFrame=null;this.planetLosses=0;this.planetRespawns=0;this.firstPlanetLoss=null;this.stellarFailure=null;this.numericalUnknown=null;this.timers={};this.processedContacts=0;this.maxResidual=0;this.lastPlanetLoss=null;
+   this.integrator=new GravityIntegrator(this.bodies,G,{model:'newtonian',radii:()=>this.radii(this.integrator.time)});
+@@ -46,7 +46,7 @@ export class ControlledSystem{
+   this.event('planet-respawn',{host,radius});this.onRespawn();
+  }
+  beforeStep(){
+-  const before=this.cost.projectionEvents;deflect(this.bodies,this.G,this.cfg,this.settings,this.cost);reflect(this.bodies,this.G,this.cfg,this.settings,this.cost);
++  const before=this.cost.projectionEvents;deflect(this.bodies,this.G,this.cfg,this.settings,this.cost,this.onProjection);reflect(this.bodies,this.G,this.cfg,this.settings,this.cost,this.onProjection);
+   if(this.cost.projectionEvents!==before)this.event('stellar-protection',{events:this.cost.projectionEvents-before,solverTime:this.integrator.time});
+  }
+  acceptedStep(){
+@@ -76,7 +76,7 @@ export class ControlledSystem{
+   this.frameStartFrame=this.frame;this.frameStartTime=this.integrator.time;const count=this.cost.projectionEvents;
+   try{this.integrator.advance(.0075,{maxStep:V2_STEP,eta:V2_ETA,beforeStep:()=>this.beforeStep(),onAcceptedStep:()=>this.acceptedStep()});}
+   catch(e){if(e.physical){this.integrator.numericalError=null;this.event('stellar-failure',this.stellarFailure);return false;}this.numericalUnknown={code:e.code??'numerical-error',message:e.message};throw e;}
+-  this.frame++;capture(this.bodies,this.G,this.cfg,this.scale,this.cost);if(this.cost.projectionEvents>count){this.cost.activeFrames++;this.cost.projectionFrames++;}
++  this.frame++;capture(this.bodies,this.G,this.cfg,this.scale,this.cost,this.onProjection);if(this.cost.projectionEvents>count){this.cost.activeFrames++;this.cost.projectionFrames++;}
+   this.escapes();if(this.returnFrame!==null&&this.frame>=this.returnFrame)this.respawn();
+   if(this.stellarFailure)this.event('stellar-failure',this.stellarFailure);
+   return true;
+diff --git a/src/physics/minimal-control.js b/src/physics/minimal-control.js
+index d64d59c..c4c6ff6 100644
+--- a/src/physics/minimal-control.js
++++ b/src/physics/minimal-control.js
+@@ -13,12 +13,15 @@ export function applyVelocity(body,dv,cost){
+  const dl=cross(r,dp);cost.cumulativeBodyAngularImpulse+=norm(dl);for(let k=0;k<3;k++){cost.deltaP[k]+=dp[k];cost.deltaL[k]+=dl[k];body[keys[k+3]]+=dv[k];}
+  return w;
+ }
+-export function capture(b,G,cfg,scale,cost){
++function projectionStart(b,cost){return {v:b.slice(0,3).map(vel),work:cost.work,absoluteWork:cost.absoluteWork,impulse:cost.impulse,deltaP:[...cost.deltaP],deltaL:[...cost.deltaL]};}
++function projectionEnd(kind,b,cost,before,notify){if(!notify)return;const deltaVelocity=b.slice(0,3).map((body,i)=>sub(vel(body),before.v[i]));const peakNetVelocityJump=Math.max(...deltaVelocity.map(norm));cost.peakNetVelocityJump=Math.max(cost.peakNetVelocityJump??0,peakNetVelocityJump);notify({kind,deltaVelocity,peakNetVelocityJump,work:cost.work-before.work,absoluteWork:cost.absoluteWork-before.absoluteWork,impulse:cost.impulse-before.impulse,deltaP:sub(cost.deltaP,before.deltaP),deltaL:sub(cost.deltaL,before.deltaL)});}
++export function capture(b,G,cfg,scale,cost,onProjection=null){
+  if(!cfg.capture)return 0;let count=0;
+  for(let i=0;i<3;i++){
+   const others=b.slice(0,3).filter((_,j)=>j!==i),c=center(others),M=others.reduce((s,x)=>s+x.mass,0),r=sub(pos(b[i]),c.slice(0,3)),v=sub(vel(b[i]),c.slice(3)),R=norm(r),vr=dot(r,v)/R,mu=G*(M+b[i].mass),E=.5*dot(v,v)-mu/R;
+   const target=-mu/((cfg.apocenterScale??4)*scale),trigger=cfg.captureTriggerScale>0?-mu/(cfg.captureTriggerScale*scale):(cfg.capturePositiveOnly?0:target);
+   if(!(vr>0&&R>(cfg.captureRadiusScale??1.5)*scale&&R>(cfg.captureSeparationFactor??0)*norm(sub(pos(others[0]),pos(others[1])))&&E>trigger+1e-14*mu/scale))continue;
++  const before=onProjection?projectionStart(b,cost):null;
+   const vt2=Math.max(0,dot(v,v)-vr*vr),available=Math.max(0,2*(mu/R+target));let dv;
+   if(available>=vt2){const change=Math.sqrt(available-vt2)-vr;dv=r.map(x=>x*(change/R));}
+   else{const ratio=Math.sqrt(available/dot(v,v));dv=v.map(x=>x*(ratio-1));}
+@@ -27,12 +30,12 @@ export function capture(b,G,cfg,scale,cost){
+   for(const item of velocities){absoluteWork+=Math.abs(applyVelocity(item.body,item.dv,cost));cost.impulse+=item.body.mass*norm(item.dv);}
+   cost.absoluteWork+=absoluteWork;const removed=oldWork-cost.work;
+   if(cfg.redistribute&&removed>0){const a=b[(i+1)%3],c=b[(i+2)%3],r=sub(pos(a),pos(c)),nr=r.map(x=>x/norm(r)),u=sub(vel(a),vel(c)),ur=dot(nr,u),reduced=a.mass*c.mass/(a.mass+c.mass),newUr=Math.sign(ur||1)*Math.sqrt(ur*ur+2*removed/reduced),change=nr.map(x=>x*(newUr-ur));for(const [body,share]of [[a,c.mass/(a.mass+c.mass)],[c,-a.mass/(a.mass+c.mass)]]){const dv=change.map(x=>x*share);cost.absoluteWork+=Math.abs(applyVelocity(body,dv,cost));cost.impulse+=body.mass*norm(dv);}}
+-  cost.projectionEvents++;count++;
++  cost.projectionEvents++;count++;projectionEnd('capture',b,cost,before,onProjection);
+  }
+  return count;
+ }
+-export function reflect(b,G,cfg,settings,cost){if(!cfg.reflect)return;for(let i=0;i<3;i++)for(let j=i+1;j<3;j++){const r=sub(pos(b[j]),pos(b[i])),v=sub(vel(b[j]),vel(b[i])),R=norm(r),vr=dot(r,v)/R,radii=[settings._13,settings._21,settings._3],guard=(cfg.reflectionMargin??1.15)*(radii[i]+radii[j])*(settings.stellarBreathing?1.08:1);if(!(R<guard&&vr<0))continue;const change=r.map(x=>-2*vr*x/R),M=b[i].mass+b[j].mass;for(const [body,f]of [[b[i],-b[j].mass/M],[b[j],b[i].mass/M]]){const dv=change.map(x=>x*f);cost.absoluteWork+=Math.abs(applyVelocity(body,dv,cost));cost.impulse+=body.mass*norm(dv);}cost.projectionEvents++;cost.reflectionEvents=(cost.reflectionEvents??0)+1;}}
+-export function deflect(b,G,cfg,settings,cost){
++export function reflect(b,G,cfg,settings,cost,onProjection=null){if(!cfg.reflect)return;for(let i=0;i<3;i++)for(let j=i+1;j<3;j++){const r=sub(pos(b[j]),pos(b[i])),v=sub(vel(b[j]),vel(b[i])),R=norm(r),vr=dot(r,v)/R,radii=[settings._13,settings._21,settings._3],guard=(cfg.reflectionMargin??1.15)*(radii[i]+radii[j])*(settings.stellarBreathing?1.08:1);if(!(R<guard&&vr<0))continue;const before=onProjection?projectionStart(b,cost):null;const change=r.map(x=>-2*vr*x/R),M=b[i].mass+b[j].mass;for(const [body,f]of [[b[i],-b[j].mass/M],[b[j],b[i].mass/M]]){const dv=change.map(x=>x*f);cost.absoluteWork+=Math.abs(applyVelocity(body,dv,cost));cost.impulse+=body.mass*norm(dv);}cost.projectionEvents++;cost.reflectionEvents=(cost.reflectionEvents??0)+1;projectionEnd('reflect',b,cost,before,onProjection);}}
++export function deflect(b,G,cfg,settings,cost,onProjection=null){
+  if(!cfg.deflect)return;
+  const radii=[settings._13,settings._21,settings._3];
+  for(let i=0;i<3;i++)for(let j=i+1;j<3;j++){
+@@ -41,10 +44,11 @@ export function deflect(b,G,cfg,settings,cost){
+   const mu=G*(b[i].mass+b[j].mass),E=.5*dot(v,v)-mu/R,h=cross(r,v),h2=dot(h,h),ecc=Math.sqrt(Math.max(0,1+2*E*h2/(mu*mu))),q=h2/(mu*(1+ecc));if(!(q<(cfg.reflectionMargin??1.15)*radius))continue;
+   const vt2=Math.max(0,(2*target*target*E+2*mu*target)/(R*R));if(!(vt2<dot(v,v)))continue;
+   const n=r.map(x=>x/R);let t=sub(v,n.map(x=>x*vr));if(norm(t)<1e-12){const k=n.map(Math.abs).indexOf(Math.min(...n.map(Math.abs))),basis=[0,0,0];basis[k]=1;t=sub(basis,n.map(x=>x*dot(basis,n)));}t=t.map(x=>x/norm(t));
++  const before=onProjection?projectionStart(b,cost):null;
+   const u=n.map((x,k)=>-x*Math.sqrt(Math.max(0,dot(v,v)-vt2))+t[k]*Math.sqrt(vt2)),change=sub(u,v),M=b[i].mass+b[j].mass;
+   for(const [body,f]of [[b[i],-b[j].mass/M],[b[j],b[i].mass/M]]){const dv=change.map(x=>x*f);cost.absoluteWork+=Math.abs(applyVelocity(body,dv,cost));cost.impulse+=body.mass*norm(dv);}
+-  cost.projectionEvents++;cost.deflectionEvents=(cost.deflectionEvents??0)+1;
++  cost.projectionEvents++;cost.deflectionEvents=(cost.deflectionEvents??0)+1;projectionEnd('deflect',b,cost,before,onProjection);
+  }
+ }
+ 
+-export function emptyCost(){return {work:0,absoluteWork:0,impulse:0,peakVelocityJump:0,deltaP:[0,0,0],deltaL:[0,0,0],cumulativeBodyAngularImpulse:0,projectionEvents:0,reflectionEvents:0,deflectionEvents:0,activeFrames:0,projectionFrames:0,activeTime:0,peakAcceleration:0,accelerationIntegral:0,accelerationSquaredIntegral:0};}
++export function emptyCost(){return {work:0,absoluteWork:0,impulse:0,peakNetVelocityJump:0,peakVelocityJump:0,deltaP:[0,0,0],deltaL:[0,0,0],cumulativeBodyAngularImpulse:0,projectionEvents:0,reflectionEvents:0,deflectionEvents:0,activeFrames:0,projectionFrames:0,activeTime:0,peakAcceleration:0,accelerationIntegral:0,accelerationSquaredIntegral:0};}
+diff --git a/tests/v2-chaos-observer.test.js b/tests/v2-chaos-observer.test.js
+new file mode 100644
+index 0000000..c795607
+--- /dev/null
++++ b/tests/v2-chaos-observer.test.js
+@@ -0,0 +1,10 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {Simulation} from '../src/simulation.js';
++import {createControlledSystem} from '../src/v2-simulation.js';
++import {ChaosObserver} from '../tools/v2/chaos-observer.mjs';
++import {checkpointV2,restoreV2,encodeV2,decodeV2} from '../src/v2-checkpoint.js';
++const create=()=>{const s=new Simulation({seed:'V2-SHADOW-RESTORE',stabilityMode:'deflect-v2'});s.controlled=createControlledSystem(s);return s;};
++test('conditional shadow does not alter any primary state or ledger',()=>{const a=create(),b=create(),shadow=new ChaosObserver(a.controlled);for(let i=0;i<1200;i++){a.tick();shadow.observe(a.controlled);b.tick();}assert.deepEqual(a.snapshot(),b.snapshot());assert.equal(shadow.windows.length,2);assert.ok(Number.isFinite(shadow.result(20,true).fullConditionalFTLE));assert.equal(shadow.result(20,true).matureConditionalFTLE,null);assert.equal(shadow.result(20,true).joint,false);});
++test('primary plus shadow resume is bitwise including renormalization windows and geometry',()=>{const a=create(),shadow=new ChaosObserver(a.controlled);for(let i=0;i<380;i++){a.tick();shadow.observe(a.controlled);}const b=restoreV2(decodeV2(encodeV2(checkpointV2(a)))),resumed=ChaosObserver.restore(decodeV2(encodeV2(shadow.checkpoint())));for(let i=0;i<900;i++){a.tick();shadow.observe(a.controlled);b.tick();resumed.observe(b.controlled);}assert.deepEqual(a.snapshot(),b.snapshot());assert.deepEqual(shadow.checkpoint(),resumed.checkpoint());});
++test('missing or duplicate frames are rejected; a zero perturbation is an observer UNKNOWN',()=>{const a=create(),shadow=new ChaosObserver(a.controlled,{epsilon:0});assert.throws(()=>shadow.observe(a.controlled),/skipped or repeated/);for(let i=0;i<599;i++){a.tick();shadow.observe(a.controlled);}a.tick();assert.throws(()=>shadow.observe(a.controlled),/collapsed/);assert.equal(a.controlled.stellarFailure,null);assert.equal(a.controlled.numericalUnknown,null);});
+diff --git a/tests/v2-integration.test.js b/tests/v2-integration.test.js
+index ab42072..9b35638 100644
+--- a/tests/v2-integration.test.js
++++ b/tests/v2-integration.test.js
+@@ -46,3 +46,10 @@ test('Seed replay, physical changes and display-only changes preserve the intend
+  const replay=new Simulation(settingsFromInitial(a.settings,a.initialBodies));replay.tick();assert.deepEqual(replay.initialBodies,a.initialBodies);assert.equal(replay.snapshot().algorithm,a.snapshot().algorithm);
+  a.configure({stabilityMode:'off'});a.tick();assert.equal(a.controlled,null);assert.equal(a.snapshot().physics.model,'newtonian');
+ });
++
++test('every capture/near-encounter projection has an explicit velocity and cost event',()=>{
++ const initial=[b(-.07),b(.07),b(1.8,1),b(1.8,1.3,5000)];initial[0].vx=.3;initial[1].vx=-.3;initial[1].vy=.01;
++ const events=[],c=new ControlledSystem(initial,G,normalizeSettings({stabilityMode:mode,newproperty60:true}),{onEvent:e=>events.push(e)});for(let i=0;i<1200;i++)c.advanceFrame();
++ const projections=events.filter(e=>e.kind==='deflect'||e.kind==='reflect'||e.kind==='capture');assert.equal(projections.length,c.cost.projectionEvents);assert.ok(projections.length>0);assert.ok(projections.every(e=>e.deltaVelocity.length===3&&e.impulse>=0&&Number.isFinite(e.work)&&e.deltaL.length===3));assert.ok(c.cost.peakNetVelocityJump>0);
++ const far=fixture();far[0].x=6;far[0].vx=.25;far[1].x=-.5;far[2].x=.5;far[2].y=0;far[3].x=.5;far[3].y=.3;const captures=[],captureSystem=new ControlledSystem(far,G,normalizeSettings({stabilityMode:mode,newproperty60:true}),{onEvent:e=>captures.push(e)});for(let i=0;i<1200;i++)captureSystem.advanceFrame();assert.ok(captures.some(e=>e.kind==='capture'&&e.deltaVelocity));
++});
+diff --git a/tools/v2/batch-worker-v2.mjs b/tools/v2/batch-worker-v2.mjs
+new file mode 100644
+index 0000000..a664701
+--- /dev/null
++++ b/tools/v2/batch-worker-v2.mjs
+@@ -0,0 +1,51 @@
++import fs from 'node:fs';
++import path from 'node:path';
++import crypto from 'node:crypto';
++import assert from 'node:assert/strict';
++import {ChaosObserver} from './chaos-observer.mjs';
++import {Simulation} from '../../src/simulation.js';
++import {createControlledSystem} from '../../src/v2-simulation.js';
++import {checkpointV2,restoreV2,encodeV2,decodeV2} from '../../src/v2-checkpoint.js';
++const sha=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
++const [config,shardText='0',shardsText='1']=process.argv.slice(2),cfg=JSON.parse(fs.readFileSync(config)),shard=Number(shardText),shards=Number(shardsText),dir=cfg.output;
++const manifest=JSON.parse(fs.readFileSync(dir+'/manifest.json')),hash=manifest.sourceHash;
++const verify=()=>{assert.equal(sha(config),manifest.configHash);for(const[p,h]of Object.entries(manifest.files))assert.equal(sha(p),h,'Frozen source changed: '+p);};verify();
++const write=(p,value)=>{fs.mkdirSync(path.dirname(p),{recursive:true});const text=encodeV2(value)+'\n',fd=fs.openSync(p+'.tmp','w');fs.writeFileSync(fd,text);fs.fsyncSync(fd);fs.closeSync(fd);fs.renameSync(p+'.tmp',p);};
++const resultFile=dir+`/shard${shard}.jsonl`,done=new Map();
++const endpointDir=dir+'/endpoints';fs.mkdirSync(endpointDir,{recursive:true});
++for(const file of fs.readdirSync(endpointDir).filter(x=>x.endsWith('.json'))){const r=decodeV2(fs.readFileSync(endpointDir+'/'+file,'utf8')),key=r.seed+'|'+r.mode+'|'+r.horizon;assert(!done.has(key),'Duplicate endpoint');assert.equal(r.sourceHash,hash);assert.equal(r.configHash,manifest.configHash);assert.equal(sha(r.checkpoint),r.checkpointSHA256);assert.equal(sha(r.rawFile),r.rawSHA256);done.set(key,r);}
++const preserveWrite=(p,data)=>{if(fs.existsSync(p))fs.renameSync(p,p+'.unpublished-'+sha(p));write(p,data);};
++const pairs=[[0,1],[0,2],[1,2]],d=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y,a.z-b.z);
++for(let index=cfg.start??0;index<(cfg.start??0)+cfg.seeds;index++){
++ if(index%shards!==shard)continue;
++ for(const mode of cfg.modes){
++  verify();const seed=cfg.prefix+'-'+index,stem=dir+'/'+seed+'-'+mode,cpFile=stem+'.checkpoint.json';let sim,metrics,observer;
++  if(fs.existsSync(cpFile)){const cp=decodeV2(fs.readFileSync(cpFile,'utf8'));assert.equal(cp.sourceHash,hash);assert.equal(cp.configHash,manifest.configHash);assert.equal(cp.seed,seed);assert.equal(cp.mode,mode);sim=restoreV2(cp.simulation);metrics=cp.metrics;observer=ChaosObserver.restore(cp.observer);console.log(JSON.stringify({resume:seed,mode,year:sim.controlled.year}));}
++  else{sim=new Simulation({seed,stabilityMode:mode,newproperty60:true,autorestart:true});sim.controlled=createControlledSystem(sim);metrics={stableFrames:0,matureStableFrames:0,absentFrames:0,aliveFrames:0,activeFrames:0,births:0,deaths:0,closestChanges:0,lastPair:null,nonhierFrames:0,matureNonhierFrames:0,hierarchyRun:0,longestHierarchy:0,minStellarDistance:Infinity,events:[],bins:[],wallSeconds:0,observerUNKNOWN:null,stableYoungFrames:0,matureStableYoungFrames:0,lastRespawnFrame:null,cumulativeProjectionAngularImpulse:0};observer=new ChaosObserver(sim.controlled);}
++  if(cfg.initialRegistry){const registry=JSON.parse(fs.readFileSync(cfg.initialRegistry)),buffer=Buffer.alloc(4*7*8);let offset=0;for(const b of sim.initialBodies)for(const key of ['x','y','z','vx','vy','vz','mass']){buffer.writeDoubleBE(b[key],offset);offset+=8;}assert.equal(crypto.createHash('sha256').update(buffer).digest('hex'),registry.seeds[seed].initialSHA256,'Pre-registered initial state mismatch');}
++  const emit=sim.emit.bind(sim);sim.emit=(type,detail)=>{metrics.events.push({id:sim.eventSeq+1,type,year:sim.shared.xntime||0,detail:structuredClone(detail)});emit(type,detail);if(type==='planet:respawn')metrics.lastRespawnFrame=sim.controlled.frame;if(['physics:deflect','physics:reflect','physics:capture'].includes(type))metrics.cumulativeProjectionAngularImpulse+=Math.hypot(...detail.deltaL);if(type==='civilization:birth')metrics.births++;if(type==='civilization:death')metrics.deaths++;};
++  let start=performance.now();
++  const checkpoint=()=>{metrics.wallSeconds+=(performance.now()-start)/1000;start=performance.now();write(cpFile,{sourceHash:hash,configHash:manifest.configHash,seed,mode,simulation:checkpointV2(sim),metrics,observer:observer.checkpoint()});};
++  for(const horizon of cfg.horizons){
++   const key=seed+'|'+mode+'|'+horizon;if(done.has(key))continue;
++   assert(sim.controlled.frame<=horizon*60,'Checkpoint passed an unrecorded endpoint');
++   while(sim.controlled.frame<horizon*60&&!sim.controlled.stellarFailure&&!sim.controlled.numericalUnknown&&!metrics.observerUNKNOWN){
++    try{sim.tick();}catch(e){assert(sim.controlled.numericalUnknown,'Unexpected programming error: '+e.stack);}
++    const c=sim.controlled;if(c.stellarFailure||c.numericalUnknown)break;
++    try{observer.observe(c);}catch(e){metrics.observerUNKNOWN={scope:'conditional-shadow',code:e.code??'observer-error',message:e.message,year:c.year};break;}
++    if(sim.world.state?.epoch.kind==='stable'&&c.bodies[3].mass>0){metrics.stableFrames++;if(c.frame>600000)metrics.matureStableFrames++;if(metrics.lastRespawnFrame!==null&&c.frame-metrics.lastRespawnFrame<=1500){metrics.stableYoungFrames++;if(c.frame>600000)metrics.matureStableYoungFrames++;}}if(!c.bodies[3].mass)metrics.absentFrames++;
++    if(sim.shared.civilizationAlive){metrics.aliveFrames++;if(sim.civilization.phase==='active')metrics.activeFrames++;}
++    const distances=pairs.map(([i,j])=>d(c.bodies[i],c.bodies[j])),minimum=Math.min(...distances),pair=distances.indexOf(minimum),ratio=Math.max(...distances)/minimum;metrics.minStellarDistance=Math.min(metrics.minStellarDistance,minimum);if(metrics.lastPair!==null&&pair!==metrics.lastPair)metrics.closestChanges++;metrics.lastPair=pair;
++    if(ratio<3){metrics.nonhierFrames++;if(c.frame>600000)metrics.matureNonhierFrames++;}if(ratio>5){metrics.hierarchyRun++;metrics.longestHierarchy=Math.max(metrics.longestHierarchy,metrics.hierarchyRun);}else metrics.hierarchyRun=0;
++    if(c.frame%60000===0){metrics.bins.push({year:c.year,stableFrames:metrics.stableFrames,matureStableFrames:metrics.matureStableFrames,planetLosses:c.planetLosses,planetRespawns:c.planetRespawns,absentFrames:metrics.absentFrames,control:structuredClone(c.cost)});checkpoint();console.log(JSON.stringify({progress:seed,mode,year:c.year,steps:c.integrator.steps}));}
++   }
++   verify();checkpoint();const c=sim.controlled,terminal=c.stellarFailure||c.numericalUnknown||metrics.observerUNKNOWN,total=horizon*60,complete=c.frame===total&&!terminal;
++   const snapshot=stem+`-${horizon}.state.json`;if(fs.existsSync(snapshot))fs.renameSync(snapshot,snapshot+'.unpublished-'+sha(snapshot));fs.copyFileSync(cpFile,snapshot);const rawFile=stem+`-${horizon}.raw.json`;preserveWrite(rawFile,{sourceHash:hash,configHash:manifest.configHash,seed,mode,horizon,settings:sim.settings,initialBodies:sim.initialBodies,finalBodies:c.bodies,stellarFailure:c.stellarFailure,numericalUnknown:c.numericalUnknown,control:c.cost,planetExternal:c.external,metrics,chaos:observer.result(horizon,complete),shadowWindows:observer.windows});
++   const r={seed,mode,horizon,shard,shards,sourceHash:hash,configHash:manifest.configHash,integratedYears:c.year,solverTime:c.integrator.time,stellarIntact:complete,starFailure:c.stellarFailure,numericalUNKNOWN:c.numericalUnknown??metrics.observerUNKNOWN,primaryNumericalUNKNOWN:c.numericalUnknown,observerUNKNOWN:metrics.observerUNKNOWN,stableFraction:metrics.stableFrames/total,matureStableFraction:horizon>10000?metrics.matureStableFrames/((horizon-10000)*60):null,planetLosses:c.planetLosses,planetRespawns:c.planetRespawns,originalPlanetSurvived:complete&&!c.planetLosses,firstPlanetLoss:c.firstPlanetLoss,absentFraction:metrics.absentFrames/total,civilizationBirths:metrics.births,civilizationDeaths:metrics.deaths,civilizationAliveFraction:metrics.aliveFrames/total,civilizationActiveFraction:metrics.activeFrames/total,originalCivilizationSurvived:complete&&metrics.births>0&&metrics.deaths===0&&!!sim.shared.civilizationAlive,nonhierFraction:metrics.nonhierFrames/total,matureNonhierFraction:horizon>10000?metrics.matureNonhierFrames/((horizon-10000)*60):null,closestPairChanges:metrics.closestChanges,longestGeometricHierarchyYears:metrics.longestHierarchy/60,...observer.result(horizon,complete),chaosEvidenceStatus:'CONDITIONAL_STELLAR_FTLE_AND_GEOMETRIC_DYNAMIC_HIERARCHY',stablePostRespawn25Contribution:metrics.stableYoungFrames/total,matureStablePostRespawn25Contribution:horizon>10000?metrics.matureStableYoungFrames/((horizon-10000)*60):null,controlObservedActiveFrameFraction:c.cost.activeFrames/total,controlApplication:'velocity pulses; peak/mean continuous acceleration undefined without specified duration',cumulativeProjectionAngularImpulse:metrics.cumulativeProjectionAngularImpulse,control:c.cost,planetExternal:c.external,maxNumericalEnergyResidual:c.maxResidual,steps:c.integrator.steps,wallSeconds:metrics.wallSeconds,maxRSSMiB:process.memoryUsage().rss/1048576,generation:sim.generation,rawFile,rawSHA256:sha(rawFile),checkpoint:snapshot,checkpointSHA256:sha(snapshot)};
++   const endpoint=endpointDir+'/'+seed+'-'+mode+'-'+horizon+'.json';assert(!fs.existsSync(endpoint),'Published endpoint is immutable');write(endpoint,r);done.set(key,r);console.log(JSON.stringify({complete:seed,mode,horizon,stellarIntact:complete,UNKNOWN:r.numericalUNKNOWN}));
++   if(c.numericalUnknown||metrics.observerUNKNOWN)throw new Error('Numerical UNKNOWN preserved; stop for review');
++  }
++ }
++}
++
++const own=[...done.values()].filter(r=>r.shard===shard).sort((a,b)=>a.seed.localeCompare(b.seed)||a.mode.localeCompare(b.mode)||a.horizon-b.horizon);const fd=fs.openSync(resultFile+'.tmp','w');fs.writeFileSync(fd,own.map(r=>encodeV2(r)).join('\n')+'\n');fs.fsyncSync(fd);fs.closeSync(fd);fs.renameSync(resultFile+'.tmp',resultFile);
+diff --git a/tools/v2/chaos-observer.mjs b/tools/v2/chaos-observer.mjs
+new file mode 100644
+index 0000000..f355404
+--- /dev/null
++++ b/tools/v2/chaos-observer.mjs
+@@ -0,0 +1,60 @@
++import {GravityIntegrator,PhysicsError} from '../../src/physics/gravity.js';
++import {V2_STEP,V2_ETA} from '../../src/physics/controlled-system.js';
++import {deflect,reflect,capture,emptyCost,norm,dot,cross,sub,pos,vel,center,keys} from '../../src/physics/minimal-control.js';
++const pairs=[[0,1],[0,2],[1,2]],distance=(a,b)=>norm(sub(pos(a),pos(b)));
++// Diagnostic observer only: the primary bodies and its control ledger are never
++// passed to the shadow integrator. Planet lifecycle follows the primary forcing.
++export class ChaosObserver{
++ constructor(primary,{epsilon=1e-8,windowYears=10,shadow=true}={}){
++  this.scale=primary.scale;this.G=primary.G;this.settings=structuredClone(primary.settings);this.cfg=structuredClone(primary.cfg);this.epsilon=epsilon;this.windowYears=windowYears;this.shadowEnabled=shadow;this.frame=0;this.losses=0;
++  this.bodies=structuredClone(primary.bodies);this.bodies[0].x+=epsilon*this.scale/Math.sqrt(2);this.bodies[1].x-=epsilon*this.scale/Math.sqrt(2);
++  this.integrator=new GravityIntegrator(this.bodies,this.G);this.cost=emptyCost();this.fullLog=0;this.fullYears=0;this.matureLog=0;this.matureYears=0;this.windows=[];
++  this.nonhier=0;this.matureNonhier=0;this.geometricRun=0;this.longestGeometric=0;this.dynamicFrames=0;this.matureDynamic=0;this.dynamicRun=0;this.longestDynamic=0;this.lastPair=-1;this.closestChanges=0;this.lastTight=-1;this.tightChanges=0;
++ }
++ advanceShadow(duration){if(duration<=1e-14)return;this.integrator.advance(duration,{maxStep:V2_STEP,eta:V2_ETA,beforeStep:()=>{deflect(this.bodies,this.G,this.cfg,this.settings,this.cost);reflect(this.bodies,this.G,this.cfg,this.settings,this.cost);}});}
++ observe(primary){
++  if(primary.frame!==this.frame+1)throw new Error('Shadow observer skipped or repeated a primary frame');
++  if(this.shadowEnabled){
++   // Native uses a fresh dummy cost each frame; it can affect subtraction
++   // rounding in redistributed capture, so preserve that ordering too.
++   this.cost=emptyCost();
++   if(primary.planetLosses>this.losses&&this.bodies[3].mass>0){const offset=Math.max(0,Math.min(.0075,(primary.lastPlanetLoss.year*60-this.frame)*.0075));this.advanceShadow(offset);this.bodies[3].mass=0;this.advanceShadow(.0075-offset);}
++   else this.advanceShadow(.0075);
++   capture(this.bodies,this.G,this.cfg,this.scale,this.cost);
++   if((this.bodies[3].mass>0)!==(primary.bodies[3].mass>0))Object.assign(this.bodies[3],primary.bodies[3]);
++  }
++  this.frame=primary.frame;this.losses=primary.planetLosses;this.observeGeometry(primary.bodies);
++  if(this.shadowEnabled&&this.frame%Math.round(this.windowYears*60)===0)this.renormalize(primary.bodies);
++ }
++ observeGeometry(b){
++  const ds=pairs.map(([i,j])=>distance(b[i],b[j])),minimum=Math.min(...ds),pair=ds.indexOf(minimum),shape=Math.max(...ds)/minimum;
++  if(pair!==this.lastPair){if(this.lastPair>=0)this.closestChanges++;this.lastPair=pair;}
++  if(shape<3){this.nonhier++;if(this.frame>600000)this.matureNonhier++;}if(shape>5){this.geometricRun++;this.longestGeometric=Math.max(this.longestGeometric,this.geometricRun);}else this.geometricRun=0;
++  const [i,j]=pairs[pair],k=3-i-j,r=sub(pos(b[i]),pos(b[j])),v=sub(vel(b[i]),vel(b[j])),mu=this.G*(b[i].mass+b[j].mass),energy=.5*dot(v,v)-mu/minimum;let hierarchical=false;
++  if(energy<0){
++   const a=-mu/(2*energy),h=norm(cross(r,v)),ecc=Math.sqrt(Math.max(0,1+2*energy*h*h/(mu*mu))),apo=a*(1+ecc),next=Math.min(...ds.filter((_,q)=>q!==pair));
++   if(minimum<.5*next&&pair!==this.lastTight){if(this.lastTight>=0)this.tightChanges++;this.lastTight=pair;}
++   const c=center([b[i],b[j]]),rr=sub(pos(b[k]),c.slice(0,3)),vv=sub(vel(b[k]),c.slice(3)),R=norm(rr),outerMu=this.G*(b[i].mass+b[j].mass+b[k].mass),outerEnergy=.5*dot(vv,vv)-outerMu/R;
++   if(outerEnergy<0){const outerH=norm(cross(rr,vv)),outerEcc=Math.sqrt(Math.max(0,1+2*outerEnergy*outerH*outerH/(outerMu*outerMu))),peri=outerH*outerH/(outerMu*(1+outerEcc));hierarchical=peri>3*apo;}
++  }
++  if(hierarchical){this.dynamicFrames++;if(this.frame>600000)this.matureDynamic++;this.dynamicRun++;this.longestDynamic=Math.max(this.longestDynamic,this.dynamicRun);}else this.dynamicRun=0;
++ }
++ renormalize(primary){
++  const velocityScale=Math.sqrt(this.G*15e6/this.scale),dr=[0,0,0],dv=[0,0,0];
++  for(let i=0;i<3;i++)for(let k=0;k<3;k++){dr[k]+=this.bodies[i][keys[k]]-primary[i][keys[k]];dv[k]+=this.bodies[i][keys[k+3]]-primary[i][keys[k+3]];}
++  for(let k=0;k<3;k++){dr[k]*=1/3;dv[k]*=1/3;}
++  let sum=0;for(let i=0;i<3;i++){const r=sub(sub(pos(this.bodies[i]),pos(primary[i])),dr),v=sub(sub(vel(this.bodies[i]),vel(primary[i])),dv);sum+=dot(r,r)/(this.scale*this.scale)+dot(v,v)/(velocityScale*velocityScale);}
++  const D=Math.sqrt(sum);if(!(D>0&&Number.isFinite(D)))throw new PhysicsError('shadow-collapse','Conditional stellar shadow collapsed or became non-finite; primary physical outcome is separate');
++  const log=Math.log(D/this.epsilon),ratio=this.epsilon/D;this.fullLog+=log;this.fullYears+=this.windowYears;if(this.frame>600000){this.matureLog+=log;this.matureYears+=this.windowYears;}
++  this.windows.push({year:this.frame/60,logGrowth:log});
++  for(let i=0;i<3;i++)for(let k=0;k<3;k++){this.bodies[i][keys[k]]=primary[i][keys[k]]+(this.bodies[i][keys[k]]-primary[i][keys[k]]-dr[k])*ratio;this.bodies[i][keys[k+3]]=primary[i][keys[k+3]]+(this.bodies[i][keys[k+3]]-primary[i][keys[k+3]]-dv[k])*ratio;}
++  Object.assign(this.bodies[3],primary[3]);
++ }
++ checkpoint(){return structuredClone({format:'conditional-stellar-shadow-v1',state:Object.fromEntries(Object.entries(this).filter(([k])=>k!=='integrator')),time:this.integrator.time,steps:this.integrator.steps});}
++ static restore(data){if(data.format!=='conditional-stellar-shadow-v1')throw new Error('Unsupported shadow checkpoint');const o=Object.create(ChaosObserver.prototype);Object.assign(o,structuredClone(data.state));o.integrator=new GravityIntegrator(o.bodies,o.G);o.integrator.time=data.time;o.integrator.steps=data.steps;return o;}
++ result(horizon,stellarIntact){
++  const total=horizon*60,mature=(horizon-10000)*60,FTLE=this.matureYears>0?this.matureLog/this.matureYears:null,nonhier=mature>0?this.matureNonhier/mature:null;
++  const q={fullConditionalFTLE:this.fullYears>0?this.fullLog/this.fullYears:null,matureConditionalFTLE:FTLE,lyapunovWindows:this.matureYears/this.windowYears,lyapunovScope:'stellar shadow conditioned on primary planet lifecycle; 10-year renormalization, dimensionless eps1e-8; not full-four-body infinite spectrum',nonhierFraction:this.nonhier/total,matureNonhierFraction:nonhier,dynHierFraction:this.dynamicFrames/total,matureDynHierFraction:mature>0?this.matureDynamic/mature:null,longestHierarchyYears:this.longestGeometric/60,longestDynamicalHierarchyYears:this.longestDynamic/60,closestPairChanges:this.closestChanges,tightPairChanges:this.tightChanges};
++  q.diagnosticJoint=horizon>=30000&&this.shadowEnabled&&stellarIntact&&FTLE>.003&&q.tightPairChanges>=20&&q.longestDynamicalHierarchyYears<1000&&q.longestHierarchyYears<=5000&&nonhier>=.1;q.joint=horizon===100000&&q.diagnosticJoint;return q;
++ }
++}
+diff --git a/tools/v2/check-formal-worker.mjs b/tools/v2/check-formal-worker.mjs
+new file mode 100644
+index 0000000..c381404
+--- /dev/null
++++ b/tools/v2/check-formal-worker.mjs
+@@ -0,0 +1,8 @@
++import fs from 'node:fs';
++import os from 'node:os';
++import path from 'node:path';
++import crypto from 'node:crypto';
++import assert from 'node:assert/strict';
++import {spawnSync} from 'node:child_process';
++const root=fs.mkdtempSync(path.join(os.tmpdir(),'v2-formal-audit-')),sha=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex'),dir=root+'/results',config=root+'/config.json';fs.mkdirSync(dir);const cfg={prefix:'V2-FORMAL-WORKER-SMOKE',start:0,seeds:1,modes:['deflect-v2'],horizons:[1,2],output:dir};fs.writeFileSync(config,JSON.stringify(cfg));const mf={sourceHash:'formal-worker-smoke-only',configHash:sha(config),files:{[config]:sha(config),'tools/v2/batch-worker-v2.mjs':sha('tools/v2/batch-worker-v2.mjs'),'tools/v2/chaos-observer.mjs':sha('tools/v2/chaos-observer.mjs')}};fs.writeFileSync(dir+'/manifest.json',JSON.stringify(mf));const logs=[];
++try{const r=spawnSync(process.execPath,['tools/v2/batch-worker-v2.mjs',config],{encoding:'utf8'});logs.push(r.stdout,r.stderr);assert.equal(r.status,0);const endpoint=dir+'/endpoints/'+fs.readdirSync(dir+'/endpoints')[0],row=JSON.parse(fs.readFileSync(endpoint)),raw=JSON.parse(fs.readFileSync(row.rawFile)),buf=Buffer.alloc(224);let k=0;for(const b of raw.initialBodies)for(const key of ['x','y','z','vx','vy','vz','mass']){buf.writeDoubleBE(b[key],k);k+=8;}const registry={seeds:{[row.seed]:{initialSHA256:crypto.createHash('sha256').update(buf).digest('hex')}}};fs.writeFileSync(root+'/registry.json',JSON.stringify(registry));const audit=spawnSync('python3',['-c',"import runpy,json,sys;f=runpy.run_path('tools/v2/run-js-confirmation.py');c=json.load(open(sys.argv[1]));m=json.load(open(sys.argv[2]));r=json.load(open(sys.argv[3]));print('AUDITED',len(f['audit'](c,m,r)))",config,dir+'/manifest.json',root+'/registry.json'],{encoding:'utf8'});logs.push(audit.stdout,audit.stderr);assert.equal(audit.status,0,audit.stderr);assert.match(audit.stdout,/AUDITED 2/);row.stableFraction+=.01;fs.writeFileSync(endpoint,JSON.stringify(row));const rejected=spawnSync('python3',['-c',"import runpy,json,sys;f=runpy.run_path('tools/v2/run-js-confirmation.py');f['audit'](json.load(open(sys.argv[1])),json.load(open(sys.argv[2])),json.load(open(sys.argv[3])))",config,dir+'/manifest.json',root+'/registry.json'],{encoding:'utf8'});assert.notEqual(rejected.status,0);logs.push(rejected.stderr);const report={pass:true,checks:['Published primary+shadow endpoints pass full raw/state/initial-signature/count/epoch/chaos audit','Tampered epoch proportion is rejected even when the original raw/state hashes remain correct'],logs,scope:'Temporary one/two-year synthetic transport audit, not research outcomes'};fs.writeFileSync('docs/integration-v2/results/formal-worker-smoke.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report.checks));}finally{fs.rmSync(root,{recursive:true,force:true});}
+diff --git a/tools/v2/check-shadow-recovery.mjs b/tools/v2/check-shadow-recovery.mjs
+new file mode 100644
+index 0000000..76c7331
+--- /dev/null
++++ b/tools/v2/check-shadow-recovery.mjs
+@@ -0,0 +1,19 @@
++import fs from 'node:fs';
++import os from 'node:os';
++import path from 'node:path';
++import crypto from 'node:crypto';
++import assert from 'node:assert/strict';
++import {spawnSync} from 'node:child_process';
++import {decodeV2} from '../../src/v2-checkpoint.js';
++const root=fs.mkdtempSync(path.join(os.tmpdir(),'v2-recovery-')),output=process.argv[2]??'docs/integration-v2/results/batch-shadow-recovery.json',checks=[],logs=[];
++const sha=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
++try{
++ const config=root+'/study.json',dir=root+'/results';fs.mkdirSync(dir);fs.writeFileSync(config,JSON.stringify({prefix:'V2-RECOVERY-SMOKE',seeds:1,modes:['deflect-v2'],start:0,horizons:[1,2],output:dir}));fs.writeFileSync(dir+'/manifest.json',JSON.stringify({sourceHash:'recovery-test-only',configHash:sha(config),files:{[config]:sha(config),'tools/v2/batch-worker-v2.mjs':sha('tools/v2/batch-worker-v2.mjs')}}));
++ const run=()=>{const r=spawnSync(process.execPath,['tools/v2/batch-worker-v2.mjs',config],{encoding:'utf8'});logs.push({status:r.status,stdout:r.stdout,stderr:r.stderr});return r;};
++ assert.equal(run().status,0);const rowsFile=dir+'/shard0.jsonl',lines=fs.readFileSync(rowsFile,'utf8').trim().split('\n');assert.equal(lines.length,2);const last=JSON.parse(lines[1]),continuous=decodeV2(fs.readFileSync(last.checkpoint,'utf8'));
++ assert.equal(run().status,0);assert.equal(fs.readFileSync(rowsFile,'utf8').trim().split('\n').length,2);checks.push('Primary+shadow endpoint keys are audited and skipped without duplicate rows');
++ // Emulate a stop after the atomic full-state checkpoint and before appending its endpoint row.
++ fs.writeFileSync(rowsFile,lines[0]+'\n');assert.equal(run().status,0);const restored=JSON.parse(fs.readFileSync(rowsFile,'utf8').trim().split('\n')[1]),resumed=decodeV2(fs.readFileSync(restored.checkpoint,'utf8'));assert.deepEqual(resumed.simulation,continuous.simulation);assert.deepEqual(resumed.observer,continuous.observer);assert.equal(restored.integratedYears,2);checks.push('Checkpoint-to-result interruption resumes the same physical state without resetting or double-counting');
++ fs.appendFileSync(restored.rawFile,' ');assert.notEqual(run().status,0);checks.push('Changed raw-result SHA is rejected before continuing');
++ fs.writeFileSync(output,JSON.stringify({pass:true,checks,logs,scope:'Temporary runner fault/restore tests; all fixture files removed afterward, no research outcomes'},null,2)+'\n');console.log(JSON.stringify({pass:true,checks}));
++}finally{fs.rmSync(root,{recursive:true,force:true});}
+diff --git a/tools/v2/matched-native30.py b/tools/v2/matched-native30.py
+new file mode 100644
+index 0000000..20461ca
+--- /dev/null
++++ b/tools/v2/matched-native30.py
+@@ -0,0 +1,56 @@
++#!/usr/bin/env python3
++"""Frozen native h4, exactly the four JS diagnostic initial states, shadow on."""
++import argparse,concurrent.futures,fcntl,gzip,hashlib,json,os,pathlib,subprocess,time,datetime
++ROOT=pathlib.Path(__file__).resolve().parents[2];os.chdir(ROOT)
++D=pathlib.Path('docs/integration-v2/results/matched-native30');B=pathlib.Path('/workspace/2/docs/research-v2/bin/native');BINARY='cf2117ac290bea83d6cfbdb07f98888412d594024e295887bc537bce5132f091';SOURCE='dd9de546d74b62483b487d40511fab862e37f516179d652228072b516734200e'
++def sha(p):return hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest()
++def write(p,x):
++ p=pathlib.Path(p);tmp=pathlib.Path(str(p)+'.tmp');p.parent.mkdir(parents=True,exist_ok=True)
++ with tmp.open('w') as f:json.dump(x,f,indent=2);f.write('\n');f.flush();os.fsync(f.fileno())
++ os.replace(tmp,p)
++def now():return datetime.datetime.now(datetime.timezone.utc).isoformat()
++def spec():
++ assert subprocess.check_output(['git','branch','--show-current'],text=True).strip()=='integration/minimal-chaos-control-v2';assert sha(B)==BINARY
++ files=['tools/v2/matched-native30.py','docs/integration-v2/MATCHED_NATIVE30_PROTOCOL.md','docs/integration-v2/results/diagnostics-v1/manifest.json',*map(str,sorted(pathlib.Path('docs/integration-v2/results/diagnostics-v1').glob('shard*.jsonl'))),*map(str,sorted(pathlib.Path('docs/integration-v2/results/headless-r1').glob('*.input.json')))]
++ return {'binarySHA256':BINARY,'nativeSourceHash':SOURCE,'files':{p:sha(p) for p in files}}
++def main():
++ ap=argparse.ArgumentParser();ap.add_argument('--register',action='store_true');ap.add_argument('--audit-only',action='store_true');a=ap.parse_args();D.mkdir(exist_ok=True);expected=spec();mp=D/'manifest.json'
++ if a.register:
++  assert not mp.exists(),'registration must not overwrite';write(mp,{**expected,'registered':now(),'scope':'Matched8native h4 runs, same4diagnostic initial states,30000years,shadow on; not a new independent confirmation'});return
++ mf=json.load(open(mp));assert {k:mf[k] for k in expected}==expected
++ def audit():
++  rr=[]
++  for p in sorted(D.glob('*.result.json')):
++   r=json.load(open(p));assert r['sourceHash']==SOURCE;assert sha(r['rawFile'])==r['rawSHA256'];assert sha(r['checkpoint'])==r['checkpointSHA256'];assert sha(r['inputFile'])==r['inputSHA256'];assert not r['numericallyCensored'];rr.append(r)
++  return rr
++ if a.audit_only:print(json.dumps({'audit':'PASS','rows':len(audit())}));return
++ with (D/'supervise.lock').open('a+') as lock:
++  try:fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
++  except BlockingIOError:print('already-active');return
++  for folder in ['/workspace/2/docs/research-v2/results','docs/integration-v2/results']:
++   for p in pathlib.Path(folder).rglob('*.lock'):
++    if p.resolve()==(D/'supervise.lock').resolve():continue
++    with p.open() as f:
++     try:fcntl.flock(f,fcntl.LOCK_EX|fcntl.LOCK_NB)
++     except BlockingIOError:print('other-active',p);return
++  write(D/'state.json',{'status':'RUNNING','updated':now(),'pid':os.getpid(),'expected':8});audit()
++  def job(item):
++   i,mode=item;seed=f'V2-INTEGRATION-LONG-20261022-{i}';stem=D/(seed+'-'+mode);rp=pathlib.Path(str(stem)+'.result.json')
++   if rp.exists():return json.load(open(rp))
++   assert spec()==expected;original=f'docs/integration-v2/results/headless-r1/{seed}-{mode}.input.json';inp=json.load(open(original));assert inp['seed']==seed and inp['controller']['dt']==.0001875 and inp['controller']['eta']==.001875
++   inp.update(horizon=30000,sourceHash=SOURCE,configHash=hashlib.sha256(json.dumps(expected,sort_keys=True).encode()).hexdigest());inp['controller']['shadow']=True;ip=str(stem)+'.input.json';cp=str(stem)+'.checkpoint.json';stdout=str(stem)+'.stdout.json';err=str(stem)+'.stderr.log'
++   if pathlib.Path(ip).exists():assert json.load(open(ip))==inp
++   else:write(ip,inp)
++   with open(stdout,'wb') as out,open(err,'ab') as stderr:p=subprocess.run([str(B),ip,cp],stdout=out,stderr=stderr,pass_fds=(lock.fileno(),))
++   assert p.returncode==0,(seed,mode,'process interruption; last complete state retained');r=json.load(open(stdout));assert r['seed']==seed and r['profile']==mode and r['horizon']==30000 and r['initialBodies']==inp['bodies'];assert r['sourceHash']==SOURCE and r['configHash']==inp['configHash']
++   raw=str(stem)+'.raw.json.gz'
++   with open(stdout,'rb') as src,gzip.GzipFile(raw+'.tmp','wb',mtime=0) as dest:
++    import shutil
++    shutil.copyfileobj(src,dest)
++   os.replace(raw+'.tmp',raw);pathlib.Path(stdout).unlink();meta={k:v for k,v in r.items() if k not in ['events','history']};meta.update(rawFile=raw,rawSHA256=sha(raw),checkpoint=cp,checkpointSHA256=sha(cp),inputFile=ip,inputSHA256=sha(ip));write(rp,meta)
++   print(json.dumps({'seed':seed,'mode':mode,'stellarIntact':r['stellarIntact'],'matureStable':r['matureStableFraction'],'losses':r['planetLosses'],'UNKNOWN':r['error']}),flush=True);assert not r['numericallyCensored'],'UNKNOWN preserved; review required';return meta
++  try:
++   with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:rr=list(pool.map(job,[(i,m) for i in range(4) for m in ['deflect-v2','reflect-v2']]))
++   audit();write(D/'state.json',{'status':'MATCHED_NATIVE30_COMPLETE_REVIEW_REQUIRED','researchComplete':False,'updated':now(),'rows':len(rr),'UNKNOWN':sum(r['numericallyCensored'] for r in rr)});print('MATCHED_NATIVE30_COMPLETE',flush=True)
++  except Exception as e:write(D/'state.json',{'status':'STOPPED_REVIEW_REQUIRED','error':str(e),'updated':now()});raise
++if __name__=='__main__':main()
+diff --git a/tools/v2/register-js-initials.mjs b/tools/v2/register-js-initials.mjs
+new file mode 100644
+index 0000000..c52dc36
+--- /dev/null
++++ b/tools/v2/register-js-initials.mjs
+@@ -0,0 +1,8 @@
++import fs from 'node:fs';
++import crypto from 'node:crypto';
++import assert from 'node:assert/strict';
++import {Simulation} from '../../src/simulation.js';
++import {createControlledSystem} from '../../src/v2-simulation.js';
++const dir='docs/integration-v2/js-confirmation-v1',file=dir+'/initial-state-audit.json',prior=JSON.parse(fs.readFileSync(dir+'/prior-initials.json')),out={scope:'Initializer only; no physical steps, lifespan prediction, filtering, resampling or per-Seed adjustment',prefix:'V2-JS-CONFIRM-20261022',count:128,priorUniqueStates:prior.uniqueStates,uniqueInitialStates:0,overlapWithPrior:0,seeds:{}};assert(!fs.existsSync(file),'Initial registration must not overwrite');const signatures=new Set();
++for(let i=0;i<128;i++){const seed=out.prefix+'-'+i,s=new Simulation({seed,stabilityMode:'deflect-v2',newproperty60:true,autorestart:true});s.controlled=createControlledSystem(s);assert.equal(s.controlled.frame,0);assert.equal(s.controlled.integrator.steps,0);const buffer=Buffer.alloc(224);let offset=0;for(const b of s.initialBodies)for(const k of ['x','y','z','vx','vy','vz','mass']){buffer.writeDoubleBE(b[k],offset);offset+=8;}const hash=crypto.createHash('sha256').update(buffer).digest('hex');assert(!signatures.has(hash),'Duplicate new initial state: stop registration');assert(!(hash in prior.signatures),'Overlap with prior: stop registration, do not replace the Seed');signatures.add(hash);out.seeds[seed]={initialSHA256:hash,initialBodies:s.initialBodies};}
++out.uniqueInitialStates=signatures.size;fs.writeFileSync(file,JSON.stringify(out,null,2)+'\n');console.log(JSON.stringify({count:out.count,unique:out.uniqueInitialStates,overlap:out.overlapWithPrior,prior:prior.uniqueStates}));
+diff --git a/tools/v2/review-js-confirmation.py b/tools/v2/review-js-confirmation.py
+new file mode 100644
+index 0000000..d06d064
+--- /dev/null
++++ b/tools/v2/review-js-confirmation.py
+@@ -0,0 +1,36 @@
++#!/usr/bin/env python3
++"""Predefined final analysis; refuses pending/UNKNOWN as completed128Seed evidence."""
++import csv,json,pathlib,statistics,sys
++import numpy as np
++from scipy.stats import beta
++import runpy
++F=runpy.run_path(str(pathlib.Path(__file__).with_name('run-js-confirmation.py')))
++if '--selftest' in sys.argv:
++ assert abs(F['wilson'](128,128)[0]-.9708630437264916)<1e-12
++ assert abs(float(beta.ppf(.05/4/2,128,1))-.961126)<1e-5
++ print('PASS: Wilson/Bonferroni boundary checks; final analysis requires256complete observed outcomes and no UNKNOWN');raise SystemExit
++study=sys.argv[1];s,expected=F['spec'](study);d=pathlib.Path(s['output']);mf=json.load(open(d/'manifest.json'));assert {k:mf[k] for k in expected}==expected;registry=json.load(open(s['initialRegistry']));rows=[]
++for config in s['configs']:
++ c=json.load(open(config));rows+=F['audit'](c,json.load(open(pathlib.Path(c['output'])/'manifest.json')),registry)
++rr=[r for r in rows if r['horizon']==100000];assert len(rr)==256 and not any(r['numericalUNKNOWN'] for r in rr),'Incomplete or UNKNOWN: cannot finalize128Seed confirmation';out=F['summary'](s,rows);out.update(status='JS_CONFIRMATION_FINAL_REVIEW_REQUIRED',researchComplete=False,sourceHash=mf['sourceHash'],bootstrap={'replicates':20000,'seed':20261022,'unit':'Seed, matched across candidates'},limits='Not a proof of exact trajectory/statistical equivalence or unlimited-time stability; production integration/main replacement still requires review')
++idx=np.random.default_rng(20261022).integers(0,128,size=(20000,128));arrays={}
++def interval(x,mask=None):
++ x=np.asarray(x);v=x[idx]
++ if mask is None:b=v.mean(axis=1)
++ else:
++  m=np.asarray(mask,dtype=bool)[idx];den=m.sum(axis=1);b=(v*m).sum(axis=1)[den>0]/den[den>0]
++ return np.quantile(b,[.025,.975]).tolist() if len(b) else None
++for mode in ['deflect-v2','reflect-v2']:
++ r=sorted([q for q in rr if q['mode']==mode],key=lambda q:int(q['seed'].rsplit('-',1)[1]));assert len({q['seed'] for q in r})==128;g=out['groups'][mode];n=128
++ for name,key in [('stellar','stellarIntact'),('joint','joint')]:
++  k=sum(q[key] for q in r);g[name+'BonferroniClopperPearson95']=[0 if k==0 else float(beta.ppf(.05/8,k,n-k+1)),1 if k==n else float(beta.ppf(1-.05/8,k+1,n-k))]
++ for scope,key in [('full','stableFraction'),('mature','matureStableFraction')]:
++  values=np.array([q[key] for q in r]);g[scope+'StableAll']={'mean':float(values.mean()),'quantiles':np.quantile(values,[0,.1,.25,.5,.75,.9,1]).tolist(),'bootstrap95':interval(values)}
++  for label,flag in [('StellarSurvivors','stellarIntact'),('JointSurvivors','joint')]:
++   mask=[q[flag] for q in r];g[scope+label]={'n':sum(mask),'mean':float(values[mask].mean()) if any(mask) else None,'bootstrap95':interval(values,mask)}
++  if scope=='mature':arrays[mode]=values
++ g['planetLossesMean']=statistics.mean(q['planetLosses'] for q in r);g['originalPlanetSurvived']=sum(q['originalPlanetSurvived'] for q in r);g['originalCivilizationSurvived']=sum(q['originalCivilizationSurvived'] for q in r);g['controlAbsoluteWorkMean']=statistics.mean(q['control']['absoluteWork'] for q in r);g['controlImpulseMean']=statistics.mean(q['control']['impulse'] for q in r);g['controlActiveFractionMean']=statistics.mean(q['controlObservedActiveFrameFraction'] for q in r)
++diff=arrays['deflect-v2']-arrays['reflect-v2'];out['pairedMatureDifferenceDeflectMinusReflect']={'mean':float(diff.mean()),'bootstrap95':interval(diff)};F['write'](d/'final-review.json',out)
++fields=['seed','mode','horizon','stellarIntact','joint','stableFraction','matureStableFraction','matureConditionalFTLE','tightPairChanges','longestDynamicalHierarchyYears','longestHierarchyYears','planetLosses','planetRespawns','originalPlanetSurvived','originalCivilizationSurvived','civilizationAliveFraction','controlObservedActiveFrameFraction','maxNumericalEnergyResidual','rawFile','rawSHA256','checkpoint','checkpointSHA256']
++with (d/'final-seeds.csv').open('w',newline='') as f:w=csv.DictWriter(f,fieldnames=fields,extrasaction='ignore');w.writeheader();w.writerows(rr)
++print(json.dumps({'status':out['status'],'100000yearRows':len(rr),'sourceHash':mf['sourceHash']}))
+diff --git a/tools/v2/run-js-confirmation.py b/tools/v2/run-js-confirmation.py
+new file mode 100644
+index 0000000..fe10b08
+--- /dev/null
++++ b/tools/v2/run-js-confirmation.py
+@@ -0,0 +1,154 @@
++#!/usr/bin/env python3
++"""Frozen128Seed JS holdout; immutable endpoints, complete primary+shadow resume."""
++import argparse,datetime,fcntl,hashlib,json,math,os,pathlib,signal,struct,subprocess,time
++ROOT=pathlib.Path(__file__).resolve().parents[2];os.chdir(ROOT);BRANCH='integration/minimal-chaos-control-v2'
++def now():return datetime.datetime.now(datetime.timezone.utc).isoformat()
++def sha(p):return hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest()
++def git(*a):return subprocess.check_output(['git',*a],text=True).strip()
++def run(*a,**kw):return subprocess.run(a,check=True,**kw)
++def write(p,x):
++ p=pathlib.Path(p);p.parent.mkdir(parents=True,exist_ok=True);tmp=pathlib.Path(str(p)+'.tmp')
++ with tmp.open('w') as f:json.dump(x,f,indent=2);f.write('\n');f.flush();os.fsync(f.fileno())
++ os.replace(tmp,p)
++def spec(file):
++ assert git('branch','--show-current')==BRANCH;s=json.load(open(file));assert s['designation']=='INDEPENDENT_JS_CONFIRMATION_V1' and s['seeds']==128 and len(s['configs'])==16
++ reg=json.load(open(s['initialRegistry']));assert reg['count']==reg['uniqueInitialStates']==128 and reg['overlapWithPrior']==0
++ for i,p in enumerate(s['configs']):
++  c=json.load(open(p));assert c['start']==i*8 and c['seeds']==8 and c['prefix']==s['prefix'] and c['modes']==['deflect-v2','reflect-v2'] and c['horizons']==[1000,10000,30000,100000] and c['initialRegistry']==s['initialRegistry']
++ files=[str(p) for p in sorted(pathlib.Path('src').rglob('*.js'))]+[file,s['protocol'],s['initialRegistry'],s['priorRegistry'],'tools/v2/register-js-initials.mjs','tools/v2/chaos-observer.mjs','tools/v2/batch-worker-v2.mjs','tools/v2/run-js-confirmation.py','tools/v2/review-js-confirmation.py',*s['configs']]
++ hashes={p:sha(p) for p in files};h=hashlib.sha256()
++ for p in files:h.update(p.encode()+b'\0'+bytes.fromhex(hashes[p]))
++ return s,{'sourceHash':h.hexdigest(),'studyHash':sha(file),'files':hashes}
++def endpoints(c):return sorted((pathlib.Path(c['output'])/'endpoints').glob('*.json'))
++def audit(c,mf,registry):
++ rows=[];keys=set()
++ for p in endpoints(c):
++  r=json.load(open(p));key=(r['seed'],r['mode'],r['horizon']);assert key not in keys;keys.add(key);assert r['sourceHash']==mf['sourceHash'] and r['configHash']==mf['configHash'];assert r['mode'] in c['modes'] and r['horizon'] in c['horizons'];assert r['seed'] in {c['prefix']+'-'+str(i) for i in range(c['start'],c['start']+c['seeds'])}
++  for k,h in [('rawFile','rawSHA256'),('checkpoint','checkpointSHA256')]:assert sha(r[k])==r[h],r[k]
++  raw=json.load(open(r['rawFile']));cp=json.load(open(r['checkpoint']));assert (raw['seed'],raw['mode'],raw['horizon'],raw['sourceHash'],raw['configHash'])==(*key,mf['sourceHash'],mf['configHash']);assert cp['sourceHash']==mf['sourceHash'] and cp['configHash']==mf['configHash'];assert cp['seed']==r['seed'] and cp['mode']==r['mode']
++  primary=cp['simulation']['controlled'];assert primary['frame']/60==r['integratedYears'] and r['generation']==1 and r['steps']>=40*primary['frame'];assert r['integratedYears']<=r['horizon']
++  assert abs(r['solverTime']-.45*r['integratedYears'])<.01,'physical time mismatch'
++  values=[b[k] for b in raw['initialBodies'] for k in ['x','y','z','vx','vy','vz','mass']];signature=hashlib.sha256(b''.join(struct.pack('>d',float(v)) for v in values)).hexdigest();assert signature==registry['seeds'][r['seed']]['initialSHA256']
++  if not r['observerUNKNOWN']:assert cp['observer']['state']['frame']==primary['frame']
++  assert r['starFailure']==raw['stellarFailure'] and r['observerUNKNOWN']==raw['metrics']['observerUNKNOWN']
++  total=r['horizon']*60;metrics=raw['metrics'];mature=(r['horizon']-10000)*60
++  assert r['stableFraction']==metrics['stableFrames']/total and r['absentFraction']==metrics['absentFrames']/total
++  assert r['matureStableFraction']==(metrics['matureStableFrames']/mature if mature>0 else None)
++  assert r['civilizationBirths']==metrics['births'] and r['civilizationDeaths']==metrics['deaths'] and r['civilizationAliveFraction']==metrics['aliveFrames']/total
++  assert r['control']==raw['control']==primary['cost'] and r['planetExternal']==raw['planetExternal']==primary['external']
++  assert r['planetLosses']==primary['planetLosses'] and r['planetRespawns']==primary['planetRespawns'] and r['firstPlanetLoss']==primary['firstPlanetLoss']
++  assert raw['finalBodies']==primary['bodies'] and r['steps']==cp['simulation']['integrator']['steps'] and r['solverTime']==cp['simulation']['integrator']['time']
++  for key,value in raw['chaos'].items():assert r[key]==value,(key,'raw chaos/index mismatch')
++  cs=cp['observer']['state'];ftle=cs['matureLog']/cs['matureYears'] if cs['matureYears']>0 else None;assert r['matureConditionalFTLE']==ftle
++  expected_joint=r['horizon']==100000 and r['stellarIntact'] and ftle is not None and ftle>.003 and r['tightPairChanges']>=20 and r['longestDynamicalHierarchyYears']<1000 and r['longestHierarchyYears']<=5000 and r['matureNonhierFraction']>=.1
++  assert r['joint']==expected_joint
++  if r['stellarIntact']:assert r['integratedYears']==r['horizon'] and r['starFailure'] is None and r['numericalUNKNOWN'] is None
++  rows.append(r)
++ return rows
++def push(d,label):
++ try:
++  p=d/(label+'.push.log')
++  with p.open('a') as f:r=subprocess.run(['git','-c','pack.windowMemory=128m','-c','pack.threads=1','-c','http.postBuffer=536870912','push','origin',BRANCH],stdout=f,stderr=subprocess.STDOUT,timeout=180)
++  return {'confirmed':r.returncode==0,'returncode':r.returncode,'time':now(),'commit':git('rev-parse','HEAD')}
++ except Exception as e:return {'confirmed':False,'error':str(e),'time':now()}
++def archive(d,c,rows):
++ closed=endpoints(c);tracked=set(git('ls-files','--',str(pathlib.Path(c['output'])/'endpoints')).splitlines());new=[p for p in closed if str(p) not in tracked]
++ count=len(closed);label=c['id']+f'-e{count:03}';progress=d/'archives'/(label+'.json');record=pathlib.Path('records/analyses')/('minimal-chaos-v2-js-confirm-'+label)
++ if not new and record.exists():
++  if not git('ls-files','--',str(record/'record.json')):
++   run('python3','tools/records.py','check');run('git','add','records');run('git','commit','-qm','records: complete interrupted JS archive '+label);return push(d,label)
++  return None
++ if not new and not progress.exists():return None
++ if new:
++  assert subprocess.run(['git','diff','--cached','--quiet']).returncode==0,'Unexpected staged changes'
++  paths=[]
++  for p in new:
++   r=json.load(open(p));paths += [str(p),r['rawFile'],r['checkpoint']]
++  data={'scope':'Partial JS holdout endpoints; not completed128Seed100000year claim','batch':c['id'],'closedEndpoints':count,'keys':[[r['seed'],r['mode'],r['horizon']] for r in rows],'sourceHash':rows[0]['sourceHash'],'baseCommit':git('rev-parse','HEAD'),'time':now()};write(progress,data);paths.append(str(progress));run('git','add','--',*paths);run('git','commit','-qm','integration: checkpoint immutable JS holdout '+label);ref=git('rev-parse','HEAD')
++ else:ref=git('log','-1','--format=%H','--',str(progress))
++ if not record.exists():
++  data=json.load(open(progress));run('python3','tools/records.py','capture','--kind','analysis','--id','minimal-chaos-v2-js-confirm-'+label,'--ref',ref,'--previous',data['baseCommit'],'--title','独立JS确认中间检查点 '+label,'--summary','只归档已实测端点、全原始事件和主/影子完整状态；短窗口和pending不称100000年完成，全部失败/UNKNOWN/行星/文明/脉冲成本保留，main未改。');run('python3','tools/records.py','check');run('git','add','records');run('git','commit','-qm','records: archive JS holdout checkpoint '+label)
++ return push(d,label)
++def wilson(k,n):
++ if not n:return None
++ z=1.959963984540054;p=k/n;den=1+z*z/n;center=(p+z*z/(2*n))/den;half=z*math.sqrt(p*(1-p)/n+z*z/(4*n*n))/den;return [max(0,center-half),min(1,center+half)]
++def summary(study,rows):
++ out={'researchComplete':False,'scope':'JS independent confirmation; pending never counted as failure or success','registeredSeeds':128,'windowRowsObserved':len(rows),'groups':{}}
++ for mode in ['deflect-v2','reflect-v2']:
++  rr=[r for r in rows if r['mode']==mode and r['horizon']==100000];complete=[r for r in rr if r['stellarIntact']];known=[r for r in rr if not r['numericalUNKNOWN']];joint=sum(r['joint'] for r in rr);n=len(rr)
++  out['groups'][mode]={'planned':128,'observed':n,'pending':128-n,'intact':len(complete),'physicalFailures':sum(r['starFailure'] is not None for r in rr),'UNKNOWN':sum(r['numericalUNKNOWN'] is not None for r in rr),'stellarWilson95':wilson(len(complete),len(known)),'joint':joint,'jointWilson95':wilson(joint,len(known)),'matureMeanAllObserved':sum(r['matureStableFraction'] for r in rr)/n if n else None,'matureMeanStellarSurvivors':sum(r['matureStableFraction'] for r in complete)/len(complete) if complete else None}
++ return out
++def main():
++ ap=argparse.ArgumentParser();ap.add_argument('study');ap.add_argument('--register',action='store_true');ap.add_argument('--audit-only',action='store_true');a=ap.parse_args();s,expected=spec(a.study);d=pathlib.Path(s['output']);d.mkdir(parents=True,exist_ok=True);mp=d/'manifest.json'
++ if a.register:
++  run('git','diff','--quiet','HEAD','--',*expected['files']);run('git','ls-files','--error-unmatch','--',*expected['files'],stdout=subprocess.DEVNULL)
++  if mp.exists():assert {k:json.load(open(mp))[k] for k in expected}==expected
++  else:write(mp,{**expected,'sourceCommit':git('rev-parse','HEAD'),'registered':now(),'scope':s['designation']})
++  for config in s['configs']:
++   c=json.load(open(config));p=pathlib.Path(c['output'])/'manifest.json';mf={'sourceHash':expected['sourceHash'],'configHash':sha(config),'files':expected['files'],'sourceCommit':json.load(open(mp))['sourceCommit']}
++   if p.exists():assert json.load(open(p))==mf
++   else:write(p,mf)
++  print(json.dumps({'registration':'PASS','sourceHash':expected['sourceHash']}));return
++ mf=json.load(open(mp));assert {k:mf[k] for k in expected}==expected;run('git','diff','--quiet','HEAD','--',*expected['files']);registry=json.load(open(s['initialRegistry']))
++ if a.audit_only:
++  rows=[]
++  for config in s['configs']:
++   c=json.load(open(config));rows+=audit(c,json.load(open(pathlib.Path(c['output'])/'manifest.json')),registry)
++  print(json.dumps({'audit':'PASS','rows':len(rows),'UNKNOWN':sum(bool(r['numericalUNKNOWN']) for r in rows)}));return
++ with (d/'supervise.lock').open('a+') as lock:
++  try:fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
++  except BlockingIOError:print('already-active');return
++  for root in ['/workspace/2/docs/research-v2/results','docs/integration-v2/results']:
++   for p in pathlib.Path(root).rglob('*.lock'):
++    if p.resolve()==(d/'supervise.lock').resolve():continue
++    with p.open() as f:
++     try:fcntl.flock(f,fcntl.LOCK_EX|fcntl.LOCK_NB)
++     except BlockingIOError:print('other-active',p);return
++  statepath=d/'supervise.state.json';state=json.load(open(statepath)) if statepath.exists() else {'started':now(),'completed':[],'researchComplete':False}
++  if state.get('status')=='STOPPED_REVIEW_REQUIRED':raise RuntimeError('Review preserved UNKNOWN/source/programming error before recovery; do not bypass status')
++  lock.seek(0);lock.truncate();json.dump({'pid':os.getpid(),'started':now(),'study':a.study},lock);lock.flush();os.fsync(lock.fileno());allrows=[];workers=[]
++  try:
++   state['recoveryPush']=push(d,'recovery-current');write(statepath,state)
++   for config in s['configs']:
++    assert spec(a.study)[1]==expected;c=json.load(open(config));bm=json.load(open(pathlib.Path(c['output'])/'manifest.json'));rows=audit(c,bm,registry);assert not any(r['numericalUNKNOWN'] for r in rows),'Existing UNKNOWN; review required'
++    target=c['seeds']*len(c['modes'])*len(c['horizons']);state.update(status='RUNNING',batch=c['id'],sourceHash=expected['sourceHash'],updated=now(),rows=len(allrows)+len(rows),expectedRows=1024);write(statepath,state)
++    if len(rows)<target:
++     workers=[]
++     for shard in range(2):
++      f=open(pathlib.Path(c['output'])/f'worker{shard}.log','a');p=subprocess.Popen(['node','tools/v2/batch-worker-v2.mjs',config,str(shard),'2'],stdout=f,stderr=subprocess.STDOUT,pass_fds=(lock.fileno(),));workers.append((p,f))
++     state['workers']=[p.pid for p,_ in workers];write(statepath,state);last_archive=time.monotonic()
++     while any(p.poll() is None for p,_ in workers):
++      time.sleep(10);codes=[p.poll() for p,_ in workers]
++      if any(code not in [0,None] for code in codes):
++       for p,_ in workers:
++        if p.poll() is None:p.terminate()
++       for p,_ in workers:p.wait(timeout=30)
++       if any(code is not None and code<0 for code in codes):raise InterruptedError('Worker received signal; same-version complete checkpoint is resumable')
++       raise RuntimeError('Worker error/UNKNOWN; inspect preserved logs and checkpoints '+repr(codes))
++      state.update(updated=now(),rows=len(allrows)+len(endpoints(c)));write(statepath,state)
++      if time.monotonic()-last_archive>=600:
++       rows=audit(c,bm,registry);pushed=archive(d,c,rows)
++       if pushed:state['lastPush']=pushed;write(statepath,state)
++       last_archive=time.monotonic()
++     for _,f in workers:f.close()
++     workers=[]
++    rows=audit(c,bm,registry);assert len(rows)==target and not any(r['numericalUNKNOWN'] for r in rows);pushed=archive(d,c,rows);allrows+=rows
++    state.update(updated=now(),rows=len(allrows));state['completed']=sorted(set(state.get('completed',[])+[c['id']]))
++    if pushed:state['lastPush']=pushed
++    write(statepath,state);write(d/'summary.json',summary(s,allrows))
++   run('python3','tools/v2/review-js-confirmation.py',a.study)
++   run('git','add','--',str(d/'final-review.json'),str(d/'final-seeds.csv'),str(d/'summary.json'))
++   run('git','commit','-qm','integration: preserve predefined JS confirmation final statistical review')
++   ref=git('rev-parse','HEAD');run('python3','tools/records.py','capture','--kind','analysis','--id','minimal-chaos-v2-js-confirm-final-statistics','--ref',ref,'--previous','HEAD~1','--title','JS128Seed100000年预定统计审查','--summary','只在256长窗全部有结局且无UNKNOWN后形成，含置信区间、逐Seed和匹配差；不等于main验收。');run('python3','tools/records.py','check');run('git','add','records');run('git','commit','-qm','records: archive JS confirmation statistics');state['lastPush']=push(d,'final-statistics')
++   state.update(status='JS_CONFIRMATION_COMPLETE_REVIEW_REQUIRED',updated=now(),rows=len(allrows));write(statepath,state);write(d/'summary.json',summary(s,allrows))
++  except BaseException as e:
++   for p,f in workers:
++    if p.poll() is None:p.terminate()
++    f.close()
++   try:
++    if spec(a.study)[1]==expected:
++     preserved=audit(c,bm,registry);saved=archive(d,c,preserved)
++     if saved:state['lastPush']=saved
++   except Exception as archive_error:state['errorArchive']=str(archive_error)
++   state.update(status='INTERRUPTED_RESUMABLE' if isinstance(e,(InterruptedError,KeyboardInterrupt)) else 'STOPPED_REVIEW_REQUIRED',error=str(e),updated=now());write(statepath,state);raise
++if __name__=='__main__':main()
+diff --git a/tools/v2/validate-shadow.mjs b/tools/v2/validate-shadow.mjs
+new file mode 100644
+index 0000000..e3e2e11
+--- /dev/null
++++ b/tools/v2/validate-shadow.mjs
+@@ -0,0 +1,19 @@
++import fs from 'node:fs';
++import crypto from 'node:crypto';
++import assert from 'node:assert/strict';
++import {spawnSync} from 'node:child_process';
++import {Simulation} from '../../src/simulation.js';
++import {settingsFromInitial} from '../../src/settings.js';
++import {createControlledSystem} from '../../src/v2-simulation.js';
++import {ChaosObserver} from './chaos-observer.mjs';
++const dir=process.argv[2]??'docs/integration-v2/results/shadow-conformance-r1',binary=process.env.V2_NATIVE??'/workspace/2/docs/research-v2/bin/native';fs.mkdirSync(dir,{recursive:true});
++const sha=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');assert.equal(sha(binary),'cf2117ac290bea83d6cfbdb07f98888412d594024e295887bc537bce5132f091');
++const output={scope:'Conditional stellar shadow/dynamic hierarchy port;20year fixtures, not a long-term chaos validation',observerSHA256:sha('tools/v2/chaos-observer.mjs'),primarySourceSHA256:sha('src/physics/controlled-system.js'),binarySHA256:sha(binary),toleranceFTLE:1e-4,rows:[]};
++const save=()=>fs.writeFileSync(dir+'/report.json',JSON.stringify(output,null,2)+'\n');
++for(const mode of ['deflect-v2','reflect-v2'])for(const kind of ['natural','deflection','reflection','planet-contact','capture']){
++ const previous=`docs/integration-v2/results/conformance-r3/${mode}-${kind}.input.json`,input=JSON.parse(fs.readFileSync(previous));input.controller.shadow=true;input.sourceHash='dd9de546d74b62483b487d40511fab862e37f516179d652228072b516734200e';input.configHash='shadow-port-20year-fixture';const ip=dir+`/${mode}-${kind}.input.json`;fs.writeFileSync(ip,JSON.stringify(input));const native=spawnSync(binary,[ip],{encoding:'utf8',maxBuffer:64*1024*1024});assert.equal(native.status,0,native.stderr);fs.writeFileSync(ip.replace('.input.json','.native.json'),native.stdout);const ref=JSON.parse(native.stdout);
++ const initial=input.bodies.map(b=>({x:b.r[0],y:b.r[1],z:b.r[2],vx:b.v[0],vy:b.v[1],vz:b.v[2],mass:b.mass})),sim=new Simulation(settingsFromInitial(input.settings,initial));sim.controlled=createControlledSystem(sim);const observer=new ChaosObserver(sim.controlled);
++ for(let i=0;i<1200;i++){sim.tick();assert.equal(sim.controlled.stellarFailure,null);observer.observe(sim.controlled);}
++ const result=observer.result(20,true),diff=Math.abs(result.fullConditionalFTLE-ref.fullConditionalFTLE),counts=['tightPairChanges','closestPairChanges','longestDynamicalHierarchyYears','longestHierarchyYears','nonhierFraction','dynHierFraction'],differentCounts=counts.filter(k=>Math.abs(result[k]-ref[k])>1e-12),row={mode,kind,result,native:Object.fromEntries(['fullConditionalFTLE',...counts].map(k=>[k,ref[k]])),FTLEDifference:diff,differentCounts,pass:diff<=output.toleranceFTLE&&differentCounts.length===0};output.rows.push(row);save();console.log(JSON.stringify({mode,kind,diff,differentCounts,pass:row.pass}));
++}
++output.pass=output.rows.every(r=>r.pass);save();assert.equal(output.pass,true,'Shadow/native conformance failed; preserve and review, do not treat primary physics as failed');

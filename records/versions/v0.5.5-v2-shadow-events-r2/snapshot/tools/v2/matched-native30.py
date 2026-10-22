@@ -1,0 +1,56 @@
+#!/usr/bin/env python3
+"""Frozen native h4, exactly the four JS diagnostic initial states, shadow on."""
+import argparse,concurrent.futures,fcntl,gzip,hashlib,json,os,pathlib,subprocess,time,datetime
+ROOT=pathlib.Path(__file__).resolve().parents[2];os.chdir(ROOT)
+D=pathlib.Path('docs/integration-v2/results/matched-native30');B=pathlib.Path('/workspace/2/docs/research-v2/bin/native');BINARY='cf2117ac290bea83d6cfbdb07f98888412d594024e295887bc537bce5132f091';SOURCE='dd9de546d74b62483b487d40511fab862e37f516179d652228072b516734200e'
+def sha(p):return hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest()
+def write(p,x):
+ p=pathlib.Path(p);tmp=pathlib.Path(str(p)+'.tmp');p.parent.mkdir(parents=True,exist_ok=True)
+ with tmp.open('w') as f:json.dump(x,f,indent=2);f.write('\n');f.flush();os.fsync(f.fileno())
+ os.replace(tmp,p)
+def now():return datetime.datetime.now(datetime.timezone.utc).isoformat()
+def spec():
+ assert subprocess.check_output(['git','branch','--show-current'],text=True).strip()=='integration/minimal-chaos-control-v2';assert sha(B)==BINARY
+ files=['tools/v2/matched-native30.py','docs/integration-v2/MATCHED_NATIVE30_PROTOCOL.md','docs/integration-v2/results/diagnostics-v1/manifest.json',*map(str,sorted(pathlib.Path('docs/integration-v2/results/diagnostics-v1').glob('shard*.jsonl'))),*map(str,sorted(pathlib.Path('docs/integration-v2/results/headless-r1').glob('*.input.json')))]
+ return {'binarySHA256':BINARY,'nativeSourceHash':SOURCE,'files':{p:sha(p) for p in files}}
+def main():
+ ap=argparse.ArgumentParser();ap.add_argument('--register',action='store_true');ap.add_argument('--audit-only',action='store_true');a=ap.parse_args();D.mkdir(exist_ok=True);expected=spec();mp=D/'manifest.json'
+ if a.register:
+  assert not mp.exists(),'registration must not overwrite';write(mp,{**expected,'registered':now(),'scope':'Matched8native h4 runs, same4diagnostic initial states,30000years,shadow on; not a new independent confirmation'});return
+ mf=json.load(open(mp));assert {k:mf[k] for k in expected}==expected
+ def audit():
+  rr=[]
+  for p in sorted(D.glob('*.result.json')):
+   r=json.load(open(p));assert r['sourceHash']==SOURCE;assert sha(r['rawFile'])==r['rawSHA256'];assert sha(r['checkpoint'])==r['checkpointSHA256'];assert sha(r['inputFile'])==r['inputSHA256'];assert not r['numericallyCensored'];rr.append(r)
+  return rr
+ if a.audit_only:print(json.dumps({'audit':'PASS','rows':len(audit())}));return
+ with (D/'supervise.lock').open('a+') as lock:
+  try:fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+  except BlockingIOError:print('already-active');return
+  for folder in ['/workspace/2/docs/research-v2/results','docs/integration-v2/results']:
+   for p in pathlib.Path(folder).rglob('*.lock'):
+    if p.resolve()==(D/'supervise.lock').resolve():continue
+    with p.open() as f:
+     try:fcntl.flock(f,fcntl.LOCK_EX|fcntl.LOCK_NB)
+     except BlockingIOError:print('other-active',p);return
+  write(D/'state.json',{'status':'RUNNING','updated':now(),'pid':os.getpid(),'expected':8});audit()
+  def job(item):
+   i,mode=item;seed=f'V2-INTEGRATION-LONG-20261022-{i}';stem=D/(seed+'-'+mode);rp=pathlib.Path(str(stem)+'.result.json')
+   if rp.exists():return json.load(open(rp))
+   assert spec()==expected;original=f'docs/integration-v2/results/headless-r1/{seed}-{mode}.input.json';inp=json.load(open(original));assert inp['seed']==seed and inp['controller']['dt']==.0001875 and inp['controller']['eta']==.001875
+   inp.update(horizon=30000,sourceHash=SOURCE,configHash=hashlib.sha256(json.dumps(expected,sort_keys=True).encode()).hexdigest());inp['controller']['shadow']=True;ip=str(stem)+'.input.json';cp=str(stem)+'.checkpoint.json';stdout=str(stem)+'.stdout.json';err=str(stem)+'.stderr.log'
+   if pathlib.Path(ip).exists():assert json.load(open(ip))==inp
+   else:write(ip,inp)
+   with open(stdout,'wb') as out,open(err,'ab') as stderr:p=subprocess.run([str(B),ip,cp],stdout=out,stderr=stderr,pass_fds=(lock.fileno(),))
+   assert p.returncode==0,(seed,mode,'process interruption; last complete state retained');r=json.load(open(stdout));assert r['seed']==seed and r['profile']==mode and r['horizon']==30000 and r['initialBodies']==inp['bodies'];assert r['sourceHash']==SOURCE and r['configHash']==inp['configHash']
+   raw=str(stem)+'.raw.json.gz'
+   with open(stdout,'rb') as src,gzip.GzipFile(raw+'.tmp','wb',mtime=0) as dest:
+    import shutil
+    shutil.copyfileobj(src,dest)
+   os.replace(raw+'.tmp',raw);pathlib.Path(stdout).unlink();meta={k:v for k,v in r.items() if k not in ['events','history']};meta.update(rawFile=raw,rawSHA256=sha(raw),checkpoint=cp,checkpointSHA256=sha(cp),inputFile=ip,inputSHA256=sha(ip));write(rp,meta)
+   print(json.dumps({'seed':seed,'mode':mode,'stellarIntact':r['stellarIntact'],'matureStable':r['matureStableFraction'],'losses':r['planetLosses'],'UNKNOWN':r['error']}),flush=True);assert not r['numericallyCensored'],'UNKNOWN preserved; review required';return meta
+  try:
+   with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:rr=list(pool.map(job,[(i,m) for i in range(4) for m in ['deflect-v2','reflect-v2']]))
+   audit();write(D/'state.json',{'status':'MATCHED_NATIVE30_COMPLETE_REVIEW_REQUIRED','researchComplete':False,'updated':now(),'rows':len(rr),'UNKNOWN':sum(r['numericallyCensored'] for r in rr)});print('MATCHED_NATIVE30_COMPLETE',flush=True)
+  except Exception as e:write(D/'state.json',{'status':'STOPPED_REVIEW_REQUIRED','error':str(e),'updated':now()});raise
+if __name__=='__main__':main()

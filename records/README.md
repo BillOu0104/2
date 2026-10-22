@@ -23,6 +23,7 @@
 | [v0.5.5](versions/v0.5.5/README.md) | v0.5.5：固定观察原点、守恒核查与连续尾迹 | [e62d7e8](https://github.com/BillOu0104/2/commit/e62d7e8761c1b318de23d600e121bee41907c0e2) |
 | [v0.5.5-v2-integration-r1](versions/v0.5.5-v2-integration-r1/README.md) | V2完整集成原型功能、数值、UI与恢复检查 | [aaf84bd](https://github.com/BillOu0104/2/commit/aaf84bdb60fa0304662d95dcb72ef1f3a781e0cb) |
 | [v0.5.5-v2-kernel-prototype-r0](versions/v0.5.5-v2-kernel-prototype-r0/README.md) | V2可选运行器初稿源码归档 | [2b043ca](https://github.com/BillOu0104/2/commit/2b043ca46b081fc987f6cdd6e77a2ad93dd08498) |
+| [v0.5.5-v2-shadow-events-r2](versions/v0.5.5-v2-shadow-events-r2/README.md) | JS条件混沌观察器、逐事件控制账与独立128Seed确认注册 | [48537d5](https://github.com/BillOu0104/2/commit/48537d563ed9c885d749c49c70df24e89a42d577) |
 | [minimal-chaos-v2-auto-ablation30k](analyses/minimal-chaos-v2-auto-ablation30k/README.md) | V2自动阶段 ablation30k | [940a71a](https://github.com/BillOu0104/2/commit/940a71acff7b8f49455a9471e5ddc3da04ef0936) |
 | [minimal-chaos-v2-auto-explore100k](analyses/minimal-chaos-v2-auto-explore100k/README.md) | V2自动阶段 explore100k | [54802b4](https://github.com/BillOu0104/2/commit/54802b4a4525190bd3e9354e260bf341e1d5dc2a) |
 | [minimal-chaos-v2-auto-precision30k](analyses/minimal-chaos-v2-auto-precision30k/README.md) | V2自动阶段 precision30k | [f637f9f](https://github.com/BillOu0104/2/commit/f637f9fd4d8537e76cb62889cd7991a3f278292f) |

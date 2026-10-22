@@ -1,0 +1,908 @@
+{
+  "scope": "Integration validation against frozen native7f64a8a; short windows/forced fixtures, not a new100000year confirmation",
+  "binarySHA256": "cf2117ac290bea83d6cfbdb07f98888412d594024e295887bc537bce5132f091",
+  "sourceSHA256": {
+    "src/simulation.js": "ad0dad322d9bc4d06a92665f2d53e2f55db171e305234904448939d0e5e33251",
+    "src/v2-simulation.js": "9f9cfe6d863afb515b0aeb9ad89f04e845c9599ed15512f36b63267e4db9d391",
+    "src/settings.js": "5006eab7c12bcd5cdb6d4df2e24558f618bdac686aa4406e134cbfdcfdb23bfe",
+    "src/physics/gravity.js": "bc01e2f3bb0cec31ef837ca67d955b24ba54a310b2363136337f437d9c645f9d",
+    "src/physics/minimal-control.js": "3dbbdfca6d79ab26f62132e1cf20f9c304dc9cf9c66f55fce694bd548922f660",
+    "src/physics/controlled-system.js": "73837dab69ab4caa97b206d35a94d2989c7fd9eee43a8e068507cef72bf4ef9f",
+    "src/world-state.js": "b423367fc750270d32274e251d8c7c530fd1a9bf022abfc9fe642a617532a88d",
+    "src/habitability.js": "3df1a155e44ec9f7ac9e322027f21f04553759dddb88da085c50e0ddff2363b1",
+    "src/civilization-state.js": "c1f5fae8c23e0a1e91fd526e003770d829e9aaa048b9fe49699960d4b07b0259"
+  },
+  "checks": [
+    {
+      "mode": "deflect-v2",
+      "kind": "natural",
+      "horizon": 20,
+      "maxState": 0,
+      "jsSteps": 48000,
+      "nativeSteps": 48000,
+      "jsLosses": 0,
+      "nativeLosses": 0,
+      "jsRespawns": 0,
+      "nativeRespawns": 0,
+      "jsStable": 0.9966666666666667,
+      "nativeStable": 0.9966666666666667,
+      "jsControl": {
+        "work": 0,
+        "absoluteWork": 0,
+        "impulse": 0,
+        "peakNetVelocityJump": 0,
+        "peakVelocityJump": 0,
+        "deltaP": [
+          0,
+          0,
+          0
+        ],
+        "deltaL": [
+          0,
+          0,
+          0
+        ],
+        "cumulativeBodyAngularImpulse": 0,
+        "projectionEvents": 0,
+        "reflectionEvents": 0,
+        "deflectionEvents": 0,
+        "activeFrames": 0,
+        "projectionFrames": 0,
+        "activeTime": 0,
+        "peakAcceleration": 0,
+        "accelerationIntegral": 0,
+        "accelerationSquaredIntegral": 0
+      },
+      "nativeControl": {
+        "absoluteWork": 0,
+        "accelerationIntegral": 0,
+        "accelerationSquaredIntegral": 0,
+        "activeFrames": 0,
+        "activeTime": 0,
+        "deflectionEvents": 0,
+        "deltaL": [
+          0,
+          0,
+          0
+        ],
+        "deltaP": [
+          0,
+          0,
+          0
+        ],
+        "impulse": 0,
+        "peakAcceleration": 0,
+        "peakVelocityJump": 0,
+        "projectionEvents": 0,
+        "projectionFrames": 0,
+        "reflectionEvents": 0,
+        "work": 0
+      },
+      "differentCounts": [],
+      "budgets": {
+        "control": {
+          "work": 0,
+          "gross": 0,
+          "impulse": 0,
+          "angular": 0
+        },
+        "planetExternal": {
+          "work": 0,
+          "gross": 0,
+          "impulse": 0,
+          "angular": 0
+        }
+      },
+      "budgetsPass": true,
+      "civPass": true,
+      "births": 0,
+      "deaths": 0,
+      "aliveFrames": 0,
+      "activeFrames": 0,
+      "generation": 1,
+      "pass": true
+    },
+    {
+      "mode": "deflect-v2",
+      "kind": "deflection",
+      "horizon": 20,
+      "maxState": 1.6239054545508225e-10,
+      "jsSteps": 69892,
+      "nativeSteps": 69892,
+      "jsLosses": 1,
+      "nativeLosses": 1,
+      "jsRespawns": 0,
+      "nativeRespawns": 0,
+      "jsStable": 0.7441666666666666,
+      "nativeStable": 0.7441666666666666,
+      "jsControl": {
+        "work": 8.731149137020111e-9,
+        "absoluteWork": 4136018.490273323,
+        "impulse": 20414549.994085837,
+        "peakNetVelocityJump": 0.7529362147576291,
+        "peakVelocityJump": 0.7529362147576291,
+        "deltaP": [
+          0,
+          0,
+          0
+        ],
+        "deltaL": [
+          0,
+          0,
+          980831.3648372808
+        ],
+        "cumulativeBodyAngularImpulse": 6275582.485670703,
+        "projectionEvents": 12,
+        "reflectionEvents": 0,
+        "deflectionEvents": 12,
+        "activeFrames": 8,
+        "projectionFrames": 8,
+        "activeTime": 0,
+        "peakAcceleration": 0,
+        "accelerationIntegral": 0,
+        "accelerationSquaredIntegral": 0
+      },
+      "nativeControl": {
+        "absoluteWork": 4136018.4903804096,
+        "accelerationIntegral": 0,
+        "accelerationSquaredIntegral": 0,
+        "activeFrames": 8,
+        "activeTime": 0,
+        "deflectionEvents": 12,
+        "deltaL": [
+          0,
+          0,
+          980831.3649479053
+        ],
+        "deltaP": [
+          0,
+          0,
+          0
+        ],
+        "impulse": 20414549.994495872,
+        "peakAcceleration": 0,
+        "peakVelocityJump": 0.7529362147576291,
+        "projectionEvents": 12,
+        "projectionFrames": 8,
+        "reflectionEvents": 0,
+        "work": 2.764863893389702e-9
+      },
+      "differentCounts": [],
+      "budgets": {
+        "control": {
+          "work": 1.4425189968339965e-15,
+          "gross": 2.589125979667697e-11,
+          "impulse": 2.008544164243928e-11,
+          "angular": 1.1278643651365408e-10
+        },
+        "planetExternal": {
+          "work": 2.3518785972163614e-12,
+          "gross": 2.3518785972163614e-12,
+          "impulse": 1.6150382116415278e-12,
+          "angular": 1.1364049374856581e-12
+        }
+      },
+      "budgetsPass": true,
+      "civPass": true,
+      "births": 1,
+      "deaths": 1,
+      "aliveFrames": 898,
+      "activeFrames": 68,
+      "generation": 1,
+      "pass": true
+    },
+    {
+      "mode": "deflect-v2",
+      "kind": "reflection",
+      "horizon": 20,
+      "maxState": 2.2084556405843614e-11,
+      "jsSteps": 106247,
+      "nativeSteps": 106247,
+      "jsLosses": 1,
+      "nativeLosses": 1,
+      "jsRespawns": 0,
+      "nativeRespawns": 0,
+      "jsStable": 0.7483333333333333,
+      "nativeStable": 0.7483333333333333,
+      "jsControl": {
+        "work": -1.464115939597832e-9,
+        "absoluteWork": 148847632.4957704,
+        "impulse": 1400741534.789492,
+        "peakNetVelocityJump": 0.6,
+        "peakVelocityJump": 0.6,
+        "deltaP": [
+          0,
+          0,
+          0
+        ],
+        "deltaL": [
+          0,
+          0,
+          -271745.81269331137
+        ],
+        "cumulativeBodyAngularImpulse": 183320519.97144964,
+        "projectionEvents": 104763,
+        "reflectionEvents": 104757,
+        "deflectionEvents": 6,
+        "activeFrames": 1199,
+        "projectionFrames": 1199,
+        "activeTime": 0,
+        "peakAcceleration": 0,
+        "accelerationIntegral": 0,
+        "accelerationSquaredIntegral": 0
+      },
+      "nativeControl": {
+        "absoluteWork": 148847632.4957228,
+        "accelerationIntegral": 0,
+        "accelerationSquaredIntegral": 0,
+        "activeFrames": 1199,
+        "activeTime": 0,
+        "deflectionEvents": 6,
+        "deltaL": [
+          0,
+          0,
+          -271745.81269329786
+        ],
+        "deltaP": [
+          0,
+          0,
+          0
+        ],
+        "impulse": 1400741534.7894459,
+        "peakAcceleration": 0,
+        "peakVelocityJump": 0.6,
+        "projectionEvents": 104763,
+        "projectionFrames": 1199,
+        "reflectionEvents": 104757,
+        "work": -4.8174229050346185e-9
+      },
+      "differentCounts": [],
+      "budgets": {
+        "control": {
+          "work": 2.2528453487717684e-17,
+          "gross": 3.1975187011803536e-13,
+          "impulse": 3.2850304373617597e-14,
+          "angular": 4.969415056697025e-14
+        },
+        "planetExternal": {
+          "work": 1.5146784042614457e-11,
+          "gross": 1.5146784042614457e-11,
+          "impulse": 2.4957342587078765e-12,
+          "angular": 1.8293502862113078e-12
+        }
+      },
+      "budgetsPass": true,
+      "civPass": true,
+      "births": 1,
+      "deaths": 1,
+      "aliveFrames": 900,
+      "activeFrames": 68,
+      "generation": 1,
+      "pass": true
+    },
+    {
+      "mode": "deflect-v2",
+      "kind": "planet-contact",
+      "horizon": 20,
+      "maxState": 2.0825563495918686e-11,
+      "jsSteps": 51330,
+      "nativeSteps": 51330,
+      "jsLosses": 2,
+      "nativeLosses": 2,
+      "jsRespawns": 1,
+      "nativeRespawns": 1,
+      "jsStable": 0.6066666666666667,
+      "nativeStable": 0.6066666666666667,
+      "jsControl": {
+        "work": 7.4214767664670944e-9,
+        "absoluteWork": 342777.31052934163,
+        "impulse": 4326644.7254062705,
+        "peakNetVelocityJump": 0.28508189385981914,
+        "peakVelocityJump": 0.28508189385981914,
+        "deltaP": [
+          0,
+          0,
+          0
+        ],
+        "deltaL": [
+          0,
+          0,
+          372527.9368624074
+        ],
+        "cumulativeBodyAngularImpulse": 1294464.0423273786,
+        "projectionEvents": 2,
+        "reflectionEvents": 0,
+        "deflectionEvents": 2,
+        "activeFrames": 2,
+        "projectionFrames": 2,
+        "activeTime": 0,
+        "peakAcceleration": 0,
+        "accelerationIntegral": 0,
+        "accelerationSquaredIntegral": 0
+      },
+      "nativeControl": {
+        "absoluteWork": 342777.31052935624,
+        "accelerationIntegral": 0,
+        "accelerationSquaredIntegral": 0,
+        "activeFrames": 2,
+        "activeTime": 0,
+        "deflectionEvents": 2,
+        "deltaL": [
+          -1.1235436893300898e-14,
+          3.34456515397519e-14,
+          372527.9368624119
+        ],
+        "deltaP": [
+          0,
+          0,
+          0
+        ],
+        "impulse": 4326644.72540641,
+        "peakAcceleration": 0,
+        "peakVelocityJump": 0.2850818938598324,
+        "projectionEvents": 2,
+        "projectionFrames": 2,
+        "reflectionEvents": 0,
+        "work": -2.648448571562767e-9
+      },
+      "differentCounts": [],
+      "budgets": {
+        "control": {
+          "work": 2.9377455942106326e-14,
+          "gross": 4.262278289866293e-14,
+          "impulse": 3.228792633978045e-14,
+          "angular": 1.2031285299634383e-14
+        },
+        "planetExternal": {
+          "work": 2.4875464557514744e-14,
+          "gross": 2.4875464557514744e-14,
+          "impulse": 6.476159418081219e-12,
+          "angular": 7.921981687079892e-12
+        }
+      },
+      "budgetsPass": true,
+      "civPass": true,
+      "births": 0,
+      "deaths": 0,
+      "aliveFrames": 0,
+      "activeFrames": 0,
+      "generation": 1,
+      "pass": true
+    },
+    {
+      "mode": "deflect-v2",
+      "kind": "capture",
+      "horizon": 20,
+      "maxState": 5.895284260759581e-14,
+      "jsSteps": 48724,
+      "nativeSteps": 48724,
+      "jsLosses": 0,
+      "nativeLosses": 0,
+      "jsRespawns": 0,
+      "nativeRespawns": 0,
+      "jsStable": 0.9966666666666667,
+      "nativeStable": 0.9966666666666667,
+      "jsControl": {
+        "work": 0,
+        "absoluteWork": 82147.92216998879,
+        "impulse": 882682.3802135839,
+        "peakNetVelocityJump": 0.07014151208333047,
+        "peakVelocityJump": 0.05910935070215371,
+        "deltaP": [
+          0,
+          0,
+          0
+        ],
+        "deltaL": [
+          0,
+          0,
+          -1.4551915228366852e-11
+        ],
+        "cumulativeBodyAngularImpulse": 56080.596524272194,
+        "projectionEvents": 1,
+        "reflectionEvents": 0,
+        "deflectionEvents": 0,
+        "activeFrames": 1,
+        "projectionFrames": 1,
+        "activeTime": 0,
+        "peakAcceleration": 0,
+        "accelerationIntegral": 0,
+        "accelerationSquaredIntegral": 0
+      },
+      "nativeControl": {
+        "absoluteWork": 82147.92216998879,
+        "accelerationIntegral": 0,
+        "accelerationSquaredIntegral": 0,
+        "activeFrames": 1,
+        "activeTime": 0,
+        "deflectionEvents": 0,
+        "deltaL": [
+          0,
+          0,
+          -1.4551915228366852e-11
+        ],
+        "deltaP": [
+          0,
+          0,
+          0
+        ],
+        "impulse": 882682.3802135839,
+        "peakAcceleration": 0,
+        "peakVelocityJump": 0.05910935070215371,
+        "projectionEvents": 1,
+        "projectionFrames": 1,
+        "reflectionEvents": 0,
+        "work": 0
+      },
+      "differentCounts": [],
+      "budgets": {
+        "control": {
+          "work": 0,
+          "gross": 0,
+          "impulse": 0,
+          "angular": 0
+        },
+        "planetExternal": {
+          "work": 0,
+          "gross": 0,
+          "impulse": 0,
+          "angular": 0
+        }
+      },
+      "budgetsPass": true,
+      "civPass": true,
+      "births": 1,
+      "deaths": 0,
+      "aliveFrames": 1170,
+      "activeFrames": 23,
+      "generation": 1,
+      "pass": true
+    },
+    {
+      "mode": "reflect-v2",
+      "kind": "natural",
+      "horizon": 20,
+      "maxState": 0,
+      "jsSteps": 48000,
+      "nativeSteps": 48000,
+      "jsLosses": 0,
+      "nativeLosses": 0,
+      "jsRespawns": 0,
+      "nativeRespawns": 0,
+      "jsStable": 0.9966666666666667,
+      "nativeStable": 0.9966666666666667,
+      "jsControl": {
+        "work": 0,
+        "absoluteWork": 0,
+        "impulse": 0,
+        "peakNetVelocityJump": 0,
+        "peakVelocityJump": 0,
+        "deltaP": [
+          0,
+          0,
+          0
+        ],
+        "deltaL": [
+          0,
+          0,
+          0
+        ],
+        "cumulativeBodyAngularImpulse": 0,
+        "projectionEvents": 0,
+        "reflectionEvents": 0,
+        "deflectionEvents": 0,
+        "activeFrames": 0,
+        "projectionFrames": 0,
+        "activeTime": 0,
+        "peakAcceleration": 0,
+        "accelerationIntegral": 0,
+        "accelerationSquaredIntegral": 0
+      },
+      "nativeControl": {
+        "absoluteWork": 0,
+        "accelerationIntegral": 0,
+        "accelerationSquaredIntegral": 0,
+        "activeFrames": 0,
+        "activeTime": 0,
+        "deflectionEvents": 0,
+        "deltaL": [
+          0,
+          0,
+          0
+        ],
+        "deltaP": [
+          0,
+          0,
+          0
+        ],
+        "impulse": 0,
+        "peakAcceleration": 0,
+        "peakVelocityJump": 0,
+        "projectionEvents": 0,
+        "projectionFrames": 0,
+        "reflectionEvents": 0,
+        "work": 0
+      },
+      "differentCounts": [],
+      "budgets": {
+        "control": {
+          "work": 0,
+          "gross": 0,
+          "impulse": 0,
+          "angular": 0
+        },
+        "planetExternal": {
+          "work": 0,
+          "gross": 0,
+          "impulse": 0,
+          "angular": 0
+        }
+      },
+      "budgetsPass": true,
+      "civPass": true,
+      "births": 0,
+      "deaths": 0,
+      "aliveFrames": 0,
+      "activeFrames": 0,
+      "generation": 1,
+      "pass": true
+    },
+    {
+      "mode": "reflect-v2",
+      "kind": "deflection",
+      "horizon": 20,
+      "maxState": 9.528966678218342e-11,
+      "jsSteps": 56754,
+      "nativeSteps": 56754,
+      "jsLosses": 1,
+      "nativeLosses": 1,
+      "jsRespawns": 0,
+      "nativeRespawns": 0,
+      "jsStable": 0.73,
+      "nativeStable": 0.73,
+      "jsControl": {
+        "work": -3.9217411540448666e-9,
+        "absoluteWork": 31567930.278943762,
+        "impulse": 325944547.2711843,
+        "peakNetVelocityJump": 2.298405321249563,
+        "peakVelocityJump": 2.298405321249563,
+        "deltaP": [
+          0,
+          0,
+          0
+        ],
+        "deltaL": [
+          0,
+          0,
+          9.313225746154785e-10
+        ],
+        "cumulativeBodyAngularImpulse": 21996102.10245826,
+        "projectionEvents": 21,
+        "reflectionEvents": 21,
+        "deflectionEvents": 0,
+        "activeFrames": 21,
+        "projectionFrames": 21,
+        "activeTime": 0,
+        "peakAcceleration": 0,
+        "accelerationIntegral": 0,
+        "accelerationSquaredIntegral": 0
+      },
+      "nativeControl": {
+        "absoluteWork": 31567930.279363696,
+        "accelerationIntegral": 0,
+        "accelerationSquaredIntegral": 0,
+        "activeFrames": 21,
+        "activeTime": 0,
+        "deflectionEvents": 0,
+        "deltaL": [
+          0,
+          0,
+          0
+        ],
+        "deltaP": [
+          0,
+          0,
+          0
+        ],
+        "impulse": 325944547.2693785,
+        "peakAcceleration": 0,
+        "peakVelocityJump": 2.298405321063537,
+        "projectionEvents": 21,
+        "projectionFrames": 21,
+        "reflectionEvents": 21,
+        "work": 9.687937563285232e-9
+      },
+      "differentCounts": [],
+      "budgets": {
+        "control": {
+          "work": 4.311235673954493e-16,
+          "gross": 1.3302530295077163e-11,
+          "impulse": 5.540334814276131e-12,
+          "angular": 9.313225746154785e-10
+        },
+        "planetExternal": {
+          "work": 5.198723938930052e-13,
+          "gross": 5.198723938930052e-13,
+          "impulse": 8.006662602829439e-13,
+          "angular": 6.618875720156214e-13
+        }
+      },
+      "budgetsPass": true,
+      "civPass": true,
+      "births": 1,
+      "deaths": 1,
+      "aliveFrames": 896,
+      "activeFrames": 68,
+      "generation": 1,
+      "pass": true
+    },
+    {
+      "mode": "reflect-v2",
+      "kind": "reflection",
+      "horizon": 20,
+      "maxState": 1.3818457489378488e-10,
+      "jsSteps": 118027,
+      "nativeSteps": 118027,
+      "jsLosses": 1,
+      "nativeLosses": 1,
+      "jsRespawns": 0,
+      "nativeRespawns": 0,
+      "jsStable": 0.7508333333333334,
+      "nativeStable": 0.7508333333333334,
+      "jsControl": {
+        "work": -6.28642737865448e-9,
+        "absoluteWork": 218479041.6041777,
+        "impulse": 1625394184.405611,
+        "peakNetVelocityJump": 2.471865081839577,
+        "peakVelocityJump": 2.471865081839577,
+        "deltaP": [
+          0,
+          0,
+          0
+        ],
+        "deltaL": [
+          0,
+          0,
+          1.862645149230957e-9
+        ],
+        "cumulativeBodyAngularImpulse": 355460773.66322374,
+        "projectionEvents": 80419,
+        "reflectionEvents": 80418,
+        "deflectionEvents": 0,
+        "activeFrames": 1042,
+        "projectionFrames": 1042,
+        "activeTime": 0,
+        "peakAcceleration": 0,
+        "accelerationIntegral": 0,
+        "accelerationSquaredIntegral": 0
+      },
+      "nativeControl": {
+        "absoluteWork": 218479041.60403755,
+        "accelerationIntegral": 0,
+        "accelerationSquaredIntegral": 0,
+        "activeFrames": 1042,
+        "activeTime": 0,
+        "deflectionEvents": 0,
+        "deltaL": [
+          0,
+          0,
+          -9.313225746154785e-10
+        ],
+        "deltaP": [
+          0,
+          0,
+          0
+        ],
+        "impulse": 1625394184.4050965,
+        "peakAcceleration": 0,
+        "peakVelocityJump": 2.4718650818390557,
+        "projectionEvents": 80419,
+        "projectionFrames": 1042,
+        "reflectionEvents": 80418,
+        "work": 7.275957614183426e-9
+      },
+      "differentCounts": [],
+      "budgets": {
+        "control": {
+          "work": 6.207636619634123e-17,
+          "gross": 6.415275404006571e-13,
+          "impulse": 3.165430876015374e-13,
+          "angular": 2.7939677238464355e-9
+        },
+        "planetExternal": {
+          "work": 1.8744878998434374e-11,
+          "gross": 1.8744878998434374e-11,
+          "impulse": 3.021960242074497e-11,
+          "angular": 3.4782727206563277e-11
+        }
+      },
+      "budgetsPass": true,
+      "civPass": true,
+      "births": 1,
+      "deaths": 1,
+      "aliveFrames": 899,
+      "activeFrames": 68,
+      "generation": 1,
+      "pass": true
+    },
+    {
+      "mode": "reflect-v2",
+      "kind": "planet-contact",
+      "horizon": 20,
+      "maxState": 5.296929561637853e-12,
+      "jsSteps": 51557,
+      "nativeSteps": 51557,
+      "jsLosses": 1,
+      "nativeLosses": 1,
+      "jsRespawns": 1,
+      "nativeRespawns": 1,
+      "jsStable": 0.5975,
+      "nativeStable": 0.5975,
+      "jsControl": {
+        "work": 3.3760443329811096e-9,
+        "absoluteWork": 3761099.5122830295,
+        "impulse": 36611647.79746167,
+        "peakNetVelocityJump": 2.101001395026546,
+        "peakVelocityJump": 2.101001395026546,
+        "deltaP": [
+          0,
+          0,
+          0
+        ],
+        "deltaL": [
+          0,
+          0,
+          2.3283064365386963e-10
+        ],
+        "cumulativeBodyAngularImpulse": 4181160.122605575,
+        "projectionEvents": 2,
+        "reflectionEvents": 2,
+        "deflectionEvents": 0,
+        "activeFrames": 2,
+        "projectionFrames": 2,
+        "activeTime": 0,
+        "peakAcceleration": 0,
+        "accelerationIntegral": 0,
+        "accelerationSquaredIntegral": 0
+      },
+      "nativeControl": {
+        "absoluteWork": 3761099.5122830197,
+        "accelerationIntegral": 0,
+        "accelerationSquaredIntegral": 0,
+        "activeFrames": 2,
+        "activeTime": 0,
+        "deflectionEvents": 0,
+        "deltaL": [
+          0,
+          0,
+          0
+        ],
+        "deltaP": [
+          0,
+          0,
+          0
+        ],
+        "impulse": 36611647.797461815,
+        "peakAcceleration": 0,
+        "peakVelocityJump": 2.101001395026553,
+        "projectionEvents": 2,
+        "projectionFrames": 2,
+        "reflectionEvents": 2,
+        "work": 6.6356733441352844e-9
+      },
+      "differentCounts": [],
+      "budgets": {
+        "control": {
+          "work": 8.66669174933782e-16,
+          "gross": 2.600007524801346e-15,
+          "impulse": 3.866557225850042e-15,
+          "angular": 2.3283064365386963e-10
+        },
+        "planetExternal": {
+          "work": 0,
+          "gross": 0,
+          "impulse": 8.86340148692571e-16,
+          "angular": 1.3089080538653568e-17
+        }
+      },
+      "budgetsPass": true,
+      "civPass": true,
+      "births": 0,
+      "deaths": 0,
+      "aliveFrames": 0,
+      "activeFrames": 0,
+      "generation": 1,
+      "pass": true
+    },
+    {
+      "mode": "reflect-v2",
+      "kind": "capture",
+      "horizon": 20,
+      "maxState": 5.895284260759581e-14,
+      "jsSteps": 48724,
+      "nativeSteps": 48724,
+      "jsLosses": 0,
+      "nativeLosses": 0,
+      "jsRespawns": 0,
+      "nativeRespawns": 0,
+      "jsStable": 0.9966666666666667,
+      "nativeStable": 0.9966666666666667,
+      "jsControl": {
+        "work": 0,
+        "absoluteWork": 82147.92216998879,
+        "impulse": 882682.3802135839,
+        "peakNetVelocityJump": 0.07014151208333047,
+        "peakVelocityJump": 0.05910935070215371,
+        "deltaP": [
+          0,
+          0,
+          0
+        ],
+        "deltaL": [
+          0,
+          0,
+          -1.4551915228366852e-11
+        ],
+        "cumulativeBodyAngularImpulse": 56080.596524272194,
+        "projectionEvents": 1,
+        "reflectionEvents": 0,
+        "deflectionEvents": 0,
+        "activeFrames": 1,
+        "projectionFrames": 1,
+        "activeTime": 0,
+        "peakAcceleration": 0,
+        "accelerationIntegral": 0,
+        "accelerationSquaredIntegral": 0
+      },
+      "nativeControl": {
+        "absoluteWork": 82147.92216998879,
+        "accelerationIntegral": 0,
+        "accelerationSquaredIntegral": 0,
+        "activeFrames": 1,
+        "activeTime": 0,
+        "deflectionEvents": 0,
+        "deltaL": [
+          0,
+          0,
+          -1.4551915228366852e-11
+        ],
+        "deltaP": [
+          0,
+          0,
+          0
+        ],
+        "impulse": 882682.3802135839,
+        "peakAcceleration": 0,
+        "peakVelocityJump": 0.05910935070215371,
+        "projectionEvents": 1,
+        "projectionFrames": 1,
+        "reflectionEvents": 0,
+        "work": 0
+      },
+      "differentCounts": [],
+      "budgets": {
+        "control": {
+          "work": 0,
+          "gross": 0,
+          "impulse": 0,
+          "angular": 0
+        },
+        "planetExternal": {
+          "work": 0,
+          "gross": 0,
+          "impulse": 0,
+          "angular": 0
+        }
+      },
+      "budgetsPass": true,
+      "civPass": true,
+      "births": 1,
+      "deaths": 0,
+      "aliveFrames": 1170,
+      "activeFrames": 23,
+      "generation": 1,
+      "pass": true
+    }
+  ],
+  "pass": true
+}

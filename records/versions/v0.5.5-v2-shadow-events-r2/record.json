@@ -1,0 +1,1411 @@
+{
+  "format": 1,
+  "id": "v0.5.5-v2-shadow-events-r2",
+  "path": "versions/v0.5.5-v2-shadow-events-r2",
+  "kind": "version",
+  "version": "0.5.5",
+  "title": "JS条件混沌观察器、逐事件控制账与独立128Seed确认注册",
+  "summary": "同4初值原生/JS30k差异完整保留；条件FTLE/动态层级通过独立原生短窗、主轨迹不变及主+影子恢复，补齐每次速度投影账；16测试文件/浏览器/故障审计通过。128全新初值只初始化0步，冻结两候选h4/P5真100000年研究，不称已完成，不改main或网页。",
+  "source_commit": "48537d563ed9c885d749c49c70df24e89a42d577",
+  "previous_commit": "aaf84bdb60fa0304662d95dcb72ef1f3a781e0cb",
+  "source_repository": "https://github.com/BillOu0104/2",
+  "source_subject": "prototype: validate conditional chaos observer and freeze fresh128Seed JS confirmation",
+  "source_date": "2026-10-22T22:05:18Z",
+  "archived_at": "2026-10-22T22:05:19.762358+00:00",
+  "runtime_fingerprint": "9948c9a1b79ffc2188f6d0160430ac2b5586404c06592af8b46c2eb1df9db74c",
+  "deleted_paths": [],
+  "files": [
+    {
+      "source_path": "docs/integration-v2/DIAGNOSTICS30_RESULTS.md",
+      "archive_path": "snapshot/docs/integration-v2/DIAGNOSTICS30_RESULTS.md",
+      "sha256": "525186faf621e311f9157e1e676d911b9dc19b6ee7405468ea8e409a60bd8b99",
+      "bytes": 1604
+    },
+    {
+      "source_path": "docs/integration-v2/JS_CONFIRMATION_PROTOCOL.md",
+      "archive_path": "snapshot/docs/integration-v2/JS_CONFIRMATION_PROTOCOL.md",
+      "sha256": "cc03140a535ae790ceeba7ca93d52dc39924f45bc3b1d0c1cbc65f9e00cfc967",
+      "bytes": 4745
+    },
+    {
+      "source_path": "docs/integration-v2/MATCHED_NATIVE30_PROTOCOL.md",
+      "archive_path": "snapshot/docs/integration-v2/MATCHED_NATIVE30_PROTOCOL.md",
+      "sha256": "5c4b747b8102011927a7cc8379c8622e97ec35a10286cd2ea89b7342244cae10",
+      "bytes": 1559
+    },
+    {
+      "source_path": "docs/integration-v2/MATCHED_NATIVE30_RESULTS.md",
+      "archive_path": "snapshot/docs/integration-v2/MATCHED_NATIVE30_RESULTS.md",
+      "sha256": "52d49e9e1999af6ca92dd7d4078a002e3534ad810873896c283bf16e0dbdccc6",
+      "bytes": 2190
+    },
+    {
+      "source_path": "docs/integration-v2/STATUS.md",
+      "archive_path": "snapshot/docs/integration-v2/STATUS.md",
+      "sha256": "43104f51c2e2741a6efb9c720518049b16858760351604751885b7b58d9ecf79",
+      "bytes": 10706
+    },
+    {
+      "source_path": "docs/integration-v2/js-confirmation-v1/b00.json",
+      "archive_path": "snapshot/docs/integration-v2/js-confirmation-v1/b00.json",
+      "sha256": "b78760a244430820645df5c7de8795ab90cc6475adab240e9187ce0ce2b4fc8e",
+      "bytes": 470
+    },
+    {
+      "source_path": "docs/integration-v2/js-confirmation-v1/b01.json",
+      "archive_path": "snapshot/docs/integration-v2/js-confirmation-v1/b01.json",
+      "sha256": "8355f90691f5982c411c3da2f97c3cbc03c6ee4b842f9d5ca86aed14351690e2",
+      "bytes": 470
+    },
+    {
+      "source_path": "docs/integration-v2/js-confirmation-v1/b02.json",
+      "archive_path": "snapshot/docs/integration-v2/js-confirmation-v1/b02.json",
+      "sha256": "49d86de7cc11835dfe861786bb454f5f494debd5dd82246c4edbdba86635d0b0",
+      "bytes": 471
+    },
+    {
+      "source_path": "docs/integration-v2/js-confirmation-v1/b03.json",
+      "archive_path": "snapshot/docs/integration-v2/js-confirmation-v1/b03.json",
+      "sha256": "59e31fee431ab8ecefae0e4f6f427e80ec189067c26a8b88444fa319680f5f27",
+      "bytes": 471
+    },
+    {
+      "source_path": "docs/integration-v2/js-confirmation-v1/b04.json",
+      "archive_path": "snapshot/docs/integration-v2/js-confirmation-v1/b04.json",
+      "sha256": "a6cc92afbcf07a6392caa89f8b32259e3d3a5371f77ce0f01e2054f7c4717a8f",
+      "bytes": 471
+    },
+    {
+      "source_path": "docs/integration-v2/js-confirmation-v1/b05.json",
+      "archive_path": "snapshot/docs/integration-v2/js-confirmation-v1/b05.json",
+      "sha256": "fc959c6655abcb61181c7c475dee8061d5b097dc6d73f1929d7bedf130a7f64e",
+      "bytes": 471
+    },
+    {
+      "source_path": "docs/integration-v2/js-confirmation-v1/b06.json",
+      "archive_path": "snapshot/docs/integration-v2/js-confirmation-v1/b06.json",
+      "sha256": "cb74510e9449e775df74d80eabe6038c4cc62ed57f6c56327d1810bb031b5964",
+      "bytes": 471
+    },
+    {
+      "source_path": "docs/integration-v2/js-confirmation-v1/b07.json",
+      "archive_path": "snapshot/docs/integration-v2/js-confirmation-v1/b07.json",
+      "sha256": "945512458c9feddfc7ba8de6cae68576aaf53f2c92cef5f6e7786f92fe7c6877",
+      "bytes": 471
+    },
+    {
+      "source_path": "docs/integration-v2/js-confirmation-v1/b08.json",
+      "archive_path": "snapshot/docs/integration-v2/js-confirmation-v1/b08.json",
+      "sha256": "a81749f06041c9ecbd39eb8e1cd89d708a9cd66b69027b7054415a0ff0ac84d4",
+      "bytes": 471
+    },
+    {
+      "source_path": "docs/integration-v2/js-confirmation-v1/b09.json",
+      "archive_path": "snapshot/docs/integration-v2/js-confirmation-v1/b09.json",
+      "sha256": "5821511a4a38efa154fe1449747ffd9fe39f8946718adbfee3495f8e5cde41b7",
+      "bytes": 471
+    },
+    {
+      "source_path": "docs/integration-v2/js-confirmation-v1/b10.json",
+      "archive_path": "snapshot/docs/integration-v2/js-confirmation-v1/b10.json",
+      "sha256": "ba8509411f577af8409a8f8fdb98819f284e0411339c82f4040da5982e5fc6f0",
+      "bytes": 471
+    },
+    {
+      "source_path": "docs/integration-v2/js-confirmation-v1/b11.json",
+      "archive_path": "snapshot/docs/integration-v2/js-confirmation-v1/b11.json",
+      "sha256": "518248b722fc2eefb43819b0cff64e51997ec82c87669383c01fb5728a87c3e2",
+      "bytes": 471
+    },
+    {
+      "source_path": "docs/integration-v2/js-confirmation-v1/b12.json",
+      "archive_path": "snapshot/docs/integration-v2/js-confirmation-v1/b12.json",
+      "sha256": "d3a18c581ac284331693df5f0441d2a962353476e5c23a1bf9d79522e02637f5",
+      "bytes": 471
+    },
+    {
+      "source_path": "docs/integration-v2/js-confirmation-v1/b13.json",
+      "archive_path": "snapshot/docs/integration-v2/js-confirmation-v1/b13.json",
+      "sha256": "60289b4b6d80d4f7653aa0b3c66a9a2ccc184ffce21677a18a5c5dc4a235737d",
+      "bytes": 472
+    },
+    {
+      "source_path": "docs/integration-v2/js-confirmation-v1/b14.json",
+      "archive_path": "snapshot/docs/integration-v2/js-confirmation-v1/b14.json",
+      "sha256": "7e521d8bb81ddd2f1a9ad0c04a83e10027c724941f73431e5290d00b6500fdf5",
+      "bytes": 472
+    },
+    {
+      "source_path": "docs/integration-v2/js-confirmation-v1/b15.json",
+      "archive_path": "snapshot/docs/integration-v2/js-confirmation-v1/b15.json",
+      "sha256": "9212fe3509f2d9baa3387d22e64f657fee247bd7fdc3a96dc42562a1317ca03f",
+      "bytes": 472
+    },
+    {
+      "source_path": "docs/integration-v2/js-confirmation-v1/initial-state-audit.json",
+      "archive_path": "snapshot/docs/integration-v2/js-confirmation-v1/initial-state-audit.json",
+      "sha256": "ee9622e1dca55c27e571ab9eb0b9bbf240af743dbc6823ecafa6bdc2de7cd460",
+      "bytes": 157429
+    },
+    {
+      "source_path": "docs/integration-v2/js-confirmation-v1/prior-initials.json",
+      "archive_path": "snapshot/docs/integration-v2/js-confirmation-v1/prior-initials.json",
+      "sha256": "389cd885c69cfcaee56f07a18b6d5a15350f8e181281b34eccef38e136ca9917",
+      "bytes": 30653
+    },
+    {
+      "source_path": "docs/integration-v2/js-confirmation-v1/study.json",
+      "archive_path": "snapshot/docs/integration-v2/js-confirmation-v1/study.json",
+      "sha256": "c9f20f61e835a504e51295926f2b62daf4ac06a98a406e921c70765c94360e16",
+      "bytes": 1302
+    },
+    {
+      "source_path": "docs/integration-v2/results/batch-shadow-recovery.json",
+      "archive_path": "snapshot/docs/integration-v2/results/batch-shadow-recovery.json",
+      "sha256": "501bb805078ac71cb0742f0ef45435bba1b027b7b0cb32ba7667d58b00504244",
+      "bytes": 1579
+    },
+    {
+      "source_path": "docs/integration-v2/results/batch-shadow-recovery.log",
+      "archive_path": "snapshot/docs/integration-v2/results/batch-shadow-recovery.log",
+      "sha256": "29add8da8da2c94dd8f4ef6f09242f24e559812a23ddcf5f0b4d1795272aa52c",
+      "bytes": 263
+    },
+    {
+      "source_path": "docs/integration-v2/results/confirmation-browser-r1.log",
+      "archive_path": "snapshot/docs/integration-v2/results/confirmation-browser-r1.log",
+      "sha256": "0c9e52df4578cdc0b7c6d41979cc6918d79b3b381c3d63ffb3b4ed1572730f45",
+      "bytes": 672
+    },
+    {
+      "source_path": "docs/integration-v2/results/confirmation-browser-r1/browser.json",
+      "archive_path": "snapshot/docs/integration-v2/results/confirmation-browser-r1/browser.json",
+      "sha256": "417300090bdb6cdd4270354204cf53ddb69eef08e616fe18305240a9eb3679c9",
+      "bytes": 30627
+    },
+    {
+      "source_path": "docs/integration-v2/results/confirmation-browser-r1/planet-absent.png",
+      "archive_path": "snapshot/docs/integration-v2/results/confirmation-browser-r1/planet-absent.png",
+      "sha256": "f3828941632d9de5405fa95d225f6dc15d7f1af98a22ea0443c65c71bd0bfd38",
+      "bytes": 1005835
+    },
+    {
+      "source_path": "docs/integration-v2/results/confirmation-browser-r1/planet-returned.png",
+      "archive_path": "snapshot/docs/integration-v2/results/confirmation-browser-r1/planet-returned.png",
+      "sha256": "a514345804ff52113c9b93fc75df0e719009f55378acf1e3535bb48b1514d331",
+      "bytes": 1310242
+    },
+    {
+      "source_path": "docs/integration-v2/results/confirmation-browser-server.log",
+      "archive_path": "snapshot/docs/integration-v2/results/confirmation-browser-server.log",
+      "sha256": "a28c4e0f0df6a8cc6d0d96d43ba832aeb3bdd7355d8b8ba4c8b5a2f3f5f88a2d",
+      "bytes": 29
+    },
+    {
+      "source_path": "docs/integration-v2/results/confirmation-build-r1.log",
+      "archive_path": "snapshot/docs/integration-v2/results/confirmation-build-r1.log",
+      "sha256": "04f1f20cca47ea484089b46428121122710fb43a32ae9a42fd6a2eb1f880572e",
+      "bytes": 349
+    },
+    {
+      "source_path": "docs/integration-v2/results/confirmation-regression-r1.log",
+      "archive_path": "snapshot/docs/integration-v2/results/confirmation-regression-r1.log",
+      "sha256": "1c14506a19e5170384042c712666983524b253ec1fd50fb9753cda17f0746d7a",
+      "bytes": 872
+    },
+    {
+      "source_path": "docs/integration-v2/results/control-event-conformance-r1.log",
+      "archive_path": "snapshot/docs/integration-v2/results/control-event-conformance-r1.log",
+      "sha256": "0de8b103fa9346a101e9c0e546359528633febcccc79bdffd33c8ed4b4b1e595",
+      "bytes": 1632
+    },
+    {
+      "source_path": "docs/integration-v2/results/control-event-conformance-r1/deflect-v2-capture.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/control-event-conformance-r1/deflect-v2-capture.input.json",
+      "sha256": "adb1fe707e49bffef1bb6a891c5de7e3c09cc3f3ccaefd3ae9c32ada1ace66a4",
+      "bytes": 4926
+    },
+    {
+      "source_path": "docs/integration-v2/results/control-event-conformance-r1/deflect-v2-capture.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/control-event-conformance-r1/deflect-v2-capture.native.json",
+      "sha256": "1e974a5bf46181b56c6c02406b03cccdc2b8880bc6fb75c98f163d8383026bf5",
+      "bytes": 3888
+    },
+    {
+      "source_path": "docs/integration-v2/results/control-event-conformance-r1/deflect-v2-deflection.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/control-event-conformance-r1/deflect-v2-deflection.input.json",
+      "sha256": "2f536fe925bf7274a9e9f87e1b09b2f45daff68f7b97f6728a5beac99a81e2cb",
+      "bytes": 4959
+    },
+    {
+      "source_path": "docs/integration-v2/results/control-event-conformance-r1/deflect-v2-deflection.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/control-event-conformance-r1/deflect-v2-deflection.native.json",
+      "sha256": "9df966572d20ae4518b7473081c2cec9bdc34024f355a1f25b174d5073dd9a44",
+      "bytes": 9127
+    },
+    {
+      "source_path": "docs/integration-v2/results/control-event-conformance-r1/deflect-v2-natural.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/control-event-conformance-r1/deflect-v2-natural.input.json",
+      "sha256": "a49d0a518245cef22082b4a04a0c7ef9aee297f52fd7fe6cbfb2b8bf1c4b65dd",
+      "bytes": 5109
+    },
+    {
+      "source_path": "docs/integration-v2/results/control-event-conformance-r1/deflect-v2-natural.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/control-event-conformance-r1/deflect-v2-natural.native.json",
+      "sha256": "9177a44d066632009fa9b521d7b914145c8937d8ea0576bb39bde84d0c60336e",
+      "bytes": 3949
+    },
+    {
+      "source_path": "docs/integration-v2/results/control-event-conformance-r1/deflect-v2-planet-contact.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/control-event-conformance-r1/deflect-v2-planet-contact.input.json",
+      "sha256": "e388ac340b679cce53350f5a156f841f875874702f60e701cc8ce68d88fb1ed1",
+      "bytes": 4947
+    },
+    {
+      "source_path": "docs/integration-v2/results/control-event-conformance-r1/deflect-v2-planet-contact.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/control-event-conformance-r1/deflect-v2-planet-contact.native.json",
+      "sha256": "a3d53ed729d71b1051d43eb550d80c269716151360a6145b0f3446108bd1e496",
+      "bytes": 5284
+    },
+    {
+      "source_path": "docs/integration-v2/results/control-event-conformance-r1/deflect-v2-reflection.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/control-event-conformance-r1/deflect-v2-reflection.input.json",
+      "sha256": "b4b18f8eac45880ee2e800fdec47fdf4cbf9dcb5711fbdfe80040451435e95b9",
+      "bytes": 4959
+    },
+    {
+      "source_path": "docs/integration-v2/results/control-event-conformance-r1/deflect-v2-reflection.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/control-event-conformance-r1/deflect-v2-reflection.native.json",
+      "sha256": "d08eaa8629569acfa45979008081de50661fb15d581c69ca230c562f607d0bce",
+      "bytes": 29279021
+    },
+    {
+      "source_path": "docs/integration-v2/results/control-event-conformance-r1/native-comparison.json",
+      "archive_path": "snapshot/docs/integration-v2/results/control-event-conformance-r1/native-comparison.json",
+      "sha256": "9d62a44b381f8df39988a0b67ac7ef8bd3d1c84ba57e95cf16b971d3d10b9bf4",
+      "bytes": 23933
+    },
+    {
+      "source_path": "docs/integration-v2/results/control-event-conformance-r1/reflect-v2-capture.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/control-event-conformance-r1/reflect-v2-capture.input.json",
+      "sha256": "cd053fb4a6a0bb6cd0b0e2d3ea45980adf68c76b422dfb2a39719966af4d1c48",
+      "bytes": 4927
+    },
+    {
+      "source_path": "docs/integration-v2/results/control-event-conformance-r1/reflect-v2-capture.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/control-event-conformance-r1/reflect-v2-capture.native.json",
+      "sha256": "275d13e32ed9f15277f73350bb65b0b870e212244e8fc7f7b1de10b3eae73e8c",
+      "bytes": 3889
+    },
+    {
+      "source_path": "docs/integration-v2/results/control-event-conformance-r1/reflect-v2-deflection.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/control-event-conformance-r1/reflect-v2-deflection.input.json",
+      "sha256": "559e9bcf90bd6875b21081ba181b5d94070ddf254957ed4b368e06a7b529a855",
+      "bytes": 4960
+    },
+    {
+      "source_path": "docs/integration-v2/results/control-event-conformance-r1/reflect-v2-deflection.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/control-event-conformance-r1/reflect-v2-deflection.native.json",
+      "sha256": "f073d544aa45d486b811bbaabd8a9246cf0d954bb514c9ac4eb8f83646a4c91a",
+      "bytes": 10034
+    },
+    {
+      "source_path": "docs/integration-v2/results/control-event-conformance-r1/reflect-v2-natural.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/control-event-conformance-r1/reflect-v2-natural.input.json",
+      "sha256": "ce34ff3c38bef7ce7a82a869c2fdfccc951167ac3df0c7e8def3a80395512050",
+      "bytes": 5110
+    },
+    {
+      "source_path": "docs/integration-v2/results/control-event-conformance-r1/reflect-v2-natural.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/control-event-conformance-r1/reflect-v2-natural.native.json",
+      "sha256": "cbb1817a1f42ec21bc4f929089f949b2102459357870abaa88c2bf46869d03f4",
+      "bytes": 3949
+    },
+    {
+      "source_path": "docs/integration-v2/results/control-event-conformance-r1/reflect-v2-planet-contact.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/control-event-conformance-r1/reflect-v2-planet-contact.input.json",
+      "sha256": "d134943840df9a2182f345a90074526cb761abb00a14fd66382587a1b9c24f73",
+      "bytes": 4948
+    },
+    {
+      "source_path": "docs/integration-v2/results/control-event-conformance-r1/reflect-v2-planet-contact.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/control-event-conformance-r1/reflect-v2-planet-contact.native.json",
+      "sha256": "00894d134c6437bd0d1a446dd28e923528222b71bd23eb0c836fe6672f8b7f56",
+      "bytes": 4927
+    },
+    {
+      "source_path": "docs/integration-v2/results/control-event-conformance-r1/reflect-v2-reflection.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/control-event-conformance-r1/reflect-v2-reflection.input.json",
+      "sha256": "3bb2869611842334678b2e4af76de7f8d41860459ff4a7d2110421e6e704e0cd",
+      "bytes": 4960
+    },
+    {
+      "source_path": "docs/integration-v2/results/control-event-conformance-r1/reflect-v2-reflection.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/control-event-conformance-r1/reflect-v2-reflection.native.json",
+      "sha256": "5854676cecc22c5d977df7f5460989d378cf5589040d58761e512b7e466e4dc8",
+      "bytes": 22442253
+    },
+    {
+      "source_path": "docs/integration-v2/results/control-events-r1.log",
+      "archive_path": "snapshot/docs/integration-v2/results/control-events-r1.log",
+      "sha256": "943d646b94d54cc8fafc3d8c4d31658e441ba2829c7f3f63aa72724cb5972585",
+      "bytes": 1689
+    },
+    {
+      "source_path": "docs/integration-v2/results/control-events-r2.log",
+      "archive_path": "snapshot/docs/integration-v2/results/control-events-r2.log",
+      "sha256": "64c76376e431bb23d50e0b6a18ab38ea433485182d0c00a51b5b6c2dde4dfd41",
+      "bytes": 737
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1-supervise.log",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1-supervise.log",
+      "sha256": "b5d03f9cf68dfc9b37440dff4a62cec6c64413bdf8d5824a278c98e9a0fc4192",
+      "bytes": 151
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-deflect-v2-1000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-deflect-v2-1000.raw.json",
+      "sha256": "057634e8481804b40667ec3dd1b4cb82812589919709aac7dfa59c4a589811c1",
+      "bytes": 9424
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-deflect-v2-1000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-deflect-v2-1000.state.json",
+      "sha256": "80bd3e50d96e6868f2b7921609f4b023847f37446910f243ed6ce53cf891ff53",
+      "bytes": 22189
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-deflect-v2-10000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-deflect-v2-10000.raw.json",
+      "sha256": "3e12116d80b6dc8b6734b00dc84e56b85e586026d27525a11e7b68e03b80811e",
+      "bytes": 22254
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-deflect-v2-10000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-deflect-v2-10000.state.json",
+      "sha256": "3ba49173de4b6c027c89aba6b3aa9482903d12cd656b9b8b6cb642b5631daefe",
+      "bytes": 44530
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-deflect-v2-30000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-deflect-v2-30000.raw.json",
+      "sha256": "a2d5bad48aabdaef7e41fa2950b99ab06c7884c52796677668d1275fd66e8532",
+      "bytes": 37907
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-deflect-v2-30000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-deflect-v2-30000.state.json",
+      "sha256": "b1961fc9ed12256c556dfe14c5152ea8b4096db7760d2804bd73aff236db4ad8",
+      "bytes": 64197
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-deflect-v2.checkpoint.json",
+      "sha256": "b1961fc9ed12256c556dfe14c5152ea8b4096db7760d2804bd73aff236db4ad8",
+      "bytes": 64197
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-reflect-v2-1000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-reflect-v2-1000.raw.json",
+      "sha256": "36a235a47b9315cfc0d217031f7f4475f3526120871dfe0065107841a93931f8",
+      "bytes": 52967
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-reflect-v2-1000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-reflect-v2-1000.state.json",
+      "sha256": "618c8f05d405d4bc4f8b439ceb56efbde31d4b7b72ce0b5fe55eef6007439130",
+      "bytes": 75157
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-reflect-v2-10000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-reflect-v2-10000.raw.json",
+      "sha256": "c7902c5ade82b912a569d9937640568dda6e15ef18982519f74456febf453b02",
+      "bytes": 128491
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-reflect-v2-10000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-reflect-v2-10000.state.json",
+      "sha256": "83d90ee38f8b4c73ac460d287c172a6652b86d878387cf749e5f4d1cffb57f39",
+      "bytes": 178003
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-reflect-v2-30000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-reflect-v2-30000.raw.json",
+      "sha256": "a834d8442def35c14dfecb1ebc30433ebd82a99dc2b47a1a34767029e7af6750",
+      "bytes": 223287
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-reflect-v2-30000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-reflect-v2-30000.state.json",
+      "sha256": "434f9ea365d017b640c3b7fbf79398eb280f4a3414e13fffd7512368e2f48524",
+      "bytes": 272119
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-reflect-v2.checkpoint.json",
+      "sha256": "434f9ea365d017b640c3b7fbf79398eb280f4a3414e13fffd7512368e2f48524",
+      "bytes": 272119
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-deflect-v2-1000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-deflect-v2-1000.raw.json",
+      "sha256": "4311acdb1643967160d46281fe6a45c94e5729307064431ffffd7b23a822e787",
+      "bytes": 27094
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-deflect-v2-1000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-deflect-v2-1000.state.json",
+      "sha256": "ea49ecae9aa50a3adf79f1c57924c2f362561024212528c9d3859de1ed17e90e",
+      "bytes": 59611
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-deflect-v2-10000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-deflect-v2-10000.raw.json",
+      "sha256": "0b3bd1d4ecbe70d1b3e37689b448574ca372238a24ffd796e50e8406f6134cfe",
+      "bytes": 65752
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-deflect-v2-10000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-deflect-v2-10000.state.json",
+      "sha256": "0d495be77a9297ca77f4244d3d404d060d2e2e82d65e5397ea31795a18be057b",
+      "bytes": 115531
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-deflect-v2-30000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-deflect-v2-30000.raw.json",
+      "sha256": "bdb941b0f662df81c06f3337664468a7d157a20d4479d078f1cb788afaee2cd4",
+      "bytes": 81095
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-deflect-v2-30000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-deflect-v2-30000.state.json",
+      "sha256": "c6fdb84eb328ce383dfb21ed171ef41a1b26b9b5524ed959495f5b8a0e1d17e7",
+      "bytes": 127078
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-deflect-v2.checkpoint.json",
+      "sha256": "c6fdb84eb328ce383dfb21ed171ef41a1b26b9b5524ed959495f5b8a0e1d17e7",
+      "bytes": 127078
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-reflect-v2-1000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-reflect-v2-1000.raw.json",
+      "sha256": "c536c04af3394c1c19aa2825e9c95a8ceb522a864a693dadb709e67dd21debd2",
+      "bytes": 27094
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-reflect-v2-1000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-reflect-v2-1000.state.json",
+      "sha256": "b6bfd3a8983abfa55b57bb9f41c2414de6d5ea4aa004e26d13df3da8b3f2edd5",
+      "bytes": 59611
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-reflect-v2-10000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-reflect-v2-10000.raw.json",
+      "sha256": "da4b7db79d673bcc70e0873ada84e7c16062aa4d4327e02bd53763c0c96038b0",
+      "bytes": 86902
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-reflect-v2-10000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-reflect-v2-10000.state.json",
+      "sha256": "9e227f5c5cd0682b74a33fec4b6807f01d15e0e5f367686eeac05f333f96b812",
+      "bytes": 149644
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-reflect-v2-30000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-reflect-v2-30000.raw.json",
+      "sha256": "3a7acc5b6eaadf37518e8541921d4714a5006774c63c8f20fa3985b005437be3",
+      "bytes": 111458
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-reflect-v2-30000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-reflect-v2-30000.state.json",
+      "sha256": "be2a1a2d30f2aa5193655d729c5c56af3e4596e2fe847bebad040bc6a6da68a1",
+      "bytes": 156335
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-reflect-v2.checkpoint.json",
+      "sha256": "be2a1a2d30f2aa5193655d729c5c56af3e4596e2fe847bebad040bc6a6da68a1",
+      "bytes": 156335
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-deflect-v2-1000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-deflect-v2-1000.raw.json",
+      "sha256": "1d9162748571a234a70b57239294a59404e5d4b00ec2258f8162b25fb4429c3b",
+      "bytes": 15400
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-deflect-v2-1000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-deflect-v2-1000.state.json",
+      "sha256": "1d643ccd1d2e5b8f204b4235fd04c565f32e9b35a889712882454c894d8c28be",
+      "bytes": 35408
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-deflect-v2-10000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-deflect-v2-10000.raw.json",
+      "sha256": "6f7b59aa2d46b9ed0c6fb1fe7d43bf8261318ae37df6e07cbf69edca9174eb84",
+      "bytes": 114628
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-deflect-v2-10000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-deflect-v2-10000.state.json",
+      "sha256": "f377dc3ce14dd91e586cf0b8efebc733fc735d73fa752c23a98d19d8c5693289",
+      "bytes": 157297
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-deflect-v2-30000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-deflect-v2-30000.raw.json",
+      "sha256": "2cd3b1936e088c23caf2dc82a2c691c01bf7752ae851ae57158f2bdcbd024b5c",
+      "bytes": 137894
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-deflect-v2-30000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-deflect-v2-30000.state.json",
+      "sha256": "fb4ba970fae5e6f09ae9a0dec91f63c3f41fb8e8aec17d4300f62b5d1217af4d",
+      "bytes": 182046
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-deflect-v2.checkpoint.json",
+      "sha256": "fb4ba970fae5e6f09ae9a0dec91f63c3f41fb8e8aec17d4300f62b5d1217af4d",
+      "bytes": 182046
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-reflect-v2-1000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-reflect-v2-1000.raw.json",
+      "sha256": "4141821efdd8449392a79bd4ddeac7a31ce52948b9037b9d065681a80b344169",
+      "bytes": 23644
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-reflect-v2-1000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-reflect-v2-1000.state.json",
+      "sha256": "a076ac0375b1cad2bebe52be1ac86564f27a24ef08df7478a9781170dc553064",
+      "bytes": 53642
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-reflect-v2-10000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-reflect-v2-10000.raw.json",
+      "sha256": "f349516bb94503ec67a977d0695cade6dce5777dad28c57cb6872a19755a489f",
+      "bytes": 36130
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-reflect-v2-10000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-reflect-v2-10000.state.json",
+      "sha256": "2c4c38ce03f3ec76bd5e5df43019eafe120da4ea3c63c289f6016f1f05e4e100",
+      "bytes": 73524
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-reflect-v2-30000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-reflect-v2-30000.raw.json",
+      "sha256": "03129a4538a1e7a0b31e9025401b338d1d69ab71315055b13e27b30c61f3f892",
+      "bytes": 57935
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-reflect-v2-30000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-reflect-v2-30000.state.json",
+      "sha256": "a5a199dcb656a607ca97e7157c4cce1c1e6d0bebb52437ab361928b4249c4d7b",
+      "bytes": 103502
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-reflect-v2.checkpoint.json",
+      "sha256": "a5a199dcb656a607ca97e7157c4cce1c1e6d0bebb52437ab361928b4249c4d7b",
+      "bytes": 103502
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-deflect-v2-1000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-deflect-v2-1000.raw.json",
+      "sha256": "d22f1eaa4544e91fa917d2f6123898e97601db95428250ab697fee3e0783d1ef",
+      "bytes": 11298
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-deflect-v2-1000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-deflect-v2-1000.state.json",
+      "sha256": "f6b1778de827b31c86eedd8f71d2ace76445f17ee6829c89471107dcbf14c6b0",
+      "bytes": 25713
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-deflect-v2-10000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-deflect-v2-10000.raw.json",
+      "sha256": "b951f930db71dc028353aed083ac5a4b810fde182f015e3a1f56dc1da811616f",
+      "bytes": 99796
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-deflect-v2-10000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-deflect-v2-10000.state.json",
+      "sha256": "51a55a6d6ebdfd8827d6f523ea57663b03065690148d32db9ea83d39b1058512",
+      "bytes": 145390
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-deflect-v2-30000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-deflect-v2-30000.raw.json",
+      "sha256": "a702342fc3fc56976c37f06a3bef4a84d7f65708361bb817512aa25eb554dabb",
+      "bytes": 201176
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-deflect-v2-30000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-deflect-v2-30000.state.json",
+      "sha256": "ba49619e5f5e0ec4cc018a15503ad103697506232eb6930f7c68908c8744dec9",
+      "bytes": 264184
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-deflect-v2.checkpoint.json",
+      "sha256": "ba49619e5f5e0ec4cc018a15503ad103697506232eb6930f7c68908c8744dec9",
+      "bytes": 264184
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-reflect-v2-1000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-reflect-v2-1000.raw.json",
+      "sha256": "cd1d21d5259c5e25672d46215f707e38661cb751cdc6903abe510cebe25b919a",
+      "bytes": 13616
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-reflect-v2-1000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-reflect-v2-1000.state.json",
+      "sha256": "e5e11aee2f6f2916ae0c68696594be0b1b5bd87ddb4d8bfeb8b9abc8703933f0",
+      "bytes": 31967
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-reflect-v2-10000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-reflect-v2-10000.raw.json",
+      "sha256": "6c72f74a81e1c2731cb811166bae1391c77d8ec752de4c05b912d054f807c155",
+      "bytes": 96665
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-reflect-v2-10000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-reflect-v2-10000.state.json",
+      "sha256": "1117db7dd0cccbb23eccf3dc86170c73b4a0543214708ba6759d549ebe1394a7",
+      "bytes": 146639
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-reflect-v2-30000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-reflect-v2-30000.raw.json",
+      "sha256": "8e4798675e7cd00785c5589e01a9edba1f76ab27a7a59be8c4738c9dce361ae3",
+      "bytes": 146623
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-reflect-v2-30000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-reflect-v2-30000.state.json",
+      "sha256": "563a7786249c91c7d153fe079a2babbda5ea558681a4a959f3b9494c36575152",
+      "bytes": 181900
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-reflect-v2.checkpoint.json",
+      "sha256": "563a7786249c91c7d153fe079a2babbda5ea558681a4a959f3b9494c36575152",
+      "bytes": 181900
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/manifest.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/manifest.json",
+      "sha256": "db942bb3d8a629010a1eccb1926070dacf54d3721c3f292767839a613a9ee55b",
+      "bytes": 4359
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/push.log",
+      "sha256": "06db3b1b74dc107138aa403faa22d49e60e7f3abce0a648f37221f23a1cb2cc9",
+      "bytes": 137
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/shard0.jsonl",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/shard0.jsonl",
+      "sha256": "124035010be405cf6dbe031f1cbca62c980031a85513750159f5a7687e5a1d09",
+      "bytes": 28781
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/shard1.jsonl",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/shard1.jsonl",
+      "sha256": "bb66f4c8bcc46574213425c3cf41f2727b3492ce9e5c1ac2ba19a41d1926614c",
+      "bytes": 29020
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/summary.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/summary.json",
+      "sha256": "0fcbfc17557a3ca90f6905d0fa81e32c69d73c42bae1a6d7e37a4c0c1e30c4e5",
+      "bytes": 1815
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/supervise.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/supervise.state.json",
+      "sha256": "695f11ce87862210ae895a979af77b5941b083ba08226c816bcc7ae6cf72fac1",
+      "bytes": 655
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/worker0.log",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/worker0.log",
+      "sha256": "fda5061d502190b6c58f55107ce4a8ddd656c02904f0c8b310c040c6543bd3f7",
+      "bytes": 12880
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/worker1.log",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/worker1.log",
+      "sha256": "ae31d52395cbf2db4a6d2bf3182bee79a40dfdac09675fbf53e1cc8637f959e1",
+      "bytes": 12880
+    },
+    {
+      "source_path": "docs/integration-v2/results/formal-worker-smoke.json",
+      "archive_path": "snapshot/docs/integration-v2/results/formal-worker-smoke.json",
+      "sha256": "e9d248bae61549f1fe7b0196d445a1e0a2facfbc574d3007a53ab0f2ae72a629",
+      "bytes": 786
+    },
+    {
+      "source_path": "docs/integration-v2/results/formal-worker-smoke.log",
+      "archive_path": "snapshot/docs/integration-v2/results/formal-worker-smoke.log",
+      "sha256": "27175f94b48c05531a0f107b0c2cae92c649593d1fe4b6b28a23686336c03c36",
+      "bytes": 196
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-confirmation-initials.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-confirmation-initials.log",
+      "sha256": "b17ebff06c31b016e0e339362a6a151cafbeee7661290afcddbdb908ea45cefb",
+      "bytes": 51
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30-supervise.log",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30-supervise.log",
+      "sha256": "cc9bddcacc33ad07fff777914f803d41567d9972dfde798d2f497f2f6a9d7273",
+      "bytes": 1206
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-0-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-0-deflect-v2.checkpoint.json",
+      "sha256": "886371ec0e3ac26c5b4db97f2b96a71fba6418aeae93ae741963b3c24f2bdf4a",
+      "bytes": 172330
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-0-deflect-v2.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-0-deflect-v2.input.json",
+      "sha256": "e1ce2b54263e7f9e50b4ae4a438b5a67c34a5c78af25b8f675c6560470ffde84",
+      "bytes": 6993
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-0-deflect-v2.raw.json.gz",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-0-deflect-v2.raw.json.gz",
+      "sha256": "04f4f6111a2fae5d34c67fa38ebe458acdde90cf06601023ea486a356d931099",
+      "bytes": 42017
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-0-deflect-v2.result.json",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-0-deflect-v2.result.json",
+      "sha256": "dc68104a48d347d7b2f66d3525b18df4f54d26dfbf1f97d023c4846a803b6736",
+      "bytes": 39017
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-0-deflect-v2.stderr.log",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-0-deflect-v2.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-0-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-0-reflect-v2.checkpoint.json",
+      "sha256": "4dca03cf4db86e4647942d1d52a9089ed5e11299c58cbb6fee1eba0210a8825b",
+      "bytes": 175988
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-0-reflect-v2.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-0-reflect-v2.input.json",
+      "sha256": "e4ba4dcf003281d99891ba3a6a709aed0fd158535c75e96f5f4ebbe18d131543",
+      "bytes": 6994
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-0-reflect-v2.raw.json.gz",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-0-reflect-v2.raw.json.gz",
+      "sha256": "b26b2f08cfb23936e088c15b25fb4e906a07336038ab2241231a7a09d5236672",
+      "bytes": 41996
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-0-reflect-v2.result.json",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-0-reflect-v2.result.json",
+      "sha256": "d6ce0b0dac52c547645a9d08fd0733ff708cce5dca2864ee5bd6ce2b8f3cc449",
+      "bytes": 39094
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-0-reflect-v2.stderr.log",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-0-reflect-v2.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-1-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-1-deflect-v2.checkpoint.json",
+      "sha256": "9b106b0ec4da961cb3d069810ea4c56d66d2be8decd31173e247d73cdfe2cdb7",
+      "bytes": 143343
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-1-deflect-v2.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-1-deflect-v2.input.json",
+      "sha256": "4fdd2647c4039d432604cd90f6c9e363cc76556b96de9e110f450af2ada84a0a",
+      "bytes": 6997
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-1-deflect-v2.raw.json.gz",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-1-deflect-v2.raw.json.gz",
+      "sha256": "817a01a47aac0303f376af42e25dcef4874ce16def32df51d7f1c3a1be9e5398",
+      "bytes": 32769
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-1-deflect-v2.result.json",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-1-deflect-v2.result.json",
+      "sha256": "d2a7ddddec3171e7f85585a8fc2449c5017a89f5fbb11448d16d4a60de05a713",
+      "bytes": 39229
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-1-deflect-v2.stderr.log",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-1-deflect-v2.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-1-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-1-reflect-v2.checkpoint.json",
+      "sha256": "6401bdbd53e4cb23f6fad724147ad0e089f1b449ac6517e566b641b33784d4c4",
+      "bytes": 197868
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-1-reflect-v2.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-1-reflect-v2.input.json",
+      "sha256": "f500a5e5b2f2dc082fc81cce2a8dc71bf3135e7502192c44260926ea610894c6",
+      "bytes": 6998
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-1-reflect-v2.raw.json.gz",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-1-reflect-v2.raw.json.gz",
+      "sha256": "0a79478151bc7dfdbf5e0835ebea6b7b03f014e51b70b6df15f1653485853e34",
+      "bytes": 47067
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-1-reflect-v2.result.json",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-1-reflect-v2.result.json",
+      "sha256": "e7abaf7ab7dd96178df21dc846263c1663000b07e09517c8a3a85a2c628cc16f",
+      "bytes": 39166
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-1-reflect-v2.stderr.log",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-1-reflect-v2.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-2-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-2-deflect-v2.checkpoint.json",
+      "sha256": "00c4e027f4493146c88969ee5847545f28970ec24747f5bff11007ab81ae5716",
+      "bytes": 217631
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-2-deflect-v2.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-2-deflect-v2.input.json",
+      "sha256": "77eeb7e9d72fd0932f5210657888670a370ee7cc2ca0c2edba4085842bec576a",
+      "bytes": 7000
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-2-deflect-v2.raw.json.gz",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-2-deflect-v2.raw.json.gz",
+      "sha256": "dc68cd1e679485c8df2851c5754b8d1d43c13ec2d005a05a92e5e58b72a00686",
+      "bytes": 49185
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-2-deflect-v2.result.json",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-2-deflect-v2.result.json",
+      "sha256": "32656f9eb3ca625394d0b208b7e245767ff63a74c91f405c78e137b8156cd0a0",
+      "bytes": 38891
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-2-deflect-v2.stderr.log",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-2-deflect-v2.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-2-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-2-reflect-v2.checkpoint.json",
+      "sha256": "e18e85360ca8bfc6388de1fde72b3835724059b7addc68dead1912bab514e690",
+      "bytes": 209225
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-2-reflect-v2.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-2-reflect-v2.input.json",
+      "sha256": "966189394db45eedbf141b1ae6b7752b4edb1af76dea66149551d03415792483",
+      "bytes": 7001
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-2-reflect-v2.raw.json.gz",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-2-reflect-v2.raw.json.gz",
+      "sha256": "0d51af577a74a976979a4839a2c5f2273e4bdc451efec9e0ab98e133d7fa9f94",
+      "bytes": 49376
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-2-reflect-v2.result.json",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-2-reflect-v2.result.json",
+      "sha256": "dc2ea28e1ceacd5fb2d301f1652037e5fab90df4de4cb643022baaf65c82e489",
+      "bytes": 38872
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-2-reflect-v2.stderr.log",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-2-reflect-v2.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-3-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-3-deflect-v2.checkpoint.json",
+      "sha256": "625a7e88e1ee33ed3202dcb96db99d51b2f8227b77b1f563740e6168a26d3d3d",
+      "bytes": 230304
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-3-deflect-v2.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-3-deflect-v2.input.json",
+      "sha256": "69dca867002ac7f164cd78ec0b90ca14f2468eb868e36c89de2c60033fb63943",
+      "bytes": 6994
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-3-deflect-v2.raw.json.gz",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-3-deflect-v2.raw.json.gz",
+      "sha256": "49ba8464e4233a1f932f36f807da9b06b701af947bf06d6325f0eaa87c6fa2e7",
+      "bytes": 55840
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-3-deflect-v2.result.json",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-3-deflect-v2.result.json",
+      "sha256": "16d67f2edbd87fdd77968309443bdd935c278ce0359b45cc8c3e03e7aaabc015",
+      "bytes": 39151
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-3-deflect-v2.stderr.log",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-3-deflect-v2.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-3-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-3-reflect-v2.checkpoint.json",
+      "sha256": "d03d03de12a18bbb07908adaf4dc49f270e3b7a0c71c0325a99ad9380695fecc",
+      "bytes": 210135
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-3-reflect-v2.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-3-reflect-v2.input.json",
+      "sha256": "a670e22ba743cf6d6af23ecc4c1d180e0050b3cbc0ce50deb839d4ff854718e1",
+      "bytes": 6995
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-3-reflect-v2.raw.json.gz",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-3-reflect-v2.raw.json.gz",
+      "sha256": "44bd3f250b9e0213c41f77804dc6d84b75fc904e580fe43a93c1a398a2afad02",
+      "bytes": 49892
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-3-reflect-v2.result.json",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-3-reflect-v2.result.json",
+      "sha256": "73d8eafb43a71bfd3b86540e1b7f1e248420c21add46e0c3c2a1dc38df1ca9ad",
+      "bytes": 38869
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-3-reflect-v2.stderr.log",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/V2-INTEGRATION-LONG-20261022-3-reflect-v2.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/manifest.json",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/manifest.json",
+      "sha256": "47d9b6fa56d5f09a7f4f2c3b7630213381eecf1e3003e1f74c5cc450a98a42bc",
+      "bytes": 2340
+    },
+    {
+      "source_path": "docs/integration-v2/results/matched-native30/state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/matched-native30/state.json",
+      "sha256": "0230ed894eabf3a325f8e448a0f5c14db07e37ac52e8e61d8228708b23527e93",
+      "bytes": 167
+    },
+    {
+      "source_path": "docs/integration-v2/results/review30k/matched-audit.log",
+      "archive_path": "snapshot/docs/integration-v2/results/review30k/matched-audit.log",
+      "sha256": "be01f98c86981ca647243e990a2dc2659e96fde3454802d57d702ec32ec1480a",
+      "bytes": 29
+    },
+    {
+      "source_path": "docs/integration-v2/results/review30k/matched-review.json",
+      "archive_path": "snapshot/docs/integration-v2/results/review30k/matched-review.json",
+      "sha256": "08243726b15fed9ea791f64f40bda9f3fcd9af92223dcb599065a1bcbdc0cbe9",
+      "bytes": 4638
+    },
+    {
+      "source_path": "docs/integration-v2/results/review30k/restore-audit.log",
+      "archive_path": "snapshot/docs/integration-v2/results/review30k/restore-audit.log",
+      "sha256": "971cb2295816e1d1ba38d67284138bfbe6fdbae9a1996a18659e7260c8e72939",
+      "bytes": 44
+    },
+    {
+      "source_path": "docs/integration-v2/results/review30k/review.json",
+      "archive_path": "snapshot/docs/integration-v2/results/review30k/review.json",
+      "sha256": "f343f9b9b91f9720c304c66101b0d88972bd33f130beeee939becc148d15f156",
+      "bytes": 3558
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r1.log",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r1.log",
+      "sha256": "d3756e7e8a3ab40c04c42b341af0c424ead4a582db7c1ca3e6b7275f2588f004",
+      "bytes": 1041
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r1/deflect-v2-capture.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r1/deflect-v2-capture.input.json",
+      "sha256": "abd791737aac1cfa7749ce33cf01e0d083b175f37739d006829f287652a1690a",
+      "bytes": 4948
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r1/deflect-v2-capture.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r1/deflect-v2-capture.native.json",
+      "sha256": "5365f3e31042c6a73e396d0ecd2af8fbcd9b77526db2b209df0157d7f05ac83e",
+      "bytes": 3925
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r1/deflect-v2-deflection.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r1/deflect-v2-deflection.input.json",
+      "sha256": "68b80d8bc4d4c2f99f30748533ed6d5db7fc48ad9977671890b6069cd8e733db",
+      "bytes": 4981
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r1/deflect-v2-deflection.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r1/deflect-v2-deflection.native.json",
+      "sha256": "581f7ee91d5301c53d288347be154b1827248af0dbe02c3cf30faa513569786f",
+      "bytes": 9163
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r1/deflect-v2-natural.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r1/deflect-v2-natural.input.json",
+      "sha256": "878c225b8fd5f9a36726f09d0f27a3c5b8e1dab1b33ff7c30e36dbb84317a69f",
+      "bytes": 5131
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r1/deflect-v2-natural.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r1/deflect-v2-natural.native.json",
+      "sha256": "99afcde9d110e14458ac7085a73bd2820913acc1bfaa5c2ba00871563abc8bf3",
+      "bytes": 3987
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r1/deflect-v2-planet-contact.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r1/deflect-v2-planet-contact.input.json",
+      "sha256": "5bd942d5f52256c4957c355f1feecfb604f71be7e2482e2fece34c11947f39c6",
+      "bytes": 4969
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r1/deflect-v2-planet-contact.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r1/deflect-v2-planet-contact.native.json",
+      "sha256": "cd81117883e520f014a71462a18333265630bf48abd7f4a506eac430ce056409",
+      "bytes": 5322
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r1/deflect-v2-reflection.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r1/deflect-v2-reflection.input.json",
+      "sha256": "14d38df1f34699a36606de67897131cdebd7c0c8db53367d7684511991693596",
+      "bytes": 4981
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r1/deflect-v2-reflection.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r1/deflect-v2-reflection.native.json",
+      "sha256": "475f3f022ece51ad54612c676747ce245e7eeaed9ad16717402b585195687118",
+      "bytes": 29279059
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r1/reflect-v2-capture.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r1/reflect-v2-capture.input.json",
+      "sha256": "8be4508d421711cc7edab9cd84fbdc8d56a3f3822b2b9e99a30054b58bb01b01",
+      "bytes": 4949
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r1/reflect-v2-capture.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r1/reflect-v2-capture.native.json",
+      "sha256": "b64b89a81913f43ba4120f106ad3445ab06601805e997de2cbef20dabf426de5",
+      "bytes": 3926
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r1/reflect-v2-deflection.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r1/reflect-v2-deflection.input.json",
+      "sha256": "c9bee0767d64a462117adcccd6c6695d0e6d4cb05a69991853171ddf60971d4b",
+      "bytes": 4982
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r1/reflect-v2-deflection.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r1/reflect-v2-deflection.native.json",
+      "sha256": "a87b993709251941f7dfeedb803007325801b2df231ba08abe1449b0d0875a80",
+      "bytes": 10072
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r1/reflect-v2-natural.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r1/reflect-v2-natural.input.json",
+      "sha256": "c913a1cffe7a346f96079ee7c6ef8812387d827af2bce1120ddfe0a22c944957",
+      "bytes": 5132
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r1/reflect-v2-natural.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r1/reflect-v2-natural.native.json",
+      "sha256": "8ef9485f2577a2655204c2d91638e913166854e9eac80e837791c7ca81848f45",
+      "bytes": 3987
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r1/reflect-v2-planet-contact.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r1/reflect-v2-planet-contact.input.json",
+      "sha256": "5395215b4a2520cf1ee7f741f58e267fb7c1acb9b8a4d2c07cd5a180f9e57192",
+      "bytes": 4970
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r1/reflect-v2-planet-contact.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r1/reflect-v2-planet-contact.native.json",
+      "sha256": "8b2eb731322b68f9fdd680d76556f40a24e72c12bf34dd52f9f430b291c5e17c",
+      "bytes": 4964
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r1/reflect-v2-reflection.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r1/reflect-v2-reflection.input.json",
+      "sha256": "6e606dd61704e28d255a4ad31fe46e6efb7eecf19854217c1db87db75a731387",
+      "bytes": 4982
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r1/reflect-v2-reflection.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r1/reflect-v2-reflection.native.json",
+      "sha256": "5b413529c478617756b0a11bc02768a41774a67b45744e355663cf22e2eaafc5",
+      "bytes": 22442291
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r1/report.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r1/report.json",
+      "sha256": "f666d34a98cc8c84bd2f1a327d54c8db21fb4e04c438c0eba616be01d871e95d",
+      "bytes": 11960
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r2.log",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r2.log",
+      "sha256": "d3756e7e8a3ab40c04c42b341af0c424ead4a582db7c1ca3e6b7275f2588f004",
+      "bytes": 1041
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r2/deflect-v2-capture.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r2/deflect-v2-capture.input.json",
+      "sha256": "abd791737aac1cfa7749ce33cf01e0d083b175f37739d006829f287652a1690a",
+      "bytes": 4948
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r2/deflect-v2-capture.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r2/deflect-v2-capture.native.json",
+      "sha256": "c20cba97a21ab4204a66e3ea4fb95c7905ea179d759e0572e3e55ca24e5ade03",
+      "bytes": 3925
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r2/deflect-v2-deflection.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r2/deflect-v2-deflection.input.json",
+      "sha256": "68b80d8bc4d4c2f99f30748533ed6d5db7fc48ad9977671890b6069cd8e733db",
+      "bytes": 4981
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r2/deflect-v2-deflection.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r2/deflect-v2-deflection.native.json",
+      "sha256": "8c1c5ad6f402963aa9d1c2a233bf10771b3eabca6e7d95075cad373a79f569d8",
+      "bytes": 9164
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r2/deflect-v2-natural.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r2/deflect-v2-natural.input.json",
+      "sha256": "878c225b8fd5f9a36726f09d0f27a3c5b8e1dab1b33ff7c30e36dbb84317a69f",
+      "bytes": 5131
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r2/deflect-v2-natural.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r2/deflect-v2-natural.native.json",
+      "sha256": "e2f81967fbee8d65b2a1e7875d1f8e19768991137ecbb08fd43b71720ab0aa38",
+      "bytes": 3987
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r2/deflect-v2-planet-contact.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r2/deflect-v2-planet-contact.input.json",
+      "sha256": "5bd942d5f52256c4957c355f1feecfb604f71be7e2482e2fece34c11947f39c6",
+      "bytes": 4969
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r2/deflect-v2-planet-contact.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r2/deflect-v2-planet-contact.native.json",
+      "sha256": "1905d4fb588d520bdea1618a4022c497b114d3a5099c6d57cb052d98d99706c0",
+      "bytes": 5322
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r2/deflect-v2-reflection.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r2/deflect-v2-reflection.input.json",
+      "sha256": "14d38df1f34699a36606de67897131cdebd7c0c8db53367d7684511991693596",
+      "bytes": 4981
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r2/deflect-v2-reflection.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r2/deflect-v2-reflection.native.json",
+      "sha256": "aff4ced175e0090a68a4939207acd104aec272fa1f8d6b854ee02b209ffd96b6",
+      "bytes": 29279059
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r2/reflect-v2-capture.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r2/reflect-v2-capture.input.json",
+      "sha256": "8be4508d421711cc7edab9cd84fbdc8d56a3f3822b2b9e99a30054b58bb01b01",
+      "bytes": 4949
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r2/reflect-v2-capture.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r2/reflect-v2-capture.native.json",
+      "sha256": "76b76be81169da6189bc93a73e7f3ba205f6fae08a1445e41606376c00e56afa",
+      "bytes": 3926
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r2/reflect-v2-deflection.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r2/reflect-v2-deflection.input.json",
+      "sha256": "c9bee0767d64a462117adcccd6c6695d0e6d4cb05a69991853171ddf60971d4b",
+      "bytes": 4982
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r2/reflect-v2-deflection.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r2/reflect-v2-deflection.native.json",
+      "sha256": "624af7624727010802559b565cc40ccb3b84b05458f4d82c8ba597103f220b85",
+      "bytes": 10072
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r2/reflect-v2-natural.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r2/reflect-v2-natural.input.json",
+      "sha256": "c913a1cffe7a346f96079ee7c6ef8812387d827af2bce1120ddfe0a22c944957",
+      "bytes": 5132
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r2/reflect-v2-natural.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r2/reflect-v2-natural.native.json",
+      "sha256": "cd34cb9af4bbd633ac747cb0a52b327d8b604b7ad152e740319c3a7a43235331",
+      "bytes": 3988
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r2/reflect-v2-planet-contact.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r2/reflect-v2-planet-contact.input.json",
+      "sha256": "5395215b4a2520cf1ee7f741f58e267fb7c1acb9b8a4d2c07cd5a180f9e57192",
+      "bytes": 4970
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r2/reflect-v2-planet-contact.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r2/reflect-v2-planet-contact.native.json",
+      "sha256": "839e5d6d962648bcfaf8aa90cb8da19a2c30b36e651239abbec0de2bdf3a33fa",
+      "bytes": 4964
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r2/reflect-v2-reflection.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r2/reflect-v2-reflection.input.json",
+      "sha256": "6e606dd61704e28d255a4ad31fe46e6efb7eecf19854217c1db87db75a731387",
+      "bytes": 4982
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r2/reflect-v2-reflection.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r2/reflect-v2-reflection.native.json",
+      "sha256": "c71d805033e1a8c5d5bf07c4afa70738b2d09557c33a1409a69018c50a0b0e82",
+      "bytes": 22442289
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-conformance-r2/report.json",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-conformance-r2/report.json",
+      "sha256": "396ab8a8f5cdc9edc39dbddbd6ddc6f68919e816601dc8ddb2359a6a8eb59e0e",
+      "bytes": 11960
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-unit-r1.log",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-unit-r1.log",
+      "sha256": "70031d6e5d1df70cc88f992c29be3a68d761e709e6a487586d9c50c4359413e0",
+      "bytes": 402
+    },
+    {
+      "source_path": "docs/integration-v2/results/shadow-unit-r2.log",
+      "archive_path": "snapshot/docs/integration-v2/results/shadow-unit-r2.log",
+      "sha256": "ba7037cc46df0dceb60c47526dba0230c3b06acd6718549d40c2068b875139fd",
+      "bytes": 407
+    },
+    {
+      "source_path": "docs/integration-v2/results/statistics-selftest-r2.log",
+      "archive_path": "snapshot/docs/integration-v2/results/statistics-selftest-r2.log",
+      "sha256": "66f9097f0bb3720fdab3e5539d2b1912a82326139c6c2694bc055adfc66b1a69",
+      "bytes": 109
+    },
+    {
+      "source_path": "docs/integration-v2/results/statistics-selftest.log",
+      "archive_path": "snapshot/docs/integration-v2/results/statistics-selftest.log",
+      "sha256": "66f9097f0bb3720fdab3e5539d2b1912a82326139c6c2694bc055adfc66b1a69",
+      "bytes": 109
+    },
+    {
+      "source_path": "tests/v2-chaos-observer.test.js",
+      "archive_path": "snapshot/tests/v2-chaos-observer.test.js",
+      "sha256": "d3d868dd93c4c91292e9a1c9d50b2bcef75f87cf29f03478b6c27f69b719ee0a",
+      "bytes": 1973
+    },
+    {
+      "source_path": "tests/v2-integration.test.js",
+      "archive_path": "snapshot/tests/v2-integration.test.js",
+      "sha256": "3077b1e25bd95a5a9953aa943e4a40d191069dc89662e9b3cabb9febdaa8aed6",
+      "bytes": 6055
+    },
+    {
+      "source_path": "tools/v2/batch-worker-v2.mjs",
+      "archive_path": "snapshot/tools/v2/batch-worker-v2.mjs",
+      "sha256": "1d42ccb2e63e5d6716746f3ccc374da97f423316f11909994be349dd24de51cd",
+      "bytes": 9821
+    },
+    {
+      "source_path": "tools/v2/chaos-observer.mjs",
+      "archive_path": "snapshot/tools/v2/chaos-observer.mjs",
+      "sha256": "e220acb572ef99303bae2839e87105fe68f6d54c72714527c30c569afa83edd6",
+      "bytes": 7028
+    },
+    {
+      "source_path": "tools/v2/check-formal-worker.mjs",
+      "archive_path": "snapshot/tools/v2/check-formal-worker.mjs",
+      "sha256": "7281dad3fbb561806b49e03941234ae20692dcbf18070315c0f3a802f24b6497",
+      "bytes": 2869
+    },
+    {
+      "source_path": "tools/v2/check-shadow-recovery.mjs",
+      "archive_path": "snapshot/tools/v2/check-shadow-recovery.mjs",
+      "sha256": "04f2cd21284c1489ee805b4fdeb60838eb82c43a8d3c8b93375364bf5d08e002",
+      "bytes": 2562
+    },
+    {
+      "source_path": "tools/v2/matched-native30.py",
+      "archive_path": "snapshot/tools/v2/matched-native30.py",
+      "sha256": "af5ff0db682bd6e16e86f89364ec65ba810a11bcbe8bc8fe34306344a0ba1e15",
+      "bytes": 5492
+    },
+    {
+      "source_path": "tools/v2/register-js-initials.mjs",
+      "archive_path": "snapshot/tools/v2/register-js-initials.mjs",
+      "sha256": "5d60508620876f3d0cfc3dab98a9e49762986dcbb59c07b5cc5953fbe73799d0",
+      "bytes": 1712
+    },
+    {
+      "source_path": "tools/v2/review-js-confirmation.py",
+      "archive_path": "snapshot/tools/v2/review-js-confirmation.py",
+      "sha256": "6b0eae6bf2b5dc8f570d90f38b359d49b877212c7d0dccb833e28a22d00a69f2",
+      "bytes": 4139
+    },
+    {
+      "source_path": "tools/v2/run-js-confirmation.py",
+      "archive_path": "snapshot/tools/v2/run-js-confirmation.py",
+      "sha256": "b7ef26cc902e9d488367f1f678864a445e7c5f45a66aafb26419edc8bec65bbf",
+      "bytes": 15000
+    },
+    {
+      "source_path": "tools/v2/validate-shadow.mjs",
+      "archive_path": "snapshot/tools/v2/validate-shadow.mjs",
+      "sha256": "c0df72cf6d9ea03215faa45ed7ab543aa9b9de7ce9d445c127c3fd5ca710b3cf",
+      "bytes": 3037
+    },
+    {
+      "source_path": null,
+      "archive_path": "changes.patch",
+      "sha256": "4dfd7636a139c74bf260d11f73d603d66523a9c4ebed74ad53f2fe2d0be66e09",
+      "bytes": 67605
+    }
+  ]
+}
