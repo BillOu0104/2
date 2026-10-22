@@ -2,6 +2,36 @@
 
 状态：RESEARCH_IN_PROGRESS / NUMERICAL_REVIEW_REQUIRED。正式128新Seed主确认及32Seed预定h2辅助已全部实测完成（576/576、pending0、UNKNOWN0），最终原始/版本/初值/恢复哈希重审计通过。见CONFIRMATION_RESULTS.md和results/confirmation-v1/cohort.review.json。main未修改、未合并，私有网页未更新。
 
+## 当前恢复：全新128Seed JS正式100000年确认
+
+原生128新Seed主确认与全部1280精度/基准结果已完成，科学源7f64a8a不修改。JS旧24诊断窗口与同4初值原生30k对照也全部完成，三星完整且UNKNOWN0；成熟恒纪元JS8.03%/3.88%、同初值原生32.82%/11.93%，不能宣称长期等价。完整低结果/原始/成本/行星文明/差异保留，不拿原生成绩冒充JS产品验收。
+
+当前在/workspace/2-integration、integration/minimal-chaos-control-v2固定全新128个JS Seed，初始化0步、128唯一且与244既往初值无重合。候选与h4/P5/真实半径/纪元阈值均不调，补齐条件恒星影子与动态层级联合；新观察器不改主轨迹、完整恢复逐位一致、10类短窗原生对照与16测试文件通过。事件账补齐所有捕获/反射/转向的速度、功/冲量/P/L，非控制参数变更。
+
+先读集成STATUS、MATCHED_NATIVE30_RESULTS、JS_CONFIRMATION_PROTOCOL、js-confirmation-v1/study.json/initial-state-audit.json、results/js-confirmation-v1/manifest.json/supervise.state.json。两worker仅用现有2CPU，每1000年主+影子完整状态、端点不可变发布、哈希/注册初值/去重审计，新端点至多10分钟Git/records/check/push。
+
+恢复先检查双方活跃supervise/native/JS锁/worker和近20分钟记录，任一活跃/近期更新就安静退出，不编辑计算源码、不重复启动；工作区/分支/版本不可确认则报告阻碍。无活跃且过期并同版哈希核对后：
+
+```sh
+cd /workspace/2-integration
+python3 tools/v2/run-js-confirmation.py docs/integration-v2/js-confirmation-v1/study.json
+```
+
+128Seed×两候选×四窗口共1024条，但正式100000年端点仅256个；短窗或pending不算100k成功。全部失败/UNKNOWN与行星损失/重生/文明/累计脉冲成本保留；成熟过渡固定10000年。INTERRUPTED_RESUMABLE可核对同版完整状态恢复；STOPPED_REVIEW_REQUIRED先审阅error/worker/原始/state，不得改状态绕过UNKNOWN或混源。旧全部诊断/原生队列已完成，不再积分。JS_CONFIRMATION_COMPLETE_REVIEW_REQUIRED仍需综合评审，不等于整项研究完成。main未改、未合并，网页未发布，最终替换仍须用户验收，恢复检查继续。
+
+## 当前恢复：JS30k已完成，同初值原生对照进行中
+
+独立集成分支integration/minimal-chaos-control-v2、工作区/workspace/2-integration：JS4诊断Seed×两模式×1000/10000/30000共24窗口已完成、完整原始/状态SHA复审通过、UNKNOWN0，阶段f82a658已推送。30k全部三星完整，但成熟恒纪元均值转向8.03%、反射3.88%，本小样本未达到B；不能用1000年成绩或原生128Seed成绩替代JS移植结论。
+
+当前唯一诊断固定同4个初值、同h4、同控制参数的冻结原生7f64a8a、30000年、条件影子开启，共8条；不调参、不筛种、不是新独立确认。先读集成STATUS.md、DIAGNOSTICS30_RESULTS.md、MATCHED_NATIVE30_PROTOCOL.md和results/matched-native30/manifest.json/state.json，依源码/输入/配置/原始/状态哈希恢复：
+
+```sh
+cd /workspace/2-integration
+python3 tools/v2/matched-native30.py
+```
+
+先检查双方活跃supervise/native/JS锁/worker和最近20分钟记录；任一活跃/近期更新即安静退出，不编辑计算源码、不启动重复工作。工作区/分支/版本不可确认就报告阻碍。匹配原生阶段完成后审查全部配对差、成本、行星文明和混沌，保存Git/records/check/push，再决定JS条件影子与独立长期验证。旧JS/原生批处理都已完成，不重启。UNKNOWN不能当成功/死亡，也不能修改STOPPED状态绕过。研究未结案，恢复检查保持；main与私有网页未改。
+
 ## 当前恢复队列：独立JS移植1000/10000/30000年诊断
 
 原生科学阶段综合报告与同h4权衡图见SCIENTIFIC_REPORT.md；主确认128独立Seed和全部1280结果键已完成，UNKNOWN0，不重启旧积分。
