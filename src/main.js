@@ -42,6 +42,7 @@ function saveSettings() {
 }
 function changeSettings(patch, options = {}) {
   const previous = settings;
+  if(patch.stabilityMode&&patch.stabilityMode!=='off'&&patch.stabilityMode!==settings.stabilityMode&&!('newproperty60' in patch))patch={...patch,newproperty60:true,gravityModel:'newtonian',physicsMode:'reference',civilizationMode:'balanced'};
   if(manualInitialKeys.some(k=>k in patch)&&!('manualInitialBodies' in patch))patch={...patch,manualInitialBodies:null};
   settings = normalizeSettings({ ...settings, ...patch });
   worker?.postMessage({ type: 'settings', patch: settings });

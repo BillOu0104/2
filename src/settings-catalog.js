@@ -1,5 +1,6 @@
 // Shared by the settings panel and its generated complete reference.
 export const settingsDefinitions={
+    stabilityMode:{type:'combo',text:'星系运行模式 / System mode',options:[{value:'off',label:'现行版本'},{value:'deflect-v2',label:'长期三星 · 柔和避险原型'},{value:'reflect-v2',label:'长期三星 · 反弹避险原型'}]},
     dragSensitivity:{type:'slider',text:'拖拽灵敏度倍率 / Drag multiplier',min:.1,max:20,step:.1},
     civilizationLevels:{type:'bool',text:'文明科技等级 / Civilization levels'},
     developmentRate:{type:'slider',text:'文明发展倍率 / Development rate',min:.1,max:20,step:.1},
@@ -25,4 +26,4 @@ export const settingsDefinitions={
     music: { type: 'bool', text: '播放原版音乐 · Ether' },
     volume: { type: 'slider', text: '音乐音量 / Volume', min: 0, max: 1, step: .01 }
   };
-export const settingsCategories=[['layout','布局与窗口 / Layout',[]],['simulation','模拟与文明 / Simulation',['seed','orbitalInitialization','gravityModel','encounterAccuracy','physicsMode','civilizationMode','civilizationLevels','developmentRate','thermalGrace','birthDelay','wakeDelay','epochWindow','climateInertia','stellarBreathing','planetStrength']],['view','视角与银河 / View',['viewSensitivity','dragSensitivity','newproperty16','newproperty51','newproperty61','x5','y5','x6','y7','newproperty62','y6','compass','compassOpacity']],['visual','画面与轨迹 / Visual',['renderQuality','trailsLength','pixelRatio','bodyLabels','dust','_1dust1quantity','_1dust1size','_2dust2quantity','_2dust1size']],['audio','声音 / Audio',['music','volume']]];
+export const settingsCategories=[['layout','布局与窗口 / Layout',[]],['simulation','模拟与文明 / Simulation',['seed','stabilityMode','newproperty60','orbitalInitialization','gravityModel','encounterAccuracy','physicsMode','civilizationMode','civilizationLevels','developmentRate','thermalGrace','birthDelay','wakeDelay','epochWindow','climateInertia','stellarBreathing','planetStrength']],['view','视角与银河 / View',['viewSensitivity','dragSensitivity','newproperty16','newproperty51','newproperty61','x5','y5','x6','y7','newproperty62','y6','compass','compassOpacity']],['visual','画面与轨迹 / Visual',['renderQuality','trailsLength','pixelRatio','bodyLabels','dust','_1dust1quantity','_1dust1size','_2dust2quantity','_2dust1size']],['audio','声音 / Audio',['music','volume']]];

@@ -13,6 +13,7 @@ import { WorldState } from './world-state.js';
 import { CivilizationState } from './civilization-state.js';
 import { EscapeState } from './escape-state.js';
 import { OrbitTrace } from './orbit-trace.js';
+import {tickControlled} from './v2-simulation.js';
 
 class Vec3 { constructor(x = 0, y = x, z = x) { this.x = x; this.y = y; this.z = z; } }
 const plain = v => v && typeof v === 'object' ? structuredClone(v) : v;
@@ -22,7 +23,7 @@ export class Simulation {
   constructor(settings = {}, statistics = {}, {trace=false} = {}) {
     this.traceEnabled=trace;
     this.statistics=new RunStatistics(statistics);
-    this.settings = normalizeSettings(settings);
+    this.settings = normalizeSettings(settings.stabilityMode&&settings.stabilityMode!=='off'&&!('newproperty60' in settings)?{...settings,newproperty60:true}:settings);
     this.shared = { gjz: 0, rst: 0, cfw: 0, c_down: false, text: '',universeNumber:this.statistics.universeNumber,xntime:this.statistics.totalYears };
     this.engine = { runtime: 0, frametime: 1 / 60, screenResolution: new Vec3(1920, 1080, 0) };
     this.input = { cursorScreenPosition: new Vec3(960, 540, 0) };
@@ -57,10 +58,11 @@ export class Simulation {
     if(next.manualInitialBodies&&manualInitialKeys.some(k=>next[k]!==this.settings[k])&&!('manualInitialBodies' in patch))next.manualInitialBodies=null;
     const changed = Object.keys(next).filter(k => k==='manualInitialBodies'?JSON.stringify(next[k])!==JSON.stringify(this.settings[k]):next[k]!==this.settings[k]);
     this.settings = next;
+    if(changed.includes('stabilityMode'))this.modules['010']=this.createModule('010',timeFactory);
     if(!next.autorestart||(next.newproperty60&&next.civilizationMode!=='legacy'&&this.pendingRestart==='escape'))this.pendingRestart=null;
     if(changed.includes('newproperty14'))this.orbitTrace.reset();
     if (changed.includes('civilizationMode')) { this.habitability.reset(); this.civilization.reset(); this.shared.suitablePeriodCount = 0; }
-    const resetKeys = new Set(['seed', 'physicsMode', 'newproperty53', 'orbitalInitialization','gravityModel','encounterAccuracy','manualInitialBodies']);
+    const resetKeys = new Set(['stabilityMode','seed', 'physicsMode', 'newproperty53', 'orbitalInitialization','gravityModel','encounterAccuracy','manualInitialBodies']);
     const mapped = {};
     for (const [id, module] of Object.entries(this.modules)) {
       const changes = {};
@@ -73,7 +75,8 @@ export class Simulation {
     this.modules['008'].scriptProperties.trailen = false;
     for (const key of ['trailen', 'trailLength', 'trailStartSize', 'trailEndSize', 'color1', 'color2', 'color3', 'color4']) delete mapped[key];
     if (changed.some(k => resetKeys.has(k))) {
-      if(changed.includes('seed'))this.setRandom();
+      this.controlled=null;this.v2FailureNotified=false;
+      if(changed.includes('seed')||changed.includes('stabilityMode'))this.setRandom();
       this.modules['008'] = this.createModule('008', physicsFactory); this.modules['008'].init(); this.revision++;
       if (changed.includes('seed')) this.setRandom();
     } else { this.modules['008'].applyUserProperties(mapped); if (Object.keys(mapped).length) this.revision++; }
@@ -83,6 +86,7 @@ export class Simulation {
     if(reason==='restart'&&this.escape.result.confirmed)reason='escape';
     if(reason==='restart'&&this.world.state?.planet.damaged)reason='planet-damage';
     this.pendingRestart=null;
+    this.controlled=null;this.v2FailureNotified=false;
     this.escape.reset();
     this.shared.rst = 1;
     // Original log's escape edge is observed before physics consumes rst.
@@ -96,6 +100,7 @@ export class Simulation {
     this.shared.rst = 0; this.shared.num = 0; this.revision++;
   }
   tick() {
+    if(this.settings.stabilityMode!=='off')return tickControlled(this);
     if(this.pendingRestart)this.restart(this.pendingRestart);
     this.engine.runtime = ++this.tickCount / 60;
     try{this.modules['008'].update(true);}catch(error){this.emit('physics:numerical-error',{code:error.code||'physics-error',message:error.message});throw error;}
@@ -165,7 +170,7 @@ export class Simulation {
     if (this.events.length > 100) this.events.shift();
   }
   snapshot({ afterEvent = 0, compact = false } = {}) {
-    const current = this.modules['008'].state(); const p=current.bodies.length===4?current:this.lastPhysicsState||current; const s = this.shared;
+    const current = this.settings.stabilityMode!=='off'&&this.controlled?this.controlled.state():this.modules['008'].state(); const p=current.bodies.length===4?current:this.lastPhysicsState||current; const s = this.shared;
     return { tick: this.tickCount, revision: this.revision, runtime: this.engine.runtime, generation: this.generation, algorithm: algorithmId(this.settings),
       seed: this.settings.seed, bodies: p.bodies, com: p.com, G: p.G, temperature: Number(s.tem || 0), year: s.xntime || 0,
       era: this.era || '', escaped: s.tj === 1, alive: !!s.civilizationAlive, civilization: s.civilizationCount,

@@ -180,9 +180,13 @@ export class SpaceRenderer {
     if (this.snap && state.revision !== this.snap.revision) { this.clearTrails(); this.firstPosition = true; }
     if (!this.snap) this.firstPosition = true;
     if(this.firstPosition){this.fixedFrame.reset(state.initialBodies);this.renderTime=Math.max(0,state.runtime-.05);}
+    const previousState=this.snap;
     this.snap = state;
     if(state.runtime-this.renderTime>.15)this.renderTime=state.runtime-.05;
     state.bodies.forEach((b, i) => {
+      if(b.mass<=0){this.nodes[i].group.visible=false;this.trails[i].visible=false;this.trailBuffers[i].clear();return;}
+      this.nodes[i].group.visible=true;this.trails[i].visible=!!this.settings.newproperty14;
+      if(i===3&&previousState?.bodies[3]?.mass===0)this.trailBuffers[i].clear();
       const n = this.nodes[i],position=this.fixedFrame.position(b,this.spaceScale);n.target.set(position.x,position.y,position.z);
       if (this.firstPosition) n.group.position.copy(n.target);
       const samples=state.trailSamples?.[i];
