@@ -1,0 +1,109 @@
+{
+  "format": 1,
+  "id": "minimal-chaos-v2-matched-h4-review",
+  "path": "analyses/minimal-chaos-v2-matched-h4-review",
+  "kind": "analysis",
+  "version": null,
+  "title": "V2同精度基准完整审计与集成移交",
+  "summary": "256条h4牛顿/原牢笼结果完整审计，总1280唯一键与UNKNOWN0；比较候选128/128与4/128、3/128基准，保留旧牢笼联合1/128和全部行星、文明与成本。独立集成原型尚未完成验收，main未修改。",
+  "source_commit": "e6955bba95861c0ebd01d0a2f905c53984e4b933",
+  "previous_commit": "eafe2f5f532f5d65a24ec1873d8d9724b478c627",
+  "source_repository": "https://github.com/BillOu0104/2",
+  "source_subject": "research: audit matched h4 baselines and record integration handoff",
+  "source_date": "2026-10-22T19:46:29Z",
+  "archived_at": "2026-10-22T19:46:30.209170+00:00",
+  "runtime_fingerprint": null,
+  "deleted_paths": [],
+  "files": [
+    {
+      "source_path": "STATUS.md",
+      "archive_path": "snapshot/STATUS.md",
+      "sha256": "424a6584c0705578311a0a754aca67ff08cf9e120582ac03beb4e04a2d04601c",
+      "bytes": 1598
+    },
+    {
+      "source_path": "docs/research-v2/EXPERIMENT_LOG.md",
+      "archive_path": "snapshot/docs/research-v2/EXPERIMENT_LOG.md",
+      "sha256": "0dbde9b1bfab1aee657d0917068572d287f0babbd4d50082fbdb2338292aaa6d",
+      "bytes": 25818
+    },
+    {
+      "source_path": "docs/research-v2/MATCHED_BASELINES_RESULTS.md",
+      "archive_path": "snapshot/docs/research-v2/MATCHED_BASELINES_RESULTS.md",
+      "sha256": "6119956aea6465281576d6078959fd60571bcd2f4c60de56d73b50ed2b5adb6b",
+      "bytes": 2270
+    },
+    {
+      "source_path": "docs/research-v2/STATUS.md",
+      "archive_path": "snapshot/docs/research-v2/STATUS.md",
+      "sha256": "5ba20375839ecc0a4daa28f0d12b4a28739c965f4f622d66a78c424e4478258c",
+      "bytes": 17511
+    },
+    {
+      "source_path": "docs/research-v2/audit-matched-baselines.py",
+      "archive_path": "snapshot/docs/research-v2/audit-matched-baselines.py",
+      "sha256": "e632ff4c1354bd5441a4f870edaa38e4f7f80902d4ac4c1859e7d2679799469a",
+      "bytes": 3727
+    },
+    {
+      "source_path": "docs/research-v2/results/matched-baselines-restore-audit.log",
+      "archive_path": "snapshot/docs/research-v2/results/matched-baselines-restore-audit.log",
+      "sha256": "651b6bb07e21dcc4f22f0884047ac76a7d8353eb9eb0aa5ca7840f3b22a49059",
+      "bytes": 7585
+    },
+    {
+      "source_path": "docs/research-v2/results/matched-baselines-review.log",
+      "archive_path": "snapshot/docs/research-v2/results/matched-baselines-review.log",
+      "sha256": "4a89e252e78f703aad72946a91bf9531a1dc356dfcbde7239c927f8206a44e40",
+      "bytes": 2607
+    },
+    {
+      "source_path": "docs/research-v2/results/matched-baselines-summary.log",
+      "archive_path": "snapshot/docs/research-v2/results/matched-baselines-summary.log",
+      "sha256": "c56d2c121ed957fde2455f295c21f6fdf4aa9c6c5ccda77455586c253504184f",
+      "bytes": 658
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines.log",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines.log",
+      "sha256": "90589ff8222a0329aed4d4688de6dfe317e79315e7a4ebd457ce19f81ed97c4c",
+      "bytes": 17053
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines.state.json",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines.state.json",
+      "sha256": "057da0adb27f4abe2823a6c46790e946cfe1c00f1eba9862a11c8359eb130cf6",
+      "bytes": 3935
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/matched-h4.jsonl",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/matched-h4.jsonl",
+      "sha256": "7faebd67d6eea4cbb7a8aecb9f3bbf9534a30bb053cb9d73f888059ec4a966c7",
+      "bytes": 22246855
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/matched-h4.seeds.csv",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/matched-h4.seeds.csv",
+      "sha256": "44127db2f3c60d39da44b8a9673edf097c641f1ff05fddaadcd94967ef6a7bef",
+      "bytes": 169423
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/matched-h4.summary.json",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/matched-h4.summary.json",
+      "sha256": "acf67376afd40889cd22d4673a55907816429833e0cc3cfd5507d42eb2566cf2",
+      "bytes": 179592
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/matched-review.json",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/matched-review.json",
+      "sha256": "4a89e252e78f703aad72946a91bf9531a1dc356dfcbde7239c927f8206a44e40",
+      "bytes": 2607
+    },
+    {
+      "source_path": null,
+      "archive_path": "changes.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ]
+}
