@@ -49,6 +49,7 @@
 | [minimal-chaos-v2-h4-baselines-p00](analyses/minimal-chaos-v2-h4-baselines-p00/README.md) | 确认后精度诊断 p00 | [4cb10d1](https://github.com/BillOu0104/2/commit/4cb10d1aa74316c88adbdb8e1587654a66fa38b0) |
 | [minimal-chaos-v2-h4-baselines-p01](analyses/minimal-chaos-v2-h4-baselines-p01/README.md) | 确认后精度诊断 p01 | [e606d08](https://github.com/BillOu0104/2/commit/e606d082e6c534208d74db0185f8b509e7905f97) |
 | [minimal-chaos-v2-h4-baselines-p02](analyses/minimal-chaos-v2-h4-baselines-p02/README.md) | 确认后精度诊断 p02 | [47bd30d](https://github.com/BillOu0104/2/commit/47bd30de3a8a04f0b1f29935c72d70f55c493bd0) |
+| [minimal-chaos-v2-h4-baselines-p03](analyses/minimal-chaos-v2-h4-baselines-p03/README.md) | 确认后精度诊断 p03 | [9f04375](https://github.com/BillOu0104/2/commit/9f04375f95717ae88f2414187a8d0af880b26115) |
 | [minimal-chaos-v2-h4-p00](analyses/minimal-chaos-v2-h4-p00/README.md) | 确认后精度诊断 p00 | [28cab09](https://github.com/BillOu0104/2/commit/28cab09a91f806e00ffec035f1d932dcb0488edd) |
 | [minimal-chaos-v2-h4-p01](analyses/minimal-chaos-v2-h4-p01/README.md) | 确认后精度诊断 p01 | [547f556](https://github.com/BillOu0104/2/commit/547f556fe9b0ca2364d52206a8cb4658fb5553fa) |
 | [minimal-chaos-v2-h4-p02](analyses/minimal-chaos-v2-h4-p02/README.md) | 确认后精度诊断 p02 | [4f07a50](https://github.com/BillOu0104/2/commit/4f07a500c49096836a6aed227210963cb170c342) |
