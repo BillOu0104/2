@@ -31,3 +31,5 @@ STATUS.md、EXPERIMENT_LOG.md、results/、controllers/和FINAL_REPORT.md位于�
 ## 2026-10-22确认后数值诊断续篇
 
 原128新Seed确认完整完成，主成绩冻结。因前32配对恒纪元差异，先完成128个h2及32个h4；256条新增数值复测全完成且审计通过。128配对转向h2-default仍+8.23个百分点，不能宣称收敛；见PRECISION_EXTENSION_RESULTS.md。在看到这些数据后固定H4_EXTENSION_PROTOCOL，补齐剩余96个Seed×两候选h4共192条，控制参数不变、精度仅提高。不将确认后诊断冒充首轮预注册或新独立确认，也不以未显著差异证明等价。完成数值评审后才考虑生产集成/兼容性；main最终替换仍由用户验收。
+
+三精度候选各128Seed均完成后，追加MATCHED_BASELINES_PROTOCOL，在相同h4精度补齐原128Seed的纯牛顿/原牢笼对照，以分开精度和控制贡献。不是新增独立Seed或控制调参，全部候选和原确认结果不变。完成后才评审完整生产移植/兼容性。

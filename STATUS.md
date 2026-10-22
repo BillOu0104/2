@@ -9,3 +9,5 @@
 2026-10-22：128新Seed独立确认数据已完整结束并重审计；研究仍在进行，因恒纪元精度敏感性需继续precision-extension。唯一当前恢复命令见docs/research-v2/STATUS.md最上方，不再启动已完成confirmation/series队列。main及私有网页未修改。
 
 2026-10-22后续：precision-extension的256条已完成并重审计，当前任务改为补齐剩余96Seed×两候选的h4；恢复run-h4-extension，完整命令见V2 STATUS最上方。原确认与精度复测全部保留，研究未完成、main未改。
+
+h4补齐192条已完成并重审计；当前唯一队列改为h4同精度牛顿/旧牢笼基准run-matched-baselines，见V2 STATUS最上方。所有三精度候选各128个Seed，研究仍未完成，main未改。

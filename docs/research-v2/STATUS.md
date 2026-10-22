@@ -2,7 +2,25 @@
 
 状态：RESEARCH_IN_PROGRESS / NUMERICAL_REVIEW_REQUIRED。正式128新Seed主确认及32Seed预定h2辅助已全部实测完成（576/576、pending0、UNKNOWN0），最终原始/版本/初值/恢复哈希重审计通过。见CONFIRMATION_RESULTS.md和results/confirmation-v1/cohort.review.json。main未修改、未合并，私有网页未更新。
 
-## 当前唯一恢复队列：补齐128个h4数值复测
+## 当前唯一恢复队列：h4同精度牛顿/旧牢笼基准
+
+h4剩余192条已全完成并重审计，UNKNOWN0；新增原始native汇总/index逐项一致，科学源/配置/注册初值/输入/状态哈希通过。候选default/h2/h4各128Seed、真正100000年；全部1024结果键唯一。见H4_RESULTS.md及results/precision-h4/h4-review.json。
+
+先检查所有活跃锁（尤其results/precision-baselines.lock）、native worker及研究记录最近20分钟更新时间；任一活跃或近期更新即安静退出，不编辑计算源、不重编译、不重复启动。没有活跃且记录过期后，读MATCHED_BASELINES_PROTOCOL.md、precision-baselines/study.json、results/precision-baselines.manifest.json及state（若存在），恢复：
+
+```sh
+python3 docs/research-v2/run-matched-baselines.py docs/research-v2/precision-baselines/study.json
+```
+
+固定原确认128个初值，无控制newton__h4与原牢笼legacy-cage__h4，最大步长.0001875、eta.001875，与h4候选完全同精度；16批×8Seed×2=256计划结局。每条运行100000显示年或真实恒星失败；提前失败不算完整长窗。P5/真实半径/独立失效/纪元/文明/条件影子均不改，科学源仍7f64a8a、原二进制。只用已有两个CPU和两worker。不同批次原始/状态使用科学源/配置哈希目录；完成键去重、原版本恢复、每批audit/provenance/注册初值验证、全部失败/UNKNOWN与行星文明/预算保留、Git/records/check/push，推送异常单独记录。
+
+BASELINES_COMPLETE_REVIEW_REQUIRED只代表这一数据队列结束，整个研究未完成。STOPPED_REVIEW_REQUIRED先读error/日志/原始/检查点，不能绕过UNKNOWN、版本或初值问题。旧confirmation、series、precision-extension、precision-h4均已完成，不重复积分。新manifest同时冻结此前确认/h4/精度spec与新驱动/协议/配置及本次h4分析哈希。
+
+h4候选均128/128三星完整，混沌联合转向122/128、反射126/128；成熟恒纪元30.91%和15.26%。转向h4-h2成熟均值差−5.53个百分点、配对bootstrap95%约[−11.54,+0.39]，反射−1.26、约[−4.61,+2.12]；不能把区间含0解释为等价，转向精确恒纪元估计仍未证明收敛。累计功/L漂移权衡与原行星损失详见H4_RESULTS，所有不足Seed保留。
+
+下一步将h4候选与h4两基准公平比较，避免把精度收益当作控制收益。之后才进入独立集成分支实现完整生产原型和数值/功能/UI/性能回归；旧研究JS原型近遇控制位于step内部，而原生在选自适应步长之前，移植必须匹配原生次序并验证触发事件，不冒称旧短窗对照已证明生产一致。main和私有网页未修改，正式替换依然等待用户最终验收。恢复检查保持开启。
+
+## 已完成h4补齐的历史恢复入口
 
 2026-10-22：precision-extension已256/256完成、UNKNOWN0，全部16批重新按恢复命令审计，额外256份原始native汇总/index逐字段一致；确认与扩展合计832个不同Seed/profile结果键。见PRECISION_EXTENSION_RESULTS.md和results/precision-extension/precision-review.json。旧confirmation/series/precision-extension均已完成，不重启积分。
 
