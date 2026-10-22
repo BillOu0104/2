@@ -1,0 +1,36 @@
+{
+  "prefix": "V2-CONFIRM-20261021",
+  "start": 64,
+  "seeds": 8,
+  "horizon": 100000,
+  "saveCheckpoints": true,
+  "output": "docs/research-v2/results/precision-extension/p04.jsonl",
+  "profiles": [
+    {
+      "capture": true,
+      "redistribute": true,
+      "capturePositiveOnly": true,
+      "captureSeparationFactor": 1.5,
+      "shadow": true,
+      "reflect": true,
+      "id": "deflect4-trigger8__h2",
+      "captureTriggerScale": 8,
+      "deflect": true,
+      "deflectionFactor": 4,
+      "dt": 0.000375,
+      "eta": 0.00375
+    },
+    {
+      "capture": true,
+      "redistribute": true,
+      "capturePositiveOnly": true,
+      "captureSeparationFactor": 1.5,
+      "shadow": true,
+      "reflect": true,
+      "id": "reflect-trigger8__h2",
+      "captureTriggerScale": 8,
+      "dt": 0.000375,
+      "eta": 0.00375
+    }
+  ]
+}

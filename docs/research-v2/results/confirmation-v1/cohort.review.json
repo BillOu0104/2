@@ -1,0 +1,4645 @@
+{
+  "scope": "Post-hoc numerical/cost review; original registered endpoints unchanged.",
+  "cohortSHA256": "adda31d849c0d0777ec64986ba8c77130c519b20649be24a8b942e7e14f508aa",
+  "groups": {
+    "deflect4-trigger8": {
+      "pairedPrecision32": {
+        "matureStableFraction": {
+          "defaultMean": 0.2424715509259259,
+          "halfMean": 0.34577597800925924,
+          "halfMinusDefault": 0.10330442708333334,
+          "pairedBootstrapMeanDifference95": [
+            0.006606538049768519,
+            0.2067554479166666
+          ]
+        },
+        "stableFraction": {
+          "defaultMean": 0.2544747864583333,
+          "halfMean": 0.34727331250000004,
+          "halfMinusDefault": 0.09279852604166666,
+          "pairedBootstrapMeanDifference95": [
+            0.0006690656250000008,
+            0.18907036093749993
+          ]
+        },
+        "matureConditionalFTLE": {
+          "defaultMean": 0.015096085995848666,
+          "halfMean": 0.01427067001560866,
+          "halfMinusDefault": -0.0008254159802400082,
+          "pairedBootstrapMeanDifference95": [
+            -0.0029398615632764847,
+            0.001463503731013233
+          ]
+        },
+        "planetLosses": {
+          "defaultMean": 45.625,
+          "halfMean": 47.28125,
+          "halfMinusDefault": 1.65625,
+          "pairedBootstrapMeanDifference95": [
+            -16.9375,
+            20.438281249999932
+          ]
+        },
+        "controlActiveFrameFraction": {
+          "defaultMean": 2.6755208333333336e-05,
+          "halfMean": 2.1635416666666666e-05,
+          "halfMinusDefault": -5.119791666666666e-06,
+          "pairedBootstrapMeanDifference95": [
+            -9.265625e-06,
+            -8.802083333333333e-07
+          ]
+        },
+        "jointDefault": 31,
+        "jointHalf": 30
+      },
+      "failedContinuousJoint": [
+        {
+          "seed": "V2-CONFIRM-20261021-24",
+          "reasons": [
+            "mature-exchanges",
+            "mature-nonhier"
+          ],
+          "matureConditionalFTLE": 0.012866103037728905,
+          "matureNonhierFraction": 0.06126277777777778,
+          "longestHierarchyYears": 763.25,
+          "longestDynamicalHierarchyYears": 0.0,
+          "matureStableFraction": 0.7573805555555555
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-38",
+          "reasons": [
+            "mature-exchanges"
+          ],
+          "matureConditionalFTLE": 0.012084947390318818,
+          "matureNonhierFraction": 0.2148811111111111,
+          "longestHierarchyYears": 567.8666666666667,
+          "longestDynamicalHierarchyYears": 0.0,
+          "matureStableFraction": 0.908387037037037
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-49",
+          "reasons": [
+            "mature-exchanges"
+          ],
+          "matureConditionalFTLE": 0.012094790224889847,
+          "matureNonhierFraction": 0.10586518518518519,
+          "longestHierarchyYears": 654.9833333333333,
+          "longestDynamicalHierarchyYears": 0.0,
+          "matureStableFraction": 0.9866262962962963
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-55",
+          "reasons": [
+            "mature-exchanges"
+          ],
+          "matureConditionalFTLE": 0.04675172707223516,
+          "matureNonhierFraction": 0.12054703703703704,
+          "longestHierarchyYears": 470.31666666666666,
+          "longestDynamicalHierarchyYears": 0.0,
+          "matureStableFraction": 1.0
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-88",
+          "reasons": [
+            "mature-exchanges",
+            "mature-nonhier"
+          ],
+          "matureConditionalFTLE": 0.015319265913952858,
+          "matureNonhierFraction": 0.08979537037037037,
+          "longestHierarchyYears": 381.6333333333333,
+          "longestDynamicalHierarchyYears": 914.9166666666666,
+          "matureStableFraction": 0.9998311111111111
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-95",
+          "reasons": [
+            "dynamical-hierarchy"
+          ],
+          "matureConditionalFTLE": 0.02128938832379215,
+          "matureNonhierFraction": 0.1834075925925926,
+          "longestHierarchyYears": 376.4,
+          "longestDynamicalHierarchyYears": 1090.3666666666666,
+          "matureStableFraction": 0.7031631481481482
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-97",
+          "reasons": [
+            "mature-exchanges"
+          ],
+          "matureConditionalFTLE": 0.020447422840270752,
+          "matureNonhierFraction": 0.3404303703703704,
+          "longestHierarchyYears": 603.4166666666666,
+          "longestDynamicalHierarchyYears": 0.0,
+          "matureStableFraction": 1.0
+        }
+      ],
+      "perSeedEvents": [
+        {
+          "seed": "V2-CONFIRM-20261021-0",
+          "rawSHA256": "606ca825c51a60c20a281144ca83cab9da832c13055c3d527a00330e5fb9fc1b",
+          "eventCounts": {
+            "civilization-birth": 23,
+            "close-region-exit": 1378,
+            "civilization-death": 23,
+            "pericenter-deflection": 165,
+            "planet-loss": 61,
+            "planet-respawn": 61,
+            "capture": 49
+          },
+          "peakRecordedNetDeltaV": 0.3401607879239402,
+          "netEventImpulseSum": 235912628.85678807,
+          "deflectionCumulativeNormDeltaLNormalized": 1.5932741461690614,
+          "totalSignedDeltaLNormNormalized": 0.07497481696229952
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-1",
+          "rawSHA256": "d5e3fad20f65671115f9eb57b6655dcb2a74a477c8d8c681bd1d45dcb05eef1c",
+          "eventCounts": {
+            "close-region-exit": 1949,
+            "planet-loss": 21,
+            "planet-respawn": 21,
+            "civilization-birth": 10,
+            "civilization-death": 10,
+            "pericenter-deflection": 159,
+            "capture": 45
+          },
+          "peakRecordedNetDeltaV": 0.30449760854748004,
+          "netEventImpulseSum": 202577976.94885972,
+          "deflectionCumulativeNormDeltaLNormalized": 1.3858664423029374,
+          "totalSignedDeltaLNormNormalized": 0.2127362312595618
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-2",
+          "rawSHA256": "a270d709fc7349a26fc5cb6e1606c33181aeae3c2c6979660948baadaf97606e",
+          "eventCounts": {
+            "civilization-birth": 46,
+            "pericenter-deflection": 224,
+            "planet-loss": 113,
+            "civilization-death": 46,
+            "close-region-exit": 1873,
+            "planet-respawn": 113,
+            "capture": 58
+          },
+          "peakRecordedNetDeltaV": 0.4834768506616087,
+          "netEventImpulseSum": 356072698.908902,
+          "deflectionCumulativeNormDeltaLNormalized": 2.622698129018309,
+          "totalSignedDeltaLNormNormalized": 0.3231743341484186
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-3",
+          "rawSHA256": "2697b873bb0e802c710927b370a98245f3509a7de68ed47a6c3b4b370b23da3b",
+          "eventCounts": {
+            "civilization-birth": 7,
+            "close-region-exit": 1660,
+            "planet-loss": 17,
+            "civilization-death": 7,
+            "planet-respawn": 17,
+            "pericenter-deflection": 160,
+            "capture": 59
+          },
+          "peakRecordedNetDeltaV": 0.32672965073247784,
+          "netEventImpulseSum": 267745227.5235725,
+          "deflectionCumulativeNormDeltaLNormalized": 1.6017378284350714,
+          "totalSignedDeltaLNormNormalized": 0.3271648120878386
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-4",
+          "rawSHA256": "05e520441527653089727af5341f4760af23455880d0f6c4321d357107880c4d",
+          "eventCounts": {
+            "planet-loss": 98,
+            "close-region-exit": 3611,
+            "planet-respawn": 98,
+            "pericenter-deflection": 168,
+            "civilization-birth": 40,
+            "civilization-death": 40,
+            "capture": 61
+          },
+          "peakRecordedNetDeltaV": 0.3164525794440978,
+          "netEventImpulseSum": 245064379.52214444,
+          "deflectionCumulativeNormDeltaLNormalized": 1.6265285690759503,
+          "totalSignedDeltaLNormNormalized": 0.25358415527420974
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-5",
+          "rawSHA256": "2aeefdfd7a9986f104df011feef5f99b688721cd0268c61cb88a358a280c891a",
+          "eventCounts": {
+            "civilization-birth": 9,
+            "pericenter-deflection": 397,
+            "capture": 7,
+            "close-region-exit": 2860,
+            "planet-loss": 11,
+            "civilization-death": 9,
+            "planet-respawn": 11
+          },
+          "peakRecordedNetDeltaV": 0.29075726745303027,
+          "netEventImpulseSum": 180099731.1546504,
+          "deflectionCumulativeNormDeltaLNormalized": 1.4607813609694131,
+          "totalSignedDeltaLNormNormalized": 0.22924499656058275
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-6",
+          "rawSHA256": "93afac3861b592541b435293c38aa551978f89be7c48881703cdd7b61ee661d2",
+          "eventCounts": {
+            "civilization-birth": 28,
+            "planet-loss": 34,
+            "civilization-death": 28,
+            "planet-respawn": 34,
+            "pericenter-deflection": 85,
+            "close-region-exit": 750,
+            "capture": 37
+          },
+          "peakRecordedNetDeltaV": 0.29970181072586166,
+          "netEventImpulseSum": 136134016.31818244,
+          "deflectionCumulativeNormDeltaLNormalized": 0.7077243165343791,
+          "totalSignedDeltaLNormNormalized": 0.04744292205080332
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-7",
+          "rawSHA256": "fea6c3160b9f9fd0a95b05e0dfa85144e48bfb0eb880616fb9e1cae40c8a9b6d",
+          "eventCounts": {
+            "close-region-exit": 2190,
+            "civilization-birth": 17,
+            "capture": 37,
+            "civilization-death": 17,
+            "planet-loss": 26,
+            "planet-respawn": 26,
+            "pericenter-deflection": 117
+          },
+          "peakRecordedNetDeltaV": 0.3091202231659419,
+          "netEventImpulseSum": 137251733.89044997,
+          "deflectionCumulativeNormDeltaLNormalized": 0.8609032792522389,
+          "totalSignedDeltaLNormNormalized": 0.2275297473902746
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-8",
+          "rawSHA256": "6185ec81bebfed4da6c04ef010a1e54e54e108da3ea7a17b9bb9a3cc2cd0b278",
+          "eventCounts": {
+            "close-region-exit": 1985,
+            "planet-loss": 28,
+            "planet-respawn": 28,
+            "pericenter-deflection": 101,
+            "civilization-birth": 11,
+            "capture": 26,
+            "civilization-death": 10
+          },
+          "peakRecordedNetDeltaV": 0.31091117231014836,
+          "netEventImpulseSum": 131248990.38288625,
+          "deflectionCumulativeNormDeltaLNormalized": 0.9900926227842392,
+          "totalSignedDeltaLNormNormalized": 0.210253653058202
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-9",
+          "rawSHA256": "9e9faa186a0f4ecaa808d2567a406c36dce94ec1f3ddadfff4526ed1338936b2",
+          "eventCounts": {
+            "civilization-birth": 31,
+            "close-region-exit": 1634,
+            "pericenter-deflection": 166,
+            "capture": 46,
+            "planet-loss": 56,
+            "civilization-death": 31,
+            "planet-respawn": 56
+          },
+          "peakRecordedNetDeltaV": 0.3239873585282436,
+          "netEventImpulseSum": 197899592.5274734,
+          "deflectionCumulativeNormDeltaLNormalized": 1.2908778676949593,
+          "totalSignedDeltaLNormNormalized": 0.1684080480879182
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-10",
+          "rawSHA256": "31d27f77e500c80eac553a36e117be7ba89e171135387c35105a7da0cd6c0482",
+          "eventCounts": {
+            "civilization-birth": 26,
+            "close-region-exit": 1429,
+            "planet-loss": 42,
+            "civilization-death": 26,
+            "planet-respawn": 42,
+            "capture": 43,
+            "pericenter-deflection": 135
+          },
+          "peakRecordedNetDeltaV": 0.3287155176247762,
+          "netEventImpulseSum": 199048810.48456278,
+          "deflectionCumulativeNormDeltaLNormalized": 1.2847859196660836,
+          "totalSignedDeltaLNormNormalized": 0.0946865335667042
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-11",
+          "rawSHA256": "69165a9acb085014803b9b17f7391c0b481d9c44a07be3619f3b5f37acf474ce",
+          "eventCounts": {
+            "pericenter-deflection": 109,
+            "close-region-exit": 3205,
+            "civilization-birth": 40,
+            "planet-loss": 62,
+            "civilization-death": 40,
+            "planet-respawn": 62,
+            "capture": 57
+          },
+          "peakRecordedNetDeltaV": 0.25056102424924537,
+          "netEventImpulseSum": 138736419.08122018,
+          "deflectionCumulativeNormDeltaLNormalized": 0.7462860589618412,
+          "totalSignedDeltaLNormNormalized": 0.15865055270654374
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-12",
+          "rawSHA256": "9c01d9dec72a1d3b6e240bb2e195b8493d9bfa0cd0cfd9c15f58d4cd13ff4ae1",
+          "eventCounts": {
+            "close-region-exit": 3691,
+            "planet-loss": 71,
+            "planet-respawn": 71,
+            "pericenter-deflection": 91,
+            "civilization-birth": 37,
+            "civilization-death": 37,
+            "capture": 57
+          },
+          "peakRecordedNetDeltaV": 0.29921107727560414,
+          "netEventImpulseSum": 137129997.49714318,
+          "deflectionCumulativeNormDeltaLNormalized": 0.7293850825685416,
+          "totalSignedDeltaLNormNormalized": 0.22060692699551054
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-13",
+          "rawSHA256": "d77f755c0edce7f6bac17b6f2103d1e428d1a95d1a7999f9d236ae000cf36365",
+          "eventCounts": {
+            "close-region-exit": 3428,
+            "planet-loss": 20,
+            "planet-respawn": 20,
+            "civilization-birth": 9,
+            "civilization-death": 9,
+            "capture": 21,
+            "pericenter-deflection": 38
+          },
+          "peakRecordedNetDeltaV": 0.18333675229902488,
+          "netEventImpulseSum": 48534546.8653517,
+          "deflectionCumulativeNormDeltaLNormalized": 0.25264866868074237,
+          "totalSignedDeltaLNormNormalized": 0.04644782325089867
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-14",
+          "rawSHA256": "a5fb35b1772b2e8283e8dbd9b628fceb055554ef0da25acaf04590cdb8d3ad1c",
+          "eventCounts": {
+            "civilization-birth": 12,
+            "planet-loss": 29,
+            "civilization-death": 12,
+            "planet-respawn": 29,
+            "close-region-exit": 1729,
+            "pericenter-deflection": 124,
+            "capture": 36
+          },
+          "peakRecordedNetDeltaV": 0.30804653771948914,
+          "netEventImpulseSum": 159829077.28800347,
+          "deflectionCumulativeNormDeltaLNormalized": 1.0012492466791256,
+          "totalSignedDeltaLNormNormalized": 0.15861240986218972
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-15",
+          "rawSHA256": "83ecc8eae54f3ef94f297a4ccfcfdeda4fb80c8b2a1be5b8c4b01514c960fe04",
+          "eventCounts": {
+            "civilization-birth": 21,
+            "civilization-death": 21,
+            "planet-loss": 29,
+            "planet-respawn": 29,
+            "close-region-exit": 850,
+            "pericenter-deflection": 54,
+            "capture": 33
+          },
+          "peakRecordedNetDeltaV": 0.27831201132884154,
+          "netEventImpulseSum": 84030218.40001905,
+          "deflectionCumulativeNormDeltaLNormalized": 0.4353311258487758,
+          "totalSignedDeltaLNormNormalized": 0.05332371273813829
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-16",
+          "rawSHA256": "3a9804fcebd33d5de090820b1551a70fa91828c171c09582ed65fed503ad24ca",
+          "eventCounts": {
+            "civilization-birth": 24,
+            "planet-loss": 37,
+            "civilization-death": 24,
+            "close-region-exit": 539,
+            "planet-respawn": 37,
+            "pericenter-deflection": 50,
+            "capture": 31
+          },
+          "peakRecordedNetDeltaV": 0.3093710705168427,
+          "netEventImpulseSum": 92799253.04776902,
+          "deflectionCumulativeNormDeltaLNormalized": 0.4780525885878094,
+          "totalSignedDeltaLNormNormalized": 0.0657007605696208
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-17",
+          "rawSHA256": "6baceebcf6acaa9951e1c769bcde56308fac13d6f8a5a7e25e700cec25dfd8d1",
+          "eventCounts": {
+            "pericenter-deflection": 37,
+            "planet-loss": 34,
+            "close-region-exit": 2555,
+            "planet-respawn": 34,
+            "civilization-birth": 16,
+            "capture": 17,
+            "civilization-death": 16
+          },
+          "peakRecordedNetDeltaV": 0.28314700984919144,
+          "netEventImpulseSum": 49056509.37663176,
+          "deflectionCumulativeNormDeltaLNormalized": 0.2916267725502729,
+          "totalSignedDeltaLNormNormalized": 0.12064496825239532
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-18",
+          "rawSHA256": "8666f0abea3b79887db3065516043d2b7b91da5c33d3cf5bca7e600ff43f6a66",
+          "eventCounts": {
+            "capture": 19,
+            "civilization-birth": 15,
+            "civilization-death": 14,
+            "planet-loss": 28,
+            "planet-respawn": 28,
+            "close-region-exit": 2912,
+            "pericenter-deflection": 27
+          },
+          "peakRecordedNetDeltaV": 0.1510594311340582,
+          "netEventImpulseSum": 38010684.85147047,
+          "deflectionCumulativeNormDeltaLNormalized": 0.17060215186442912,
+          "totalSignedDeltaLNormNormalized": 0.0611119359618622
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-19",
+          "rawSHA256": "0cedec772b053c7092a439b259e95fac211cf6fd8b9396f7fd96db3cb1d83d3f",
+          "eventCounts": {
+            "close-region-exit": 3227,
+            "civilization-birth": 27,
+            "civilization-death": 26,
+            "planet-loss": 61,
+            "planet-respawn": 61,
+            "pericenter-deflection": 127,
+            "capture": 50
+          },
+          "peakRecordedNetDeltaV": 0.31926658803607194,
+          "netEventImpulseSum": 168279770.37286112,
+          "deflectionCumulativeNormDeltaLNormalized": 1.1011401272358823,
+          "totalSignedDeltaLNormNormalized": 0.2101823997753534
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-20",
+          "rawSHA256": "79e7a19cf79c0609c58d6ef38c737cca2ba3af0a7e2977b22ece863254517102",
+          "eventCounts": {
+            "civilization-birth": 33,
+            "pericenter-deflection": 63,
+            "close-region-exit": 589,
+            "planet-loss": 58,
+            "civilization-death": 33,
+            "planet-respawn": 58,
+            "capture": 30
+          },
+          "peakRecordedNetDeltaV": 0.3096858649479813,
+          "netEventImpulseSum": 104650325.87067915,
+          "deflectionCumulativeNormDeltaLNormalized": 0.583012001521075,
+          "totalSignedDeltaLNormNormalized": 0.048737507393762446
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-21",
+          "rawSHA256": "f286228f6a9844974fff49d41c61c03b8d62b645e44cb3026fc4c4352786020e",
+          "eventCounts": {
+            "pericenter-deflection": 58,
+            "planet-loss": 22,
+            "close-region-exit": 5331,
+            "planet-respawn": 22,
+            "civilization-birth": 7,
+            "civilization-death": 7,
+            "capture": 27
+          },
+          "peakRecordedNetDeltaV": 0.33610173502951507,
+          "netEventImpulseSum": 75662259.37276863,
+          "deflectionCumulativeNormDeltaLNormalized": 0.4640727177947018,
+          "totalSignedDeltaLNormNormalized": 0.13784463847538636
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-22",
+          "rawSHA256": "847fc6c1be83249708d853624731316d8f7f9bf8b9b57314b3af87093bc095d2",
+          "eventCounts": {
+            "civilization-birth": 54,
+            "pericenter-deflection": 175,
+            "close-region-exit": 1320,
+            "capture": 58,
+            "planet-loss": 117,
+            "civilization-death": 53,
+            "planet-respawn": 117
+          },
+          "peakRecordedNetDeltaV": 0.34691851827634645,
+          "netEventImpulseSum": 269793874.7237861,
+          "deflectionCumulativeNormDeltaLNormalized": 1.6919967850802704,
+          "totalSignedDeltaLNormNormalized": 0.1239651004248028
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-23",
+          "rawSHA256": "2a2b32f08c1000178c95f4e022b7e7ebb0f0ee379ae0d5a94bedee635cac2d42",
+          "eventCounts": {
+            "close-region-exit": 4791,
+            "planet-loss": 155,
+            "planet-respawn": 155,
+            "pericenter-deflection": 276,
+            "capture": 59,
+            "civilization-birth": 45,
+            "civilization-death": 45
+          },
+          "peakRecordedNetDeltaV": 0.4016350297622782,
+          "netEventImpulseSum": 395759827.2715598,
+          "deflectionCumulativeNormDeltaLNormalized": 3.147503416221375,
+          "totalSignedDeltaLNormNormalized": 0.431815874366805
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-24",
+          "rawSHA256": "a5ec6ec0e7c915ef47673e9f6e261847d74a121b0a1978ee835015c3a7fc7f4e",
+          "eventCounts": {
+            "close-region-exit": 3466,
+            "capture": 5,
+            "planet-loss": 7,
+            "planet-respawn": 7,
+            "civilization-birth": 4,
+            "civilization-death": 4,
+            "pericenter-deflection": 11
+          },
+          "peakRecordedNetDeltaV": 0.12492722955606315,
+          "netEventImpulseSum": 11255948.709753307,
+          "deflectionCumulativeNormDeltaLNormalized": 0.05534992564709862,
+          "totalSignedDeltaLNormNormalized": 0.04966056593540692
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-25",
+          "rawSHA256": "2b5d91593e82ed44ba2c52e44039746a58ea8fa6b8b7f1b1b0aa04f7554213e6",
+          "eventCounts": {
+            "pericenter-deflection": 148,
+            "close-region-exit": 1097,
+            "capture": 60,
+            "planet-loss": 36,
+            "planet-respawn": 36,
+            "civilization-birth": 24,
+            "civilization-death": 24
+          },
+          "peakRecordedNetDeltaV": 0.2863310735474301,
+          "netEventImpulseSum": 230126620.63102028,
+          "deflectionCumulativeNormDeltaLNormalized": 1.3660492437098142,
+          "totalSignedDeltaLNormNormalized": 0.22767378987420556
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-26",
+          "rawSHA256": "a551bdd1d5975927bccfb6e13c2bc928b835a9f2140e5ea396a00ed9d037d359",
+          "eventCounts": {
+            "pericenter-deflection": 168,
+            "close-region-exit": 2995,
+            "civilization-birth": 11,
+            "capture": 42,
+            "civilization-death": 11,
+            "planet-loss": 15,
+            "planet-respawn": 15
+          },
+          "peakRecordedNetDeltaV": 0.3366792819325735,
+          "netEventImpulseSum": 218409569.0731022,
+          "deflectionCumulativeNormDeltaLNormalized": 1.6121155222139247,
+          "totalSignedDeltaLNormNormalized": 0.21491516345191009
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-27",
+          "rawSHA256": "7f69b550127f1a2cf3ee46b9fd570d0d1d14e50b73348711a6b86edfb2d56637",
+          "eventCounts": {
+            "civilization-birth": 19,
+            "close-region-exit": 1313,
+            "capture": 11,
+            "pericenter-deflection": 43,
+            "planet-loss": 27,
+            "civilization-death": 18,
+            "planet-respawn": 27
+          },
+          "peakRecordedNetDeltaV": 0.30208057888128004,
+          "netEventImpulseSum": 46086954.991579205,
+          "deflectionCumulativeNormDeltaLNormalized": 0.2686728944118873,
+          "totalSignedDeltaLNormNormalized": 0.11983468808646444
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-28",
+          "rawSHA256": "aaa14bdb0f4a0d2e6ce6bcf2028c29767896fa619a522756782f2aeb71aecddd",
+          "eventCounts": {
+            "close-region-exit": 2875,
+            "pericenter-deflection": 80,
+            "planet-loss": 13,
+            "capture": 28,
+            "planet-respawn": 13,
+            "civilization-birth": 6,
+            "civilization-death": 6
+          },
+          "peakRecordedNetDeltaV": 0.2974723081979514,
+          "netEventImpulseSum": 89156963.46085766,
+          "deflectionCumulativeNormDeltaLNormalized": 0.5550506066253794,
+          "totalSignedDeltaLNormNormalized": 0.1324488828044998
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-29",
+          "rawSHA256": "b566244607589c338f43e96b007cbbe30a8f4580669ef8586325db77444d322b",
+          "eventCounts": {
+            "civilization-birth": 38,
+            "civilization-death": 38,
+            "planet-loss": 80,
+            "planet-respawn": 80,
+            "close-region-exit": 1134,
+            "pericenter-deflection": 164,
+            "capture": 44
+          },
+          "peakRecordedNetDeltaV": 0.3595409356050052,
+          "netEventImpulseSum": 227904036.4968614,
+          "deflectionCumulativeNormDeltaLNormalized": 1.539620651616317,
+          "totalSignedDeltaLNormNormalized": 0.2946232950730524
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-30",
+          "rawSHA256": "17b26435403d987fe806f17e62a305b5ab5261be98245c7d5587f3379c1bd3b4",
+          "eventCounts": {
+            "close-region-exit": 1994,
+            "civilization-birth": 5,
+            "planet-loss": 18,
+            "civilization-death": 5,
+            "planet-respawn": 18,
+            "pericenter-deflection": 131,
+            "capture": 40
+          },
+          "peakRecordedNetDeltaV": 0.3375521430423499,
+          "netEventImpulseSum": 191849006.95842895,
+          "deflectionCumulativeNormDeltaLNormalized": 1.311974561214969,
+          "totalSignedDeltaLNormNormalized": 0.3323670020752173
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-31",
+          "rawSHA256": "4dbc07ae26f74192c71d03d28b03b06fe10ac36d87af8106096feb1b24987404",
+          "eventCounts": {
+            "close-region-exit": 2064,
+            "planet-loss": 34,
+            "planet-respawn": 34,
+            "civilization-birth": 12,
+            "civilization-death": 12,
+            "pericenter-deflection": 67,
+            "capture": 28
+          },
+          "peakRecordedNetDeltaV": 0.26114650206524265,
+          "netEventImpulseSum": 95629858.13401216,
+          "deflectionCumulativeNormDeltaLNormalized": 0.5960175923901417,
+          "totalSignedDeltaLNormNormalized": 0.20307295677663995
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-32",
+          "rawSHA256": "184fe7ae69ca01673647e28a1846bbf3b091cbfd9bca6be1854abd6f18917a8d",
+          "eventCounts": {
+            "civilization-birth": 21,
+            "pericenter-deflection": 90,
+            "close-region-exit": 1039,
+            "civilization-death": 21,
+            "planet-loss": 32,
+            "planet-respawn": 32,
+            "capture": 37
+          },
+          "peakRecordedNetDeltaV": 0.311572585087696,
+          "netEventImpulseSum": 131752651.89470148,
+          "deflectionCumulativeNormDeltaLNormalized": 0.8121437933493604,
+          "totalSignedDeltaLNormNormalized": 0.1723594419781837
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-33",
+          "rawSHA256": "eaa877ea54565ac8d89e6cc712f1e8c50956c8b87914c86d4943ebc9c0b76f67",
+          "eventCounts": {
+            "close-region-exit": 2405,
+            "planet-loss": 66,
+            "planet-respawn": 66,
+            "civilization-birth": 29,
+            "pericenter-deflection": 46,
+            "civilization-death": 29,
+            "capture": 29
+          },
+          "peakRecordedNetDeltaV": 0.3151994774725023,
+          "netEventImpulseSum": 85631390.94540687,
+          "deflectionCumulativeNormDeltaLNormalized": 0.4808667430470811,
+          "totalSignedDeltaLNormNormalized": 0.18491735403890322
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-34",
+          "rawSHA256": "44c50716154d0225838171aeb81d80ee1f0ea130f6fa7c90b6791707b35429e2",
+          "eventCounts": {
+            "civilization-birth": 16,
+            "pericenter-deflection": 91,
+            "close-region-exit": 862,
+            "planet-loss": 34,
+            "civilization-death": 16,
+            "planet-respawn": 34,
+            "capture": 41
+          },
+          "peakRecordedNetDeltaV": 0.3397577730198243,
+          "netEventImpulseSum": 160109362.15543726,
+          "deflectionCumulativeNormDeltaLNormalized": 0.9131754793461084,
+          "totalSignedDeltaLNormNormalized": 0.1549752703100263
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-35",
+          "rawSHA256": "0f050f2d7e2f56f4063bd143d9b7205203bc95085f8dfd244960be1e483a3058",
+          "eventCounts": {
+            "close-region-exit": 1245,
+            "civilization-birth": 8,
+            "planet-loss": 18,
+            "civilization-death": 8,
+            "planet-respawn": 18,
+            "pericenter-deflection": 67,
+            "capture": 32
+          },
+          "peakRecordedNetDeltaV": 0.27187615601553805,
+          "netEventImpulseSum": 106666793.16981608,
+          "deflectionCumulativeNormDeltaLNormalized": 0.6385726270258,
+          "totalSignedDeltaLNormNormalized": 0.10763503127879753
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-36",
+          "rawSHA256": "4250b23097ac7122f305360e13895f43ecbed409f9b511db634005160149f656",
+          "eventCounts": {
+            "civilization-birth": 16,
+            "close-region-exit": 1808,
+            "pericenter-deflection": 69,
+            "planet-loss": 21,
+            "civilization-death": 16,
+            "planet-respawn": 21,
+            "capture": 22
+          },
+          "peakRecordedNetDeltaV": 0.21578544242412076,
+          "netEventImpulseSum": 70070615.3241741,
+          "deflectionCumulativeNormDeltaLNormalized": 0.35812324987737193,
+          "totalSignedDeltaLNormNormalized": 0.11445618560778717
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-37",
+          "rawSHA256": "9928089346049ef5d673c73ec50f16d92031299ced0c29a8eef7cd6b1abc9271",
+          "eventCounts": {
+            "civilization-birth": 9,
+            "close-region-exit": 3403,
+            "capture": 10,
+            "civilization-death": 8,
+            "pericenter-deflection": 31,
+            "planet-loss": 13,
+            "planet-respawn": 13
+          },
+          "peakRecordedNetDeltaV": 0.19862667877039297,
+          "netEventImpulseSum": 24492008.4997129,
+          "deflectionCumulativeNormDeltaLNormalized": 0.14430781886492247,
+          "totalSignedDeltaLNormNormalized": 0.026350507800060038
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-38",
+          "rawSHA256": "b73a5fa4fd64dfc4964fbcaa80ca5c3b4f5b782128cb33c0297e6d58067d320c",
+          "eventCounts": {
+            "close-region-exit": 3287,
+            "planet-loss": 22,
+            "planet-respawn": 22,
+            "civilization-birth": 15,
+            "pericenter-deflection": 43,
+            "civilization-death": 15,
+            "capture": 12
+          },
+          "peakRecordedNetDeltaV": 0.14942499803726542,
+          "netEventImpulseSum": 38067107.770796314,
+          "deflectionCumulativeNormDeltaLNormalized": 0.23148134211229607,
+          "totalSignedDeltaLNormNormalized": 0.14116818375275691
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-39",
+          "rawSHA256": "413b702dae590fb930886f97b676cc9333b64ea9c8c1820dbe8c29239ab30ae8",
+          "eventCounts": {
+            "civilization-birth": 11,
+            "close-region-exit": 949,
+            "capture": 15,
+            "planet-loss": 9,
+            "civilization-death": 10,
+            "planet-respawn": 9,
+            "pericenter-deflection": 29
+          },
+          "peakRecordedNetDeltaV": 0.2342869019072683,
+          "netEventImpulseSum": 43725555.05705176,
+          "deflectionCumulativeNormDeltaLNormalized": 0.22242973233576827,
+          "totalSignedDeltaLNormNormalized": 0.06204942941281138
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-40",
+          "rawSHA256": "3e5dc993eed6afacc60538aee841a021a3eaf4a5a7575f1adc8fd2233df86f45",
+          "eventCounts": {
+            "close-region-exit": 2350,
+            "civilization-birth": 16,
+            "planet-loss": 31,
+            "civilization-death": 16,
+            "planet-respawn": 31,
+            "pericenter-deflection": 123,
+            "capture": 35
+          },
+          "peakRecordedNetDeltaV": 0.32161899424359014,
+          "netEventImpulseSum": 169035319.88890326,
+          "deflectionCumulativeNormDeltaLNormalized": 1.3152136832651,
+          "totalSignedDeltaLNormNormalized": 0.2810419929259296
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-41",
+          "rawSHA256": "c3d159c21f13110a5a750fe5ef63352fc282602518ac6b9b447b1182079cab98",
+          "eventCounts": {
+            "civilization-birth": 41,
+            "planet-loss": 64,
+            "civilization-death": 41,
+            "planet-respawn": 64,
+            "close-region-exit": 1033,
+            "pericenter-deflection": 97,
+            "capture": 51
+          },
+          "peakRecordedNetDeltaV": 0.5166958745210793,
+          "netEventImpulseSum": 175450574.74393478,
+          "deflectionCumulativeNormDeltaLNormalized": 0.830956373201772,
+          "totalSignedDeltaLNormNormalized": 0.14148579898171956
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-42",
+          "rawSHA256": "c9954a76a9c601ebd4a8947fcb2a0bbb083efb2119a44de8c91dc1ef9e44ef7e",
+          "eventCounts": {
+            "civilization-birth": 9,
+            "pericenter-deflection": 86,
+            "close-region-exit": 2626,
+            "planet-loss": 24,
+            "civilization-death": 9,
+            "planet-respawn": 24,
+            "capture": 28
+          },
+          "peakRecordedNetDeltaV": 0.29265748689289534,
+          "netEventImpulseSum": 94927330.11455153,
+          "deflectionCumulativeNormDeltaLNormalized": 0.5981303746514166,
+          "totalSignedDeltaLNormNormalized": 0.19054076229759123
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-43",
+          "rawSHA256": "d5dcf62598925cdf52f35f8cc4a3c5842c5b9bc0615e92c91699853d8417dae4",
+          "eventCounts": {
+            "civilization-birth": 19,
+            "close-region-exit": 2170,
+            "planet-loss": 44,
+            "civilization-death": 18,
+            "planet-respawn": 44,
+            "pericenter-deflection": 59,
+            "capture": 19
+          },
+          "peakRecordedNetDeltaV": 0.347707385597203,
+          "netEventImpulseSum": 73427751.05076051,
+          "deflectionCumulativeNormDeltaLNormalized": 0.4539888392772648,
+          "totalSignedDeltaLNormNormalized": 0.12321285062819579
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-44",
+          "rawSHA256": "daf731ddb87d6b8a5131edf9987cc7a90606890ee2b18fa8dd2970a0e8ebe2a3",
+          "eventCounts": {
+            "close-region-exit": 3025,
+            "planet-loss": 16,
+            "planet-respawn": 16,
+            "pericenter-deflection": 75,
+            "civilization-birth": 6,
+            "civilization-death": 6,
+            "capture": 40
+          },
+          "peakRecordedNetDeltaV": 0.24834307291753105,
+          "netEventImpulseSum": 99784200.32311366,
+          "deflectionCumulativeNormDeltaLNormalized": 0.5705813662198463,
+          "totalSignedDeltaLNormNormalized": 0.10898601411615885
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-45",
+          "rawSHA256": "d24dc591a33a8e75bbf23c1be19df1c6b42656c3c48295323d4d7acd97078fc0",
+          "eventCounts": {
+            "close-region-exit": 1667,
+            "planet-loss": 49,
+            "planet-respawn": 49,
+            "civilization-birth": 22,
+            "pericenter-deflection": 169,
+            "civilization-death": 22,
+            "capture": 53
+          },
+          "peakRecordedNetDeltaV": 0.35030629084880976,
+          "netEventImpulseSum": 241957630.86305574,
+          "deflectionCumulativeNormDeltaLNormalized": 1.7529758195761698,
+          "totalSignedDeltaLNormNormalized": 0.1828291417889861
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-46",
+          "rawSHA256": "fea4258c61c028086e3016764c2726124fbdb5df85859450fbbb44b7ae80e8ce",
+          "eventCounts": {
+            "close-region-exit": 2065,
+            "capture": 24,
+            "planet-loss": 47,
+            "planet-respawn": 47,
+            "pericenter-deflection": 77,
+            "civilization-birth": 20,
+            "civilization-death": 20
+          },
+          "peakRecordedNetDeltaV": 0.2891279190674801,
+          "netEventImpulseSum": 99344480.19232774,
+          "deflectionCumulativeNormDeltaLNormalized": 0.6906089716131198,
+          "totalSignedDeltaLNormNormalized": 0.3081517604888351
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-47",
+          "rawSHA256": "76ff345357de1b33e93154851561b6dc0706c9622d3bcf424dc70f2fd7b85a7f",
+          "eventCounts": {
+            "civilization-birth": 21,
+            "close-region-exit": 605,
+            "pericenter-deflection": 66,
+            "planet-loss": 27,
+            "civilization-death": 20,
+            "planet-respawn": 27,
+            "capture": 30
+          },
+          "peakRecordedNetDeltaV": 0.34605774066327366,
+          "netEventImpulseSum": 103827134.37529477,
+          "deflectionCumulativeNormDeltaLNormalized": 0.597219009137575,
+          "totalSignedDeltaLNormNormalized": 0.08232325937411293
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-48",
+          "rawSHA256": "b4feb4b0a99fe1798b08659a8d4373782fd82db099d48cfb397ce58bbcdae709",
+          "eventCounts": {
+            "planet-loss": 65,
+            "planet-respawn": 65,
+            "close-region-exit": 4625,
+            "pericenter-deflection": 81,
+            "civilization-birth": 29,
+            "civilization-death": 29,
+            "capture": 40
+          },
+          "peakRecordedNetDeltaV": 0.25514479311842286,
+          "netEventImpulseSum": 103476356.38492595,
+          "deflectionCumulativeNormDeltaLNormalized": 0.5810146722348379,
+          "totalSignedDeltaLNormNormalized": 0.1400632439061894
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-49",
+          "rawSHA256": "c6365f05d1a6bcf1297257f0cffb8681b458fb0eebdca7f1f25e867faa19d1c4",
+          "eventCounts": {
+            "pericenter-deflection": 11,
+            "close-region-exit": 1131,
+            "planet-loss": 19,
+            "planet-respawn": 19,
+            "civilization-birth": 6,
+            "civilization-death": 5,
+            "capture": 3
+          },
+          "peakRecordedNetDeltaV": 0.1578782344491682,
+          "netEventImpulseSum": 9321690.456012193,
+          "deflectionCumulativeNormDeltaLNormalized": 0.06665148653745671,
+          "totalSignedDeltaLNormNormalized": 0.025759383196884162
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-50",
+          "rawSHA256": "91b900493e5d6a52ca1d5bdba75da4401710bb94850d9862553417e4bcdacf46",
+          "eventCounts": {
+            "pericenter-deflection": 128,
+            "close-region-exit": 2116,
+            "civilization-birth": 52,
+            "civilization-death": 51,
+            "planet-loss": 94,
+            "planet-respawn": 94,
+            "capture": 45
+          },
+          "peakRecordedNetDeltaV": 0.3133959749187194,
+          "netEventImpulseSum": 175756734.60061872,
+          "deflectionCumulativeNormDeltaLNormalized": 1.249362239600184,
+          "totalSignedDeltaLNormNormalized": 0.2832048258738035
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-51",
+          "rawSHA256": "1ec6af7de0db908081adbc1bf84f5c7c62f82b091923cba87d00e15b44e68fb9",
+          "eventCounts": {
+            "pericenter-deflection": 111,
+            "close-region-exit": 2612,
+            "planet-loss": 78,
+            "planet-respawn": 78,
+            "civilization-birth": 44,
+            "civilization-death": 44,
+            "capture": 34
+          },
+          "peakRecordedNetDeltaV": 0.2754072892788305,
+          "netEventImpulseSum": 132408365.27998531,
+          "deflectionCumulativeNormDeltaLNormalized": 0.8700199478187733,
+          "totalSignedDeltaLNormNormalized": 0.13660630078934075
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-52",
+          "rawSHA256": "d53cca1bcaa7659980461ffa4537ffe5a2c74240781709dd7d25f096cf22e774",
+          "eventCounts": {
+            "close-region-exit": 4822,
+            "pericenter-deflection": 242,
+            "capture": 44,
+            "planet-loss": 97,
+            "planet-respawn": 97,
+            "civilization-birth": 36,
+            "civilization-death": 36
+          },
+          "peakRecordedNetDeltaV": 0.483903300672319,
+          "netEventImpulseSum": 293741643.08815676,
+          "deflectionCumulativeNormDeltaLNormalized": 2.4687626009277017,
+          "totalSignedDeltaLNormNormalized": 0.2707935253426905
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-53",
+          "rawSHA256": "7d6f84e34d7f7ebb654781659ed2b117321451a582503d93069965dc6abb5791",
+          "eventCounts": {
+            "civilization-birth": 46,
+            "close-region-exit": 3064,
+            "planet-loss": 96,
+            "civilization-death": 45,
+            "planet-respawn": 96,
+            "pericenter-deflection": 135,
+            "capture": 36
+          },
+          "peakRecordedNetDeltaV": 0.306096337414196,
+          "netEventImpulseSum": 164766187.22877318,
+          "deflectionCumulativeNormDeltaLNormalized": 1.1054381712440395,
+          "totalSignedDeltaLNormNormalized": 0.21322600760356358
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-54",
+          "rawSHA256": "88afd412d30a29ea8293b3facd58a68016584d667dfcea03a60451f01bb27593",
+          "eventCounts": {
+            "close-region-exit": 2947,
+            "civilization-birth": 26,
+            "planet-loss": 54,
+            "civilization-death": 26,
+            "planet-respawn": 54,
+            "pericenter-deflection": 79,
+            "capture": 22
+          },
+          "peakRecordedNetDeltaV": 0.3090904513994799,
+          "netEventImpulseSum": 82307648.99981086,
+          "deflectionCumulativeNormDeltaLNormalized": 0.6246218790681083,
+          "totalSignedDeltaLNormNormalized": 0.08419134204298097
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-55",
+          "rawSHA256": "150344fceded497c30549db64144d359e59fadde50b12c3c27769e8c1573ebec",
+          "eventCounts": {
+            "civilization-birth": 4,
+            "close-region-exit": 3744,
+            "planet-loss": 17,
+            "civilization-death": 4,
+            "planet-respawn": 17,
+            "capture": 6,
+            "pericenter-deflection": 17
+          },
+          "peakRecordedNetDeltaV": 0.1978466571021924,
+          "netEventImpulseSum": 16294486.073358582,
+          "deflectionCumulativeNormDeltaLNormalized": 0.08500700194784433,
+          "totalSignedDeltaLNormNormalized": 0.07585140402866829
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-56",
+          "rawSHA256": "6daca893172d7efbf16d0fae70861801996ec54fd939c2e1d9e898898ff504e3",
+          "eventCounts": {
+            "civilization-birth": 33,
+            "close-region-exit": 900,
+            "civilization-death": 33,
+            "pericenter-deflection": 60,
+            "planet-loss": 52,
+            "planet-respawn": 52,
+            "capture": 26
+          },
+          "peakRecordedNetDeltaV": 0.2859439158008196,
+          "netEventImpulseSum": 102607991.6850938,
+          "deflectionCumulativeNormDeltaLNormalized": 0.5967306212821473,
+          "totalSignedDeltaLNormNormalized": 0.14533846490011468
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-57",
+          "rawSHA256": "0c9f33453a08c7b09382d4b602e13e16d0b66652eb4a133d10cf4282f7999e56",
+          "eventCounts": {
+            "close-region-exit": 1969,
+            "capture": 51,
+            "pericenter-deflection": 153,
+            "planet-loss": 57,
+            "planet-respawn": 57,
+            "civilization-birth": 22,
+            "civilization-death": 22
+          },
+          "peakRecordedNetDeltaV": 0.3293944356136504,
+          "netEventImpulseSum": 234947121.1328565,
+          "deflectionCumulativeNormDeltaLNormalized": 1.6122814301379764,
+          "totalSignedDeltaLNormNormalized": 0.12804752733148983
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-58",
+          "rawSHA256": "6639d2df4b9184c6af6a3a99754c72b67ca6ff289f4f5db83350b8b0433ee9c4",
+          "eventCounts": {
+            "civilization-birth": 29,
+            "planet-loss": 50,
+            "civilization-death": 29,
+            "planet-respawn": 50,
+            "close-region-exit": 1207,
+            "pericenter-deflection": 136,
+            "capture": 44
+          },
+          "peakRecordedNetDeltaV": 0.3209566054070849,
+          "netEventImpulseSum": 193583658.28289407,
+          "deflectionCumulativeNormDeltaLNormalized": 1.1631240880197624,
+          "totalSignedDeltaLNormNormalized": 0.18797894246251573
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-59",
+          "rawSHA256": "2e93d22afafa62416578113ca5b1b493ca6a37798d92553e71833e4abcdfb572",
+          "eventCounts": {
+            "close-region-exit": 1205,
+            "planet-loss": 20,
+            "planet-respawn": 20,
+            "civilization-birth": 10,
+            "pericenter-deflection": 135,
+            "civilization-death": 10,
+            "capture": 53
+          },
+          "peakRecordedNetDeltaV": 0.31757057283128654,
+          "netEventImpulseSum": 224188656.10176992,
+          "deflectionCumulativeNormDeltaLNormalized": 1.3889099110228096,
+          "totalSignedDeltaLNormNormalized": 0.2576884649341592
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-60",
+          "rawSHA256": "81cebd4996045d026ca1bb219155cffb0db5ac7890cf33c670ed9fb9bd187d4d",
+          "eventCounts": {
+            "civilization-birth": 17,
+            "close-region-exit": 712,
+            "pericenter-deflection": 39,
+            "capture": 35,
+            "planet-loss": 26,
+            "civilization-death": 17,
+            "planet-respawn": 26
+          },
+          "peakRecordedNetDeltaV": 0.3114226496522553,
+          "netEventImpulseSum": 79101362.91636164,
+          "deflectionCumulativeNormDeltaLNormalized": 0.32713014773792093,
+          "totalSignedDeltaLNormNormalized": 0.10288288754853922
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-61",
+          "rawSHA256": "6c88a67c879acaee75e1e4d57d1f23afe0ddb41fb432733f2efd8ace687d1381",
+          "eventCounts": {
+            "close-region-exit": 1484,
+            "civilization-birth": 21,
+            "pericenter-deflection": 111,
+            "planet-loss": 36,
+            "civilization-death": 21,
+            "planet-respawn": 36,
+            "capture": 44
+          },
+          "peakRecordedNetDeltaV": 0.3136521839459994,
+          "netEventImpulseSum": 185314924.1777712,
+          "deflectionCumulativeNormDeltaLNormalized": 1.0969985983440678,
+          "totalSignedDeltaLNormNormalized": 0.21446354441580795
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-62",
+          "rawSHA256": "e5920d4c925324b4f155e7ba98eb407f22f22ecf9d456586baf1ceb4f2efce66",
+          "eventCounts": {
+            "capture": 43,
+            "close-region-exit": 2050,
+            "planet-loss": 64,
+            "planet-respawn": 63,
+            "pericenter-deflection": 119,
+            "civilization-birth": 24,
+            "civilization-death": 24
+          },
+          "peakRecordedNetDeltaV": 0.3529417801821905,
+          "netEventImpulseSum": 158271865.0214288,
+          "deflectionCumulativeNormDeltaLNormalized": 0.9954185083267395,
+          "totalSignedDeltaLNormNormalized": 0.18429163026341816
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-63",
+          "rawSHA256": "c091c1a9a80c264ad80653af75e99db804fd228a4386e48cee799387a0cc4db4",
+          "eventCounts": {
+            "civilization-birth": 32,
+            "planet-loss": 70,
+            "civilization-death": 32,
+            "planet-respawn": 70,
+            "close-region-exit": 1566,
+            "capture": 67,
+            "pericenter-deflection": 180
+          },
+          "peakRecordedNetDeltaV": 0.4429241697129933,
+          "netEventImpulseSum": 292498606.50725824,
+          "deflectionCumulativeNormDeltaLNormalized": 1.8483252344368142,
+          "totalSignedDeltaLNormNormalized": 0.16191541420654718
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-64",
+          "rawSHA256": "d1b1b1178ee35023092633f27a7db79adbebb0b5e2f43781f79d02792cb0a623",
+          "eventCounts": {
+            "civilization-birth": 31,
+            "close-region-exit": 2432,
+            "planet-loss": 74,
+            "civilization-death": 31,
+            "planet-respawn": 74,
+            "pericenter-deflection": 78,
+            "capture": 45
+          },
+          "peakRecordedNetDeltaV": 0.3199407172954814,
+          "netEventImpulseSum": 110857093.9668039,
+          "deflectionCumulativeNormDeltaLNormalized": 0.5795451350391796,
+          "totalSignedDeltaLNormNormalized": 0.09616348827141798
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-65",
+          "rawSHA256": "2c6fcf6c446aa362df6aaeb75308b0391f5ad5736b4d44bce22060faa2deca53",
+          "eventCounts": {
+            "close-region-exit": 1708,
+            "civilization-birth": 10,
+            "civilization-death": 9,
+            "pericenter-deflection": 77,
+            "capture": 23,
+            "planet-loss": 18,
+            "planet-respawn": 18
+          },
+          "peakRecordedNetDeltaV": 0.3129877795451565,
+          "netEventImpulseSum": 99771972.73886915,
+          "deflectionCumulativeNormDeltaLNormalized": 0.6357739465408516,
+          "totalSignedDeltaLNormNormalized": 0.22958851738451955
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-66",
+          "rawSHA256": "e94dc5e85d330ddf80091283ee511fc23c6ced2e7b8359739254b48ad35cd688",
+          "eventCounts": {
+            "civilization-birth": 6,
+            "civilization-death": 6,
+            "planet-loss": 4,
+            "planet-respawn": 4,
+            "close-region-exit": 1637,
+            "pericenter-deflection": 113,
+            "capture": 37
+          },
+          "peakRecordedNetDeltaV": 0.30035496423369124,
+          "netEventImpulseSum": 162433786.15037376,
+          "deflectionCumulativeNormDeltaLNormalized": 1.131018763952181,
+          "totalSignedDeltaLNormNormalized": 0.1868424315043659
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-67",
+          "rawSHA256": "220828e33657d91d441a816483c0f10bc583c92851c7ed65ec71dbde75c4139d",
+          "eventCounts": {
+            "civilization-birth": 7,
+            "close-region-exit": 1491,
+            "capture": 30,
+            "pericenter-deflection": 76,
+            "civilization-death": 7,
+            "planet-loss": 11,
+            "planet-respawn": 11
+          },
+          "peakRecordedNetDeltaV": 0.3048163213209877,
+          "netEventImpulseSum": 109365682.39246061,
+          "deflectionCumulativeNormDeltaLNormalized": 0.6640187968192212,
+          "totalSignedDeltaLNormNormalized": 0.11840331749749267
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-68",
+          "rawSHA256": "e4da16eac6b01a900b58731f828c234094940cb486a8f0bed69bcc22c492baa9",
+          "eventCounts": {
+            "planet-loss": 19,
+            "planet-respawn": 19,
+            "civilization-birth": 10,
+            "close-region-exit": 1658,
+            "civilization-death": 10,
+            "capture": 34,
+            "pericenter-deflection": 93
+          },
+          "peakRecordedNetDeltaV": 0.31826322647442884,
+          "netEventImpulseSum": 131878123.28861928,
+          "deflectionCumulativeNormDeltaLNormalized": 0.8593844625858864,
+          "totalSignedDeltaLNormNormalized": 0.18524601851814926
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-69",
+          "rawSHA256": "eaf4465876935b0fdb8207a8e35d785ce16c4cee4f84631b008a93eec3ebff03",
+          "eventCounts": {
+            "close-region-exit": 1350,
+            "civilization-birth": 18,
+            "civilization-death": 17,
+            "planet-loss": 24,
+            "planet-respawn": 24,
+            "pericenter-deflection": 132,
+            "capture": 38
+          },
+          "peakRecordedNetDeltaV": 0.33294832544950703,
+          "netEventImpulseSum": 167369885.42735156,
+          "deflectionCumulativeNormDeltaLNormalized": 1.1145398566156794,
+          "totalSignedDeltaLNormNormalized": 0.17056549029357893
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-70",
+          "rawSHA256": "ffc853a84ee68a0eb323e146c24a9bd4fe61f68ac18a40e9baa1ffaf9fb2c8f3",
+          "eventCounts": {
+            "civilization-birth": 19,
+            "close-region-exit": 1161,
+            "capture": 62,
+            "civilization-death": 19,
+            "pericenter-deflection": 150,
+            "planet-loss": 29,
+            "planet-respawn": 29
+          },
+          "peakRecordedNetDeltaV": 0.33865982302456654,
+          "netEventImpulseSum": 249153508.30784112,
+          "deflectionCumulativeNormDeltaLNormalized": 1.441336689699466,
+          "totalSignedDeltaLNormNormalized": 0.019885096743657606
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-71",
+          "rawSHA256": "50faa3c662727f5f44f1ea98dfd5231a4c1b102f4a7b3c0b5545aa135713346a",
+          "eventCounts": {
+            "civilization-birth": 5,
+            "pericenter-deflection": 47,
+            "close-region-exit": 919,
+            "civilization-death": 5,
+            "planet-loss": 8,
+            "planet-respawn": 8,
+            "capture": 23
+          },
+          "peakRecordedNetDeltaV": 0.25190386989224817,
+          "netEventImpulseSum": 66197941.16547156,
+          "deflectionCumulativeNormDeltaLNormalized": 0.3530278988236538,
+          "totalSignedDeltaLNormNormalized": 0.20278118214945592
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-72",
+          "rawSHA256": "dbedf595a15531ec83ae1ba09bca3dfe5e1438fc40fff02db6a8108e862cd5a7",
+          "eventCounts": {
+            "civilization-birth": 15,
+            "close-region-exit": 572,
+            "planet-loss": 16,
+            "civilization-death": 15,
+            "planet-respawn": 16,
+            "pericenter-deflection": 63,
+            "capture": 21
+          },
+          "peakRecordedNetDeltaV": 0.3534970099660754,
+          "netEventImpulseSum": 102527199.6227125,
+          "deflectionCumulativeNormDeltaLNormalized": 0.627188285210241,
+          "totalSignedDeltaLNormNormalized": 0.03808436195823758
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-73",
+          "rawSHA256": "26a9dd017faab9207d3d57814f775c9a0d549a298a74c7f9393695c91633932f",
+          "eventCounts": {
+            "civilization-birth": 20,
+            "close-region-exit": 1648,
+            "pericenter-deflection": 101,
+            "civilization-death": 20,
+            "planet-loss": 37,
+            "planet-respawn": 37,
+            "capture": 36
+          },
+          "peakRecordedNetDeltaV": 0.31479519657849164,
+          "netEventImpulseSum": 156539615.8382829,
+          "deflectionCumulativeNormDeltaLNormalized": 0.9571120310165395,
+          "totalSignedDeltaLNormNormalized": 0.1950805722491073
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-74",
+          "rawSHA256": "20c1a9c510ae87be917bf65ec43788510ad34a6d561861611787bce573200208",
+          "eventCounts": {
+            "civilization-birth": 4,
+            "close-region-exit": 3780,
+            "planet-loss": 6,
+            "civilization-death": 4,
+            "planet-respawn": 6,
+            "pericenter-deflection": 142,
+            "capture": 57
+          },
+          "peakRecordedNetDeltaV": 0.3269169937615186,
+          "netEventImpulseSum": 201030438.3200927,
+          "deflectionCumulativeNormDeltaLNormalized": 1.3277936155511776,
+          "totalSignedDeltaLNormNormalized": 0.10971055981590923
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-75",
+          "rawSHA256": "9ff4e57d25906c8c623522865b6f6516a99a759339c015784a8416b8fea75fb7",
+          "eventCounts": {
+            "close-region-exit": 1233,
+            "civilization-birth": 27,
+            "planet-loss": 40,
+            "civilization-death": 27,
+            "planet-respawn": 40,
+            "pericenter-deflection": 88,
+            "capture": 39
+          },
+          "peakRecordedNetDeltaV": 0.3429828764812688,
+          "netEventImpulseSum": 117091062.57285266,
+          "deflectionCumulativeNormDeltaLNormalized": 0.6314702371411605,
+          "totalSignedDeltaLNormNormalized": 0.1803818062384168
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-76",
+          "rawSHA256": "4557519cc2888a9e46bd36f2792bcfc1db1b5c9169e12c56c41f352ec41dc1e7",
+          "eventCounts": {
+            "close-region-exit": 1854,
+            "planet-loss": 24,
+            "planet-respawn": 24,
+            "capture": 42,
+            "civilization-birth": 16,
+            "civilization-death": 16,
+            "pericenter-deflection": 175
+          },
+          "peakRecordedNetDeltaV": 0.34366841608426707,
+          "netEventImpulseSum": 243959324.87190905,
+          "deflectionCumulativeNormDeltaLNormalized": 1.54723674509004,
+          "totalSignedDeltaLNormNormalized": 0.15023791265913794
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-77",
+          "rawSHA256": "2bd06b1831fb59b5549a5033162a373abfc914fca5c733da86c59a267bf2b390",
+          "eventCounts": {
+            "civilization-birth": 76,
+            "close-region-exit": 1725,
+            "planet-loss": 171,
+            "civilization-death": 76,
+            "planet-respawn": 171,
+            "pericenter-deflection": 174,
+            "capture": 54
+          },
+          "peakRecordedNetDeltaV": 0.33205524071261244,
+          "netEventImpulseSum": 278415663.7269014,
+          "deflectionCumulativeNormDeltaLNormalized": 1.7987445400718534,
+          "totalSignedDeltaLNormNormalized": 0.07203297829183686
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-78",
+          "rawSHA256": "0d828a6653d0ff0a6ea36dac8577e3e6d5325c09ec0801ee1e14d002da47ee39",
+          "eventCounts": {
+            "civilization-birth": 20,
+            "close-region-exit": 1921,
+            "capture": 16,
+            "pericenter-deflection": 58,
+            "planet-loss": 27,
+            "civilization-death": 19,
+            "planet-respawn": 27
+          },
+          "peakRecordedNetDeltaV": 0.328172979109478,
+          "netEventImpulseSum": 68651316.10402195,
+          "deflectionCumulativeNormDeltaLNormalized": 0.4134271213532727,
+          "totalSignedDeltaLNormNormalized": 0.1663319707359113
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-79",
+          "rawSHA256": "e6fbff8039880fba5bf2fa88fdde88d64b8879955f23d4a6b650b2d53dc83f78",
+          "eventCounts": {
+            "civilization-birth": 43,
+            "close-region-exit": 1289,
+            "civilization-death": 43,
+            "planet-loss": 86,
+            "planet-respawn": 86,
+            "pericenter-deflection": 99,
+            "capture": 34
+          },
+          "peakRecordedNetDeltaV": 0.35177834062882013,
+          "netEventImpulseSum": 152622235.60561672,
+          "deflectionCumulativeNormDeltaLNormalized": 1.1120867877432226,
+          "totalSignedDeltaLNormNormalized": 0.14220774274788653
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-80",
+          "rawSHA256": "5af540d3d1efcd7167bc3be12a93c875d6883ca3699ff78c387a3fe9e6b9c0ad",
+          "eventCounts": {
+            "civilization-birth": 4,
+            "pericenter-deflection": 94,
+            "close-region-exit": 739,
+            "civilization-death": 4,
+            "capture": 32,
+            "planet-loss": 9,
+            "planet-respawn": 9
+          },
+          "peakRecordedNetDeltaV": 0.2906219572430323,
+          "netEventImpulseSum": 132518864.84418882,
+          "deflectionCumulativeNormDeltaLNormalized": 0.7886585687174663,
+          "totalSignedDeltaLNormNormalized": 0.06869324259954819
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-81",
+          "rawSHA256": "1060eb0e904a4b02f0b655f59c873a3ff6351151ef242bf6a58b72fef30c9c2e",
+          "eventCounts": {
+            "civilization-birth": 5,
+            "planet-loss": 7,
+            "civilization-death": 5,
+            "planet-respawn": 7,
+            "close-region-exit": 958,
+            "pericenter-deflection": 115,
+            "capture": 48
+          },
+          "peakRecordedNetDeltaV": 0.3078298499383813,
+          "netEventImpulseSum": 182638587.31130764,
+          "deflectionCumulativeNormDeltaLNormalized": 1.1433322896863614,
+          "totalSignedDeltaLNormNormalized": 0.127265797476502
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-82",
+          "rawSHA256": "9436f3d4d39a1d5737873fdfe349658f960fa870a6f6addfa59cf36ae18a0f65",
+          "eventCounts": {
+            "close-region-exit": 1216,
+            "civilization-birth": 8,
+            "planet-loss": 4,
+            "civilization-death": 8,
+            "planet-respawn": 4,
+            "capture": 9,
+            "pericenter-deflection": 31
+          },
+          "peakRecordedNetDeltaV": 0.263102935866357,
+          "netEventImpulseSum": 43531349.57966078,
+          "deflectionCumulativeNormDeltaLNormalized": 0.2972245160807255,
+          "totalSignedDeltaLNormNormalized": 0.05019115739303796
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-83",
+          "rawSHA256": "52aeeecb8f6cb2827ca41e209dec0393a65606b86e7e442c0f8a2a3b7531bfd4",
+          "eventCounts": {
+            "close-region-exit": 3381,
+            "civilization-birth": 12,
+            "planet-loss": 27,
+            "civilization-death": 12,
+            "planet-respawn": 27,
+            "pericenter-deflection": 137,
+            "capture": 30
+          },
+          "peakRecordedNetDeltaV": 0.3028901925861012,
+          "netEventImpulseSum": 157302792.58174062,
+          "deflectionCumulativeNormDeltaLNormalized": 1.1587057926322157,
+          "totalSignedDeltaLNormNormalized": 0.3283849437281959
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-84",
+          "rawSHA256": "9704ddb1bc4e024947b28d56f7ace540b3bcd002932edb21777a59bceba34f28",
+          "eventCounts": {
+            "civilization-birth": 35,
+            "close-region-exit": 2131,
+            "pericenter-deflection": 47,
+            "civilization-death": 34,
+            "planet-loss": 63,
+            "planet-respawn": 63,
+            "capture": 17
+          },
+          "peakRecordedNetDeltaV": 0.3015836350844032,
+          "netEventImpulseSum": 67334843.20515512,
+          "deflectionCumulativeNormDeltaLNormalized": 0.4168603018747128,
+          "totalSignedDeltaLNormNormalized": 0.15212078175627403
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-85",
+          "rawSHA256": "4198abdbdac4327c517dc6ccad91e4b77c4c42264926117e878f4ec3e9fadcfa",
+          "eventCounts": {
+            "close-region-exit": 2853,
+            "capture": 30,
+            "planet-loss": 34,
+            "planet-respawn": 34,
+            "civilization-birth": 13,
+            "civilization-death": 12,
+            "pericenter-deflection": 51
+          },
+          "peakRecordedNetDeltaV": 0.23477896527186715,
+          "netEventImpulseSum": 85367200.34388776,
+          "deflectionCumulativeNormDeltaLNormalized": 0.44030078367737424,
+          "totalSignedDeltaLNormNormalized": 0.16917186419857264
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-86",
+          "rawSHA256": "e52db21b048950fbbbf385d9c4f1a173b71b00715853cb30f55793b2d4a0ea47",
+          "eventCounts": {
+            "close-region-exit": 2031,
+            "planet-loss": 12,
+            "planet-respawn": 12,
+            "pericenter-deflection": 128,
+            "civilization-birth": 9,
+            "civilization-death": 9,
+            "capture": 47
+          },
+          "peakRecordedNetDeltaV": 0.33813791549703465,
+          "netEventImpulseSum": 195047945.15977454,
+          "deflectionCumulativeNormDeltaLNormalized": 1.3680774587217364,
+          "totalSignedDeltaLNormNormalized": 0.1122666680510733
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-87",
+          "rawSHA256": "e966af26b8c47138feabb82596292c16378f61a51da9a0f1df97745f4b52ce86",
+          "eventCounts": {
+            "planet-loss": 5,
+            "planet-respawn": 5,
+            "close-region-exit": 2145,
+            "civilization-birth": 2,
+            "civilization-death": 2,
+            "capture": 10,
+            "pericenter-deflection": 26
+          },
+          "peakRecordedNetDeltaV": 0.18034746555073505,
+          "netEventImpulseSum": 26547786.704048567,
+          "deflectionCumulativeNormDeltaLNormalized": 0.15278057141541068,
+          "totalSignedDeltaLNormNormalized": 0.03780776203809363
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-88",
+          "rawSHA256": "a7e58b825ba0016180119bb4b4a629b0e3574ba00f3844e0f7967b04904fc81a",
+          "eventCounts": {
+            "close-region-exit": 3660,
+            "planet-loss": 41,
+            "planet-respawn": 41,
+            "civilization-birth": 11,
+            "civilization-death": 11,
+            "pericenter-deflection": 41,
+            "capture": 11
+          },
+          "peakRecordedNetDeltaV": 0.25130755919298464,
+          "netEventImpulseSum": 44532950.06328748,
+          "deflectionCumulativeNormDeltaLNormalized": 0.305654249729204,
+          "totalSignedDeltaLNormNormalized": 0.11528019913684565
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-89",
+          "rawSHA256": "dff7d0386d575818e98c36317f947229c00f17e21d15d13bddad564378342c92",
+          "eventCounts": {
+            "close-region-exit": 4056,
+            "planet-loss": 68,
+            "planet-respawn": 68,
+            "capture": 48,
+            "pericenter-deflection": 114,
+            "civilization-birth": 38,
+            "civilization-death": 37
+          },
+          "peakRecordedNetDeltaV": 0.2788509022452975,
+          "netEventImpulseSum": 146487509.28999656,
+          "deflectionCumulativeNormDeltaLNormalized": 0.931987532924882,
+          "totalSignedDeltaLNormNormalized": 0.11779460850911053
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-90",
+          "rawSHA256": "a4df4b16fd4ed3ebdf1fcc9e1d2c068e7f41e0f20ac229e23c7ee37a4000b2f4",
+          "eventCounts": {
+            "civilization-birth": 39,
+            "pericenter-deflection": 147,
+            "close-region-exit": 1513,
+            "civilization-death": 39,
+            "planet-loss": 72,
+            "planet-respawn": 72,
+            "capture": 52
+          },
+          "peakRecordedNetDeltaV": 0.345007944238752,
+          "netEventImpulseSum": 194550520.2599196,
+          "deflectionCumulativeNormDeltaLNormalized": 1.2100070869281043,
+          "totalSignedDeltaLNormNormalized": 0.02992497903482677
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-91",
+          "rawSHA256": "ab110ae2671226b84e4e7ab65b3db8d3607b33f1a49a6e6270100e43af1edf66",
+          "eventCounts": {
+            "capture": 17,
+            "planet-loss": 21,
+            "planet-respawn": 21,
+            "civilization-birth": 6,
+            "close-region-exit": 2904,
+            "civilization-death": 6,
+            "pericenter-deflection": 95
+          },
+          "peakRecordedNetDeltaV": 0.2661484488928624,
+          "netEventImpulseSum": 93046236.8898027,
+          "deflectionCumulativeNormDeltaLNormalized": 0.7076684198383681,
+          "totalSignedDeltaLNormNormalized": 0.237818904763825
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-92",
+          "rawSHA256": "b66af6edcd20b088b238bd86c70f9b85c429cd32502f4bfcbcb3dd24408b4b12",
+          "eventCounts": {
+            "civilization-birth": 39,
+            "civilization-death": 39,
+            "planet-loss": 63,
+            "planet-respawn": 63,
+            "close-region-exit": 1141,
+            "pericenter-deflection": 128,
+            "capture": 51
+          },
+          "peakRecordedNetDeltaV": 0.32039188995973417,
+          "netEventImpulseSum": 203032953.8740007,
+          "deflectionCumulativeNormDeltaLNormalized": 1.2438245218825192,
+          "totalSignedDeltaLNormNormalized": 0.1664295919493992
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-93",
+          "rawSHA256": "5d878b0ae5f6d0277003ce5c027f993e2033595d8c07a1bede6ecd8310bb2d0c",
+          "eventCounts": {
+            "civilization-birth": 11,
+            "close-region-exit": 2318,
+            "planet-loss": 29,
+            "civilization-death": 11,
+            "planet-respawn": 29,
+            "pericenter-deflection": 153,
+            "capture": 73
+          },
+          "peakRecordedNetDeltaV": 0.4810134530290155,
+          "netEventImpulseSum": 238718846.0739473,
+          "deflectionCumulativeNormDeltaLNormalized": 1.422743584681279,
+          "totalSignedDeltaLNormNormalized": 0.20872632796561688
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-94",
+          "rawSHA256": "6963dee89ece4c76e5819f87175140acf459653aaff2733e350288b08e19784f",
+          "eventCounts": {
+            "close-region-exit": 2906,
+            "civilization-birth": 57,
+            "pericenter-deflection": 220,
+            "planet-loss": 135,
+            "civilization-death": 57,
+            "planet-respawn": 135,
+            "capture": 74
+          },
+          "peakRecordedNetDeltaV": 0.34172341853358684,
+          "netEventImpulseSum": 342574467.5935505,
+          "deflectionCumulativeNormDeltaLNormalized": 2.531069326467839,
+          "totalSignedDeltaLNormNormalized": 0.19734742728091825
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-95",
+          "rawSHA256": "b583146f977c631701e3e298bf517678d340817be2f374029eb082f50cb0fe9d",
+          "eventCounts": {
+            "close-region-exit": 3834,
+            "pericenter-deflection": 167,
+            "planet-loss": 48,
+            "planet-respawn": 48,
+            "civilization-birth": 18,
+            "civilization-death": 18,
+            "capture": 43
+          },
+          "peakRecordedNetDeltaV": 0.30712369607372875,
+          "netEventImpulseSum": 156328191.43421584,
+          "deflectionCumulativeNormDeltaLNormalized": 1.148539343281815,
+          "totalSignedDeltaLNormNormalized": 0.28410306226414317
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-96",
+          "rawSHA256": "443fe1d3d0e0aba5ecfb4339b5aa6512946310ccfb2f4d4c27b76bd2822ff2b4",
+          "eventCounts": {
+            "close-region-exit": 3677,
+            "civilization-birth": 24,
+            "planet-loss": 72,
+            "civilization-death": 24,
+            "planet-respawn": 72,
+            "pericenter-deflection": 77,
+            "capture": 22
+          },
+          "peakRecordedNetDeltaV": 0.30776655508532585,
+          "netEventImpulseSum": 99197500.98710476,
+          "deflectionCumulativeNormDeltaLNormalized": 0.5995307456844016,
+          "totalSignedDeltaLNormNormalized": 0.1541425616697172
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-97",
+          "rawSHA256": "950ce8350e641e4175fbaca033c77e01147f1d58ba3b80d8d63e95b70d1d7806",
+          "eventCounts": {
+            "close-region-exit": 1770,
+            "civilization-birth": 5,
+            "planet-loss": 9,
+            "civilization-death": 5,
+            "planet-respawn": 9,
+            "capture": 1,
+            "pericenter-deflection": 11
+          },
+          "peakRecordedNetDeltaV": 0.14471558170770113,
+          "netEventImpulseSum": 8599524.03970178,
+          "deflectionCumulativeNormDeltaLNormalized": 0.06542079126428904,
+          "totalSignedDeltaLNormNormalized": 0.053077057721447815
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-98",
+          "rawSHA256": "365226f3ded0a0b36f08de4e5e6d7671275aed82da092956e27e030e141b8522",
+          "eventCounts": {
+            "civilization-birth": 26,
+            "close-region-exit": 1282,
+            "pericenter-deflection": 155,
+            "civilization-death": 26,
+            "capture": 44,
+            "planet-loss": 39,
+            "planet-respawn": 39
+          },
+          "peakRecordedNetDeltaV": 0.33039480628515633,
+          "netEventImpulseSum": 217660324.5224534,
+          "deflectionCumulativeNormDeltaLNormalized": 1.5135700279639899,
+          "totalSignedDeltaLNormNormalized": 0.1533253843073821
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-99",
+          "rawSHA256": "70198891583e4bdc90268e538dc2f8bf94578f467b6ec2019e86d7f21470fe03",
+          "eventCounts": {
+            "close-region-exit": 1635,
+            "civilization-birth": 30,
+            "planet-loss": 46,
+            "civilization-death": 29,
+            "planet-respawn": 46,
+            "pericenter-deflection": 112,
+            "capture": 59
+          },
+          "peakRecordedNetDeltaV": 0.29926449484628986,
+          "netEventImpulseSum": 163099774.9426714,
+          "deflectionCumulativeNormDeltaLNormalized": 0.8298507097594486,
+          "totalSignedDeltaLNormNormalized": 0.20268232791856872
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-100",
+          "rawSHA256": "f03ac779a0c074e5d4f588f38e77fd032b325ec4d3e0e5f43bd7e16a346a2b4c",
+          "eventCounts": {
+            "civilization-birth": 31,
+            "planet-loss": 50,
+            "civilization-death": 31,
+            "planet-respawn": 50,
+            "close-region-exit": 548,
+            "pericenter-deflection": 40,
+            "capture": 32
+          },
+          "peakRecordedNetDeltaV": 0.3049067327384691,
+          "netEventImpulseSum": 67641532.88123673,
+          "deflectionCumulativeNormDeltaLNormalized": 0.2823721490582531,
+          "totalSignedDeltaLNormNormalized": 0.0876659979508729
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-101",
+          "rawSHA256": "7884229a2494dfe6f9b4d6436528823e17cc866fbc1f3c46e95fa8dd46d7789e",
+          "eventCounts": {
+            "civilization-birth": 21,
+            "close-region-exit": 1171,
+            "planet-loss": 31,
+            "civilization-death": 21,
+            "planet-respawn": 31,
+            "capture": 23,
+            "pericenter-deflection": 64
+          },
+          "peakRecordedNetDeltaV": 0.30247728053815753,
+          "netEventImpulseSum": 80884449.81021547,
+          "deflectionCumulativeNormDeltaLNormalized": 0.4993990259658127,
+          "totalSignedDeltaLNormNormalized": 0.05395687399859049
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-102",
+          "rawSHA256": "235275d7e6cfede25798d720bfdf54ddec47ebec8448fa003fc323bceddcb3fb",
+          "eventCounts": {
+            "civilization-birth": 32,
+            "close-region-exit": 1885,
+            "planet-loss": 51,
+            "civilization-death": 31,
+            "planet-respawn": 51,
+            "pericenter-deflection": 82,
+            "capture": 17
+          },
+          "peakRecordedNetDeltaV": 0.2917768270840433,
+          "netEventImpulseSum": 104081308.92779899,
+          "deflectionCumulativeNormDeltaLNormalized": 0.6929894226859216,
+          "totalSignedDeltaLNormNormalized": 0.21051585771849046
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-103",
+          "rawSHA256": "331aae730feecc152367f8ea85abb96b3a15f315f618a9c48bb25600eeabca85",
+          "eventCounts": {
+            "close-region-exit": 1775,
+            "civilization-birth": 46,
+            "planet-loss": 70,
+            "civilization-death": 45,
+            "planet-respawn": 70,
+            "pericenter-deflection": 109,
+            "capture": 44
+          },
+          "peakRecordedNetDeltaV": 0.3369741320866071,
+          "netEventImpulseSum": 169952444.3680439,
+          "deflectionCumulativeNormDeltaLNormalized": 1.010444811067356,
+          "totalSignedDeltaLNormNormalized": 0.2669853102654432
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-104",
+          "rawSHA256": "395e6197c8b8cea620788b7248fb9bd7e24661c6b50d26eba12de4d5fc8a5ba9",
+          "eventCounts": {
+            "planet-loss": 37,
+            "planet-respawn": 37,
+            "civilization-birth": 18,
+            "close-region-exit": 1540,
+            "pericenter-deflection": 68,
+            "civilization-death": 18,
+            "capture": 32
+          },
+          "peakRecordedNetDeltaV": 0.34108119121319624,
+          "netEventImpulseSum": 96050761.32412821,
+          "deflectionCumulativeNormDeltaLNormalized": 0.5287299722971788,
+          "totalSignedDeltaLNormNormalized": 0.14474218424308474
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-105",
+          "rawSHA256": "dd6498fccb6770a4375a1f6006c3d21b6846af76c5cd47be38d4d0f05854c090",
+          "eventCounts": {
+            "close-region-exit": 2709,
+            "planet-loss": 32,
+            "planet-respawn": 32,
+            "civilization-birth": 10,
+            "civilization-death": 10,
+            "pericenter-deflection": 85,
+            "capture": 26
+          },
+          "peakRecordedNetDeltaV": 0.2636904009459771,
+          "netEventImpulseSum": 95223938.74909107,
+          "deflectionCumulativeNormDeltaLNormalized": 0.6237020051825796,
+          "totalSignedDeltaLNormNormalized": 0.1814072432171994
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-106",
+          "rawSHA256": "18d95fd97d04043bb2c03e2594bf974020a6b8010a343806354512ef3d684695",
+          "eventCounts": {
+            "civilization-birth": 6,
+            "planet-loss": 9,
+            "civilization-death": 6,
+            "planet-respawn": 9,
+            "close-region-exit": 1773,
+            "capture": 20,
+            "pericenter-deflection": 67
+          },
+          "peakRecordedNetDeltaV": 0.22059249276913293,
+          "netEventImpulseSum": 69806606.61482923,
+          "deflectionCumulativeNormDeltaLNormalized": 0.41568454596958354,
+          "totalSignedDeltaLNormNormalized": 0.026852550542513145
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-107",
+          "rawSHA256": "d179f01470d6ecbd8c334878b3af3866123650525f09939c16a085a06d0d4c5b",
+          "eventCounts": {
+            "civilization-birth": 26,
+            "close-region-exit": 1082,
+            "pericenter-deflection": 119,
+            "civilization-death": 26,
+            "planet-loss": 46,
+            "planet-respawn": 46,
+            "capture": 31
+          },
+          "peakRecordedNetDeltaV": 0.32204866626293555,
+          "netEventImpulseSum": 181912426.178491,
+          "deflectionCumulativeNormDeltaLNormalized": 1.2131048083116136,
+          "totalSignedDeltaLNormNormalized": 0.042728370358400776
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-108",
+          "rawSHA256": "22b7eb33781371a08c9f2c10801d0333260e3d5e6b0954c8eb8fd09289e83196",
+          "eventCounts": {
+            "civilization-birth": 43,
+            "close-region-exit": 719,
+            "planet-loss": 69,
+            "civilization-death": 43,
+            "planet-respawn": 69,
+            "capture": 42,
+            "pericenter-deflection": 99
+          },
+          "peakRecordedNetDeltaV": 0.3199384863201108,
+          "netEventImpulseSum": 156551046.78951666,
+          "deflectionCumulativeNormDeltaLNormalized": 0.9010331369272234,
+          "totalSignedDeltaLNormNormalized": 0.16669058851411642
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-109",
+          "rawSHA256": "baef13700ac46c4e4a89117ade30d435aa2e7b47ba97a13d5a27b17c695859ad",
+          "eventCounts": {
+            "planet-loss": 27,
+            "planet-respawn": 27,
+            "pericenter-deflection": 63,
+            "close-region-exit": 4814,
+            "capture": 21,
+            "civilization-birth": 12,
+            "civilization-death": 12
+          },
+          "peakRecordedNetDeltaV": 0.19220335159034346,
+          "netEventImpulseSum": 57007241.4849819,
+          "deflectionCumulativeNormDeltaLNormalized": 0.35356094785544095,
+          "totalSignedDeltaLNormNormalized": 0.14689299213760468
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-110",
+          "rawSHA256": "ab3a9b0eaa6e7214c52e2a14086084d3303d055c5b0d1432723376e06b8b314e",
+          "eventCounts": {
+            "civilization-birth": 14,
+            "civilization-death": 14,
+            "planet-loss": 27,
+            "planet-respawn": 27,
+            "close-region-exit": 907,
+            "pericenter-deflection": 111,
+            "capture": 34
+          },
+          "peakRecordedNetDeltaV": 0.31322239889970244,
+          "netEventImpulseSum": 149183697.68048766,
+          "deflectionCumulativeNormDeltaLNormalized": 0.9430551900585031,
+          "totalSignedDeltaLNormNormalized": 0.154712860841576
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-111",
+          "rawSHA256": "3b3fb3cc2061a8a78e6a13ccd4322bf1cd410ada39ebe3fab96b83c688789e94",
+          "eventCounts": {
+            "civilization-birth": 37,
+            "civilization-death": 37,
+            "planet-loss": 53,
+            "planet-respawn": 53,
+            "close-region-exit": 1197,
+            "pericenter-deflection": 104,
+            "capture": 34
+          },
+          "peakRecordedNetDeltaV": 0.33095453518884244,
+          "netEventImpulseSum": 114612836.43018147,
+          "deflectionCumulativeNormDeltaLNormalized": 0.6648227808740584,
+          "totalSignedDeltaLNormNormalized": 0.1569728920328509
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-112",
+          "rawSHA256": "c3d86fa5b2e53fbe6a856360d776e82ff03ead78783ccaa33a29fb08fc389b99",
+          "eventCounts": {
+            "civilization-birth": 45,
+            "close-region-exit": 1466,
+            "civilization-death": 45,
+            "planet-loss": 88,
+            "planet-respawn": 88,
+            "pericenter-deflection": 105,
+            "capture": 41
+          },
+          "peakRecordedNetDeltaV": 0.3209237558988505,
+          "netEventImpulseSum": 159194114.87892222,
+          "deflectionCumulativeNormDeltaLNormalized": 0.9039035648927156,
+          "totalSignedDeltaLNormNormalized": 0.19263098349051583
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-113",
+          "rawSHA256": "b5ce308bd661510bea4ba3f4d170d4f778e17432fd79716116fa335e79522c64",
+          "eventCounts": {
+            "civilization-birth": 5,
+            "close-region-exit": 3763,
+            "civilization-death": 4,
+            "pericenter-deflection": 109,
+            "capture": 18,
+            "planet-loss": 11,
+            "planet-respawn": 11
+          },
+          "peakRecordedNetDeltaV": 0.3392095832579522,
+          "netEventImpulseSum": 103641931.41665205,
+          "deflectionCumulativeNormDeltaLNormalized": 0.7783512019173845,
+          "totalSignedDeltaLNormNormalized": 0.20466790683485048
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-114",
+          "rawSHA256": "0ef0dcd4ed7488b4ad2a07246c9cffe0688e818a1bb2fde5383df8c5c1ce9e74",
+          "eventCounts": {
+            "close-region-exit": 3224,
+            "planet-loss": 20,
+            "planet-respawn": 20,
+            "civilization-birth": 13,
+            "civilization-death": 13,
+            "pericenter-deflection": 72,
+            "capture": 46
+          },
+          "peakRecordedNetDeltaV": 0.2646990159004447,
+          "netEventImpulseSum": 109675294.68746956,
+          "deflectionCumulativeNormDeltaLNormalized": 0.5275717222815148,
+          "totalSignedDeltaLNormNormalized": 0.12378556685147611
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-115",
+          "rawSHA256": "47857d370d0d22bc1a8c87a36001a31f849157b3992e869d626610855c55ece0",
+          "eventCounts": {
+            "civilization-birth": 18,
+            "pericenter-deflection": 93,
+            "close-region-exit": 778,
+            "capture": 47,
+            "planet-loss": 31,
+            "civilization-death": 18,
+            "planet-respawn": 31
+          },
+          "peakRecordedNetDeltaV": 0.325252820650328,
+          "netEventImpulseSum": 168247359.66732055,
+          "deflectionCumulativeNormDeltaLNormalized": 0.935186316294112,
+          "totalSignedDeltaLNormNormalized": 0.13817067388070875
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-116",
+          "rawSHA256": "ae4926c95766e099e3ce51e406b2d766a7c0d4b17a37bdfe602047277d42d5d0",
+          "eventCounts": {
+            "planet-loss": 6,
+            "planet-respawn": 6,
+            "pericenter-deflection": 19,
+            "close-region-exit": 2632,
+            "civilization-birth": 6,
+            "civilization-death": 6,
+            "capture": 8
+          },
+          "peakRecordedNetDeltaV": 0.30729432229380244,
+          "netEventImpulseSum": 21897135.0459251,
+          "deflectionCumulativeNormDeltaLNormalized": 0.12070803370660323,
+          "totalSignedDeltaLNormNormalized": 0.08212331118784306
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-117",
+          "rawSHA256": "3d80d31c52aab0011a08b1467b128b99c426b41ebe0ee7a7267a70e54a666ee4",
+          "eventCounts": {
+            "civilization-birth": 15,
+            "pericenter-deflection": 83,
+            "close-region-exit": 953,
+            "planet-loss": 20,
+            "civilization-death": 15,
+            "planet-respawn": 20,
+            "capture": 28
+          },
+          "peakRecordedNetDeltaV": 0.3310816278608914,
+          "netEventImpulseSum": 120284587.864004,
+          "deflectionCumulativeNormDeltaLNormalized": 0.7590426945697726,
+          "totalSignedDeltaLNormNormalized": 0.16385152842675738
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-118",
+          "rawSHA256": "d25c1f3e4119c67ba81e8ff7fa2bbf9587b89c47e04d1622f806aa8bf7456b2a",
+          "eventCounts": {
+            "civilization-birth": 10,
+            "close-region-exit": 1455,
+            "civilization-death": 10,
+            "capture": 41,
+            "planet-loss": 18,
+            "planet-respawn": 18,
+            "pericenter-deflection": 47
+          },
+          "peakRecordedNetDeltaV": 0.32156286904111264,
+          "netEventImpulseSum": 75382944.0384042,
+          "deflectionCumulativeNormDeltaLNormalized": 0.3054324282486832,
+          "totalSignedDeltaLNormNormalized": 0.06285198701157083
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-119",
+          "rawSHA256": "5aa2ca17ea9eea5e7708787bd020d2d292b245678121b6a989dcc7e61a75554a",
+          "eventCounts": {
+            "close-region-exit": 1820,
+            "pericenter-deflection": 89,
+            "civilization-birth": 7,
+            "planet-loss": 18,
+            "civilization-death": 7,
+            "planet-respawn": 18,
+            "capture": 21
+          },
+          "peakRecordedNetDeltaV": 0.3090065345632432,
+          "netEventImpulseSum": 111687349.82781406,
+          "deflectionCumulativeNormDeltaLNormalized": 0.8226398389197674,
+          "totalSignedDeltaLNormNormalized": 0.1782585994615555
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-120",
+          "rawSHA256": "d709c7d6b20145c37d7fd5f84e37c8e3f6c1067b3ecdd530dde07e978d81ee70",
+          "eventCounts": {
+            "planet-loss": 22,
+            "planet-respawn": 22,
+            "close-region-exit": 1891,
+            "pericenter-deflection": 59,
+            "civilization-birth": 10,
+            "civilization-death": 9,
+            "capture": 30
+          },
+          "peakRecordedNetDeltaV": 0.31408750140167124,
+          "netEventImpulseSum": 88978450.10823615,
+          "deflectionCumulativeNormDeltaLNormalized": 0.5149547587766509,
+          "totalSignedDeltaLNormNormalized": 0.16604426473474598
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-121",
+          "rawSHA256": "791c071e7fea5f000462d0a922b0a4a60b56f42ec01887f2280bc58b883360ef",
+          "eventCounts": {
+            "civilization-birth": 16,
+            "close-region-exit": 1184,
+            "planet-loss": 38,
+            "civilization-death": 16,
+            "planet-respawn": 38,
+            "pericenter-deflection": 64,
+            "capture": 34
+          },
+          "peakRecordedNetDeltaV": 0.30184866940352223,
+          "netEventImpulseSum": 88017886.37148562,
+          "deflectionCumulativeNormDeltaLNormalized": 0.42544511443344674,
+          "totalSignedDeltaLNormNormalized": 0.09191437798113591
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-122",
+          "rawSHA256": "8cfbfa43f560b1a6b7d23eaccc8b640cb4f45d1dff0c359c8a16172f60639cdf",
+          "eventCounts": {
+            "civilization-birth": 38,
+            "close-region-exit": 744,
+            "planet-loss": 60,
+            "civilization-death": 38,
+            "planet-respawn": 60,
+            "capture": 28,
+            "pericenter-deflection": 83
+          },
+          "peakRecordedNetDeltaV": 0.37175723876348504,
+          "netEventImpulseSum": 131233061.98506615,
+          "deflectionCumulativeNormDeltaLNormalized": 0.845679556915545,
+          "totalSignedDeltaLNormNormalized": 0.12130324609077311
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-123",
+          "rawSHA256": "25513841c7fa435bd66640949b42bb21e6d3b7ed5710c4dc44d5e83d86a2f762",
+          "eventCounts": {
+            "civilization-birth": 10,
+            "planet-loss": 23,
+            "civilization-death": 10,
+            "planet-respawn": 23,
+            "close-region-exit": 1454,
+            "pericenter-deflection": 74,
+            "capture": 29
+          },
+          "peakRecordedNetDeltaV": 0.3143417780054268,
+          "netEventImpulseSum": 106963698.33341603,
+          "deflectionCumulativeNormDeltaLNormalized": 0.6276162553201169,
+          "totalSignedDeltaLNormNormalized": 0.18255041069831968
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-124",
+          "rawSHA256": "01a1a9f4cd7d1a2826f16976e8de5abf15eff0e0ba48f7c7cfd2a13d6802827d",
+          "eventCounts": {
+            "close-region-exit": 3574,
+            "civilization-birth": 13,
+            "pericenter-deflection": 70,
+            "planet-loss": 24,
+            "civilization-death": 13,
+            "planet-respawn": 24,
+            "capture": 12
+          },
+          "peakRecordedNetDeltaV": 0.2765018126250829,
+          "netEventImpulseSum": 84120178.33363307,
+          "deflectionCumulativeNormDeltaLNormalized": 0.6834804685491997,
+          "totalSignedDeltaLNormNormalized": 0.20183759490811715
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-125",
+          "rawSHA256": "604c6d2b0283873e2e43a33db7b55c1eb81c985de00c54874ee87f0e59609497",
+          "eventCounts": {
+            "close-region-exit": 2583,
+            "planet-loss": 13,
+            "planet-respawn": 13,
+            "pericenter-deflection": 49,
+            "civilization-birth": 10,
+            "civilization-death": 10,
+            "capture": 21
+          },
+          "peakRecordedNetDeltaV": 0.20478370821103087,
+          "netEventImpulseSum": 55593591.81723562,
+          "deflectionCumulativeNormDeltaLNormalized": 0.33964282599520473,
+          "totalSignedDeltaLNormNormalized": 0.1493636277688478
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-126",
+          "rawSHA256": "3a41ca8f670e92642365018036a0acba6b4e8d33045beed70e476c337c879222",
+          "eventCounts": {
+            "close-region-exit": 3296,
+            "planet-loss": 74,
+            "planet-respawn": 74,
+            "civilization-birth": 35,
+            "pericenter-deflection": 166,
+            "civilization-death": 35,
+            "capture": 39
+          },
+          "peakRecordedNetDeltaV": 0.30493078223710907,
+          "netEventImpulseSum": 205226084.7808027,
+          "deflectionCumulativeNormDeltaLNormalized": 1.6004487666361393,
+          "totalSignedDeltaLNormNormalized": 0.263266310240682
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-127",
+          "rawSHA256": "b213241f10ec0b5c538dcaa33e4447e021699bb76dcea4d8606a37a69d473b0b",
+          "eventCounts": {
+            "planet-loss": 45,
+            "close-region-exit": 1737,
+            "planet-respawn": 45,
+            "civilization-birth": 23,
+            "capture": 40,
+            "civilization-death": 23,
+            "pericenter-deflection": 123
+          },
+          "peakRecordedNetDeltaV": 0.32838335506729155,
+          "netEventImpulseSum": 169826983.47574645,
+          "deflectionCumulativeNormDeltaLNormalized": 1.1069236702539982,
+          "totalSignedDeltaLNormNormalized": 0.08953851975231862
+        }
+      ],
+      "peakRecordedNetDeltaV": {
+        "mean": 0.30454518185829516,
+        "max": 0.5166958745210793
+      },
+      "deflectionCumulativeNormDeltaLNormalized": {
+        "mean": 0.8860081057448852,
+        "max": 3.147503416221375
+      },
+      "totalSignedDeltaLNormNormalized": {
+        "mean": 0.15514537364756398,
+        "max": 0.431815874366805
+      },
+      "matureStablePostRespawn25Contribution": {
+        "mean": 0.007565700231481481,
+        "min": 0.0,
+        "max": 0.03948111111111111
+      },
+      "matureStableOlderPlanetContribution": {
+        "mean": 0.27452414641203704,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "initialCrossingYears": {
+        "mean": 16.650462580901873,
+        "min": 7.1504527391686885,
+        "max": 29.756064328850997
+      },
+      "steps": {
+        "mean": 60154434.9921875,
+        "min": 60027173,
+        "max": 60650873
+      },
+      "angularScope": "Cumulative norm only for logged deflections; net L includes capture. Missing per-subprojection capture angular budget cannot be reconstructed."
+    },
+    "reflect-trigger8": {
+      "pairedPrecision32": {
+        "matureStableFraction": {
+          "defaultMean": 0.23690961805555555,
+          "halfMean": 0.14384980902777778,
+          "halfMinusDefault": -0.09305980902777777,
+          "pairedBootstrapMeanDifference95": [
+            -0.17609840031828705,
+            -0.015280804687500047
+          ]
+        },
+        "stableFraction": {
+          "defaultMean": 0.260011078125,
+          "halfMean": 0.16408211458333333,
+          "halfMinusDefault": -0.09592896354166666,
+          "pairedBootstrapMeanDifference95": [
+            -0.17404039401041665,
+            -0.02416131536458353
+          ]
+        },
+        "matureConditionalFTLE": {
+          "defaultMean": 0.027522611852877975,
+          "halfMean": 0.027865954837759582,
+          "halfMinusDefault": 0.00034334298488161176,
+          "pairedBootstrapMeanDifference95": [
+            -0.002250580801036141,
+            0.0032961539842490473
+          ]
+        },
+        "planetLosses": {
+          "defaultMean": 63.71875,
+          "halfMean": 46.5625,
+          "halfMinusDefault": -17.15625,
+          "pairedBootstrapMeanDifference95": [
+            -38.90703125,
+            4.40625
+          ]
+        },
+        "controlActiveFrameFraction": {
+          "defaultMean": 8.538020833333333e-05,
+          "halfMean": 9.224479166666666e-05,
+          "halfMinusDefault": 6.864583333333332e-06,
+          "pairedBootstrapMeanDifference95": [
+            -4.901041666666666e-06,
+            1.9994791666666662e-05
+          ]
+        },
+        "jointDefault": 30,
+        "jointHalf": 31
+      },
+      "failedContinuousJoint": [
+        {
+          "seed": "V2-CONFIRM-20261021-13",
+          "reasons": [
+            "mature-exchanges",
+            "dynamical-hierarchy",
+            "mature-nonhier"
+          ],
+          "matureConditionalFTLE": 0.003964240019302158,
+          "matureNonhierFraction": 0.014323703703703703,
+          "longestHierarchyYears": 487.96666666666664,
+          "longestDynamicalHierarchyYears": 4148.6,
+          "matureStableFraction": 0.9901392592592593
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-24",
+          "reasons": [
+            "dynamical-hierarchy"
+          ],
+          "matureConditionalFTLE": 0.020419239421446675,
+          "matureNonhierFraction": 0.12882722222222223,
+          "longestHierarchyYears": 763.25,
+          "longestDynamicalHierarchyYears": 3574.1666666666665,
+          "matureStableFraction": 0.7016888888888889
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-37",
+          "reasons": [
+            "mature-exchanges",
+            "dynamical-hierarchy"
+          ],
+          "matureConditionalFTLE": 0.02117102322686473,
+          "matureNonhierFraction": 0.10514666666666667,
+          "longestHierarchyYears": 507.3333333333333,
+          "longestDynamicalHierarchyYears": 4624.333333333333,
+          "matureStableFraction": 0.9949594444444444
+        }
+      ],
+      "perSeedEvents": [
+        {
+          "seed": "V2-CONFIRM-20261021-0",
+          "rawSHA256": "8c4abb9b6055a972ca70e2192b6ee2abfb60d1ed282133b3197b0622f55212d5",
+          "eventCounts": {
+            "civilization-birth": 31,
+            "close-region-exit": 1722,
+            "civilization-death": 31,
+            "reflection": 415,
+            "capture": 56,
+            "planet-loss": 58,
+            "planet-respawn": 58
+          },
+          "peakRecordedNetDeltaV": 2.315292903163433,
+          "netEventImpulseSum": 5998500822.716174,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 1.0202250205318317e-13
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-1",
+          "rawSHA256": "2f2bd0ba72a4edcbf6d2701b0a7439eb0cddf1ccdc7b12a61091c9fdfbd59a1b",
+          "eventCounts": {
+            "close-region-exit": 1770,
+            "planet-loss": 46,
+            "planet-respawn": 46,
+            "civilization-birth": 17,
+            "civilization-death": 17,
+            "reflection": 425,
+            "capture": 52
+          },
+          "peakRecordedNetDeltaV": 2.3032612017003533,
+          "netEventImpulseSum": 6016723867.28624,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 8.693428321162272e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-2",
+          "rawSHA256": "e3678567042ff90aed8296355ed957abad64639634b1c6b36c1d7aa88caf3857",
+          "eventCounts": {
+            "civilization-birth": 32,
+            "reflection": 416,
+            "close-region-exit": 1707,
+            "planet-loss": 59,
+            "civilization-death": 32,
+            "planet-respawn": 59,
+            "capture": 53
+          },
+          "peakRecordedNetDeltaV": 2.317169685830326,
+          "netEventImpulseSum": 5954757949.827414,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 4.350186497163482e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-3",
+          "rawSHA256": "83f00bbd73583448baa30a0fa839affa79b214849a375ab6fbc91e05813d8617",
+          "eventCounts": {
+            "civilization-birth": 35,
+            "close-region-exit": 2132,
+            "planet-loss": 83,
+            "civilization-death": 35,
+            "planet-respawn": 83,
+            "reflection": 549,
+            "capture": 70
+          },
+          "peakRecordedNetDeltaV": 2.3118446283709755,
+          "netEventImpulseSum": 8001347202.370992,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 3.735356769035818e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-4",
+          "rawSHA256": "11987d4fbb26e318ee04dd12759d1628addcaaaa4e98fc38a182711ee9fdc816",
+          "eventCounts": {
+            "planet-loss": 149,
+            "close-region-exit": 2545,
+            "planet-respawn": 149,
+            "reflection": 565,
+            "civilization-birth": 40,
+            "capture": 85,
+            "civilization-death": 40
+          },
+          "peakRecordedNetDeltaV": 2.3027474242602657,
+          "netEventImpulseSum": 8190391317.011461,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 1.3987876119414752e-13
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-5",
+          "rawSHA256": "d5af577b82036fca9bc14dd2c4e2cb73d12c78ab3dde2c33ef1fa8ddf1b7eee5",
+          "eventCounts": {
+            "civilization-birth": 66,
+            "reflection": 518,
+            "capture": 42,
+            "close-region-exit": 2055,
+            "planet-loss": 119,
+            "civilization-death": 66,
+            "planet-respawn": 119
+          },
+          "peakRecordedNetDeltaV": 2.305309392877195,
+          "netEventImpulseSum": 7293140896.152588,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 0.06271511975969367
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-6",
+          "rawSHA256": "5cb68742bbcecca0a2f0195db87d0c79681383708e71a1b1157160c137fc425c",
+          "eventCounts": {
+            "civilization-birth": 10,
+            "planet-loss": 16,
+            "civilization-death": 10,
+            "planet-respawn": 16,
+            "reflection": 177,
+            "close-region-exit": 500,
+            "capture": 22
+          },
+          "peakRecordedNetDeltaV": 2.2755385828184145,
+          "netEventImpulseSum": 2604374262.1202707,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 3.980304149896812e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-7",
+          "rawSHA256": "74875ea5592e743ec76b568486247c61eda90588989b32110b6cb17127b12528",
+          "eventCounts": {
+            "close-region-exit": 1635,
+            "civilization-birth": 31,
+            "capture": 35,
+            "civilization-death": 31,
+            "planet-loss": 58,
+            "planet-respawn": 58,
+            "reflection": 333
+          },
+          "peakRecordedNetDeltaV": 2.3020130290308303,
+          "netEventImpulseSum": 4787795702.528299,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 6.284316587449827e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-8",
+          "rawSHA256": "5a68485804738b3823a7617cf0d7b018d57fbb96dc7d22b96935cf6ce5196fb8",
+          "eventCounts": {
+            "close-region-exit": 1911,
+            "planet-loss": 49,
+            "planet-respawn": 49,
+            "reflection": 314,
+            "civilization-birth": 22,
+            "capture": 42,
+            "civilization-death": 22
+          },
+          "peakRecordedNetDeltaV": 2.2781141282876467,
+          "netEventImpulseSum": 4378154583.332672,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 5.69774287199557e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-9",
+          "rawSHA256": "bcad3d9bb752115ac9985c40a4ff54fe902977b32c8a105432fbe416ad30f7ab",
+          "eventCounts": {
+            "civilization-birth": 56,
+            "close-region-exit": 1565,
+            "reflection": 374,
+            "capture": 46,
+            "civilization-death": 55,
+            "planet-loss": 85,
+            "planet-respawn": 85
+          },
+          "peakRecordedNetDeltaV": 2.3127956867229305,
+          "netEventImpulseSum": 5412601646.399017,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 4.753020566937219e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-10",
+          "rawSHA256": "b2765aa180204e530b14fdf9432182347d899d8fc883248c5ab2b202137d35d7",
+          "eventCounts": {
+            "civilization-birth": 39,
+            "close-region-exit": 1635,
+            "planet-loss": 65,
+            "civilization-death": 39,
+            "planet-respawn": 65,
+            "capture": 63,
+            "reflection": 391
+          },
+          "peakRecordedNetDeltaV": 2.320187189136072,
+          "netEventImpulseSum": 5438220990.74348,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 1.133558506508121e-13
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-11",
+          "rawSHA256": "a3f25e81514c986e1457d106fc11ba9dfa116467f2a56f1916875a3b351533d1",
+          "eventCounts": {
+            "reflection": 673,
+            "close-region-exit": 2662,
+            "civilization-birth": 25,
+            "planet-loss": 55,
+            "civilization-death": 24,
+            "planet-respawn": 55,
+            "capture": 54
+          },
+          "peakRecordedNetDeltaV": 2.2429778315819138,
+          "netEventImpulseSum": 9320514047.299427,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 5.233574716560526e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-12",
+          "rawSHA256": "fd8eb07383523a56348a047e27f9767d0e013038e563ce5584547e9faf9c3a6e",
+          "eventCounts": {
+            "close-region-exit": 3644,
+            "planet-loss": 115,
+            "planet-respawn": 115,
+            "reflection": 1206,
+            "civilization-birth": 42,
+            "civilization-death": 42,
+            "capture": 81
+          },
+          "peakRecordedNetDeltaV": 2.2940722125736865,
+          "netEventImpulseSum": 16608105015.386822,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 0.03980157964230122
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-13",
+          "rawSHA256": "bdc0265c618ae35aab84528a0232e677338164e88bd0d2c4bc005fe0cd41859a",
+          "eventCounts": {
+            "close-region-exit": 1562,
+            "planet-loss": 11,
+            "planet-respawn": 11,
+            "civilization-birth": 4,
+            "civilization-death": 3,
+            "capture": 5,
+            "reflection": 58
+          },
+          "peakRecordedNetDeltaV": 2.2310953434735077,
+          "netEventImpulseSum": 955866996.3535589,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 0.04869413058739523
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-14",
+          "rawSHA256": "231936844634b9fb2cf679948f1e916d1357049fb017f95d3409a2e0a5bd07ed",
+          "eventCounts": {
+            "civilization-birth": 49,
+            "planet-loss": 102,
+            "civilization-death": 48,
+            "planet-respawn": 102,
+            "close-region-exit": 1523,
+            "reflection": 364,
+            "capture": 46
+          },
+          "peakRecordedNetDeltaV": 2.315814953888142,
+          "netEventImpulseSum": 5094406189.2844925,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 6.491446322113484e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-15",
+          "rawSHA256": "372079f62dda90edb61dc07a95f49827ef6f6e4765172ccd92c4c163441e851c",
+          "eventCounts": {
+            "civilization-birth": 26,
+            "civilization-death": 26,
+            "planet-loss": 33,
+            "planet-respawn": 33,
+            "close-region-exit": 1010,
+            "reflection": 208,
+            "capture": 35
+          },
+          "peakRecordedNetDeltaV": 2.2502147434301483,
+          "netEventImpulseSum": 3304404674.674748,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 0.058829340231140774
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-16",
+          "rawSHA256": "924d048a8f75516bd54c709ee9843b53151ca50491205891a4cfbffb958a9a87",
+          "eventCounts": {
+            "civilization-birth": 29,
+            "planet-loss": 45,
+            "civilization-death": 28,
+            "close-region-exit": 498,
+            "planet-respawn": 45,
+            "reflection": 92,
+            "capture": 29
+          },
+          "peakRecordedNetDeltaV": 2.2250574237904006,
+          "netEventImpulseSum": 1409090062.2200606,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 1.3445596860348526e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-17",
+          "rawSHA256": "639ede9bbfca7463373ba799bca00db3959a2b0156565a8dc700a83cdafcba5e",
+          "eventCounts": {
+            "reflection": 59,
+            "planet-loss": 8,
+            "close-region-exit": 864,
+            "planet-respawn": 8,
+            "civilization-birth": 5,
+            "civilization-death": 5,
+            "capture": 9
+          },
+          "peakRecordedNetDeltaV": 2.18136686172474,
+          "netEventImpulseSum": 624516957.088549,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 8.272037023149556e-16
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-18",
+          "rawSHA256": "46c381d11912d4bb4294269e2657007062588b0888c572ac0dd0e9f06bbf283e",
+          "eventCounts": {
+            "capture": 19,
+            "civilization-birth": 26,
+            "civilization-death": 26,
+            "planet-loss": 32,
+            "planet-respawn": 32,
+            "close-region-exit": 2032,
+            "reflection": 500
+          },
+          "peakRecordedNetDeltaV": 2.171496795014305,
+          "netEventImpulseSum": 6925755582.839228,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 0.04737643408317793
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-19",
+          "rawSHA256": "3a3de8e0f3881da23afca531c60f46cfa49d51a172bc3987ca5e7c0da35c1c38",
+          "eventCounts": {
+            "close-region-exit": 2807,
+            "civilization-birth": 28,
+            "civilization-death": 28,
+            "planet-loss": 68,
+            "planet-respawn": 68,
+            "reflection": 733,
+            "capture": 54
+          },
+          "peakRecordedNetDeltaV": 2.2952983189271903,
+          "netEventImpulseSum": 10307483809.565142,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 7.937616953435759e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-20",
+          "rawSHA256": "2535463f5b898f0220768b6733b16cc0e555d5eee7c0b2444a18d98ea320b787",
+          "eventCounts": {
+            "civilization-birth": 25,
+            "reflection": 99,
+            "close-region-exit": 626,
+            "planet-loss": 39,
+            "civilization-death": 25,
+            "planet-respawn": 39,
+            "capture": 31
+          },
+          "peakRecordedNetDeltaV": 2.190023720856608,
+          "netEventImpulseSum": 1364003705.6169302,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 5.523083003720069e-15
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-21",
+          "rawSHA256": "7842ae246dbcfe0bf1631be2c6fe7547151c723c350f55ae70b14567c081da53",
+          "eventCounts": {
+            "planet-loss": 1,
+            "reflection": 906,
+            "close-region-exit": 4523,
+            "planet-respawn": 1,
+            "civilization-birth": 1,
+            "civilization-death": 1,
+            "capture": 98
+          },
+          "peakRecordedNetDeltaV": 2.2909746205078423,
+          "netEventImpulseSum": 12902919944.39941,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 3.009238095200881e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-22",
+          "rawSHA256": "93924d5ed954436b0e7a711cbfede00066b50a3d38b3cf872a8742920849f3dd",
+          "eventCounts": {
+            "civilization-birth": 28,
+            "reflection": 353,
+            "close-region-exit": 1266,
+            "capture": 62,
+            "civilization-death": 28,
+            "planet-loss": 39,
+            "planet-respawn": 39
+          },
+          "peakRecordedNetDeltaV": 2.3251116255183804,
+          "netEventImpulseSum": 4943395098.538332,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 1.2640181426631943e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-23",
+          "rawSHA256": "203f858edf20b2d9c1dbb930d677f1347ac67949eeea11b55d4170be16d880a7",
+          "eventCounts": {
+            "close-region-exit": 4159,
+            "planet-loss": 94,
+            "planet-respawn": 94,
+            "capture": 122,
+            "reflection": 1135,
+            "civilization-birth": 26,
+            "civilization-death": 26
+          },
+          "peakRecordedNetDeltaV": 2.3351759292535883,
+          "netEventImpulseSum": 16658555690.37879,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 5.621983849217566e-13
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-24",
+          "rawSHA256": "33e8e73b52238ceaa6abf594208844129abbbada1f88f36455d39fb3bdc99dbf",
+          "eventCounts": {
+            "close-region-exit": 2582,
+            "capture": 12,
+            "planet-loss": 26,
+            "planet-respawn": 26,
+            "civilization-birth": 17,
+            "civilization-death": 17,
+            "reflection": 880
+          },
+          "peakRecordedNetDeltaV": 2.310820469777207,
+          "netEventImpulseSum": 12464040470.059376,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 4.432998801217909e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-25",
+          "rawSHA256": "b189b32693da1fc8880bf0cee3b48f7ee5dac9f745099d8934573e8161ab6965",
+          "eventCounts": {
+            "reflection": 333,
+            "close-region-exit": 1328,
+            "capture": 75,
+            "civilization-birth": 25,
+            "planet-loss": 44,
+            "civilization-death": 25,
+            "planet-respawn": 44
+          },
+          "peakRecordedNetDeltaV": 2.281692373165718,
+          "netEventImpulseSum": 4971406277.1851425,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 1.752510768196068e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-26",
+          "rawSHA256": "5bba008dc5964c76dc6b824ec47d12c39d3634af3bea16b83bbcfd859110e020",
+          "eventCounts": {
+            "reflection": 522,
+            "close-region-exit": 2239,
+            "civilization-birth": 45,
+            "planet-loss": 111,
+            "civilization-death": 45,
+            "planet-respawn": 111,
+            "capture": 61
+          },
+          "peakRecordedNetDeltaV": 2.3029158517218122,
+          "netEventImpulseSum": 7910423785.8894825,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 4.112917982857708e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-27",
+          "rawSHA256": "9da14e9afcaa7239964c23763db2f11d08fc5c6ab15f61c35f744ebb98ba9fca",
+          "eventCounts": {
+            "civilization-birth": 34,
+            "close-region-exit": 805,
+            "capture": 24,
+            "reflection": 224,
+            "planet-loss": 44,
+            "civilization-death": 34,
+            "planet-respawn": 44
+          },
+          "peakRecordedNetDeltaV": 2.320567526643218,
+          "netEventImpulseSum": 3213069340.8200893,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 2.2455120164895984e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-28",
+          "rawSHA256": "fa8ba32fa79b1a0c4a8352cd85e0e6c0c99a58d5ea626b3af4b2152c78c55158",
+          "eventCounts": {
+            "close-region-exit": 2432,
+            "reflection": 532,
+            "planet-loss": 52,
+            "capture": 14,
+            "planet-respawn": 52,
+            "civilization-birth": 30,
+            "civilization-death": 30
+          },
+          "peakRecordedNetDeltaV": 2.3087634768821195,
+          "netEventImpulseSum": 7422636202.158321,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 7.263107260024146e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-29",
+          "rawSHA256": "b09d3b2a65581c13ae148110d1c89d85b5779c49c61c6477a04e8bd8bb2e5f65",
+          "eventCounts": {
+            "civilization-birth": 15,
+            "civilization-death": 15,
+            "planet-loss": 21,
+            "planet-respawn": 21,
+            "close-region-exit": 1397,
+            "reflection": 405,
+            "capture": 40
+          },
+          "peakRecordedNetDeltaV": 2.281596866802293,
+          "netEventImpulseSum": 5993084445.099469,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 0.10515443641503482
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-30",
+          "rawSHA256": "17c3171d83bf977d8e83f2483ba7412872a21668377677a3e700ecca951fa28a",
+          "eventCounts": {
+            "close-region-exit": 2702,
+            "civilization-birth": 80,
+            "planet-loss": 211,
+            "civilization-death": 80,
+            "planet-respawn": 211,
+            "reflection": 613,
+            "capture": 77
+          },
+          "peakRecordedNetDeltaV": 2.3367252624742236,
+          "netEventImpulseSum": 8788432550.302668,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 9.52508623174743e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-31",
+          "rawSHA256": "d5b20a9c8107ae3e890c2ca275c9b7612d76a0f187da547de6bb5dedaeb168e0",
+          "eventCounts": {
+            "close-region-exit": 1748,
+            "planet-loss": 101,
+            "planet-respawn": 101,
+            "civilization-birth": 53,
+            "civilization-death": 53,
+            "reflection": 465,
+            "capture": 42
+          },
+          "peakRecordedNetDeltaV": 2.316027833597125,
+          "netEventImpulseSum": 7086059624.216623,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 1.695300623501962e-13
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-32",
+          "rawSHA256": "40ed5a32f232a8a6a7a48f0ad56981be41fdf64ca8c57379ea3f8cb8adb3d438",
+          "eventCounts": {
+            "civilization-birth": 31,
+            "reflection": 227,
+            "close-region-exit": 996,
+            "planet-loss": 42,
+            "civilization-death": 31,
+            "planet-respawn": 42,
+            "capture": 39
+          },
+          "peakRecordedNetDeltaV": 2.286843362082063,
+          "netEventImpulseSum": 3106489869.257737,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 1.1974398684710478e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-33",
+          "rawSHA256": "bc0ea31ef7d72e44db0717d93daefd4804f8a7a15f8675dc1d5af518a41a3a3e",
+          "eventCounts": {
+            "close-region-exit": 2582,
+            "planet-loss": 44,
+            "planet-respawn": 44,
+            "civilization-birth": 18,
+            "reflection": 536,
+            "civilization-death": 17,
+            "capture": 54
+          },
+          "peakRecordedNetDeltaV": 2.29496255227394,
+          "netEventImpulseSum": 7612403868.070344,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 2.153942121935734e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-34",
+          "rawSHA256": "dbb53f806fe7c78208bd60a24d2f341ecc4cd9f78305ba992c06052d8bb8b749",
+          "eventCounts": {
+            "civilization-birth": 42,
+            "reflection": 212,
+            "close-region-exit": 1281,
+            "planet-loss": 103,
+            "civilization-death": 42,
+            "planet-respawn": 103,
+            "capture": 44
+          },
+          "peakRecordedNetDeltaV": 2.3373649320419494,
+          "netEventImpulseSum": 2737511568.8930783,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 7.053329034354605e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-35",
+          "rawSHA256": "4ad61470bdac166f5d66d82d394e399222fd0175d823468817e3c3ff703405ac",
+          "eventCounts": {
+            "close-region-exit": 1729,
+            "civilization-birth": 21,
+            "planet-loss": 41,
+            "civilization-death": 21,
+            "planet-respawn": 41,
+            "reflection": 400,
+            "capture": 31
+          },
+          "peakRecordedNetDeltaV": 2.170373478839878,
+          "netEventImpulseSum": 5252651652.00029,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 8.616990166886764e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-36",
+          "rawSHA256": "394533aed8179bf1c42fbd9091e3a6d1cbc90479af50ce810a00d2e279b0d182",
+          "eventCounts": {
+            "civilization-birth": 29,
+            "close-region-exit": 1710,
+            "reflection": 439,
+            "capture": 37,
+            "planet-loss": 57,
+            "civilization-death": 29,
+            "planet-respawn": 57
+          },
+          "peakRecordedNetDeltaV": 2.2200562554145553,
+          "netEventImpulseSum": 6360770814.756549,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 9.569828309525418e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-37",
+          "rawSHA256": "ecafc7308fc26bf071a2e6f8ccf5d9503dcbd589fe50b933a9a63ce241101d96",
+          "eventCounts": {
+            "civilization-birth": 4,
+            "close-region-exit": 2046,
+            "capture": 4,
+            "civilization-death": 4,
+            "reflection": 265,
+            "planet-loss": 6,
+            "planet-respawn": 6
+          },
+          "peakRecordedNetDeltaV": 2.110366850809899,
+          "netEventImpulseSum": 2756615532.6351957,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 0.03898778121164473
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-38",
+          "rawSHA256": "18422dc4a14bcde4224c498aa9657eee06e166d192cfc08ec51ac18d66412896",
+          "eventCounts": {
+            "close-region-exit": 2251,
+            "planet-loss": 43,
+            "planet-respawn": 43,
+            "civilization-birth": 20,
+            "reflection": 625,
+            "civilization-death": 20,
+            "capture": 49
+          },
+          "peakRecordedNetDeltaV": 2.2880068782723066,
+          "netEventImpulseSum": 8663861594.635826,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 3.3247477082912206e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-39",
+          "rawSHA256": "bd549c566799e61b939975b36cf9a123b4a6c95a85af78733288b8140f02b476",
+          "eventCounts": {
+            "civilization-birth": 39,
+            "close-region-exit": 1025,
+            "capture": 30,
+            "planet-loss": 65,
+            "civilization-death": 39,
+            "planet-respawn": 65,
+            "reflection": 159
+          },
+          "peakRecordedNetDeltaV": 2.2877560725725608,
+          "netEventImpulseSum": 2463373307.1763463,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 9.214816769029709e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-40",
+          "rawSHA256": "0e3150b04c48ac32e7257ab6a0c6c6929dd1ec4acb22ee1c3a009b2cdd4b2a8c",
+          "eventCounts": {
+            "close-region-exit": 3161,
+            "civilization-birth": 34,
+            "planet-loss": 84,
+            "civilization-death": 34,
+            "planet-respawn": 84,
+            "reflection": 848,
+            "capture": 53
+          },
+          "peakRecordedNetDeltaV": 2.2959910826367667,
+          "netEventImpulseSum": 11557018823.051651,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 2.7574563647961795e-13
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-41",
+          "rawSHA256": "da19ef9403855805abde6f8ab85631f4123d28ce1c955f2bb85014d81fd275cb",
+          "eventCounts": {
+            "civilization-birth": 50,
+            "planet-loss": 97,
+            "civilization-death": 50,
+            "planet-respawn": 97,
+            "close-region-exit": 775,
+            "reflection": 150,
+            "capture": 48
+          },
+          "peakRecordedNetDeltaV": 2.306725765227274,
+          "netEventImpulseSum": 2114795130.1861918,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 3.737573464725747e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-42",
+          "rawSHA256": "1c7cad37066077fd13b13f9a776be33f2a2aff2249e03583806b9bbca1ef89e8",
+          "eventCounts": {
+            "civilization-birth": 26,
+            "reflection": 534,
+            "close-region-exit": 2046,
+            "civilization-death": 26,
+            "planet-loss": 55,
+            "planet-respawn": 55,
+            "capture": 62
+          },
+          "peakRecordedNetDeltaV": 2.2901495496861313,
+          "netEventImpulseSum": 7762584161.30517,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 5.589062408511233e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-43",
+          "rawSHA256": "7f638c6fe6315c66a1c0284179be6874512b2235cd2196c209bdd6f3de7b8bfb",
+          "eventCounts": {
+            "civilization-birth": 29,
+            "close-region-exit": 1106,
+            "planet-loss": 50,
+            "civilization-death": 29,
+            "planet-respawn": 50,
+            "reflection": 255,
+            "capture": 38
+          },
+          "peakRecordedNetDeltaV": 2.2927313176584883,
+          "netEventImpulseSum": 3322821806.510054,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 1.4058876779573118e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-44",
+          "rawSHA256": "f5428abf21388eeea4e42db077772adcc7c2bb888063b223d2d52fece5f506d3",
+          "eventCounts": {
+            "close-region-exit": 2582,
+            "planet-loss": 47,
+            "planet-respawn": 47,
+            "reflection": 466,
+            "capture": 30,
+            "civilization-birth": 20,
+            "civilization-death": 20
+          },
+          "peakRecordedNetDeltaV": 2.2201121778076383,
+          "netEventImpulseSum": 6388230578.853781,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 0.04135129753726293
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-45",
+          "rawSHA256": "6518d9244383a88cb56a7720768c659c7da99e14fb877cc784aa781fdc2999c8",
+          "eventCounts": {
+            "close-region-exit": 2042,
+            "planet-loss": 30,
+            "planet-respawn": 30,
+            "civilization-birth": 11,
+            "reflection": 538,
+            "civilization-death": 11,
+            "capture": 61
+          },
+          "peakRecordedNetDeltaV": 2.3202476344395953,
+          "netEventImpulseSum": 7951842222.893955,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 2.94160603838483e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-46",
+          "rawSHA256": "509261e4d3a63531604f4c036326a90dcf0630ca7984d47056e3c701adb41561",
+          "eventCounts": {
+            "close-region-exit": 1576,
+            "capture": 60,
+            "planet-loss": 46,
+            "planet-respawn": 46,
+            "reflection": 372,
+            "civilization-birth": 23,
+            "civilization-death": 23
+          },
+          "peakRecordedNetDeltaV": 2.31844530008117,
+          "netEventImpulseSum": 5253586343.040052,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 2.118843114631566e-15
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-47",
+          "rawSHA256": "b71d8e8c87557b0312f3805088a4a3cdb9830e2b12d248e1fb38d9bb8f7f8d0c",
+          "eventCounts": {
+            "civilization-birth": 17,
+            "close-region-exit": 885,
+            "reflection": 236,
+            "capture": 40,
+            "planet-loss": 35,
+            "civilization-death": 17,
+            "planet-respawn": 35
+          },
+          "peakRecordedNetDeltaV": 2.3118889090434256,
+          "netEventImpulseSum": 3405090186.1082377,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 1.2067923198471113e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-48",
+          "rawSHA256": "05fb58d0fb9f9a78581f78d32153c2f7a84230c356ebde546d558494b15743a2",
+          "eventCounts": {
+            "planet-loss": 51,
+            "planet-respawn": 51,
+            "close-region-exit": 3730,
+            "reflection": 959,
+            "civilization-birth": 21,
+            "civilization-death": 21,
+            "capture": 84
+          },
+          "peakRecordedNetDeltaV": 2.3028970177109422,
+          "netEventImpulseSum": 13053171427.896933,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 5.74114718388629e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-49",
+          "rawSHA256": "92c10ec5c7e98aded931cf04ed4eecd3d4139f2df742c5e9ff1432ec1ea61a44",
+          "eventCounts": {
+            "reflection": 437,
+            "planet-loss": 37,
+            "close-region-exit": 2038,
+            "planet-respawn": 37,
+            "capture": 26,
+            "civilization-birth": 25,
+            "civilization-death": 25
+          },
+          "peakRecordedNetDeltaV": 2.3117030955476077,
+          "netEventImpulseSum": 5968942067.918376,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 0.04328868266997737
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-50",
+          "rawSHA256": "1c23fea71cf18916da0e6ec0bea77b553aa688b2cc8005352beac2087b78a65a",
+          "eventCounts": {
+            "reflection": 376,
+            "close-region-exit": 1786,
+            "civilization-birth": 26,
+            "civilization-death": 26,
+            "planet-loss": 42,
+            "planet-respawn": 42,
+            "capture": 54
+          },
+          "peakRecordedNetDeltaV": 2.32333014280628,
+          "netEventImpulseSum": 5857883248.936131,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 4.0695223059422994e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-51",
+          "rawSHA256": "5423f8a9315f7883ca116ee7170d74ddd295a3188e78f711e5dd4daaeb5bfbc1",
+          "eventCounts": {
+            "reflection": 614,
+            "close-region-exit": 2234,
+            "civilization-birth": 20,
+            "civilization-death": 20,
+            "planet-loss": 30,
+            "planet-respawn": 30,
+            "capture": 35
+          },
+          "peakRecordedNetDeltaV": 2.2942360239998254,
+          "netEventImpulseSum": 9074514768.342411,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 5.6782705812495636e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-52",
+          "rawSHA256": "4976e263be18af921e9c76911a7c0f71bc44eb2c4390fa59c9fc53a705c69ec1",
+          "eventCounts": {
+            "close-region-exit": 4587,
+            "reflection": 1262,
+            "civilization-birth": 48,
+            "capture": 138,
+            "planet-loss": 126,
+            "civilization-death": 47,
+            "planet-respawn": 126
+          },
+          "peakRecordedNetDeltaV": 2.357795018740082,
+          "netEventImpulseSum": 17105937126.695686,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 7.268642314249097e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-53",
+          "rawSHA256": "ee86a456873a9f0837c7d2634244f37e290e85efca50e181519429713cbbd2b7",
+          "eventCounts": {
+            "civilization-birth": 19,
+            "close-region-exit": 2456,
+            "planet-loss": 42,
+            "civilization-death": 19,
+            "planet-respawn": 42,
+            "reflection": 670,
+            "capture": 54
+          },
+          "peakRecordedNetDeltaV": 2.2962666453131355,
+          "netEventImpulseSum": 9249258580.588707,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 2.8939640242761495e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-54",
+          "rawSHA256": "529ca946cc499fc61ac8d490226793dc92aed64aab7b5ca34edbd78cb69a6821",
+          "eventCounts": {
+            "close-region-exit": 2716,
+            "civilization-birth": 44,
+            "planet-loss": 82,
+            "civilization-death": 43,
+            "planet-respawn": 82,
+            "reflection": 772,
+            "capture": 48
+          },
+          "peakRecordedNetDeltaV": 2.2942923182491373,
+          "netEventImpulseSum": 10856292278.220476,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 2.7749513513379013e-13
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-55",
+          "rawSHA256": "30429251173270991deb1a3d87a0c4fc78a422c1d64c1f9497855054629408f2",
+          "eventCounts": {
+            "civilization-birth": 31,
+            "close-region-exit": 2586,
+            "planet-loss": 64,
+            "civilization-death": 31,
+            "planet-respawn": 64,
+            "capture": 29,
+            "reflection": 621
+          },
+          "peakRecordedNetDeltaV": 2.3009531892281267,
+          "netEventImpulseSum": 8990409810.742863,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 0.03999300029734607
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-56",
+          "rawSHA256": "a9f82be17006da7838fa5f091db1d46f437d0d9c9e51e670dc587070950216e5",
+          "eventCounts": {
+            "civilization-birth": 18,
+            "close-region-exit": 554,
+            "civilization-death": 18,
+            "reflection": 100,
+            "planet-loss": 23,
+            "planet-respawn": 23,
+            "capture": 25
+          },
+          "peakRecordedNetDeltaV": 2.3118778911398614,
+          "netEventImpulseSum": 1438459452.965177,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 1.7608249353016047e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-57",
+          "rawSHA256": "926d530b2f1500e21fa4e9567adf326de0cd5a6fcf6ccf00e5f109f769fb3a21",
+          "eventCounts": {
+            "close-region-exit": 2445,
+            "capture": 81,
+            "reflection": 625,
+            "civilization-birth": 24,
+            "civilization-death": 24,
+            "planet-loss": 33,
+            "planet-respawn": 33
+          },
+          "peakRecordedNetDeltaV": 2.3077424197087755,
+          "netEventImpulseSum": 9375203248.5976,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 4.429707450648128e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-58",
+          "rawSHA256": "b84f44eab6de4d04ec74333fb7c04058aad42e1b8e51a5bd85fa0c559acd9965",
+          "eventCounts": {
+            "civilization-birth": 8,
+            "planet-loss": 16,
+            "civilization-death": 8,
+            "planet-respawn": 16,
+            "close-region-exit": 938,
+            "reflection": 219,
+            "capture": 30
+          },
+          "peakRecordedNetDeltaV": 2.3231357473613867,
+          "netEventImpulseSum": 3167437781.8858886,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 2.313760184115197e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-59",
+          "rawSHA256": "ea333e3ac2d2331c4ed7875bfa8042f0d1f8ba8ad53aac52ab99a439bacf4d14",
+          "eventCounts": {
+            "close-region-exit": 1104,
+            "planet-loss": 10,
+            "planet-respawn": 10,
+            "civilization-birth": 5,
+            "reflection": 245,
+            "civilization-death": 5,
+            "capture": 34
+          },
+          "peakRecordedNetDeltaV": 2.3241874395857804,
+          "netEventImpulseSum": 3595475010.98179,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 4.5799519363016455e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-60",
+          "rawSHA256": "5197974c3809a25765da5dd3f669b014fbf20269064b550650d00f1998fb37e4",
+          "eventCounts": {
+            "civilization-birth": 16,
+            "close-region-exit": 892,
+            "reflection": 187,
+            "planet-loss": 18,
+            "civilization-death": 16,
+            "planet-respawn": 18,
+            "capture": 22
+          },
+          "peakRecordedNetDeltaV": 2.1313110453564,
+          "netEventImpulseSum": 2572800019.147596,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 2.648919665483386e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-61",
+          "rawSHA256": "6be6715b0b311bf9be2ef37dba9b4e1c4ad7ac901909ff86c7cec004b68ceb30",
+          "eventCounts": {
+            "close-region-exit": 1664,
+            "civilization-birth": 8,
+            "reflection": 304,
+            "planet-loss": 14,
+            "civilization-death": 8,
+            "planet-respawn": 14,
+            "capture": 58
+          },
+          "peakRecordedNetDeltaV": 2.3326053471590584,
+          "netEventImpulseSum": 4414159635.263074,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 2.9746431231583723e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-62",
+          "rawSHA256": "ab62ab588880a6ca6525d1ec58f7ea327656c312c0b59ed8e2e079fd0b4ca1b5",
+          "eventCounts": {
+            "capture": 57,
+            "close-region-exit": 1662,
+            "planet-loss": 68,
+            "planet-respawn": 68,
+            "reflection": 311,
+            "civilization-birth": 34,
+            "civilization-death": 34
+          },
+          "peakRecordedNetDeltaV": 2.3179490363013113,
+          "netEventImpulseSum": 4370983256.062731,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 5.683467647593691e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-63",
+          "rawSHA256": "b99ab16c82ad22bd1c5df8c716e42f20ca409283cc390aa0f0bb55877f3f12c9",
+          "eventCounts": {
+            "civilization-birth": 14,
+            "planet-loss": 23,
+            "civilization-death": 14,
+            "planet-respawn": 23,
+            "close-region-exit": 1411,
+            "capture": 62,
+            "reflection": 324
+          },
+          "peakRecordedNetDeltaV": 2.2558511204215073,
+          "netEventImpulseSum": 4977037987.317121,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 3.7342472282053315e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-64",
+          "rawSHA256": "e27147663ca41224750fbca7ce30e692eb414f52349c8009c9d4fc58d602c950",
+          "eventCounts": {
+            "civilization-birth": 37,
+            "close-region-exit": 1641,
+            "planet-loss": 65,
+            "civilization-death": 37,
+            "planet-respawn": 65,
+            "reflection": 477,
+            "capture": 45
+          },
+          "peakRecordedNetDeltaV": 2.306161272383655,
+          "netEventImpulseSum": 7092681472.433229,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 1.4302984276845103e-13
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-65",
+          "rawSHA256": "2f4038e7bbfc32cee6f5613e3d5f2e50ba03138271a88ef2287d79b2217a5401",
+          "eventCounts": {
+            "close-region-exit": 2167,
+            "civilization-birth": 1,
+            "civilization-death": 1,
+            "reflection": 619,
+            "capture": 46
+          },
+          "peakRecordedNetDeltaV": 2.268544263029281,
+          "netEventImpulseSum": 8703361462.135605,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 5.009158164055562e-15
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-66",
+          "rawSHA256": "bf418129eef26d805771839269286ff57704042ec6d3e13d90f057fceae6e89d",
+          "eventCounts": {
+            "civilization-birth": 14,
+            "civilization-death": 14,
+            "planet-loss": 20,
+            "planet-respawn": 20,
+            "close-region-exit": 1228,
+            "reflection": 304,
+            "capture": 43
+          },
+          "peakRecordedNetDeltaV": 2.3138758243842252,
+          "netEventImpulseSum": 4338459221.297676,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 4.719800112489797e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-67",
+          "rawSHA256": "690c020d2b5696437af803ca9721c200012f76a787729be44c2c0756f8e18ceb",
+          "eventCounts": {
+            "civilization-birth": 43,
+            "close-region-exit": 1412,
+            "capture": 34,
+            "reflection": 221,
+            "civilization-death": 43,
+            "planet-loss": 77,
+            "planet-respawn": 77
+          },
+          "peakRecordedNetDeltaV": 2.2239844226112537,
+          "netEventImpulseSum": 3263579853.849275,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 4.913056691322173e-15
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-68",
+          "rawSHA256": "12a5d7c484cc07f5dc8ac91f9cc6dfa8623fc00f776593a7acd63869d7b22a8a",
+          "eventCounts": {
+            "planet-loss": 99,
+            "planet-respawn": 99,
+            "civilization-birth": 34,
+            "close-region-exit": 2339,
+            "civilization-death": 34,
+            "capture": 46,
+            "reflection": 549
+          },
+          "peakRecordedNetDeltaV": 2.324541734378353,
+          "netEventImpulseSum": 7348822607.227111,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 6.218038864622728e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-69",
+          "rawSHA256": "015ae4e3005803af5c0adf52192c9806efe17bb3195db6bb6f2652e172e5405a",
+          "eventCounts": {
+            "close-region-exit": 1766,
+            "civilization-birth": 66,
+            "civilization-death": 66,
+            "planet-loss": 125,
+            "planet-respawn": 125,
+            "reflection": 516,
+            "capture": 53
+          },
+          "peakRecordedNetDeltaV": 2.3183654064626773,
+          "netEventImpulseSum": 7469987167.858534,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 5.369156083849909e-13
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-70",
+          "rawSHA256": "2e444cf9e08d91aabf0998b917ba2d1176c224e79d9389b2f20483789224833f",
+          "eventCounts": {
+            "civilization-birth": 15,
+            "close-region-exit": 1076,
+            "capture": 56,
+            "civilization-death": 15,
+            "reflection": 209,
+            "planet-loss": 28,
+            "planet-respawn": 28
+          },
+          "peakRecordedNetDeltaV": 2.2670130701207825,
+          "netEventImpulseSum": 3031692210.7438364,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 2.5222197163832237e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-71",
+          "rawSHA256": "a68f120eccdaa10a9cffc53a534f7685a76459d106b4bdb825dfe7cf0ae9ee38",
+          "eventCounts": {
+            "civilization-birth": 12,
+            "reflection": 273,
+            "close-region-exit": 934,
+            "civilization-death": 12,
+            "planet-loss": 14,
+            "planet-respawn": 14,
+            "capture": 44
+          },
+          "peakRecordedNetDeltaV": 2.294348187719265,
+          "netEventImpulseSum": 3993264127.225369,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 2.0231100568256367e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-72",
+          "rawSHA256": "7bf4a89c9917346c51b45bc5537fe0ca87fd0557ffae47031659d1fa34b20b32",
+          "eventCounts": {
+            "civilization-birth": 14,
+            "close-region-exit": 531,
+            "planet-loss": 21,
+            "civilization-death": 14,
+            "planet-respawn": 21,
+            "reflection": 111,
+            "capture": 19
+          },
+          "peakRecordedNetDeltaV": 2.288072133169644,
+          "netEventImpulseSum": 1639443401.299972,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 3.862682185352673e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-73",
+          "rawSHA256": "c86b832896a9e7082bb4b298b97f09ae758037bc0e53e69d0ab409b149b549d3",
+          "eventCounts": {
+            "civilization-birth": 13,
+            "close-region-exit": 1200,
+            "reflection": 331,
+            "planet-loss": 23,
+            "civilization-death": 13,
+            "planet-respawn": 23,
+            "capture": 44
+          },
+          "peakRecordedNetDeltaV": 2.3280014717803774,
+          "netEventImpulseSum": 4617035052.1956625,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 5.1828341297381086e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-74",
+          "rawSHA256": "1697d54cbc3c504298a2c113c6792dff8aad542951328d1c6a58d7227529684d",
+          "eventCounts": {
+            "civilization-birth": 11,
+            "close-region-exit": 3155,
+            "planet-loss": 38,
+            "civilization-death": 11,
+            "planet-respawn": 38,
+            "reflection": 743,
+            "capture": 80
+          },
+          "peakRecordedNetDeltaV": 2.321005809725853,
+          "netEventImpulseSum": 10173235249.987791,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 1.849817137282011e-13
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-75",
+          "rawSHA256": "f14eb6c1d5ab179699ac56b3ce51ee627214fa2d423fa5e8aed576a7588869ea",
+          "eventCounts": {
+            "close-region-exit": 799,
+            "civilization-birth": 5,
+            "planet-loss": 9,
+            "civilization-death": 5,
+            "planet-respawn": 9,
+            "reflection": 230,
+            "capture": 34
+          },
+          "peakRecordedNetDeltaV": 2.2899582353059493,
+          "netEventImpulseSum": 3272309913.4574604,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 5.848790049647418e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-76",
+          "rawSHA256": "d2e792c9cc69838faa74dffcaa176d71763ca602c36382b2f2551c1d1efdc26a",
+          "eventCounts": {
+            "close-region-exit": 2333,
+            "planet-loss": 47,
+            "planet-respawn": 47,
+            "capture": 62,
+            "civilization-birth": 25,
+            "civilization-death": 25,
+            "reflection": 641
+          },
+          "peakRecordedNetDeltaV": 2.341630540872432,
+          "netEventImpulseSum": 9679885220.407698,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 1.0338678104512665e-13
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-77",
+          "rawSHA256": "50fe3071f0d11fc1cd27b2486bc3615b42221cae948579b18c608aa50d711429",
+          "eventCounts": {
+            "civilization-birth": 22,
+            "close-region-exit": 1317,
+            "planet-loss": 44,
+            "civilization-death": 22,
+            "planet-respawn": 44,
+            "reflection": 273,
+            "capture": 49
+          },
+          "peakRecordedNetDeltaV": 2.330309642738505,
+          "netEventImpulseSum": 4150305302.85761,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 4.104492314650548e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-78",
+          "rawSHA256": "3b7500ddc86f0e31d75872d81ab988f84bb5860a68506db53fbff1da08fafa83",
+          "eventCounts": {
+            "civilization-birth": 41,
+            "close-region-exit": 832,
+            "capture": 28,
+            "reflection": 172,
+            "civilization-death": 41,
+            "planet-loss": 61,
+            "planet-respawn": 61
+          },
+          "peakRecordedNetDeltaV": 2.2901325842860487,
+          "netEventImpulseSum": 2526841343.7372937,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 1.4208595027369424e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-79",
+          "rawSHA256": "712916df8669dc016957ff7fd92be7411439d5853a79e1633a98a73a4b0a209d",
+          "eventCounts": {
+            "civilization-birth": 37,
+            "close-region-exit": 1272,
+            "civilization-death": 37,
+            "planet-loss": 69,
+            "planet-respawn": 69,
+            "reflection": 235,
+            "capture": 47
+          },
+          "peakRecordedNetDeltaV": 2.2721848592457614,
+          "netEventImpulseSum": 3741781147.947441,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 4.4593400604690557e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-80",
+          "rawSHA256": "1fa2aa5eaf204b75d7bb5ed08fd7a576dd433e6ae8709263b0e51c473478d576",
+          "eventCounts": {
+            "civilization-birth": 31,
+            "reflection": 195,
+            "close-region-exit": 703,
+            "planet-loss": 39,
+            "civilization-death": 31,
+            "planet-respawn": 39,
+            "capture": 39
+          },
+          "peakRecordedNetDeltaV": 2.325269496460766,
+          "netEventImpulseSum": 3196281284.6245265,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 4.658122554497468e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-81",
+          "rawSHA256": "5af55968ff6ad4927576d8540b8dc27d8d7571edec5f4f8072befc0765e7f2d1",
+          "eventCounts": {
+            "civilization-birth": 25,
+            "planet-loss": 43,
+            "civilization-death": 25,
+            "planet-respawn": 43,
+            "close-region-exit": 998,
+            "reflection": 238,
+            "capture": 43
+          },
+          "peakRecordedNetDeltaV": 2.322965252912178,
+          "netEventImpulseSum": 3532165883.195864,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 3.3553596450958125e-15
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-82",
+          "rawSHA256": "78ad19bdbcdb31dd51ea0d9e89ce4ffa2bbb0178982dcffd793146359c9491bb",
+          "eventCounts": {
+            "close-region-exit": 1593,
+            "civilization-birth": 18,
+            "planet-loss": 22,
+            "civilization-death": 18,
+            "planet-respawn": 22,
+            "capture": 36,
+            "reflection": 486
+          },
+          "peakRecordedNetDeltaV": 2.3200410785059686,
+          "netEventImpulseSum": 7016881777.760619,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 2.4180009987542898e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-83",
+          "rawSHA256": "a18e6a8fe52b8e6dce42f5d908fa122854efa878fc3c692a36743643cff9ebdf",
+          "eventCounts": {
+            "close-region-exit": 3047,
+            "civilization-birth": 55,
+            "planet-loss": 130,
+            "civilization-death": 54,
+            "planet-respawn": 130,
+            "reflection": 826,
+            "capture": 72
+          },
+          "peakRecordedNetDeltaV": 2.2957580427566193,
+          "netEventImpulseSum": 11838097647.514814,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 1.8691658503295447e-13
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-84",
+          "rawSHA256": "44c0ad36034b297bc3400100f4b0648c547fcf9428d22c19813dbefed0395bf6",
+          "eventCounts": {
+            "civilization-birth": 31,
+            "close-region-exit": 949,
+            "reflection": 221,
+            "planet-loss": 43,
+            "civilization-death": 31,
+            "planet-respawn": 43,
+            "capture": 29
+          },
+          "peakRecordedNetDeltaV": 2.2926242429105153,
+          "netEventImpulseSum": 3224305760.0978956,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 5.38031263298037e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-85",
+          "rawSHA256": "7e5366ddc83e21e37acbc2079d5a6b429bf2be685efb75158819855c6c751869",
+          "eventCounts": {
+            "close-region-exit": 2949,
+            "capture": 58,
+            "planet-loss": 64,
+            "planet-respawn": 64,
+            "civilization-birth": 23,
+            "civilization-death": 23,
+            "reflection": 661
+          },
+          "peakRecordedNetDeltaV": 2.300002074387984,
+          "netEventImpulseSum": 10151933783.466558,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 7.880239109814733e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-86",
+          "rawSHA256": "48db0a9bba00f4609e46f97e884d204f0c9e9df8b18a66d3ca4dca4317ebf3ba",
+          "eventCounts": {
+            "close-region-exit": 2170,
+            "planet-loss": 42,
+            "planet-respawn": 42,
+            "reflection": 544,
+            "civilization-birth": 11,
+            "civilization-death": 11,
+            "capture": 56
+          },
+          "peakRecordedNetDeltaV": 2.3023672805760858,
+          "netEventImpulseSum": 8149592442.6961565,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 8.68509147758327e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-87",
+          "rawSHA256": "bbb529a511078a0e725818009734b8dc393392263578e791483f7861b32fa616",
+          "eventCounts": {
+            "planet-loss": 5,
+            "planet-respawn": 5,
+            "close-region-exit": 1796,
+            "civilization-birth": 2,
+            "civilization-death": 2,
+            "capture": 23,
+            "reflection": 446
+          },
+          "peakRecordedNetDeltaV": 2.310401374177786,
+          "netEventImpulseSum": 5751941193.3956375,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 0.04602421359360919
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-88",
+          "rawSHA256": "15bc9464ee4c355a285830276bec654f4a9b0af45883423cd11e59742340546e",
+          "eventCounts": {
+            "close-region-exit": 4746,
+            "planet-loss": 127,
+            "planet-respawn": 127,
+            "civilization-birth": 41,
+            "civilization-death": 41,
+            "reflection": 771,
+            "capture": 48
+          },
+          "peakRecordedNetDeltaV": 2.310134461888111,
+          "netEventImpulseSum": 10866374002.472506,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 1.0868909374486291e-13
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-89",
+          "rawSHA256": "c32954eacbd7eda10e0c59aca328b6ac36bae9c24c749acad8633fc4443ec0c1",
+          "eventCounts": {
+            "close-region-exit": 3813,
+            "planet-loss": 227,
+            "planet-respawn": 227,
+            "capture": 99,
+            "reflection": 1030,
+            "civilization-birth": 76,
+            "civilization-death": 76
+          },
+          "peakRecordedNetDeltaV": 2.6607413785220957,
+          "netEventImpulseSum": 14926581578.55745,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 0.2383183913508957
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-90",
+          "rawSHA256": "0337afec0cc3c2ff0fcb2f8abeaa038969a514052d16a0890dc4073cba936d01",
+          "eventCounts": {
+            "civilization-birth": 67,
+            "reflection": 449,
+            "close-region-exit": 1527,
+            "planet-loss": 146,
+            "civilization-death": 67,
+            "planet-respawn": 145,
+            "capture": 58
+          },
+          "peakRecordedNetDeltaV": 2.325380008212241,
+          "netEventImpulseSum": 6269594426.432092,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 1.8673212552941323e-13
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-91",
+          "rawSHA256": "edec3beddb39e46613edc6bb8105ba422e770fb33a2603c6c2a7b5b846b12bbc",
+          "eventCounts": {
+            "capture": 48,
+            "planet-loss": 34,
+            "planet-respawn": 34,
+            "civilization-birth": 15,
+            "close-region-exit": 1857,
+            "civilization-death": 15,
+            "reflection": 470
+          },
+          "peakRecordedNetDeltaV": 2.315046903117879,
+          "netEventImpulseSum": 7019628185.308102,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 2.9829110999082656e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-92",
+          "rawSHA256": "607ae0b72e1c8e5bd18cbdbcb7b6b33e431b695512f7f7572d5d7c338009b3ef",
+          "eventCounts": {
+            "civilization-birth": 6,
+            "civilization-death": 5,
+            "planet-loss": 4,
+            "planet-respawn": 4,
+            "close-region-exit": 1097,
+            "reflection": 281,
+            "capture": 44
+          },
+          "peakRecordedNetDeltaV": 2.2847958642369752,
+          "netEventImpulseSum": 3971384123.9965262,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 9.287525572190356e-15
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-93",
+          "rawSHA256": "3673b1073bf6b9325d8641b5872348a7ef4eefae781d0a25c5f990d7cb77923d",
+          "eventCounts": {
+            "civilization-birth": 28,
+            "close-region-exit": 2293,
+            "planet-loss": 70,
+            "civilization-death": 28,
+            "planet-respawn": 70,
+            "reflection": 580,
+            "capture": 70
+          },
+          "peakRecordedNetDeltaV": 2.3068351757558188,
+          "netEventImpulseSum": 8678137586.51374,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 4.9433171511249564e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-94",
+          "rawSHA256": "9f0b750e6461256c476e33dbde02036f4f21f27bad6f02fe66f7e333f66db961",
+          "eventCounts": {
+            "close-region-exit": 3130,
+            "civilization-birth": 48,
+            "reflection": 952,
+            "planet-loss": 99,
+            "civilization-death": 48,
+            "planet-respawn": 99,
+            "capture": 109
+          },
+          "peakRecordedNetDeltaV": 2.3339706131987983,
+          "netEventImpulseSum": 13487422056.42173,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 1.7693604641790404e-13
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-95",
+          "rawSHA256": "cb75864fc4af78e924b51ed061ab8900ae8f81da47117dd7b11cd8d79d272f53",
+          "eventCounts": {
+            "close-region-exit": 2667,
+            "reflection": 637,
+            "planet-loss": 27,
+            "planet-respawn": 27,
+            "civilization-birth": 17,
+            "civilization-death": 16,
+            "capture": 72
+          },
+          "peakRecordedNetDeltaV": 2.313402266834978,
+          "netEventImpulseSum": 8640353944.494072,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 8.153144112299016e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-96",
+          "rawSHA256": "4b601f7ad22910b928d607dca6da7a29882861de74e0fb1ed7042bb3bccc1155",
+          "eventCounts": {
+            "close-region-exit": 2415,
+            "civilization-birth": 14,
+            "planet-loss": 33,
+            "civilization-death": 14,
+            "planet-respawn": 33,
+            "reflection": 679,
+            "capture": 47
+          },
+          "peakRecordedNetDeltaV": 2.3149597011438248,
+          "netEventImpulseSum": 8740201030.931252,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 1.1577793993812945e-13
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-97",
+          "rawSHA256": "94fea50f0015d641362ac92d6d09bcf4f86be12364091c54878fe13821bd8645",
+          "eventCounts": {
+            "close-region-exit": 2007,
+            "civilization-birth": 6,
+            "planet-loss": 13,
+            "civilization-death": 6,
+            "planet-respawn": 13,
+            "capture": 30,
+            "reflection": 489
+          },
+          "peakRecordedNetDeltaV": 2.314820328666664,
+          "netEventImpulseSum": 7399594994.541926,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 9.574292282171115e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-98",
+          "rawSHA256": "f0e962ed9dfaf643246b8642e0bb07c90cd6f03e230d692554734fc7eaca7976",
+          "eventCounts": {
+            "civilization-birth": 8,
+            "close-region-exit": 1409,
+            "reflection": 307,
+            "civilization-death": 8,
+            "planet-loss": 13,
+            "planet-respawn": 13,
+            "capture": 39
+          },
+          "peakRecordedNetDeltaV": 2.2874344409431506,
+          "netEventImpulseSum": 4623684601.015709,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 1.1765944446178003e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-99",
+          "rawSHA256": "ef18f1a2cab5a5a2f28516c07a5f239b813ee8deae68af98b54435589b81297d",
+          "eventCounts": {
+            "close-region-exit": 1707,
+            "civilization-birth": 7,
+            "planet-loss": 13,
+            "civilization-death": 7,
+            "planet-respawn": 13,
+            "reflection": 429,
+            "capture": 58
+          },
+          "peakRecordedNetDeltaV": 2.336545277613041,
+          "netEventImpulseSum": 6535261957.92236,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 2.711986993132206e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-100",
+          "rawSHA256": "5ac8d11479fc3b37b72ef98cb9fc70a25280bcaba122cb676e8aa83ad54720b2",
+          "eventCounts": {
+            "civilization-birth": 22,
+            "planet-loss": 26,
+            "civilization-death": 22,
+            "planet-respawn": 26,
+            "close-region-exit": 661,
+            "reflection": 166,
+            "capture": 7
+          },
+          "peakRecordedNetDeltaV": 2.099830332197125,
+          "netEventImpulseSum": 2362019087.5813417,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 0.04745218634352121
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-101",
+          "rawSHA256": "ff8eb085b9a9a831296257298d8dd93a92b2731b8a0d8b013896544e2df018b8",
+          "eventCounts": {
+            "civilization-birth": 8,
+            "close-region-exit": 728,
+            "planet-loss": 11,
+            "civilization-death": 8,
+            "planet-respawn": 11,
+            "capture": 27,
+            "reflection": 197
+          },
+          "peakRecordedNetDeltaV": 2.1869210411394375,
+          "netEventImpulseSum": 2930120667.267468,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 2.6134276412646432e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-102",
+          "rawSHA256": "264bad164e74e377ed3f6c7229c034f641b77845d120dd7828c8af14b177b472",
+          "eventCounts": {
+            "civilization-birth": 30,
+            "close-region-exit": 1343,
+            "planet-loss": 66,
+            "civilization-death": 29,
+            "planet-respawn": 66,
+            "reflection": 295,
+            "capture": 41
+          },
+          "peakRecordedNetDeltaV": 2.2620375275879354,
+          "netEventImpulseSum": 4120896248.190499,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 4.7798504638557154e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-103",
+          "rawSHA256": "04275d8644a6f9cfb2d15279c8835fdfa7da33e59c4671d7473c37c5838b1b35",
+          "eventCounts": {
+            "close-region-exit": 1561,
+            "civilization-birth": 30,
+            "planet-loss": 61,
+            "civilization-death": 30,
+            "planet-respawn": 61,
+            "reflection": 322,
+            "capture": 59
+          },
+          "peakRecordedNetDeltaV": 2.3494004548858296,
+          "netEventImpulseSum": 4470904222.589289,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 4.0579465284218826e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-104",
+          "rawSHA256": "e5ad9f81d30a0a5e6a5d5feaffd7d3e5a91abfda68af86307639269e78201448",
+          "eventCounts": {
+            "planet-loss": 15,
+            "planet-respawn": 15,
+            "civilization-birth": 6,
+            "close-region-exit": 1995,
+            "reflection": 479,
+            "civilization-death": 6,
+            "capture": 60
+          },
+          "peakRecordedNetDeltaV": 2.3364193588348745,
+          "netEventImpulseSum": 6754315851.7248335,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 0.2497950647932908
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-105",
+          "rawSHA256": "2320015fea1a0c7046277c7062c5221b603da82e534b7712c498f6d4c7f7eeff",
+          "eventCounts": {
+            "close-region-exit": 2416,
+            "planet-loss": 129,
+            "planet-respawn": 129,
+            "civilization-birth": 56,
+            "civilization-death": 56,
+            "reflection": 615,
+            "capture": 61
+          },
+          "peakRecordedNetDeltaV": 2.240574994394839,
+          "netEventImpulseSum": 9000915001.205227,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 1.3904566289364318e-13
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-106",
+          "rawSHA256": "31d62e268a504fcda69a6d8a7e21b334a27730029cf35113482996961d6fc086",
+          "eventCounts": {
+            "civilization-birth": 32,
+            "planet-loss": 36,
+            "civilization-death": 31,
+            "planet-respawn": 36,
+            "close-region-exit": 1289,
+            "capture": 10,
+            "reflection": 388
+          },
+          "peakRecordedNetDeltaV": 2.3049965693819963,
+          "netEventImpulseSum": 5187769195.652282,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 0.040062201557242126
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-107",
+          "rawSHA256": "2add22dfdbd2c92f3d5a850251cb012bb93fa1c10f1c05f462e02328de695da8",
+          "eventCounts": {
+            "civilization-birth": 43,
+            "close-region-exit": 1086,
+            "reflection": 246,
+            "civilization-death": 43,
+            "capture": 49,
+            "planet-loss": 86,
+            "planet-respawn": 86
+          },
+          "peakRecordedNetDeltaV": 2.2741374666709087,
+          "netEventImpulseSum": 3568765860.8167067,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 7.27246648428651e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-108",
+          "rawSHA256": "890078fd0e089049e7fab55e0261de6e860fc8f2862707e9895ce1e726cf7719",
+          "eventCounts": {
+            "civilization-birth": 55,
+            "close-region-exit": 1222,
+            "planet-loss": 88,
+            "civilization-death": 55,
+            "planet-respawn": 88,
+            "capture": 51,
+            "reflection": 318
+          },
+          "peakRecordedNetDeltaV": 2.326316033453795,
+          "netEventImpulseSum": 4883493033.124674,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 1.28341860039712e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-109",
+          "rawSHA256": "ba49ca26ae00ca507e1140a39e76a4a486f80899c11722ebc652a831b3441fa2",
+          "eventCounts": {
+            "planet-loss": 77,
+            "planet-respawn": 77,
+            "reflection": 1033,
+            "close-region-exit": 3924,
+            "civilization-birth": 29,
+            "civilization-death": 29,
+            "capture": 57
+          },
+          "peakRecordedNetDeltaV": 2.3083944501103724,
+          "netEventImpulseSum": 14773426274.724422,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 1.1073917509680648e-13
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-110",
+          "rawSHA256": "916e7afdf7a9af9462ec305738b971e335440b530443025a113e165bcb2dd286",
+          "eventCounts": {
+            "civilization-birth": 32,
+            "civilization-death": 32,
+            "planet-loss": 54,
+            "planet-respawn": 54,
+            "close-region-exit": 877,
+            "reflection": 193,
+            "capture": 32
+          },
+          "peakRecordedNetDeltaV": 2.2108513285669793,
+          "netEventImpulseSum": 2664472874.796506,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 2.5766240631844635e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-111",
+          "rawSHA256": "d5e1ecd5f6cfa533e6db493339b7cfded7ec303edc11cfb1e42fc0ab22ed0204",
+          "eventCounts": {
+            "civilization-birth": 37,
+            "civilization-death": 37,
+            "planet-loss": 66,
+            "planet-respawn": 66,
+            "close-region-exit": 1257,
+            "reflection": 264,
+            "capture": 44
+          },
+          "peakRecordedNetDeltaV": 2.2707883805421147,
+          "netEventImpulseSum": 3576491085.5679116,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 6.035161359768954e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-112",
+          "rawSHA256": "0d74e608b412b97c4475249697f1080a19fb3242dfa2a59deb714cb866b7df87",
+          "eventCounts": {
+            "civilization-birth": 28,
+            "close-region-exit": 1049,
+            "civilization-death": 27,
+            "planet-loss": 59,
+            "planet-respawn": 59,
+            "reflection": 196,
+            "capture": 53
+          },
+          "peakRecordedNetDeltaV": 2.338930024210857,
+          "netEventImpulseSum": 3199141816.973592,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 1.957966267307393e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-113",
+          "rawSHA256": "0292f071c0acfe67c11208b4623d6ce38f3c7f17f8d57dcada49e9923c9ac1cf",
+          "eventCounts": {
+            "civilization-birth": 1,
+            "close-region-exit": 2245,
+            "civilization-death": 1,
+            "reflection": 560,
+            "capture": 66
+          },
+          "peakRecordedNetDeltaV": 2.3115049887924175,
+          "netEventImpulseSum": 7564364070.119223,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 2.33658383567669e-15
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-114",
+          "rawSHA256": "5928012cf90b11be54120d10de3199e78adbfeb0c70459191cf9c57d5040d3cc",
+          "eventCounts": {
+            "close-region-exit": 2956,
+            "planet-loss": 9,
+            "planet-respawn": 9,
+            "civilization-birth": 7,
+            "civilization-death": 6,
+            "reflection": 567,
+            "capture": 31
+          },
+          "peakRecordedNetDeltaV": 2.30254309111547,
+          "netEventImpulseSum": 7407062426.09251,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 0.0425066692123071
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-115",
+          "rawSHA256": "50bd20e5d90394c05cbc8dbb4d4f40b78a1b008b42bc145a1f54884aee78c06a",
+          "eventCounts": {
+            "civilization-birth": 39,
+            "reflection": 380,
+            "close-region-exit": 1442,
+            "capture": 50,
+            "planet-loss": 54,
+            "civilization-death": 39,
+            "planet-respawn": 54
+          },
+          "peakRecordedNetDeltaV": 2.3617675344928544,
+          "netEventImpulseSum": 5408875590.084572,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 1.3134311256528515e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-116",
+          "rawSHA256": "7d6cf5e58b2621031a0095ff9f66f12fe1b712f74a89954b0be29033037d6fc1",
+          "eventCounts": {
+            "planet-loss": 52,
+            "planet-respawn": 52,
+            "reflection": 797,
+            "close-region-exit": 2287,
+            "capture": 26,
+            "civilization-birth": 26,
+            "civilization-death": 26
+          },
+          "peakRecordedNetDeltaV": 2.3106070444911806,
+          "netEventImpulseSum": 11050903298.859877,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 2.99890142875996e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-117",
+          "rawSHA256": "9f837ddf7fdd2d84237c1b227ea7642549a4c2abe61d8802d43fb781db489b28",
+          "eventCounts": {
+            "civilization-birth": 24,
+            "reflection": 314,
+            "close-region-exit": 1193,
+            "planet-loss": 24,
+            "civilization-death": 24,
+            "planet-respawn": 24,
+            "capture": 29
+          },
+          "peakRecordedNetDeltaV": 2.2925031008631964,
+          "netEventImpulseSum": 4604802723.977619,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 1.1566457699518606e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-118",
+          "rawSHA256": "cf4932565ba0495ba2ae7ddaa3f9ac9b2d303722aded84ddf6e7e6cb794835e7",
+          "eventCounts": {
+            "civilization-birth": 24,
+            "close-region-exit": 1185,
+            "civilization-death": 24,
+            "capture": 23,
+            "planet-loss": 34,
+            "planet-respawn": 34,
+            "reflection": 363
+          },
+          "peakRecordedNetDeltaV": 2.3099209571114483,
+          "netEventImpulseSum": 5051381241.40456,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 0.04195656736383356
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-119",
+          "rawSHA256": "28d3358e62924ff48cf52f2c7cb523b7ae6f48a9b975c280c544df05161c2ff2",
+          "eventCounts": {
+            "close-region-exit": 1524,
+            "reflection": 275,
+            "civilization-birth": 12,
+            "planet-loss": 13,
+            "civilization-death": 12,
+            "planet-respawn": 13,
+            "capture": 49
+          },
+          "peakRecordedNetDeltaV": 2.2472736016376347,
+          "netEventImpulseSum": 3949988699.381374,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 3.1325526075167664e-15
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-120",
+          "rawSHA256": "4812495e6d0f2db06a608dbd207e015b4f377fa918ff8f8b70a5cf320df01e8a",
+          "eventCounts": {
+            "planet-loss": 26,
+            "planet-respawn": 26,
+            "close-region-exit": 2385,
+            "reflection": 589,
+            "civilization-birth": 14,
+            "civilization-death": 14,
+            "capture": 69
+          },
+          "peakRecordedNetDeltaV": 2.3095161163544597,
+          "netEventImpulseSum": 8467314029.468466,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 0.13457517723211948
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-121",
+          "rawSHA256": "bbdf6c224435f6a341bd34fc554f88e52aaaa179ca2367c5dc03ca331c3388a7",
+          "eventCounts": {
+            "civilization-birth": 5,
+            "close-region-exit": 1103,
+            "planet-loss": 8,
+            "civilization-death": 5,
+            "planet-respawn": 8,
+            "reflection": 254,
+            "capture": 22
+          },
+          "peakRecordedNetDeltaV": 2.1384037578738777,
+          "netEventImpulseSum": 3636925042.3335004,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 2.201280576298989e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-122",
+          "rawSHA256": "5c4e15ecacad71a4676996524b504c363c045a7adb3e6136f517e33441cbe0f6",
+          "eventCounts": {
+            "civilization-birth": 17,
+            "close-region-exit": 706,
+            "planet-loss": 22,
+            "civilization-death": 17,
+            "planet-respawn": 22,
+            "capture": 31,
+            "reflection": 124
+          },
+          "peakRecordedNetDeltaV": 2.1539982188053206,
+          "netEventImpulseSum": 1581976187.4659796,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 3.960127979513415e-15
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-123",
+          "rawSHA256": "c09b3c6861387b4d066285acc67f9a963428de26c7eea9e743cc6cc4eb62cab4",
+          "eventCounts": {
+            "civilization-birth": 5,
+            "planet-loss": 5,
+            "civilization-death": 5,
+            "planet-respawn": 5,
+            "close-region-exit": 812,
+            "reflection": 194,
+            "capture": 34
+          },
+          "peakRecordedNetDeltaV": 2.2486455675503465,
+          "netEventImpulseSum": 2954050499.5818763,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 1.488077049958992e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-124",
+          "rawSHA256": "846936113bb73ce69f8e341a7ae2e49cc7ef3abe91aea1adcff813cbf1976843",
+          "eventCounts": {
+            "close-region-exit": 2984,
+            "civilization-birth": 37,
+            "reflection": 821,
+            "civilization-death": 37,
+            "planet-loss": 105,
+            "planet-respawn": 105,
+            "capture": 73
+          },
+          "peakRecordedNetDeltaV": 2.330308929221403,
+          "netEventImpulseSum": 11890079401.549475,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 0.18810628773806332
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-125",
+          "rawSHA256": "109da4b9902648f6fa6e916f5745bcc97a8f799e0f3dca0abf1b5261b73b4ff4",
+          "eventCounts": {
+            "close-region-exit": 1893,
+            "planet-loss": 33,
+            "planet-respawn": 33,
+            "reflection": 436,
+            "civilization-birth": 10,
+            "civilization-death": 10,
+            "capture": 49
+          },
+          "peakRecordedNetDeltaV": 2.3018941951854965,
+          "netEventImpulseSum": 6546459211.58663,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 3.642252268761437e-14
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-126",
+          "rawSHA256": "6992fc1ea8ecd8fc49cf34d3345d74e7812ee3351e7b6b434ff35349f91c1e65",
+          "eventCounts": {
+            "close-region-exit": 2658,
+            "planet-loss": 56,
+            "planet-respawn": 56,
+            "civilization-birth": 24,
+            "reflection": 613,
+            "capture": 77,
+            "civilization-death": 24
+          },
+          "peakRecordedNetDeltaV": 2.296954868690575,
+          "netEventImpulseSum": 8260001904.744948,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 1.031401921974803e-13
+        },
+        {
+          "seed": "V2-CONFIRM-20261021-127",
+          "rawSHA256": "626118d7e73ce51a86e1fa168e513dcf43812199dda4b7c1c24f55407ac693ff",
+          "eventCounts": {
+            "planet-loss": 76,
+            "close-region-exit": 1027,
+            "planet-respawn": 76,
+            "civilization-birth": 39,
+            "capture": 32,
+            "civilization-death": 39,
+            "reflection": 194
+          },
+          "peakRecordedNetDeltaV": 2.318001060678111,
+          "netEventImpulseSum": 2970560254.5787463,
+          "deflectionCumulativeNormDeltaLNormalized": 0.0,
+          "totalSignedDeltaLNormNormalized": 3.928916262700377e-14
+        }
+      ],
+      "peakRecordedNetDeltaV": {
+        "mean": 2.292072540837468,
+        "max": 2.6607413785220957
+      },
+      "deflectionCumulativeNormDeltaLNormalized": {
+        "mean": 0.0,
+        "max": 0.0
+      },
+      "totalSignedDeltaLNormNormalized": {
+        "mean": 0.012148348137711842,
+        "max": 0.2497950647932908
+      },
+      "matureStablePostRespawn25Contribution": {
+        "mean": 0.010171430844907407,
+        "min": 0.0,
+        "max": 0.04460796296296296
+      },
+      "matureStableOlderPlanetContribution": {
+        "mean": 0.16578560185185184,
+        "min": 0.0,
+        "max": 0.9935572222222222
+      },
+      "initialCrossingYears": {
+        "mean": 16.650462580901873,
+        "min": 7.1504527391686885,
+        "max": 29.756064328850997
+      },
+      "steps": {
+        "mean": 60152467.28125,
+        "min": 60032969,
+        "max": 60416375
+      },
+      "angularScope": "Cumulative norm only for logged deflections; net L includes capture. Missing per-subprojection capture angular budget cannot be reconstructed."
+    }
+  }
+}

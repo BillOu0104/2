@@ -1,6 +1,24 @@
 # V2 恢复入口
 
-状态：RESEARCH_IN_PROGRESS。稳健性/消融序列及V2-E真实100000年探索均已完成并审计；128个全新Seed独立确认已实际启动，当前状态以results/confirmation-v1.state.json为准。正式确认尚未完成，不能报告128Seed成功率。main未修改、未合并，私有网页未更新。
+状态：RESEARCH_IN_PROGRESS / NUMERICAL_REVIEW_REQUIRED。正式128新Seed主确认及32Seed预定h2辅助已全部实测完成（576/576、pending0、UNKNOWN0），最终原始/版本/初值/恢复哈希重审计通过。见CONFIRMATION_RESULTS.md和results/confirmation-v1/cohort.review.json。main未修改、未合并，私有网页未更新。
+
+## 当前唯一恢复队列：确认后精度扩展
+
+先检查全部活跃锁（尤其results/precision-extension.lock）、native worker和最近20分钟研究记录；任一活跃/近期更新即安静退出，不修改计算源、不重编译、不启动重复工作。当前锁/worker优先于可能过期的state字符串。没有活跃任务且记录过期后，读PRECISION_EXTENSION_PROTOCOL.md、precision-extension/study.json、results/precision-extension.manifest.json和results/precision-extension.state.json（若已生成）。
+
+恢复命令（仓库根）：
+
+```sh
+python3 docs/research-v2/run-precision-extension.py docs/research-v2/precision-extension/study.json
+```
+
+这是确认后数值诊断，不是新独立Seed确认，也不是调参。先补跑确认Seed32..127各两候选h2，补齐全128；再跑Seed0..31各两候选h4。16批×8Seed，共256新模拟，每条真正100000年、成熟期10000年后，两worker。计算源/二进制/控制/P5/纪元及失效规则全部不变，仅提高积分精度。数据在results/precision-extension/，每批audit/verify-provenance/固定注册初值核对、保存原始及完整状态、Git/records/check及push。
+
+预定前32默认→h2成熟恒纪元变化：转向24.25%→34.58%，反射23.69%→14.38%，配对均值差bootstrap95%未含0。能量残差小不足以证明统计收敛，暂不进入生产集成或main替换。PRECISION_COMPLETE_REVIEW_REQUIRED只表示这批数据结束，研究仍未完成。STOPPED_REVIEW_REQUIRED先看error/日志/检查点，不绕过版本、UNKNOWN或数值问题。恢复跳过完成键但重审计；checkpoint只用于相同科学源/配置，不将不同精度状态混合。推送失败单列，不把本地提交说成远端已保存。
+
+完整主确认：转向/反射各128/128三星完整；连续参与混沌联合121/128与125/128；默认成熟恒纪元28.21%与17.60%，分布和置信区间见报告。两方案存在角动量/累计功冲量的权衡，尚无唯一支配方案。所有失败、行星重生及文明结局保留。冻结的两个辅助脚本直接传cohort会空读，原空文件保留，新review-confirmation.py从576条及原事件正确重算；主要终点audit-confirmation不受影响。
+
+旧run-confirmation及run-series队列均已完成，不重启它们。下文“恢复当前独立确认”保留历史命令和证据，仅供复核，不是当前待执行队列。完整精度/统计评审后才考虑独立集成分支、功能/UI兼容测试；覆盖main等待用户最终验收。
 
 ## 身份和已完成证据
 
@@ -10,7 +28,7 @@
 
 先读RESEARCH_PLAN.md、STRICT_PROTOCOL.md、MEDIUM_PROTOCOL.md、LONG30_PROTOCOL.md、WEAK_BINDING_PROTOCOL.md。早期baseline-v1/screen-v3/strict-screen/medium/medium-contact-v2有已披露观测差异，仅保留历史调试价值，不混作规范长窗证据。
 
-## 恢复当前独立确认
+## 已完成独立确认的历史恢复入口
 
 先检查所有锁（尤其results/confirmation-v1.lock）、native worker及最近20分钟研究记录；有活跃工作或近期更新即安静跳过，不改计算源码、不重编译、不重复启动。没有活跃工作且记录过期后，先读：
 

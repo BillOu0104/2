@@ -5,3 +5,5 @@
 分支research/minimal-chaos-control-v2；实际产品基准fix/v0.5.5@8a8eb34。main仍c7a53a0，未修改、未合并。上一轮报告仍在根FINAL_REPORT.md，V1状态与完整结果在research/newtonian-survival@c198020及records/analyses/newtonian-survival。
 
 恢复须核对源/配置哈希与既有结果，不依赖聊天上下文，不混合调试版和canonical结果，不将数值停止记为物理死亡。
+
+2026-10-22：128新Seed独立确认数据已完整结束并重审计；研究仍在进行，因恒纪元精度敏感性需继续precision-extension。唯一当前恢复命令见docs/research-v2/STATUS.md最上方，不再启动已完成confirmation/series队列。main及私有网页未修改。
