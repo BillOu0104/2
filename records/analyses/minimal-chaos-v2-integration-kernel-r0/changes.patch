@@ -1,0 +1,439 @@
+diff --git a/src/main.js b/src/main.js
+index 3e27ca9..e721daf 100644
+--- a/src/main.js
++++ b/src/main.js
+@@ -42,6 +42,7 @@ function saveSettings() {
+ }
+ function changeSettings(patch, options = {}) {
+   const previous = settings;
++  if(patch.stabilityMode&&patch.stabilityMode!=='off'&&patch.stabilityMode!==settings.stabilityMode&&!('newproperty60' in patch))patch={...patch,newproperty60:true,gravityModel:'newtonian',physicsMode:'reference',civilizationMode:'balanced'};
+   if(manualInitialKeys.some(k=>k in patch)&&!('manualInitialBodies' in patch))patch={...patch,manualInitialBodies:null};
+   settings = normalizeSettings({ ...settings, ...patch });
+   worker?.postMessage({ type: 'settings', patch: settings });
+diff --git a/src/physics/controlled-system.js b/src/physics/controlled-system.js
+new file mode 100644
+index 0000000..e54bf28
+--- /dev/null
++++ b/src/physics/controlled-system.js
+@@ -0,0 +1,95 @@
++import {GravityIntegrator,invariants,axes,PhysicsError} from './gravity.js';
++import {capture,deflect,reflect,emptyCost,norm,dot,cross,sub,pos,vel,center} from './minimal-control.js';
++import {escapeCandidates} from '../escape-state.js';
++
++export const V2_STEP=.0001875,V2_ETA=.001875;
++const pairs=[[0,1],[0,2],[1,2]];
++const distance=(a,b)=>norm(sub(pos(a),pos(b)));
++const unit=v=>norm(v)>1e-14?v.map(x=>x/norm(v)):[0,0,1];
++function budget(b,G){const e=invariants(b,G);return {...e,L:b.reduce((s,x)=>{const h=cross(pos(x),vel(x));return s.map((a,i)=>a+x.mass*h[i]);},[0,0,0])};}
++
++// Reference frame and lifecycle match the native confirmation: .0075 solver
++// units per frame,60 frames/display year. Rendering speed never skips physics.
++export class ControlledSystem{
++ constructor(bodies,G,settings,{onEvent=()=>{},onPlanetLoss=()=>{},onRespawn=()=>{},onStep=null}={}){
++  if(!(G>0)||bodies.length!==4||bodies.slice(0,3).some(b=>!(b.mass>0)))throw new PhysicsError('v2-initial-state','长期三星模式需要三颗正质量恒星');
++  this.bodies=structuredClone(bodies);this.G=G;this.settings=settings;this.onEvent=onEvent;this.onPlanetLoss=onPlanetLoss;this.onRespawn=onRespawn;this.onStep=onStep;
++  this.scale=pairs.reduce((sum,[i,j])=>sum+distance(bodies[i],bodies[j]),0)/3;
++  this.initialEnergy=invariants(bodies,G).inertialEnergy;this.cost=emptyCost();this.external=emptyCost();this.frame=0;this.returnFrame=null;this.planetLosses=0;this.planetRespawns=0;this.firstPlanetLoss=null;this.stellarFailure=null;this.numericalUnknown=null;this.timers={};this.processedContacts=0;this.maxResidual=0;this.lastPlanetLoss=null;
++  this.integrator=new GravityIntegrator(this.bodies,G,{model:'newtonian',radii:()=>this.radii(this.integrator.time)});
++ }
++ get year(){return this.frame/60;}
++ get enabled(){return !!this.settings.newproperty60;}
++ get cfg(){return {capture:this.enabled,reflect:this.enabled,deflect:this.enabled&&this.settings.stabilityMode==='deflect-v2',redistribute:true,capturePositiveOnly:true,captureTriggerScale:8,captureSeparationFactor:1.5};}
++ radii(time){return [this.settings._13,this.settings._21,this.settings._3,this.settings.newproperty20].map((r,i)=>i<3?r*(this.settings.stellarBreathing?1+.08*Math.sin(time/.45/120+i*2):1):r);}
++ event(kind,detail={}){this.onEvent({kind,year:this.year,...detail});}
++ externalChange(action){
++  const a=budget(this.bodies,this.G),before=this.bodies[3].mass*norm(vel(this.bodies[3]));action();const b=budget(this.bodies,this.G),w=b.inertialEnergy-a.inertialEnergy;
++  this.external.work+=w;this.external.absoluteWork+=Math.abs(w);
++  for(let k=0;k<3;k++){this.external.deltaP[k]+=b.momentum[k]-a.momentum[k];this.external.deltaL[k]+=b.L[k]-a.L[k];}
++  this.external.impulse+=Math.abs(this.bodies[3].mass*norm(vel(this.bodies[3]))-before);
++ }
++ losePlanet(cause,eventTime=this.integrator.time){
++  if(!this.bodies[3].mass)return;
++  const fraction=Math.max(0,Math.min(1,(eventTime-this.frameStartTime)/.0075)),year=(this.frameStartFrame+fraction)/60;
++  this.externalChange(()=>{this.bodies[3].mass=0;});this.planetLosses++;this.firstPlanetLoss??=year;this.lastPlanetLoss={kind:cause,year};this.returnFrame=Math.ceil((year+5)*60-1e-8);
++  this.event('planet-loss',{cause,year});this.onPlanetLoss({kind:cause,year});
++ }
++ respawn(){
++  const s=this.settings,b=this.bodies,host=(2+this.planetRespawns)%3,h=b[host],c=center(b.slice(0,3)),L=[0,0,0];
++  for(let i=0;i<3;i++){const l=cross(sub(pos(b[i]),c.slice(0,3)),sub(vel(b[i]),c.slice(3)));for(let k=0;k<3;k++)L[k]+=b[i].mass*l[k];}
++  const normal=unit(L),phase=this.planetRespawns*2.399963229728653,raw=[Math.cos(phase),Math.sin(phase),.37],radial=unit(sub(raw,normal.map(x=>x*dot(raw,normal)))),tangent=cross(normal,radial);
++  const radius=Math.max(.12*Math.min(...b.slice(0,3).filter((_,i)=>i!==host).map(x=>distance(h,x))),2.5*([s._13,s._21,s._3][host]+s.newproperty20)),speed=Math.sqrt(this.G*(h.mass+s.newproperty8)/radius);
++  this.externalChange(()=>{b[3].mass=s.newproperty8;for(let k=0;k<3;k++){b[3][axes[k]]=h[axes[k]]+radius*radial[k];b[3][axes[k+3]]=h[axes[k+3]]-speed*tangent[k];}});
++  this.planetRespawns++;this.returnFrame=null;
++  for(let i=0;i<3;i++)this.integrator.contactKeys.delete(`${i}:3`);
++  this.event('planet-respawn',{host,radius});this.onRespawn();
++ }
++ beforeStep(){
++  const before=this.cost.projectionEvents;deflect(this.bodies,this.G,this.cfg,this.settings,this.cost);reflect(this.bodies,this.G,this.cfg,this.settings,this.cost);
++  if(this.cost.projectionEvents!==before)this.event('stellar-protection',{events:this.cost.projectionEvents-before,solverTime:this.integrator.time});
++ }
++ acceptedStep(){
++  for(;this.processedContacts<this.integrator.contacts.length;this.processedContacts++){
++   const c=this.integrator.contacts[this.processedContacts];this.event('contact',structuredClone(c));
++   if(c.pair.includes(3)){if(this.bodies[3].mass)this.losePlanet('accepted-step-engulfed',this.integrator.time);}
++   else{this.stellarFailure={kind:'stellar-contact',year:c.time/.45,...structuredClone(c)};throw Object.assign(new Error('stellar-contact'),{physical:true});}
++  }
++  this.onStep?.(this.bodies,this.integrator.time);
++ }
++ escapes(){
++  const b=this.bodies,G=this.G,all=center(b.slice(0,3)),active=new Set();
++  const observe=(key,yes,detail)=>{if(yes){active.add(key);this.timers[key]=(this.timers[key]??0)+1/60;if(this.timers[key]>=3){if(key==='planet')this.losePlanet('confirmed-escape');else this.stellarFailure??={year:this.year,...detail};}}};
++  if(b[3].mass>0)observe('planet',escapeCandidates(b,G,{...this.settings,newproperty60:false,gravityModel:'newtonian'}).some(x=>x.partition===7),{});
++  const outside=b.slice(0,3).some(x=>norm(sub(pos(x),all.slice(0,3)))>this.settings.newproperty13);
++  for(let i=0;i<3;i++){
++   const others=b.slice(0,3).filter((_,j)=>j!==i),c=center(others),M=others.reduce((sum,x)=>sum+x.mass,0),r=sub(pos(b[i]),c.slice(0,3)),v=sub(vel(b[i]),c.slice(3)),R=norm(r),radial=dot(r,v)/R,size=Math.max(...others.map(x=>norm(sub(pos(x),c.slice(0,3))))),U=-G*(b[i].mass+M)/M*others.reduce((sum,x)=>sum+x.mass/distance(x,b[i]),0),E=.5*dot(v,v)+U;
++   observe('star'+i,outside&&R>4*size&&radial>0&&E>.1*Math.abs(U),{kind:'stellar-separation',star:i,distance:R,specificEnergy:E});
++  }
++  let triple=outside,K=0,U=0;for(let i=0;i<3;i++)K+=.5*b[i].mass*dot(sub(vel(b[i]),all.slice(3)),sub(vel(b[i]),all.slice(3)));
++  for(const[i,j]of pairs){const r=sub(pos(b[i]),pos(b[j])),v=sub(vel(b[i]),vel(b[j])),R=norm(r);U-=G*b[i].mass*b[j].mass/R;if(!(.5*dot(v,v)-G*(b[i].mass+b[j].mass)/R>0&&dot(r,v)>0))triple=false;}
++  observe('triple',triple&&K+U>.1*Math.abs(U),{kind:'triple-disintegration',energy:K+U});
++  for(const key of Object.keys(this.timers))if(!active.has(key))delete this.timers[key];
++ }
++ advanceFrame(){
++  if(this.stellarFailure||this.numericalUnknown)return false;
++  this.frameStartFrame=this.frame;this.frameStartTime=this.integrator.time;const count=this.cost.projectionEvents;
++  try{this.integrator.advance(.0075,{maxStep:V2_STEP,eta:V2_ETA,beforeStep:()=>this.beforeStep(),onAcceptedStep:()=>this.acceptedStep()});}
++  catch(e){if(e.physical){this.integrator.numericalError=null;this.event('stellar-failure',this.stellarFailure);return false;}this.numericalUnknown={code:e.code??'numerical-error',message:e.message};throw e;}
++  this.frame++;capture(this.bodies,this.G,this.cfg,this.scale,this.cost);if(this.cost.projectionEvents>count){this.cost.activeFrames++;this.cost.projectionFrames++;}
++  this.escapes();if(this.returnFrame!==null&&this.frame>=this.returnFrame)this.respawn();
++  if(this.stellarFailure)this.event('stellar-failure',this.stellarFailure);
++  return true;
++ }
++ finishWorld(world){if(this.bodies[3].mass&&world.planet.terminal)this.losePlanet(world.planet.terminal.kind);}
++ observeResidual(){if(this.frame%60===0)this.maxResidual=Math.max(this.maxResidual,Math.abs(invariants(this.bodies,this.G).inertialEnergy-this.initialEnergy-this.cost.work-this.external.work)/Math.max(Math.abs(this.initialEnergy),1e-20));}
++ equilibrium(){
++  let flux=0;for(let i=0;i<3;i++){const d=Math.max(distance(this.bodies[i],this.bodies[3]),.01)*1e12/this.settings.newproperty69/1.496e11;flux+=1361*[this.settings._111lum_sun,this.settings._211lum_sun,this.settings._311lum_sun][i]/(d*d);}
++  const base=(flux*.7/(4*5.67e-8))**.25-273.15,albedo=base<0?.3+.3*Math.min(1,-base/20):.3,x=Math.max(-270,Math.min(1500,(flux*(1-albedo)/(4*5.67e-8))**.25-273.15+10*Math.sin(this.year)));
++  return Math.sign(x)*Math.round(Math.abs(x)*100)/100;
++ }
++ state(){
++  const e=invariants(this.bodies,this.G),residual=Math.abs(e.inertialEnergy-this.initialEnergy-this.cost.work-this.external.work)/Math.max(Math.abs(this.initialEnergy),1e-20);
++  return {bodies:structuredClone(this.bodies),com:{x:e.center[0],y:e.center[1],z:e.center[2]},G:this.G,step:V2_STEP,contacts:[],diagnostics:{model:'newtonian',solverTime:this.integrator.time,steps:this.integrator.steps,controlled:this.enabled,conservationApplicable:false,physicalModelValid:!this.stellarFailure,numericalError:this.numericalUnknown,stellarFailure:this.stellarFailure,relativeEnergyError:residual,maxRelativeEnergyError:this.maxResidual,energyResidualScope:'yearly sampled; measured control and planet external work subtracted',control:structuredClone(this.cost),planetExternal:structuredClone(this.external),planetLosses:this.planetLosses,planetRespawns:this.planetRespawns,planetPresent:this.bodies[3].mass>0,firstPlanetLoss:this.firstPlanetLoss,returnFrame:this.returnFrame}};
++ }
++}
+diff --git a/src/physics/gravity.js b/src/physics/gravity.js
+index 409891c..c305d74 100644
+--- a/src/physics/gravity.js
++++ b/src/physics/gravity.js
+@@ -56,10 +56,10 @@ export class GravityIntegrator{
+    if(d<=limit){this.contactKeys.add(key);this.contacts.push({pair:[i,j],time:this.time-h+fraction*h,distance:d,radius:limit,method:'accepted-step-segment'});}
+   }
+  }
+- advance(duration,{maxStep=.00075,eta=.0075,adaptive=true,minStep=1e-10,maxSteps=200000,onAcceptedStep=null}={}){
++ advance(duration,{maxStep=.00075,eta=.0075,adaptive=true,minStep=1e-10,maxSteps=200000,onAcceptedStep=null,beforeStep=null}={}){
+   if(!Number.isFinite(duration)||!Number.isFinite(maxStep)||maxStep<=0||!Number.isFinite(eta)||eta<=0)throw new PhysicsError('invalid-step','物理步长或近遇精度参数无效');
+   const sign=Math.sign(duration);let remaining=Math.abs(duration),used=0;
+-  try{while(remaining>1e-14){const limit=Math.min(maxStep,adaptive?eta*this.timescale():Infinity),magnitude=Math.min(remaining,limit);if(!(limit>minStep))throw new PhysicsError('minimum-step','近遇所需步长低于安全下限；数值中断不计为物理死亡');if(used++>=maxSteps)throw new PhysicsError('step-budget','单帧近遇计算预算耗尽；未跳过物理时间');
++  try{while(remaining>1e-14){beforeStep?.(this.bodies,this.time);const limit=Math.min(maxStep,adaptive?eta*this.timescale():Infinity),magnitude=Math.min(remaining,limit);if(!(limit>minStep))throw new PhysicsError('minimum-step','近遇所需步长低于安全下限；数值中断不计为物理死亡');if(used++>=maxSteps)throw new PhysicsError('step-budget','单帧近遇计算预算耗尽；未跳过物理时间');
+     const h=sign*magnitude;this.save();const oldTime=this.time,oldSteps=this.steps;
+     try{this.step(h);if(this.bodies.some(b=>axes.some(k=>!Number.isFinite(b[k]))))throw new PhysicsError('non-finite','数值溢出；已恢复到最后有效状态');}
+     catch(error){this.restore();this.time=oldTime;this.steps=oldSteps;throw error;}
+diff --git a/src/physics/minimal-control.js b/src/physics/minimal-control.js
+new file mode 100644
+index 0000000..d64d59c
+--- /dev/null
++++ b/src/physics/minimal-control.js
+@@ -0,0 +1,50 @@
++// V2 velocity feedback, ported from frozen research native.cpp@7f64a8a.
++// Called before adaptive step selection; no coordinates or orbital scripts.
++export const norm=v=>Math.hypot(...v),dot=(a,b)=>a.reduce((s,x,i)=>s+x*b[i],0);
++export const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
++export const sub=(a,b)=>a.map((x,i)=>x-b[i]);
++export const pos=b=>[b.x,b.y,b.z],vel=b=>[b.vx,b.vy,b.vz];
++export const keys=['x','y','z','vx','vy','vz'];
++export function center(b){const m=b.reduce((s,x)=>s+x.mass,0);return keys.map(k=>b.reduce((s,x)=>s+x.mass*x[k],0)*(1/m));}
++export function applyVelocity(body,dv,cost){
++ const v=vel(body),r=pos(body),dp=dv.map(x=>x*body.mass);
++ const w=body.mass*(dot(v,dv)+.5*dot(dv,dv));cost.work+=w;
++ cost.peakVelocityJump=Math.max(cost.peakVelocityJump,norm(dv));
++ const dl=cross(r,dp);cost.cumulativeBodyAngularImpulse+=norm(dl);for(let k=0;k<3;k++){cost.deltaP[k]+=dp[k];cost.deltaL[k]+=dl[k];body[keys[k+3]]+=dv[k];}
++ return w;
++}
++export function capture(b,G,cfg,scale,cost){
++ if(!cfg.capture)return 0;let count=0;
++ for(let i=0;i<3;i++){
++  const others=b.slice(0,3).filter((_,j)=>j!==i),c=center(others),M=others.reduce((s,x)=>s+x.mass,0),r=sub(pos(b[i]),c.slice(0,3)),v=sub(vel(b[i]),c.slice(3)),R=norm(r),vr=dot(r,v)/R,mu=G*(M+b[i].mass),E=.5*dot(v,v)-mu/R;
++  const target=-mu/((cfg.apocenterScale??4)*scale),trigger=cfg.captureTriggerScale>0?-mu/(cfg.captureTriggerScale*scale):(cfg.capturePositiveOnly?0:target);
++  if(!(vr>0&&R>(cfg.captureRadiusScale??1.5)*scale&&R>(cfg.captureSeparationFactor??0)*norm(sub(pos(others[0]),pos(others[1])))&&E>trigger+1e-14*mu/scale))continue;
++  const vt2=Math.max(0,dot(v,v)-vr*vr),available=Math.max(0,2*(mu/R+target));let dv;
++  if(available>=vt2){const change=Math.sqrt(available-vt2)-vr;dv=r.map(x=>x*(change/R));}
++  else{const ratio=Math.sqrt(available/dot(v,v));dv=v.map(x=>x*(ratio-1));}
++  const share=M/(M+b[i].mass),reaction=-b[i].mass/(M+b[i].mass),oldWork=cost.work;let absoluteWork=0;
++  const velocities=b.slice(0,3).map((body,j)=>({body,dv:dv.map(x=>x*(j===i?share:reaction))}));
++  for(const item of velocities){absoluteWork+=Math.abs(applyVelocity(item.body,item.dv,cost));cost.impulse+=item.body.mass*norm(item.dv);}
++  cost.absoluteWork+=absoluteWork;const removed=oldWork-cost.work;
++  if(cfg.redistribute&&removed>0){const a=b[(i+1)%3],c=b[(i+2)%3],r=sub(pos(a),pos(c)),nr=r.map(x=>x/norm(r)),u=sub(vel(a),vel(c)),ur=dot(nr,u),reduced=a.mass*c.mass/(a.mass+c.mass),newUr=Math.sign(ur||1)*Math.sqrt(ur*ur+2*removed/reduced),change=nr.map(x=>x*(newUr-ur));for(const [body,share]of [[a,c.mass/(a.mass+c.mass)],[c,-a.mass/(a.mass+c.mass)]]){const dv=change.map(x=>x*share);cost.absoluteWork+=Math.abs(applyVelocity(body,dv,cost));cost.impulse+=body.mass*norm(dv);}}
++  cost.projectionEvents++;count++;
++ }
++ return count;
++}
++export function reflect(b,G,cfg,settings,cost){if(!cfg.reflect)return;for(let i=0;i<3;i++)for(let j=i+1;j<3;j++){const r=sub(pos(b[j]),pos(b[i])),v=sub(vel(b[j]),vel(b[i])),R=norm(r),vr=dot(r,v)/R,radii=[settings._13,settings._21,settings._3],guard=(cfg.reflectionMargin??1.15)*(radii[i]+radii[j])*(settings.stellarBreathing?1.08:1);if(!(R<guard&&vr<0))continue;const change=r.map(x=>-2*vr*x/R),M=b[i].mass+b[j].mass;for(const [body,f]of [[b[i],-b[j].mass/M],[b[j],b[i].mass/M]]){const dv=change.map(x=>x*f);cost.absoluteWork+=Math.abs(applyVelocity(body,dv,cost));cost.impulse+=body.mass*norm(dv);}cost.projectionEvents++;cost.reflectionEvents=(cost.reflectionEvents??0)+1;}}
++export function deflect(b,G,cfg,settings,cost){
++ if(!cfg.deflect)return;
++ const radii=[settings._13,settings._21,settings._3];
++ for(let i=0;i<3;i++)for(let j=i+1;j<3;j++){
++  const r=sub(pos(b[j]),pos(b[i])),v=sub(vel(b[j]),vel(b[i])),R=norm(r),vr=dot(r,v)/R,radius=(radii[i]+radii[j])*(settings.stellarBreathing?1.08:1),target=(cfg.deflectionTarget??1.3)*radius;
++  if(!(vr<0&&R<(cfg.deflectionFactor??4)*radius&&R>target))continue;
++  const mu=G*(b[i].mass+b[j].mass),E=.5*dot(v,v)-mu/R,h=cross(r,v),h2=dot(h,h),ecc=Math.sqrt(Math.max(0,1+2*E*h2/(mu*mu))),q=h2/(mu*(1+ecc));if(!(q<(cfg.reflectionMargin??1.15)*radius))continue;
++  const vt2=Math.max(0,(2*target*target*E+2*mu*target)/(R*R));if(!(vt2<dot(v,v)))continue;
++  const n=r.map(x=>x/R);let t=sub(v,n.map(x=>x*vr));if(norm(t)<1e-12){const k=n.map(Math.abs).indexOf(Math.min(...n.map(Math.abs))),basis=[0,0,0];basis[k]=1;t=sub(basis,n.map(x=>x*dot(basis,n)));}t=t.map(x=>x/norm(t));
++  const u=n.map((x,k)=>-x*Math.sqrt(Math.max(0,dot(v,v)-vt2))+t[k]*Math.sqrt(vt2)),change=sub(u,v),M=b[i].mass+b[j].mass;
++  for(const [body,f]of [[b[i],-b[j].mass/M],[b[j],b[i].mass/M]]){const dv=change.map(x=>x*f);cost.absoluteWork+=Math.abs(applyVelocity(body,dv,cost));cost.impulse+=body.mass*norm(dv);}
++  cost.projectionEvents++;cost.deflectionEvents=(cost.deflectionEvents??0)+1;
++ }
++}
++
++export function emptyCost(){return {work:0,absoluteWork:0,impulse:0,peakVelocityJump:0,deltaP:[0,0,0],deltaL:[0,0,0],cumulativeBodyAngularImpulse:0,projectionEvents:0,reflectionEvents:0,deflectionEvents:0,activeFrames:0,projectionFrames:0,activeTime:0,peakAcceleration:0,accelerationIntegral:0,accelerationSquaredIntegral:0};}
+diff --git a/src/renderer.js b/src/renderer.js
+index 43bbf99..113eea5 100644
+--- a/src/renderer.js
++++ b/src/renderer.js
+@@ -180,9 +180,13 @@ export class SpaceRenderer {
+     if (this.snap && state.revision !== this.snap.revision) { this.clearTrails(); this.firstPosition = true; }
+     if (!this.snap) this.firstPosition = true;
+     if(this.firstPosition){this.fixedFrame.reset(state.initialBodies);this.renderTime=Math.max(0,state.runtime-.05);}
++    const previousState=this.snap;
+     this.snap = state;
+     if(state.runtime-this.renderTime>.15)this.renderTime=state.runtime-.05;
+     state.bodies.forEach((b, i) => {
++      if(b.mass<=0){this.nodes[i].group.visible=false;this.trails[i].visible=false;this.trailBuffers[i].clear();return;}
++      this.nodes[i].group.visible=true;this.trails[i].visible=!!this.settings.newproperty14;
++      if(i===3&&previousState?.bodies[3]?.mass===0)this.trailBuffers[i].clear();
+       const n = this.nodes[i],position=this.fixedFrame.position(b,this.spaceScale);n.target.set(position.x,position.y,position.z);
+       if (this.firstPosition) n.group.position.copy(n.target);
+       const samples=state.trailSamples?.[i];
+diff --git a/src/settings-catalog.js b/src/settings-catalog.js
+index 3c58cc5..5e967fe 100644
+--- a/src/settings-catalog.js
++++ b/src/settings-catalog.js
+@@ -1,5 +1,6 @@
+ // Shared by the settings panel and its generated complete reference.
+ export const settingsDefinitions={
++    stabilityMode:{type:'combo',text:'星系运行模式 / System mode',options:[{value:'off',label:'现行版本'},{value:'deflect-v2',label:'长期三星 · 柔和避险原型'},{value:'reflect-v2',label:'长期三星 · 反弹避险原型'}]},
+     dragSensitivity:{type:'slider',text:'拖拽灵敏度倍率 / Drag multiplier',min:.1,max:20,step:.1},
+     civilizationLevels:{type:'bool',text:'文明科技等级 / Civilization levels'},
+     developmentRate:{type:'slider',text:'文明发展倍率 / Development rate',min:.1,max:20,step:.1},
+@@ -25,4 +26,4 @@ export const settingsDefinitions={
+     music: { type: 'bool', text: '播放原版音乐 · Ether' },
+     volume: { type: 'slider', text: '音乐音量 / Volume', min: 0, max: 1, step: .01 }
+   };
+-export const settingsCategories=[['layout','布局与窗口 / Layout',[]],['simulation','模拟与文明 / Simulation',['seed','orbitalInitialization','gravityModel','encounterAccuracy','physicsMode','civilizationMode','civilizationLevels','developmentRate','thermalGrace','birthDelay','wakeDelay','epochWindow','climateInertia','stellarBreathing','planetStrength']],['view','视角与银河 / View',['viewSensitivity','dragSensitivity','newproperty16','newproperty51','newproperty61','x5','y5','x6','y7','newproperty62','y6','compass','compassOpacity']],['visual','画面与轨迹 / Visual',['renderQuality','trailsLength','pixelRatio','bodyLabels','dust','_1dust1quantity','_1dust1size','_2dust2quantity','_2dust1size']],['audio','声音 / Audio',['music','volume']]];
++export const settingsCategories=[['layout','布局与窗口 / Layout',[]],['simulation','模拟与文明 / Simulation',['seed','stabilityMode','newproperty60','orbitalInitialization','gravityModel','encounterAccuracy','physicsMode','civilizationMode','civilizationLevels','developmentRate','thermalGrace','birthDelay','wakeDelay','epochWindow','climateInertia','stellarBreathing','planetStrength']],['view','视角与银河 / View',['viewSensitivity','dragSensitivity','newproperty16','newproperty51','newproperty61','x5','y5','x6','y7','newproperty62','y6','compass','compassOpacity']],['visual','画面与轨迹 / Visual',['renderQuality','trailsLength','pixelRatio','bodyLabels','dust','_1dust1quantity','_1dust1size','_2dust2quantity','_2dust1size']],['audio','声音 / Audio',['music','volume']]];
+diff --git a/src/settings.js b/src/settings.js
+index a8c166a..fa5e694 100644
+--- a/src/settings.js
++++ b/src/settings.js
+@@ -2,7 +2,7 @@ import { propertySchema } from './original-data.js';
+ 
+ export const defaults = Object.fromEntries(Object.entries(propertySchema)
+   .filter(([, d]) => d.type && d.type !== 'group').map(([k, d]) => [k, d.value]));
+-export const extraDefaults = { seed: 'TRISOLARIS', music: false, volume: 0.35, trailsLength: 400, orbitalInitialization: 'research', physicsMode: 'reference', pixelRatio: 4, bodyLabels: false, presentationRevision: 6, layout: {}, viewSensitivity: .12, compassOpacity: .12, planetStrength: 1.6, idleAmplitude: 6, civilizationMode: 'balanced', thermalGrace: 30, wakeDelay: 1, epochWindow: 1/12, epochTimebase: 'years', climateInertia: 1.5, stellarBreathing: true, renderQuality: 'native', dragSensitivity: 5, birthDelay: .5, civilizationLevels: true, developmentRate: 1, gravityModel: 'newtonian', encounterAccuracy: .0075, physicsRevision: 1, manualInitialBodies: null, centerOnSystem: false, galaxyReturnRevision: 2 };
++export const extraDefaults = { stabilityMode:'off', seed: 'TRISOLARIS', music: false, volume: 0.35, trailsLength: 400, orbitalInitialization: 'research', physicsMode: 'reference', pixelRatio: 4, bodyLabels: false, presentationRevision: 6, layout: {}, viewSensitivity: .12, compassOpacity: .12, planetStrength: 1.6, idleAmplitude: 6, civilizationMode: 'balanced', thermalGrace: 30, wakeDelay: 1, epochWindow: 1/12, epochTimebase: 'years', climateInertia: 1.5, stellarBreathing: true, renderQuality: 'native', dragSensitivity: 5, birthDelay: .5, civilizationLevels: true, developmentRate: 1, gravityModel: 'newtonian', encounterAccuracy: .0075, physicsRevision: 1, manualInitialBodies: null, centerOnSystem: false, galaxyReturnRevision: 2 };
+ // New installs show the requested tails; explicitly saved off/on preferences still win.
+ defaults.newproperty14 = true;
+ defaults.newproperty60 = false;
+@@ -18,6 +18,7 @@ defaults.newproperty61 = 1;
+ defaults.newproperty3 = 0;
+ defaults.newproperty68 = 0;
+ export const effectivePropertySchema = { ...propertySchema,
++  newproperty60:{...propertySchema.newproperty60,text:'星系保护 / System protection'},
+   newproperty39:{...propertySchema.newproperty39,text:'显示右侧双排行 / Rankings',value:true},
+   audiobar:{...propertySchema.audiobar,text:'显示基础信息与排行 / Runtime overview'},
+   newproperty45: {...propertySchema.newproperty45,text:'常态活动低温边界 / Active life minimum °C',value:-20},
+@@ -51,6 +52,7 @@ export function normalizeSettings(source = {}, includeExtras = true) {
+     else if(key==='civilizationLevels')out.civilizationLevels=value===true;
+     else if(key==='compassOpacity'&&Number.isFinite(+value))out.compassOpacity=Math.max(0,Math.min(.5,+value));
+     else if(key==='orbitalInitialization'&&['research','chaotic','balanced','original'].includes(value))out.orbitalInitialization=value;
++    else if(key==='stabilityMode'&&['off','deflect-v2','reflect-v2'].includes(value))out.stabilityMode=value;
+     else if(key==='gravityModel'&&['newtonian','plummer','legacy'].includes(value))out.gravityModel=value;
+     else if(key==='encounterAccuracy'&&Number.isFinite(+value))out.encounterAccuracy=Math.max(.001,Math.min(.03,+value));
+     else if(key==='manualInitialBodies'&&value===null)out.manualInitialBodies=null;
+@@ -77,7 +79,7 @@ export function colorRGB(s = '1 1 1') { return s.split(/\s+/).map(Number); }
+ export function colorHex(s) { return '#' + colorRGB(s).map(x => Math.round(x * 255).toString(16).padStart(2, '0')).join(''); }
+ export function fromHex(s) { return [1, 3, 5].map(i => parseInt(s.slice(i, i + 2), 16) / 255).join(' '); }
+ export function plainText(s = '') { return s.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' '); }
+-export function algorithmId(s) { return `sykm-scene-v4-${s.physicsMode}60-civ-${s.civilizationMode}-v055-tech2-escape1-${s.gravityModel}-${s.orbitalInitialization}-eta${s.encounterAccuracy}-orbits`; }
++export function algorithmId(s) { return `${s.stabilityMode&&s.stabilityMode!=='off'?'v2-'+s.stabilityMode+'-h4-P5-':''}sykm-scene-v4-${s.physicsMode}60-civ-${s.civilizationMode}-v055-tech2-escape1-${s.gravityModel}-${s.orbitalInitialization}-eta${s.encounterAccuracy}-orbits`; }
+ export function migrateSettings(saved={},version=3){
+   // v0.5.1: one simulated month replaces the former default two-second window.
+   if(saved.epochTimebase!=='years')saved={...saved,epochWindow:saved.epochWindow===undefined||Math.abs(saved.epochWindow-2)<1e-9?1/12:saved.epochWindow};
+diff --git a/src/simulation.js b/src/simulation.js
+index 487465b..24288f3 100644
+--- a/src/simulation.js
++++ b/src/simulation.js
+@@ -13,6 +13,7 @@ import { WorldState } from './world-state.js';
+ import { CivilizationState } from './civilization-state.js';
+ import { EscapeState } from './escape-state.js';
+ import { OrbitTrace } from './orbit-trace.js';
++import {tickControlled} from './v2-simulation.js';
+ 
+ class Vec3 { constructor(x = 0, y = x, z = x) { this.x = x; this.y = y; this.z = z; } }
+ const plain = v => v && typeof v === 'object' ? structuredClone(v) : v;
+@@ -22,7 +23,7 @@ export class Simulation {
+   constructor(settings = {}, statistics = {}, {trace=false} = {}) {
+     this.traceEnabled=trace;
+     this.statistics=new RunStatistics(statistics);
+-    this.settings = normalizeSettings(settings);
++    this.settings = normalizeSettings(settings.stabilityMode&&settings.stabilityMode!=='off'&&!('newproperty60' in settings)?{...settings,newproperty60:true}:settings);
+     this.shared = { gjz: 0, rst: 0, cfw: 0, c_down: false, text: '',universeNumber:this.statistics.universeNumber,xntime:this.statistics.totalYears };
+     this.engine = { runtime: 0, frametime: 1 / 60, screenResolution: new Vec3(1920, 1080, 0) };
+     this.input = { cursorScreenPosition: new Vec3(960, 540, 0) };
+@@ -57,10 +58,11 @@ export class Simulation {
+     if(next.manualInitialBodies&&manualInitialKeys.some(k=>next[k]!==this.settings[k])&&!('manualInitialBodies' in patch))next.manualInitialBodies=null;
+     const changed = Object.keys(next).filter(k => k==='manualInitialBodies'?JSON.stringify(next[k])!==JSON.stringify(this.settings[k]):next[k]!==this.settings[k]);
+     this.settings = next;
++    if(changed.includes('stabilityMode'))this.modules['010']=this.createModule('010',timeFactory);
+     if(!next.autorestart||(next.newproperty60&&next.civilizationMode!=='legacy'&&this.pendingRestart==='escape'))this.pendingRestart=null;
+     if(changed.includes('newproperty14'))this.orbitTrace.reset();
+     if (changed.includes('civilizationMode')) { this.habitability.reset(); this.civilization.reset(); this.shared.suitablePeriodCount = 0; }
+-    const resetKeys = new Set(['seed', 'physicsMode', 'newproperty53', 'orbitalInitialization','gravityModel','encounterAccuracy','manualInitialBodies']);
++    const resetKeys = new Set(['stabilityMode','seed', 'physicsMode', 'newproperty53', 'orbitalInitialization','gravityModel','encounterAccuracy','manualInitialBodies']);
+     const mapped = {};
+     for (const [id, module] of Object.entries(this.modules)) {
+       const changes = {};
+@@ -73,7 +75,8 @@ export class Simulation {
+     this.modules['008'].scriptProperties.trailen = false;
+     for (const key of ['trailen', 'trailLength', 'trailStartSize', 'trailEndSize', 'color1', 'color2', 'color3', 'color4']) delete mapped[key];
+     if (changed.some(k => resetKeys.has(k))) {
+-      if(changed.includes('seed'))this.setRandom();
++      this.controlled=null;this.v2FailureNotified=false;
++      if(changed.includes('seed')||changed.includes('stabilityMode'))this.setRandom();
+       this.modules['008'] = this.createModule('008', physicsFactory); this.modules['008'].init(); this.revision++;
+       if (changed.includes('seed')) this.setRandom();
+     } else { this.modules['008'].applyUserProperties(mapped); if (Object.keys(mapped).length) this.revision++; }
+@@ -83,6 +86,7 @@ export class Simulation {
+     if(reason==='restart'&&this.escape.result.confirmed)reason='escape';
+     if(reason==='restart'&&this.world.state?.planet.damaged)reason='planet-damage';
+     this.pendingRestart=null;
++    this.controlled=null;this.v2FailureNotified=false;
+     this.escape.reset();
+     this.shared.rst = 1;
+     // Original log's escape edge is observed before physics consumes rst.
+@@ -96,6 +100,7 @@ export class Simulation {
+     this.shared.rst = 0; this.shared.num = 0; this.revision++;
+   }
+   tick() {
++    if(this.settings.stabilityMode!=='off')return tickControlled(this);
+     if(this.pendingRestart)this.restart(this.pendingRestart);
+     this.engine.runtime = ++this.tickCount / 60;
+     try{this.modules['008'].update(true);}catch(error){this.emit('physics:numerical-error',{code:error.code||'physics-error',message:error.message});throw error;}
+@@ -165,7 +170,7 @@ export class Simulation {
+     if (this.events.length > 100) this.events.shift();
+   }
+   snapshot({ afterEvent = 0, compact = false } = {}) {
+-    const current = this.modules['008'].state(); const p=current.bodies.length===4?current:this.lastPhysicsState||current; const s = this.shared;
++    const current = this.settings.stabilityMode!=='off'&&this.controlled?this.controlled.state():this.modules['008'].state(); const p=current.bodies.length===4?current:this.lastPhysicsState||current; const s = this.shared;
+     return { tick: this.tickCount, revision: this.revision, runtime: this.engine.runtime, generation: this.generation, algorithm: algorithmId(this.settings),
+       seed: this.settings.seed, bodies: p.bodies, com: p.com, G: p.G, temperature: Number(s.tem || 0), year: s.xntime || 0,
+       era: this.era || '', escaped: s.tj === 1, alive: !!s.civilizationAlive, civilization: s.civilizationCount,
+diff --git a/src/v2-simulation.js b/src/v2-simulation.js
+new file mode 100644
+index 0000000..ec33510
+--- /dev/null
++++ b/src/v2-simulation.js
+@@ -0,0 +1,61 @@
++import {ControlledSystem} from './physics/controlled-system.js';
++
++function absentWorld(sim){
++ const old=sim.world.state??{stars:[],planet:{}},terminal={kind:sim.controlled.lastPlanetLoss?.kind??'absent',zh:'行星已毁灭 · 等待新行星',en:'Planet lost · awaiting a new planet'};
++ return {...old,epoch:{kind:'chaotic',primary:-1,stableFor:0,stableForUnit:'years'},phenomena:[],safeToWake:false,
++  planet:{...old.planet,present:false,intact:false,terminal,canSupportLife:false,restartRequired:false,damaged:true,recoverable:false,integrity:0,condition:'absent',temperature:old.planet.temperature??-270,stressRatio:0,tideRatio:0}};
++}
++function createSystem(sim){
++ // The existing initializer owns Seed/manual inputs. Initialize without taking
++ // an extra physical frame; then the V2 runtime alone advances those bodies.
++ sim.modules['008'].initializePhysics();sim.v2YearOrigin=sim.shared.xntime||0;
++ const p=sim.modules['008'].state();
++ return new ControlledSystem(sim.initialBodies,p.G,sim.settings,{
++  onEvent:e=>sim.emit('physics:'+e.kind,e),
++  onPlanetLoss:e=>{
++   const cause={kind:e.kind,zh:e.kind==='confirmed-escape'?'行星逃逸':'行星毁灭',en:e.kind==='confirmed-escape'?'Planet escaped':'Planet destroyed'};
++   sim.civilization.destroy(cause,sim.v2YearOrigin+e.year,sim.engine.runtime,sim.settings);sim.habitability.reset();sim.world.terminal=cause;sim.emit('planet:destroyed',cause);
++  },
++  onRespawn:()=>{sim.world.reset();sim.habitability.reset();sim.civilization.reset();sim.emit('planet:respawn',{number:sim.controlled.planetRespawns});},
++  onStep:sim.traceEnabled?(b,time)=>{if(sim.settings.newproperty14)sim.orbitTrace.observe(b,sim.engine.runtime-1/60+(time-sim.controlled.frameStartTime)/.0075/60);}:null
++ });
++}
++export function tickControlled(sim){
++ if(sim.pendingRestart)sim.restart(sim.pendingRestart);
++ if(!sim.controlled)sim.controlled=createSystem(sim);
++ const c=sim.controlled;c.settings=sim.settings;
++ if(c.stellarFailure)return sim.lastPhysicsState??c.state();
++ if(sim.settings.gravityModel!=='newtonian'||sim.settings.civilizationMode!=='balanced'||sim.settings.physicsMode!=='reference')throw new Error('长期三星原型需要牛顿引力、文明延续模式和参考时钟；请切回现行模式使用其他组合');
++ sim.engine.runtime=++sim.tickCount/60;
++ const before=sim.shared.civilizationRecords.length,alive=sim.shared.civilizationAlive;
++ try{c.advanceFrame();}catch(e){sim.emit('physics:numerical-error',{code:e.code??'numerical-error',message:e.message,numericalUnknown:true});throw e;}
++ sim.shared.xntime=sim.v2YearOrigin+c.year;sim.statistics.totalYears=sim.shared.xntime;
++ const b=c.bodies;
++ if(c.stellarFailure){if(!sim.v2FailureNotified){sim.v2FailureNotified=true;sim.emit(c.stellarFailure.kind==='stellar-contact'?'system:stellar-contact':'system:escape',{...c.stellarFailure,modelValid:false});}sim.shared.tj=1;sim.escape.result={confirmed:true,candidate:c.stellarFailure,years:3,confirmationYears:3};sim.lastPhysicsState=c.state();return sim.lastPhysicsState;}
++ for(let i=0;i<4;i++)for(let j=i+1;j<4;j++)sim.shared[`d${i+1}${j+1}`]=Math.hypot(b[i].x-b[j].x,b[i].y-b[j].y,b[i].z-b[j].z);
++ sim.shared.text=`/Seed:${sim.settings.seed}/Universe:${sim.generation}`;
++ let w;
++ if(b[3].mass>0&&!c.stellarFailure){
++  w=sim.world.update(b,c.G,c.equilibrium(),sim.settings,c.year,1/60,1/60);w.planet.present=true;sim.shared.tem=w.planet.temperature;
++  const wasAlive=sim.shared.civilizationAlive,phase=sim.civilization.phase,level=sim.civilization.result?.development?.level;
++  sim.habitability.update(sim.shared,sim.settings,1/60,{alive:wasAlive,number:sim.shared.civilizationCount,developmentYears:sim.civilization.developmentYears,phase,terminal:w.planet.terminal,damaged:!w.planet.canSupportLife,integrity:w.planet.integrity,tideRatio:w.planet.stressRatio,hazard:w.planet.stressRatio>1?'tidal':null});
++  sim.civilization.update(w,sim.habitability.result,sim.settings,sim.shared.xntime,sim.engine.runtime,1/60);
++  if(!wasAlive&&sim.shared.civilizationAlive)sim.habitability.begin(sim.shared.civilizationCount);
++  if(wasAlive&&!sim.shared.civilizationAlive)sim.habitability.reset();
++  sim.shared.civilizationDevelopment=sim.civilization.result?.development;
++  if(level&&sim.shared.civilizationDevelopment?.level>level)sim.emit('civilization:level',{number:sim.shared.civilizationCount,universe:sim.generation,development:sim.shared.civilizationDevelopment});
++  if(phase!==sim.civilization.phase)sim.emit('civilization:phase',{phase:sim.civilization.phase,number:sim.shared.civilizationCount});
++  c.finishWorld(w);
++  if(!b[3].mass)w=absentWorld(sim);
++ }else w=absentWorld(sim);
++ c.observeResidual();
++ sim.world.state=w;sim.shared.tem=w.planet.temperature;
++ sim.era=w.epoch.kind==='stable'?(sim.settings.cnen2?'Stable Era':'恒纪元'):(sim.settings.cnen2?'Chaotic Era':'乱纪元');
++ sim.statistics.observe(sim.shared.xntime,sim.shared);
++ if(!alive&&sim.shared.civilizationAlive)sim.emit('civilization:birth',{number:sim.shared.civilizationCount});
++ for(const record of sim.shared.civilizationRecords.slice(before))sim.recordDeath(record);
++ if(sim.shared.civilizationRecords.length>1000)sim.shared.civilizationRecords.splice(0,sim.shared.civilizationRecords.length-1000);
++ sim.escape.result={confirmed:!!c.stellarFailure,candidate:c.stellarFailure,years:0,confirmationYears:3};sim.shared.tj=c.stellarFailure?1:0;
++ if(c.stellarFailure&&!sim.v2FailureNotified){sim.v2FailureNotified=true;sim.emit(c.stellarFailure.kind==='stellar-contact'?'system:stellar-contact':'system:escape',{...c.stellarFailure,modelValid:false});}
++ sim.modules['156'].update('');sim.lastPhysicsState=c.state();return sim.lastPhysicsState;
++}
+diff --git a/tools/validate-v2-native.mjs b/tools/validate-v2-native.mjs
+new file mode 100644
+index 0000000..5c72afb
+--- /dev/null
++++ b/tools/validate-v2-native.mjs
+@@ -0,0 +1,38 @@
++import fs from 'node:fs';
++import crypto from 'node:crypto';
++import assert from 'node:assert/strict';
++import {spawnSync} from 'node:child_process';
++import {Simulation} from '../src/simulation.js';
++import {settingsFromInitial} from '../src/settings.js';
++import {initialize} from '/workspace/2/docs/research-v2/engine.mjs';
++
++const binary='/workspace/2/docs/research-v2/bin/native',dir='docs/integration-v2/results';fs.mkdirSync(dir,{recursive:true});
++const binarySHA256=crypto.createHash('sha256').update(fs.readFileSync(binary)).digest('hex');
++assert.equal(binarySHA256,'cf2117ac290bea83d6cfbdb07f98888412d594024e295887bc537bce5132f091');
++const checks=[];const output={scope:'Integration validation against frozen native7f64a8a; short windows/forced fixtures, not a new100000year confirmation',binarySHA256,checks};
++const save=()=>fs.writeFileSync(dir+'/native-comparison.json',JSON.stringify(output,null,2)+'\n');
++function manual(kind){
++ const b=[{x:-.07,y:0,z:0,vx:.3,vy:0,vz:0,mass:5e6},{x:.07,y:0,z:0,vx:-.3,vy:.01,vz:0,mass:5e6},{x:1.8,y:1,z:0,vx:0,vy:-.05,vz:0,mass:5e6},{x:1.8,y:1.3,z:0,vx:-.3,vy:-.05,vz:0,mass:5000}];
++ if(kind==='reflection'){b[0].x=-.03;b[1].x=.03;}
++ if(kind==='planet-contact'){b[0].x=-1.2;b[1].x=.4;b[3].x=1.82;b[3].y=1;b[0].vx=0;b[1].vx=0;}
++ if(kind==='capture'){b[0].x=6;b[0].vx=.25;b[1].x=-.5;b[1].vx=0;b[1].vy=-.2;b[2].x=.5;b[2].y=0;b[2].vy=.2;b[3].x=.5;b[3].y=.3;}
++ return b;
++}
++for(const mode of ['deflect-v2','reflect-v2'])for(const kind of ['natural','deflection','reflection','planet-contact','capture']){
++ const seed='V2-INTEGRATION-'+kind;const cfg={seed,stabilityMode:mode,newproperty60:true,autorestart:true};
++ const sim=new Simulation(kind==='natural'?cfg:settingsFromInitial(cfg,manual(kind)));sim.tick();
++ if(kind==='natural')assert.deepEqual(sim.initialBodies,initialize(seed).bodies);
++ const controller={...sim.controlled.cfg,dt:.0001875,eta:.001875,shadow:false};
++ const file=dir+'/'+mode+'-'+kind+'.input.json',horizon=20;
++ const input={seed,profile:mode+'-'+kind,sourceHash:'short-integration-fixture-original-native7f64a8a',configHash:'integration-fixture',horizon,settings:sim.settings,controller,bodies:sim.initialBodies.map(b=>({r:[b.x,b.y,b.z],v:[b.vx,b.vy,b.vz],mass:b.mass}))};
++ fs.writeFileSync(file,JSON.stringify(input));const native=spawnSync(binary,[file],{encoding:'utf8',maxBuffer:32*1024*1024});assert.equal(native.status,0,native.stderr);fs.writeFileSync(file.replace('.input.json','.native.json'),native.stdout);const reference=JSON.parse(native.stdout);
++ let stable=sim.world.state?.epoch.kind==='stable'&&sim.controlled.bodies[3].mass>0?1:0;
++ for(let frame=1;frame<horizon*60&&!sim.controlled.stellarFailure;frame++){sim.tick();if(sim.world.state?.epoch.kind==='stable'&&sim.controlled.bodies[3].mass>0)stable++;}
++ const c=sim.controlled;let maxState=0;
++ for(let i=0;i<4;i++)for(let k=0;k<6;k++){const key=['x','y','z','vx','vy','vz'][k];maxState=Math.max(maxState,Math.abs(c.bodies[i][key]-(k<3?reference.finalBodies[i].r[k]:reference.finalBodies[i].v[k-3])));}
++ const countFields=['projectionEvents','deflectionEvents','reflectionEvents','activeFrames'];const differentCounts=countFields.filter(k=>c.cost[k]!==reference.control[k]);
++ const q={mode,kind,horizon,maxState,jsSteps:c.integrator.steps,nativeSteps:reference.steps,jsLosses:c.planetLosses,nativeLosses:reference.planetLosses,jsRespawns:c.planetRespawns,nativeRespawns:reference.planetRespawns,jsStable:stable/(horizon*60),nativeStable:reference.stableFraction,jsControl:c.cost,nativeControl:reference.control,differentCounts,generation:sim.generation,pass:maxState<1e-7&&c.integrator.steps===reference.steps&&c.planetLosses===reference.planetLosses&&c.planetRespawns===reference.planetRespawns&&differentCounts.length===0&&Math.abs(stable/(horizon*60)-reference.stableFraction)<1e-12};checks.push(q);save();console.log(JSON.stringify({mode,kind,maxState,steps:c.integrator.steps,losses:c.planetLosses,differentCounts,pass:q.pass}));
++ if(!q.pass)throw new Error('Independent native comparison failed: '+mode+' '+kind);
++}
++assert(checks.some(x=>x.jsControl.deflectionEvents>0));assert(checks.some(x=>x.jsControl.reflectionEvents>0));assert(checks.some(x=>x.jsRespawns>0));assert(checks.some(x=>x.kind==='capture'&&x.jsControl.projectionEvents>x.jsControl.deflectionEvents+x.jsControl.reflectionEvents));
++output.pass=true;save();
