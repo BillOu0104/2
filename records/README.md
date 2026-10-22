@@ -61,6 +61,7 @@
 | [minimal-chaos-v2-precision-p09](analyses/minimal-chaos-v2-precision-p09/README.md) | 确认后精度诊断 p09 | [6f14e59](https://github.com/BillOu0104/2/commit/6f14e59c64a2d5095181a9243598d3b587ddbb2d) |
 | [minimal-chaos-v2-precision-p10](analyses/minimal-chaos-v2-precision-p10/README.md) | 确认后精度诊断 p10 | [a31e3c7](https://github.com/BillOu0104/2/commit/a31e3c7cf38d79408a61f769fbb336e05e6a6529) |
 | [minimal-chaos-v2-precision-p11](analyses/minimal-chaos-v2-precision-p11/README.md) | 确认后精度诊断 p11 | [dd4f965](https://github.com/BillOu0104/2/commit/dd4f965e30bd601e8bea223911f9bcd85ed347cd) |
+| [minimal-chaos-v2-precision-p12](analyses/minimal-chaos-v2-precision-p12/README.md) | 确认后精度诊断 p12 | [5c6294c](https://github.com/BillOu0104/2/commit/5c6294c74dd69b51c98cb80184eaa6d852bb8459) |
 | [minimal-chaos-v2-prototype](analyses/minimal-chaos-v2-prototype/README.md) | V2 validated driver, strict escape observer and controller experiments | [aba525d](https://github.com/BillOu0104/2/commit/aba525d5dd9ac69c451f58ed43b0f3037fe91b33) |
 | [minimal-chaos-v2-series-protocol](analyses/minimal-chaos-v2-series-protocol/README.md) | V2稳健性与100000年探索序列预注册 | [079a215](https://github.com/BillOu0104/2/commit/079a215359e78f12f20f921efbeb488d489037d7) |
 | [minimal-chaos-v2-start](analyses/minimal-chaos-v2-start/README.md) | V2 baseline registration and headless research prototype | [f6e89c2](https://github.com/BillOu0104/2/commit/f6e89c22bd6b6f0938ec8991eb2c1809f4894788) |
