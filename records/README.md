@@ -50,6 +50,7 @@
 | [minimal-chaos-v2-long30](analyses/minimal-chaos-v2-long30/README.md) | V2完整30000年探索与负对照校准 | [102339c](https://github.com/BillOu0104/2/commit/102339ca9efcfa3b575dab447645133cef18d59b) |
 | [minimal-chaos-v2-medium](analyses/minimal-chaos-v2-medium/README.md) | V2 complete10000-year comparison and predictive30000-year prototype | [8173521](https://github.com/BillOu0104/2/commit/8173521a4c1c28a98a29af41ae82871e1f3c0743) |
 | [minimal-chaos-v2-precision-p00](analyses/minimal-chaos-v2-precision-p00/README.md) | 确认后精度诊断 p00 | [1c6c7ca](https://github.com/BillOu0104/2/commit/1c6c7cabc8996f8a4fc2f8bc3b050dbe6bff63e5) |
+| [minimal-chaos-v2-precision-p01](analyses/minimal-chaos-v2-precision-p01/README.md) | 确认后精度诊断 p01 | [9538337](https://github.com/BillOu0104/2/commit/95383373fc6fa2e6fa33125871c62b7d837a9cba) |
 | [minimal-chaos-v2-prototype](analyses/minimal-chaos-v2-prototype/README.md) | V2 validated driver, strict escape observer and controller experiments | [aba525d](https://github.com/BillOu0104/2/commit/aba525d5dd9ac69c451f58ed43b0f3037fe91b33) |
 | [minimal-chaos-v2-series-protocol](analyses/minimal-chaos-v2-series-protocol/README.md) | V2稳健性与100000年探索序列预注册 | [079a215](https://github.com/BillOu0104/2/commit/079a215359e78f12f20f921efbeb488d489037d7) |
 | [minimal-chaos-v2-start](analyses/minimal-chaos-v2-start/README.md) | V2 baseline registration and headless research prototype | [f6e89c2](https://github.com/BillOu0104/2/commit/f6e89c22bd6b6f0938ec8991eb2c1809f4894788) |
