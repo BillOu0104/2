@@ -1,0 +1,600 @@
+diff --git a/src/main.js b/src/main.js
+index e721daf..7ebfa7b 100644
+--- a/src/main.js
++++ b/src/main.js
+@@ -88,7 +88,9 @@ const hintMap = {
+   cheatingcheck: '标记引力牢笼、温度距离倍数及非默认物理参数。',
+   custombg: '选择球面全景图。文件仅保存在本机；WE 中也可使用原生背景属性。',
+   newproperty63: '原版虚构账号与密码的视觉展示，不涉及实际账号登录。',
+-  civilizationMode: '纪元由轨道稳定性判断；文明在 −20～40°C 活动，脱水保存、原编号复苏。行星毁坏后只能重建宇宙。原版模式保留旧判定。',
++  stabilityMode: '研究原型：危险近遇保护与外逸能量反馈。行星毁灭后至少等待5显示年再生成新行星，三星计时继续；不自动重置宇宙。正式成绩仅适用于研究默认设置。',
++  newproperty60: '现行模式使用原引力牢笼；V2中开关新控制器。关闭V2保护仍保留相同精度与行星生命周期，便于对照。',
++  civilizationMode: '纪元由轨道稳定性判断；文明脱水保存并以原编号复苏。现行模式行星毁坏后重建宇宙；V2会独立生成新行星，旧文明的毁灭仍保留。',
+   thermalGrace: '越大越耐久。文明诞生后才有人口储备与干仓质量；等级提升额外延缓损耗。持续极端灾害仍会毁灭文明。'
+ };
+ function makeControl(key, def, extension = false) {
+@@ -161,7 +163,11 @@ function buildSettings() {
+   updateControls();
+ }
+ function updateControls() {
++  const locked=new Set(['gravityModel','physicsMode','civilizationMode','newproperty53','encounterAccuracy','timespeed','newproperty26','autorestart','mc','k1','k2','rc','re','expc','newproperty66','newproperty67','newproperty28','newproperty29']);
+   for (const [key, { input, number, type }] of controlMap) {
++    const disabled=key==='newproperty7'||(settings.stabilityMode!=='off'&&locked.has(key));
++    input.disabled=disabled;if(number)number.disabled=disabled;
++    input.title=disabled&&key!=='newproperty7'?'V2使用固定精度、固定显示年与独立失效；此旧设置不生效。切回现行模式后可调整。':'';
+     if (type === 'bool') input.checked = !!controlValue(key);
+     else if (type === 'color') input.value = colorHex(controlValue(key));
+     else if (type !== 'scenetexture') { input.value = controlValue(key); if (number) number.value = controlValue(key); }
+@@ -323,14 +329,15 @@ function renderState(s) {
+   [...log.children].forEach(li=>{if(!retained.has(li.dataset.id))li.remove();});
+   renderStatistics(s);
+   $('#simulation-year').textContent = s.year >= 1e8 ? s.year.toExponential(2) : s.year.toFixed(2);
+-  $('#restart-prompt').hidden = !(s.world?.planet.restartRequired||s.escapeStatus?.confirmed||(settings.civilizationMode==='legacy'&&s.escaped)) || settings.autorestart;
++  $('#restart-prompt').hidden = !(s.world?.planet.restartRequired||s.escapeStatus?.confirmed||(settings.civilizationMode==='legacy'&&s.escaped)) || (settings.autorestart&&settings.stabilityMode==='off');
+   $('#restart-prompt span').textContent=s.world?.planet.terminal?(en?s.world.planet.terminal.en:s.world.planet.terminal.zh):s.world?.planet.damaged?(en?'PLANETARY DAMAGE':'行星结构受损'):(en?'CELESTIAL ESCAPE':'天体已逃逸');
+   $('#restart-prompt strong').textContent=en?`Start universe ${s.generation+1} ↻`:`开启第${s.generation+1}号宇宙 ↻`;
+ 
+-  if (settings.cheatingcheck) $('#physics-check').textContent = `${settings.newproperty60 ? 'CAGE ON / ' : ''}G × ${settings.newproperty52 / 1000} / T DIST × ${settings.newproperty69}\n${settings.physicsMode === 'reference' ? 'REFERENCE 60 Hz' : 'REAL TIME'}`;
++  if (settings.cheatingcheck) $('#physics-check').textContent = `${settings.newproperty60 ? (settings.stabilityMode==='off'?'CAGE ON / ':'V2 PROTECTION ON / ') : ''}G × ${settings.newproperty52 / 1000} / T DIST × ${settings.newproperty69}\n${settings.physicsMode === 'reference' ? 'REFERENCE 60 Hz' : 'REAL TIME'}`;
+   const physics=s.physics;
+-  const conservationLabel=physics?.cageActive?'牢笼外力：不作孤立守恒判定':physics&&!physics.physicalModelValid?'星体已接触：点质量模型受限':'孤立系统';
+-  $('#runtime-diagnostics').textContent = `Three.js WebGL · ${fps} FPS · Worker 60 Hz · Tick ${s.tick} · ${s.bodies.length} bodies · 宇宙 ${s.generation} · Seed ${s.seed} · ${renderer.canvas.width}×${renderer.canvas.height}${physics ? ` · ${physics.model} · ${conservationLabel} · ΔE惯性 ${physics.relativeInertialEnergyError.toExponential(2)} · ΔE内部 ${physics.relativeEnergyError.toExponential(2)} · ΔL ${physics.relativeAngularMomentumError.toExponential(2)} · ΔP ${physics.normalizedMomentumDrift.toExponential(2)} · 固定初始质心 / ΔR ${physics.centerPositionDrift.toExponential(2)} / ΔVcm ${physics.centerVelocityDrift.toExponential(2)}` : ''}`;
++  const conservationLabel=physics?.control?'V2：控制与行星外部预算分列':physics?.cageActive?'牢笼外力：不作孤立守恒判定':physics&&!physics.physicalModelValid?'三星完整性已失效':'孤立系统';
++  const diagnosticText=physics?.control?` · ${conservationLabel} · 数值能量残差 ${physics.relativeEnergyError.toExponential(2)} · 控制累计绝对功 ${physics.control.absoluteWork.toExponential(2)} · 额外冲量 ${physics.control.impulse.toExponential(2)} · 净ΔL ${Math.hypot(...physics.control.deltaL).toExponential(2)} · 行星损失/重生 ${physics.planetLosses}/${physics.planetRespawns}`:physics?` · ${conservationLabel} · ΔE惯性 ${physics.relativeInertialEnergyError.toExponential(2)} · ΔE内部 ${physics.relativeEnergyError.toExponential(2)} · ΔL ${physics.relativeAngularMomentumError.toExponential(2)} · ΔP ${physics.normalizedMomentumDrift.toExponential(2)} · 固定初始质心 / ΔR ${physics.centerPositionDrift.toExponential(2)} / ΔVcm ${physics.centerVelocityDrift.toExponential(2)}`:'';
++  $('#runtime-diagnostics').textContent = `Three.js WebGL · ${fps} FPS · Worker 60 Hz · Tick ${s.tick} · ${s.bodies.length} bodies · 宇宙 ${s.generation} · Seed ${s.seed} · ${renderer.canvas.width}×${renderer.canvas.height}${physics?' · '+physics.model:''}${diagnosticText}`;
+ }
+ function handleEvents(events) {
+   for (const event of events) {
+@@ -412,4 +419,4 @@ try {
+ }
+ // Diagnostic readout for automated smoke checks and host integrations.
+ window.__threeBodyDiagnostics = () => ({ ready: !!state && !fatal, tick: lastTick, fps, paused: userPaused || hostPaused || visibilityPaused, controls: controlMap.size, history: history.length, worker: !!worker,
+-  scene: renderer ? { canvas:[renderer.canvas.width,renderer.canvas.height], drawingBuffer:[renderer.renderer.getContext().drawingBufferWidth,renderer.renderer.getContext().drawingBufferHeight], renderedFrames:renderer.renderer.info.render.frame, viewVelocity:[renderer.rot.vx,renderer.rot.vy], speedLimited:false, compassOpacity:renderer.compass.children.map(n=>n.material.opacity), idleYaw:renderer.autoAngle, returningToGalaxy:renderer.returning, systemOffset:renderer.system.position.toArray(),displayOrigin:{...renderer.fixedFrame.origin},cameraPosition:renderer.camera.position.toArray(),renderTime:renderer.renderTime,trailStyle:"continuous-ribbon",trailHeads:renderer.trails.map(l=>l.segmentCount?Array.from(l.geometry.attributes.position.array.slice(l.segmentCount*6,l.segmentCount*6+3)):null),bodyLocalPositions:renderer.nodes.map(n=>n.group.position.toArray()),bodyWorldPositions:renderer.nodes.map(n=>n.group.getWorldPosition(new renderer.camera.position.constructor()).toArray()), compassScale:renderer.compass.scale.x, compassTarget:renderer.compassTarget, compassFade:renderer.compassFade, viewSensitivity:settings.viewSensitivity, dragSensitivity:settings.dragSensitivity, dustLayers:renderer.dustLayers.map(d=>({visible:d.visible,count:d.geometry.drawRange.count,size:d.material.size,opacity:d.material.opacity,blending:d.material.blending,alphaTest:d.material.alphaTest})), pointerMode:+settings.newproperty61, galaxyCoreScreen:renderer.sky.localToWorld(renderer.galaxyDirection.clone().multiplyScalar(90)).project(renderer.camera).toArray(), layoutEditing:layoutEditor.editing, compassVisible:renderer.compass.visible, maxTextureSize:renderer.renderer.capabilities.maxTextureSize, backgroundSizes:Object.fromEntries(Object.entries(renderer.bgTextures).map(([k,t])=>[k,[t.image?.width||0,t.image?.height||0]])), backgroundFollowsView: renderer.sky.parent === renderer.world, viewRotation: renderer.world.rotation.toArray().slice(0,3), skyRotation: renderer.sky.getWorldQuaternion(new renderer.camera.quaternion.constructor()).toArray(), bodyShapes: renderer.nodes.map(n => n.mesh.geometry.type), glowShape: 'radial-circle', bodyLabelsVisible:renderer.nodes.some(n=>!n.label.hidden), trailSamples: renderer.trailBuffers.map(b => b.length), trailComplexity:renderer.trailComplexity||0, trailMetrics:renderer.trailMetrics||[], trailsVisible: renderer.trails.every(t => t.visible) } : null });
++  scene: renderer ? { canvas:[renderer.canvas.width,renderer.canvas.height], drawingBuffer:[renderer.renderer.getContext().drawingBufferWidth,renderer.renderer.getContext().drawingBufferHeight], renderedFrames:renderer.renderer.info.render.frame, viewVelocity:[renderer.rot.vx,renderer.rot.vy], speedLimited:false, compassOpacity:renderer.compass.children.map(n=>n.material.opacity), idleYaw:renderer.autoAngle, returningToGalaxy:renderer.returning, systemOffset:renderer.system.position.toArray(),displayOrigin:{...renderer.fixedFrame.origin},cameraPosition:renderer.camera.position.toArray(),renderTime:renderer.renderTime,trailStyle:"continuous-ribbon",trailHeads:renderer.trails.map(l=>l.segmentCount?Array.from(l.geometry.attributes.position.array.slice(l.segmentCount*6,l.segmentCount*6+3)):null),bodyVisible:renderer.nodes.map(n=>n.group.visible),trailVisible:renderer.trails.map(t=>t.visible),bodyLocalPositions:renderer.nodes.map(n=>n.group.position.toArray()),bodyWorldPositions:renderer.nodes.map(n=>n.group.getWorldPosition(new renderer.camera.position.constructor()).toArray()), compassScale:renderer.compass.scale.x, compassTarget:renderer.compassTarget, compassFade:renderer.compassFade, viewSensitivity:settings.viewSensitivity, dragSensitivity:settings.dragSensitivity, dustLayers:renderer.dustLayers.map(d=>({visible:d.visible,count:d.geometry.drawRange.count,size:d.material.size,opacity:d.material.opacity,blending:d.material.blending,alphaTest:d.material.alphaTest})), pointerMode:+settings.newproperty61, galaxyCoreScreen:renderer.sky.localToWorld(renderer.galaxyDirection.clone().multiplyScalar(90)).project(renderer.camera).toArray(), layoutEditing:layoutEditor.editing, compassVisible:renderer.compass.visible, maxTextureSize:renderer.renderer.capabilities.maxTextureSize, backgroundSizes:Object.fromEntries(Object.entries(renderer.bgTextures).map(([k,t])=>[k,[t.image?.width||0,t.image?.height||0]])), backgroundFollowsView: renderer.sky.parent === renderer.world, viewRotation: renderer.world.rotation.toArray().slice(0,3), skyRotation: renderer.sky.getWorldQuaternion(new renderer.camera.quaternion.constructor()).toArray(), bodyShapes: renderer.nodes.map(n => n.mesh.geometry.type), glowShape: 'radial-circle', bodyLabelsVisible:renderer.nodes.some(n=>!n.label.hidden), trailSamples: renderer.trailBuffers.map(b => b.length), trailComplexity:renderer.trailComplexity||0, trailMetrics:renderer.trailMetrics||[], trailsVisible: renderer.trails.every(t => t.visible) } : null });
+diff --git a/src/orbit-trace.js b/src/orbit-trace.js
+index dafc1ec..5319ecb 100644
+--- a/src/orbit-trace.js
++++ b/src/orbit-trace.js
+@@ -7,6 +7,7 @@ const deviation=(b,a,c)=>{
+ export class OrbitTrace{
+   constructor(){this.reset();}
+   reset(){this.paths=Array.from({length:4},()=>({anchor:null,pending:null,raw:[],truncated:false}));}
++  resetBody(i){this.paths[i]={anchor:null,pending:null,raw:[],truncated:false};}
+   observe(bodies,time){
+     bodies.forEach((body,i)=>{
+       const p={x:body.x,y:body.y,z:body.z,time},path=this.paths[i];
+diff --git a/src/physics/controlled-system.js b/src/physics/controlled-system.js
+index e54bf28..be1bc7b 100644
+--- a/src/physics/controlled-system.js
++++ b/src/physics/controlled-system.js
+@@ -90,6 +90,6 @@ export class ControlledSystem{
+  }
+  state(){
+   const e=invariants(this.bodies,this.G),residual=Math.abs(e.inertialEnergy-this.initialEnergy-this.cost.work-this.external.work)/Math.max(Math.abs(this.initialEnergy),1e-20);
+-  return {bodies:structuredClone(this.bodies),com:{x:e.center[0],y:e.center[1],z:e.center[2]},G:this.G,step:V2_STEP,contacts:[],diagnostics:{model:'newtonian',solverTime:this.integrator.time,steps:this.integrator.steps,controlled:this.enabled,conservationApplicable:false,physicalModelValid:!this.stellarFailure,numericalError:this.numericalUnknown,stellarFailure:this.stellarFailure,relativeEnergyError:residual,maxRelativeEnergyError:this.maxResidual,energyResidualScope:'yearly sampled; measured control and planet external work subtracted',control:structuredClone(this.cost),planetExternal:structuredClone(this.external),planetLosses:this.planetLosses,planetRespawns:this.planetRespawns,planetPresent:this.bodies[3].mass>0,firstPlanetLoss:this.firstPlanetLoss,returnFrame:this.returnFrame}};
++  return {bodies:structuredClone(this.bodies),com:{x:e.center[0],y:e.center[1],z:e.center[2]},G:this.G,step:V2_STEP,contacts:[],diagnostics:{model:'newtonian',solverTime:this.integrator.time,steps:this.integrator.steps,controlled:this.enabled,conservationApplicable:false,physicalModelValid:!this.stellarFailure,numericalError:this.numericalUnknown,stellarFailure:this.stellarFailure,relativeEnergyError:residual,maxRelativeEnergyError:this.maxResidual,energyResidualScope:'yearly sampled; measured control and planet external work subtracted',controlApplication:'instantaneous velocity projections; finite peak acceleration undefined without pulse duration',controlActiveFrameFraction:this.cost.activeFrames/Math.max(1,this.frame),control:structuredClone(this.cost),planetExternal:structuredClone(this.external),planetLosses:this.planetLosses,planetRespawns:this.planetRespawns,planetPresent:this.bodies[3].mass>0,firstPlanetLoss:this.firstPlanetLoss,returnFrame:this.returnFrame}};
+  }
+ }
+diff --git a/src/renderer.js b/src/renderer.js
+index 113eea5..638e245 100644
+--- a/src/renderer.js
++++ b/src/renderer.js
+@@ -199,7 +199,7 @@ export class SpaceRenderer {
+     if (t <= -100) color.setRGB(THREE.MathUtils.clamp((t + 210) / 110, 0, 1), THREE.MathUtils.clamp((t + 210) / 110, 0, 1), 1);
+     else if (t >= 10) color.setRGB(1, Math.max(0, 1 - (t - 10) / 990), Math.max(0, 1 - (t - 10) / 990));
+     this.nodes[3].material.emissive.copy(color);
+-    this.nodes[3].group.visible=!state.world?.planet.terminal;
++    this.nodes[3].group.visible=state.bodies[3].mass>0&&!state.world?.planet.terminal;
+     this.nodes[3].label.hidden=!this.settings.newproperty65||!this.settings.bodyLabels||!!state.world?.planet.terminal;
+     this.nodes.slice(0,3).forEach((n,i)=>{const radius=state.world?.stars[i]?.radius;if(radius)n.mesh.scale.setScalar(radius/this.spaceScale);});
+   }
+diff --git a/src/settings-catalog.js b/src/settings-catalog.js
+index 5e967fe..607b4b4 100644
+--- a/src/settings-catalog.js
++++ b/src/settings-catalog.js
+@@ -10,7 +10,7 @@ export const settingsDefinitions={
+     compassOpacity:{type:'slider',text:'旋转环不透明度 / Ring opacity',min:0,max:.5,step:.01},
+     orbitalInitialization:{type:'combo',text:'随机初始轨道 / Initial orbits',options:[{value:'research',label:'随机三星 Q=1 · 逆向行星 0.12D（默认）'},{value:'chaotic',label:'v0.5.1 随机四体 · 对照'},{value:'original',label:'原版完全随机'},{value:'balanced',label:'稳定轨道实验'}]},
+     gravityModel:{type:'combo',text:'引力模型 / Gravity',options:[{value:'newtonian',label:'牛顿平方反比 · 无软化（默认）'},{value:'plummer',label:'Plummer 一致软化 · 实验'},{value:'legacy',label:'旧近距引力 · 复现对照'}]},
+-    encounterAccuracy:{type:'slider',text:'近遇时间尺度系数 η（越小越精确）',min:.001,max:.03,step:.0005},
++    encounterAccuracy:{type:'slider',text:'近遇时间尺度系数 η（越小越精确）',min:.001,max:.03,step:.000001},
+     seed: { type: 'textinput', text: '随机初始化 Seed' },
+     physicsMode: { type: 'combo', text: '物理时钟', options: [{ value: 'reference', label: '原版节奏 · 固定 60 Hz（默认）' }, { value: 'realtime', label: '墙钟同步 · 修复原版每帧步数上限' }] },
+     civilizationMode: { type: 'combo', text: '文明延续机制 / Civilization', options: [{ value: 'balanced', label: '韧性与文明等级（默认）' }, { value: 'legacy', label: '原版即时判定' }] },
+diff --git a/src/settings.js b/src/settings.js
+index fa5e694..386be01 100644
+--- a/src/settings.js
++++ b/src/settings.js
+@@ -73,6 +73,7 @@ export function normalizeSettings(source = {}, includeExtras = true) {
+     }
+     else if (key === 'renderQuality' && ['native','8k'].includes(value)) out.renderQuality=value;
+   }
++  if(out.stabilityMode&&out.stabilityMode!=='off')Object.assign(out,{gravityModel:'newtonian',civilizationMode:'balanced',physicsMode:'reference',newproperty53:.1875,encounterAccuracy:.001875,timespeed:1,newproperty26:10});
+   return out;
+ }
+ export function colorRGB(s = '1 1 1') { return s.split(/\s+/).map(Number); }
+@@ -104,7 +105,8 @@ export function migrateSettings(saved={},version=3){
+ export function seededRandom(seed) {
+   let h = 2166136261;
+   for (const c of String(seed)) h = Math.imul(h ^ c.charCodeAt(0), 16777619);
+-  return () => { h += 0x6d2b79f5; let t = h; t = Math.imul(t ^ t >>> 15, t | 1); t ^= t + Math.imul(t ^ t >>> 7, t | 61); return ((t ^ t >>> 14) >>> 0) / 4294967296; };
++  const random = () => { h += 0x6d2b79f5; let t = h; t = Math.imul(t ^ t >>> 15, t | 1); t ^= t + Math.imul(t ^ t >>> 7, t | 61); return ((t ^ t >>> 14) >>> 0) / 4294967296; };
++  random.checkpoint=()=>h;random.restore=value=>{if(!Number.isFinite(value))throw new Error('Invalid RNG state');h=value;};return random;
+ }
+ 
+ export function settingsFromInitial(settings, bodies) {
+diff --git a/src/simulation.js b/src/simulation.js
+index 24288f3..683e239 100644
+--- a/src/simulation.js
++++ b/src/simulation.js
+@@ -63,6 +63,7 @@ export class Simulation {
+     if(changed.includes('newproperty14'))this.orbitTrace.reset();
+     if (changed.includes('civilizationMode')) { this.habitability.reset(); this.civilization.reset(); this.shared.suitablePeriodCount = 0; }
+     const resetKeys = new Set(['stabilityMode','seed', 'physicsMode', 'newproperty53', 'orbitalInitialization','gravityModel','encounterAccuracy','manualInitialBodies']);
++    if(next.stabilityMode!=='off')for(const key of [...manualInitialKeys,'newproperty50','newproperty52','newproperty48','brfontcoloraaaaaarandomposrange'])resetKeys.add(key);
+     const mapped = {};
+     for (const [id, module] of Object.entries(this.modules)) {
+       const changes = {};
+diff --git a/src/v2-checkpoint.js b/src/v2-checkpoint.js
+new file mode 100644
+index 0000000..5336a89
+--- /dev/null
++++ b/src/v2-checkpoint.js
+@@ -0,0 +1,29 @@
++import {Simulation} from './simulation.js';
++import {createControlledSystem} from './v2-simulation.js';
++const omit=(object,keys)=>Object.fromEntries(Object.entries(object).filter(([key])=>!keys.includes(key)&&typeof object[key]!=='function'));
++// A complete accepted-frame checkpoint, not a restart from the same Seed.
++// The batch runner must also verify its frozen source/configuration hashes.
++export function checkpointV2(sim){
++ if(!sim.controlled||sim.settings.stabilityMode==='off')throw new Error('V2 checkpoint requires an initialized V2 runtime');
++ const c=sim.controlled,g=c.integrator;
++ return structuredClone({format:'three-body-v2-full-state',version:1,
++  simulation:omit(sim,['modules','random','input','settings','statistics','habitability','world','civilization','escape','orbitTrace','controlled']),
++  randomState:sim.random.checkpoint(),settings:sim.settings,statistics:omit(sim.statistics,[]),habitability:omit(sim.habitability,[]),world:omit(sim.world,[]),civilization:omit(sim.civilization,['shared']),escape:omit(sim.escape,[]),orbitTrace:omit(sim.orbitTrace,[]),
++  controlled:omit(c,['settings','integrator','onEvent','onPlanetLoss','onRespawn','onStep']),
++  integrator:{...omit(g,['bodies','radii','cageAcceleration','saved','contactKeys']),saved:[...g.saved],contactKeys:[...g.contactKeys]}});
++}
++export function restoreV2(data){
++ if(data.format!=='three-body-v2-full-state'||data.version!==1)throw new Error('Unsupported V2 checkpoint');
++ const x=structuredClone(data),sim=new Simulation(x.settings,{}, {trace:x.simulation.traceEnabled});
++ sim.generation=x.simulation.generation;sim.setRandom();sim.controlled=createControlledSystem(sim);
++ // Keep the shared object captured by legacy module closures and CivilizationState.
++ const shared=sim.shared,engine=sim.engine;Object.assign(sim,x.simulation);sim.shared=shared;sim.engine=engine;
++ for(const key of Object.keys(shared))delete shared[key];Object.assign(shared,x.simulation.shared);Object.assign(engine,x.simulation.engine);
++ for(const key of ['statistics','habitability','world','civilization','escape','orbitTrace'])Object.assign(sim[key],x[key]);
++ const c=sim.controlled;Object.assign(c,x.controlled);c.settings=sim.settings;
++ Object.assign(c.integrator,x.integrator);c.integrator.bodies=c.bodies;c.integrator.saved=new Float64Array(x.integrator.saved);c.integrator.contactKeys=new Set(x.integrator.contactKeys);
++ sim.random.restore(x.randomState);sim.lastPhysicsState=c.state();return sim;
++}
++// JSON transport preserves nonfinite sentinels used by diagnostic state.
++export function encodeV2(data){return JSON.stringify(data,(_,v)=>v instanceof Set?{__v2Set:[...v]}:v instanceof Map?{__v2Map:[...v]}:typeof v==='number'&&!Number.isFinite(v)?{__v2Nonfinite:String(v)}:v);}
++export function decodeV2(text){return JSON.parse(text,(_,v)=>v&&typeof v==='object'&&Object.keys(v).length===1?('__v2Nonfinite'in v?Number(v.__v2Nonfinite):'__v2Set'in v?new Set(v.__v2Set):'__v2Map'in v?new Map(v.__v2Map):v):v);}
+diff --git a/src/v2-simulation.js b/src/v2-simulation.js
+index ec33510..6583cc4 100644
+--- a/src/v2-simulation.js
++++ b/src/v2-simulation.js
+@@ -5,7 +5,7 @@ function absentWorld(sim){
+  return {...old,epoch:{kind:'chaotic',primary:-1,stableFor:0,stableForUnit:'years'},phenomena:[],safeToWake:false,
+   planet:{...old.planet,present:false,intact:false,terminal,canSupportLife:false,restartRequired:false,damaged:true,recoverable:false,integrity:0,condition:'absent',temperature:old.planet.temperature??-270,stressRatio:0,tideRatio:0}};
+ }
+-function createSystem(sim){
++export function createControlledSystem(sim){
+  // The existing initializer owns Seed/manual inputs. Initialize without taking
+  // an extra physical frame; then the V2 runtime alone advances those bodies.
+  sim.modules['008'].initializePhysics();sim.v2YearOrigin=sim.shared.xntime||0;
+@@ -14,17 +14,17 @@ function createSystem(sim){
+   onEvent:e=>sim.emit('physics:'+e.kind,e),
+   onPlanetLoss:e=>{
+    const cause={kind:e.kind,zh:e.kind==='confirmed-escape'?'行星逃逸':'行星毁灭',en:e.kind==='confirmed-escape'?'Planet escaped':'Planet destroyed'};
+-   sim.civilization.destroy(cause,sim.v2YearOrigin+e.year,sim.engine.runtime,sim.settings);sim.habitability.reset();sim.world.terminal=cause;sim.emit('planet:destroyed',cause);
++   sim.civilization.destroy(cause,sim.v2YearOrigin+e.year,sim.engine.runtime,sim.settings);sim.habitability.reset();sim.orbitTrace.resetBody(3);sim.world.terminal=cause;sim.emit('planet:destroyed',cause);
+   },
+-  onRespawn:()=>{sim.world.reset();sim.habitability.reset();sim.civilization.reset();sim.emit('planet:respawn',{number:sim.controlled.planetRespawns});},
++  onRespawn:()=>{sim.orbitTrace.resetBody(3);sim.world.reset();sim.habitability.reset();sim.civilization.reset();sim.emit('planet:respawn',{number:sim.controlled.planetRespawns});},
+   onStep:sim.traceEnabled?(b,time)=>{if(sim.settings.newproperty14)sim.orbitTrace.observe(b,sim.engine.runtime-1/60+(time-sim.controlled.frameStartTime)/.0075/60);}:null
+  });
+ }
+ export function tickControlled(sim){
+  if(sim.pendingRestart)sim.restart(sim.pendingRestart);
+- if(!sim.controlled)sim.controlled=createSystem(sim);
++ if(!sim.controlled)sim.controlled=createControlledSystem(sim);
+  const c=sim.controlled;c.settings=sim.settings;
+- if(c.stellarFailure)return sim.lastPhysicsState??c.state();
++ if(c.stellarFailure||c.numericalUnknown)return sim.lastPhysicsState??c.state();
+  if(sim.settings.gravityModel!=='newtonian'||sim.settings.civilizationMode!=='balanced'||sim.settings.physicsMode!=='reference')throw new Error('长期三星原型需要牛顿引力、文明延续模式和参考时钟；请切回现行模式使用其他组合');
+  sim.engine.runtime=++sim.tickCount/60;
+  const before=sim.shared.civilizationRecords.length,alive=sim.shared.civilizationAlive;
+@@ -40,8 +40,8 @@ export function tickControlled(sim){
+   const wasAlive=sim.shared.civilizationAlive,phase=sim.civilization.phase,level=sim.civilization.result?.development?.level;
+   sim.habitability.update(sim.shared,sim.settings,1/60,{alive:wasAlive,number:sim.shared.civilizationCount,developmentYears:sim.civilization.developmentYears,phase,terminal:w.planet.terminal,damaged:!w.planet.canSupportLife,integrity:w.planet.integrity,tideRatio:w.planet.stressRatio,hazard:w.planet.stressRatio>1?'tidal':null});
+   sim.civilization.update(w,sim.habitability.result,sim.settings,sim.shared.xntime,sim.engine.runtime,1/60);
+-  if(!wasAlive&&sim.shared.civilizationAlive)sim.habitability.begin(sim.shared.civilizationCount);
+-  if(wasAlive&&!sim.shared.civilizationAlive)sim.habitability.reset();
++  if(!wasAlive&&sim.shared.civilizationAlive){sim.habitability.begin(sim.shared.civilizationCount);Object.assign(sim.habitability.result,{health:1,population:1,storageQuality:1,level:1});}
++  if(wasAlive&&!sim.shared.civilizationAlive){sim.habitability.reset();sim.habitability.update(sim.shared,sim.settings,0,{terminal:w.planet.terminal,damaged:!w.planet.canSupportLife,tideRatio:w.planet.stressRatio,integrity:w.planet.integrity});}
+   sim.shared.civilizationDevelopment=sim.civilization.result?.development;
+   if(level&&sim.shared.civilizationDevelopment?.level>level)sim.emit('civilization:level',{number:sim.shared.civilizationCount,universe:sim.generation,development:sim.shared.civilizationDevelopment});
+   if(phase!==sim.civilization.phase)sim.emit('civilization:phase',{phase:sim.civilization.phase,number:sim.shared.civilizationCount});
+diff --git a/tests/v2-checkpoint.test.js b/tests/v2-checkpoint.test.js
+new file mode 100644
+index 0000000..ba140a3
+--- /dev/null
++++ b/tests/v2-checkpoint.test.js
+@@ -0,0 +1,17 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {Simulation} from '../src/simulation.js';
++import {checkpointV2,restoreV2,encodeV2,decodeV2} from '../src/v2-checkpoint.js';
++import {settingsFromInitial} from '../src/settings.js';
++const b=(x,y=0,mass=5e6)=>({x,y,z:0,vx:0,vy:0,vz:0,mass});
++for(const absent of [false,true])test(`full-state resume is bitwise through controls/civilization/planet lifecycle; checkpoint while ${absent?'absent':'present'}`,()=>{
++ const initial=[b(-1.2),b(.4),b(1.8,1),b(absent?1.82:1.8,absent?1:1.3,5000)],s=new Simulation(settingsFromInitial({stabilityMode:'deflect-v2',newproperty60:true,autorestart:true},initial),{},{trace:true});
++ for(let i=0;i<30;i++)s.tick();assert.equal(s.controlled.bodies[3].mass>0,!absent);
++ const data=decodeV2(encodeV2(checkpointV2(s))),resumed=restoreV2(data);
++ assert.deepEqual(resumed.snapshot(),s.snapshot());for(let i=0;i<600;i++){s.tick();resumed.tick();}
++ assert.deepEqual(resumed.snapshot(),s.snapshot());assert.deepEqual(checkpointV2(resumed),checkpointV2(s));
++ if(absent)assert.ok(resumed.controlled.planetRespawns>0);
++});
++test('checkpoint format guards and nonfinite diagnostics survive JSON without becoming null',()=>{assert.throws(()=>restoreV2({version:2}));assert.deepEqual(decodeV2(encodeV2({a:Infinity,b:-Infinity,c:NaN})),{a:Infinity,b:-Infinity,c:NaN});});
++
++test('checkpoint preserves RNG state across subsequent physical reinitialization',()=>{const s=new Simulation({stabilityMode:'deflect-v2',seed:'V2-RNG-RESTORE'});s.tick();s.configure({_110:6e6});s.tick();const resumed=restoreV2(decodeV2(encodeV2(checkpointV2(s))));s.configure({_110:7e6});resumed.configure({_110:7e6});s.tick();resumed.tick();assert.deepEqual(s.initialBodies,resumed.initialBodies);assert.deepEqual(s.snapshot(),resumed.snapshot());});
+diff --git a/tests/v2-integration.test.js b/tests/v2-integration.test.js
+new file mode 100644
+index 0000000..ab42072
+--- /dev/null
++++ b/tests/v2-integration.test.js
+@@ -0,0 +1,48 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {Simulation} from '../src/simulation.js';
++import {normalizeSettings,settingsFromInitial} from '../src/settings.js';
++import {GravityIntegrator} from '../src/physics/gravity.js';
++import {ControlledSystem,V2_STEP,V2_ETA} from '../src/physics/controlled-system.js';
++const mode='deflect-v2',G=1.3275440274585598e-8;
++const b=(x,y=0,mass=5e6)=>({x,y,z:0,vx:0,vy:0,vz:0,mass});
++const fixture=()=>[b(-1.2),b(.4),b(1.8,1),b(1.82,1,5000)];
++
++test('V2 control off uses the identical Newtonian integrator with zero external control',()=>{
++ const s=new Simulation({stabilityMode:mode,newproperty60:false,seed:'V2-CONTROL-OFF'});s.modules['008'].initializePhysics();
++ const original=structuredClone(s.initialBodies),reference=new GravityIntegrator(original,G),c=new ControlledSystem(s.initialBodies,G,s.settings);
++ for(let i=0;i<120;i++){reference.advance(.0075,{maxStep:V2_STEP,eta:V2_ETA});c.advanceFrame();}
++ assert.deepEqual(c.bodies,original);assert.equal(c.integrator.steps,reference.steps);assert.equal(c.cost.impulse,0);assert.equal(c.cost.projectionEvents,0);
++});
++
++test('physical planet loss and P5 respawn do not reset the universe even with autorestart enabled',()=>{
++ const s=new Simulation(settingsFromInitial({stabilityMode:mode,newproperty60:true,autorestart:true},fixture()),{},{trace:true});s.tick();
++ const c=s.controlled,loss=c.firstPlanetLoss,generation=s.generation;assert.equal(c.planetLosses,1);assert.equal(s.snapshot().world.planet.present,false);assert.equal(s.snapshot().bodies[3].mass,0);
++ const returnFrame=c.returnFrame;while(c.frame<returnFrame-1)s.tick();
++ assert.equal(c.planetRespawns,0);assert.ok(c.year-loss<5);assert.equal(s.generation,generation);s.tick();
++ assert.equal(c.planetRespawns,1);assert.ok(c.year-loss>=5-1e-12);assert.equal(s.generation,generation);assert.equal(c.frame,returnFrame);assert.ok(c.external.impulse>0);assert.ok(c.external.absoluteWork>0);assert.equal(s.snapshot().world.planet.present,true);assert.ok(s.events.some(e=>e.type==='planet:respawn'));
++ // The planet trace starts afresh; stellar trace histories remain continuous.
++ assert.equal(s.orbitTrace.paths[3].raw.length,0);assert.ok(s.orbitTrace.paths[0].pending);
++});
++
++test('stellar contact is absorbing and never becomes an automatic new universe or numerical UNKNOWN',()=>{
++ const initial=fixture();initial[0].x=0;initial[1].x=.04;initial[3].x=2;
++ const s=new Simulation(settingsFromInitial({stabilityMode:mode,newproperty60:false,autorestart:true},initial));s.tick();
++ assert.equal(s.controlled.stellarFailure.kind,'stellar-contact');assert.equal(s.controlled.numericalUnknown,null);assert.equal(s.controlled.integrator.numericalError,null);
++ const before=s.snapshot();for(let i=0;i<400;i++)s.tick();const after=s.snapshot();
++ assert.deepEqual(after.bodies,before.bodies);assert.equal(after.year,before.year);assert.equal(after.generation,before.generation);assert.equal(after.physics.physicalModelValid,false);assert.equal(after.events.filter(e=>e.type==='system:stellar-contact').length,1);assert.equal(after.events.some(e=>e.type==='universe:restart'),false);
++});
++
++test('numerical inability remains UNKNOWN with original physical failure field empty',()=>{
++ const initial=fixture();initial[0].x=0;initial[1].x=0;
++ const c=new ControlledSystem(initial,G,normalizeSettings({stabilityMode:mode,newproperty60:false}));assert.throws(()=>c.advanceFrame(),/步长/);assert.ok(c.numericalUnknown);assert.equal(c.stellarFailure,null);assert.equal(c.frame,0);
++});
++
++test('Seed replay, physical changes and display-only changes preserve the intended boundaries',()=>{
++ const a=new Simulation({seed:'V2-REPLAY',stabilityMode:mode}),b=new Simulation({seed:'V2-REPLAY',stabilityMode:mode});a.tick();b.tick();assert.deepEqual(a.initialBodies,b.initialBodies);assert.deepEqual(a.snapshot().bodies,b.snapshot().bodies);
++ const system=a.controlled;a.configure({bodyLabels:true,cnen2:true,pixelRatio:1,newproperty60:false});a.tick();assert.equal(a.controlled,system);assert.equal(a.controlled.frame,2);
++ a.configure({_110:6e6});a.tick();assert.notEqual(a.controlled,system);assert.equal(a.initialBodies[0].mass,6e6);
++ const normalized=normalizeSettings({stabilityMode:mode,gravityModel:'plummer',civilizationMode:'legacy',physicsMode:'realtime',newproperty53:5,encounterAccuracy:.03,timespeed:3});assert.equal(normalized.gravityModel,'newtonian');assert.equal(normalized.civilizationMode,'balanced');assert.equal(normalized.newproperty53,.1875);assert.equal(normalized.encounterAccuracy,.001875);assert.equal(normalized.timespeed,1);
++ const replay=new Simulation(settingsFromInitial(a.settings,a.initialBodies));replay.tick();assert.deepEqual(replay.initialBodies,a.initialBodies);assert.equal(replay.snapshot().algorithm,a.snapshot().algorithm);
++ a.configure({stabilityMode:'off'});a.tick();assert.equal(a.controlled,null);assert.equal(a.snapshot().physics.model,'newtonian');
++});
+diff --git a/tools/build.mjs b/tools/build.mjs
+index 4aca8d9..6f3afb4 100644
+--- a/tools/build.mjs
++++ b/tools/build.mjs
+@@ -22,7 +22,8 @@ const properties = structuredClone(original.general.properties);
+ properties.custombg = { ...properties.custombg, type: 'file', value: '' };
+ for(const [key,value] of Object.entries(defaults))if(properties[key])properties[key].value=value;
+ properties.audiobar.text='基础信息与排行';properties.newproperty39.text='显示文明与宇宙排行';
+-for(const key of ['audiobar','newproperty39','newproperty45','newproperty46','newproperty43','newproperty44','newproperty51','newproperty61','newproperty16'])properties[key].text=effectivePropertySchema[key].text;
++for(const key of ['newproperty60','audiobar','newproperty39','newproperty45','newproperty46','newproperty43','newproperty44','newproperty51','newproperty61','newproperty16'])properties[key].text=effectivePropertySchema[key].text;
++properties.stabilityMode={type:'combo',text:'三星控制系统 / Stellar controller',value:'off',options:[{label:'现行模式',value:'off'},{label:'V2转向原型',value:'deflect-v2'},{label:'V2反射原型',value:'reflect-v2'}]};
+ const project = { title: '三体实时演算 · Web 重建', type: 'web', file: 'index.html', description: '基于用户提供的 SYKM 原版场景移植。Three.js + Worker，原版设置兼容。', version: 0, contentrating: 'Everyone', general: { ...original.general, supportsaudioprocessing: true, properties } };
+ await writeFile(path.join(dist, 'project.json'), JSON.stringify(project, null, 2));
+ await writeFile(path.join(dist, 'LICENSE-NOTICE.txt'), 'Original Wallpaper Engine scene: SYKM, workshop 3509243656. Music: Melodysheep - Ether. Original assets retained for the supplied authorized non-commercial use. See source docs/SOURCE-AUDIT.md and assets/original/manifest.json.\nThree.js: MIT.\n');
+diff --git a/tools/generate-settings-guide.mjs b/tools/generate-settings-guide.mjs
+index c5ab4e2..4674e09 100644
+--- a/tools/generate-settings-guide.mjs
++++ b/tools/generate-settings-guide.mjs
+@@ -5,6 +5,7 @@ import {settingsDefinitions,settingsCategories} from '../src/settings-catalog.js
+ import {civilizationLevels} from '../src/civilization-levels.js';
+ const root=new URL('../',import.meta.url),allDefaults={...defaults,...extraDefaults};
+ const descriptions={
++ stabilityMode:'off保留现行算法；deflect-v2/reflect-v2为独立研究原型。V2固定牛顿、参考时钟、韧性文明、h4最大步长0.0001875与η0.001875，每60帧1显示年。危险时脉冲控制，行星损失后至少5年按P5重生，恒星失效停止，不自动重置宇宙。科研存活成绩只适用于预注册默认参数，不能推广到任意用户设置。',
+  datacolor:'界面主色与旋转环颜色，影响HUD显示，不改变恒星光度或气候。',
+  seed:'随机初值的文字种子；与宇宙编号共同确定随机序列。重建初值，不是文明随机加分。',
+  gravityModel:'newtonian（默认）采用无软化平方反比引力。plummer 使用与势能一致的软化；legacy 精确保留旧近距异常，仅作复现。牢笼独立开关，默认关闭。更改模型重置轨道。',
+@@ -51,8 +52,8 @@ const descriptions={
+  newproperty17:'1预置背景一、2纯色、3自定义全景图、4原生8K银河。初始化朝向银河亮部；预置图片均使用本地资源。',
+  custombg:'选择本机全景图，保存在IndexedDB，自动切换到自定义模式。WE可用文件选择属性；文件不上传。',
+  newproperty50:'开启后直接使用24项位置/速度初值；随机种子与随机轨道准备不再决定初值。手动滑块仍按属性范围钳制；导入完整初始四体数组则保留精确值（每分量绝对值≤1e8），避免新轨道导出后被旧滑块范围截断。编辑任一手动坐标/质量后切回滑块数据。',
+- autorestart:'现代模式在行星不可逆吞噬/撕毁后延时4模拟秒，或保守逃逸条件持续3显示年后重建。逃逸要求超过既有距离阈值、分离星群足够紧凑、向外运动且相对轨道能量明确为正；开启牢笼时不使用此逃逸判定。仍受束缚的远日点、寒冷、文明死亡和可恢复损伤不会单独重置。关闭后显示手动重启入口。legacy沿用原版逃逸重启。',
+- newproperty60:'开关原版质心引力牢笼；它是额外约束力，并非真实天体。默认仍开。',
++ autorestart:'V2忽略此设置并禁止自动整宇宙重置，恒星失效后须手动开启新宇宙；现行现代模式在行星不可逆吞噬/撕毁后延时4模拟秒，或保守逃逸条件持续3显示年后重建。逃逸要求超过既有距离阈值、分离星群足够紧凑、向外运动且相对轨道能量明确为正；开启牢笼时不使用此逃逸判定。仍受束缚的远日点、寒冷、文明死亡和可恢复损伤不会单独重置。关闭后显示手动重启入口。legacy沿用原版逃逸重启。',
++ newproperty60:'现行模式开关原质心牢笼，默认关闭；V2开关新近遇/外逸保护，首次选择V2默认开启。V2关闭后保留同精度和P5作为对照。两者都是明确记录的人工干预。旧牢笼强度/边界参数在V2不生效。',
+  newproperty13:'原版任一天体超出质心距离D的逃逸阈值；现代模式保留逃逸标志但不因其自动重启完整行星。',
+  newproperty14:'四条天体尾迹显示开关，不影响物理轨迹。',menuinit:'下次加载默认展开右下角设置面板。',compass:'鼠标转动/惯性明显时显示旋转环；静止后淡出。银河自动慢回归不会单独触发旋转环。',
+  newproperty38:'中央文明状态、寿命和精选日志的总开关。不会暂停模拟或删除历史。',newproperty39:'右侧文明/宇宙两榜开关；各5条，按寿命从长到短，包括当前仍在运行的记录。',
+diff --git a/tools/v2/batch-worker.mjs b/tools/v2/batch-worker.mjs
+new file mode 100644
+index 0000000..5634300
+--- /dev/null
++++ b/tools/v2/batch-worker.mjs
+@@ -0,0 +1,44 @@
++import fs from 'node:fs';
++import path from 'node:path';
++import crypto from 'node:crypto';
++import assert from 'node:assert/strict';
++import {Simulation} from '../../src/simulation.js';
++import {createControlledSystem} from '../../src/v2-simulation.js';
++import {checkpointV2,restoreV2,encodeV2,decodeV2} from '../../src/v2-checkpoint.js';
++const sha=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
++const [config,shardText='0',shardsText='1']=process.argv.slice(2),cfg=JSON.parse(fs.readFileSync(config)),shard=Number(shardText),shards=Number(shardsText),dir=cfg.output;
++const manifest=JSON.parse(fs.readFileSync(dir+'/manifest.json')),hash=manifest.sourceHash;
++const verify=()=>{assert.equal(sha(config),manifest.configHash);for(const[p,h]of Object.entries(manifest.files))assert.equal(sha(p),h,'Frozen source changed: '+p);};verify();
++const write=(p,value)=>{fs.mkdirSync(path.dirname(p),{recursive:true});const text=encodeV2(value)+'\n',fd=fs.openSync(p+'.tmp','w');fs.writeFileSync(fd,text);fs.fsyncSync(fd);fs.closeSync(fd);fs.renameSync(p+'.tmp',p);};
++const resultFile=dir+`/shard${shard}.jsonl`,done=new Map();
++if(fs.existsSync(resultFile))for(const line of fs.readFileSync(resultFile,'utf8').trim().split('\n').filter(Boolean)){const r=decodeV2(line),key=r.seed+'|'+r.mode+'|'+r.horizon;assert(!done.has(key),'Duplicate result');assert.equal(r.sourceHash,hash);assert.equal(sha(r.checkpoint),r.checkpointSHA256);assert.equal(sha(r.rawFile),r.rawSHA256);done.set(key,r);}
++const pairs=[[0,1],[0,2],[1,2]],d=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y,a.z-b.z);
++for(let index=0;index<cfg.seeds;index++){
++ if(index%shards!==shard)continue;
++ for(const mode of cfg.modes){
++  verify();const seed=cfg.prefix+'-'+index,stem=dir+'/'+seed+'-'+mode,cpFile=stem+'.checkpoint.json';let sim,metrics;
++  if(fs.existsSync(cpFile)){const cp=decodeV2(fs.readFileSync(cpFile,'utf8'));assert.equal(cp.sourceHash,hash);assert.equal(cp.configHash,manifest.configHash);assert.equal(cp.seed,seed);assert.equal(cp.mode,mode);sim=restoreV2(cp.simulation);metrics=cp.metrics;console.log(JSON.stringify({resume:seed,mode,year:sim.controlled.year}));}
++  else{sim=new Simulation({seed,stabilityMode:mode,newproperty60:true,autorestart:true});sim.controlled=createControlledSystem(sim);metrics={stableFrames:0,matureStableFrames:0,absentFrames:0,aliveFrames:0,activeFrames:0,births:0,deaths:0,closestChanges:0,lastPair:null,nonhierFrames:0,matureNonhierFrames:0,hierarchyRun:0,longestHierarchy:0,minStellarDistance:Infinity,events:[],bins:[],wallSeconds:0};}
++  const emit=sim.emit.bind(sim);sim.emit=(type,detail)=>{metrics.events.push({id:sim.eventSeq+1,type,year:sim.shared.xntime||0,detail:structuredClone(detail)});emit(type,detail);if(type==='civilization:birth')metrics.births++;if(type==='civilization:death')metrics.deaths++;};
++  let start=performance.now();
++  const checkpoint=()=>{metrics.wallSeconds+=(performance.now()-start)/1000;start=performance.now();write(cpFile,{sourceHash:hash,configHash:manifest.configHash,seed,mode,simulation:checkpointV2(sim),metrics});};
++  for(const horizon of cfg.horizons){
++   const key=seed+'|'+mode+'|'+horizon;if(done.has(key))continue;
++   assert(sim.controlled.frame<=horizon*60,'Checkpoint passed an unrecorded endpoint');
++   while(sim.controlled.frame<horizon*60&&!sim.controlled.stellarFailure&&!sim.controlled.numericalUnknown){
++    try{sim.tick();}catch(e){assert(sim.controlled.numericalUnknown,'Unexpected programming error: '+e.stack);}
++    const c=sim.controlled;if(c.stellarFailure||c.numericalUnknown)break;
++    if(sim.world.state?.epoch.kind==='stable'&&c.bodies[3].mass>0){metrics.stableFrames++;if(c.frame>600000)metrics.matureStableFrames++;}if(!c.bodies[3].mass)metrics.absentFrames++;
++    if(sim.shared.civilizationAlive){metrics.aliveFrames++;if(sim.civilization.phase==='active')metrics.activeFrames++;}
++    const distances=pairs.map(([i,j])=>d(c.bodies[i],c.bodies[j])),minimum=Math.min(...distances),pair=distances.indexOf(minimum),ratio=Math.max(...distances)/minimum;metrics.minStellarDistance=Math.min(metrics.minStellarDistance,minimum);if(metrics.lastPair!==null&&pair!==metrics.lastPair)metrics.closestChanges++;metrics.lastPair=pair;
++    if(ratio<3){metrics.nonhierFrames++;if(c.frame>600000)metrics.matureNonhierFrames++;}if(ratio>5){metrics.hierarchyRun++;metrics.longestHierarchy=Math.max(metrics.longestHierarchy,metrics.hierarchyRun);}else metrics.hierarchyRun=0;
++    if(c.frame%60000===0){metrics.bins.push({year:c.year,stableFrames:metrics.stableFrames,matureStableFrames:metrics.matureStableFrames,planetLosses:c.planetLosses,planetRespawns:c.planetRespawns,absentFrames:metrics.absentFrames,control:structuredClone(c.cost)});checkpoint();console.log(JSON.stringify({progress:seed,mode,year:c.year,steps:c.integrator.steps}));}
++   }
++   verify();checkpoint();const c=sim.controlled,terminal=c.stellarFailure||c.numericalUnknown,total=horizon*60,complete=c.frame===total&&!terminal;
++   const snapshot=stem+`-${horizon}.state.json`;fs.copyFileSync(cpFile,snapshot);const rawFile=stem+`-${horizon}.raw.json`;write(rawFile,{sourceHash:hash,configHash:manifest.configHash,seed,mode,horizon,settings:sim.settings,initialBodies:sim.initialBodies,finalBodies:c.bodies,stellarFailure:c.stellarFailure,numericalUnknown:c.numericalUnknown,control:c.cost,planetExternal:c.external,metrics});
++   const r={seed,mode,horizon,sourceHash:hash,configHash:manifest.configHash,integratedYears:c.year,solverTime:c.integrator.time,stellarIntact:complete,starFailure:c.stellarFailure,numericalUNKNOWN:c.numericalUnknown,stableFraction:metrics.stableFrames/total,matureStableFraction:horizon>10000?metrics.matureStableFrames/((horizon-10000)*60):null,planetLosses:c.planetLosses,planetRespawns:c.planetRespawns,originalPlanetSurvived:complete&&!c.planetLosses,firstPlanetLoss:c.firstPlanetLoss,absentFraction:metrics.absentFrames/total,civilizationBirths:metrics.births,civilizationDeaths:metrics.deaths,civilizationAliveFraction:metrics.aliveFrames/total,civilizationActiveFraction:metrics.activeFrames/total,originalCivilizationSurvived:complete&&metrics.births>0&&metrics.deaths===0&&!!sim.shared.civilizationAlive,nonhierFraction:metrics.nonhierFrames/total,matureNonhierFraction:horizon>10000?metrics.matureNonhierFrames/((horizon-10000)*60):null,closestPairChanges:metrics.closestChanges,longestGeometricHierarchyYears:metrics.longestHierarchy/60,chaosEvidenceStatus:'GEOMETRY_ONLY_CONDITIONAL_FTLE_NOT_MEASURED',control:c.cost,planetExternal:c.external,maxNumericalEnergyResidual:c.maxResidual,steps:c.integrator.steps,wallSeconds:metrics.wallSeconds,maxRSSMiB:process.memoryUsage().rss/1048576,generation:sim.generation,rawFile,rawSHA256:sha(rawFile),checkpoint:snapshot,checkpointSHA256:sha(snapshot)};
++   const fd=fs.openSync(resultFile,'a');fs.writeFileSync(fd,encodeV2(r)+'\n');fs.fsyncSync(fd);fs.closeSync(fd);done.set(key,r);console.log(JSON.stringify({complete:seed,mode,horizon,stellarIntact:complete,UNKNOWN:r.numericalUNKNOWN}));
++   if(c.numericalUnknown)throw new Error('Numerical UNKNOWN preserved; stop for review');
++  }
++ }
++}
+diff --git a/tools/v2/browser-check.mjs b/tools/v2/browser-check.mjs
+new file mode 100644
+index 0000000..dbec7f1
+--- /dev/null
++++ b/tools/v2/browser-check.mjs
+@@ -0,0 +1,26 @@
++import {chromium} from 'playwright-core';
++import fs from 'node:fs';
++import assert from 'node:assert/strict';
++import {settingsFromInitial} from '../../src/settings.js';
++import {guideControls} from '../generate-settings-guide.mjs';
++const dir=process.argv[2]??'docs/integration-v2/results/browser-r1';fs.mkdirSync(dir,{recursive:true});
++const browser=await chromium.launch({executablePath:'/usr/bin/chromium',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
++const page=await browser.newPage({viewport:{width:1280,height:900}}),errors=[],checks=[];
++page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error'&&!m.text().startsWith('Failed to load resource:'))errors.push(m.text());});
++await page.addInitScript(()=>{localStorage.clear();localStorage.setItem('three-body.settings.v3',JSON.stringify({presentationRevision:6,physicsRevision:1,galaxyReturnRevision:2,pixelRatio:1,newproperty63:false,newproperty64:false,newproperty2:false,newproperty61:2,newproperty16:false,seed:'V2-BROWSER-NEW',autorestart:true}));window.__wallpaperFPS=30;});
++const state=()=>page.evaluate(()=>window.threeBody.getState()),scene=()=>page.evaluate(()=>window.__threeBodyDiagnostics().scene),apply=p=>page.evaluate(p=>window.threeBody.applySettings(p),p),wait=fn=>page.waitForFunction(fn,undefined,{timeout:40000});
++const b=(x,y=0,mass=5e6)=>({x,y,z:0,vx:0,vy:0,vz:0,mass}),initial=[b(-1.2),b(.4),b(1.8,1),b(1.82,1,5000)];
++try{
++ await page.goto('http://localhost:4173',{waitUntil:'networkidle'});await wait(()=>window.__threeBodyDiagnostics?.().ready);assert(!(await state()).algorithm.startsWith('v2-'));assert.deepEqual((await page.locator('.control').evaluateAll(ns=>ns.map(n=>n.dataset.key))).sort(),guideControls().map(x=>x.key).sort());checks.push('Existing settings boot in off mode; full settings guide matches all controls');
++ await page.locator('#settings-toggle').click();await page.locator('[data-category=simulation]').evaluate(n=>n.open=true);await page.locator('#setting-stabilityMode').selectOption('deflect-v2');await wait(()=>window.threeBody.getState()?.algorithm.startsWith('v2-deflect-v2'));
++ assert.equal(await page.locator('#setting-gravityModel').inputValue(),'newtonian');assert.equal(await page.locator('#setting-newproperty60').isChecked(),true);assert.equal(await page.locator('#setting-timespeed').isDisabled(),true);assert.equal(await page.locator('#setting-autorestart').isDisabled(),true);assert.equal(await page.locator('#setting-encounterAccuracy').inputValue(),'0.001875');await page.locator('#settings-close').click();checks.push('Actual selector enables V2 protection and exposes fixed h4 clock/accuracy; incompatible controls disabled');
++ await page.evaluate(()=>{window.v2Events=[];for(const type of ['planet:destroyed','planet:respawn','system:stellar-contact','universe:restart'])window.threeBody.subscribe(type,e=>window.v2Events.push({type,detail:e}));});
++ await apply(settingsFromInitial({stabilityMode:'deflect-v2',newproperty60:true,autorestart:true,bodyLabels:true,newproperty14:true},initial));await wait(()=>window.threeBody.getState()?.bodies?.[3]?.mass===0);const absent=await state(),absentScene=await scene();assert.equal(absentScene.bodyVisible[3],false);assert.equal(absentScene.trailVisible[3],false);assert.equal(absent.world.planet.present,false);assert.equal(absent.world.epoch.kind,'chaotic');await page.screenshot({path:dir+'/planet-absent.png'});
++ await wait(()=>window.threeBody.getState()?.physics?.planetRespawns>=1);const returned=await state(),returnedScene=await scene();assert.equal(returned.generation,absent.generation);assert.ok(returned.year-absent.year>=4.8);assert.equal(returnedScene.bodyVisible[3],true);assert.equal(returnedScene.trailVisible[3],true);assert.equal(returned.world.planet.present,true);assert.ok(returned.physics.planetExternal.impulse>0);assert.ok(await page.evaluate(()=>window.v2Events.some(e=>e.type==='planet:respawn')));await page.screenshot({path:dir+'/planet-returned.png'});checks.push('Actual Worker accepted-step planet loss hides body/trail; P5 restores them after at least5 simulation years with same universe and independent cost/event ledger');
++ const settings=JSON.parse(await page.evaluate(()=>localStorage.getItem('three-body.settings.v3')));assert.equal(settings.stabilityMode,'deflect-v2');assert.equal(settings.manualInitialBodies.length,4);
++ await apply({newproperty60:false,cnen2:true});await wait(()=>window.threeBody.getState()?.physics?.controlled===false);assert.equal((await state()).generation,absent.generation);checks.push('Live protection toggle and language update preserve universe; complete Seed/manual settings remain exportable');
++ const contact=initial.map(x=>({...x}));contact[0].x=0;contact[1].x=.04;contact[3].x=2;await apply(settingsFromInitial({stabilityMode:'reflect-v2',newproperty60:false,autorestart:true},contact));await wait(()=>!!window.threeBody.getState()?.physics?.stellarFailure);const failed=await state();await page.waitForTimeout(500);const frozen=await state();assert.equal(frozen.year,failed.year);assert.equal(frozen.generation,failed.generation);assert.equal(frozen.physics.numericalError,null);assert.equal(await page.locator('#restart-prompt').isVisible(),true);checks.push('Stellar contact freezes physical clock and shows manual recovery even when old autorestart flag is true');
++ await apply({stabilityMode:'off',manualInitialBodies:null,newproperty50:false,newproperty60:false});await wait(()=>window.threeBody.getState()?.algorithm&&!window.threeBody.getState().algorithm.startsWith('v2-'));assert.equal(await page.locator('#setting-timespeed').isDisabled(),false);assert.equal(await page.evaluate(()=>window.__threeBodyDiagnostics().ready),true);checks.push('Returning to existing mode restores old settings controls and healthy Worker');
++ assert.deepEqual(errors,[]);const report={pass:true,checks,errors,absent,returned,absentScene,returnedScene,events:await page.evaluate(()=>window.v2Events),limits:'Actual Chromium SwiftShader/Worker; synthetic manual states are compatibility fixtures, never random survival evidence. Native Wallpaper Engine unavailable.'};fs.writeFileSync(dir+'/browser.json',JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({pass:true,checks}));
++}catch(e){fs.writeFileSync(dir+'/failure.json',JSON.stringify({pass:false,checks,errors,error:e.stack,state:await state().catch(()=>null)},null,2));await page.screenshot({path:dir+'/failure.png'}).catch(()=>{});throw e;}
++finally{await browser.close();}
+diff --git a/tools/v2/check-batch-recovery.mjs b/tools/v2/check-batch-recovery.mjs
+new file mode 100644
+index 0000000..4e9b784
+--- /dev/null
++++ b/tools/v2/check-batch-recovery.mjs
+@@ -0,0 +1,19 @@
++import fs from 'node:fs';
++import os from 'node:os';
++import path from 'node:path';
++import crypto from 'node:crypto';
++import assert from 'node:assert/strict';
++import {spawnSync} from 'node:child_process';
++import {decodeV2} from '../../src/v2-checkpoint.js';
++const root=fs.mkdtempSync(path.join(os.tmpdir(),'v2-recovery-')),output=process.argv[2]??'docs/integration-v2/results/batch-recovery.json',checks=[],logs=[];
++const sha=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
++try{
++ const config=root+'/study.json',dir=root+'/results';fs.mkdirSync(dir);fs.writeFileSync(config,JSON.stringify({prefix:'V2-RECOVERY-SMOKE',seeds:1,modes:['deflect-v2'],horizons:[1,2],output:dir}));fs.writeFileSync(dir+'/manifest.json',JSON.stringify({sourceHash:'recovery-test-only',configHash:sha(config),files:{[config]:sha(config),'tools/v2/batch-worker.mjs':sha('tools/v2/batch-worker.mjs')}}));
++ const run=()=>{const r=spawnSync(process.execPath,['tools/v2/batch-worker.mjs',config],{encoding:'utf8'});logs.push({status:r.status,stdout:r.stdout,stderr:r.stderr});return r;};
++ assert.equal(run().status,0);const rowsFile=dir+'/shard0.jsonl',lines=fs.readFileSync(rowsFile,'utf8').trim().split('\n');assert.equal(lines.length,2);const last=JSON.parse(lines[1]),continuous=decodeV2(fs.readFileSync(last.checkpoint,'utf8'));
++ assert.equal(run().status,0);assert.equal(fs.readFileSync(rowsFile,'utf8').trim().split('\n').length,2);checks.push('Completed result keys are audited and skipped without duplicate rows');
++ // Emulate a stop after the atomic full-state checkpoint and before appending its endpoint row.
++ fs.writeFileSync(rowsFile,lines[0]+'\n');assert.equal(run().status,0);const restored=JSON.parse(fs.readFileSync(rowsFile,'utf8').trim().split('\n')[1]),resumed=decodeV2(fs.readFileSync(restored.checkpoint,'utf8'));assert.deepEqual(resumed.simulation,continuous.simulation);assert.equal(restored.integratedYears,2);checks.push('Checkpoint-to-result interruption resumes the same physical state without resetting or double-counting');
++ fs.appendFileSync(restored.rawFile,' ');assert.notEqual(run().status,0);checks.push('Changed raw-result SHA is rejected before continuing');
++ fs.writeFileSync(output,JSON.stringify({pass:true,checks,logs,scope:'Temporary runner fault/restore tests; all fixture files removed afterward, no research outcomes'},null,2)+'\n');console.log(JSON.stringify({pass:true,checks}));
++}finally{fs.rmSync(root,{recursive:true,force:true});}
+diff --git a/tools/v2/headless-check.mjs b/tools/v2/headless-check.mjs
+new file mode 100644
+index 0000000..53656a0
+--- /dev/null
++++ b/tools/v2/headless-check.mjs
+@@ -0,0 +1,22 @@
++import fs from 'node:fs';
++import crypto from 'node:crypto';
++import {spawnSync} from 'node:child_process';
++import assert from 'node:assert/strict';
++import {Simulation} from '../../src/simulation.js';
++const dir=process.argv[2]??'docs/integration-v2/results/headless-r1';fs.mkdirSync(dir,{recursive:true});
++const binary=process.env.V2_NATIVE??'/workspace/2/docs/research-v2/bin/native';assert.equal(crypto.createHash('sha256').update(fs.readFileSync(binary)).digest('hex'),'cf2117ac290bea83d6cfbdb07f98888412d594024e295887bc537bce5132f091');
++const report={scope:'Four new Seeds, two variants, 1000 display years; integration/precision diagnostic, not a100000year confirmation',node:process.version,platform:process.platform,rows:[]};
++report.sourceSHA256=Object.fromEntries(['src/simulation.js','src/v2-simulation.js','src/settings.js','src/physics/controlled-system.js','src/physics/gravity.js','src/physics/minimal-control.js'].map(p=>[p,crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex')]));
++const save=()=>fs.writeFileSync(dir+'/report.json',JSON.stringify(report,null,2)+'\n');
++for(let seedIndex=0;seedIndex<4;seedIndex++)for(const mode of ['deflect-v2','reflect-v2']){
++ const seed='V2-INTEGRATION-LONG-20261022-'+seedIndex,sim=new Simulation({seed,stabilityMode:mode,autorestart:true});sim.tick();const c=sim.controlled,horizon=1000;
++ const input={seed,profile:mode,sourceHash:'frozen-native7f64a8a-integration-diagnostic',configHash:'h4-P5-1000-years',horizon,settings:sim.settings,controller:{...c.cfg,dt:.0001875,eta:.001875,shadow:false},bodies:sim.initialBodies.map(b=>({r:[b.x,b.y,b.z],v:[b.vx,b.vy,b.vz],mass:b.mass}))};
++ const prefix=dir+'/'+seed+'-'+mode;fs.writeFileSync(prefix+'.input.json',JSON.stringify(input));const raw=spawnSync(binary,[prefix+'.input.json'],{encoding:'utf8',maxBuffer:64*1024*1024});fs.writeFileSync(prefix+'.native.json',raw.stdout);assert.equal(raw.status,0,raw.stderr);const ref=JSON.parse(raw.stdout);
++ let stable=sim.world.state?.epoch.kind==='stable'&&c.bodies[3].mass>0?1:0;const start=performance.now(),heapStart=process.memoryUsage().heapUsed;let maxFrameMS=0;
++ for(let i=1;i<horizon*60&&!c.stellarFailure&&!c.numericalUnknown;i++){const before=performance.now();sim.tick();maxFrameMS=Math.max(maxFrameMS,performance.now()-before);if(sim.world.state?.epoch.kind==='stable'&&c.bodies[3].mass>0)stable++;}
++ let maxState=0;for(let i=0;i<4;i++)for(let k=0;k<6;k++){const field=['x','y','z','vx','vy','vz'][k];maxState=Math.max(maxState,Math.abs(c.bodies[i][field]-(k<3?ref.finalBodies[i].r[k]:ref.finalBodies[i].v[k-3])));}
++ const seconds=(performance.now()-start)/1000,row={seed,mode,horizon,jsCompletedYears:c.year,nativeIntegratedYears:ref.integratedYears,jsFailure:c.stellarFailure,nativeFailure:ref.starFailure,jsUNKNOWN:c.numericalUnknown,nativeUNKNOWN:ref.error,jsSteps:c.integrator.steps,nativeSteps:ref.steps,maxState,jsStableFraction:stable/(horizon*60),nativeStableFraction:ref.stableFraction,jsPlanetLosses:c.planetLosses,nativePlanetLosses:ref.planetLosses,jsRespawns:c.planetRespawns,nativeRespawns:ref.planetRespawns,jsSeconds:seconds,nativeSeconds:ref.wallSeconds,framesPerSecond:c.frame/seconds,stepsPerSecond:c.integrator.steps/seconds,maxFrameMS,heapStart,heapEnd:process.memoryUsage().heapUsed,rss:process.memoryUsage().rss,jsControl:c.cost,nativeControl:ref.control,jsPlanetExternal:c.external,nativePlanetExternal:ref.planetExternal,jsResidual:c.maxResidual,nativeResidual:ref.maxNumericalEnergyResidual,generation:sim.generation};
++ row.complete=c.frame===horizon*60&&!c.stellarFailure&&!c.numericalUnknown;row.shortTrajectoryAgreement=maxState<1e-5&&row.jsSteps===row.nativeSteps&&row.jsPlanetLosses===row.nativePlanetLosses&&Math.abs(row.jsStableFraction-row.nativeStableFraction)<1e-12;report.rows.push(row);save();console.log(JSON.stringify({seed,mode,complete:row.complete,maxState,trajectoryAgreement:row.shortTrajectoryAgreement,seconds,framesPerSecond:row.framesPerSecond}));
++ assert.equal(sim.generation,1);assert.equal(c.numericalUnknown,null);
++}
++report.allCompleted=report.rows.every(r=>r.complete);report.allTrajectoryAgree=report.rows.every(r=>r.shortTrajectoryAgreement);report.limits='Scalar allocation-heavy JS includes snapshots/world/civilization. Timings include per-frame instrumentation and co-running browser on2sharedCPUs, no GPU timing or native Wallpaper Engine claim. Chaotic long trajectories need not remain bitwise; report divergences without replacing Seeds.';save();
+diff --git a/tools/v2/supervise.py b/tools/v2/supervise.py
+new file mode 100644
+index 0000000..a84f9f2
+--- /dev/null
++++ b/tools/v2/supervise.py
+@@ -0,0 +1,86 @@
++#!/usr/bin/env python3
++"""Two-worker, hash-locked JS integration diagnostics. Never modifies main."""
++import argparse,datetime,fcntl,hashlib,json,os,pathlib,subprocess,time
++ROOT=pathlib.Path(__file__).resolve().parents[2];os.chdir(ROOT)
++BRANCH='integration/minimal-chaos-control-v2'
++def now():return datetime.datetime.now(datetime.timezone.utc).isoformat()
++def sha(p):return hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest()
++def git(*args):return subprocess.check_output(['git',*args],text=True).strip()
++def run(*args,**kw):return subprocess.run(args,check=True,**kw)
++def write(p,data):
++ p=pathlib.Path(p);tmp=pathlib.Path(str(p)+'.tmp');p.parent.mkdir(parents=True,exist_ok=True)
++ with tmp.open('w') as f:json.dump(data,f,indent=2);f.write('\n');f.flush();os.fsync(f.fileno())
++ os.replace(tmp,p)
++def spec(config):
++ cfg=json.load(open(config));assert git('branch','--show-current')==BRANCH
++ files=[str(p) for p in sorted(pathlib.Path('src').rglob('*.js'))]+[config,'tools/v2/batch-worker.mjs','tools/v2/supervise.py',cfg['protocol']]
++ hashes={p:sha(p) for p in files};h=hashlib.sha256()
++ for p in files:h.update(p.encode()+b'\0'+bytes.fromhex(hashes[p]))
++ return cfg,{'sourceHash':h.hexdigest(),'configHash':sha(config),'files':hashes}
++def audit(cfg,mf):
++ d=pathlib.Path(cfg['output']);rows=[];keys=set()
++ for f in d.glob('shard*.jsonl'):
++  for line in f.read_text().splitlines():
++   r=json.loads(line);key=(r['seed'],r['mode'],r['horizon']);assert key not in keys;keys.add(key)
++   assert r['sourceHash']==mf['sourceHash'] and r['configHash']==mf['configHash']
++   for p,h in [('rawFile','rawSHA256'),('checkpoint','checkpointSHA256')]:assert sha(r[p])==r[h],r[p]
++   raw=json.load(open(r['rawFile']));assert (raw['seed'],raw['mode'],raw['horizon'],raw['sourceHash'])==(*key,mf['sourceHash'])
++   cp=json.load(open(r['checkpoint']));assert cp['sourceHash']==mf['sourceHash'] and cp['configHash']==mf['configHash']
++   assert cp['simulation']['controlled']['frame']/60==r['integratedYears'];assert r['generation']==1
++   rows.append(r)
++ return rows
++
++def main():
++ ap=argparse.ArgumentParser();ap.add_argument('config');ap.add_argument('--register',action='store_true');ap.add_argument('--audit-only',action='store_true');a=ap.parse_args();cfg,expected=spec(a.config);d=pathlib.Path(cfg['output']);d.mkdir(parents=True,exist_ok=True);mp=d/'manifest.json'
++ if a.register:
++  run('git','diff','--quiet','HEAD','--',*expected['files']);run('git','ls-files','--error-unmatch','--',*expected['files'],stdout=subprocess.DEVNULL)
++  if mp.exists():
++   old=json.load(open(mp));assert {k:old[k] for k in expected}==expected
++  else:write(mp,{**expected,'sourceCommit':git('rev-parse','HEAD'),'registered':now(),'scope':cfg['designation']})
++  print(json.dumps({'registration':'PASS','sourceHash':expected['sourceHash']}));return
++ mf=json.load(open(mp));assert {k:mf[k] for k in expected}==expected
++ run('git','diff','--quiet','HEAD','--',*expected['files']);run('git','ls-files','--error-unmatch',str(mp),stdout=subprocess.DEVNULL)
++ if a.audit_only:
++  rows=audit(cfg,mf);print(json.dumps({'audit':'PASS','rows':len(rows),'UNKNOWN':sum(r['numericalUNKNOWN'] is not None for r in rows)}));return
++ with (d/'supervise.lock').open('a+') as lock:
++  try:fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
++  except BlockingIOError:print('already-active');return
++  # Both research and integration worktrees share the same two CPUs.
++  for root in [pathlib.Path('/workspace/2/docs/research-v2/results'),pathlib.Path('docs/integration-v2/results')]:
++   for p in root.rglob('*.lock'):
++    if p.resolve()==(d/'supervise.lock').resolve():continue
++    with p.open('a+') as other:
++     try:fcntl.flock(other,fcntl.LOCK_EX|fcntl.LOCK_NB)
++     except BlockingIOError:print('other-active-lock',p);return
++  lock.seek(0);lock.truncate();json.dump({'pid':os.getpid(),'started':now(),'config':a.config},lock);lock.flush();os.fsync(lock.fileno())
++  statepath=d/'supervise.state.json';old=json.load(open(statepath)) if statepath.exists() else {}
++  if old.get('status')=='STOPPED_REVIEW_REQUIRED':raise RuntimeError('Prior stop requires evidence review; do not silently restart')
++  rows=audit(cfg,mf);assert not any(r['numericalUNKNOWN'] for r in rows),'Existing UNKNOWN requires review'
++  state={'status':'RUNNING','researchComplete':False,'sourceHash':mf['sourceHash'],'configHash':mf['configHash'],'started':old.get('started',now()),'updated':now(),'rows':len(rows),'expectedRows':cfg['seeds']*len(cfg['modes'])*len(cfg['horizons']),'sourceCommit':mf['sourceCommit']}
++  workers=[]
++  try:
++   for shard in range(2):
++    log=open(d/f'worker{shard}.log','a');p=subprocess.Popen(['node','tools/v2/batch-worker.mjs',a.config,str(shard),'2'],stdout=log,stderr=subprocess.STDOUT,pass_fds=(lock.fileno(),));workers.append((p,log))
++   state['workers']=[p.pid for p,_ in workers];write(statepath,state)
++   while any(p.poll() is None for p,_ in workers):
++    time.sleep(10);state.update(updated=now(),rows=sum(len(f.read_text().splitlines()) for f in d.glob('shard*.jsonl')));write(statepath,state)
++   codes=[p.wait() for p,_ in workers]
++   for _,log in workers:log.close()
++   if any(codes):raise RuntimeError('Worker interruption '+repr(codes)+'; raw/checkpoints preserved')
++   assert spec(a.config)[1]==expected;rows=audit(cfg,mf);assert len(rows)==state['expectedRows'];assert not any(r['numericalUNKNOWN'] for r in rows)
++   summary={'scope':cfg['designation'],'sourceHash':mf['sourceHash'],'rows':len(rows),'UNKNOWN':0,'groups':{}}
++   for horizon in cfg['horizons']:
++    for mode in cfg['modes']:
++     rr=[r for r in rows if r['mode']==mode and r['horizon']==horizon];summary['groups'][f'{mode}-{horizon}']={'n':len(rr),'stellarIntact':sum(r['stellarIntact'] for r in rr),'stableMeanAll':sum(r['stableFraction'] for r in rr)/len(rr),'matureMeanAll':sum(r['matureStableFraction'] for r in rr)/len(rr) if horizon>10000 else None,'planetLosses':sum(r['planetLosses'] for r in rr),'chaosStatus':'GEOMETRY_ONLY_FTLE_NOT_MEASURED; not a chaos-qualified confirmation'}
++   write(d/'summary.json',summary);state.update(status='DIAGNOSTICS_COMPLETE_REVIEW_REQUIRED',rows=len(rows),updated=now());write(statepath,state)
++   previous=git('rev-parse','HEAD');run('git','add','--',str(d))
++   if subprocess.run(['git','diff','--cached','--quiet']).returncode:run('git','commit','-qm','integration: preserve checkpointed JS1000/10000/30000 diagnostic results')
++   ref=git('rev-parse','HEAD');ident='minimal-chaos-v2-js-diagnostics-'+cfg['id']
++   if not (pathlib.Path('records/analyses')/ident).exists():
++    run('python3','tools/records.py','capture','--kind','analysis','--id',ident,'--ref',ref,'--previous',previous,'--title','JS集成逐级窗口验证','--summary','同版完整状态续算、原始事件/失败/UNKNOWN及控制和行星成本；小样本数值诊断，不是128Seed长期确认，FTLE未测，main未改。');run('python3','tools/records.py','check');run('git','add','records');run('git','commit','-qm','records: archive JS integration diagnostic evidence')
++   with (d/'push.log').open('a') as log:
++    p=subprocess.run(['git','-c','pack.windowMemory=128m','-c','pack.threads=1','-c','http.postBuffer=536870912','push','origin',BRANCH],stdout=log,stderr=subprocess.STDOUT,timeout=180)
++   state['push']={'confirmed':p.returncode==0,'returncode':p.returncode,'commit':git('rev-parse','HEAD'),'time':now()};write(statepath,state)
++  except Exception as e:
++   state.update(status='STOPPED_REVIEW_REQUIRED',error=str(e),updated=now());write(statepath,state);raise
++if __name__=='__main__':main()
+diff --git a/tools/validate-v2-native.mjs b/tools/validate-v2-native.mjs
+index 5c72afb..d7d1fec 100644
+--- a/tools/validate-v2-native.mjs
++++ b/tools/validate-v2-native.mjs
+@@ -4,12 +4,13 @@ import assert from 'node:assert/strict';
+ import {spawnSync} from 'node:child_process';
+ import {Simulation} from '../src/simulation.js';
+ import {settingsFromInitial} from '../src/settings.js';
+-import {initialize} from '/workspace/2/docs/research-v2/engine.mjs';
++import {initialize} from '../docs/research-v2/engine.mjs';
+ 
+-const binary='/workspace/2/docs/research-v2/bin/native',dir='docs/integration-v2/results';fs.mkdirSync(dir,{recursive:true});
++const binary=process.env.V2_NATIVE??'/workspace/2/docs/research-v2/bin/native',dir=process.argv[2]??'docs/integration-v2/results/conformance-r1';fs.mkdirSync(dir,{recursive:true});
+ const binarySHA256=crypto.createHash('sha256').update(fs.readFileSync(binary)).digest('hex');
+ assert.equal(binarySHA256,'cf2117ac290bea83d6cfbdb07f98888412d594024e295887bc537bce5132f091');
+-const checks=[];const output={scope:'Integration validation against frozen native7f64a8a; short windows/forced fixtures, not a new100000year confirmation',binarySHA256,checks};
++const sourceSHA256=Object.fromEntries(['src/simulation.js','src/v2-simulation.js','src/settings.js','src/physics/gravity.js','src/physics/minimal-control.js','src/physics/controlled-system.js','src/world-state.js','src/habitability.js','src/civilization-state.js'].map(p=>[p,crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex')]));
++const checks=[];const output={scope:'Integration validation against frozen native7f64a8a; short windows/forced fixtures, not a new100000year confirmation',binarySHA256,sourceSHA256,checks};
+ const save=()=>fs.writeFileSync(dir+'/native-comparison.json',JSON.stringify(output,null,2)+'\n');
+ function manual(kind){
+  const b=[{x:-.07,y:0,z:0,vx:.3,vy:0,vz:0,mass:5e6},{x:.07,y:0,z:0,vx:-.3,vy:.01,vz:0,mass:5e6},{x:1.8,y:1,z:0,vx:0,vy:-.05,vz:0,mass:5e6},{x:1.8,y:1.3,z:0,vx:-.3,vy:-.05,vz:0,mass:5000}];
+@@ -26,12 +27,17 @@ for(const mode of ['deflect-v2','reflect-v2'])for(const kind of ['natural','defl
+  const file=dir+'/'+mode+'-'+kind+'.input.json',horizon=20;
+  const input={seed,profile:mode+'-'+kind,sourceHash:'short-integration-fixture-original-native7f64a8a',configHash:'integration-fixture',horizon,settings:sim.settings,controller,bodies:sim.initialBodies.map(b=>({r:[b.x,b.y,b.z],v:[b.vx,b.vy,b.vz],mass:b.mass}))};
+  fs.writeFileSync(file,JSON.stringify(input));const native=spawnSync(binary,[file],{encoding:'utf8',maxBuffer:32*1024*1024});assert.equal(native.status,0,native.stderr);fs.writeFileSync(file.replace('.input.json','.native.json'),native.stdout);const reference=JSON.parse(native.stdout);
++ let births=0,deaths=0,aliveFrames=sim.shared.civilizationAlive?1:0,activeFrames=sim.shared.civilizationAlive&&sim.civilization.phase==='active'?1:0,lastEvent=0;
++ const observe=()=>{for(const e of sim.events.filter(e=>e.id>lastEvent)){if(e.type==='civilization:birth')births++;if(e.type==='civilization:death')deaths++;lastEvent=e.id;}};observe();
+  let stable=sim.world.state?.epoch.kind==='stable'&&sim.controlled.bodies[3].mass>0?1:0;
+- for(let frame=1;frame<horizon*60&&!sim.controlled.stellarFailure;frame++){sim.tick();if(sim.world.state?.epoch.kind==='stable'&&sim.controlled.bodies[3].mass>0)stable++;}
++ for(let frame=1;frame<horizon*60&&!sim.controlled.stellarFailure;frame++){sim.tick();observe();if(sim.shared.civilizationAlive){aliveFrames++;if(sim.civilization.phase==='active')activeFrames++;}if(sim.world.state?.epoch.kind==='stable'&&sim.controlled.bodies[3].mass>0)stable++;}
+  const c=sim.controlled;let maxState=0;
+  for(let i=0;i<4;i++)for(let k=0;k<6;k++){const key=['x','y','z','vx','vy','vz'][k];maxState=Math.max(maxState,Math.abs(c.bodies[i][key]-(k<3?reference.finalBodies[i].r[k]:reference.finalBodies[i].v[k-3])));}
+  const countFields=['projectionEvents','deflectionEvents','reflectionEvents','activeFrames'];const differentCounts=countFields.filter(k=>c.cost[k]!==reference.control[k]);
+- const q={mode,kind,horizon,maxState,jsSteps:c.integrator.steps,nativeSteps:reference.steps,jsLosses:c.planetLosses,nativeLosses:reference.planetLosses,jsRespawns:c.planetRespawns,nativeRespawns:reference.planetRespawns,jsStable:stable/(horizon*60),nativeStable:reference.stableFraction,jsControl:c.cost,nativeControl:reference.control,differentCounts,generation:sim.generation,pass:maxState<1e-7&&c.integrator.steps===reference.steps&&c.planetLosses===reference.planetLosses&&c.planetRespawns===reference.planetRespawns&&differentCounts.length===0&&Math.abs(stable/(horizon*60)-reference.stableFraction)<1e-12};checks.push(q);save();console.log(JSON.stringify({mode,kind,maxState,steps:c.integrator.steps,losses:c.planetLosses,differentCounts,pass:q.pass}));
++ const budgets={};for(const [name,a,b]of [['control',c.cost,reference.control],['planetExternal',c.external,reference.planetExternal]]){const energyScale=Math.max(1,b.absoluteWork),impulseScale=Math.max(1,b.impulse),angularScale=Math.max(1,Math.hypot(...b.deltaL));budgets[name]={work:Math.abs(a.work-b.work)/energyScale,gross:Math.abs(a.absoluteWork-b.absoluteWork)/energyScale,impulse:Math.abs(a.impulse-b.impulse)/impulseScale,angular:Math.hypot(...a.deltaL.map((x,k)=>x-b.deltaL[k]))/angularScale};}
++ const budgetsPass=Object.values(budgets).every(q=>Object.values(q).every(x=>x<1e-7));
++ const civPass=births===reference.civilizationBirths&&deaths===reference.civilizationDeaths&&!!sim.shared.civilizationAlive===reference.civilizationCurrentlyAlive&&Math.abs(aliveFrames/(horizon*60)-reference.civilizationAliveFraction)<1e-12&&Math.abs(activeFrames/(horizon*60)-reference.civilizationActiveFraction)<1e-12;
++ const q={mode,kind,horizon,maxState,jsSteps:c.integrator.steps,nativeSteps:reference.steps,jsLosses:c.planetLosses,nativeLosses:reference.planetLosses,jsRespawns:c.planetRespawns,nativeRespawns:reference.planetRespawns,jsStable:stable/(horizon*60),nativeStable:reference.stableFraction,jsControl:c.cost,nativeControl:reference.control,differentCounts,budgets,budgetsPass,civPass,births,deaths,aliveFrames,activeFrames,generation:sim.generation,pass:budgetsPass&&civPass&&maxState<1e-7&&c.integrator.steps===reference.steps&&c.planetLosses===reference.planetLosses&&c.planetRespawns===reference.planetRespawns&&differentCounts.length===0&&Math.abs(stable/(horizon*60)-reference.stableFraction)<1e-12};checks.push(q);save();console.log(JSON.stringify({mode,kind,maxState,steps:c.integrator.steps,losses:c.planetLosses,differentCounts,budgetsPass,civPass,pass:q.pass}));
+  if(!q.pass)throw new Error('Independent native comparison failed: '+mode+' '+kind);
+ }
+ assert(checks.some(x=>x.jsControl.deflectionEvents>0));assert(checks.some(x=>x.jsControl.reflectionEvents>0));assert(checks.some(x=>x.jsRespawns>0));assert(checks.some(x=>x.kind==='capture'&&x.jsControl.projectionEvents>x.jsControl.deflectionEvents+x.jsControl.reflectionEvents));

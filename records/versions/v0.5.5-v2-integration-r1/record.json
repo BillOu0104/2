@@ -1,0 +1,805 @@
+{
+  "format": 1,
+  "id": "v0.5.5-v2-integration-r1",
+  "path": "versions/v0.5.5-v2-integration-r1",
+  "kind": "version",
+  "version": "0.5.5",
+  "title": "V2完整集成原型功能、数值、UI与恢复检查",
+  "summary": "保留15测试文件、10类独立原生预算/文明/轨迹夹具、Chromium实际功能、完整物理/RNG逐位恢复与故障哈希审计。8条1000年均完整但7条末态严格一致性未达，保留所有失败日志；固定1000/10000/30000移植诊断，非100000年产品验收，main及网页未改。",
+  "source_commit": "aaf84bdb60fa0304662d95dcb72ef1f3a781e0cb",
+  "previous_commit": "2b043ca46b081fc987f6cdd6e77a2ad93dd08498",
+  "source_repository": "https://github.com/BillOu0104/2",
+  "source_subject": "prototype: validate V2 UI, full-state recovery and frozen staged JS diagnostics",
+  "source_date": "2026-10-22T20:07:15Z",
+  "archived_at": "2026-10-22T20:07:16.965612+00:00",
+  "runtime_fingerprint": "4000c025e88730dd9bbb492055c8df4ad7f292d943ac01296f6338fcd4130da1",
+  "deleted_paths": [],
+  "files": [
+    {
+      "source_path": "docs/SETTINGS-GUIDE-v0.5.md",
+      "archive_path": "snapshot/docs/SETTINGS-GUIDE-v0.5.md",
+      "sha256": "5b14d5a88f63f373efe10c796e90d07a4ee8bb263ee55faba178fa05011c1a4d",
+      "bytes": 55451
+    },
+    {
+      "source_path": "docs/integration-v2/DIAGNOSTICS_PROTOCOL.md",
+      "archive_path": "snapshot/docs/integration-v2/DIAGNOSTICS_PROTOCOL.md",
+      "sha256": "bb1f18c492599f62addc2d4e5c26c5a7d2b42166a1769affaceffc9222331c21",
+      "bytes": 2025
+    },
+    {
+      "source_path": "docs/integration-v2/INTEGRATION_REPORT.md",
+      "archive_path": "snapshot/docs/integration-v2/INTEGRATION_REPORT.md",
+      "sha256": "2682222ad2c6c83719b4f40ab78f5fe9e70769a503dedeb2b6ae3ca31fbd3b7c",
+      "bytes": 5663
+    },
+    {
+      "source_path": "docs/integration-v2/STATUS.md",
+      "archive_path": "snapshot/docs/integration-v2/STATUS.md",
+      "sha256": "5974c2b2fc43d9cdf68633f30476a52a55ee8698f9bdf2cf4fbf521c1288a35c",
+      "bytes": 5935
+    },
+    {
+      "source_path": "docs/integration-v2/diagnostics-v1.json",
+      "archive_path": "snapshot/docs/integration-v2/diagnostics-v1.json",
+      "sha256": "b3c7787b9fb40bb776a82b0dc33734970d4395ea9e48b97aab034abbfe5dcc5a",
+      "bytes": 345
+    },
+    {
+      "source_path": "docs/integration-v2/results/batch-recovery-r2.json",
+      "archive_path": "snapshot/docs/integration-v2/results/batch-recovery-r2.json",
+      "sha256": "135cd76edd558df4e3e732889e5704fe9c261d49c147ae46e1a31cc39880ae40",
+      "bytes": 1569
+    },
+    {
+      "source_path": "docs/integration-v2/results/batch-recovery-r2.log",
+      "archive_path": "snapshot/docs/integration-v2/results/batch-recovery-r2.log",
+      "sha256": "8b39943e7a06438316e16bba63b54bdb0f501381fd6ef8eb1f186afa445a5bd7",
+      "bytes": 256
+    },
+    {
+      "source_path": "docs/integration-v2/results/batch-recovery.json",
+      "archive_path": "snapshot/docs/integration-v2/results/batch-recovery.json",
+      "sha256": "77d3e7630fe5f58e3cf1c196c5828e671ebc3030dd870b1ff2f9216e8fdc10e1",
+      "bytes": 1569
+    },
+    {
+      "source_path": "docs/integration-v2/results/batch-recovery.log",
+      "archive_path": "snapshot/docs/integration-v2/results/batch-recovery.log",
+      "sha256": "8b39943e7a06438316e16bba63b54bdb0f501381fd6ef8eb1f186afa445a5bd7",
+      "bytes": 256
+    },
+    {
+      "source_path": "docs/integration-v2/results/browser-r1.log",
+      "archive_path": "snapshot/docs/integration-v2/results/browser-r1.log",
+      "sha256": "ec4fe3bc44bc04938fefe0d5ae64c228d42fd7a858d022c342f6751740f88eea",
+      "bytes": 429
+    },
+    {
+      "source_path": "docs/integration-v2/results/browser-r1/failure.json",
+      "archive_path": "snapshot/docs/integration-v2/results/browser-r1/failure.json",
+      "sha256": "83be60f2f86972c96e396b49ef4e97fc822fb250b11603e90d18ec0e5d5b5a7e",
+      "bytes": 13781
+    },
+    {
+      "source_path": "docs/integration-v2/results/browser-r1/failure.png",
+      "archive_path": "snapshot/docs/integration-v2/results/browser-r1/failure.png",
+      "sha256": "52ff99fab3f83a7ea3eb0422d8131ec609754ddc81688ced12a0aecba4bf56f2",
+      "bytes": 1173409
+    },
+    {
+      "source_path": "docs/integration-v2/results/browser-r2.log",
+      "archive_path": "snapshot/docs/integration-v2/results/browser-r2.log",
+      "sha256": "ec4fe3bc44bc04938fefe0d5ae64c228d42fd7a858d022c342f6751740f88eea",
+      "bytes": 429
+    },
+    {
+      "source_path": "docs/integration-v2/results/browser-r2/failure.json",
+      "archive_path": "snapshot/docs/integration-v2/results/browser-r2/failure.json",
+      "sha256": "c664d233403d4a3b2bf7b29e2acebe696fcebb57e21717754f6bcb857c4100b4",
+      "bytes": 12886
+    },
+    {
+      "source_path": "docs/integration-v2/results/browser-r2/failure.png",
+      "archive_path": "snapshot/docs/integration-v2/results/browser-r2/failure.png",
+      "sha256": "d90bfa6c84b10e085fb2d39c8254298422234049e14b0eb907b7ae4988cdb190",
+      "bytes": 1174179
+    },
+    {
+      "source_path": "docs/integration-v2/results/browser-r3.log",
+      "archive_path": "snapshot/docs/integration-v2/results/browser-r3.log",
+      "sha256": "0c9e52df4578cdc0b7c6d41979cc6918d79b3b381c3d63ffb3b4ed1572730f45",
+      "bytes": 672
+    },
+    {
+      "source_path": "docs/integration-v2/results/browser-r3/browser.json",
+      "archive_path": "snapshot/docs/integration-v2/results/browser-r3/browser.json",
+      "sha256": "17220c0aec9c388d81faddd0c022fc65402d1e436604c4d56265fda9b4e67697",
+      "bytes": 30205
+    },
+    {
+      "source_path": "docs/integration-v2/results/browser-r3/planet-absent.png",
+      "archive_path": "snapshot/docs/integration-v2/results/browser-r3/planet-absent.png",
+      "sha256": "260daf2d7cfc1eabc9887badfa80e5b7136ff531538e82c73e962d0f2445d36c",
+      "bytes": 1003850
+    },
+    {
+      "source_path": "docs/integration-v2/results/browser-r3/planet-returned.png",
+      "archive_path": "snapshot/docs/integration-v2/results/browser-r3/planet-returned.png",
+      "sha256": "5ec627c03f389af9fe502064508084c71ec7d06b1d9fbca1463e07e892684436",
+      "bytes": 1306132
+    },
+    {
+      "source_path": "docs/integration-v2/results/browser-server.log",
+      "archive_path": "snapshot/docs/integration-v2/results/browser-server.log",
+      "sha256": "a28c4e0f0df6a8cc6d0d96d43ba832aeb3bdd7355d8b8ba4c8b5a2f3f5f88a2d",
+      "bytes": 29
+    },
+    {
+      "source_path": "docs/integration-v2/results/build-r1.log",
+      "archive_path": "snapshot/docs/integration-v2/results/build-r1.log",
+      "sha256": "9ee8bb3ff9e34fee0ca5f9ff66363c0fb5a5d55922672c632636916af7a9c73a",
+      "bytes": 848
+    },
+    {
+      "source_path": "docs/integration-v2/results/build-r2.log",
+      "archive_path": "snapshot/docs/integration-v2/results/build-r2.log",
+      "sha256": "5b4eddfef3803b141f18fd876b17998d01dc80c203f26c766752b0b718d215b3",
+      "bytes": 141
+    },
+    {
+      "source_path": "docs/integration-v2/results/build-r3.log",
+      "archive_path": "snapshot/docs/integration-v2/results/build-r3.log",
+      "sha256": "04f1f20cca47ea484089b46428121122710fb43a32ae9a42fd6a2eb1f880572e",
+      "bytes": 349
+    },
+    {
+      "source_path": "docs/integration-v2/results/build-r4.log",
+      "archive_path": "snapshot/docs/integration-v2/results/build-r4.log",
+      "sha256": "04f1f20cca47ea484089b46428121122710fb43a32ae9a42fd6a2eb1f880572e",
+      "bytes": 349
+    },
+    {
+      "source_path": "docs/integration-v2/results/build-r5.log",
+      "archive_path": "snapshot/docs/integration-v2/results/build-r5.log",
+      "sha256": "5b4eddfef3803b141f18fd876b17998d01dc80c203f26c766752b0b718d215b3",
+      "bytes": 141
+    },
+    {
+      "source_path": "docs/integration-v2/results/build-r6.log",
+      "archive_path": "snapshot/docs/integration-v2/results/build-r6.log",
+      "sha256": "5b4eddfef3803b141f18fd876b17998d01dc80c203f26c766752b0b718d215b3",
+      "bytes": 141
+    },
+    {
+      "source_path": "docs/integration-v2/results/checkpoint-r1-direct.log",
+      "archive_path": "snapshot/docs/integration-v2/results/checkpoint-r1-direct.log",
+      "sha256": "029d6974a27780715a7633c793562835391f45a3d5964b56f7748d3f95970345",
+      "bytes": 3189
+    },
+    {
+      "source_path": "docs/integration-v2/results/checkpoint-r1.log",
+      "archive_path": "snapshot/docs/integration-v2/results/checkpoint-r1.log",
+      "sha256": "8ee9d3a6f1aa19e24f555e07fa814dc6257dd300e8a71e5bcc148ac2ec166a72",
+      "bytes": 289
+    },
+    {
+      "source_path": "docs/integration-v2/results/checkpoint-r2.log",
+      "archive_path": "snapshot/docs/integration-v2/results/checkpoint-r2.log",
+      "sha256": "5ba8cb1882dba34412d5ea7ec8cc8f80532701f6ceb5ec353fca650dd866f461",
+      "bytes": 459
+    },
+    {
+      "source_path": "docs/integration-v2/results/checkpoint-r3-direct.log",
+      "archive_path": "snapshot/docs/integration-v2/results/checkpoint-r3-direct.log",
+      "sha256": "125372ffb086c7e2304c0d2cc8ac8b3b392e1a2e8032ed43bc95908a514efb47",
+      "bytes": 553
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r1.log",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r1.log",
+      "sha256": "0de8b103fa9346a101e9c0e546359528633febcccc79bdffd33c8ed4b4b1e595",
+      "bytes": 1632
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r1/deflect-v2-capture.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r1/deflect-v2-capture.input.json",
+      "sha256": "adb1fe707e49bffef1bb6a891c5de7e3c09cc3f3ccaefd3ae9c32ada1ace66a4",
+      "bytes": 4926
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r1/deflect-v2-capture.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r1/deflect-v2-capture.native.json",
+      "sha256": "833a3b6e9fcacfd84e0c93459fb35b887de9a05a002a359b84a94b3c128afa97",
+      "bytes": 3888
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r1/deflect-v2-deflection.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r1/deflect-v2-deflection.input.json",
+      "sha256": "2f536fe925bf7274a9e9f87e1b09b2f45daff68f7b97f6728a5beac99a81e2cb",
+      "bytes": 4959
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r1/deflect-v2-deflection.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r1/deflect-v2-deflection.native.json",
+      "sha256": "626ef1f6141f84b29b9965cd3256dca830943c4b531f2f30119cef5565cce5bf",
+      "bytes": 9127
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r1/deflect-v2-natural.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r1/deflect-v2-natural.input.json",
+      "sha256": "a49d0a518245cef22082b4a04a0c7ef9aee297f52fd7fe6cbfb2b8bf1c4b65dd",
+      "bytes": 5109
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r1/deflect-v2-natural.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r1/deflect-v2-natural.native.json",
+      "sha256": "1a30cbe7f5c0891ec393d1044c7958c11e646b4b32d529ee908d9282731f3cb6",
+      "bytes": 3949
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r1/deflect-v2-planet-contact.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r1/deflect-v2-planet-contact.input.json",
+      "sha256": "e388ac340b679cce53350f5a156f841f875874702f60e701cc8ce68d88fb1ed1",
+      "bytes": 4947
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r1/deflect-v2-planet-contact.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r1/deflect-v2-planet-contact.native.json",
+      "sha256": "ae9f21471e4f56763d0a93abd6b461d682427283a0ececba08ab1bca9007920f",
+      "bytes": 5284
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r1/deflect-v2-reflection.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r1/deflect-v2-reflection.input.json",
+      "sha256": "b4b18f8eac45880ee2e800fdec47fdf4cbf9dcb5711fbdfe80040451435e95b9",
+      "bytes": 4959
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r1/deflect-v2-reflection.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r1/deflect-v2-reflection.native.json",
+      "sha256": "c206a84d768974668c974cd13b49c7e8442682cf7ba38d55f8bc11a10408d783",
+      "bytes": 29279021
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r1/native-comparison.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r1/native-comparison.json",
+      "sha256": "67a09dfc283deed8fb841f49bfb9e5bddae37f0fcbaee68b71cbb912d6183ef0",
+      "bytes": 23472
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r1/reflect-v2-capture.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r1/reflect-v2-capture.input.json",
+      "sha256": "cd053fb4a6a0bb6cd0b0e2d3ea45980adf68c76b422dfb2a39719966af4d1c48",
+      "bytes": 4927
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r1/reflect-v2-capture.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r1/reflect-v2-capture.native.json",
+      "sha256": "1c59e9e21c69dd41e7bc5aa9cd206fd74dfac705c7cfbd93a073b106b0a2ddf5",
+      "bytes": 3889
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r1/reflect-v2-deflection.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r1/reflect-v2-deflection.input.json",
+      "sha256": "559e9bcf90bd6875b21081ba181b5d94070ddf254957ed4b368e06a7b529a855",
+      "bytes": 4960
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r1/reflect-v2-deflection.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r1/reflect-v2-deflection.native.json",
+      "sha256": "4227019b00ceebab23d28268ca5e926230fee94a73034629a465132d996d55b1",
+      "bytes": 10034
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r1/reflect-v2-natural.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r1/reflect-v2-natural.input.json",
+      "sha256": "ce34ff3c38bef7ce7a82a869c2fdfccc951167ac3df0c7e8def3a80395512050",
+      "bytes": 5110
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r1/reflect-v2-natural.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r1/reflect-v2-natural.native.json",
+      "sha256": "25293b3405ffc503314bf2519e4cd41b468b65035913a988c38dda2dd93c2542",
+      "bytes": 3950
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r1/reflect-v2-planet-contact.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r1/reflect-v2-planet-contact.input.json",
+      "sha256": "d134943840df9a2182f345a90074526cb761abb00a14fd66382587a1b9c24f73",
+      "bytes": 4948
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r1/reflect-v2-planet-contact.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r1/reflect-v2-planet-contact.native.json",
+      "sha256": "34008be2e943795bddda78e157c1ca224f661c623b24ac694f9787fade7aaf1e",
+      "bytes": 4927
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r1/reflect-v2-reflection.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r1/reflect-v2-reflection.input.json",
+      "sha256": "3bb2869611842334678b2e4af76de7f8d41860459ff4a7d2110421e6e704e0cd",
+      "bytes": 4960
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r1/reflect-v2-reflection.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r1/reflect-v2-reflection.native.json",
+      "sha256": "0c6bb387898b3eb77d14be8150d7bd0b9ed10947eff5f6b700a65ee169be11d9",
+      "bytes": 22442253
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r2.log",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r2.log",
+      "sha256": "0de8b103fa9346a101e9c0e546359528633febcccc79bdffd33c8ed4b4b1e595",
+      "bytes": 1632
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r2/deflect-v2-capture.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r2/deflect-v2-capture.input.json",
+      "sha256": "adb1fe707e49bffef1bb6a891c5de7e3c09cc3f3ccaefd3ae9c32ada1ace66a4",
+      "bytes": 4926
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r2/deflect-v2-capture.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r2/deflect-v2-capture.native.json",
+      "sha256": "eaebc99d60a823301d41d84bdef2f0ced4f219123ca632284a0191cd4c3204a9",
+      "bytes": 3888
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r2/deflect-v2-deflection.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r2/deflect-v2-deflection.input.json",
+      "sha256": "2f536fe925bf7274a9e9f87e1b09b2f45daff68f7b97f6728a5beac99a81e2cb",
+      "bytes": 4959
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r2/deflect-v2-deflection.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r2/deflect-v2-deflection.native.json",
+      "sha256": "087d8ecef5d20a01cb8d6cc20f0a96d9f6566f13cad7f30a1225071ff4f9033d",
+      "bytes": 9126
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r2/deflect-v2-natural.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r2/deflect-v2-natural.input.json",
+      "sha256": "a49d0a518245cef22082b4a04a0c7ef9aee297f52fd7fe6cbfb2b8bf1c4b65dd",
+      "bytes": 5109
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r2/deflect-v2-natural.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r2/deflect-v2-natural.native.json",
+      "sha256": "20e926754d7ad883e2cf5d5c3c7d9b5b767a62963d94b976faa145ff11ada8f5",
+      "bytes": 3949
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r2/deflect-v2-planet-contact.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r2/deflect-v2-planet-contact.input.json",
+      "sha256": "e388ac340b679cce53350f5a156f841f875874702f60e701cc8ce68d88fb1ed1",
+      "bytes": 4947
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r2/deflect-v2-planet-contact.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r2/deflect-v2-planet-contact.native.json",
+      "sha256": "c21f672d8b865b5108fb1fc6e25ecf92dc6f77b6d2c377396df7303c69d461eb",
+      "bytes": 5284
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r2/deflect-v2-reflection.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r2/deflect-v2-reflection.input.json",
+      "sha256": "b4b18f8eac45880ee2e800fdec47fdf4cbf9dcb5711fbdfe80040451435e95b9",
+      "bytes": 4959
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r2/deflect-v2-reflection.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r2/deflect-v2-reflection.native.json",
+      "sha256": "5aaed7613e6a8f1e43f5447b7492a2fe67eea950938da5db08144b4df964aaf6",
+      "bytes": 29279020
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r2/native-comparison.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r2/native-comparison.json",
+      "sha256": "b9802e96fa5ec085ffec396e6ad1f3987d4e380be75baa018d97ae3c02264fac",
+      "bytes": 23472
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r2/reflect-v2-capture.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r2/reflect-v2-capture.input.json",
+      "sha256": "cd053fb4a6a0bb6cd0b0e2d3ea45980adf68c76b422dfb2a39719966af4d1c48",
+      "bytes": 4927
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r2/reflect-v2-capture.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r2/reflect-v2-capture.native.json",
+      "sha256": "7ab6d8bef0fe3bad0bc21f3ae42240fc6307e706874a8f5d18e7d13b44ef4481",
+      "bytes": 3889
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r2/reflect-v2-deflection.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r2/reflect-v2-deflection.input.json",
+      "sha256": "559e9bcf90bd6875b21081ba181b5d94070ddf254957ed4b368e06a7b529a855",
+      "bytes": 4960
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r2/reflect-v2-deflection.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r2/reflect-v2-deflection.native.json",
+      "sha256": "0496e6e19ecd9240fdf313af344755fc71eee3a07b10959c375dc315d105c574",
+      "bytes": 10033
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r2/reflect-v2-natural.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r2/reflect-v2-natural.input.json",
+      "sha256": "ce34ff3c38bef7ce7a82a869c2fdfccc951167ac3df0c7e8def3a80395512050",
+      "bytes": 5110
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r2/reflect-v2-natural.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r2/reflect-v2-natural.native.json",
+      "sha256": "28d7135a201abe29e837ec77a103961a1009f712873d552219cb57dfc4f08920",
+      "bytes": 3950
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r2/reflect-v2-planet-contact.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r2/reflect-v2-planet-contact.input.json",
+      "sha256": "d134943840df9a2182f345a90074526cb761abb00a14fd66382587a1b9c24f73",
+      "bytes": 4948
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r2/reflect-v2-planet-contact.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r2/reflect-v2-planet-contact.native.json",
+      "sha256": "a3664fb44a7ee8e0024f8e85e3af68a0497aecf8d62eb21ba3a6bfeb14c54dd0",
+      "bytes": 4926
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r2/reflect-v2-reflection.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r2/reflect-v2-reflection.input.json",
+      "sha256": "3bb2869611842334678b2e4af76de7f8d41860459ff4a7d2110421e6e704e0cd",
+      "bytes": 4960
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r2/reflect-v2-reflection.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r2/reflect-v2-reflection.native.json",
+      "sha256": "475af69624aec662c728387a6c9fa28230a88ae622f7b6267ff09bf9fee27aab",
+      "bytes": 22442253
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r3.log",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r3.log",
+      "sha256": "0de8b103fa9346a101e9c0e546359528633febcccc79bdffd33c8ed4b4b1e595",
+      "bytes": 1632
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r3/deflect-v2-capture.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r3/deflect-v2-capture.input.json",
+      "sha256": "adb1fe707e49bffef1bb6a891c5de7e3c09cc3f3ccaefd3ae9c32ada1ace66a4",
+      "bytes": 4926
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r3/deflect-v2-capture.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r3/deflect-v2-capture.native.json",
+      "sha256": "224c1bef7c2711a640c66ecba338f1e3fc8ddb7ec0c7eb156e2f1a008be884f8",
+      "bytes": 3888
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r3/deflect-v2-deflection.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r3/deflect-v2-deflection.input.json",
+      "sha256": "2f536fe925bf7274a9e9f87e1b09b2f45daff68f7b97f6728a5beac99a81e2cb",
+      "bytes": 4959
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r3/deflect-v2-deflection.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r3/deflect-v2-deflection.native.json",
+      "sha256": "1b6baded1c91f9c09c3ca481ebfc5af2798944d6a76e29738c010f69f1c5bc26",
+      "bytes": 9126
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r3/deflect-v2-natural.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r3/deflect-v2-natural.input.json",
+      "sha256": "a49d0a518245cef22082b4a04a0c7ef9aee297f52fd7fe6cbfb2b8bf1c4b65dd",
+      "bytes": 5109
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r3/deflect-v2-natural.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r3/deflect-v2-natural.native.json",
+      "sha256": "f02f159ba5d018f5b7b91dedbc3379ce563946827ca0a39e3f5ab04b380856e2",
+      "bytes": 3949
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r3/deflect-v2-planet-contact.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r3/deflect-v2-planet-contact.input.json",
+      "sha256": "e388ac340b679cce53350f5a156f841f875874702f60e701cc8ce68d88fb1ed1",
+      "bytes": 4947
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r3/deflect-v2-planet-contact.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r3/deflect-v2-planet-contact.native.json",
+      "sha256": "c9c9097abf3712cbd67094ef4691b11f0c5209309ef9055e4c7fb6736f2631d2",
+      "bytes": 5284
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r3/deflect-v2-reflection.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r3/deflect-v2-reflection.input.json",
+      "sha256": "b4b18f8eac45880ee2e800fdec47fdf4cbf9dcb5711fbdfe80040451435e95b9",
+      "bytes": 4959
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r3/deflect-v2-reflection.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r3/deflect-v2-reflection.native.json",
+      "sha256": "8d5f26d8f93d33635841d419ef846cfb0ea8681c4d86a8987440f227e81fda38",
+      "bytes": 29279021
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r3/native-comparison.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r3/native-comparison.json",
+      "sha256": "766238b13d5e0c589149e0edc2e78cf2aeefa4255f6d41325f79960879d2974a",
+      "bytes": 23472
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r3/reflect-v2-capture.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r3/reflect-v2-capture.input.json",
+      "sha256": "cd053fb4a6a0bb6cd0b0e2d3ea45980adf68c76b422dfb2a39719966af4d1c48",
+      "bytes": 4927
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r3/reflect-v2-capture.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r3/reflect-v2-capture.native.json",
+      "sha256": "f656d0ffe785bed03e097b84fbcbdb6eaf7c31e3b8033ba7e25ddd5f1ffa82bc",
+      "bytes": 3889
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r3/reflect-v2-deflection.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r3/reflect-v2-deflection.input.json",
+      "sha256": "559e9bcf90bd6875b21081ba181b5d94070ddf254957ed4b368e06a7b529a855",
+      "bytes": 4960
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r3/reflect-v2-deflection.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r3/reflect-v2-deflection.native.json",
+      "sha256": "0da84ec92b118b111fd58d852d8813b1e88422e5a2ab62291cf56307663db773",
+      "bytes": 10034
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r3/reflect-v2-natural.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r3/reflect-v2-natural.input.json",
+      "sha256": "ce34ff3c38bef7ce7a82a869c2fdfccc951167ac3df0c7e8def3a80395512050",
+      "bytes": 5110
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r3/reflect-v2-natural.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r3/reflect-v2-natural.native.json",
+      "sha256": "4d09dbe13c1792772517dd702d7c2ec54a6ec1fb01ad6b4719c0c2c23ff8c82f",
+      "bytes": 3950
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r3/reflect-v2-planet-contact.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r3/reflect-v2-planet-contact.input.json",
+      "sha256": "d134943840df9a2182f345a90074526cb761abb00a14fd66382587a1b9c24f73",
+      "bytes": 4948
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r3/reflect-v2-planet-contact.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r3/reflect-v2-planet-contact.native.json",
+      "sha256": "2e77b7d23bfaed118c767506da32614ca1faeba6376e8e493b9d83057e48a6e7",
+      "bytes": 4927
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r3/reflect-v2-reflection.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r3/reflect-v2-reflection.input.json",
+      "sha256": "3bb2869611842334678b2e4af76de7f8d41860459ff4a7d2110421e6e704e0cd",
+      "bytes": 4960
+    },
+    {
+      "source_path": "docs/integration-v2/results/conformance-r3/reflect-v2-reflection.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/conformance-r3/reflect-v2-reflection.native.json",
+      "sha256": "5b812797b59f07d4fbcd56192990dce1cb5717de61d5fd9e7d101f538b7ae148",
+      "bytes": 22442253
+    },
+    {
+      "source_path": "docs/integration-v2/results/functional-r1.log",
+      "archive_path": "snapshot/docs/integration-v2/results/functional-r1.log",
+      "sha256": "4a9ea8296e3e83fe9aab477370b63f04914e29006b9b65a1bf66757150967004",
+      "bytes": 163
+    },
+    {
+      "source_path": "docs/integration-v2/results/headless-r1.log",
+      "archive_path": "snapshot/docs/integration-v2/results/headless-r1.log",
+      "sha256": "fc6dbca5392cc57254deecf947d08157985fb4d0ed5afb79818512a7759ccd76",
+      "bytes": 1598
+    },
+    {
+      "source_path": "docs/integration-v2/results/headless-r1/V2-INTEGRATION-LONG-20261022-0-deflect-v2.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/headless-r1/V2-INTEGRATION-LONG-20261022-0-deflect-v2.input.json",
+      "sha256": "1288b917cbad8f17661c067f0e716c1fd6f91855e89379c135bba4f5466f7060",
+      "bytes": 5108
+    },
+    {
+      "source_path": "docs/integration-v2/results/headless-r1/V2-INTEGRATION-LONG-20261022-0-deflect-v2.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/headless-r1/V2-INTEGRATION-LONG-20261022-0-deflect-v2.native.json",
+      "sha256": "998a5ffcdb25e160db47b32c0d2b5d02fd3c5167ea3c41b3d69933eef22c014a",
+      "bytes": 12470
+    },
+    {
+      "source_path": "docs/integration-v2/results/headless-r1/V2-INTEGRATION-LONG-20261022-0-reflect-v2.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/headless-r1/V2-INTEGRATION-LONG-20261022-0-reflect-v2.input.json",
+      "sha256": "75ca12d435d6d8178fad673cb43e8f57b6c99c81ef213706012df75a47af659f",
+      "bytes": 5109
+    },
+    {
+      "source_path": "docs/integration-v2/results/headless-r1/V2-INTEGRATION-LONG-20261022-0-reflect-v2.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/headless-r1/V2-INTEGRATION-LONG-20261022-0-reflect-v2.native.json",
+      "sha256": "5f240a855e427786dea690dbf833cf41b4e815e85f1ad8a9dc592e9672b7a84e",
+      "bytes": 8180
+    },
+    {
+      "source_path": "docs/integration-v2/results/headless-r1/V2-INTEGRATION-LONG-20261022-1-deflect-v2.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/headless-r1/V2-INTEGRATION-LONG-20261022-1-deflect-v2.input.json",
+      "sha256": "af43f0ef29d8e01143fb6f8fd32354ecc3d62876f8999e316810c8d4863cae64",
+      "bytes": 5112
+    },
+    {
+      "source_path": "docs/integration-v2/results/headless-r1/V2-INTEGRATION-LONG-20261022-1-deflect-v2.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/headless-r1/V2-INTEGRATION-LONG-20261022-1-deflect-v2.native.json",
+      "sha256": "7cedecebe6fd68f5bedb78102673b0455275cb3d3b09851dd91da738a7dc72f8",
+      "bytes": 9592
+    },
+    {
+      "source_path": "docs/integration-v2/results/headless-r1/V2-INTEGRATION-LONG-20261022-1-reflect-v2.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/headless-r1/V2-INTEGRATION-LONG-20261022-1-reflect-v2.input.json",
+      "sha256": "0e5e60b61693f29d716c2c9e5b909814cee063ac5b197a838e92360d987d1dce",
+      "bytes": 5113
+    },
+    {
+      "source_path": "docs/integration-v2/results/headless-r1/V2-INTEGRATION-LONG-20261022-1-reflect-v2.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/headless-r1/V2-INTEGRATION-LONG-20261022-1-reflect-v2.native.json",
+      "sha256": "c542924facb7a006ee01f6e4d00adb7ffd7d241570d5871f88e294359ca8f289",
+      "bytes": 9592
+    },
+    {
+      "source_path": "docs/integration-v2/results/headless-r1/V2-INTEGRATION-LONG-20261022-2-deflect-v2.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/headless-r1/V2-INTEGRATION-LONG-20261022-2-deflect-v2.input.json",
+      "sha256": "0ee9f6c9c88a8f78c36e62a4c62cacbd0c1d3257b82a09290f40d7c9310e88a5",
+      "bytes": 5115
+    },
+    {
+      "source_path": "docs/integration-v2/results/headless-r1/V2-INTEGRATION-LONG-20261022-2-deflect-v2.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/headless-r1/V2-INTEGRATION-LONG-20261022-2-deflect-v2.native.json",
+      "sha256": "d1f9acbd223d170a2b4f999511ed0af61780d5dd619a796921c0c8b4df8b5481",
+      "bytes": 13475
+    },
+    {
+      "source_path": "docs/integration-v2/results/headless-r1/V2-INTEGRATION-LONG-20261022-2-reflect-v2.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/headless-r1/V2-INTEGRATION-LONG-20261022-2-reflect-v2.input.json",
+      "sha256": "9cfa40fdee443da49e0044ee66556a9173a35027d160fc948e426e7b9203f0b6",
+      "bytes": 5116
+    },
+    {
+      "source_path": "docs/integration-v2/results/headless-r1/V2-INTEGRATION-LONG-20261022-2-reflect-v2.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/headless-r1/V2-INTEGRATION-LONG-20261022-2-reflect-v2.native.json",
+      "sha256": "43aa6404ad56a9fbb0a18e326e3953680e0ce350391a097a6173aaf630a2fbe5",
+      "bytes": 11149
+    },
+    {
+      "source_path": "docs/integration-v2/results/headless-r1/V2-INTEGRATION-LONG-20261022-3-deflect-v2.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/headless-r1/V2-INTEGRATION-LONG-20261022-3-deflect-v2.input.json",
+      "sha256": "5eb071481d23f7af02faa6b567d793568ae0c4a23cda41944052eb805385f95b",
+      "bytes": 5109
+    },
+    {
+      "source_path": "docs/integration-v2/results/headless-r1/V2-INTEGRATION-LONG-20261022-3-deflect-v2.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/headless-r1/V2-INTEGRATION-LONG-20261022-3-deflect-v2.native.json",
+      "sha256": "8d76713ca4a615b7582f3460a8159d5816cae821c8690c5d3a56d987886ef6aa",
+      "bytes": 13666
+    },
+    {
+      "source_path": "docs/integration-v2/results/headless-r1/V2-INTEGRATION-LONG-20261022-3-reflect-v2.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/headless-r1/V2-INTEGRATION-LONG-20261022-3-reflect-v2.input.json",
+      "sha256": "95e61c01135c8ad38167f0de645f8001ddda57607e48d1e7d6eefaeb1214c2cd",
+      "bytes": 5110
+    },
+    {
+      "source_path": "docs/integration-v2/results/headless-r1/V2-INTEGRATION-LONG-20261022-3-reflect-v2.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/headless-r1/V2-INTEGRATION-LONG-20261022-3-reflect-v2.native.json",
+      "sha256": "9e22fc648f97fad3ba4b8449caea7a39afd904df1324f16b5d93488f7e179bc8",
+      "bytes": 12107
+    },
+    {
+      "source_path": "docs/integration-v2/results/headless-r1/report.json",
+      "archive_path": "snapshot/docs/integration-v2/results/headless-r1/report.json",
+      "sha256": "80a2ba1d1217db41caafec6e1ab45550efc7c0d77903cdecf4d67d7c49959ffe",
+      "bytes": 31475
+    },
+    {
+      "source_path": "docs/integration-v2/results/kernel-archive-check.log",
+      "archive_path": "snapshot/docs/integration-v2/results/kernel-archive-check.log",
+      "sha256": "8c8cf5225a4c7e4f8129b7827e9b8432ecc0dee95c8e0b225f26a90574b84925",
+      "bytes": 81
+    },
+    {
+      "source_path": "docs/integration-v2/results/regression-r1.log",
+      "archive_path": "snapshot/docs/integration-v2/results/regression-r1.log",
+      "sha256": "89f122ce353f8f6ef5cf9d6e1bd362be8a669854706fbc7721e092709c837e82",
+      "bytes": 773
+    },
+    {
+      "source_path": "docs/integration-v2/results/regression-r2.log",
+      "archive_path": "snapshot/docs/integration-v2/results/regression-r2.log",
+      "sha256": "33352c90e3e9203100cfd6dea438aa6ff492a11e6e40615a9a83e8d0e558d0a8",
+      "bytes": 818
+    },
+    {
+      "source_path": "docs/integration-v2/results/regression-r3.log",
+      "archive_path": "snapshot/docs/integration-v2/results/regression-r3.log",
+      "sha256": "e26a4f4cd402b028ffb8a07a4c59175226d50ce4c3f989311fa99dfa020b64b7",
+      "bytes": 819
+    },
+    {
+      "source_path": "docs/settings-guide.html",
+      "archive_path": "snapshot/docs/settings-guide.html",
+      "sha256": "250058ee3948f2f51354bec5f3434f1efd79c944082ea91cb09dcb9574a216ac",
+      "bytes": 68779
+    },
+    {
+      "source_path": "tests/v2-checkpoint.test.js",
+      "archive_path": "snapshot/tests/v2-checkpoint.test.js",
+      "sha256": "7111aa7ace2449adb20c032d393cb51df5f298d5ba4305d57a8feb0ce79918cf",
+      "bytes": 1818
+    },
+    {
+      "source_path": "tests/v2-integration.test.js",
+      "archive_path": "snapshot/tests/v2-integration.test.js",
+      "sha256": "336d73a1d3230b90cdc2e64974b5fb472d6444840c696e93b56a6dd5767ea265",
+      "bytes": 4948
+    },
+    {
+      "source_path": "tools/build.mjs",
+      "archive_path": "snapshot/tools/build.mjs",
+      "sha256": "72176b4e7e610ac7a7e333028f83f2ed9e066b3a3e73499e59dd88c23fb35ead",
+      "bytes": 3369
+    },
+    {
+      "source_path": "tools/generate-settings-guide.mjs",
+      "archive_path": "snapshot/tools/generate-settings-guide.mjs",
+      "sha256": "ee06d0f521855efe77d3096d71e1ab1529a324f4e9337bc936612be4b8dc6f17",
+      "bytes": 39076
+    },
+    {
+      "source_path": "tools/v2/batch-worker.mjs",
+      "archive_path": "snapshot/tools/v2/batch-worker.mjs",
+      "sha256": "dafe0be9e2c4bc5944699a380fdfde681583b5d04863eac3fdaf4f2e78bb00be",
+      "bytes": 7091
+    },
+    {
+      "source_path": "tools/v2/browser-check.mjs",
+      "archive_path": "snapshot/tools/v2/browser-check.mjs",
+      "sha256": "05611ade348c42be51177da4977156bd82f8e53c4838d2dbd242cc930181be2c",
+      "bytes": 6569
+    },
+    {
+      "source_path": "tools/v2/check-batch-recovery.mjs",
+      "archive_path": "snapshot/tools/v2/check-batch-recovery.mjs",
+      "sha256": "3daf1adbf55af6fd4b2a02349fec2d70f5ee9d68fe7a502b88b86d46048bf47a",
+      "bytes": 2476
+    },
+    {
+      "source_path": "tools/v2/headless-check.mjs",
+      "archive_path": "snapshot/tools/v2/headless-check.mjs",
+      "sha256": "70b9027429fcc4d59fe45c97139a4e3df650d7d9c302bfd74278eed32b388345",
+      "bytes": 4479
+    },
+    {
+      "source_path": "tools/v2/supervise.py",
+      "archive_path": "snapshot/tools/v2/supervise.py",
+      "sha256": "c8b18652026cffabda411a3a4b763476b8d7f1ae054054bb106befbeda11ba68",
+      "bytes": 7544
+    },
+    {
+      "source_path": "tools/validate-v2-native.mjs",
+      "archive_path": "snapshot/tools/validate-v2-native.mjs",
+      "sha256": "d095302859fdf9e1781e08c650f8462befbf6bf2198332c6c9b3864fbbe8dc85",
+      "bytes": 6240
+    },
+    {
+      "source_path": null,
+      "archive_path": "changes.patch",
+      "sha256": "54ce9d6668fef801257cc6b61e1214dbf476877d1201e7ffe77776f9999960a0",
+      "bytes": 76074
+    }
+  ]
+}

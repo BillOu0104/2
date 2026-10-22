@@ -1,0 +1,22 @@
+import fs from 'node:fs';
+import crypto from 'node:crypto';
+import {spawnSync} from 'node:child_process';
+import assert from 'node:assert/strict';
+import {Simulation} from '../../src/simulation.js';
+const dir=process.argv[2]??'docs/integration-v2/results/headless-r1';fs.mkdirSync(dir,{recursive:true});
+const binary=process.env.V2_NATIVE??'/workspace/2/docs/research-v2/bin/native';assert.equal(crypto.createHash('sha256').update(fs.readFileSync(binary)).digest('hex'),'cf2117ac290bea83d6cfbdb07f98888412d594024e295887bc537bce5132f091');
+const report={scope:'Four new Seeds, two variants, 1000 display years; integration/precision diagnostic, not a100000year confirmation',node:process.version,platform:process.platform,rows:[]};
+report.sourceSHA256=Object.fromEntries(['src/simulation.js','src/v2-simulation.js','src/settings.js','src/physics/controlled-system.js','src/physics/gravity.js','src/physics/minimal-control.js'].map(p=>[p,crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex')]));
+const save=()=>fs.writeFileSync(dir+'/report.json',JSON.stringify(report,null,2)+'\n');
+for(let seedIndex=0;seedIndex<4;seedIndex++)for(const mode of ['deflect-v2','reflect-v2']){
+ const seed='V2-INTEGRATION-LONG-20261022-'+seedIndex,sim=new Simulation({seed,stabilityMode:mode,autorestart:true});sim.tick();const c=sim.controlled,horizon=1000;
+ const input={seed,profile:mode,sourceHash:'frozen-native7f64a8a-integration-diagnostic',configHash:'h4-P5-1000-years',horizon,settings:sim.settings,controller:{...c.cfg,dt:.0001875,eta:.001875,shadow:false},bodies:sim.initialBodies.map(b=>({r:[b.x,b.y,b.z],v:[b.vx,b.vy,b.vz],mass:b.mass}))};
+ const prefix=dir+'/'+seed+'-'+mode;fs.writeFileSync(prefix+'.input.json',JSON.stringify(input));const raw=spawnSync(binary,[prefix+'.input.json'],{encoding:'utf8',maxBuffer:64*1024*1024});fs.writeFileSync(prefix+'.native.json',raw.stdout);assert.equal(raw.status,0,raw.stderr);const ref=JSON.parse(raw.stdout);
+ let stable=sim.world.state?.epoch.kind==='stable'&&c.bodies[3].mass>0?1:0;const start=performance.now(),heapStart=process.memoryUsage().heapUsed;let maxFrameMS=0;
+ for(let i=1;i<horizon*60&&!c.stellarFailure&&!c.numericalUnknown;i++){const before=performance.now();sim.tick();maxFrameMS=Math.max(maxFrameMS,performance.now()-before);if(sim.world.state?.epoch.kind==='stable'&&c.bodies[3].mass>0)stable++;}
+ let maxState=0;for(let i=0;i<4;i++)for(let k=0;k<6;k++){const field=['x','y','z','vx','vy','vz'][k];maxState=Math.max(maxState,Math.abs(c.bodies[i][field]-(k<3?ref.finalBodies[i].r[k]:ref.finalBodies[i].v[k-3])));}
+ const seconds=(performance.now()-start)/1000,row={seed,mode,horizon,jsCompletedYears:c.year,nativeIntegratedYears:ref.integratedYears,jsFailure:c.stellarFailure,nativeFailure:ref.starFailure,jsUNKNOWN:c.numericalUnknown,nativeUNKNOWN:ref.error,jsSteps:c.integrator.steps,nativeSteps:ref.steps,maxState,jsStableFraction:stable/(horizon*60),nativeStableFraction:ref.stableFraction,jsPlanetLosses:c.planetLosses,nativePlanetLosses:ref.planetLosses,jsRespawns:c.planetRespawns,nativeRespawns:ref.planetRespawns,jsSeconds:seconds,nativeSeconds:ref.wallSeconds,framesPerSecond:c.frame/seconds,stepsPerSecond:c.integrator.steps/seconds,maxFrameMS,heapStart,heapEnd:process.memoryUsage().heapUsed,rss:process.memoryUsage().rss,jsControl:c.cost,nativeControl:ref.control,jsPlanetExternal:c.external,nativePlanetExternal:ref.planetExternal,jsResidual:c.maxResidual,nativeResidual:ref.maxNumericalEnergyResidual,generation:sim.generation};
+ row.complete=c.frame===horizon*60&&!c.stellarFailure&&!c.numericalUnknown;row.shortTrajectoryAgreement=maxState<1e-5&&row.jsSteps===row.nativeSteps&&row.jsPlanetLosses===row.nativePlanetLosses&&Math.abs(row.jsStableFraction-row.nativeStableFraction)<1e-12;report.rows.push(row);save();console.log(JSON.stringify({seed,mode,complete:row.complete,maxState,trajectoryAgreement:row.shortTrajectoryAgreement,seconds,framesPerSecond:row.framesPerSecond}));
+ assert.equal(sim.generation,1);assert.equal(c.numericalUnknown,null);
+}
+report.allCompleted=report.rows.every(r=>r.complete);report.allTrajectoryAgree=report.rows.every(r=>r.shortTrajectoryAgreement);report.limits='Scalar allocation-heavy JS includes snapshots/world/civilization. Timings include per-frame instrumentation and co-running browser on2sharedCPUs, no GPU timing or native Wallpaper Engine claim. Chaotic long trajectories need not remain bitwise; report divergences without replacing Seeds.';save();

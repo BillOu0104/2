@@ -1,0 +1,31 @@
+{
+  "pass": true,
+  "checks": [
+    "Completed result keys are audited and skipped without duplicate rows",
+    "Checkpoint-to-result interruption resumes the same physical state without resetting or double-counting",
+    "Changed raw-result SHA is rejected before continuing"
+  ],
+  "logs": [
+    {
+      "status": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "status": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "status": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "status": 1,
+      "stdout": "",
+      "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n+ actual - expected\n\n+ '42f38a2c0c5d0fbe9a49524f0df762affd5cb48da80c94e3b1016eb6eed89b66'\n- '680dc10cf5cd0f837ce18664eb6760b62e57b23b457560820bc505114f8ca24f'\n\n    at file:///workspace/2-integration/tools/v2/batch-worker.mjs:14:310\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n    at async node:internal/modules/esm/loader:643:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: '42f38a2c0c5d0fbe9a49524f0df762affd5cb48da80c94e3b1016eb6eed89b66',\n  expected: '680dc10cf5cd0f837ce18664eb6760b62e57b23b457560820bc505114f8ca24f',\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.19.0\n"
+    }
+  ],
+  "scope": "Temporary runner fault/restore tests; all fixture files removed afterward, no research outcomes"
+}
