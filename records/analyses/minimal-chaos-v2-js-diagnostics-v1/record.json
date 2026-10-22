@@ -1,0 +1,397 @@
+{
+  "format": 1,
+  "id": "minimal-chaos-v2-js-diagnostics-v1",
+  "path": "analyses/minimal-chaos-v2-js-diagnostics-v1",
+  "kind": "analysis",
+  "version": null,
+  "title": "JS集成逐级窗口验证",
+  "summary": "同版完整状态续算、原始事件/失败/UNKNOWN及控制和行星成本；小样本数值诊断，不是128Seed长期确认，FTLE未测，main未改。",
+  "source_commit": "8551609026fb86523223d878f5d71ef1521aae2d",
+  "previous_commit": "baafdaf3e31182df8dc383d0a6886dd46dc5201e",
+  "source_repository": "https://github.com/BillOu0104/2",
+  "source_subject": "integration: preserve checkpointed JS1000/10000/30000 diagnostic results",
+  "source_date": "2026-10-22T20:57:40Z",
+  "archived_at": "2026-10-22T20:57:40.947189+00:00",
+  "runtime_fingerprint": null,
+  "deleted_paths": [],
+  "files": [
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-deflect-v2-1000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-deflect-v2-1000.raw.json",
+      "sha256": "057634e8481804b40667ec3dd1b4cb82812589919709aac7dfa59c4a589811c1",
+      "bytes": 9424
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-deflect-v2-1000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-deflect-v2-1000.state.json",
+      "sha256": "80bd3e50d96e6868f2b7921609f4b023847f37446910f243ed6ce53cf891ff53",
+      "bytes": 22189
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-deflect-v2-10000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-deflect-v2-10000.raw.json",
+      "sha256": "3e12116d80b6dc8b6734b00dc84e56b85e586026d27525a11e7b68e03b80811e",
+      "bytes": 22254
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-deflect-v2-10000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-deflect-v2-10000.state.json",
+      "sha256": "3ba49173de4b6c027c89aba6b3aa9482903d12cd656b9b8b6cb642b5631daefe",
+      "bytes": 44530
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-deflect-v2-30000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-deflect-v2-30000.raw.json",
+      "sha256": "a2d5bad48aabdaef7e41fa2950b99ab06c7884c52796677668d1275fd66e8532",
+      "bytes": 37907
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-deflect-v2-30000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-deflect-v2-30000.state.json",
+      "sha256": "b1961fc9ed12256c556dfe14c5152ea8b4096db7760d2804bd73aff236db4ad8",
+      "bytes": 64197
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-deflect-v2.checkpoint.json",
+      "sha256": "b1961fc9ed12256c556dfe14c5152ea8b4096db7760d2804bd73aff236db4ad8",
+      "bytes": 64197
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-reflect-v2-1000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-reflect-v2-1000.raw.json",
+      "sha256": "36a235a47b9315cfc0d217031f7f4475f3526120871dfe0065107841a93931f8",
+      "bytes": 52967
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-reflect-v2-1000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-reflect-v2-1000.state.json",
+      "sha256": "618c8f05d405d4bc4f8b439ceb56efbde31d4b7b72ce0b5fe55eef6007439130",
+      "bytes": 75157
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-reflect-v2-10000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-reflect-v2-10000.raw.json",
+      "sha256": "c7902c5ade82b912a569d9937640568dda6e15ef18982519f74456febf453b02",
+      "bytes": 128491
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-reflect-v2-10000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-reflect-v2-10000.state.json",
+      "sha256": "83d90ee38f8b4c73ac460d287c172a6652b86d878387cf749e5f4d1cffb57f39",
+      "bytes": 178003
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-reflect-v2-30000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-reflect-v2-30000.raw.json",
+      "sha256": "a834d8442def35c14dfecb1ebc30433ebd82a99dc2b47a1a34767029e7af6750",
+      "bytes": 223287
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-reflect-v2-30000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-reflect-v2-30000.state.json",
+      "sha256": "434f9ea365d017b640c3b7fbf79398eb280f4a3414e13fffd7512368e2f48524",
+      "bytes": 272119
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-0-reflect-v2.checkpoint.json",
+      "sha256": "434f9ea365d017b640c3b7fbf79398eb280f4a3414e13fffd7512368e2f48524",
+      "bytes": 272119
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-deflect-v2-1000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-deflect-v2-1000.raw.json",
+      "sha256": "4311acdb1643967160d46281fe6a45c94e5729307064431ffffd7b23a822e787",
+      "bytes": 27094
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-deflect-v2-1000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-deflect-v2-1000.state.json",
+      "sha256": "ea49ecae9aa50a3adf79f1c57924c2f362561024212528c9d3859de1ed17e90e",
+      "bytes": 59611
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-deflect-v2-10000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-deflect-v2-10000.raw.json",
+      "sha256": "0b3bd1d4ecbe70d1b3e37689b448574ca372238a24ffd796e50e8406f6134cfe",
+      "bytes": 65752
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-deflect-v2-10000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-deflect-v2-10000.state.json",
+      "sha256": "0d495be77a9297ca77f4244d3d404d060d2e2e82d65e5397ea31795a18be057b",
+      "bytes": 115531
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-deflect-v2-30000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-deflect-v2-30000.raw.json",
+      "sha256": "bdb941b0f662df81c06f3337664468a7d157a20d4479d078f1cb788afaee2cd4",
+      "bytes": 81095
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-deflect-v2-30000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-deflect-v2-30000.state.json",
+      "sha256": "c6fdb84eb328ce383dfb21ed171ef41a1b26b9b5524ed959495f5b8a0e1d17e7",
+      "bytes": 127078
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-deflect-v2.checkpoint.json",
+      "sha256": "c6fdb84eb328ce383dfb21ed171ef41a1b26b9b5524ed959495f5b8a0e1d17e7",
+      "bytes": 127078
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-reflect-v2-1000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-reflect-v2-1000.raw.json",
+      "sha256": "c536c04af3394c1c19aa2825e9c95a8ceb522a864a693dadb709e67dd21debd2",
+      "bytes": 27094
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-reflect-v2-1000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-reflect-v2-1000.state.json",
+      "sha256": "b6bfd3a8983abfa55b57bb9f41c2414de6d5ea4aa004e26d13df3da8b3f2edd5",
+      "bytes": 59611
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-reflect-v2-10000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-reflect-v2-10000.raw.json",
+      "sha256": "da4b7db79d673bcc70e0873ada84e7c16062aa4d4327e02bd53763c0c96038b0",
+      "bytes": 86902
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-reflect-v2-10000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-reflect-v2-10000.state.json",
+      "sha256": "9e227f5c5cd0682b74a33fec4b6807f01d15e0e5f367686eeac05f333f96b812",
+      "bytes": 149644
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-reflect-v2-30000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-reflect-v2-30000.raw.json",
+      "sha256": "3a7acc5b6eaadf37518e8541921d4714a5006774c63c8f20fa3985b005437be3",
+      "bytes": 111458
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-reflect-v2-30000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-reflect-v2-30000.state.json",
+      "sha256": "be2a1a2d30f2aa5193655d729c5c56af3e4596e2fe847bebad040bc6a6da68a1",
+      "bytes": 156335
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-1-reflect-v2.checkpoint.json",
+      "sha256": "be2a1a2d30f2aa5193655d729c5c56af3e4596e2fe847bebad040bc6a6da68a1",
+      "bytes": 156335
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-deflect-v2-1000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-deflect-v2-1000.raw.json",
+      "sha256": "1d9162748571a234a70b57239294a59404e5d4b00ec2258f8162b25fb4429c3b",
+      "bytes": 15400
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-deflect-v2-1000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-deflect-v2-1000.state.json",
+      "sha256": "1d643ccd1d2e5b8f204b4235fd04c565f32e9b35a889712882454c894d8c28be",
+      "bytes": 35408
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-deflect-v2-10000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-deflect-v2-10000.raw.json",
+      "sha256": "6f7b59aa2d46b9ed0c6fb1fe7d43bf8261318ae37df6e07cbf69edca9174eb84",
+      "bytes": 114628
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-deflect-v2-10000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-deflect-v2-10000.state.json",
+      "sha256": "f377dc3ce14dd91e586cf0b8efebc733fc735d73fa752c23a98d19d8c5693289",
+      "bytes": 157297
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-deflect-v2-30000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-deflect-v2-30000.raw.json",
+      "sha256": "2cd3b1936e088c23caf2dc82a2c691c01bf7752ae851ae57158f2bdcbd024b5c",
+      "bytes": 137894
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-deflect-v2-30000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-deflect-v2-30000.state.json",
+      "sha256": "fb4ba970fae5e6f09ae9a0dec91f63c3f41fb8e8aec17d4300f62b5d1217af4d",
+      "bytes": 182046
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-deflect-v2.checkpoint.json",
+      "sha256": "fb4ba970fae5e6f09ae9a0dec91f63c3f41fb8e8aec17d4300f62b5d1217af4d",
+      "bytes": 182046
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-reflect-v2-1000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-reflect-v2-1000.raw.json",
+      "sha256": "4141821efdd8449392a79bd4ddeac7a31ce52948b9037b9d065681a80b344169",
+      "bytes": 23644
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-reflect-v2-1000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-reflect-v2-1000.state.json",
+      "sha256": "a076ac0375b1cad2bebe52be1ac86564f27a24ef08df7478a9781170dc553064",
+      "bytes": 53642
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-reflect-v2-10000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-reflect-v2-10000.raw.json",
+      "sha256": "f349516bb94503ec67a977d0695cade6dce5777dad28c57cb6872a19755a489f",
+      "bytes": 36130
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-reflect-v2-10000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-reflect-v2-10000.state.json",
+      "sha256": "2c4c38ce03f3ec76bd5e5df43019eafe120da4ea3c63c289f6016f1f05e4e100",
+      "bytes": 73524
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-reflect-v2-30000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-reflect-v2-30000.raw.json",
+      "sha256": "03129a4538a1e7a0b31e9025401b338d1d69ab71315055b13e27b30c61f3f892",
+      "bytes": 57935
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-reflect-v2-30000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-reflect-v2-30000.state.json",
+      "sha256": "a5a199dcb656a607ca97e7157c4cce1c1e6d0bebb52437ab361928b4249c4d7b",
+      "bytes": 103502
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-2-reflect-v2.checkpoint.json",
+      "sha256": "a5a199dcb656a607ca97e7157c4cce1c1e6d0bebb52437ab361928b4249c4d7b",
+      "bytes": 103502
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-deflect-v2-1000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-deflect-v2-1000.raw.json",
+      "sha256": "d22f1eaa4544e91fa917d2f6123898e97601db95428250ab697fee3e0783d1ef",
+      "bytes": 11298
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-deflect-v2-1000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-deflect-v2-1000.state.json",
+      "sha256": "f6b1778de827b31c86eedd8f71d2ace76445f17ee6829c89471107dcbf14c6b0",
+      "bytes": 25713
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-deflect-v2-10000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-deflect-v2-10000.raw.json",
+      "sha256": "b951f930db71dc028353aed083ac5a4b810fde182f015e3a1f56dc1da811616f",
+      "bytes": 99796
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-deflect-v2-10000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-deflect-v2-10000.state.json",
+      "sha256": "51a55a6d6ebdfd8827d6f523ea57663b03065690148d32db9ea83d39b1058512",
+      "bytes": 145390
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-deflect-v2-30000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-deflect-v2-30000.raw.json",
+      "sha256": "a702342fc3fc56976c37f06a3bef4a84d7f65708361bb817512aa25eb554dabb",
+      "bytes": 201176
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-deflect-v2-30000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-deflect-v2-30000.state.json",
+      "sha256": "ba49619e5f5e0ec4cc018a15503ad103697506232eb6930f7c68908c8744dec9",
+      "bytes": 264184
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-deflect-v2.checkpoint.json",
+      "sha256": "ba49619e5f5e0ec4cc018a15503ad103697506232eb6930f7c68908c8744dec9",
+      "bytes": 264184
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-reflect-v2-1000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-reflect-v2-1000.raw.json",
+      "sha256": "cd1d21d5259c5e25672d46215f707e38661cb751cdc6903abe510cebe25b919a",
+      "bytes": 13616
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-reflect-v2-1000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-reflect-v2-1000.state.json",
+      "sha256": "e5e11aee2f6f2916ae0c68696594be0b1b5bd87ddb4d8bfeb8b9abc8703933f0",
+      "bytes": 31967
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-reflect-v2-10000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-reflect-v2-10000.raw.json",
+      "sha256": "6c72f74a81e1c2731cb811166bae1391c77d8ec752de4c05b912d054f807c155",
+      "bytes": 96665
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-reflect-v2-10000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-reflect-v2-10000.state.json",
+      "sha256": "1117db7dd0cccbb23eccf3dc86170c73b4a0543214708ba6759d549ebe1394a7",
+      "bytes": 146639
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-reflect-v2-30000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-reflect-v2-30000.raw.json",
+      "sha256": "8e4798675e7cd00785c5589e01a9edba1f76ab27a7a59be8c4738c9dce361ae3",
+      "bytes": 146623
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-reflect-v2-30000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-reflect-v2-30000.state.json",
+      "sha256": "563a7786249c91c7d153fe079a2babbda5ea558681a4a959f3b9494c36575152",
+      "bytes": 181900
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/V2-INTEGRATION-LONG-20261022-3-reflect-v2.checkpoint.json",
+      "sha256": "563a7786249c91c7d153fe079a2babbda5ea558681a4a959f3b9494c36575152",
+      "bytes": 181900
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/shard0.jsonl",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/shard0.jsonl",
+      "sha256": "124035010be405cf6dbe031f1cbca62c980031a85513750159f5a7687e5a1d09",
+      "bytes": 28781
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/shard1.jsonl",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/shard1.jsonl",
+      "sha256": "bb66f4c8bcc46574213425c3cf41f2727b3492ce9e5c1ac2ba19a41d1926614c",
+      "bytes": 29020
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/summary.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/summary.json",
+      "sha256": "0fcbfc17557a3ca90f6905d0fa81e32c69d73c42bae1a6d7e37a4c0c1e30c4e5",
+      "bytes": 1815
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/supervise.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/supervise.state.json",
+      "sha256": "028fe7ed637595e3f038f45f2448517c7d16141c54c00d2bb5a55642e30c18d0",
+      "bytes": 489
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/worker0.log",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/worker0.log",
+      "sha256": "fda5061d502190b6c58f55107ce4a8ddd656c02904f0c8b310c040c6543bd3f7",
+      "bytes": 12880
+    },
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/worker1.log",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/worker1.log",
+      "sha256": "ae31d52395cbf2db4a6d2bf3182bee79a40dfdac09675fbf53e1cc8637f959e1",
+      "bytes": 12880
+    },
+    {
+      "source_path": null,
+      "archive_path": "changes.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ]
+}
