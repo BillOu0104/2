@@ -21,6 +21,7 @@
 | [v0.5.3](versions/v0.5.3/README.md) | 显示居中、慢速银河归位与十二阶段科技 | [292d21d](https://github.com/BillOu0104/2/commit/292d21d93e90ae212a41f828ea454337582dbf2b) |
 | [v0.5.4](versions/v0.5.4/README.md) | v0.5.4：松手回弹、完全重置与逃逸重建 | [de49389](https://github.com/BillOu0104/2/commit/de493891629800b8b70614f11915847a6594da9d) |
 | [v0.5.5](versions/v0.5.5/README.md) | v0.5.5：固定观察原点、守恒核查与连续尾迹 | [e62d7e8](https://github.com/BillOu0104/2/commit/e62d7e8761c1b318de23d600e121bee41907c0e2) |
+| [v0.5.5-v2-kernel-prototype-r0](versions/v0.5.5-v2-kernel-prototype-r0/README.md) | V2可选运行器初稿源码归档 | [2b043ca](https://github.com/BillOu0104/2/commit/2b043ca46b081fc987f6cdd6e77a2ad93dd08498) |
 | [minimal-chaos-v2-auto-ablation30k](analyses/minimal-chaos-v2-auto-ablation30k/README.md) | V2自动阶段 ablation30k | [940a71a](https://github.com/BillOu0104/2/commit/940a71acff7b8f49455a9471e5ddc3da04ef0936) |
 | [minimal-chaos-v2-auto-explore100k](analyses/minimal-chaos-v2-auto-explore100k/README.md) | V2自动阶段 explore100k | [54802b4](https://github.com/BillOu0104/2/commit/54802b4a4525190bd3e9354e260bf341e1d5dc2a) |
 | [minimal-chaos-v2-auto-precision30k](analyses/minimal-chaos-v2-auto-precision30k/README.md) | V2自动阶段 precision30k | [f637f9f](https://github.com/BillOu0104/2/commit/f637f9fd4d8537e76cb62889cd7991a3f278292f) |

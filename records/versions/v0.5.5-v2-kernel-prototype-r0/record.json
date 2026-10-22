@@ -1,0 +1,175 @@
+{
+  "format": 1,
+  "id": "v0.5.5-v2-kernel-prototype-r0",
+  "path": "versions/v0.5.5-v2-kernel-prototype-r0",
+  "kind": "version",
+  "version": "0.5.5",
+  "title": "V2可选运行器初稿源码归档",
+  "summary": "保存实际生产源码差异，配套analysis记录独立原生夹具；首次analysis类型不登记runtime导致check拒绝，新增version记录修正，不覆盖原分析。原型未完成UI/性能验收，main未改。",
+  "source_commit": "2b043ca46b081fc987f6cdd6e77a2ad93dd08498",
+  "previous_commit": "eafe2f5f532f5d65a24ec1873d8d9724b478c627",
+  "source_repository": "https://github.com/BillOu0104/2",
+  "source_subject": "prototype: port minimal chaos controllers and P5 lifecycle into optional V2 runtime",
+  "source_date": "2026-10-22T19:46:40Z",
+  "archived_at": "2026-10-22T19:47:03.042396+00:00",
+  "runtime_fingerprint": "8fc912a1787f6ca2df66b347ff27321a10c5bd77a5287ffb7f1ad5f248b88c61",
+  "deleted_paths": [],
+  "files": [
+    {
+      "source_path": "docs/integration-v2/STATUS.md",
+      "archive_path": "snapshot/docs/integration-v2/STATUS.md",
+      "sha256": "c64bd7e2d872365ddd219fbdbbcca510aa975b0d4dc696de4a88e387c929be62",
+      "bytes": 2877
+    },
+    {
+      "source_path": "docs/integration-v2/results/deflect-v2-capture.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/deflect-v2-capture.input.json",
+      "sha256": "1f040d07e49e384dca6017c287501bb256492f13ab3593853814530d9441f0fe",
+      "bytes": 4922
+    },
+    {
+      "source_path": "docs/integration-v2/results/deflect-v2-capture.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/deflect-v2-capture.native.json",
+      "sha256": "d0d86f6de18aa991d7928c3fd0bba7611194d4d25e7a4023d083df4d0d1a2672",
+      "bytes": 3888
+    },
+    {
+      "source_path": "docs/integration-v2/results/deflect-v2-deflection.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/deflect-v2-deflection.input.json",
+      "sha256": "c7a47aa590e4db2c336f2ad77af5845c0edf73ded8f5d11eea4aed5f58a6f2ab",
+      "bytes": 4955
+    },
+    {
+      "source_path": "docs/integration-v2/results/deflect-v2-deflection.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/deflect-v2-deflection.native.json",
+      "sha256": "00cec544eaa249523f387c5c50789eb08aa68bb9a3c8ab657323c473b7142856",
+      "bytes": 9126
+    },
+    {
+      "source_path": "docs/integration-v2/results/deflect-v2-natural.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/deflect-v2-natural.input.json",
+      "sha256": "de4203248226f0c31787c6628a9e40790b1e5adb14cce8dce5cd2d53f146ee3b",
+      "bytes": 5105
+    },
+    {
+      "source_path": "docs/integration-v2/results/deflect-v2-natural.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/deflect-v2-natural.native.json",
+      "sha256": "48ab98609747fe9ef1c1d795a0f67d6dda12fe395dc25077fd1c1980f07446f9",
+      "bytes": 3949
+    },
+    {
+      "source_path": "docs/integration-v2/results/deflect-v2-planet-contact.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/deflect-v2-planet-contact.input.json",
+      "sha256": "6287f0d7df760acb65436cf23a50b397b6c653eb1ef71868d398673c4be2a211",
+      "bytes": 4943
+    },
+    {
+      "source_path": "docs/integration-v2/results/deflect-v2-planet-contact.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/deflect-v2-planet-contact.native.json",
+      "sha256": "0f36306cd8196247e741d912f0192aa1c7b382722082e22037b6cb92021c435f",
+      "bytes": 5284
+    },
+    {
+      "source_path": "docs/integration-v2/results/deflect-v2-reflection.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/deflect-v2-reflection.input.json",
+      "sha256": "4547a3dbf76b2797c92dbd684294ab9a9988b971e2bf8d01bd5105503ee4f4ff",
+      "bytes": 4955
+    },
+    {
+      "source_path": "docs/integration-v2/results/deflect-v2-reflection.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/deflect-v2-reflection.native.json",
+      "sha256": "7492854c494a5a2dd87c2d12cce873d5d16f9dc090b87493a45d241bfb857279",
+      "bytes": 29279021
+    },
+    {
+      "source_path": "docs/integration-v2/results/native-comparison.json",
+      "archive_path": "snapshot/docs/integration-v2/results/native-comparison.json",
+      "sha256": "81932ab3ffab7ab13e4a8b7f32298854f634f4548d27a3f1322bd90eeed72109",
+      "bytes": 17455
+    },
+    {
+      "source_path": "docs/integration-v2/results/native-comparison.log",
+      "archive_path": "snapshot/docs/integration-v2/results/native-comparison.log",
+      "sha256": "93044ce8bb060e88fa458f3417a7746eda4fabd7f38af215b0929c0557eb4167",
+      "bytes": 1292
+    },
+    {
+      "source_path": "docs/integration-v2/results/reflect-v2-capture.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/reflect-v2-capture.input.json",
+      "sha256": "cd06e83396d0e3249473265c163cf0894449e567078a78a1683c18845ea41678",
+      "bytes": 4923
+    },
+    {
+      "source_path": "docs/integration-v2/results/reflect-v2-capture.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/reflect-v2-capture.native.json",
+      "sha256": "2a7c181cd01213d369ee79c619b0fb067a970f234e9a4fc31cc9ffcb6a27bf16",
+      "bytes": 3889
+    },
+    {
+      "source_path": "docs/integration-v2/results/reflect-v2-deflection.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/reflect-v2-deflection.input.json",
+      "sha256": "4fa25555d269c12bbe3e0baf68409a362ffae80fcab7fdde68e9239bae90852e",
+      "bytes": 4956
+    },
+    {
+      "source_path": "docs/integration-v2/results/reflect-v2-deflection.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/reflect-v2-deflection.native.json",
+      "sha256": "d85a06f7c3cd7f7882462e731e7639f3863b7c5406d67c33264287440a8456ad",
+      "bytes": 10034
+    },
+    {
+      "source_path": "docs/integration-v2/results/reflect-v2-natural.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/reflect-v2-natural.input.json",
+      "sha256": "4491df30b955d4dcfc2c8c738bc63c69073d43ceec6a8b905fd6b81549b389f0",
+      "bytes": 5106
+    },
+    {
+      "source_path": "docs/integration-v2/results/reflect-v2-natural.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/reflect-v2-natural.native.json",
+      "sha256": "5aaa0ef31402df4cc965d2e34e2f4d1727bf5de598588b33b73e0540a11b4747",
+      "bytes": 3950
+    },
+    {
+      "source_path": "docs/integration-v2/results/reflect-v2-planet-contact.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/reflect-v2-planet-contact.input.json",
+      "sha256": "0f063794f516eaeac34cae13c7e83ae410868dac82b91c6bf51773c01921ec8d",
+      "bytes": 4944
+    },
+    {
+      "source_path": "docs/integration-v2/results/reflect-v2-planet-contact.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/reflect-v2-planet-contact.native.json",
+      "sha256": "e346f5ee6e3bf4503073d9e5466586bf7a26500aede8e8a2c534653a8848238e",
+      "bytes": 4927
+    },
+    {
+      "source_path": "docs/integration-v2/results/reflect-v2-reflection.input.json",
+      "archive_path": "snapshot/docs/integration-v2/results/reflect-v2-reflection.input.json",
+      "sha256": "b17e6c56e4cdcb8c9f1aff0b63a2850b3253e073820de3bf7bf5787d7b0e9b18",
+      "bytes": 4956
+    },
+    {
+      "source_path": "docs/integration-v2/results/reflect-v2-reflection.native.json",
+      "archive_path": "snapshot/docs/integration-v2/results/reflect-v2-reflection.native.json",
+      "sha256": "a1d02ab441074da2f704831de07e1794519d9e3e6a0c8beea8c39c94f2fcb6c4",
+      "bytes": 22442253
+    },
+    {
+      "source_path": "docs/research-v2/results/integration-first-tests.log",
+      "archive_path": "snapshot/docs/research-v2/results/integration-first-tests.log",
+      "sha256": "3f394e113fa45ac0f2421643d8249bf5332c7fd758cfdaf36fa6c51b89773962",
+      "bytes": 723
+    },
+    {
+      "source_path": "tools/validate-v2-native.mjs",
+      "archive_path": "snapshot/tools/validate-v2-native.mjs",
+      "sha256": "da3e9ca2bf19396300c81bfc70c105fc5a5208d1953bc17b6a1b613404ef5f20",
+      "bytes": 4354
+    },
+    {
+      "source_path": null,
+      "archive_path": "changes.patch",
+      "sha256": "f91a3ac761ba6b2b2b7e785874fcbf52a290c1044f15e2bbdfaeb3dc0e68ca32",
+      "bytes": 41942
+    }
+  ]
+}
