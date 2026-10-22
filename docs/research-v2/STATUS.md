@@ -2,7 +2,23 @@
 
 状态：RESEARCH_IN_PROGRESS / NUMERICAL_REVIEW_REQUIRED。正式128新Seed主确认及32Seed预定h2辅助已全部实测完成（576/576、pending0、UNKNOWN0），最终原始/版本/初值/恢复哈希重审计通过。见CONFIRMATION_RESULTS.md和results/confirmation-v1/cohort.review.json。main未修改、未合并，私有网页未更新。
 
-## 当前唯一恢复队列：确认后精度扩展
+## 当前唯一恢复队列：补齐128个h4数值复测
+
+2026-10-22：precision-extension已256/256完成、UNKNOWN0，全部16批重新按恢复命令审计，额外256份原始native汇总/index逐字段一致；确认与扩展合计832个不同Seed/profile结果键。见PRECISION_EXTENSION_RESULTS.md和results/precision-extension/precision-review.json。旧confirmation/series/precision-extension均已完成，不重启积分。
+
+先检查全部活跃锁（尤其results/precision-h4.lock）、native worker及最近20分钟研究记录；任一活跃或近期更新即安静退出，不修改计算源、不重编译、不重复启动。没有活跃任务且记录过期后，读H4_EXTENSION_PROTOCOL.md、precision-h4/study.json、results/precision-h4.manifest.json及results/precision-h4.state.json（若存在），恢复命令：
+
+```sh
+python3 docs/research-v2/run-h4-extension.py docs/research-v2/precision-h4/study.json
+```
+
+固定确认Seed32..127，两候选完全相同参数的h4（dt=.0001875、eta=.001875），12批×8Seed×2=192条新模拟，每条真正100000年、成熟期10000年后、至少2.4亿名义步。加入先前前32个h4，最终为同一128个初值的default/h2/h4比较。不是新独立Seed确认、不改变原成绩、不调控制参数；计算源/二进制仍7f64a8a及原哈希。两worker只用已有2CPU。新manifest冻结原确认与精度spec、新驱动/配置/协议和本次数值分析哈希，拒绝版本混合。
+
+数据results/precision-h4/按科学源/配置哈希隔离，完整状态检查点每1000年保存于work/并可同版本恢复。每批原始/源码/配置/输入/状态/注册初值审计、UNKNOWN和行星/文明/控制预算保留，完成键跳过且复审；Git checkpoint、records/check和push。push失败独立记录，不把本地说成远端。H4_COMPLETE_REVIEW_REQUIRED只是这一队列完成，整个研究仍未完成。STOPPED_REVIEW_REQUIRED先看error/日志/审计，不能绕过数值或版本错误。
+
+完整h2两候选各128/128三星完整，联合转向121、反射126；成熟均值36.44%和16.52%。default到h2的128配对成熟均值差转向+8.23个百分点、bootstrap95%约[+2.37,+14.08]；反射−1.08、约[−4.98,+2.82]。h4前32成熟25.42%和17.47%、联合31/32和32/32，样本小且恒纪元区间很宽。不能把不显著当等价，不能从低能量残差宣称统计收敛。继续评审后才决定是否可进入独立生产集成分支；main最终替换等待用户验收，私有网页未改。不得把h4复测变成128新Seed主确认。
+
+## 已完成精度扩展的历史恢复入口
 
 先检查全部活跃锁（尤其results/precision-extension.lock）、native worker和最近20分钟研究记录；任一活跃/近期更新即安静退出，不修改计算源、不重编译、不启动重复工作。当前锁/worker优先于可能过期的state字符串。没有活跃任务且记录过期后，读PRECISION_EXTENSION_PROTOCOL.md、precision-extension/study.json、results/precision-extension.manifest.json和results/precision-extension.state.json（若已生成）。
 
