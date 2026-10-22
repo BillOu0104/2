@@ -1,0 +1,70 @@
+{
+  "sourceHash": "dd9de546d74b62483b487d40511fab862e37f516179d652228072b516734200e",
+  "configHash": "d7bebe96c9cc799275f5ea309e90de553b8aeb155841cad5853d1e6258c1fce0",
+  "binaryHash": "cf2117ac290bea83d6cfbdb07f98888412d594024e295887bc537bce5132f091",
+  "sourceFiles": [
+    "docs/research-v2/native.cpp",
+    "docs/research-v2/vendor/json.hpp",
+    "docs/research-v2/build-native.sh",
+    "docs/research-v2/run-native.mjs",
+    "docs/research-v2/engine.mjs",
+    "docs/research-v2/controllers/index.mjs",
+    "src/adaptive-trails.js",
+    "src/audio.js",
+    "src/bridge.js",
+    "src/civilization-levels.js",
+    "src/civilization-state.js",
+    "src/escape-state.js",
+    "src/fixed-display-frame.js",
+    "src/habitability.js",
+    "src/layout.js",
+    "src/main.js",
+    "src/motion-visuals.js",
+    "src/orbit-trace.js",
+    "src/orbital-initialization.js",
+    "src/original-data.js",
+    "src/renderer.js",
+    "src/run-statistics.js",
+    "src/seed-compatibility.js",
+    "src/settings-catalog.js",
+    "src/settings.js",
+    "src/simulation-worker.js",
+    "src/simulation.js",
+    "src/storage.js",
+    "src/trail-ribbon.js",
+    "src/view-motion.js",
+    "src/world-state.js",
+    "src/physics/gravity.js",
+    "src/legacy/008.js",
+    "src/legacy/079.js",
+    "src/legacy/010.js"
+  ],
+  "config": {
+    "prefix": "V2-CONFIRM-20261021",
+    "start": 40,
+    "seeds": 8,
+    "horizon": 100000,
+    "saveCheckpoints": true,
+    "output": "docs/research-v2/results/precision-baselines/p05.jsonl",
+    "profiles": [
+      {
+        "id": "newton__h4",
+        "shadow": true,
+        "dt": 0.0001875,
+        "eta": 0.001875
+      },
+      {
+        "id": "legacy-cage__h4",
+        "cage": true,
+        "shadow": true,
+        "dt": 0.0001875,
+        "eta": 0.001875
+      }
+    ]
+  },
+  "shard": 0,
+  "shards": 2,
+  "createdAt": "2026-10-22T18:35:47.554253+00:00",
+  "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+  "flags": "-std=c++17 -O3 -ffp-contract=off -Wall -Wextra -pedantic"
+}
