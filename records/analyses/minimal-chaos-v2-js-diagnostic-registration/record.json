@@ -1,0 +1,31 @@
+{
+  "format": 1,
+  "id": "minimal-chaos-v2-js-diagnostic-registration",
+  "path": "analyses/minimal-chaos-v2-js-diagnostic-registration",
+  "kind": "analysis",
+  "version": null,
+  "title": "JS移植逐级诊断冻结注册",
+  "summary": "固定4诊断Seed、两模式和1000/10000/30000窗口，所有src/驱动/协议/配置SHA，完整状态、去重和原始审计。不是新128Seed确认，JS FTLE尚未测，main未改。",
+  "source_commit": "6601c7dd1ef54758a7d1f15ba3026a10e259de2a",
+  "previous_commit": "c784c85aa0f2918a5c4fc84ea5a861e36fdb5e0b",
+  "source_repository": "https://github.com/BillOu0104/2",
+  "source_subject": "integration: freeze hashes before staged JS long-window diagnostics",
+  "source_date": "2026-10-22T20:07:20Z",
+  "archived_at": "2026-10-22T20:07:20.937922+00:00",
+  "runtime_fingerprint": null,
+  "deleted_paths": [],
+  "files": [
+    {
+      "source_path": "docs/integration-v2/results/diagnostics-v1/manifest.json",
+      "archive_path": "snapshot/docs/integration-v2/results/diagnostics-v1/manifest.json",
+      "sha256": "db942bb3d8a629010a1eccb1926070dacf54d3721c3f292767839a613a9ee55b",
+      "bytes": 4359
+    },
+    {
+      "source_path": null,
+      "archive_path": "changes.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ]
+}

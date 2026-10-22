@@ -79,6 +79,7 @@
 | [minimal-chaos-v2-h4-review-20261022](analyses/minimal-chaos-v2-h4-review-20261022/README.md) | 128匹配h4完整评审与同精度基准注册 | [25bee72](https://github.com/BillOu0104/2/commit/25bee7286f1871ea9c9616f88a4bbf5bd0db208a) |
 | [minimal-chaos-v2-integration-kernel-r0](analyses/minimal-chaos-v2-integration-kernel-r0/README.md) | V2生产运行器集成初稿与独立原生夹具 | [2b043ca](https://github.com/BillOu0104/2/commit/2b043ca46b081fc987f6cdd6e77a2ad93dd08498) |
 | [minimal-chaos-v2-interim-audit](analyses/minimal-chaos-v2-interim-audit/README.md) | V2阶段证据与恢复审计 | [762eea4](https://github.com/BillOu0104/2/commit/762eea4eb4f3cf084048f00046330603841d2e1f) |
+| [minimal-chaos-v2-js-diagnostic-registration](analyses/minimal-chaos-v2-js-diagnostic-registration/README.md) | JS移植逐级诊断冻结注册 | [6601c7d](https://github.com/BillOu0104/2/commit/6601c7dd1ef54758a7d1f15ba3026a10e259de2a) |
 | [minimal-chaos-v2-long30](analyses/minimal-chaos-v2-long30/README.md) | V2完整30000年探索与负对照校准 | [102339c](https://github.com/BillOu0104/2/commit/102339ca9efcfa3b575dab447645133cef18d59b) |
 | [minimal-chaos-v2-medium](analyses/minimal-chaos-v2-medium/README.md) | V2 complete10000-year comparison and predictive30000-year prototype | [8173521](https://github.com/BillOu0104/2/commit/8173521a4c1c28a98a29af41ae82871e1f3c0743) |
 | [minimal-chaos-v2-precision-p00](analyses/minimal-chaos-v2-precision-p00/README.md) | 确认后精度诊断 p00 | [1c6c7ca](https://github.com/BillOu0104/2/commit/1c6c7cabc8996f8a4fc2f8bc3b050dbe6bff63e5) |
