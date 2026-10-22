@@ -2,6 +2,23 @@
 
 状态：RESEARCH_IN_PROGRESS / NUMERICAL_REVIEW_REQUIRED。正式128新Seed主确认及32Seed预定h2辅助已全部实测完成（576/576、pending0、UNKNOWN0），最终原始/版本/初值/恢复哈希重审计通过。见CONFIRMATION_RESULTS.md和results/confirmation-v1/cohort.review.json。main未修改、未合并，私有网页未更新。
 
+## 当前恢复队列：独立JS移植1000/10000/30000年诊断
+
+原生科学阶段综合报告与同h4权衡图见SCIENTIFIC_REPORT.md；主确认128独立Seed和全部1280结果键已完成，UNKNOWN0，不重启旧积分。
+
+当前实际工作区/workspace/2-integration，分支integration/minimal-chaos-control-v2。15测试文件、10类20年原生轨迹/事件/文明/预算夹具、Chromium真实Worker与行星/尾迹/设置回归、完整物理/RNG恢复和批处理故障SHA审计已通过；全部原始失败日志保留。4诊断Seed×两模式的1000年全8三星完整、UNKNOWN0，但7/8严格长轨迹一致性未满足，最大单Seed恒纪元差约1.53个百分点；不把小数值残差或原生100000年成功当JS产品验收。
+
+继续同4个诊断初值1000/10000/30000显示年，24个窗口结果、两worker/现有2CPU；每1000年完整状态检查点。JS本轮仅测几何交换/非层级，条件FTLE尚未测，不能宣称混沌联合成功。先读集成docs/integration-v2/STATUS.md、INTEGRATION_REPORT.md、DIAGNOSTICS_PROTOCOL.md、diagnostics-v1.json和results/diagnostics-v1/manifest.json/state；源码/配置/原始/状态SHA不一致即拒绝续算。恒星失败、行星缺席/重生、文明和全部脉冲成本/事件及UNKNOWN保留。
+
+恢复先查双方活跃supervise/native/JS worker、fcntl锁和最近20分钟记录；任一活跃或近期更新就安静退出，不启动重复工作、不改冻结源码。没有活跃且记录过期、工作区与身份/版本确认后：
+
+```sh
+cd /workspace/2-integration
+python3 tools/v2/supervise.py docs/integration-v2/diagnostics-v1.json
+```
+
+DIAGNOSTICS_COMPLETE_REVIEW_REQUIRED只表示这轮JS诊断结束，须评审全部30k结果与差异后决定条件影子及独立长期统计；不是整项研究完成，不关闭恢复检查。STOPPED_REVIEW_REQUIRED先看error/worker/原始/检查点，不能修改状态绕过UNKNOWN。阶段驱动Git/records/check/push，推送是否成功看push.log/state。main未修改、未合并，私有网页未发布，正式替换仍等待充分证据和用户最终验收。
+
 ## 当前阶段：独立集成原型，尚未通过正式替换验收
 
 h4同精度基准16批256条已全部完成并重审计，原始/index逐字段、源码/配置/注册初值/输入/已存状态SHA通过，UNKNOWN0；总1280不同结果键。基准h4牛顿4/128完整、旧牢笼3/128，混沌联合0/128与1/128；候选各128/128完整、联合122/128与126/128。见MATCHED_BASELINES_RESULTS.md。旧全部批处理均完成，不再启动积分。
