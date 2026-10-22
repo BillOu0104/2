@@ -1,3 +1,46 @@
+# 当前恢复：全新128Seed JS正式100000年确认
+
+研究未结案。工作区/workspace/2-integration、分支integration/minimal-chaos-control-v2；原科学工作区/workspace/2始终保持research/minimal-chaos-control-v2。main和私有网页未改，最终替换仍须完整证据及用户验收。
+
+JS旧24窗口与同4初值原生30k对照全部完成，均三星完整、UNKNOWN0；成熟恒纪元JS转向8.03%/反射3.88%，原生32.82%/11.93%，不能宣称长期统计等价，所有低结果和差异保留。见MATCHED_NATIVE30_RESULTS.md。原生旧128Seed100k成绩不当作JS产品验收。
+
+当前唯一队列：JS_CONFIRMATION_PROTOCOL.md，js-confirmation-v1/study.json及initial-state-audit.json，results/js-confirmation-v1/manifest.json和supervise.state.json。128个全新Seed（只初始化，积分0步），彼此唯一且与244个已记录初值无重合；两候选参数/初始化/真实半径/纪元/P5/h4均不变。每Seed同状态续算1000/10000/30000/100000，正式端点共256个，四窗口1024条不能说成1024独立宇宙。
+
+已补齐条件恒星影子、紧双星交换和动态层级联合，主轨迹不变与主/影子恢复逐位一致，10类原生短窗对照通过；16测试文件通过。事件账补齐所有捕获/转向/反射的速度、功/冲量/P/L，不再只有累计数。完整100k未结束前不宣称JS达到A/B/C，不以低能量残差代替统计收敛。
+
+恢复先查双方supervise锁/native/JS worker及近20分钟记录。任一活跃或近期更新，安静退出，不编辑冻结src/驱动/观察器/协议/配置，不重复启动。没有活跃且过期、身份/版本/文件可访问并与manifest一致后：
+
+```sh
+cd /workspace/2-integration
+python3 tools/v2/run-js-confirmation.py docs/integration-v2/js-confirmation-v1/study.json
+```
+
+每1000年保存主轨迹全物理/RNG/世界/文明/统计/全事件与影子归一化状态。端点原始/state/元数据不可变且原子发布，来源/配置/输入登记/原始/stateSHA及结果键审计；已完成跳过，未完成从同版状态续算。两个worker只用现有2CPU，不增加收费资源。有新端点至多10分钟Git/records/check/push，推送失败看archives/*.push.log/state，不假称远端保存。早期失败、UNKNOWN、缺席、重生、文明与累计脉冲成本全部保留，未完成不当失败或成功。
+
+INTERRUPTED_RESUMABLE或旧RUNNING无活跃worker时可按同版状态恢复；STOPPED_REVIEW_REQUIRED先看error/worker日志、原始/检查点，禁止直接改状态绕过UNKNOWN/来源错误。JS_CONFIRMATION_COMPLETE_REVIEW_REQUIRED只表示这一独立确认结束，须做完整统计/精度/性能/功能/真实宿主评审，研究未自动结案，不关闭恢复检查。环境/额度自动续跑和无限持久性仍不保证。
+
+旧JS诊断、matched-native30及全部旧原生研究队列已完成，不再重启它们。其源版本、输入/原始/完整状态、所有失败和报告均保留；不要用当前新源强行续写旧sourceHash。
+
+---
+历史入口（当前队列以上述为准）：
+
+# 当前恢复：同4诊断初值原生30000年对照
+
+研究未结案。JS diagnostics-v1全部24窗口完成、SHA审计通过、UNKNOWN0且已推送f82a658；8个宇宙均真正跑满30000年。成熟恒纪元均值转向8.03%、反射3.88%，未达到B期望；4Seed样本小，先辨别样本/数值/移植差异，不能用原生128Seed成绩遮盖。详见DIAGNOSTICS30_RESULTS.md。
+
+当前唯一运行队列：tools/v2/matched-native30.py，冻结二进制7f64a8a、完全相同4初值×两方案×30000年，h4、条件影子开启；不调整控制参数，不筛Seed。先读MATCHED_NATIVE30_PROTOCOL.md、results/matched-native30/manifest.json、state.json及supervise日志。原生完整原始gzip、状态/输入SHA、全部失败/UNKNOWN和成本保留；同样的诊断Seed不充作新独立确认。
+
+先核对双方活跃锁/native/JS worker和最近20分钟记录，任一活跃或近期更新安静退出，不编辑计算源码、不重复启动。无活跃且过期、工作区/分支/来源版本确认后，在/workspace/2-integration、integration/minimal-chaos-control-v2恢复：
+
+```sh
+python3 tools/v2/matched-native30.py
+```
+
+完成仅表示匹配原生诊断结束，先审计raw/state/input/初值/源码/配置及全部结果，再与JS逐Seed对照、保存Git/records/check/push。STOPPED_REVIEW_REQUIRED须审阅error/原始/检查点，不可绕过UNKNOWN。旧JS与原生研究队列都已完成，不再重复积分。后续仍需JS条件影子/动态层级及独立长期统计，不冒称100k产品验收。main和私有网页未改，最终替换须用户验收。
+
+---
+历史恢复入口（上述当前队列优先）：
+
 # 当前恢复入口：JS逐级移植诊断
 
 状态INTEGRATION_IN_PROGRESS，研究未结案；main和私有网页未修改。工作区/workspace/2-integration，分支integration/minimal-chaos-control-v2；科研数据工作区/workspace/2保持research/minimal-chaos-control-v2。先读INTEGRATION_REPORT.md、DIAGNOSTICS_PROTOCOL.md、diagnostics-v1.json及results/diagnostics-v1/manifest.json、supervise.state.json（若已生成）。

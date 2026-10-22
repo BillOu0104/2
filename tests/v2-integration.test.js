@@ -46,3 +46,10 @@ test('Seed replay, physical changes and display-only changes preserve the intend
  const replay=new Simulation(settingsFromInitial(a.settings,a.initialBodies));replay.tick();assert.deepEqual(replay.initialBodies,a.initialBodies);assert.equal(replay.snapshot().algorithm,a.snapshot().algorithm);
  a.configure({stabilityMode:'off'});a.tick();assert.equal(a.controlled,null);assert.equal(a.snapshot().physics.model,'newtonian');
 });
+
+test('every capture/near-encounter projection has an explicit velocity and cost event',()=>{
+ const initial=[b(-.07),b(.07),b(1.8,1),b(1.8,1.3,5000)];initial[0].vx=.3;initial[1].vx=-.3;initial[1].vy=.01;
+ const events=[],c=new ControlledSystem(initial,G,normalizeSettings({stabilityMode:mode,newproperty60:true}),{onEvent:e=>events.push(e)});for(let i=0;i<1200;i++)c.advanceFrame();
+ const projections=events.filter(e=>e.kind==='deflect'||e.kind==='reflect'||e.kind==='capture');assert.equal(projections.length,c.cost.projectionEvents);assert.ok(projections.length>0);assert.ok(projections.every(e=>e.deltaVelocity.length===3&&e.impulse>=0&&Number.isFinite(e.work)&&e.deltaL.length===3));assert.ok(c.cost.peakNetVelocityJump>0);
+ const far=fixture();far[0].x=6;far[0].vx=.25;far[1].x=-.5;far[2].x=.5;far[2].y=0;far[3].x=.5;far[3].y=.3;const captures=[],captureSystem=new ControlledSystem(far,G,normalizeSettings({stabilityMode:mode,newproperty60:true}),{onEvent:e=>captures.push(e)});for(let i=0;i<1200;i++)captureSystem.advanceFrame();assert.ok(captures.some(e=>e.kind==='capture'&&e.deltaVelocity));
+});

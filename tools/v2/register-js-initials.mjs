@@ -1,0 +1,8 @@
+import fs from 'node:fs';
+import crypto from 'node:crypto';
+import assert from 'node:assert/strict';
+import {Simulation} from '../../src/simulation.js';
+import {createControlledSystem} from '../../src/v2-simulation.js';
+const dir='docs/integration-v2/js-confirmation-v1',file=dir+'/initial-state-audit.json',prior=JSON.parse(fs.readFileSync(dir+'/prior-initials.json')),out={scope:'Initializer only; no physical steps, lifespan prediction, filtering, resampling or per-Seed adjustment',prefix:'V2-JS-CONFIRM-20261022',count:128,priorUniqueStates:prior.uniqueStates,uniqueInitialStates:0,overlapWithPrior:0,seeds:{}};assert(!fs.existsSync(file),'Initial registration must not overwrite');const signatures=new Set();
+for(let i=0;i<128;i++){const seed=out.prefix+'-'+i,s=new Simulation({seed,stabilityMode:'deflect-v2',newproperty60:true,autorestart:true});s.controlled=createControlledSystem(s);assert.equal(s.controlled.frame,0);assert.equal(s.controlled.integrator.steps,0);const buffer=Buffer.alloc(224);let offset=0;for(const b of s.initialBodies)for(const k of ['x','y','z','vx','vy','vz','mass']){buffer.writeDoubleBE(b[k],offset);offset+=8;}const hash=crypto.createHash('sha256').update(buffer).digest('hex');assert(!signatures.has(hash),'Duplicate new initial state: stop registration');assert(!(hash in prior.signatures),'Overlap with prior: stop registration, do not replace the Seed');signatures.add(hash);out.seeds[seed]={initialSHA256:hash,initialBodies:s.initialBodies};}
+out.uniqueInitialStates=signatures.size;fs.writeFileSync(file,JSON.stringify(out,null,2)+'\n');console.log(JSON.stringify({count:out.count,unique:out.uniqueInitialStates,overlap:out.overlapWithPrior,prior:prior.uniqueStates}));

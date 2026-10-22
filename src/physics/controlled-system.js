@@ -13,7 +13,7 @@ function budget(b,G){const e=invariants(b,G);return {...e,L:b.reduce((s,x)=>{con
 export class ControlledSystem{
  constructor(bodies,G,settings,{onEvent=()=>{},onPlanetLoss=()=>{},onRespawn=()=>{},onStep=null}={}){
   if(!(G>0)||bodies.length!==4||bodies.slice(0,3).some(b=>!(b.mass>0)))throw new PhysicsError('v2-initial-state','长期三星模式需要三颗正质量恒星');
-  this.bodies=structuredClone(bodies);this.G=G;this.settings=settings;this.onEvent=onEvent;this.onPlanetLoss=onPlanetLoss;this.onRespawn=onRespawn;this.onStep=onStep;
+  this.bodies=structuredClone(bodies);this.G=G;this.settings=settings;this.onEvent=onEvent;this.onProjection=e=>this.event(e.kind,{...e,solverTime:this.integrator.time});this.onPlanetLoss=onPlanetLoss;this.onRespawn=onRespawn;this.onStep=onStep;
   this.scale=pairs.reduce((sum,[i,j])=>sum+distance(bodies[i],bodies[j]),0)/3;
   this.initialEnergy=invariants(bodies,G).inertialEnergy;this.cost=emptyCost();this.external=emptyCost();this.frame=0;this.returnFrame=null;this.planetLosses=0;this.planetRespawns=0;this.firstPlanetLoss=null;this.stellarFailure=null;this.numericalUnknown=null;this.timers={};this.processedContacts=0;this.maxResidual=0;this.lastPlanetLoss=null;
   this.integrator=new GravityIntegrator(this.bodies,G,{model:'newtonian',radii:()=>this.radii(this.integrator.time)});
@@ -46,7 +46,7 @@ export class ControlledSystem{
   this.event('planet-respawn',{host,radius});this.onRespawn();
  }
  beforeStep(){
-  const before=this.cost.projectionEvents;deflect(this.bodies,this.G,this.cfg,this.settings,this.cost);reflect(this.bodies,this.G,this.cfg,this.settings,this.cost);
+  const before=this.cost.projectionEvents;deflect(this.bodies,this.G,this.cfg,this.settings,this.cost,this.onProjection);reflect(this.bodies,this.G,this.cfg,this.settings,this.cost,this.onProjection);
   if(this.cost.projectionEvents!==before)this.event('stellar-protection',{events:this.cost.projectionEvents-before,solverTime:this.integrator.time});
  }
  acceptedStep(){
@@ -76,7 +76,7 @@ export class ControlledSystem{
   this.frameStartFrame=this.frame;this.frameStartTime=this.integrator.time;const count=this.cost.projectionEvents;
   try{this.integrator.advance(.0075,{maxStep:V2_STEP,eta:V2_ETA,beforeStep:()=>this.beforeStep(),onAcceptedStep:()=>this.acceptedStep()});}
   catch(e){if(e.physical){this.integrator.numericalError=null;this.event('stellar-failure',this.stellarFailure);return false;}this.numericalUnknown={code:e.code??'numerical-error',message:e.message};throw e;}
-  this.frame++;capture(this.bodies,this.G,this.cfg,this.scale,this.cost);if(this.cost.projectionEvents>count){this.cost.activeFrames++;this.cost.projectionFrames++;}
+  this.frame++;capture(this.bodies,this.G,this.cfg,this.scale,this.cost,this.onProjection);if(this.cost.projectionEvents>count){this.cost.activeFrames++;this.cost.projectionFrames++;}
   this.escapes();if(this.returnFrame!==null&&this.frame>=this.returnFrame)this.respawn();
   if(this.stellarFailure)this.event('stellar-failure',this.stellarFailure);
   return true;

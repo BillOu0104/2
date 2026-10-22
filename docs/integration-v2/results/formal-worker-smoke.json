@@ -1,0 +1,15 @@
+{
+  "pass": true,
+  "checks": [
+    "Published primary+shadow endpoints pass full raw/state/initial-signature/count/epoch/chaos audit",
+    "Tampered epoch proportion is rejected even when the original raw/state hashes remain correct"
+  ],
+  "logs": [
+    "",
+    "",
+    "AUDITED 2\n",
+    "",
+    "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"tools/v2/run-js-confirmation.py\", line 35, in audit\n    assert r['stableFraction']==metrics['stableFrames']/total and r['absentFraction']==metrics['absentFrames']/total\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+  ],
+  "scope": "Temporary one/two-year synthetic transport audit, not research outcomes"
+}
