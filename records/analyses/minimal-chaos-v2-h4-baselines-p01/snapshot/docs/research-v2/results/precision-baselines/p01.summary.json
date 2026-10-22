@@ -1,0 +1,168 @@
+{
+  "files": [
+    "docs/research-v2/results/precision-baselines/p01.shard0.jsonl",
+    "docs/research-v2/results/precision-baselines/p01.shard1.jsonl"
+  ],
+  "groups": {
+    "legacy-cage__h4": {
+      "n": 8,
+      "stellarSuccesses": 2,
+      "numericalUnknowns": 0,
+      "stellarRateObserved": 0.25,
+      "wilsonKnownOnly": [
+        0.071479212752109,
+        0.5907245696898311
+      ],
+      "unknownWorstBestRate": [
+        0.25,
+        0.25
+      ],
+      "failures": {
+        "complete": 2,
+        "stellar-contact": 6
+      },
+      "stableAllSeedsMean": 0.18406927083333333,
+      "stableSurvivorsMean": 0.7139606666666667,
+      "matureStableSurvivorsMean": 0.6826316666666666,
+      "matureStableAllSeedsMean": 0.17065791666666666,
+      "planetOriginalSuccesses": 0,
+      "planetLossesTotal": 29,
+      "planetLossesMean": 3.625,
+      "absentFractionMean": 0.0001808125,
+      "civilizationBirthsTotal": 23,
+      "civilizationDeathsTotal": 17,
+      "civilizationAliveMean": 0.030581749999999998,
+      "nonhierSurvivorsMean": 0.35739325,
+      "longestGeometricHierarchySurvivorsMean": 26.058333333333334,
+      "dynamicalHierarchySurvivorsMean": 0.02323566666666667,
+      "longestDynamicalHierarchySurvivorsMax": 34.45,
+      "conditionalFTLESurvivors": [
+        [
+          "V2-CONFIRM-20261021-8",
+          0.023609316023852044
+        ],
+        [
+          "V2-CONFIRM-20261021-13",
+          0.027643594468938312
+        ]
+      ],
+      "tightExchangesSurvivorsMean": 20.5,
+      "controlSignedWorkOverE0Mean": 1.5316389731941544,
+      "controlGrossWorkOverE0Mean": 178.71376830355265,
+      "controlImpulseMean": 437923291.52961063,
+      "controlActiveFrameFractionMean": 0.19757739583333334,
+      "controlPeakAccelerationMax": 0.49761428180485745,
+      "controlPeakVelocityJumpMax": 0.0,
+      "maxNumericalEnergyResidual": 3.4528358574943e-08,
+      "wallSecondsTotal": 816.6093182100001,
+      "maxRSSMiB": 15.765625,
+      "planetFirstLossObserved": 5,
+      "originalPlanetRightCensored": 3,
+      "civilizationFirstDeathObserved": 3,
+      "civilizationFirstLifeRightCensored": 4,
+      "civilizationNeverBorn": 1,
+      "fullConditionalFTLESurvivorsMean": 0.02637478417334462,
+      "matureConditionalFTLESurvivorsMean": 0.025626455246395178,
+      "survivorDistribution": {
+        "V2-CONFIRM-20261021-8": {
+          "stableFraction": 0.999288,
+          "matureStableFraction": 1.0,
+          "nonhierFraction": 0.37831016666666667,
+          "matureNonhierFraction": 0.38169333333333333,
+          "dynHierFraction": 0.001737,
+          "longestDynamicalHierarchyYears": 9.116666666666667,
+          "planetLosses": 14,
+          "fullConditionalFTLE": 0.02325239292254552,
+          "matureConditionalFTLE": 0.023609316023852044,
+          "tightPairChanges": 0,
+          "controlActiveFrameFraction": 0.6636716666666667
+        },
+        "V2-CONFIRM-20261021-13": {
+          "stableFraction": 0.4286333333333333,
+          "matureStableFraction": 0.36526333333333333,
+          "nonhierFraction": 0.3364763333333333,
+          "matureNonhierFraction": 0.34671537037037037,
+          "dynHierFraction": 0.044734333333333334,
+          "longestDynamicalHierarchyYears": 34.45,
+          "planetLosses": 4,
+          "fullConditionalFTLE": 0.029497175424143728,
+          "matureConditionalFTLE": 0.027643594468938312,
+          "tightPairChanges": 41,
+          "controlActiveFrameFraction": 0.846854
+        }
+      }
+    },
+    "newton__h4": {
+      "n": 8,
+      "stellarSuccesses": 1,
+      "numericalUnknowns": 0,
+      "stellarRateObserved": 0.125,
+      "wilsonKnownOnly": [
+        0.02241749145005667,
+        0.4708881822128535
+      ],
+      "unknownWorstBestRate": [
+        0.125,
+        0.125
+      ],
+      "failures": {
+        "complete": 1,
+        "stellar-contact": 5,
+        "stellar-separation": 2
+      },
+      "stableAllSeedsMean": 0.15667472916666667,
+      "stableSurvivorsMean": 0.9668891666666667,
+      "matureStableSurvivorsMean": 0.963377962962963,
+      "matureStableAllSeedsMean": 0.13478002314814816,
+      "planetOriginalSuccesses": 0,
+      "planetLossesTotal": 42,
+      "planetLossesMean": 5.25,
+      "absentFractionMean": 0.000259625,
+      "civilizationBirthsTotal": 22,
+      "civilizationDeathsTotal": 20,
+      "civilizationAliveMean": 0.07702602083333333,
+      "nonhierSurvivorsMean": 0.06300283333333333,
+      "longestGeometricHierarchySurvivorsMean": 493.2,
+      "dynamicalHierarchySurvivorsMean": 0.0,
+      "longestDynamicalHierarchySurvivorsMax": 0.0,
+      "conditionalFTLESurvivors": [
+        [
+          "V2-CONFIRM-20261021-8",
+          0.007353531041260625
+        ]
+      ],
+      "tightExchangesSurvivorsMean": 0,
+      "controlSignedWorkOverE0Mean": 0.0,
+      "controlGrossWorkOverE0Mean": 0.0,
+      "controlImpulseMean": 0.0,
+      "controlActiveFrameFractionMean": 0.0,
+      "controlPeakAccelerationMax": 0.0,
+      "controlPeakVelocityJumpMax": 0.0,
+      "maxNumericalEnergyResidual": 1.1901174031680594e-10,
+      "wallSecondsTotal": 298.214668813,
+      "maxRSSMiB": 15.765625,
+      "planetFirstLossObserved": 7,
+      "originalPlanetRightCensored": 1,
+      "civilizationFirstDeathObserved": 7,
+      "civilizationFirstLifeRightCensored": 1,
+      "civilizationNeverBorn": 0,
+      "fullConditionalFTLESurvivorsMean": 0.007632707576411233,
+      "matureConditionalFTLESurvivorsMean": 0.007353531041260625,
+      "survivorDistribution": {
+        "V2-CONFIRM-20261021-8": {
+          "stableFraction": 0.9668891666666667,
+          "matureStableFraction": 0.963377962962963,
+          "nonhierFraction": 0.06300283333333333,
+          "matureNonhierFraction": 0.06152666666666667,
+          "dynHierFraction": 0.0,
+          "longestDynamicalHierarchyYears": 0.0,
+          "planetLosses": 11,
+          "fullConditionalFTLE": 0.007632707576411233,
+          "matureConditionalFTLE": 0.007353531041260625,
+          "tightPairChanges": 0,
+          "controlActiveFrameFraction": 0.0
+        }
+      }
+    }
+  }
+}
