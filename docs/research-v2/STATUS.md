@@ -2,7 +2,26 @@
 
 状态：RESEARCH_IN_PROGRESS / NUMERICAL_REVIEW_REQUIRED。正式128新Seed主确认及32Seed预定h2辅助已全部实测完成（576/576、pending0、UNKNOWN0），最终原始/版本/初值/恢复哈希重审计通过。见CONFIRMATION_RESULTS.md和results/confirmation-v1/cohort.review.json。main未修改、未合并，私有网页未更新。
 
-## 当前唯一恢复队列：h4同精度牛顿/旧牢笼基准
+## 当前阶段：独立集成原型，尚未通过正式替换验收
+
+h4同精度基准16批256条已全部完成并重审计，原始/index逐字段、源码/配置/注册初值/输入/已存状态SHA通过，UNKNOWN0；总1280不同结果键。基准h4牛顿4/128完整、旧牢笼3/128，混沌联合0/128与1/128；候选各128/128完整、联合122/128与126/128。见MATCHED_BASELINES_RESULTS.md。旧全部批处理均完成，不再启动积分。
+
+研究仍未完成。当前工作在独立工作区/workspace/2-integration、分支integration/minimal-chaos-control-v2；/workspace/2仍必须保持research/minimal-chaos-control-v2，冻结科学计算源7f64a8a与所有历史数据不修改。集成基于完整研究数据checkpoint eafe2f5，main未改、未合并，网页未发布。实际源码修改/测试状态以集成工作区Git和docs/integration-v2/STATUS.md为准，不能把研究原生100000年成绩当作JS移植已验证。
+
+恢复检查先检查两个工作区的活跃supervise锁/native/JS验证worker和最近20分钟记录；活跃或近期更新即安静退出，不启动重复工作、不编辑计算源码。没有活跃且记录过期后，先读取集成STATUS、git branch/status/log，确认工作区可访问且分支正确；若不可访问或版本无法确认，明确报告阻碍，不根据聊天假设可恢复。
+
+当前已接入接受步前控制/P5/独立失效和Simulation快照的初稿，短窗10类独立native夹具通过（含转向、反射、弱束缚捕获、行星吞噬/重生）；这是移植检查，不是新的100000年确认。现行模式原有13个测试文件通过。待完成更完整的关闭控制/无整宇宙自动重置/功能与事件测试、Seed与设置兼容、浏览器UI/性能检查、源码及失败记录归档。遇到失败先保留原始日志，再修复并用新检查点记录，不伪称兼容已完成。
+
+集成工作区恢复入口（先读STATUS，不盲目覆盖未提交源码）：
+
+```sh
+git -C /workspace/2-integration status --short --branch
+cat /workspace/2-integration/docs/integration-v2/STATUS.md
+```
+
+依集成STATUS继续具体测试、修复和原型验证，不更改main。每阶段分别在研究/集成分支保存实际源码/数据提交、tools/records.py capture新ID、check、归档提交并推送对应分支；不能混用两个工作区索引或宣称未成功的push已保存。正式替换仍须完整集成/数值/性能/功能/UI证据、可回滚版本及用户最终验收。当前继续研究，不关闭恢复检查。
+
+## 已完成同精度基准的历史恢复入口
 
 h4剩余192条已全完成并重审计，UNKNOWN0；新增原始native汇总/index逐项一致，科学源/配置/注册初值/输入/状态哈希通过。候选default/h2/h4各128Seed、真正100000年；全部1024结果键唯一。见H4_RESULTS.md及results/precision-h4/h4-review.json。
 

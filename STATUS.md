@@ -11,3 +11,5 @@
 2026-10-22后续：precision-extension的256条已完成并重审计，当前任务改为补齐剩余96Seed×两候选的h4；恢复run-h4-extension，完整命令见V2 STATUS最上方。原确认与精度复测全部保留，研究未完成、main未改。
 
 h4补齐192条已完成并重审计；当前唯一队列改为h4同精度牛顿/旧牢笼基准run-matched-baselines，见V2 STATUS最上方。所有三精度候选各128个Seed，研究仍未完成，main未改。
+
+同h4精度两基准256条全完成并审计；当前转入/workspace/2-integration的独立集成分支，研究与原型仍未完成。恢复前看V2 STATUS最上方及集成STATUS；全部旧批处理已结束，勿重复启动。main未改。

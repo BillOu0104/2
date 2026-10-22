@@ -1,0 +1,95 @@
+{
+  "researchComplete": false,
+  "status": "MATCHED_BASELINES_AUDIT_COMPLETE",
+  "newRows": 256,
+  "matchedH4Rows": 512,
+  "allUniqueKeysIncludingEarlierPrecision": 1280,
+  "rawMetadataAuditedRows": 256,
+  "numericUnknowns": 0,
+  "scope": "Same128initial conditions, identical h4 steps/eta/P5/stellar failure/epoch rules; earlier terminal failures retained and not called completed100000years. Distinct config hashes retained.",
+  "groups": {
+    "deflect4-trigger8__h4": {
+      "n": 128,
+      "stellarIntact": 128,
+      "stellarWilson95": [
+        0.9708630437264916,
+        1.0
+      ],
+      "joint": 122,
+      "jointWilson95": [
+        0.9015024775490568,
+        0.9783421558280763
+      ],
+      "numericUnknown": 0,
+      "failureKinds": {
+        "complete": 128
+      },
+      "matureStableAll": 0.30907935474537035,
+      "matureStableStellarSurvivors": 0.30907935474537035,
+      "terminationOrCensoringMedianYear": 100000.00051923885
+    },
+    "legacy-cage__h4": {
+      "n": 128,
+      "stellarIntact": 3,
+      "stellarWilson95": [
+        0.008002416396755481,
+        0.06664374505143222
+      ],
+      "joint": 1,
+      "jointWilson95": [
+        0.0013804318928742412,
+        0.04292625943886061
+      ],
+      "numericUnknown": 0,
+      "failureKinds": {
+        "stellar-contact": 125,
+        "complete": 3
+      },
+      "matureStableAll": 0.019033687789351852,
+      "matureStableStellarSurvivors": 0.7884211111111111,
+      "terminationOrCensoringMedianYear": 572.5680433115169
+    },
+    "newton__h4": {
+      "n": 128,
+      "stellarIntact": 4,
+      "stellarWilson95": [
+        0.01221826524505338,
+        0.07759763126136077
+      ],
+      "joint": 0,
+      "jointWilson95": [
+        0.0,
+        0.029136956273508416
+      ],
+      "numericUnknown": 0,
+      "failureKinds": {
+        "stellar-contact": 101,
+        "complete": 4,
+        "stellar-separation": 23
+      },
+      "matureStableAll": 0.032518428819444445,
+      "matureStableStellarSurvivors": 0.8449256944444444,
+      "terminationOrCensoringMedianYear": 640.6530152818358
+    },
+    "reflect-trigger8__h4": {
+      "n": 128,
+      "stellarIntact": 128,
+      "stellarWilson95": [
+        0.9708630437264916,
+        1.0
+      ],
+      "joint": 126,
+      "jointWilson95": [
+        0.9448190233201829,
+        0.9957045502898559
+      ],
+      "numericUnknown": 0,
+      "failureKinds": {
+        "complete": 128
+      },
+      "matureStableAll": 0.15259193431712964,
+      "matureStableStellarSurvivors": 0.15259193431712964,
+      "terminationOrCensoringMedianYear": 100000.0005195314
+    }
+  }
+}
