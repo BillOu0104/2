@@ -1,0 +1,295 @@
+{
+  "format": 1,
+  "id": "minimal-chaos-v2-h4-baselines-p08",
+  "path": "analyses/minimal-chaos-v2-h4-baselines-p08",
+  "kind": "analysis",
+  "version": null,
+  "title": "确认后精度诊断 p08",
+  "summary": "100000年匹配精度诊断；不新增独立确认Seed，不替换主确认，保留失败/UNKNOWN、原始/恢复哈希及控制和行星预算；main未修改。",
+  "source_commit": "aa06eed630884b6fe19f11ba8e3eb4428ee87005",
+  "previous_commit": "a35a47f572414f6880374b6b5ff645aaaf7eb895",
+  "source_repository": "https://github.com/BillOu0104/2",
+  "source_subject": "research: preserve matched h4 baseline diagnostic p08",
+  "source_date": "2026-10-22T18:38:20Z",
+  "archived_at": "2026-10-22T18:38:20.397890+00:00",
+  "runtime_fingerprint": null,
+  "deleted_paths": [],
+  "files": [
+    {
+      "source_path": "docs/research-v2/EXPERIMENT_LOG.md",
+      "archive_path": "snapshot/docs/research-v2/EXPERIMENT_LOG.md",
+      "sha256": "9eee522376841bc697360852a3140b2ebed3ade3a40f3c29f73c1c91fbec60e1",
+      "bytes": 23533
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines.state.json",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines.state.json",
+      "sha256": "c9def4c695df32c81b0b851f6689681f7948ccac1d00b6b0c4fe25b1c42749ef",
+      "bytes": 2084
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/checkpoints/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-64-legacy-cage__h4.input.json",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/checkpoints/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-64-legacy-cage__h4.input.json",
+      "sha256": "a9d7675ab0857e46dbf1dfed805a09af398b0b7baf22b0b201049151c5aaff19",
+      "bytes": 5037
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/checkpoints/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-64-legacy-cage__h4.state.json.gz",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/checkpoints/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-64-legacy-cage__h4.state.json.gz",
+      "sha256": "6cc6d6103012035b664433e58ecbb607df4440bbc1cf72db379517297fb17d13",
+      "bytes": 3992
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/checkpoints/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-65-legacy-cage__h4.input.json",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/checkpoints/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-65-legacy-cage__h4.input.json",
+      "sha256": "71e166b6a77cfeee7f9d684f034c86e485caf8d32fafdf5243e8431d6ca7b7a2",
+      "bytes": 5042
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/checkpoints/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-65-legacy-cage__h4.state.json.gz",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/checkpoints/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-65-legacy-cage__h4.state.json.gz",
+      "sha256": "ae30d3b0f34cc5ad9e42f85ee3cc2dbab506519f13bcd3946d4bda29dfdfabab",
+      "bytes": 6845
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/checkpoints/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-65-newton__h4.input.json",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/checkpoints/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-65-newton__h4.input.json",
+      "sha256": "1ed71ff3ae25d0540012636f6f0391b070977cc515897c830123c0351ef84243",
+      "bytes": 5020
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/checkpoints/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-65-newton__h4.state.json.gz",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/checkpoints/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-65-newton__h4.state.json.gz",
+      "sha256": "1979247a88a4f10f93958a4a74f8ac839f1a1733ef88462ab4103859d385ccb7",
+      "bytes": 4176
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/checkpoints/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-66-newton__h4.input.json",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/checkpoints/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-66-newton__h4.input.json",
+      "sha256": "742cc941fd556949bdf63c7b8cc5667b5cce84f35f32484cbe16c222cb53edb1",
+      "bytes": 5018
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/checkpoints/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-66-newton__h4.state.json.gz",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/checkpoints/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-66-newton__h4.state.json.gz",
+      "sha256": "72ead1aefac96045c84df617d2d2908d32ab40c2f63313786f2a73a84938939d",
+      "bytes": 3945
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/checkpoints/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-67-legacy-cage__h4.input.json",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/checkpoints/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-67-legacy-cage__h4.input.json",
+      "sha256": "0097ba01cfabb2303dad16f08bf37c96416552996546f7d49c5409706cfe7ca0",
+      "bytes": 5038
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/checkpoints/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-67-legacy-cage__h4.state.json.gz",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/checkpoints/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-67-legacy-cage__h4.state.json.gz",
+      "sha256": "185b244fc4227f7fa5795524276a3c4a7e311feb306aeda4a91d053b3c2b958b",
+      "bytes": 3638
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/checkpoints/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-67-newton__h4.input.json",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/checkpoints/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-67-newton__h4.input.json",
+      "sha256": "2b17a2095d77e94d5ff394ea1920c547416dc7c6ee781f71ff0f5c91dbb31269",
+      "bytes": 5016
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/checkpoints/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-67-newton__h4.state.json.gz",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/checkpoints/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-67-newton__h4.state.json.gz",
+      "sha256": "33a0a014d4f7cf197e50dde8684bf6307b72b94febfeaaf54e34e6bb48dcaa92",
+      "bytes": 5252
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/checkpoints/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-68-newton__h4.input.json",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/checkpoints/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-68-newton__h4.input.json",
+      "sha256": "01cddac2fe7ca371409a0cfab3a3327f0da8876fb011cc2d060d0a8d484998b4",
+      "bytes": 5013
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/checkpoints/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-68-newton__h4.state.json.gz",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/checkpoints/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-68-newton__h4.state.json.gz",
+      "sha256": "b8046b5dfa768fa95ddd01c9a42182ab122c6d2ea3b25eaa8683e89b960d10de",
+      "bytes": 6219
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/p08-worker0.log",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/p08-worker0.log",
+      "sha256": "308d4b617174978cd400a2bfce1ffe1a6ac71b64b0dafe3ac07a0c161b213a71",
+      "bytes": 1417
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/p08-worker1.log",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/p08-worker1.log",
+      "sha256": "d57fd1358b1de0919cb27efc4defdd615e4a3c367b6de3d237aa39eae076e7fb",
+      "bytes": 1421
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/p08.audit.json",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/p08.audit.json",
+      "sha256": "71ebbcd5adf6b5192e38420f27d59d4b0f4b7169cd097b607b00e501b68d3088",
+      "bytes": 144
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/p08.batch.json",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/p08.batch.json",
+      "sha256": "6e2e41e18024f3da318b3e68feeafcadd77474d12eca9de5ee8022f45e77e432",
+      "bytes": 419
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/p08.chaos-analysis.json",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/p08.chaos-analysis.json",
+      "sha256": "3b4491942c66adadf862b6d8feb1476f1bb314215d3d23a97b3034533c2bde66",
+      "bytes": 10448
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/p08.interventions.json",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/p08.interventions.json",
+      "sha256": "2c69977617910e5fa0f0c98db5cf0ce0c9123556e932bff01ce10994cad75806",
+      "bytes": 13251
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/p08.provenance.json",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/p08.provenance.json",
+      "sha256": "c81f035019d49ce2f4eaf7f389b2021d527f0e0e0c4dbbaeae71f2064439b3ad",
+      "bytes": 352
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/p08.seeds.csv",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/p08.seeds.csv",
+      "sha256": "44ff26eccc6392799c431883bf8245e1fa4f1ea7f30cc7cd503554894180896e",
+      "bytes": 6505
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/p08.shard0.jsonl",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/p08.shard0.jsonl",
+      "sha256": "c8953ee3f55bd5502f5ce32856ebe706926cf1c6b0cfe2547a070e36ed04b2af",
+      "bytes": 45900
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/p08.shard0.jsonl.manifest.json",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/p08.shard0.jsonl.manifest.json",
+      "sha256": "5ed75629740503e7645972e005636cfd381c012de7cef6ef68ff9eccff938df1",
+      "bytes": 1998
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/p08.shard1.jsonl",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/p08.shard1.jsonl",
+      "sha256": "16bd3092303963d55ece1bae4c709f2472e55087dd529297c551778dac87655b",
+      "bytes": 44198
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/p08.shard1.jsonl.manifest.json",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/p08.shard1.jsonl.manifest.json",
+      "sha256": "19cc6a12abebf6bbb409c9a1c9007af4c3cafa8a9f0898f858fff2b1995058e2",
+      "bytes": 1998
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/p08.summary.json",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/p08.summary.json",
+      "sha256": "aa53dc8ae4c46f65561814a2fbd329b66f5e3bf6a7cae9813c83eb509f8bf24a",
+      "bytes": 3764
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/raw/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-64-legacy-cage__h4.json.gz",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/raw/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-64-legacy-cage__h4.json.gz",
+      "sha256": "b0fcfb2c6e40b04d42758267ad9abb45a1d663035a72e453c46d7fc69fd9662a",
+      "bytes": 5352
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/raw/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-64-newton__h4.json.gz",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/raw/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-64-newton__h4.json.gz",
+      "sha256": "964d61b0c7461403b6a0b907ccad0e2726c35df0107471cd016df1a14eaf4206",
+      "bytes": 2366
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/raw/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-65-legacy-cage__h4.json.gz",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/raw/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-65-legacy-cage__h4.json.gz",
+      "sha256": "a58172232e5ea49e2a713012a6cfc366887c2385e270eb7a719fc51579c66d60",
+      "bytes": 7700
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/raw/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-65-newton__h4.json.gz",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/raw/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-65-newton__h4.json.gz",
+      "sha256": "4d66129c0d31a630118e29343081290cd76102c727105360dc0181a65e61444c",
+      "bytes": 5760
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/raw/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-66-legacy-cage__h4.json.gz",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/raw/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-66-legacy-cage__h4.json.gz",
+      "sha256": "cd2a5d70aea3544e99bbde2448188460905496e964854f80886197d3bc08d8f3",
+      "bytes": 3066
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/raw/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-66-newton__h4.json.gz",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/raw/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-66-newton__h4.json.gz",
+      "sha256": "7371e13ddd3485dee44193e677419365d1d8717242623b16155ac03bf9bfba5b",
+      "bytes": 4384
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/raw/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-67-legacy-cage__h4.json.gz",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/raw/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-67-legacy-cage__h4.json.gz",
+      "sha256": "b45f5c9a222470d80e1675aa654205b2ec96a09b95423593cb140b2abc826cbd",
+      "bytes": 4220
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/raw/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-67-newton__h4.json.gz",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/raw/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-67-newton__h4.json.gz",
+      "sha256": "675dee974553fd25f53e7647ca23134fa98e3ba39dccd8158f82e856899a5ddf",
+      "bytes": 5867
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/raw/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-68-legacy-cage__h4.json.gz",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/raw/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-68-legacy-cage__h4.json.gz",
+      "sha256": "7019db674b51b24d2b9caf6921cc062fefb6f5d7bc572b28197150e89fbd7bf4",
+      "bytes": 2667
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/raw/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-68-newton__h4.json.gz",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/raw/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-68-newton__h4.json.gz",
+      "sha256": "386d7aa5795aaea6f73fee1b4eeef920dfcebbdb472ab0616072f1ee7b185439",
+      "bytes": 6440
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/raw/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-69-legacy-cage__h4.json.gz",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/raw/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-69-legacy-cage__h4.json.gz",
+      "sha256": "0355bbfa42ac849d20747ef6e04de9c01478a60fa45023e30556ecdf21e544ef",
+      "bytes": 3053
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/raw/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-69-newton__h4.json.gz",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/raw/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-69-newton__h4.json.gz",
+      "sha256": "3c60bee0088ecfa7e29327fbe6c66508cc85ff135c02d260647eae3e3d15fc12",
+      "bytes": 2206
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/raw/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-70-legacy-cage__h4.json.gz",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/raw/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-70-legacy-cage__h4.json.gz",
+      "sha256": "6bc0bf1b7a69b0268150166b98f1018d528192259381eee33234e5631cfcec30",
+      "bytes": 4176
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/raw/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-70-newton__h4.json.gz",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/raw/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-70-newton__h4.json.gz",
+      "sha256": "fada112a7429ae5a890040120d9e860a613636ab88f51b9c4c143f8a58b257ab",
+      "bytes": 2242
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/raw/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-71-legacy-cage__h4.json.gz",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/raw/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-71-legacy-cage__h4.json.gz",
+      "sha256": "1c811b95eeecf8e7694d6544c015fbb4dde97f14aaa2a815e5f9c8a3cb413858",
+      "bytes": 2086
+    },
+    {
+      "source_path": "docs/research-v2/results/precision-baselines/raw/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-71-newton__h4.json.gz",
+      "archive_path": "snapshot/docs/research-v2/results/precision-baselines/raw/dd9de546d74b6248-b9f940df5ae36e74/V2-CONFIRM-20261021-71-newton__h4.json.gz",
+      "sha256": "ef335e4c9be852f8e841a36ffd3e502264f7aa5627af0c675ff82f086dd9ab14",
+      "bytes": 1837
+    },
+    {
+      "source_path": null,
+      "archive_path": "changes.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ]
+}
