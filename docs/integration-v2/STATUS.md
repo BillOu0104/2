@@ -1,5 +1,7 @@
 # 当前恢复：全新128Seed JS正式100000年确认
 
+2026-10-23恢复检查：旧supervisor/两worker已停止且记录超过20分钟，根因未验证；222个不可变端点SHA/源码/配置/注册初值审计PASS、UNKNOWN0，其中54个真正100000年端点（计划256）。保存b03未完成反射Seed26/27在68000/83000年的主+影子完整状态副本及哈希，见results/js-confirmation-v1/recoveries/20261023T1654Z/。按原冻结命令恢复，不重算完成键、不修改控制参数/main；全新128Seed确认尚未结束。
+
 研究未结案。工作区/workspace/2-integration、分支integration/minimal-chaos-control-v2；原科学工作区/workspace/2始终保持research/minimal-chaos-control-v2。main和私有网页未改，最终替换仍须完整证据及用户验收。
 
 JS旧24窗口与同4初值原生30k对照全部完成，均三星完整、UNKNOWN0；成熟恒纪元JS转向8.03%/反射3.88%，原生32.82%/11.93%，不能宣称长期统计等价，所有低结果和差异保留。见MATCHED_NATIVE30_RESULTS.md。原生旧128Seed100k成绩不当作JS产品验收。

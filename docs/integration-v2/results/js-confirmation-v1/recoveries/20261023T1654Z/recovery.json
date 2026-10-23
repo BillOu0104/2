@@ -1,0 +1,61 @@
+{
+  "time": "2026-10-23T16:55:34.102196+00:00",
+  "beforeCommit": "6cd7aa12de3b582ac126a01466ba4662a09d3401",
+  "cause": "Previous supervisor/workers absent, locks free, no research file updated in previous20min; interruption cause unverified. No error marker or UNKNOWN observed.",
+  "audit": {
+    "audit": "PASS",
+    "rows": 222,
+    "UNKNOWN": 0
+  },
+  "sourceHash": "0deca082f9b8c901fbc8036216d885f30c6dc15e422ebfa0eb5a3a0c1858e4db",
+  "manifestSHA256": "ccf44bdd34af22a9c32190455b586060c180054659b7f07421d51404a179d66f",
+  "beforeSupervisorState": {
+    "started": "2026-10-22T22:06:15.355990+00:00",
+    "completed": [
+      "b00",
+      "b01",
+      "b02"
+    ],
+    "researchComplete": false,
+    "recoveryPush": {
+      "confirmed": false,
+      "returncode": 1,
+      "time": "2026-10-22T22:06:20.985510+00:00",
+      "commit": "97c5ae70b4153de3d7e05d0bab5ab4717eda329b"
+    },
+    "status": "RUNNING",
+    "batch": "b03",
+    "sourceHash": "0deca082f9b8c901fbc8036216d885f30c6dc15e422ebfa0eb5a3a0c1858e4db",
+    "updated": "2026-10-23T16:07:12.868144+00:00",
+    "rows": 222,
+    "expectedRows": 1024,
+    "workers": [
+      81731,
+      81732
+    ],
+    "lastPush": {
+      "confirmed": true,
+      "returncode": 0,
+      "time": "2026-10-23T16:00:52.741195+00:00",
+      "commit": "6cd7aa12de3b582ac126a01466ba4662a09d3401"
+    }
+  },
+  "observed100000Endpoints": 54,
+  "planned100000Endpoints": 256,
+  "unfinishedSnapshots": [
+    {
+      "path": "docs/integration-v2/results/js-confirmation-v1/b03/V2-JS-CONFIRM-20261022-26-reflect-v2.checkpoint.json",
+      "savedCopy": "docs/integration-v2/results/js-confirmation-v1/recoveries/20261023T1654Z/V2-JS-CONFIRM-20261022-26-reflect-v2.checkpoint.json",
+      "SHA256": "8a7e5ec40a79d0b9d58798c601fd2d2703458d668558d5ffe682994472986b27",
+      "year": 68000.0
+    },
+    {
+      "path": "docs/integration-v2/results/js-confirmation-v1/b03/V2-JS-CONFIRM-20261022-27-reflect-v2.checkpoint.json",
+      "savedCopy": "docs/integration-v2/results/js-confirmation-v1/recoveries/20261023T1654Z/V2-JS-CONFIRM-20261022-27-reflect-v2.checkpoint.json",
+      "SHA256": "fc9fadea0a59d5c7e16e2cabeaea5f2255dc679c0f8d65918a5db65a6508f03c",
+      "year": 83000.0
+    }
+  ],
+  "resumeCommand": "python3 tools/v2/run-js-confirmation.py docs/integration-v2/js-confirmation-v1/study.json",
+  "limitations": "Research incomplete.54 long endpoints are not128 independent seeds per candidate; no full-cohort success claim. main unchanged."
+}
