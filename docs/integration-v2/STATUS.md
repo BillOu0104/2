@@ -1,5 +1,7 @@
 # 当前恢复：全新128Seed JS正式100000年确认
 
+2026-10-23 19:43 UTC恢复检查：worker/supervise再次均已停止，双方锁空闲且无近20分钟研究更新，根因未验证。249个已实测窗口审计PASS、UNKNOWN0，其中61个真正100000年端点（计划256）；保存b03 Seed30转向97000年及Seed31反射12000年完整主+影子状态及哈希，见results/js-confirmation-v1/recoveries/20261023T1943Z/。同冻结命令继续，完成键跳过，不改参数/计算源码/main，确认未完成。
+
 2026-10-23恢复检查：旧supervisor/两worker已停止且记录超过20分钟，根因未验证；222个不可变端点SHA/源码/配置/注册初值审计PASS、UNKNOWN0，其中54个真正100000年端点（计划256）。保存b03未完成反射Seed26/27在68000/83000年的主+影子完整状态副本及哈希，见results/js-confirmation-v1/recoveries/20261023T1654Z/。按原冻结命令恢复，不重算完成键、不修改控制参数/main；全新128Seed确认尚未结束。
 
 研究未结案。工作区/workspace/2-integration、分支integration/minimal-chaos-control-v2；原科学工作区/workspace/2始终保持research/minimal-chaos-control-v2。main和私有网页未改，最终替换仍须完整证据及用户验收。
