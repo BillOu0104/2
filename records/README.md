@@ -116,6 +116,7 @@
 | [minimal-chaos-v2-js-confirm-b01-e062](analyses/minimal-chaos-v2-js-confirm-b01-e062/README.md) | 独立JS确认中间检查点 b01-e062 | [f323607](https://github.com/BillOu0104/2/commit/f323607ea0018eaf9cc6832e7196d720b86c8756) |
 | [minimal-chaos-v2-js-confirm-b01-e064](analyses/minimal-chaos-v2-js-confirm-b01-e064/README.md) | 独立JS确认中间检查点 b01-e064 | [f6ce859](https://github.com/BillOu0104/2/commit/f6ce859b8d1440701d60e1b025988a861ca8a629) |
 | [minimal-chaos-v2-js-confirm-b02-e004](analyses/minimal-chaos-v2-js-confirm-b02-e004/README.md) | 独立JS确认中间检查点 b02-e004 | [5e04176](https://github.com/BillOu0104/2/commit/5e0417670d71a91c44c0c225d21f0e23cd1b494e) |
+| [minimal-chaos-v2-js-confirm-b02-e006](analyses/minimal-chaos-v2-js-confirm-b02-e006/README.md) | 独立JS确认中间检查点 b02-e006 | [0e7073d](https://github.com/BillOu0104/2/commit/0e7073d1dfb63904bbb30a264feb57b20adc79c1) |
 | [minimal-chaos-v2-js-diagnostic-registration](analyses/minimal-chaos-v2-js-diagnostic-registration/README.md) | JS移植逐级诊断冻结注册 | [6601c7d](https://github.com/BillOu0104/2/commit/6601c7dd1ef54758a7d1f15ba3026a10e259de2a) |
 | [minimal-chaos-v2-js-diagnostics-v1](analyses/minimal-chaos-v2-js-diagnostics-v1/README.md) | JS集成逐级窗口验证 | [8551609](https://github.com/BillOu0104/2/commit/8551609026fb86523223d878f5d71ef1521aae2d) |
 | [minimal-chaos-v2-js128-registration](analyses/minimal-chaos-v2-js128-registration/README.md) | JS128新Seed100000年独立确认冻结注册 | [537c83c](https://github.com/BillOu0104/2/commit/537c83c5fd52eb8da5401ee06ed77389782b03f1) |
