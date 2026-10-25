@@ -269,6 +269,7 @@
 | [minimal-chaos-v2-js-confirm-b09-e061](analyses/minimal-chaos-v2-js-confirm-b09-e061/README.md) | 独立JS确认中间检查点 b09-e061 | [1e746e9](https://github.com/BillOu0104/2/commit/1e746e9c8033af70cd4419105de29d4d8ab20810) |
 | [minimal-chaos-v2-js-confirm-b09-e062](analyses/minimal-chaos-v2-js-confirm-b09-e062/README.md) | 独立JS确认中间检查点 b09-e062 | [999ad21](https://github.com/BillOu0104/2/commit/999ad21fb8435d5e2424b6a82951d95d07740c93) |
 | [minimal-chaos-v2-js-confirm-b09-e064](analyses/minimal-chaos-v2-js-confirm-b09-e064/README.md) | 独立JS确认中间检查点 b09-e064 | [5f92a6a](https://github.com/BillOu0104/2/commit/5f92a6aef49fd30ebf3cb7d6f5fd555d9dd5444e) |
+| [minimal-chaos-v2-js-confirm-b10-e004](analyses/minimal-chaos-v2-js-confirm-b10-e004/README.md) | 独立JS确认中间检查点 b10-e004 | [af1a5e5](https://github.com/BillOu0104/2/commit/af1a5e598a7f8605d4b998ec31e286bfd88c90c5) |
 | [minimal-chaos-v2-js-confirm-recovery-20261023t1654](analyses/minimal-chaos-v2-js-confirm-recovery-20261023t1654/README.md) | JS长窗中断同版恢复检查 | [4e5cf99](https://github.com/BillOu0104/2/commit/4e5cf99c6293cbd4ed06235a798d01a94c55fb9f) |
 | [minimal-chaos-v2-js-confirm-recovery-20261023t1943](analyses/minimal-chaos-v2-js-confirm-recovery-20261023t1943/README.md) | JS独立确认第二次中断恢复审计 | [37a1c54](https://github.com/BillOu0104/2/commit/37a1c54c88fa2c6c6da162ecdfc4b953055cbd3f) |
 | [minimal-chaos-v2-js-diagnostic-registration](analyses/minimal-chaos-v2-js-diagnostic-registration/README.md) | JS移植逐级诊断冻结注册 | [6601c7d](https://github.com/BillOu0104/2/commit/6601c7dd1ef54758a7d1f15ba3026a10e259de2a) |
