@@ -1,0 +1,121 @@
+{
+  "format": 1,
+  "id": "minimal-chaos-v2-js-confirm-b13-e019",
+  "path": "analyses/minimal-chaos-v2-js-confirm-b13-e019",
+  "kind": "analysis",
+  "version": null,
+  "title": "独立JS确认中间检查点 b13-e019",
+  "summary": "只归档已实测端点、全原始事件和主/影子完整状态；短窗口和pending不称100000年完成，全部失败/UNKNOWN/行星/文明/脉冲成本保留，main未改。",
+  "source_commit": "d5b611b50a24b16808e52f9faf29a888f944de21",
+  "previous_commit": "0604592c1a1b786b10799dc249bad35cb0476794",
+  "source_repository": "https://github.com/BillOu0104/2",
+  "source_subject": "integration: checkpoint immutable JS holdout b13-e019",
+  "source_date": "2026-10-25T22:18:28Z",
+  "archived_at": "2026-10-25T22:18:28.481153+00:00",
+  "runtime_fingerprint": null,
+  "deleted_paths": [],
+  "files": [
+    {
+      "source_path": "docs/integration-v2/results/js-confirmation-v1/archives/b13-e019.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-confirmation-v1/archives/b13-e019.json",
+      "sha256": "03780d0f21f543a4c64a66f8ac231a53dbf54ee0b36fb416ba9bb612141b353f",
+      "bytes": 1870
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-confirmation-v1/b13/V2-JS-CONFIRM-20261022-104-reflect-v2-100000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-confirmation-v1/b13/V2-JS-CONFIRM-20261022-104-reflect-v2-100000.raw.json",
+      "sha256": "d4fd4849f1624b4e7310efc3b93dbd416e2c612cdba1a23cc69a09fbd1bbcd21",
+      "bytes": 1329490
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-confirmation-v1/b13/V2-JS-CONFIRM-20261022-104-reflect-v2-100000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-confirmation-v1/b13/V2-JS-CONFIRM-20261022-104-reflect-v2-100000.state.json",
+      "sha256": "d2a41d2a7627712b8019dac2f99d5a711ba7627d49aa181f9e282d9ea3f57b6f",
+      "bytes": 1394857
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-confirmation-v1/b13/V2-JS-CONFIRM-20261022-105-reflect-v2-100000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-confirmation-v1/b13/V2-JS-CONFIRM-20261022-105-reflect-v2-100000.raw.json",
+      "sha256": "b894cc8f0475365e4edbc556f924324d15b983a4bc24c0767f7155dba45e8928",
+      "bytes": 1108925
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-confirmation-v1/b13/V2-JS-CONFIRM-20261022-105-reflect-v2-100000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-confirmation-v1/b13/V2-JS-CONFIRM-20261022-105-reflect-v2-100000.state.json",
+      "sha256": "6eb85997d4531c1d950973c8c476ee1db227357e3166f4efc4054cba49ad203b",
+      "bytes": 1180918
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-confirmation-v1/b13/V2-JS-CONFIRM-20261022-106-deflect-v2-1000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-confirmation-v1/b13/V2-JS-CONFIRM-20261022-106-deflect-v2-1000.raw.json",
+      "sha256": "2fb69b4af7b06fd4ffa6f8308589c0cec5502ef83a003a9cf8271bd3c37585a4",
+      "bytes": 22650
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-confirmation-v1/b13/V2-JS-CONFIRM-20261022-106-deflect-v2-1000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-confirmation-v1/b13/V2-JS-CONFIRM-20261022-106-deflect-v2-1000.state.json",
+      "sha256": "e4d9ec7abfa95f7fda0bed11bed28b54b9d9c5940d57a214333f0e2257be3ec8",
+      "bytes": 48000
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-confirmation-v1/b13/V2-JS-CONFIRM-20261022-107-deflect-v2-1000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-confirmation-v1/b13/V2-JS-CONFIRM-20261022-107-deflect-v2-1000.raw.json",
+      "sha256": "b46a3c59defc4f31aae6ebb5eb1515b27e312420d72074ede6ad26acc75b2efb",
+      "bytes": 62703
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-confirmation-v1/b13/V2-JS-CONFIRM-20261022-107-deflect-v2-1000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-confirmation-v1/b13/V2-JS-CONFIRM-20261022-107-deflect-v2-1000.state.json",
+      "sha256": "4b3586dec0294c694b2b3b816ce5404fbd77e22b5e19498b163d4127a3755af1",
+      "bytes": 105948
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-confirmation-v1/b13/V2-JS-CONFIRM-20261022-107-deflect-v2-10000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-confirmation-v1/b13/V2-JS-CONFIRM-20261022-107-deflect-v2-10000.raw.json",
+      "sha256": "202889b9275684eb2c5075cd206cef929f4369fc4a523e11ae913556c7a00daf",
+      "bytes": 152337
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-confirmation-v1/b13/V2-JS-CONFIRM-20261022-107-deflect-v2-10000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-confirmation-v1/b13/V2-JS-CONFIRM-20261022-107-deflect-v2-10000.state.json",
+      "sha256": "e86b9e9a4c80ade206fb793d6699f43c9b3653f7d9c1cefdbe2926ad027cd83f",
+      "bytes": 201679
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-confirmation-v1/b13/endpoints/V2-JS-CONFIRM-20261022-104-reflect-v2-100000.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-confirmation-v1/b13/endpoints/V2-JS-CONFIRM-20261022-104-reflect-v2-100000.json",
+      "sha256": "7e9ddb7992a5ceee0b6900591a7c54965757c795edaf1afe8fd3b0d38d745eaf",
+      "bytes": 3380
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-confirmation-v1/b13/endpoints/V2-JS-CONFIRM-20261022-105-reflect-v2-100000.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-confirmation-v1/b13/endpoints/V2-JS-CONFIRM-20261022-105-reflect-v2-100000.json",
+      "sha256": "e6d4ac3333b43b83fbcaaee580df51a06111ec1a0c58a35f505efa7649f474cd",
+      "bytes": 3389
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-confirmation-v1/b13/endpoints/V2-JS-CONFIRM-20261022-106-deflect-v2-1000.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-confirmation-v1/b13/endpoints/V2-JS-CONFIRM-20261022-106-deflect-v2-1000.json",
+      "sha256": "04b2dae23b92e760cedb21e1e3ef5da47f508337980842546f6ad8682e77f3b4",
+      "bytes": 3316
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-confirmation-v1/b13/endpoints/V2-JS-CONFIRM-20261022-107-deflect-v2-1000.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-confirmation-v1/b13/endpoints/V2-JS-CONFIRM-20261022-107-deflect-v2-1000.json",
+      "sha256": "44cf7b270333fc5e7ca80e34ade51bfb20e9ff0600ff7a00e79bc0aedfa0bab2",
+      "bytes": 3350
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-confirmation-v1/b13/endpoints/V2-JS-CONFIRM-20261022-107-deflect-v2-10000.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-confirmation-v1/b13/endpoints/V2-JS-CONFIRM-20261022-107-deflect-v2-10000.json",
+      "sha256": "0ebedaf2c095c347645002e2a78b8996d63a560014f8ffd9f2b87383a3a76e33",
+      "bytes": 3328
+    },
+    {
+      "source_path": null,
+      "archive_path": "changes.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ]
+}
