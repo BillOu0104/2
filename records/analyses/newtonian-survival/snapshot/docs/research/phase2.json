@@ -1,0 +1,24 @@
+{
+ "prefix":"EXPLORE-B","start":0,"seeds":32,"horizon":400,"output":"results/phase2.jsonl",
+ "hypothesis":"Test whether Q=1.4, tighter host binding and retrograde orientation combine; separate radius, tangential/radial velocity and mass. Scale/mass comparison horizons preserve stellar crossing-time exposure.",
+ "profiles":[
+  {"id":"newton-random","force":"newton","adaptive":true},
+  {"id":"anchor","force":"newton","adaptive":true,"planet":"bound","inPlane":true,"radiusFraction":0.2,"Q":1.4},
+  {"id":"retro20","force":"newton","adaptive":true,"planet":"bound","inPlane":true,"radiusFraction":0.2,"Q":1.4,"direction":-1},
+  {"id":"retro12","force":"newton","adaptive":true,"planet":"bound","inPlane":true,"radiusFraction":0.12,"Q":1.4,"direction":-1},
+  {"id":"pro12","force":"newton","adaptive":true,"planet":"bound","inPlane":true,"radiusFraction":0.12,"Q":1.4},
+  {"id":"radius30","force":"newton","adaptive":true,"planet":"bound","inPlane":true,"radiusFraction":0.3,"Q":1.4},
+  {"id":"slow08","force":"newton","adaptive":true,"planet":"bound","inPlane":true,"radiusFraction":0.2,"Q":1.4,"speed":0.8},
+  {"id":"fast12","force":"newton","adaptive":true,"planet":"bound","inPlane":true,"radiusFraction":0.2,"Q":1.4,"speed":1.2},
+  {"id":"radial-out","force":"newton","adaptive":true,"planet":"bound","inPlane":true,"radiusFraction":0.2,"Q":1.4,"radial":0.3},
+  {"id":"radial-in","force":"newton","adaptive":true,"planet":"bound","inPlane":true,"radiusFraction":0.2,"Q":1.4,"radial":-0.3},
+  {"id":"Q10-retro12","force":"newton","adaptive":true,"planet":"bound","inPlane":true,"radiusFraction":0.12,"Q":1.0,"direction":-1},
+  {"id":"unequal-masses","force":"newton","adaptive":true,"planet":"bound","inPlane":true,"radiusFraction":0.2,"Q":1.4,"massRatios":[1,0.5,0.2]},
+  {"id":"planet-mass500","force":"newton","adaptive":true,"planet":"bound","inPlane":true,"radiusFraction":0.2,"Q":1.4,"planetMass":500},
+  {"id":"planet-mass50000","force":"newton","adaptive":true,"planet":"bound","inPlane":true,"radiusFraction":0.2,"Q":1.4,"planetMass":50000},
+  {"id":"scale2-equal-dynamical","force":"newton","adaptive":true,"planet":"bound","inPlane":true,"radiusFraction":0.2,"Q":1.4,"scale":2,"horizon":1131.370849898476},
+  {"id":"scale2-fixed-radius","force":"newton","adaptive":true,"planet":"bound","inPlane":true,"fixedRadius":0.35,"Q":1.4,"scale":2,"horizon":1131.370849898476},
+  {"id":"star-mass-half","force":"newton","adaptive":true,"planet":"bound","inPlane":true,"radiusFraction":0.2,"Q":1.4,"massScale":0.5,"horizon":565.685424949238},
+  {"id":"star-mass-double","force":"newton","adaptive":true,"planet":"bound","inPlane":true,"radiusFraction":0.2,"Q":1.4,"massScale":2,"horizon":282.842712474619}
+ ]
+}

@@ -1,0 +1,18 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+'0.188' !== '0.1875'
+
+    at file:///workspace/deflect-v2-release/tools/release-v2/browser-check.mjs:17:221 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '0.188',
+  expected: '0.1875',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

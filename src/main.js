@@ -1,8 +1,10 @@
+import {replaySettings} from './seed-compatibility.js';
+import {controllerPatch} from './controller-settings.js';
 import {settingsDefinitions,settingsCategories} from './settings-catalog.js';
 import { layoutWidgets,widgetPosition,clearLayoutStyles,applyLayout,installLayoutEditor } from './layout.js';
 import { SpaceRenderer } from './renderer.js';
 import { effectivePropertySchema as propertySchema, migrateSettings } from './settings.js';
-import { normalizeSettings, colorHex, fromHex, colorRGB, plainText, settingsFromInitial, algorithmId } from './settings.js';
+import { normalizeSettings, colorHex, fromHex, colorRGB, plainText, settingsFromInitial, algorithmId,manualInitialKeys } from './settings.js';
 import { LocalStore } from './storage.js';
 import { AudioController } from './audio.js';
 import { installWallpaperBridge } from './bridge.js';
@@ -11,8 +13,10 @@ import './style.css';
 const $ = selector => document.querySelector(selector);
 const settingsKey = 'three-body.settings.v3';
 const statisticsKey='three-body.statistics.v1';let lastStatisticsSave=0;
+const resetPendingKey='three-body.reset-pending.v1';
+let resetting=false,resetInProgress=false,startWorker;
 function persistStatistics(force=false){
-  if(!state?.statisticsCheckpoint||(!force&&performance.now()-lastStatisticsSave<1000))return;
+  if(resetting||!state?.statisticsCheckpoint||(!force&&performance.now()-lastStatisticsSave<1000))return;
   try{localStorage.setItem(statisticsKey,JSON.stringify(state.statisticsCheckpoint));lastStatisticsSave=performance.now();}catch{}
 }
 function savedStatistics(){try{return JSON.parse(localStorage.getItem(statisticsKey)||'null');}catch{return null;}}
@@ -38,7 +42,9 @@ function saveSettings() {
   catch { $('#save-status').textContent = '本地存储不可用'; }
 }
 function changeSettings(patch, options = {}) {
-  const previous = settings;
+  const previous = settings;patch=controllerPatch(settings,patch);
+  if(patch.stabilityMode&&patch.stabilityMode!=='off'&&patch.stabilityMode!==settings.stabilityMode&&!('newproperty60' in patch))patch={...patch,newproperty60:true,gravityModel:'newtonian',physicsMode:'reference',civilizationMode:'balanced'};
+  if(manualInitialKeys.some(k=>k in patch)&&!('manualInitialBodies' in patch))patch={...patch,manualInitialBodies:null};
   settings = normalizeSettings({ ...settings, ...patch });
   worker?.postMessage({ type: 'settings', patch: settings });
   renderer?.updateSettings(settings);
@@ -83,7 +89,9 @@ const hintMap = {
   cheatingcheck: '标记引力牢笼、温度距离倍数及非默认物理参数。',
   custombg: '选择球面全景图。文件仅保存在本机；WE 中也可使用原生背景属性。',
   newproperty63: '原版虚构账号与密码的视觉展示，不涉及实际账号登录。',
-  civilizationMode: '纪元由轨道稳定性判断；文明在 −20～40°C 活动，脱水保存、原编号复苏。行星毁坏后只能重建宇宙。原版模式保留旧判定。',
+  stabilityMode: 'V2转向控制：危险近遇保护与外逸能量反馈。行星毁灭后至少等待5显示年再生成新行星，三星计时继续；不自动重置宇宙。旧版可在控制方案中切回。',
+  newproperty60: '现行模式使用原引力牢笼；V2中开关新控制器。关闭V2保护仍保留相同精度与行星生命周期，便于对照。',
+  civilizationMode: '纪元由轨道稳定性判断；文明脱水保存并以原编号复苏。现行模式行星毁坏后重建宇宙；V2会独立生成新行星，旧文明的毁灭仍保留。',
   thermalGrace: '越大越耐久。文明诞生后才有人口储备与干仓质量；等级提升额外延缓损耗。持续极端灾害仍会毁灭文明。'
 };
 function makeControl(key, def, extension = false) {
@@ -156,7 +164,11 @@ function buildSettings() {
   updateControls();
 }
 function updateControls() {
+  const locked=new Set(['gravityModel','physicsMode','civilizationMode','newproperty53','encounterAccuracy','timespeed','newproperty26','autorestart','mc','k1','k2','rc','re','expc','newproperty66','newproperty67','newproperty28','newproperty29']);
   for (const [key, { input, number, type }] of controlMap) {
+    const disabled=key==='newproperty7'||(settings.stabilityMode!=='off'&&locked.has(key));
+    input.disabled=disabled;if(number)number.disabled=disabled;
+    input.title=disabled&&key!=='newproperty7'?'V2使用固定精度、固定显示年与独立失效；此旧设置不生效。切回现行模式后可调整。':'';
     if (type === 'bool') input.checked = !!controlValue(key);
     else if (type === 'color') input.value = colorHex(controlValue(key));
     else if (type !== 'scenetexture') { input.value = controlValue(key); if (number) number.value = controlValue(key); }
@@ -210,7 +222,7 @@ function applyAppearance() {
   const tabNames = en ? ['Settings', 'Archive', 'About'] : ['全部设置', '文明档案', '项目说明']; document.querySelectorAll('[data-tab]').forEach((b, i) => b.textContent = tabNames[i]);
 }
 
-function applyPause() { worker?.postMessage({ type: 'pause', value: userPaused || hostPaused || visibilityPaused }); }
+function applyPause() { worker?.postMessage({ type: 'pause', value: resetting || userPaused || hostPaused || visibilityPaused }); }
 $('#pause-button').onclick = () => { userPaused = !userPaused; applyPause(); applyAppearance(); };
 function restart() { worker?.postMessage({ type: 'restart' }); if (settings.newproperty64) showLoading(true); }
 $('#restart-button').onclick = restart; $('#restart-prompt').onclick = restart;
@@ -227,11 +239,34 @@ $('#import-settings').onchange = async e => {
   try {
     if (file.size > 1024 * 1024) throw new Error('配置文件过大');
     const data = JSON.parse(await file.text()); if (data.format !== 'three-body-seed' || data.version !== 1 || !data.settings || typeof data.settings !== 'object') throw new Error('种子格式不匹配');
-    changeSettings(data.initialBodies ? settingsFromInitial(data.settings, data.initialBodies) : data.settings); worker?.postMessage({ type: 'restart' }); notice('种子与设置已导入，宇宙已重新初始化');
+    changeSettings(data.initialBodies ? settingsFromInitial(replaySettings(data.settings), data.initialBodies) : replaySettings(data.settings)); worker?.postMessage({ type: 'restart' }); notice('种子与设置已导入，宇宙已重新初始化');
   } catch (error) { notice(`导入失败：${error.message}`, true); }
   e.target.value = '';
 };
 $('#reset-settings').onclick = () => { changeSettings(normalizeSettings()); worker?.postMessage({ type: 'restart' }); notice('已恢复默认设置：文明延续优化、尾迹开启；文明档案保留'); };
+// Keep the destructive action distinct from ordinary restart and settings reset.
+async function clearRunHistory(){
+  resetting=true;applyPause();
+  if(!await store.clearHistory())throw new Error('历史数据库暂不可写');
+  localStorage.removeItem(statisticsKey);
+  localStorage.removeItem(resetPendingKey);
+  worker?.terminate();history=[];state=null;window.__threeBodyState=null;lastEvent=lastTick=lastStatisticsSave=0;
+  sessionId=crypto.randomUUID?.()||String(Date.now());renderer.clearTrails();renderer.snap=null;
+  $('#civilization-log').replaceChildren();renderHistory();fatal=false;resetting=false;
+  startWorker({});
+}
+$('#reset-history').onclick=async()=>{
+  if(resetInProgress||!startWorker)return;
+  const en=settings.cnen2;
+  if(!confirm(en?'Erase all universe/civilization history, rankings and elapsed years? This cannot be undone. Settings and background will be kept.':'确定完全重置？将永久清空宇宙与文明历史、排行榜、累计年数，从第1号宇宙重新开始。设置与自定义背景保留。'))return;
+  resetInProgress=true;$('#reset-history').disabled=true;
+  try{
+    // A reload after an interrupted clear must complete the clear before loading old statistics.
+    localStorage.setItem(resetPendingKey,'1');await clearRunHistory();
+    notice(en?'History cleared. Starting universe 1.':'全部历史已清空，已从第1号宇宙重新开始');
+  }catch(error){notice(`完全重置未完成：${error.message}。${resetting?'模拟保持暂停，请重试完全重置。':'未清除记录，请检查浏览器存储权限后重试。'}`,true);}
+  finally{resetInProgress=false;$('#reset-history').disabled=false;}
+};
 $('#export-history').onclick = () => downloadJSON('three-body-civilization-archive.json', { version: 1, records: history });
 
 function renderHistory() {
@@ -242,7 +277,7 @@ function renderHistory() {
     title.textContent = `宇宙${entry.universe||entry.generation||'?'} · 文明${entry.number} · ${entry.lifespan} 年 · ${entry.destructionEvent}`;
     sub.textContent = `${entry.seed} / 宇宙 ${entry.generation}${entry.development?` / Lv.${entry.development.level} ${entry.development.zh} / 发展 ${entry.development.developmentYears.toFixed(1)}年`:''} / ${new Date(entry.savedAt).toLocaleString()}`;
     button.textContent = '复现初始种子'; button.onclick = () => {
-      const replay = entry.initialBodies ? settingsFromInitial(entry.settings, entry.initialBodies) : entry.settings;
+      const replay = entry.initialBodies ? settingsFromInitial(replaySettings(entry.settings), entry.initialBodies) : replaySettings(entry.settings);
       changeSettings(replay); worker?.postMessage({ type: 'restart' }); notice('已载入该文明完整初始条件');
     };
     li.append(title, sub, button); list.append(li);
@@ -262,11 +297,18 @@ function renderStatistics(s){
 }
 function renderState(s) {
   const en = settings.cnen2;
-  $('#era').textContent = s.era; $('#temperature').textContent = s.temperature.toFixed(1);
+  const absent=s.world?.planet.present===false,stopped=!!s.physics?.stellarFailure;
+  const numerical=!!s.executionError||!!s.physics?.numericalError;
+  $('#era').textContent = s.era; $('#temperature').textContent = absent?'—':s.temperature.toFixed(1);
   const condition=s.world?.planet.condition,planetLabels={temperate:['温带行星','Temperate'],hot:['高温行星','Overheated'],frozen:['冰封行星','Frozen'],molten:['熔融行星','Molten'],damaged:['行星受损 · 可恢复','Recoverable damage'],recovering:['行星结构恢复中','Structure recovering'],'tidal-stress':['潮汐应力过高','High tidal stress'],engulfed:['行星已被吞噬','Planet engulfed'],disrupted:['行星已被撕裂','Planet disrupted']};
   $('#hydration').textContent=planetLabels[condition]?.[en?1:0]||'';
+  if(absent)$('#hydration').textContent=en?'Planet absent · P5 regeneration':'行星已毁灭 · 等待 P5 重生';
   const phase=settings.civilizationMode==='legacy'?(s.alive?'active':'empty'):(s.civilizationState?.phase||'empty'),phases={empty:['等待文明诞生','Awaiting civilization'],active:['恢复生产 · 文明发展','Production and development'],dehydrating:['脱水保存中','Dehydrating'],dormant:['干仓储存 · 等待复苏','Dry storage'],rehydrating:['浸泡复苏中','Rehydrating'],destroyed:['文明已终结','Civilization ended']};
   $('#civilization-phase').textContent=phases[phase]?.[en?1:0]||'';$('#civilization-phase-detail').textContent=s.alive?(en?`U${s.generation} · C${s.civilization} · ${s.lifespan} years`:`宇宙${s.generation} · 文明${s.civilization} · 已延续${s.lifespan}年`):(en?'Dehydration preserves a civilization; it is not a rebirth.':'脱水保存与浸泡复苏延续同一文明');
+  if(absent){$('#civilization-phase').textContent=en?'Awaiting a new planet':'等待新行星';const remaining=s.physics?.planetRespawnInYears;$('#civilization-phase-detail').textContent=remaining===null||remaining===undefined?'—':en?`New planet in ${remaining.toFixed(1)} years`:`新行星将在 ${remaining.toFixed(1)} 年后生成`;}
+  if(stopped){$('#civilization-phase').textContent=en?'System stopped':'三星系统已停止';$('#civilization-phase-detail').textContent=en?'Start a new universe manually':'请手动开启新宇宙';}
+  if(stopped)$('#era').textContent=en?'STOPPED':'已停止';
+  if(numerical){$('#era').textContent=en?'NUMERICAL ERROR':'数值异常';$('#civilization-phase').textContent=en?'Simulation paused':'模拟已暂停';$('#civilization-phase-detail').textContent=en?'Check initial conditions or select legacy physics':'请检查初始条件或切换旧版物理';}
   $('#phenomena').textContent=(s.world?.phenomena||[]).map(p=>en?p.en:p.zh).join(' · ');
   const development=s.civilizationState?.development;
   $('#civilization-level').textContent=development?`Lv.${development.level} · ${en?development.en:development.zh}`:'';
@@ -283,6 +325,8 @@ function renderState(s) {
   $('#temperature-indicator').style.left = `${(s.temperature + 270) / 1770 * 100}%`;
   $('.temperature').style.color = s.temperature > settings.newproperty46 ? '#dcb09c' : s.temperature < settings.newproperty45 ? '#8dbde5' : 'var(--accent)';
   $('#civilization-status').textContent = s.text[0]; $('#civilization-lifespan').textContent = s.text[6];
+  if(stopped)$('#civilization-status').textContent=en?'Stellar system failed · simulation stopped':'三星系统失效 · 模拟已停止';
+  if(numerical)$('#civilization-status').textContent=en?'Numerical error · simulation paused':'数值异常 · 模拟已暂停';
   const log=$('#civilization-log'),items=s.logItems??s.log.map((text,i)=>({id:text,zh:text,en:text,at:s.runtime-i*5,legacy:true}));
   const retained=new Set();
   items.slice(0,6).forEach((entry,i)=>{
@@ -295,12 +339,16 @@ function renderState(s) {
   [...log.children].forEach(li=>{if(!retained.has(li.dataset.id))li.remove();});
   renderStatistics(s);
   $('#simulation-year').textContent = s.year >= 1e8 ? s.year.toExponential(2) : s.year.toFixed(2);
-  $('#restart-prompt').hidden = !(s.world?.planet.restartRequired||(settings.civilizationMode==='legacy'&&s.escaped)) || settings.autorestart;
+  $('#restart-prompt').hidden = !(s.world?.planet.restartRequired||s.escapeStatus?.confirmed||(settings.civilizationMode==='legacy'&&s.escaped)) || (settings.autorestart&&settings.stabilityMode==='off');
   $('#restart-prompt span').textContent=s.world?.planet.terminal?(en?s.world.planet.terminal.en:s.world.planet.terminal.zh):s.world?.planet.damaged?(en?'PLANETARY DAMAGE':'行星结构受损'):(en?'CELESTIAL ESCAPE':'天体已逃逸');
+  if(stopped){const reason=s.physics.stellarFailure.kind;$('#restart-prompt span').textContent=reason==='stellar-contact'?(en?'STELLAR CONTACT':'恒星发生接触'):reason==='triple-disintegration'?(en?'STELLAR SYSTEM DISINTEGRATED':'三星系统瓦解'):(en?'STELLAR ESCAPE':'恒星逃逸');}
   $('#restart-prompt strong').textContent=en?`Start universe ${s.generation+1} ↻`:`开启第${s.generation+1}号宇宙 ↻`;
 
-  if (settings.cheatingcheck) $('#physics-check').textContent = `${settings.newproperty60 ? 'CAGE ON / ' : ''}G × ${settings.newproperty52 / 1000} / T DIST × ${settings.newproperty69}\n${settings.physicsMode === 'reference' ? 'REFERENCE 60 Hz' : 'REAL TIME'}`;
-  $('#runtime-diagnostics').textContent = `Three.js WebGL · ${fps} FPS · Worker 60 Hz · Tick ${s.tick} · ${s.bodies.length} bodies · 宇宙 ${s.generation} · Seed ${s.seed} · ${renderer.canvas.width}×${renderer.canvas.height}`;
+  if (settings.cheatingcheck) $('#physics-check').textContent = `${settings.newproperty60 ? (settings.stabilityMode==='off'?'CAGE ON / ':'V2 PROTECTION ON / ') : ''}G × ${settings.newproperty52 / 1000} / T DIST × ${settings.newproperty69}\n${settings.physicsMode === 'reference' ? 'REFERENCE 60 Hz' : 'REAL TIME'}`;
+  const physics=s.physics;
+  const conservationLabel=physics?.control?'V2：控制与行星外部预算分列':physics?.cageActive?'牢笼外力：不作孤立守恒判定':physics&&!physics.physicalModelValid?'三星完整性已失效':'孤立系统';
+  const diagnosticText=physics?.control?` · ${conservationLabel} · 数值能量残差 ${physics.relativeEnergyError.toExponential(2)} · 控制累计绝对功 ${physics.control.absoluteWork.toExponential(2)} · 额外冲量 ${physics.control.impulse.toExponential(2)} · 净ΔL ${Math.hypot(...physics.control.deltaL).toExponential(2)} · P5矢量冲量 ${physics.planetExternal.vectorImpulse?.toExponential(2)??'—'}${physics.planetExternal.vectorImpulseComplete?'':'（部分）'} · 行星损失/重生 ${physics.planetLosses}/${physics.planetRespawns}`:physics?` · ${conservationLabel} · ΔE惯性 ${physics.relativeInertialEnergyError.toExponential(2)} · ΔE内部 ${physics.relativeEnergyError.toExponential(2)} · ΔL ${physics.relativeAngularMomentumError.toExponential(2)} · ΔP ${physics.normalizedMomentumDrift.toExponential(2)} · 固定初始质心 / ΔR ${physics.centerPositionDrift.toExponential(2)} / ΔVcm ${physics.centerVelocityDrift.toExponential(2)}`:'';
+  $('#runtime-diagnostics').textContent = `Three.js WebGL · ${fps} FPS · Worker 60 Hz · Tick ${s.tick} · ${s.bodies.length} bodies · 宇宙 ${s.generation} · Seed ${s.seed} · ${renderer.canvas.width}×${renderer.canvas.height}${physics?' · '+physics.model:''}${diagnosticText}`;
 }
 function handleEvents(events) {
   for (const event of events) {
@@ -338,12 +386,23 @@ const audio = new AudioController((values, average) => {
 try {
   renderer = new SpaceRenderer($('#universe'), $('#body-labels'), settings);
   const blob = new Blob([__WORKER_SOURCE__], { type: 'text/javascript' }); const workerURL = URL.createObjectURL(blob);
-  worker = new Worker(workerURL); worker.onmessage = ({ data }) => {
+  startWorker=statistics=>{
+  const activeWorker=new Worker(workerURL);worker=activeWorker;activeWorker.onmessage = ({ data }) => {
+    if(resetting||worker!==activeWorker)return;
     if (data.type === 'error') { fatal = true; console.error('Simulation worker:', data); notice(`模拟异常：${data.message}。请恢复默认设置后重试。`, true); return; }
-    if (data.type === 'state') { state = data.state; lastTick = state.tick; window.__threeBodyState = state; renderer.ingest(state); renderState(state); handleEvents(state.events);persistStatistics(); }
+    if (data.type === 'state') { fatal=false;state = data.state; lastTick = state.tick; window.__threeBodyState = state; renderer.ingest(state); renderState(state); handleEvents(state.events);persistStatistics(); }
   };
-  worker.onerror = event => { fatal = true; console.error(event); notice('后台模拟无法启动。请通过本地服务器或 Wallpaper Engine 打开此项目。', true); };
-  store.getAll('history').then(records=>{history=records.sort((a,b)=>a.savedAt-b.savedAt);worker.postMessage({type:'init',settings,statistics:{...(savedStatistics()||{}),legacyRecords:history}});});
+  worker.onerror = event => { if(resetting||worker!==activeWorker)return;fatal = true; console.error(event); notice('后台模拟无法启动。请通过本地服务器或 Wallpaper Engine 打开此项目。', true); };
+  worker.postMessage({type:'init',settings,statistics});applyPause();
+  };
+  (async()=>{
+    let interrupted=false;try{interrupted=!!localStorage.getItem(resetPendingKey);}catch{}
+    if(interrupted){resetInProgress=true;try{await clearRunHistory();}finally{resetInProgress=false;}return;}
+    const startupSession=sessionId,records=await store.getAll('history');
+    // A user may initiate reset while IndexedDB is still opening.
+    if(sessionId!==startupSession||resetting||resetInProgress)return;
+    history=records.sort((a,b)=>a.savedAt-b.savedAt);startWorker({...(savedStatistics()||{}),legacyRecords:history});
+  })().catch(error=>{notice(`历史载入未完成：${error.message}。请重试完全重置。`,true);});
   installWallpaperBridge({ changeSettings, renderer, audio, setHostPaused: value => { hostPaused = value; applyPause(); } });
   store.getAsset('background').then(file => { if (file) { customURL = URL.createObjectURL(file); renderer.setCustomBackground(customURL); } });
   let lastFrame = performance.now(), startTime = lastFrame, fpsStart = lastFrame, frames = 0, lastDraw = 0;
@@ -365,10 +424,10 @@ try {
   if (settings.newproperty64 || settings.newproperty63) showLoading(); else $('#loading-overlay').hidden = true;
   if (settings.menuinit) setPanel(true);
   addEventListener('pagehide',()=>persistStatistics(true));
-  addEventListener('beforeunload', () => { persistStatistics(true);worker.terminate(); URL.revokeObjectURL(workerURL); if (customURL) URL.revokeObjectURL(customURL); });
+  addEventListener('beforeunload', () => { persistStatistics(true);worker?.terminate(); URL.revokeObjectURL(workerURL); if (customURL) URL.revokeObjectURL(customURL); });
 } catch (error) {
   fatal = true; console.error(error); hideLoading(); notice(`无法初始化 3D 场景：${error.message}。请启用浏览器硬件加速。`, true);
 }
 // Diagnostic readout for automated smoke checks and host integrations.
 window.__threeBodyDiagnostics = () => ({ ready: !!state && !fatal, tick: lastTick, fps, paused: userPaused || hostPaused || visibilityPaused, controls: controlMap.size, history: history.length, worker: !!worker,
-  scene: renderer ? { canvas:[renderer.canvas.width,renderer.canvas.height], drawingBuffer:[renderer.renderer.getContext().drawingBufferWidth,renderer.renderer.getContext().drawingBufferHeight], renderedFrames:renderer.renderer.info.render.frame, viewVelocity:[renderer.rot.vx,renderer.rot.vy], speedLimited:false, compassOpacity:renderer.compass.children.map(n=>n.material.opacity), idleYaw:renderer.autoAngle, returningToGalaxy:renderer.returning, compassScale:renderer.compass.scale.x, compassTarget:renderer.compassTarget, compassFade:renderer.compassFade, viewSensitivity:settings.viewSensitivity, dragSensitivity:settings.dragSensitivity, dustLayers:renderer.dustLayers.map(d=>({visible:d.visible,count:d.geometry.drawRange.count,size:d.material.size,opacity:d.material.opacity,blending:d.material.blending,alphaTest:d.material.alphaTest})), pointerMode:+settings.newproperty61, galaxyCoreScreen:renderer.sky.localToWorld(renderer.galaxyDirection.clone().multiplyScalar(90)).project(renderer.camera).toArray(), layoutEditing:layoutEditor.editing, compassVisible:renderer.compass.visible, maxTextureSize:renderer.renderer.capabilities.maxTextureSize, backgroundSizes:Object.fromEntries(Object.entries(renderer.bgTextures).map(([k,t])=>[k,[t.image?.width||0,t.image?.height||0]])), backgroundFollowsView: renderer.sky.parent === renderer.world, viewRotation: renderer.world.rotation.toArray().slice(0,3), skyRotation: renderer.sky.getWorldQuaternion(new renderer.camera.quaternion.constructor()).toArray(), bodyShapes: renderer.nodes.map(n => n.mesh.geometry.type), glowShape: 'radial-circle', bodyLabelsVisible:renderer.nodes.some(n=>!n.label.hidden), trailSamples: renderer.trailBuffers.map(b => b.length), trailComplexity:renderer.trailComplexity||0, trailMetrics:renderer.trailMetrics||[], trailsVisible: renderer.trails.every(t => t.visible) } : null });
+  scene: renderer ? { canvas:[renderer.canvas.width,renderer.canvas.height], drawingBuffer:[renderer.renderer.getContext().drawingBufferWidth,renderer.renderer.getContext().drawingBufferHeight], renderedFrames:renderer.renderer.info.render.frame, viewVelocity:[renderer.rot.vx,renderer.rot.vy], speedLimited:false, compassOpacity:renderer.compass.children.map(n=>n.material.opacity), idleYaw:renderer.autoAngle, returningToGalaxy:renderer.returning, systemOffset:renderer.system.position.toArray(),displayOrigin:{...renderer.fixedFrame.origin},cameraPosition:renderer.camera.position.toArray(),renderTime:renderer.renderTime,trailStyle:"continuous-ribbon",trailHeads:renderer.trails.map(l=>l.segmentCount?Array.from(l.geometry.attributes.position.array.slice(l.segmentCount*6,l.segmentCount*6+3)):null),bodyVisible:renderer.nodes.map(n=>n.group.visible),trailVisible:renderer.trails.map(t=>t.visible),bodyLocalPositions:renderer.nodes.map(n=>n.group.position.toArray()),bodyWorldPositions:renderer.nodes.map(n=>n.group.getWorldPosition(new renderer.camera.position.constructor()).toArray()), compassScale:renderer.compass.scale.x, compassTarget:renderer.compassTarget, compassFade:renderer.compassFade, viewSensitivity:settings.viewSensitivity, dragSensitivity:settings.dragSensitivity, dustLayers:renderer.dustLayers.map(d=>({visible:d.visible,count:d.geometry.drawRange.count,size:d.material.size,opacity:d.material.opacity,blending:d.material.blending,alphaTest:d.material.alphaTest})), pointerMode:+settings.newproperty61, galaxyCoreScreen:renderer.sky.localToWorld(renderer.galaxyDirection.clone().multiplyScalar(90)).project(renderer.camera).toArray(), layoutEditing:layoutEditor.editing, compassVisible:renderer.compass.visible, maxTextureSize:renderer.renderer.capabilities.maxTextureSize, backgroundSizes:Object.fromEntries(Object.entries(renderer.bgTextures).map(([k,t])=>[k,[t.image?.width||0,t.image?.height||0]])), backgroundFollowsView: renderer.sky.parent === renderer.world, viewRotation: renderer.world.rotation.toArray().slice(0,3), skyRotation: renderer.sky.getWorldQuaternion(new renderer.camera.quaternion.constructor()).toArray(), bodyShapes: renderer.nodes.map(n => n.mesh.geometry.type), glowShape: 'radial-circle', bodyLabelsVisible:renderer.nodes.some(n=>!n.label.hidden), trailSamples: renderer.trailBuffers.map(b => b.length), trailComplexity:renderer.trailComplexity||0, trailMetrics:renderer.trailMetrics||[], trailsVisible: renderer.trails.every(t => t.visible) } : null });

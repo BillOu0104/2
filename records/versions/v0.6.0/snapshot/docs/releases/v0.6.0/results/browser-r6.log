@@ -1,0 +1,18 @@
+{
+  "pass": true,
+  "checks": [
+    "Old v0.5.5 settings boot into the enabled V2 default while preserving UI preferences; generated controls match",
+    "Only deflect and legacy are exposed; fixed h4 precision remains visible and playback is separate",
+    "Higher playback advances complete fixed-precision ticks without resetting the universe",
+    "P5 accepted-step loss hides planet/trail and clears living readouts; at least five years later it respawns with the same universe and an explicit vector budget",
+    "Protection/language updates keep the running universe and exact manual initial data",
+    "Stellar failure is absorbing, reports contact and exposes manual recovery; autorestart cannot hide it",
+    "Fixed camera, background particles, mouse drag and release inertia remain available",
+    "The optional all-body COM display is presentation-only and switching back restores the fixed origin",
+    "A singular initial state becomes visible numerical UNKNOWN/error, not a successful reset or physical survival",
+    "A failed Worker can recover from corrected settings; the legacy fallback restores active old controls and a healthy runtime",
+    "The selected controller, preferences and settings survive a browser reload",
+    "Postprocessing can still be enabled with the new Worker and trails",
+    "Complete history reset starts a fresh V2 universe while preserving preferences"
+  ]
+}

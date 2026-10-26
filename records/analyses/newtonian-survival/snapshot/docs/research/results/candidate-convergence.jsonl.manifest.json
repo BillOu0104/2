@@ -1,0 +1,29 @@
+{
+  "hash": "6377472ffcebc6274db26dcadf905c3de282967e097727777b7b522f7be88a76",
+  "config": {
+    "engine": "./engine-v2.mjs",
+    "prefix": "HOLDOUT-C",
+    "start": 0,
+    "seeds": 16,
+    "horizon": 1000,
+    "output": "results/candidate-convergence.jsonl",
+    "hypothesis": "Refine the frozen final candidate, whose tighter r=.12D and Q=1 differ from the earlier numerical-control orbit. Use the first 16 holdout seed numbers independent of outcomes, reduce both maximum step and encounter eta by two, preserve physical duration.",
+    "profiles": [
+      {
+        "id": "candidate-fine",
+        "force": "newton",
+        "dt": 0.000375,
+        "adaptive": true,
+        "eta": 0.00375,
+        "planet": "bound",
+        "inPlane": true,
+        "radiusFraction": 0.12,
+        "Q": 1,
+        "direction": -1
+      }
+    ]
+  },
+  "baseline": "c7a53a01def5f9d60389ee20ec0f8bac5210ed69",
+  "node": "v24.19.0",
+  "started": "2026-10-20T14:14:39.421Z"
+}

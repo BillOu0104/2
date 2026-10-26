@@ -1,0 +1,101 @@
+{
+  "hash": "56317e0533c6441bbbe266039b348cbb66ba403a87b2909e2c70fa2187c0263a",
+  "config": {
+    "engine": "./engine-v3.mjs",
+    "prefix": "GEOMETRY-D",
+    "start": 0,
+    "seeds": 32,
+    "horizon": 1000,
+    "output": "results/geometry.jsonl",
+    "hypothesis": "Test whether a known nonhierarchical periodic architecture and continuously perturbed families change longevity; periodic control cannot count as chaotic target success.",
+    "profiles": [
+      {
+        "id": "newton-random",
+        "force": "newton",
+        "adaptive": true,
+        "eta": 0.0075
+      },
+      {
+        "id": "candidate",
+        "force": "newton",
+        "adaptive": true,
+        "eta": 0.0075,
+        "planet": "bound",
+        "inPlane": true,
+        "radiusFraction": 0.12,
+        "Q": 1,
+        "direction": -1
+      },
+      {
+        "id": "figure8-periodic-control",
+        "force": "newton",
+        "adaptive": true,
+        "eta": 0.0075,
+        "geometry": "figure-eight",
+        "planet": "bound",
+        "inPlane": true,
+        "radiusFraction": 0.12,
+        "direction": -1,
+        "orbitNormal": [
+          0,
+          0,
+          1
+        ]
+      },
+      {
+        "id": "figure8-perturb001",
+        "force": "newton",
+        "adaptive": true,
+        "eta": 0.0075,
+        "geometry": "figure-eight",
+        "geometryPerturb": 0.001,
+        "planet": "bound",
+        "inPlane": true,
+        "radiusFraction": 0.12,
+        "direction": -1,
+        "orbitNormal": [
+          0,
+          0,
+          1
+        ]
+      },
+      {
+        "id": "figure8-perturb01",
+        "force": "newton",
+        "adaptive": true,
+        "eta": 0.0075,
+        "geometry": "figure-eight",
+        "geometryPerturb": 0.01,
+        "planet": "bound",
+        "inPlane": true,
+        "radiusFraction": 0.12,
+        "direction": -1,
+        "orbitNormal": [
+          0,
+          0,
+          1
+        ]
+      },
+      {
+        "id": "figure8-perturb05",
+        "force": "newton",
+        "adaptive": true,
+        "eta": 0.0075,
+        "geometry": "figure-eight",
+        "geometryPerturb": 0.05,
+        "planet": "bound",
+        "inPlane": true,
+        "radiusFraction": 0.12,
+        "direction": -1,
+        "orbitNormal": [
+          0,
+          0,
+          1
+        ]
+      }
+    ]
+  },
+  "baseline": "c7a53a01def5f9d60389ee20ec0f8bac5210ed69",
+  "node": "v24.19.0",
+  "started": "2026-10-20T14:16:17.870Z"
+}

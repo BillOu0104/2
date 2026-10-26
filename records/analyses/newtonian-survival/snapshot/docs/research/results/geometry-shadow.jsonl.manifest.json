@@ -1,0 +1,60 @@
+{
+  "hash": "14d52056c64dda1f41eacd23205e9f076e8edd496d0a63cadbf07feb2188c595",
+  "profiles": [
+    {
+      "id": "figure8-periodic-control",
+      "force": "newton",
+      "adaptive": true,
+      "eta": 0.0075,
+      "geometry": "figure-eight",
+      "planet": "bound",
+      "inPlane": true,
+      "radiusFraction": 0.12,
+      "direction": -1,
+      "orbitNormal": [
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "id": "figure8-perturb01",
+      "force": "newton",
+      "adaptive": true,
+      "eta": 0.0075,
+      "geometry": "figure-eight",
+      "geometryPerturb": 0.01,
+      "planet": "bound",
+      "inPlane": true,
+      "radiusFraction": 0.12,
+      "direction": -1,
+      "orbitNormal": [
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "id": "figure8-perturb05",
+      "force": "newton",
+      "adaptive": true,
+      "eta": 0.0075,
+      "geometry": "figure-eight",
+      "geometryPerturb": 0.05,
+      "planet": "bound",
+      "inPlane": true,
+      "radiusFraction": 0.12,
+      "direction": -1,
+      "orbitNormal": [
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "seeds": 16,
+  "prefix": "GEOMETRY-SENSITIVITY",
+  "horizon": 3000,
+  "perturb": 1e-9,
+  "method": "Same four-body integrator, same frame/step schedule. No WorldState needed for stellar sensitivity. Record geometric contacts; sensitivity after contact is not valid physical evidence."
+}

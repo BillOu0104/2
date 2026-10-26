@@ -1,0 +1,224 @@
+{
+  "passed": 7,
+  "checks": [
+    "existing v0.4.1 settings migrate to hover, 0.01 degree/sec return and bound initial orbits; ring scale is 0.3",
+    "actual mouse hover moves the scene without any pointer press, with a small angle and half-transparent ring",
+    "moving nearly across the screen keeps hover travel below eleven degrees instead of the prior ninety-degree range",
+    "idle view returns toward the galaxy monotonically at an extremely slow rate and does not show rings",
+    "camera migration preserves existing custom window positions",
+    "optional click-drag remains usable with greatly reduced impulse per pixel",
+    "hover preference persists after reload"
+  ],
+  "errors": [],
+  "hover": {
+    "canvas": [
+      640,
+      400
+    ],
+    "drawingBuffer": [
+      640,
+      400
+    ],
+    "renderedFrames": 8,
+    "viewVelocity": [
+      0.00006139073161144701,
+      0.0011247027802919456
+    ],
+    "speedLimited": false,
+    "compassOpacity": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "idleYaw": 0,
+    "returningToGalaxy": false,
+    "compassScale": 0.3,
+    "pointerMode": 1,
+    "galaxyCoreScreen": [
+      -0.0968235860622499,
+      0.008714192880098903,
+      0.9998893427733201
+    ],
+    "layoutEditing": false,
+    "compassVisible": true,
+    "maxTextureSize": 8192,
+    "backgroundSizes": {
+      "1": [
+        8192,
+        4096
+      ],
+      "4": [
+        8192,
+        4096
+      ]
+    },
+    "backgroundFollowsView": true,
+    "viewRotation": [
+      0.004439422871752166,
+      0.07636947332321968,
+      0
+    ],
+    "skyRotation": [
+      -0.025166041813005732,
+      0.8158315429131624,
+      -0.03533861117232366,
+      0.5766599920991625
+    ],
+    "bodyShapes": [
+      "SphereGeometry",
+      "SphereGeometry",
+      "SphereGeometry",
+      "SphereGeometry"
+    ],
+    "glowShape": "radial-circle",
+    "bodyLabelsVisible": false,
+    "trailSamples": [
+      202,
+      202,
+      202,
+      202
+    ],
+    "trailComplexity": 0.01786786854045293,
+    "trailMetrics": [
+      {
+        "arcPixels": 152.10868279934803,
+        "seconds": 6.383333333333334,
+        "budget": 859.2510240431911,
+        "segments": 93
+      },
+      {
+        "arcPixels": 81.42948881392637,
+        "seconds": 6.316666666666667,
+        "budget": 859.2510240431911,
+        "segments": 55
+      },
+      {
+        "arcPixels": 74.89219989422821,
+        "seconds": 6.3500000000000005,
+        "budget": 859.2510240431911,
+        "segments": 51
+      },
+      {
+        "arcPixels": 77.07520259888798,
+        "seconds": 6.383333333333334,
+        "budget": 859.2510240431911,
+        "segments": 53
+      }
+    ],
+    "trailsVisible": true
+  },
+  "atEdge": {
+    "canvas": [
+      640,
+      400
+    ],
+    "drawingBuffer": [
+      640,
+      400
+    ],
+    "renderedFrames": 16,
+    "viewVelocity": [
+      -4.822482519621208e-8,
+      0.0005744160110808644
+    ],
+    "speedLimited": false,
+    "compassOpacity": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "idleYaw": 0,
+    "returningToGalaxy": false,
+    "compassScale": 0.3,
+    "pointerMode": 1,
+    "galaxyCoreScreen": [
+      -0.21036785893819462,
+      0.007680481635095418,
+      0.9998872016022184
+    ],
+    "layoutEditing": false,
+    "compassVisible": true,
+    "maxTextureSize": 8192,
+    "backgroundSizes": {
+      "1": [
+        8192,
+        4096
+      ],
+      "4": [
+        8192,
+        4096
+      ]
+    },
+    "backgroundFollowsView": true,
+    "viewRotation": [
+      0.0044506015679414345,
+      0.16484377800679983,
+      0
+    ],
+    "skyRotation": [
+      -0.02686132399001574,
+      0.8405298873495584,
+      -0.034073229818168016,
+      0.5400249927136711
+    ],
+    "bodyShapes": [
+      "SphereGeometry",
+      "SphereGeometry",
+      "SphereGeometry",
+      "SphereGeometry"
+    ],
+    "glowShape": "radial-circle",
+    "bodyLabelsVisible": false,
+    "trailSamples": [
+      256,
+      256,
+      256,
+      256
+    ],
+    "trailComplexity": 0.07068888635638168,
+    "trailMetrics": [
+      {
+        "arcPixels": 186.82081872036815,
+        "seconds": 8.333333333333332,
+        "budget": 685.6922816939936,
+        "segments": 114
+      },
+      {
+        "arcPixels": 120.85562866268289,
+        "seconds": 8.333333333333332,
+        "budget": 685.6922816939936,
+        "segments": 77
+      },
+      {
+        "arcPixels": 92.63768905686813,
+        "seconds": 8.299999999999999,
+        "budget": 685.6922816939936,
+        "segments": 64
+      },
+      {
+        "arcPixels": 115.04505308940206,
+        "seconds": 8.299999999999999,
+        "budget": 685.6922816939936,
+        "segments": 79
+      }
+    ],
+    "trailsVisible": true
+  },
+  "returnMeasurement": {
+    "start": [
+      0.004406956696026609,
+      0.1649059607987476,
+      0
+    ],
+    "end": [
+      0.0035605184845620462,
+      0.16410218237795368,
+      0
+    ],
+    "seconds": 5.01,
+    "deltaRadians": 0.0008037784207939047
+  },
+  "limits": [
+    "Measured real mouse and Worker behavior in software WebGL; native Windows Wallpaper Engine is unavailable."
+  ]
+}

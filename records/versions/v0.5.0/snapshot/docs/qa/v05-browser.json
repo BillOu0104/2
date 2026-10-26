@@ -1,0 +1,46 @@
+{
+  "passed": 14,
+  "checks": [
+    "v0.5 preserves saved overall sensitivity and adds default drag multiplier 5",
+    "all 215 real controls have matching entries in the generated settings guide",
+    "empty world uses no fictitious population or resilience",
+    "hover rotation still moves the actual scene without clicking",
+    "drag also works in hover mode and default 5 multiplier produces fivefold angular impulse",
+    "release keeps the dragged view as hover baseline without snapping back",
+    "fixed view continues to disable both hover and drag",
+    "0.3 scale translucent ring fades in slowly and fades out promptly",
+    "adjustable drag setting updates the real renderer and survives reload",
+    "standalone readable full settings guide is packaged and reachable",
+    "real Worker development produces a visible civilization level, production years and population/storage reserves",
+    "foreground uses smaller hard disc points and normal blending, independently of sun halos",
+    "small foreground points remain visible in an isolated GPU pixel comparison",
+    "no browser JavaScript errors"
+  ],
+  "errors": [],
+  "drag": {
+    "low": {
+      "before": -0.011365610960268342,
+      "immediate": 0.13563442980622556,
+      "after": 0.0934556151856573,
+      "displacement": 0.10482122614592565
+    },
+    "high": {
+      "before": -0.011771710699439834,
+      "immediate": 0.7254250909454145,
+      "after": 0.5343035696157864,
+      "displacement": 0.5460752803152262
+    },
+    "impulseRatio": 5.348384565643065
+  },
+  "ring": {
+    "early": 0.09356817792586995,
+    "late": 0.11825478744167128,
+    "off": 0.0004571635643598326
+  },
+  "particlePixels": {
+    "foregroundVisiblePixels": 714
+  },
+  "limits": [
+    "Real Chromium pointer events and software WebGL, not native Windows Wallpaper Engine."
+  ]
+}

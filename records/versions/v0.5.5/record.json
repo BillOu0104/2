@@ -1,0 +1,261 @@
+{
+  "format": 1,
+  "id": "v0.5.5",
+  "path": "versions/v0.5.5",
+  "kind": "version",
+  "version": "0.5.5",
+  "title": "v0.5.5：固定观察原点、守恒核查与连续尾迹",
+  "summary": "移除星群跟随与当前质心逐帧重定位，保留方向操作；补充惯性系能量及质心位置/速度诊断。连续共顶点尾迹、实际接受积分步采样和统一插值减少接头亮珠及高速分段。124项回归、7项浏览器检查通过；4个预定Seed各1000年，修订前后独立守恒指标及最终物理状态相同，未复现整体质心明显漂移。保留全部初次验证日志与模型限制。",
+  "source_commit": "e62d7e8761c1b318de23d600e121bee41907c0e2",
+  "previous_commit": "472a7ee5d6af87b6aa19ec8cd23366d8742656b0",
+  "source_repository": "https://github.com/BillOu0104/2",
+  "source_subject": "v0.5.5: fix observation frame, expose inertial conservation and draw continuous sampled trails",
+  "source_date": "2026-10-21T12:45:22Z",
+  "archived_at": "2026-10-21T12:46:17.533926+00:00",
+  "runtime_fingerprint": "98185721f3f3c287c1873a85f791d7e3f97aab6e6a413e7d544d4401fbcdf196",
+  "deleted_paths": [
+    "src/display-center.js"
+  ],
+  "files": [
+    {
+      "source_path": "README.md",
+      "archive_path": "snapshot/README.md",
+      "sha256": "eb1b4eba18b837e2d1bb3c014764a3f4e14f96caed4182ba41ff33725e444011",
+      "bytes": 11787
+    },
+    {
+      "source_path": "docs/SETTINGS-GUIDE-v0.5.md",
+      "archive_path": "snapshot/docs/SETTINGS-GUIDE-v0.5.md",
+      "sha256": "add570a750e686375ce02628122396ee19a989e39e63e34b6bc1556bb99d263d",
+      "bytes": 54639
+    },
+    {
+      "source_path": "docs/settings-guide.html",
+      "archive_path": "snapshot/docs/settings-guide.html",
+      "sha256": "cf7e3842dbdf5ed97817fd4af0cdeee3f2305033eb5afd638257aae6f1a81daa",
+      "bytes": 67924
+    },
+    {
+      "source_path": "docs/v055/RELEASE.md",
+      "archive_path": "snapshot/docs/v055/RELEASE.md",
+      "sha256": "95e9fe75e4f986279917685993ee8464ef64446b7b6a9ee6a8374277e1a18f69",
+      "bytes": 7669
+    },
+    {
+      "source_path": "docs/v055/results/browser-failure-first.json",
+      "archive_path": "snapshot/docs/v055/results/browser-failure-first.json",
+      "sha256": "23b32d88793d03ab1d71dc7e28120073d4b2c031628ac0d64645d1c23bdd2f73",
+      "bytes": 648
+    },
+    {
+      "source_path": "docs/v055/results/browser-failure-fourth.json",
+      "archive_path": "snapshot/docs/v055/results/browser-failure-fourth.json",
+      "sha256": "fbf60ee3dda342b8255b5ed9f1d8415e8f5d5489e20fa4dcaa7603571d47d1c9",
+      "bytes": 349
+    },
+    {
+      "source_path": "docs/v055/results/browser-failure-third.json",
+      "archive_path": "snapshot/docs/v055/results/browser-failure-third.json",
+      "sha256": "4cda2ef138819dc0471be290eb7220e8b0c4bbb85dd1475682ac848d7cffc133",
+      "bytes": 1322
+    },
+    {
+      "source_path": "docs/v055/results/browser-failure.json",
+      "archive_path": "snapshot/docs/v055/results/browser-failure.json",
+      "sha256": "fbf60ee3dda342b8255b5ed9f1d8415e8f5d5489e20fa4dcaa7603571d47d1c9",
+      "bytes": 349
+    },
+    {
+      "source_path": "docs/v055/results/browser-first.log",
+      "archive_path": "snapshot/docs/v055/results/browser-first.log",
+      "sha256": "d098fce466ea5c564f21083cb9a9dd289a39c21c3e7246d098babf04c36bbd13",
+      "bytes": 402
+    },
+    {
+      "source_path": "docs/v055/results/browser-fourth.log",
+      "archive_path": "snapshot/docs/v055/results/browser-fourth.log",
+      "sha256": "1b601cdc3c606b94187e64bf5a57d0c0530eecdd28d7ff91408bf70d996b7a0c",
+      "bytes": 391
+    },
+    {
+      "source_path": "docs/v055/results/browser-second.log",
+      "archive_path": "snapshot/docs/v055/results/browser-second.log",
+      "sha256": "1b601cdc3c606b94187e64bf5a57d0c0530eecdd28d7ff91408bf70d996b7a0c",
+      "bytes": 391
+    },
+    {
+      "source_path": "docs/v055/results/browser-third.log",
+      "archive_path": "snapshot/docs/v055/results/browser-third.log",
+      "sha256": "eb16f1cddb3c1f14c0b7dc5f974e7592d1aae3218614690177a1e3e937c33518",
+      "bytes": 567
+    },
+    {
+      "source_path": "docs/v055/results/browser.json",
+      "archive_path": "snapshot/docs/v055/results/browser.json",
+      "sha256": "2136eac3395297229e72f8e7a2f52a5a36aad2f45c23626fa8fe52a7a3ea0955",
+      "bytes": 22082
+    },
+    {
+      "source_path": "docs/v055/results/browser.log",
+      "archive_path": "snapshot/docs/v055/results/browser.log",
+      "sha256": "be4f2b178969c81e9cf58b45f695657c74df95ea3a1d5168cee66e6666062e76",
+      "bytes": 939
+    },
+    {
+      "source_path": "docs/v055/results/build-first.log",
+      "archive_path": "snapshot/docs/v055/results/build-first.log",
+      "sha256": "d7fd5d03651f777a4a564eca0540cb843b59c70628cedfa4e3288633f72453c2",
+      "bytes": 129
+    },
+    {
+      "source_path": "docs/v055/results/build.log",
+      "archive_path": "snapshot/docs/v055/results/build.log",
+      "sha256": "6561b1edae1a2a4bdfe46b6d93a37f9632633116b060573c63b4c0f340f9e5c4",
+      "bytes": 129
+    },
+    {
+      "source_path": "docs/v055/results/conservation-after.json",
+      "archive_path": "snapshot/docs/v055/results/conservation-after.json",
+      "sha256": "7819e1de5ad455df534ec64a9640e160f8f627b11260442da21b80f5db1192a5",
+      "bytes": 8614
+    },
+    {
+      "source_path": "docs/v055/results/conservation-after.log",
+      "archive_path": "snapshot/docs/v055/results/conservation-after.log",
+      "sha256": "2924d4da9965f78407eee88e2777ead974eae32e4d4ef8ede3cfc0817856ce06",
+      "bytes": 1487
+    },
+    {
+      "source_path": "docs/v055/results/conservation-before.json",
+      "archive_path": "snapshot/docs/v055/results/conservation-before.json",
+      "sha256": "0ae7e8348893e766d8c528b61658ea98a2eba3c9ea3329b8d061c323af46d00d",
+      "bytes": 8620
+    },
+    {
+      "source_path": "docs/v055/results/conservation-before.log",
+      "archive_path": "snapshot/docs/v055/results/conservation-before.log",
+      "sha256": "2924d4da9965f78407eee88e2777ead974eae32e4d4ef8ede3cfc0817856ce06",
+      "bytes": 1487
+    },
+    {
+      "source_path": "docs/v055/results/conservation-comparison.json",
+      "archive_path": "snapshot/docs/v055/results/conservation-comparison.json",
+      "sha256": "5cdf06baab44cd24082cfc10c5d2338de0b9fd4ac7cab6c524d22754dea158b2",
+      "bytes": 613
+    },
+    {
+      "source_path": "docs/v055/results/environment.json",
+      "archive_path": "snapshot/docs/v055/results/environment.json",
+      "sha256": "576724f7a8d15c31d5cd1c418a1810b8d59f73de6656794ecdb743229632d610",
+      "bytes": 1024
+    },
+    {
+      "source_path": "docs/v055/results/fast-trail-metrics.json",
+      "archive_path": "snapshot/docs/v055/results/fast-trail-metrics.json",
+      "sha256": "e53df8c33976b9a590c91e4c26c93e8d0515fa9c2cfb89daa631e1e43b2a86f3",
+      "bytes": 3308
+    },
+    {
+      "source_path": "docs/v055/results/fast-trails.png",
+      "archive_path": "snapshot/docs/v055/results/fast-trails.png",
+      "sha256": "0b3efd8552cbefff567c293545bdb3e6375ae4f2c94460617bea96718b48b9d2",
+      "bytes": 1504466
+    },
+    {
+      "source_path": "docs/v055/results/fixed-frame-motion.json",
+      "archive_path": "snapshot/docs/v055/results/fixed-frame-motion.json",
+      "sha256": "6b040152a3ce08a87594a41a3d690636d1326805cf2eb16296f0ae86a1da3da2",
+      "bytes": 8160
+    },
+    {
+      "source_path": "docs/v055/results/joints-after.png",
+      "archive_path": "snapshot/docs/v055/results/joints-after.png",
+      "sha256": "2320a0ebe786fc985caf6e72d6cac4685bd62ec1008ca52350b1b9eba5f5a29e",
+      "bytes": 5426
+    },
+    {
+      "source_path": "docs/v055/results/joints-before.png",
+      "archive_path": "snapshot/docs/v055/results/joints-before.png",
+      "sha256": "1e43d17291b786299a960613c3fd7a55ed89202dc72afd3045498581e42f8204",
+      "bytes": 5594
+    },
+    {
+      "source_path": "docs/v055/results/npm-test.log",
+      "archive_path": "snapshot/docs/v055/results/npm-test.log",
+      "sha256": "1d061721eff62b906a5954d57415901434d90f460d2c01c991bcfa9774e58417",
+      "bytes": 722
+    },
+    {
+      "source_path": "docs/v055/results/unit-first.log",
+      "archive_path": "snapshot/docs/v055/results/unit-first.log",
+      "sha256": "175926715ea21ea9b8e687be419d859e94fa3a8ed64c96a20e953faba4a256ec",
+      "bytes": 682
+    },
+    {
+      "source_path": "docs/v055/results/unit-tests-final.log",
+      "archive_path": "snapshot/docs/v055/results/unit-tests-final.log",
+      "sha256": "e4bb7e924177b8ee5bec68ee975d2357e8a1e25a19218621e6038bcc13686eff",
+      "bytes": 12674
+    },
+    {
+      "source_path": "docs/v055/results/unit-tests.log",
+      "archive_path": "snapshot/docs/v055/results/unit-tests.log",
+      "sha256": "69cbc411ad85823dde93eaab143703217f7277e5a80d13552331c5fd6aa445bd",
+      "bytes": 12556
+    },
+    {
+      "source_path": "package-lock.json",
+      "archive_path": "snapshot/package-lock.json",
+      "sha256": "d9c62285b16e76e2f490322fb55128ccdd4fc443202274e68f324fe951636e19",
+      "bytes": 15394
+    },
+    {
+      "source_path": "package.json",
+      "archive_path": "snapshot/package.json",
+      "sha256": "efb3c0fdec22d2cdbf794ec917f68ae146f1b4a691966d3b8c19bbbc71fe20f2",
+      "bytes": 415
+    },
+    {
+      "source_path": "tests/v053.test.js",
+      "archive_path": "snapshot/tests/v053.test.js",
+      "sha256": "aaa96139f70895205f5978c2eea25eddc7a62fee9c57b1d266647122017e58e3",
+      "bytes": 3469
+    },
+    {
+      "source_path": "tests/v055.test.js",
+      "archive_path": "snapshot/tests/v055.test.js",
+      "sha256": "3224e6e196ecbf15d68c4d92a8899e1f416def134444cf2fea6674fe1c881667",
+      "bytes": 4964
+    },
+    {
+      "source_path": "tools/generate-settings-guide.mjs",
+      "archive_path": "snapshot/tools/generate-settings-guide.mjs",
+      "sha256": "c0a1657cb9b8e479b9009862d0ffe77093755962242705f8ab818ae7c4a6fdf7",
+      "bytes": 38432
+    },
+    {
+      "source_path": "tools/v055/browser-check.mjs",
+      "archive_path": "snapshot/tools/v055/browser-check.mjs",
+      "sha256": "cae40aa3d067d521dd1d766ba6234600ee69f5ee7db0aea9d39d45559c42f4b3",
+      "bytes": 8279
+    },
+    {
+      "source_path": "tools/v055/conservation-audit.mjs",
+      "archive_path": "snapshot/tools/v055/conservation-audit.mjs",
+      "sha256": "cd3990b84e8d742e8d7b063eb57c40ccc17357b28923923904c8a9e3ee9a9c8f",
+      "bytes": 3138
+    },
+    {
+      "source_path": "tools/v055/ribbon-fixture.mjs",
+      "archive_path": "snapshot/tools/v055/ribbon-fixture.mjs",
+      "sha256": "0eddc168eb8c8480c37da9c4722997fa8a5a5971a2570839082d5d60b271c8a1",
+      "bytes": 1629
+    },
+    {
+      "source_path": null,
+      "archive_path": "changes.patch",
+      "sha256": "3b759b5885dabf4de3528341fb74fef9c1090bb8e4fb2105c547bf298fa0d4ec",
+      "bytes": 105281
+    }
+  ]
+}

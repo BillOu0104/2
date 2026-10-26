@@ -13,7 +13,7 @@ export class CivilizationState{
     const s=this.shared,en=settings.cnen2,planet=world.planet;
     const elapsedYears=this.lastYear===null?0:Math.max(0,year-this.lastYear);this.lastYear=year;
     const previousLevel=levelFor(this.developmentYears,settings.civilizationLevels).level;
-    if(settings.civilizationLevels&&s.civilizationAlive&&this.phase==='active'&&habitat.canGrow&&world.safeToWake)this.developmentYears+=elapsedYears*settings.developmentRate;
+    if(settings.civilizationLevels&&s.civilizationAlive&&this.phase==='active'&&habitat.canGrow&&habitat.comfortable&&world.safeToWake&&!planet.terminal&&!habitat.thermalFatal)this.developmentYears+=elapsedYears*settings.developmentRate;
     const development=developmentSnapshot(this.developmentYears,settings,s.civilizationAlive);
     if(development&&development.level>previousLevel)this.log('level',`宇宙${s.universeNumber||1} · 文明${s.civilizationCount}发展为${development.zh}`,`Universe ${s.universeNumber||1} · Civilization ${s.civilizationCount}: ${development.en}`,year,runtime);
     const rare=world.phenomena.filter(p=>['stationary','alignment'].includes(p.kind)||(p.kind==='overhead'&&p.count===3));

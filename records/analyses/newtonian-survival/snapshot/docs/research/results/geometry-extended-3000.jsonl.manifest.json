@@ -1,0 +1,52 @@
+{
+  "hash": "7243d971d91624411a8accd0b68c735b32c3755884e4f454ac7d18a3c47360d2",
+  "config": {
+    "input": "results/geometry.jsonl",
+    "outputPrefix": "results/geometry-extended",
+    "seeds": 32,
+    "horizons": [
+      3000,
+      10000
+    ],
+    "hypothesis": "Retain every original seed while checking whether high 1000-year survival near a regular nonhierarchical family persists at longer exposure, without confusing it with guaranteed chaos.",
+    "profiles": [
+      {
+        "id": "figure8-perturb01",
+        "force": "newton",
+        "adaptive": true,
+        "eta": 0.0075,
+        "geometry": "figure-eight",
+        "geometryPerturb": 0.01,
+        "planet": "bound",
+        "inPlane": true,
+        "radiusFraction": 0.12,
+        "direction": -1,
+        "orbitNormal": [
+          0,
+          0,
+          1
+        ]
+      },
+      {
+        "id": "figure8-perturb05",
+        "force": "newton",
+        "adaptive": true,
+        "eta": 0.0075,
+        "geometry": "figure-eight",
+        "geometryPerturb": 0.05,
+        "planet": "bound",
+        "inPlane": true,
+        "radiusFraction": 0.12,
+        "direction": -1,
+        "orbitNormal": [
+          0,
+          0,
+          1
+        ]
+      }
+    ]
+  },
+  "horizon": 3000,
+  "rule": "Keep the entire fixed cohort; inherit known absorbing losses, recompute only unresolved/surviving trajectories; numerical stops are unresolved, never physical loss.",
+  "maxSteps": 50000000
+}

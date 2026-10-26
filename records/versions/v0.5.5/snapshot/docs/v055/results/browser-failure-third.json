@@ -1,0 +1,16 @@
+{
+  "passed": false,
+  "checks": [
+    "v0.5.5 Worker boots; all 217 controls match the guide and stellar-follow control is removed",
+    "actual common-velocity motion remains visible while camera, system translation and initial display origin remain fixed; old follow preference cannot override this",
+    "real Worker reports inertial energy and expected nonzero-COM motion without secretly zeroing custom velocities",
+    "maximum 3x speed and compact fast-orbit fixture use dense physical paths, continuous geometry and shared interpolation; all trail heads remain attached and budgets bounded",
+    "trail toggle remains functional and switching initial states clears old paths",
+    "existing mouse drag, release coast and idle galaxy orientation return work without translating the system",
+    "pixel comparison: adding 30 joints produces no bright beads; the legacy additive round-cap path reproduces the brightness spikes"
+  ],
+  "errors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ [\n+   'Failed to load resource: the server responded with a status of 404 (Not Found)'\n+ ]\n- []\n\n    at file:///workspace/2/tools/v055/browser-check.mjs:34:9"
+}

@@ -1,8 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { Habitability } from '../src/habitability.js';
-import { Simulation } from '../src/simulation.js';
-import { normalizeSettings,migrateSettings } from '../src/settings.js';
+import { Simulation } from './support/legacy-v055.js';
+import { normalizeSettings,migrateSettings } from './support/legacy-v055.js';
 import { TrailHistory,trailComplexity,selectTrail } from '../src/adaptive-trails.js';
 const settings=normalizeSettings();
 const project=p=>({x:p.x,y:p.y,z:p.z});

@@ -1,0 +1,7 @@
+{
+ "engine":"./engine-v2.mjs","prefix":"HOLDOUT-C","start":16,"seeds":112,"horizon":1000,"output":"results/candidate-convergence-rest.jsonl",
+ "hypothesis":"After the first 16 predetermined refinement seeds showed identical survival but up to195-year lifetime divergence, refine every remaining holdout candidate seed to distinguish ensemble improvement from trajectory precision. First16 are reused, never discarded.",
+ "profiles":[
+  {"id":"candidate-fine","force":"newton","dt":0.000375,"adaptive":true,"eta":0.00375,"planet":"bound","inPlane":true,"radiusFraction":0.12,"Q":1.0,"direction":-1}
+ ]
+}

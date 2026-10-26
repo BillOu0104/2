@@ -29,4 +29,16 @@ export class LocalStore {
       tx.oncomplete = () => resolve(true); tx.onerror = () => resolve(false); tx.onabort = () => resolve(false);
     });
   }
+  async clearHistory() {
+    const db = await this.ready;
+    if (!db) return false;
+    // A transaction on this store waits for all earlier history writes.
+    // Assets (including the custom background) are intentionally untouched.
+    return new Promise(resolve => {
+      const tx = db.transaction('history', 'readwrite');
+      tx.objectStore('history').clear();
+      tx.oncomplete = () => resolve(true);
+      tx.onerror = tx.onabort = () => resolve(false);
+    });
+  }
 }

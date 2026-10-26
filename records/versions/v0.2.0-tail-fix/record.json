@@ -1,0 +1,55 @@
+{
+  "format": 1,
+  "id": "v0.2.0-tail-fix",
+  "path": "versions/v0.2.0-tail-fix",
+  "kind": "version",
+  "version": "0.2.0",
+  "title": "尾迹GPU容量与像素验证",
+  "summary": "v0.2同版本修订：固定尾迹GPU容量，并以相同暂停画面的开关像素差验证实际绘制。不是新的v0.2.1发布。",
+  "source_commit": "46a852c2adb3cff5c470b62be49c0b32864205bf",
+  "previous_commit": "a08d2a897682eea5965f7e8b8654ea77d00a90c6",
+  "source_repository": "https://github.com/BillOu0104/2",
+  "source_subject": "Keep trail GPU capacity fixed and verify rendered tails with pixel comparison",
+  "source_date": "2026-10-19T13:09:43Z",
+  "archived_at": "2026-10-21T10:08:37.161133+00:00",
+  "runtime_fingerprint": "6108fed3dc6c0d16957ddd7bad9c4b8fc5182931cb7c03ed20c55a5ddfc4e7ff",
+  "deleted_paths": [],
+  "files": [
+    {
+      "source_path": "README.md",
+      "archive_path": "snapshot/README.md",
+      "sha256": "acef8afacd2993618de3b1fd550af8047f971768cc67eb9cdc635c45a52e525f",
+      "bytes": 8575
+    },
+    {
+      "source_path": "docs/qa/tail-render-report.json",
+      "archive_path": "snapshot/docs/qa/tail-render-report.json",
+      "sha256": "05fddf27b841137591eaca15e326048fc705f270e2cba60704c8df786885f63e",
+      "bytes": 120
+    },
+    {
+      "source_path": "docs/qa/tails-off.png",
+      "archive_path": "snapshot/docs/qa/tails-off.png",
+      "sha256": "a9a940c2e2c47c4f6943bdb38315640698e85fd5539669f47663ee5c0e44d920",
+      "bytes": 6615
+    },
+    {
+      "source_path": "docs/qa/tails-on.png",
+      "archive_path": "snapshot/docs/qa/tails-on.png",
+      "sha256": "26a0299bfa050f81e35f15501317f3ad208c93cdfe1b9437451f3eff6310e261",
+      "bytes": 24173
+    },
+    {
+      "source_path": "tools/tail-render-check.mjs",
+      "archive_path": "snapshot/tools/tail-render-check.mjs",
+      "sha256": "8cf5ddf93da9a3cec7e46f282c987bc9b9d1f0d7c74b21993ba17fd5f9ff88d3",
+      "bytes": 2409
+    },
+    {
+      "source_path": null,
+      "archive_path": "changes.patch",
+      "sha256": "1a396aa3584a36420754f75dd8d4225ef4c0cfbf20eba25178417654831661b3",
+      "bytes": 6016
+    }
+  ]
+}

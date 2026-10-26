@@ -1,0 +1,30 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
+  [
++   1.1714262372619633e-15,
++   7.588737581040728e-16,
++   -4.937456693498987e-16
+-   0,
+-   0,
+-   0
+  ]
+
+    at file:///workspace/deflect-v2-release/tools/release-v2/browser-check.mjs:28:350 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: [
+    1.1714262372619633e-15,
+    7.588737581040728e-16,
+    -4.937456693498987e-16
+  ],
+  expected: [ 0, 0, 0 ],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

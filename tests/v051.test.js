@@ -1,8 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {WorldState} from '../src/world-state.js';
-import {Simulation} from '../src/simulation.js';
-import {normalizeSettings,migrateSettings} from '../src/settings.js';
+import {Simulation} from './support/legacy-v055.js';
+import {normalizeSettings,migrateSettings} from './support/legacy-v055.js';
 const settings=normalizeSettings({stellarBreathing:false,autorestart:false});
 const body=(x,mass=1000,vy=0)=>({x,y:0,z:0,vx:0,vy,vz:0,mass});
 const bodies=()=>[body(1,1e6,1),body(20),body(-20),body(0,5000)];
