@@ -31,3 +31,7 @@ DIAGNOSTICS_PROTOCOL.md和diagnostics-v1.json在新积分前冻结，两个现�
 本轮JS几何交换/非层级指标仅是部分证据，条件影子FTLE及动态层级联合尚未测，不宣称混沌联合成功。待30k诊断后审阅差异、性能、必要的长期统计/精度与真实宿主兼容；当前不具备直接替换main的验收证据。研究保持未完成，恢复检查继续。
 
 在本分支执行npm test、npm run build；V2_NATIVE=/path/to/frozen/native node tools/validate-v2-native.mjs <新的输出目录>；启动本地tools/serve.mjs --dist后运行tools/v2/browser-check.mjs <新目录>。不要覆盖既有证据。完整批处理恢复命令见STATUS.md。
+
+## 2026-10-26正式JS100000年确认
+
+JS128新Seed×两候选完整256长期结局，来源/配置/注册初值/原始/主影子状态审计PASS、UNKNOWN0；完整结果与限制以JS_CONFIRMATION_RESULTS.md为准，取代上文历史“尚未JS长期验证”的状态，不覆盖原短窗差异。转向/反射完整128/128，混沌联合118/124，成熟恒纪元33.99%/19.08%。新32Seed同初值h8为数值诊断，见当前STATUS，不调控制、不将它冒充新确认。真实Wallpaper Engine宿主和完整P5矢量冲量仍未验证；main替换未授权实施。

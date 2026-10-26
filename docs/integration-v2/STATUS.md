@@ -1,3 +1,25 @@
+# 当前恢复：JS正式确认完成，32Seed同初值h8数值诊断
+
+2026-10-26：原JS128新Seed×两候选×100000年全部256长期结局完成，四窗口1024条，pending0、UNKNOWN0；冻结恢复驱动全量来源/配置/原始/主影子状态/登记初值SHA审计PASS。已完成队列状态JS_CONFIRMATION_COMPLETE_REVIEW_REQUIRED，勿重启积分。预定统计05b3cc1已推送，结果见JS_CONFIRMATION_RESULTS.md及results/js-confirmation-v1/final-review.json。
+
+转向/反射三星完整各128/128，严格混沌联合118/128、124/128，成熟恒纪元33.99%/19.08%，联合条件均值31.16%/16.71%。全部10/4个混沌不足样本保留。逐事件控制功/冲量/P/L复核通过，但累计绝对功47.42/851.68倍初始能量，不能称绝对最小干预。行星损失45.75/58.703次均值；P5 impulse是动量模长变化累计，不是完整矢量跳变冲量，明确限制且保留原值。真实Wallpaper Engine宿主未验证。
+
+研究仍未完成。当前唯一新队列为JS_PRECISION_H8_PROTOCOL.md、js-precision-h8-v1/study.json及results/js-precision-h8-v1/manifest.json/supervise.state.json。固定前32个原确认Seed0..31，两候选不调参数；主+影子同Yoshida最大步长.00009375、eta.0009375，是真实积分加密，不改显示年数、不换物理方法。每条100000年≥4.8亿主积分步；64长窗结局、256长短窗口，是同初值数值复测，不是新独立确认。原JS h4/原生所有结果保持原样。
+
+先查双方活跃supervise/native/JS worker及锁和近20分钟研究记录，任一活跃/近期更新则安静退出，不重复启动、不编辑计算源。工作区/身份/版本不可确认则报告阻碍。没有活跃且过期后，在/workspace/2-integration、integration/minimal-chaos-control-v2：
+
+```sh
+python3 tools/v2/run-js-precision.py --audit-only
+python3 tools/v2/run-js-precision.py
+```
+
+驱动冻结原正式确认全部文件、原前32匹配h4端点及新worker/适配器/协议/配置，所有原始/state/初值/真实步数与precision元数据校验。h8从同初值0步重算，不接续h4末态；只有同版本h8完整主+影子/RNG/世界/文明/事件可断点续算。每1000年保存、完成键去重，每有新端点至多10分钟Git/records/check/push，仅使用已有两worker/两CPU。保留全部失败/UNKNOWN、行星缺席/重生与脉冲累计成本。
+
+STOPPED_REVIEW_REQUIRED先审阅error/worker/原始/state，不可改状态绕过。INTERRUPTED_RESUMABLE或无活跃的旧RUNNING可同版恢复。JS_PRECISION_H8_COMPLETE_REVIEW_REQUIRED仅表示数值诊断完结，须评审固定±5个百分点配对区间门槛及32例样本局限，必要时扩大匹配精度复测；不是整项研究完成，不关闭恢复检查。main不修改、不合并，私有网页不发布，正式替换仍须用户最终验收。环境/额度自动继续与无限持久性不保证。
+
+---
+以下保留已完成确认及历史恢复记录，不是当前待运行队列。
+
 # 当前恢复：全新128Seed JS正式100000年确认
 
 2026-10-23 19:43 UTC恢复检查：worker/supervise再次均已停止，双方锁空闲且无近20分钟研究更新，根因未验证。249个已实测窗口审计PASS、UNKNOWN0，其中61个真正100000年端点（计划256）；保存b03 Seed30转向97000年及Seed31反射12000年完整主+影子状态及哈希，见results/js-confirmation-v1/recoveries/20261023T1943Z/。同冻结命令继续，完成键跳过，不改参数/计算源码/main，确认未完成。
