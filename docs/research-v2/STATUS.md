@@ -1,3 +1,24 @@
+# 当前恢复：正式JS确认已完成，32Seed同初值h8数值诊断
+
+2026-10-26：JS全新128Seed×两候选×100000显示年全部256长期结局/1024窗口完成，pending0、UNKNOWN0；冻结驱动重审计来源/源码/配置/登记初值/原始/主影子完整状态SHA及真实步数/求解时间PASS。预定统计已推送05b3cc1。完整各128/128，混沌联合118/128与124/128，成熟恒纪元33.99%/19.08%；联合条件31.16%/16.71%。完整分布/置信区间、全部10/4个混沌不足、行星重生及累计控制账在/workspace/2-integration/docs/integration-v2/JS_CONFIRMATION_RESULTS.md和results/js-confirmation-review-20261026/，原生成果不替换。
+
+研究仍未完成：累计绝对功约47.42/851.68倍初始能量，不能称绝对最小干预；P5 impulse字段只记录动量模长变化累计，不是完整矢量跳变冲量，限制已明确、原值保留。真实Wallpaper Engine宿主未验证，不能据此直接替换main。
+
+当前唯一新队列在/workspace/2-integration、integration/minimal-chaos-control-v2：JS_PRECISION_H8_PROTOCOL.md、js-precision-h8-v1/study.json、results/js-precision-h8-v1/manifest.json/supervise.state.json。固定原确认Seed0..31、两候选参数不调，主+影子原Yoshida方法最大步长.00009375、eta.0009375；每帧/显示年时钟不变，每100k至少4.8亿主积分步。64长窗/256窗口，属于匹配数值重复，不是新的独立确认。h8源集合SHA 0fea4f6638889c630380cfb7d0a7d4a78efef9ce5d76fdf8144a3547f2ebcbb6，原JS h4集合0deca082…及冻结原生7f64a8a都不改。
+
+先读集成STATUS/协议/manifest/state，检查双方活跃supervise锁/native/JS worker及最近20分钟研究记录；任一活跃或近期更新就安静退出，不改计算源、不重复启动。工作区或身份/版本不可确认就报告真实阻碍。无活跃且过期、原始/配置/源/登记初值及完整状态SHA核对后：
+
+```sh
+cd /workspace/2-integration
+python3 tools/v2/run-js-precision.py --audit-only
+python3 tools/v2/run-js-precision.py
+```
+
+只使用已有两CPU/两worker；每1000年保存完整主+影子/RNG/世界/文明/事件/成本，完成键去重，有新端点至多10分钟Git/records/check/push。h8从同初值0步重算，不从h4末态接续。STOPPED_REVIEW_REQUIRED先读error/worker/raw/state，不改旗标绕过UNKNOWN/哈希。JS_PRECISION_H8_COMPLETE_REVIEW_REQUIRED需评审固定±5个百分点配对区间门槛与样本局限，不代表整个研究完成，不关闭恢复检查。所有旧原生/JS确认和诊断队列已完成，不重启。main不修改、不合并，网页不发布，正式替换仍须用户最终验收。
+
+---
+以下保留历史恢复入口，以上述当前队列为准。
+
 # V2 恢复入口
 
 状态：RESEARCH_IN_PROGRESS / NUMERICAL_REVIEW_REQUIRED。正式128新Seed主确认及32Seed预定h2辅助已全部实测完成（576/576、pending0、UNKNOWN0），最终原始/版本/初值/恢复哈希重审计通过。见CONFIRMATION_RESULTS.md和results/confirmation-v1/cohort.review.json。main未修改、未合并，私有网页未更新。
