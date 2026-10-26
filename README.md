@@ -1,6 +1,12 @@
 # 三体 · 实时演算
 
-当前版本 **v0.5.5**，独立分支 `fix/v0.5.5`。移除自动星群跟随，以每个宇宙的初始质心为固定显示原点；补充惯性系能量与质心漂移诊断。连续带状尾迹与实际积分采样减少接头亮点和高速分段，保留逃逸重建及现有鼠标旋转。详见 [v0.5.5更新与验证](docs/v055/RELEASE.md)。
+当前版本 **v0.6.0 · V2 转向控制正式集成**。基于完整 v0.5.5 壁纸选择性迁移已验证的 `deflect-v2`，默认开启转向保护和弱束缚捕获；保留旧版牛顿/引力牢笼回退。详见 [正式集成报告](docs/releases/v0.6.0/INTEGRATION.md)。
+
+V2 保持 h4 Yoshida 精度（最大步长0.0001875、η0.001875）；播放速度通过增加完整模拟帧改变，不放大物理步长。行星毁灭后按P5至少等待5显示年再生成新行星，旧文明死亡保留、三星继续运行；恒星系统失效则停止并提供手动重启。控制、P5外部预算和数值残差分开记录。h8长期复测尚未完成，不能宣称数值统计完全收敛。
+
+默认保留固定初始质心视图；P5确实注入外部动量，长期可能离开初始画面，可明确选择“全系统质心”显示参考系。两种视图都保留原物理坐标和诊断，不使用最近恒星对追踪。新安装和旧设置升级默认V2，旧Seed档案按旧物理重放；显式选择旧版后恢复原物理配置。
+
+本次正式集成更新GitHub main与可离线构建；私有网页发布状态独立记录，不把GitHub推送当作站点已更新。
 
 基于用户提供的 Wallpaper Engine《三体实时演算》Scene 工程移植。原场景作者 SYKM，音乐 Melodysheep · Ether。此工程保留原资源来源及随附非商用说明。
 
@@ -25,7 +31,7 @@ npm run dev
 
 1. 解压交付的 `three-body-wallpaper.zip` 到独立文件夹。
 2. Wallpaper Engine → 创建壁纸 → 打开该文件夹的 `index.html`，选择 Web 类型。
-3. 工程包含 `project.json`，保留原版183个用户属性及其原始键名。原生属性修改会同步右下角面板；面板内的修改在该壁纸浏览器存储中保存。
+3. 工程包含 `project.json`，保留原版183个用户属性及其原始键名，并增加V2控制与播放速度属性。原生属性修改会同步右下角面板；面板内的修改在该壁纸浏览器存储中保存。
 4. 点击右下角齿轮打开设置，点击同一按钮或面板内 × 关闭。默认不用按住鼠标即可悬停移动视角；同时支持按住左键拖动，默认额外5倍（可调）；也可选择只拖动或固定模式。闲置后以0.006°/秒缓慢归位。
 5. 建议先使用默认设置。硬件较弱时降低“最大渲染像素比”，或关闭“超后处理”、尘埃、星芒。
 
@@ -33,11 +39,11 @@ npm run dev
 
 ## 已实现
 
-- 四体Yoshida四阶积分、近遇自适应子步、牛顿平方反比引力与E/P/L诊断；默认随机非层级三星Q=1、0.12D宿主相对逆向行星。旧分段引力、Plummer一致软化、软/硬牢笼、各旧随机模式及手动初值可选，不筛长寿Seed、不强行改轨。
+- 四体Yoshida四阶积分、近遇自适应子步、牛顿平方反比引力与E/P/L诊断；默认随机非层级三星Q=1、0.12D宿主相对逆向行星。旧分段引力、Plummer一致软化、软/硬牢笼、各旧随机模式及手动初值可选，不筛长寿Seed。V2危险事件使用明确记录的速度控制与P5续生，旧模式可关闭牢笼作纯牛顿对照。
 - 原版辐射平衡温度、冰雪反照率和温度振荡，加上热惯性；纪元由轨道稳定性独立判断，天象、行星结构与文明状态分层处理。
 - Lv.1文明在 −20～40°C 常态活动，升级后扩大温区；人口储备和干仓质量只在出生后建立，实际安全生产时间推动十二阶段科技发展；脱水、干仓休眠与原编号复苏；干仓有限耐受、差分潮汐损伤及不可逆行星吞噬/撕裂，最近日志和延续排行；原版即时判定可切换保留。
 - Three.js 场景、原版背景/太阳/行星纹理、圆形天体与柔光、默认开启的四组渐隐尾迹、导航圆环、主题色、镜头模式、时钟和各 UI 布局设置。背景、星云、尘埃与天体共享视角旋转。
-- 原版183个可操作属性，按原分组搜索与修改；另有35个扩展/布局控件，按布局、模拟、视角、画面、声音和原版高级设置分类。原版标注“固定”的引力指数保持2，界面明确禁用。
+- 原版183个可操作属性，按原分组搜索与修改；另有37个扩展/布局控件，按布局、模拟、视角、画面、声音和原版高级设置分类。原版标注“固定”的引力指数保持2，界面明确禁用。
 - 累计运行年数、当前宇宙与文明的编号和寿命；文明和宇宙各前五名，包含仍在运行的条目，本地保存。
 - 自定义背景本地持久化、音乐主动播放和音量、WE系统音频、暂停恢复、全屏。
 - 新增确定性 Seed、参数导入导出、本地 IndexedDB 文明档案和死亡时初值记录。原版“文明种子”手动初值模式完整保留。
@@ -46,7 +52,7 @@ npm run dev
 
 原脚本不是网页 JavaScript，存在 `engine/shared/Vec3/createScriptProperties` 等 WE 专属依赖。`src/legacy/`保留可读业务源码，通过局部兼容上下文运行，既不对整个附件求值，也不执行附件说明中的命令。
 
-**默认 reference 时钟**：固定60Hz，每帧推进.0075求解时间；默认最大子步.75ms，近遇自动细分。减小最大步长不会减慢时间。realtime每帧预算1/60，轨迹不同。原版时间倍速的平方效应保留；旧最多10子步与分段软化只保留在legacy对照模式。启用牢笼后为非孤立系统，不适用纯牛顿守恒基准。自适应Yoshida不宣称全局严格辛性，误差以实际诊断、步长收敛和独立积分检查为依据。
+**默认 V2 reference 时钟**：固定60Hz，每帧推进.0075求解时间；h4最大子步.1875ms、η.001875，近遇继续细分。播放速度通过增加完整模拟帧调整，不降低精度。旧模式恢复此前配置，默认最大子步.75ms；旧realtime时钟、倍速平方效应、引力模型与牢笼仍可回退。V2控制与P5都是明确人工干预，有独立预算；不能用扣除其功后的能量余额宣称纯牛顿守恒或统计已收敛。自适应Yoshida不宣称全局严格辛性，h8长期精度复测尚未完成。
 
 **0.3 原著讲解优化**：默认 `balanced` 模式分开纪元、天象、行星和文明状态。恒纪元依据暂时束缚与主导恒星扰动判断，不再等同适温；乱纪元也能保存文明。常态活动默认 −20～40°C，离开适温/安全窗口后脱水休眠，安全后复苏同一编号。干仓耐受有限，持续极端气候会毁灭；三日连珠与飞星不是自动灭绝条件。差分引力张量累计行星结构损伤，v0.4.1允许非终态损伤在低应力环境中缓慢恢复；吞噬或大撕裂后锁定终态，直到重建宇宙才恢复。具体模型、参数和未实现的现象见 [docs/REFERENCE-MODEL.md](docs/REFERENCE-MODEL.md)。数值阈值为项目模型，不声称由小说直接给定。
 
@@ -77,7 +83,7 @@ Three.js 使用球体和圆环重建 `.mdl` 几何；纹理来自原 `.tex` 首 
 
 模拟内核 `src/simulation.js` 无 DOM 或 WebGL 依赖，可直接在 Node 中运行。默认后台使用 Web Worker，满足独立网页与离线壁纸，也为以后替换 Node 服务或远程计算保留边界。未引入远程常驻服务器，因为当前模拟只有四个天体，离线运行更适合壁纸。
 
-`window.threeBody.getState()` 返回当前快照，`applySettings(patch)` 更新设置；`subscribe(type, listener)` 订阅领域事件，并返回取消订阅函数。可用事件为 `civilization:birth`、`civilization:death`、`system:escape`、`civilization:phase`、`civilization:level`、`planet:damaged`、`planet:destroyed`、`universe:restart`。未来系统通知、文明历史记忆、Seed榜可通过这些边界接入，通知功能当前没有申请任何系统权限。
+`window.threeBody.getState()` 返回当前快照，`applySettings(patch)` 更新设置；`subscribe(type, listener)` 订阅领域事件，并返回取消订阅函数。可用事件为 `civilization:birth`、`civilization:death`、`system:escape`、`civilization:phase`、`civilization:level`、`planet:damaged`、`planet:destroyed`、`planet:respawn`、`physics:deflect`、`physics:capture`、`system:stellar-contact`、`universe:restart`。未来系统通知、文明历史记忆、Seed榜可通过这些边界接入，通知功能当前没有申请任何系统权限。
 
 适配 `wallpaperPropertyListener.applyUserProperties`、`applyGeneralProperties`、`setPaused`、`wallpaperRegisterAudioListener`。普通网页音频使用 Web Audio，须主动打开播放；不会把伪造的随机频谱作为真实音频响应。
 
@@ -85,19 +91,11 @@ Three.js 使用球体和圆环重建 `.mdl` 几何；纹理来自原 `.tex` 首 
 
 ```sh
 npm test
-node tests/simulation.test.js
 npm run build
-# 先在另一终端启动 npm start，再运行浏览器检查：
-node tools/browser-smoke.mjs
-node tools/tail-render-check.mjs
-node tools/state-ui-8k-check.mjs
-node tools/v041-browser-check.mjs
-node tools/v05-browser-check.mjs
-node tools/v05-simulation-audit.mjs
+python tools/records.py check
+# 另一终端启动 PORT=4180 npm start 后：
+V2_RESULT_DIR=/tmp/v2-browser-check node tools/release-v2/browser-check.mjs
+V2_RESULT_DIR=/tmp/v2-performance-check node tools/release-v2/performance.mjs
 ```
 
-82项模拟检查覆盖原版独立轨迹基准、确定性与极值、文明脱水/复苏与真正灭亡、轨道纪元与气候独立性、飞星接近/连珠遮挡、潮汐张量和行星终态。浏览器检查覆盖实际 Worker、全部215项控件、WE回调、持久化、移动布局、文明阶段、窗口拖动/持久化、无上限转动、灵敏度实际效果、旋转环淡入淡出与前景粒子像素显示，以及实际8K绘制和原生8K纹理载入。尾迹使用同一暂停画面的像素对比。报告与截图见 `docs/qa/`；Windows Wallpaper Engine 实机和目标显卡性能未在当前环境验证。
-
-`tools/extract-textures.py` 保存了资源转换方法；输入原版解包目录，参数见脚本帮助。`assets/original/manifest.json`记录每份转换纹理的源文件和SHA256。
-
-原附件及解包文件保留在 `/workspace/wallpaper-original-files/`，未覆盖。
+本次150项自动化检查全部通过（124项原回退、10项移植集成/检查点、5个原生夹具、11项正式迁移回归），实际Chromium/WebGL/Worker完成13组流程。详情和全部失败/修复记录见 [v0.6.0测试报告](docs/releases/v0.6.0/TEST_RESULTS.md)。旧 `tools/v0*`、`docs/qa/` 和 `records/` 保留当时版本证据，不把旧脚本和旧成绩当作本次验收。真实Windows Wallpaper Engine、目标显卡性能及h8长期收敛尚未验证。

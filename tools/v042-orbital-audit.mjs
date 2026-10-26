@@ -2,7 +2,7 @@ import {Simulation} from '../src/simulation.js';
 import {settingsFromInitial} from '../src/settings.js';
 import {writeFile} from 'node:fs/promises';
 export function measureChaotic(seed,mode='chaotic',ticks=12000,profile={}){
- const sim=new Simulation({seed,orbitalInitialization:mode,autorestart:false,...profile});let far=0,unbound=0,intact=0,inner=0,stable=0,development=0,terminal=false;
+ const sim=new Simulation({stabilityMode:'off',seed,orbitalInitialization:mode,autorestart:false,...profile});let far=0,unbound=0,intact=0,inner=0,stable=0,development=0,terminal=false;
  const min=[Infinity,Infinity,Infinity],max=[0,0,0];
  for(let i=0;i<ticks;i++){
   sim.tick();const p=sim.lastPhysicsState,w=sim.world.state,planet=p.bodies[3],stars=p.bodies.slice(0,3),extent=Math.max(.1,...stars.map(b=>Math.hypot(b.x-p.com.x,b.y-p.com.y,b.z-p.com.z))),radius=Math.hypot(planet.x-p.com.x,planet.y-p.com.y,planet.z-p.com.z);
@@ -15,7 +15,7 @@ export function measureChaotic(seed,mode='chaotic',ticks=12000,profile={}){
  return{seed,years:sim.shared.xntime,farFraction:far/Math.max(1,intact),unboundFarFraction:unbound/Math.max(1,intact),insideFraction:inner/Math.max(1,intact),stableFraction:stable/ticks,developmentFraction:development/ticks,survivingPlanet:!terminal,stellarDistanceRatios:max.map((m,i)=>m/Math.max(1e-8,min[i]))};
 }
 export function sensitiveDependence(ticks=12000,profile={}){
- const s=new Simulation({seed:'TRISOLARIS',autorestart:false,...profile});s.tick();const first=s.initialBodies,second=structuredClone(first);second[0].vx+=1e-7;
+ const s=new Simulation({stabilityMode:'off',seed:'TRISOLARIS',autorestart:false,...profile});s.tick();const first=s.initialBodies,second=structuredClone(first);second[0].vx+=1e-7;
  const a=new Simulation(settingsFromInitial(s.settings,first)),b=new Simulation(settingsFromInitial(s.settings,second));let maxSeparation=0;
  for(let i=0;i<ticks;i++){a.tick();b.tick();if(i%60===0){const x=a.lastPhysicsState,y=b.lastPhysicsState;maxSeparation=Math.max(maxSeparation,Math.sqrt(x.bodies.slice(0,3).reduce((n,p,j)=>n+(p.x-x.com.x-y.bodies[j].x+y.com.x)**2+(p.y-x.com.y-y.bodies[j].y+y.com.y)**2+(p.z-x.com.z-y.bodies[j].z+y.com.z)**2,0)/3));}}
  return{initialVelocityPerturbation:1e-7,years:a.shared.xntime,maxStellarRmsSeparation:maxSeparation};

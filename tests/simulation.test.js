@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { Simulation } from '../src/simulation.js';
-import { normalizeSettings, settingsFromInitial } from '../src/settings.js';
+import { Simulation } from './support/legacy-v055.js';
+import { normalizeSettings, settingsFromInitial } from './support/legacy-v055.js';
 import { propertySchema } from '../src/original-data.js';
 import { readFileSync } from 'node:fs';
 

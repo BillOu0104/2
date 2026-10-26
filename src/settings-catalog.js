@@ -1,5 +1,8 @@
 // Shared by the settings panel and its generated complete reference.
 export const settingsDefinitions={
+    stabilityMode:{type:'combo',text:'物理控制方案 / Controller',options:[{value:'deflect-v2',label:'V2 转向控制（默认）'},{value:'off',label:'旧版牛顿 / 引力牢笼'}]},
+    playbackRate:{type:'slider',text:'播放速度（保持物理精度） / Playback rate',min:.25,max:4,step:.25},
+    displayReference:{type:'combo',text:'观察参考系 / Reference frame',options:[{value:'initial',label:'固定初始质心（默认）'},{value:'barycentric',label:'全系统质心（仅显示）'}]},
     dragSensitivity:{type:'slider',text:'拖拽灵敏度倍率 / Drag multiplier',min:.1,max:20,step:.1},
     civilizationLevels:{type:'bool',text:'文明科技等级 / Civilization levels'},
     developmentRate:{type:'slider',text:'文明发展倍率 / Development rate',min:.1,max:20,step:.1},
@@ -9,7 +12,7 @@ export const settingsDefinitions={
     compassOpacity:{type:'slider',text:'旋转环不透明度 / Ring opacity',min:0,max:.5,step:.01},
     orbitalInitialization:{type:'combo',text:'随机初始轨道 / Initial orbits',options:[{value:'research',label:'随机三星 Q=1 · 逆向行星 0.12D（默认）'},{value:'chaotic',label:'v0.5.1 随机四体 · 对照'},{value:'original',label:'原版完全随机'},{value:'balanced',label:'稳定轨道实验'}]},
     gravityModel:{type:'combo',text:'引力模型 / Gravity',options:[{value:'newtonian',label:'牛顿平方反比 · 无软化（默认）'},{value:'plummer',label:'Plummer 一致软化 · 实验'},{value:'legacy',label:'旧近距引力 · 复现对照'}]},
-    encounterAccuracy:{type:'slider',text:'近遇时间尺度系数 η（越小越精确）',min:.001,max:.03,step:.0005},
+    encounterAccuracy:{type:'slider',text:'近遇时间尺度系数 η（越小越精确）',min:.001,max:.03,step:.000001},
     seed: { type: 'textinput', text: '随机初始化 Seed' },
     physicsMode: { type: 'combo', text: '物理时钟', options: [{ value: 'reference', label: '原版节奏 · 固定 60 Hz（默认）' }, { value: 'realtime', label: '墙钟同步 · 修复原版每帧步数上限' }] },
     civilizationMode: { type: 'combo', text: '文明延续机制 / Civilization', options: [{ value: 'balanced', label: '韧性与文明等级（默认）' }, { value: 'legacy', label: '原版即时判定' }] },
@@ -25,4 +28,4 @@ export const settingsDefinitions={
     music: { type: 'bool', text: '播放原版音乐 · Ether' },
     volume: { type: 'slider', text: '音乐音量 / Volume', min: 0, max: 1, step: .01 }
   };
-export const settingsCategories=[['layout','布局与窗口 / Layout',[]],['simulation','模拟与文明 / Simulation',['seed','orbitalInitialization','gravityModel','encounterAccuracy','physicsMode','civilizationMode','civilizationLevels','developmentRate','thermalGrace','birthDelay','wakeDelay','epochWindow','climateInertia','stellarBreathing','planetStrength']],['view','视角与银河 / View',['viewSensitivity','dragSensitivity','newproperty16','newproperty51','newproperty61','x5','y5','x6','y7','newproperty62','y6','compass','compassOpacity']],['visual','画面与轨迹 / Visual',['renderQuality','trailsLength','pixelRatio','bodyLabels','dust','_1dust1quantity','_1dust1size','_2dust2quantity','_2dust1size']],['audio','声音 / Audio',['music','volume']]];
+export const settingsCategories=[['layout','布局与窗口 / Layout',[]],['simulation','模拟与文明 / Simulation',['seed','stabilityMode','playbackRate','newproperty60','orbitalInitialization','gravityModel','encounterAccuracy','physicsMode','civilizationMode','civilizationLevels','developmentRate','thermalGrace','birthDelay','wakeDelay','epochWindow','climateInertia','stellarBreathing','planetStrength']],['view','视角与银河 / View',['viewSensitivity','dragSensitivity','displayReference','newproperty16','newproperty51','newproperty61','x5','y5','x6','y7','newproperty62','y6','compass','compassOpacity']],['visual','画面与轨迹 / Visual',['renderQuality','trailsLength','pixelRatio','bodyLabels','dust','_1dust1quantity','_1dust1size','_2dust2quantity','_2dust1size']],['audio','声音 / Audio',['music','volume']]];

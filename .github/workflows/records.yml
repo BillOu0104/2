@@ -1,7 +1,7 @@
 name: Verify version and analysis records
 on:
   push:
-    branches: [main, 'fix/**', 'feature/**', 'docs/**']
+    branches: [main, 'release/**', 'fix/**', 'feature/**', 'docs/**']
   pull_request:
   workflow_dispatch:
 permissions:

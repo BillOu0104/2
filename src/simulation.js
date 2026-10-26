@@ -13,6 +13,8 @@ import { WorldState } from './world-state.js';
 import { CivilizationState } from './civilization-state.js';
 import { EscapeState } from './escape-state.js';
 import { OrbitTrace } from './orbit-trace.js';
+import {tickControlled} from './v2-simulation.js';
+import {controllerPatch} from './controller-settings.js';
 
 class Vec3 { constructor(x = 0, y = x, z = x) { this.x = x; this.y = y; this.z = z; } }
 const plain = v => v && typeof v === 'object' ? structuredClone(v) : v;
@@ -20,9 +22,10 @@ const plain = v => v && typeof v === 'object' ? structuredClone(v) : v;
 // Backend independent of DOM, WebGL and transport. The Worker and Node use the same class.
 export class Simulation {
   constructor(settings = {}, statistics = {}, {trace=false} = {}) {
+    this.statePending=true;
     this.traceEnabled=trace;
     this.statistics=new RunStatistics(statistics);
-    this.settings = normalizeSettings(settings);
+    this.settings = normalizeSettings(settings.stabilityMode&&settings.stabilityMode!=='off'&&!('newproperty60' in settings)?{...settings,newproperty60:true}:settings);
     this.shared = { gjz: 0, rst: 0, cfw: 0, c_down: false, text: '',universeNumber:this.statistics.universeNumber,xntime:this.statistics.totalYears };
     this.engine = { runtime: 0, frametime: 1 / 60, screenResolution: new Vec3(1920, 1080, 0) };
     this.input = { cursorScreenPosition: new Vec3(960, 540, 0) };
@@ -44,6 +47,7 @@ export class Simulation {
   createModule(id, factory) {
     const self = this;
     const overrides = Object.fromEntries(Object.entries(moduleBindings[id] || {}).map(([k, v]) => [k, this.resolve(v)]));
+    if(id==='008'&&this.settings.stabilityMode!=='off')overrides.constraint_En=false;
     if (id === '008') { overrides.trailLength = this.settings.trailsLength; overrides.trailen = false; overrides.rxz = false; }
     const builder = {};
     for (const method of ['addCheckbox', 'addSlider', 'addColor', 'addCombo', 'addText']) builder[method] = function(d) { this.values[d.name] = d.value; return this; };
@@ -53,14 +57,21 @@ export class Simulation {
     return factory({ shared: this.shared, engine: this.engine, input: this.input, thisScene: { createLayer: data => data }, Vec3, Math: math, createScriptProperties: () => builder, getHabitability: () => null, getPhysicsSettings:()=>self.settings, observePhysicalStep:self.traceEnabled?(bodies,time)=>{if(self.settings.newproperty14)self.orbitTrace.observe(bodies,time);}:undefined, prepareManualBodies:bodies=>{self.initializationMetadata=null;if(self.settings.manualInitialBodies)for(let i=0;i<4;i++)Object.assign(bodies[i],self.settings.manualInitialBodies[i]);}, prepareInitialBodies: (bodies,G,p) => {const result=prepareOrbits(bodies,G,p,self.settings,()=>self.random());self.initializationMetadata=result?.metadata??null;return result;}, onInitialize: bodies => { self.initialBodies = plain(bodies);self.orbitTrace.reset(); self.habitability.reset(); self.world.reset();self.escape.reset(); self.civilization?.reset(); self.terminalSince=null;self.restartSince=null;self.observedContacts=new Set(); } });
   }
   configure(patch) {
+    patch=controllerPatch(this.settings,patch);
     const next = normalizeSettings({ ...this.settings, ...patch });
     if(next.manualInitialBodies&&manualInitialKeys.some(k=>next[k]!==this.settings[k])&&!('manualInitialBodies' in patch))next.manualInitialBodies=null;
     const changed = Object.keys(next).filter(k => k==='manualInitialBodies'?JSON.stringify(next[k])!==JSON.stringify(this.settings[k]):next[k]!==this.settings[k]);
+    const previousSettings=this.settings;
     this.settings = next;
+    if(changed.includes('stabilityMode'))this.modules['010']=this.createModule('010',timeFactory);
     if(!next.autorestart||(next.newproperty60&&next.civilizationMode!=='legacy'&&this.pendingRestart==='escape'))this.pendingRestart=null;
     if(changed.includes('newproperty14'))this.orbitTrace.reset();
+    const resetKeys = new Set(['stabilityMode','seed', 'physicsMode', 'newproperty53', 'orbitalInitialization','gravityModel','encounterAccuracy','manualInitialBodies']);
+    if(next.stabilityMode!=='off')for(const key of [...manualInitialKeys,'newproperty50','newproperty52','newproperty48','brfontcoloraaaaaarandomposrange'])resetKeys.add(key);
+    if(this.tickCount>0&&changed.some(k=>resetKeys.has(k))&&(this.controlled||changed.includes('stabilityMode'))){
+      this.settings=previousSettings;this.restart('settings');this.settings=next;
+    }
     if (changed.includes('civilizationMode')) { this.habitability.reset(); this.civilization.reset(); this.shared.suitablePeriodCount = 0; }
-    const resetKeys = new Set(['seed', 'physicsMode', 'newproperty53', 'orbitalInitialization','gravityModel','encounterAccuracy','manualInitialBodies']);
     const mapped = {};
     for (const [id, module] of Object.entries(this.modules)) {
       const changes = {};
@@ -73,16 +84,20 @@ export class Simulation {
     this.modules['008'].scriptProperties.trailen = false;
     for (const key of ['trailen', 'trailLength', 'trailStartSize', 'trailEndSize', 'color1', 'color2', 'color3', 'color4']) delete mapped[key];
     if (changed.some(k => resetKeys.has(k))) {
-      if(changed.includes('seed'))this.setRandom();
+      this.statePending=true;
+      this.controlled=null;this.v2FailureNotified=false;
+      if(changed.includes('seed')||changed.includes('stabilityMode'))this.setRandom();
       this.modules['008'] = this.createModule('008', physicsFactory); this.modules['008'].init(); this.revision++;
       if (changed.includes('seed')) this.setRandom();
-    } else { this.modules['008'].applyUserProperties(mapped); if (Object.keys(mapped).length) this.revision++; }
+    } else { this.modules['008'].applyUserProperties(mapped); if (Object.keys(mapped).length){this.revision++;this.statePending=true;} }
     return changed;
   }
   restart(reason='restart') {
+    this.statePending=true;
     if(reason==='restart'&&this.escape.result.confirmed)reason='escape';
     if(reason==='restart'&&this.world.state?.planet.damaged)reason='planet-damage';
     this.pendingRestart=null;
+    this.controlled=null;this.v2FailureNotified=false;
     this.escape.reset();
     this.shared.rst = 1;
     // Original log's escape edge is observed before physics consumes rst.
@@ -96,6 +111,7 @@ export class Simulation {
     this.shared.rst = 0; this.shared.num = 0; this.revision++;
   }
   tick() {
+    if(this.settings.stabilityMode!=='off'){const state=tickControlled(this);this.statePending=false;return state;}
     if(this.pendingRestart)this.restart(this.pendingRestart);
     this.engine.runtime = ++this.tickCount / 60;
     try{this.modules['008'].update(true);}catch(error){this.emit('physics:numerical-error',{code:error.code||'physics-error',message:error.message});throw error;}
@@ -157,16 +173,16 @@ export class Simulation {
     this.modules['156'].update('');
     // Legacy ranked output reads the full list; a finite bound prevents days-long sessions growing forever.
     if (this.shared.civilizationRecords.length > 1000) this.shared.civilizationRecords.splice(0, this.shared.civilizationRecords.length - 1000);
-    return state;
+    this.statePending=false;return state;
   }
   recordDeath(record) { this.statistics.finishCivilization(record); this.emit('civilization:death', { ...plain(record), universe:this.generation, seed: this.settings.seed, generation: this.generation, settings: plain(this.settings), initialBodies: plain(this.initialBodies), algorithm: algorithmId(this.settings) }); }
-  emit(type, detail) {
-    this.events.push({ id: ++this.eventSeq, type, year: this.shared.xntime || 0, detail });
+  emit(type, detail, year=this.shared.xntime||0) {
+    this.events.push({ id: ++this.eventSeq, type, year, detail });
     if (this.events.length > 100) this.events.shift();
   }
   snapshot({ afterEvent = 0, compact = false } = {}) {
-    const current = this.modules['008'].state(); const p=current.bodies.length===4?current:this.lastPhysicsState||current; const s = this.shared;
-    return { tick: this.tickCount, revision: this.revision, runtime: this.engine.runtime, generation: this.generation, algorithm: algorithmId(this.settings),
+    const current = this.settings.stabilityMode!=='off'&&this.controlled?this.controlled.state():this.modules['008'].state(); const p=current.bodies.length===4?current:this.lastPhysicsState||current; const s = this.shared;
+    return { initializing:this.statePending, tick: this.tickCount, revision: this.revision, runtime: this.engine.runtime, generation: this.generation, algorithm: algorithmId(this.settings),
       seed: this.settings.seed, bodies: p.bodies, com: p.com, G: p.G, temperature: Number(s.tem || 0), year: s.xntime || 0,
       era: this.era || '', escaped: s.tj === 1, alive: !!s.civilizationAlive, civilization: s.civilizationCount,
       habitability: plain(this.habitability.result),statistics:plain(this.statistics.snapshot()),statisticsCheckpoint:plain(this.statistics.checkpoint()),

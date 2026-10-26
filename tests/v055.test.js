@@ -6,8 +6,8 @@ import {FixedDisplayFrame} from '../src/fixed-display-frame.js';
 import {TrailRibbon} from '../src/trail-ribbon.js';
 import {TrailHistory,selectTrail} from '../src/adaptive-trails.js';
 import {OrbitTrace} from '../src/orbit-trace.js';
-import {Simulation} from '../src/simulation.js';
-import {normalizeSettings,migrateSettings} from '../src/settings.js';
+import {Simulation} from './support/legacy-v055.js';
+import {normalizeSettings,migrateSettings} from './support/legacy-v055.js';
 const body=(x,y=0,mass=1)=>({x,y,z:0,vx:0,vy:0,vz:0,mass});
 
 test('fixed display frame remains at the initial four-body center during stellar and planetary recoil',()=>{

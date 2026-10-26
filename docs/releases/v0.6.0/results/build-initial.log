@@ -1,0 +1,14 @@
+
+> three-body-reconstruction@0.6.0 build
+> node tools/build.mjs
+
+file:///workspace/deflect-v2-release/tools/generate-settings-guide.mjs:112
+ for(const c of controls){c.value??=c.key==='epochWindow'?allDefaults.epochWindow*12:allDefaults[c.key];c.description??=descriptions[c.key];if(!c.description)throw new Error(`Missing setting explanation: ${c.key}`);}
+                                                                                                                                                                    ^
+
+Error: Missing setting explanation: playbackRate
+    at guideControls (file:///workspace/deflect-v2-release/tools/generate-settings-guide.mjs:112:165)
+    at generateSettingsGuide (file:///workspace/deflect-v2-release/tools/generate-settings-guide.mjs:118:17)
+    at file:///workspace/deflect-v2-release/tools/build.mjs:13:7
+
+Node.js v24.19.0

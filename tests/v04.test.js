@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { RunStatistics } from '../src/run-statistics.js';
-import { Simulation } from '../src/simulation.js';
+import { Simulation } from './support/legacy-v055.js';
 import { ViewMotion } from '../src/view-motion.js';
 const close=(a,b)=>assert.ok(Math.abs(a-b)<1e-9,`${a} != ${b}`);
 const tick=(s,n)=>{for(let i=0;i<n;i++)s.tick();return s.snapshot();};

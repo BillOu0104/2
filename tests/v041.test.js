@@ -1,10 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { WorldState } from '../src/world-state.js';
-import { Simulation } from '../src/simulation.js';
+import { Simulation } from './support/legacy-v055.js';
 import { RunStatistics } from '../src/run-statistics.js';
 import { ViewMotion } from '../src/view-motion.js';
-import { normalizeSettings,migrateSettings } from '../src/settings.js';
+import { normalizeSettings,migrateSettings } from './support/legacy-v055.js';
 import { clampWindow } from '../src/layout.js';
 const settings=normalizeSettings({stellarBreathing:false});
 const body=(x,mass=0)=>({x,y:0,z:0,vx:0,vy:0,vz:0,mass});

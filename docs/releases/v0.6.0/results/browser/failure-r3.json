@@ -1,0 +1,658 @@
+{
+  "pass": false,
+  "checks": [
+    "Old v0.5.5 settings boot into the enabled V2 default while preserving UI preferences; generated controls match",
+    "Only deflect and legacy are exposed; fixed h4 precision remains visible and playback is separate",
+    "Higher playback advances complete fixed-precision ticks without resetting the universe",
+    "P5 accepted-step loss hides planet/trail and clears living readouts; at least five years later it respawns with the same universe and an explicit vector budget",
+    "Protection/language updates keep the running universe and exact manual initial data",
+    "Stellar failure is absorbing, reports contact and exposes manual recovery; autorestart cannot hide it",
+    "Fixed camera, background particles, mouse drag and release inertia remain available",
+    "The optional all-body COM display is presentation-only and switching back restores the fixed origin",
+    "A singular initial state becomes visible numerical UNKNOWN/error, not a successful reset or physical survival"
+  ],
+  "errors": [],
+  "expectedErrors": [
+    "Simulation worker: {type: error, message: 近遇所需步长低于安全下限；数值中断不计为物理死亡, stack: PhysicsError: 近遇所需步长低于安全下限；数值中断不计为物理死亡\n    at Te.a…180/f9bf283a-494f-4276-bbfa-bdb9558cea3b:5:123953}"
+  ],
+  "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n+ actual - expected\n\n+ undefined\n- false\n\n    at file:///workspace/deflect-v2-release/tools/release-v2/browser-check.mjs:32:341",
+  "state": {
+    "tick": 1202,
+    "revision": 13,
+    "runtime": 20.033333333333335,
+    "generation": 7,
+    "algorithm": "sykm-scene-v4-reference60-civ-balanced-v055-tech2-escape1-newtonian-research-eta0.0075-orbits",
+    "seed": "TRISOLARIS",
+    "bodies": [
+      {
+        "x": -0.4893253545937255,
+        "y": 0.8401660677186332,
+        "z": -0.08898791077798897,
+        "vx": 0.030426463577176113,
+        "vy": 0.0667934236244405,
+        "vz": 0.11243371347868054,
+        "mass": 5000000
+      },
+      {
+        "x": -1.0060649258496486,
+        "y": -1.2714072833554257,
+        "z": -0.4233559334427008,
+        "vx": 0.08059653301200484,
+        "vy": -0.169377774628226,
+        "vz": -0.06568117134552605,
+        "mass": 5000000
+      },
+      {
+        "x": 1.4941498112007348,
+        "y": 0.4307963906324316,
+        "z": 0.5118066741549666,
+        "vx": -0.11094377840975483,
+        "vy": 0.10197474471605414,
+        "vz": -0.04674514260357295,
+        "mass": 5000000
+      },
+      {
+        "x": 1.2404692426347128,
+        "y": 0.4448250043590175,
+        "z": 0.5371700657234788,
+        "vx": -0.07921817942600018,
+        "vy": 0.6096062877317143,
+        "vz": -0.007399529581388586,
+        "mass": 5000
+      }
+    ],
+    "com": {
+      "x": -1.52059354691092e-15,
+      "y": -5.699108719670054e-16,
+      "z": 1.0809495659680479e-16
+    },
+    "G": 1.3275440274585598e-8,
+    "temperature": 37.138325636266345,
+    "year": 20.00009148592398,
+    "era": "恒纪元",
+    "escaped": false,
+    "alive": false,
+    "civilization": 3,
+    "habitability": {
+      "enabled": true,
+      "comfortable": true,
+      "stable": true,
+      "score": 1,
+      "health": null,
+      "population": null,
+      "storageQuality": null,
+      "canGrow": true,
+      "growth": 1,
+      "fatalCause": {
+        "zh": "生命储备耗尽",
+        "en": "Population and storage reserves exhausted"
+      },
+      "thermalFatal": false,
+      "hazard": null,
+      "exposure": 0,
+      "low": -20,
+      "high": 40,
+      "storageLow": -100,
+      "storageHigh": 200,
+      "level": null
+    },
+    "statistics": {
+      "totalYears": 20.00009148592398,
+      "universe": {
+        "number": 7,
+        "lifespan": 0,
+        "active": true
+      },
+      "civilization": null,
+      "universeRanking": [
+        {
+          "number": 2,
+          "lifespan": 8.716666666666667,
+          "reason": "settings"
+        },
+        {
+          "number": 1,
+          "lifespan": 8.416666666666666,
+          "reason": "settings"
+        },
+        {
+          "number": 4,
+          "lifespan": 2.6833333333333336,
+          "reason": "settings"
+        },
+        {
+          "number": 6,
+          "lifespan": 0.18333333333333357,
+          "reason": "settings"
+        },
+        {
+          "number": 3,
+          "lifespan": 0.00009148592398133815,
+          "reason": "settings"
+        }
+      ],
+      "civilizationRanking": [
+        {
+          "number": 1,
+          "universe": 1,
+          "lifespan": 7.8999999999999995,
+          "development": {
+            "level": 1,
+            "years": 0,
+            "zh": "旧石器时代",
+            "en": "Paleolithic age",
+            "resilience": 1,
+            "climate": 0,
+            "storage": 0,
+            "technologyRevision": 2,
+            "enabled": true,
+            "label": "旧石器时代",
+            "developmentYears": 4.883333333333333,
+            "nextYears": 200,
+            "progress": 0.024416666666666663
+          }
+        },
+        {
+          "number": 2,
+          "universe": 4,
+          "lifespan": 2.166666666666668,
+          "development": {
+            "level": 1,
+            "years": 0,
+            "zh": "旧石器时代",
+            "en": "Paleolithic age",
+            "resilience": 1,
+            "climate": 0,
+            "storage": 0,
+            "technologyRevision": 2,
+            "enabled": true,
+            "label": "旧石器时代",
+            "developmentYears": 2.166666666666668,
+            "nextYears": 200,
+            "progress": 0.010833333333333339
+          }
+        }
+      ]
+    },
+    "statisticsCheckpoint": {
+      "format": "three-body-statistics",
+      "version": 1,
+      "totalYears": 20.00009148592398,
+      "universeNumber": 7,
+      "universeStart": 20.00009148592398,
+      "nextCivilization": 3,
+      "activeCivilization": null,
+      "universes": [
+        {
+          "number": 2,
+          "lifespan": 8.716666666666667,
+          "reason": "settings"
+        },
+        {
+          "number": 1,
+          "lifespan": 8.416666666666666,
+          "reason": "settings"
+        },
+        {
+          "number": 4,
+          "lifespan": 2.6833333333333336,
+          "reason": "settings"
+        },
+        {
+          "number": 6,
+          "lifespan": 0.18333333333333357,
+          "reason": "settings"
+        },
+        {
+          "number": 3,
+          "lifespan": 0.00009148592398133815,
+          "reason": "settings"
+        }
+      ],
+      "civilizations": [
+        {
+          "number": 1,
+          "universe": 1,
+          "lifespan": 7.8999999999999995,
+          "development": {
+            "level": 1,
+            "years": 0,
+            "zh": "旧石器时代",
+            "en": "Paleolithic age",
+            "resilience": 1,
+            "climate": 0,
+            "storage": 0,
+            "technologyRevision": 2,
+            "enabled": true,
+            "label": "旧石器时代",
+            "developmentYears": 4.883333333333333,
+            "nextYears": 200,
+            "progress": 0.024416666666666663
+          }
+        },
+        {
+          "number": 2,
+          "universe": 4,
+          "lifespan": 2.166666666666668,
+          "development": {
+            "level": 1,
+            "years": 0,
+            "zh": "旧石器时代",
+            "en": "Paleolithic age",
+            "resilience": 1,
+            "climate": 0,
+            "storage": 0,
+            "technologyRevision": 2,
+            "enabled": true,
+            "label": "旧石器时代",
+            "developmentYears": 2.166666666666668,
+            "nextYears": 200,
+            "progress": 0.010833333333333339
+          }
+        }
+      ]
+    },
+    "world": {
+      "epoch": {
+        "kind": "stable",
+        "primary": 2,
+        "stableFor": 0.18333333333333332,
+        "stableForUnit": "years",
+        "bound": true,
+        "dominance": 54.30808469392849,
+        "perturbation": 0.006247995722265596
+      },
+      "phenomena": [
+        {
+          "kind": "flying",
+          "zh": "一颗飞星",
+          "en": "1 flying star",
+          "severity": "observation",
+          "count": 1
+        },
+        {
+          "kind": "overhead",
+          "zh": "巨日近掠",
+          "en": "Giant sun passage",
+          "severity": "observation",
+          "count": 1
+        }
+      ],
+      "planet": {
+        "condition": "temperate",
+        "damaged": false,
+        "recovering": false,
+        "recoverable": true,
+        "canSupportLife": true,
+        "restartRequired": false,
+        "intact": true,
+        "terminal": null,
+        "integrity": 1,
+        "tideRatio": 0.12037219365156453,
+        "stressRatio": 0.07523262103222783,
+        "hardness": 1.6,
+        "temperature": 37.138325636266345,
+        "equilibriumTemperature": 39.01,
+        "present": true
+      },
+      "stars": [
+        {
+          "index": 0,
+          "distance": 1.8816369778773534,
+          "angularRate": 0.2689718593509026,
+          "radialSpeed": -0.25472153906975653,
+          "visibleFraction": 1,
+          "radius": 0.03000366666524027,
+          "flying": false
+        },
+        {
+          "index": 1,
+          "distance": 2.9857962473409767,
+          "angularRate": 0.24054926641035515,
+          "radialSpeed": 0.3462625490362491,
+          "visibleFraction": 1,
+          "radius": 0.024671935478214682,
+          "flying": true
+        },
+        {
+          "index": 2,
+          "distance": 0.2553310292599151,
+          "angularRate": 1.997961036123258,
+          "radialSpeed": 0.00027860708466183066,
+          "visibleFraction": 1,
+          "radius": 0.015030015700620878,
+          "flying": false
+        }
+      ],
+      "fluxChange": 0.003955186992555075,
+      "safeToWake": true
+    },
+    "civilizationState": {
+      "phase": "destroyed",
+      "label": "等待安全生存窗口",
+      "continuing": false,
+      "active": false,
+      "safeWindow": 0.18333333333333332,
+      "requiredWindow": 0.5,
+      "development": null
+    },
+    "logItems": [
+      {
+        "id": 4,
+        "kind": "death",
+        "zh": "宇宙4 · 文明2延续2年，毁灭于宇宙重新初始化",
+        "en": "Universe 4 · Civilization 2 lasted 2 years: Universe reinitialized",
+        "year": 19.816758152590648,
+        "at": 19.833333333333332
+      },
+      {
+        "id": 3,
+        "kind": "birth",
+        "zh": "宇宙4 · 文明2启动",
+        "en": "Universe 4 · Civilization 2 started",
+        "year": 17.65009148592398,
+        "at": 17.666666666666668
+      },
+      {
+        "id": 2,
+        "kind": "death",
+        "zh": "宇宙1 · 文明1延续8年，毁灭于宇宙重新初始化",
+        "en": "Universe 1 · Civilization 1 lasted 8 years: Universe reinitialized",
+        "year": 8.416666666666666,
+        "at": 8.416666666666666
+      },
+      {
+        "id": 1,
+        "kind": "birth",
+        "zh": "宇宙1 · 文明1启动",
+        "en": "Universe 1 · Civilization 1 started",
+        "year": 0.5166666666666667,
+        "at": 0.5166666666666667
+      }
+    ],
+    "lifespan": 2,
+    "physics": {
+      "model": "newtonian",
+      "solverTime": 0.08249999999999928,
+      "steps": 440,
+      "controlled": true,
+      "conservationApplicable": false,
+      "physicalModelValid": true,
+      "numericalError": null,
+      "stellarFailure": null,
+      "relativeEnergyError": 7.015535949396531e-16,
+      "maxRelativeEnergyError": 0,
+      "energyResidualScope": "yearly sampled; measured control and planet external work subtracted",
+      "controlApplication": "instantaneous velocity projections; finite peak acceleration undefined without pulse duration",
+      "controlActiveFrameFraction": 0,
+      "control": {
+        "work": 0,
+        "absoluteWork": 0,
+        "impulse": 0,
+        "peakNetVelocityJump": 0,
+        "peakVelocityJump": 0,
+        "deltaP": [
+          0,
+          0,
+          0
+        ],
+        "deltaL": [
+          0,
+          0,
+          0
+        ],
+        "cumulativeBodyAngularImpulse": 0,
+        "projectionEvents": 0,
+        "reflectionEvents": 0,
+        "deflectionEvents": 0,
+        "activeFrames": 0,
+        "projectionFrames": 0,
+        "activeTime": 0,
+        "peakAcceleration": 0,
+        "accelerationIntegral": 0,
+        "accelerationSquaredIntegral": 0
+      },
+      "planetExternal": {
+        "work": 0,
+        "absoluteWork": 0,
+        "impulse": 0,
+        "peakNetVelocityJump": 0,
+        "peakVelocityJump": 0,
+        "deltaP": [
+          0,
+          0,
+          0
+        ],
+        "deltaL": [
+          0,
+          0,
+          0
+        ],
+        "cumulativeBodyAngularImpulse": 0,
+        "projectionEvents": 0,
+        "reflectionEvents": 0,
+        "deflectionEvents": 0,
+        "activeFrames": 0,
+        "projectionFrames": 0,
+        "activeTime": 0,
+        "peakAcceleration": 0,
+        "accelerationIntegral": 0,
+        "accelerationSquaredIntegral": 0,
+        "vectorImpulse": 0,
+        "vectorImpulseComplete": true
+      },
+      "planetBudgetVersion": 2,
+      "legacyImpulseDefinition": "cumulative absolute momentum-magnitude change; use planetExternal.vectorImpulse for vector jumps",
+      "planetLosses": 0,
+      "planetRespawns": 0,
+      "planetPresent": true,
+      "firstPlanetLoss": null,
+      "returnFrame": null,
+      "planetRespawnInYears": null
+    },
+    "initialization": {
+      "version": "research-q1-retro12-v1",
+      "host": 2,
+      "nearestStellarDistance": 2.127664209342273,
+      "planetRadius": 0.25531970512107277,
+      "stellarVirialRatio": 1,
+      "direction": "retrograde",
+      "stellarAngularMomentum": [
+        198165.75904052687,
+        -174360.9652601125,
+        2077689.4810544427
+      ]
+    },
+    "initialBodies": [
+      {
+        "x": -0.49179930309796444,
+        "y": 0.8346007345898597,
+        "z": -0.09825633323327425,
+        "vx": 0.029552629257446516,
+        "vy": 0.06812648736310185,
+        "vz": 0.11225481158181043,
+        "mass": 5000000
+      },
+      {
+        "x": -1.0126851841344844,
+        "y": -1.2573764377550636,
+        "z": -0.417923516841091,
+        "vx": 0.0798925227808542,
+        "vy": -0.17076660240054137,
+        "vz": -0.0660132336308501,
+        "mass": 5000000
+      },
+      {
+        "x": 1.5032341130540363,
+        "y": 0.42238117220835364,
+        "z": 0.5156424275921214,
+        "vx": -0.10928428897779999,
+        "vy": 0.10203277371355303,
+        "vz": -0.04624266056872033,
+        "mass": 5000000
+      },
+      {
+        "x": 1.2503741784123679,
+        "y": 0.39453095685028594,
+        "z": 0.5374224822438415,
+        "vx": -0.16086306050071517,
+        "vy": 0.6073413238864918,
+        "vz": 0.0010826177600009469,
+        "mass": 5000
+      }
+    ],
+    "escapeStatus": {
+      "confirmed": false,
+      "candidate": null,
+      "years": 0,
+      "confirmationYears": 3
+    },
+    "log": [
+      "第19年，宇宙4 · 文明2延续2年，毁灭于宇宙重新初始化",
+      "第17年，宇宙4 · 文明2启动",
+      "第8年，宇宙1 · 文明1延续8年，毁灭于宇宙重新初始化",
+      "第0年，宇宙1 · 文明1启动"
+    ],
+    "records": [
+      {
+        "number": 1,
+        "universe": 1,
+        "lifespan": 8,
+        "destructionEvent": "宇宙重新初始化",
+        "text": "/Seed:FORMAL-V2-BROWSER/Universe:1",
+        "development": {
+          "level": 1,
+          "years": 0,
+          "zh": "旧石器时代",
+          "en": "Paleolithic age",
+          "resilience": 1,
+          "climate": 0,
+          "storage": 0,
+          "technologyRevision": 2,
+          "enabled": true,
+          "label": "旧石器时代",
+          "developmentYears": 4.883333333333333,
+          "nextYears": 200,
+          "progress": 0.024416666666666663
+        }
+      },
+      {
+        "number": 2,
+        "universe": 4,
+        "lifespan": 2,
+        "destructionEvent": "宇宙重新初始化",
+        "text": "/Seed:TRISOLARIS/Universe:4",
+        "development": {
+          "level": 1,
+          "years": 0,
+          "zh": "旧石器时代",
+          "en": "Paleolithic age",
+          "resilience": 1,
+          "climate": 0,
+          "storage": 0,
+          "technologyRevision": 2,
+          "enabled": true,
+          "label": "旧石器时代",
+          "developmentYears": 2.166666666666668,
+          "nextYears": 200,
+          "progress": 0.010833333333333339
+        }
+      }
+    ],
+    "events": [
+      {
+        "id": 25,
+        "type": "universe:restart",
+        "year": 20.00009148592398,
+        "detail": {
+          "number": 7,
+          "reason": "settings"
+        }
+      }
+    ],
+    "distances": [
+      1.8816369778773534,
+      2.9857962473409767,
+      0.2553310292599151
+    ],
+    "text": [
+      "等待安全生存窗口",
+      "第19年，宇宙4 · 文明2延续2年，毁灭于宇宙重新初始化",
+      "第17年，宇宙4 · 文明2启动",
+      "第8年，宇宙1 · 文明1延续8年，毁灭于宇宙重新初始化",
+      "第0年，宇宙1 · 文明1启动",
+      "",
+      "上个文明寿命：2年",
+      "文明延续排行",
+      "第1号 · 8年 · 宇宙重新初始化",
+      "第2号 · 2年 · 宇宙重新初始化",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "loading": 0,
+    "trailSamples": [
+      [
+        {
+          "x": -0.4897805434643425,
+          "y": 0.8391623583649349,
+          "z": -0.09067417432209128,
+          "time": 20
+        },
+        {
+          "x": -0.4893253545937255,
+          "y": 0.8401660677186332,
+          "z": -0.08898791077798897,
+          "time": 20.033333333333335
+        }
+      ],
+      [
+        {
+          "x": -1.0072729211848053,
+          "y": -1.268864732419088,
+          "z": -0.4223702611267705,
+          "time": 20
+        },
+        {
+          "x": -1.0060649258496486,
+          "y": -1.2714072833554257,
+          "z": -0.4233559334427008,
+          "time": 20.033333333333335
+        }
+      ],
+      [
+        {
+          "x": 1.4958116958350123,
+          "y": 0.4292666983343421,
+          "z": 0.51250716665023,
+          "time": 20
+        },
+        {
+          "x": 1.4941498112007348,
+          "y": 0.4307963906324316,
+          "z": 0.5118066741549666,
+          "time": 20.033333333333335
+        }
+      ],
+      [
+        {
+          "x": 1.2417688141301453,
+          "y": 0.4356757198069135,
+          "z": 0.5372687986321748,
+          "time": 20
+        },
+        {
+          "x": 1.2404692426347128,
+          "y": 0.4448250043590175,
+          "z": 0.5371700657234788,
+          "time": 20.033333333333335
+        }
+      ]
+    ],
+    "playback": {
+      "rate": 1,
+      "queuedSeconds": 0.0012999999998137355
+    }
+  }
+}

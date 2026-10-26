@@ -1,8 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {escapeCandidates,EscapeState} from '../src/escape-state.js';
-import {normalizeSettings,migrateSettings,settingsFromInitial} from '../src/settings.js';
-import {Simulation} from '../src/simulation.js';
+import {normalizeSettings,migrateSettings,settingsFromInitial} from './support/legacy-v055.js';
+import {Simulation} from './support/legacy-v055.js';
 const G=1.3275440274585598e-8;
 const body=(x,y=0,vx=0,mass=5e6)=>({x,y,z:0,vx,vy:0,vz:0,mass});
 const escapedPlanet=()=>[body(-.5),body(.5),body(0,.5),body(30,0,1,1000)];

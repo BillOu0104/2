@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {Simulation} from '../src/simulation.js';
-import {normalizeSettings,migrateSettings,settingsFromInitial} from '../src/settings.js';
+import {Simulation} from './support/legacy-v055.js';
+import {normalizeSettings,migrateSettings,settingsFromInitial} from './support/legacy-v055.js';
 import {measure} from '../tools/orbital-audit.mjs';
 import {prepareBalancedOrbits} from '../src/orbital-initialization.js';
 

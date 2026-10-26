@@ -8,11 +8,11 @@ import {initial as referenceInitial,energy,angular,planetOrbit,center,G} from '.
 const pairs=[[0,1],[0,2],[1,2],[0,3],[1,3],[2,3]];
 const dot=(a,b)=>a.reduce((n,x,i)=>n+x*b[i],0),norm=a=>Math.hypot(...a),pos=b=>[b.x,b.y,b.z],vel=b=>[b.vx,b.vy,b.vz],sub=(a,b)=>a.map((x,i)=>x-b[i]),distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y,a.z-b.z);
 function initial(seed,cfg){
- if(cfg.initialization==='research'){const s=new Simulation({seed,autorestart:false,newproperty60:false,gravityModel:'newtonian',orbitalInitialization:'research'});s.tick();return {bodies:structuredClone(s.initialBodies),settings:s.settings};}
+ if(cfg.initialization==='research'){const s=new Simulation({stabilityMode:'off',seed,autorestart:false,newproperty60:false,gravityModel:'newtonian',orbitalInitialization:'research'});s.tick();return {bodies:structuredClone(s.initialBodies),settings:s.settings};}
  return referenceInitial(seed,{mode:'chaotic',...cfg});
 }
 class LegacyDriver{
- constructor(bodies,cfg){this.bodies=bodies;const s=new Simulation(settingsFromInitial({gravityModel:'legacy',newproperty60:false,autorestart:false,newproperty28:cfg.eps??.1,newproperty29:cfg.k??2.8},bodies));this.physics=s.modules['008'];this.physics.initializePhysics();this.steps=0;}
+ constructor(bodies,cfg){this.bodies=bodies;const s=new Simulation(settingsFromInitial({stabilityMode:'off',gravityModel:'legacy',newproperty60:false,autorestart:false,newproperty28:cfg.eps??.1,newproperty29:cfg.k??2.8},bodies));this.physics=s.modules['008'];this.physics.initializePhysics();this.steps=0;}
  advance(duration,cfg){const n=Math.ceil(duration/(cfg.dt??.00075));for(let i=0;i<n;i++){this.physics.directStep(duration/n);this.steps++;}const current=this.physics.state().bodies;this.bodies.forEach((b,i)=>Object.assign(b,current[i]));}
 }
 class Integrator{

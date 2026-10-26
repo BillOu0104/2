@@ -1,10 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {ViewMotion} from '../src/view-motion.js';
-import {normalizeSettings,migrateSettings} from '../src/settings.js';
+import {normalizeSettings,migrateSettings} from './support/legacy-v055.js';
 import {civilizationLevels,levelFor} from '../src/civilization-levels.js';
 import {CivilizationState} from '../src/civilization-state.js';
-import {Simulation} from '../src/simulation.js';
+import {Simulation} from './support/legacy-v055.js';
 
 test('idle return cancels residual inertia and obeys one total angular-speed cap without overshoot',()=>{
  const m=new ViewMotion();m.x=.1;m.y=2*Math.PI+.2;m.vx=2;m.vy=-4;

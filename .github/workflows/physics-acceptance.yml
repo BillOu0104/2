@@ -1,7 +1,7 @@
 name: Wallpaper acceptance build
 on:
   push:
-    branches: ['fix/**']
+    branches: [main, 'release/**', 'fix/**']
   workflow_dispatch:
 permissions:
   contents: read

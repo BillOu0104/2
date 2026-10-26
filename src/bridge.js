@@ -13,6 +13,6 @@ export function installWallpaperBridge({ changeSettings, setHostPaused, audio, r
     setPaused(paused) { setHostPaused(!!paused); }
   };
   // Stable public extension boundary: notifications and remote rankings can subscribe later.
-  window.threeBody = { version: '0.5.5', get algorithm() { return window.__threeBodyState?.algorithm; }, getState: () => window.__threeBodyState ? structuredClone(window.__threeBodyState) : null, applySettings: patch => changeSettings(patch), subscribe(type, listener) { const fn = e => listener(e.detail); window.addEventListener(type, fn); return () => window.removeEventListener(type, fn); }, wallpaper: !!window.wallpaperRegisterAudioListener };
+  window.threeBody = { version: '0.6.0', get algorithm() { return window.__threeBodyState?.algorithm; }, getState: () => window.__threeBodyState ? structuredClone(window.__threeBodyState) : null, applySettings: patch => changeSettings(patch), subscribe(type, listener) { const fn = e => listener(e.detail); window.addEventListener(type, fn); return () => window.removeEventListener(type, fn); }, wallpaper: !!window.wallpaperRegisterAudioListener };
   return () => { window.wallpaperPropertyListener = prior; };
 }

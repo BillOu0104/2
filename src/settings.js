@@ -1,8 +1,9 @@
 import { propertySchema } from './original-data.js';
+import {legacyPhysicsKeys,legacyPhysicsDefaults} from './controller-settings.js';
 
 export const defaults = Object.fromEntries(Object.entries(propertySchema)
   .filter(([, d]) => d.type && d.type !== 'group').map(([k, d]) => [k, d.value]));
-export const extraDefaults = { seed: 'TRISOLARIS', music: false, volume: 0.35, trailsLength: 400, orbitalInitialization: 'research', physicsMode: 'reference', pixelRatio: 4, bodyLabels: false, presentationRevision: 6, layout: {}, viewSensitivity: .12, compassOpacity: .12, planetStrength: 1.6, idleAmplitude: 6, civilizationMode: 'balanced', thermalGrace: 30, wakeDelay: 1, epochWindow: 1/12, epochTimebase: 'years', climateInertia: 1.5, stellarBreathing: true, renderQuality: 'native', dragSensitivity: 5, birthDelay: .5, civilizationLevels: true, developmentRate: 1, gravityModel: 'newtonian', encounterAccuracy: .0075, physicsRevision: 1, manualInitialBodies: null, centerOnSystem: false, galaxyReturnRevision: 2 };
+export const extraDefaults = { stabilityMode:'deflect-v2', displayReference:'initial', playbackRate:1, legacyPhysics:null, seed: 'TRISOLARIS', music: false, volume: 0.35, trailsLength: 400, orbitalInitialization: 'research', physicsMode: 'reference', pixelRatio: 4, bodyLabels: false, presentationRevision: 6, layout: {}, viewSensitivity: .12, compassOpacity: .12, planetStrength: 1.6, idleAmplitude: 6, civilizationMode: 'balanced', thermalGrace: 30, wakeDelay: 1, epochWindow: 1/12, epochTimebase: 'years', climateInertia: 1.5, stellarBreathing: true, renderQuality: 'native', dragSensitivity: 5, birthDelay: .5, civilizationLevels: true, developmentRate: 1, gravityModel: 'newtonian', encounterAccuracy: .0075, physicsRevision: 1, manualInitialBodies: null, centerOnSystem: false, galaxyReturnRevision: 2 };
 // New installs show the requested tails; explicitly saved off/on preferences still win.
 defaults.newproperty14 = true;
 defaults.newproperty60 = false;
@@ -18,6 +19,8 @@ defaults.newproperty61 = 1;
 defaults.newproperty3 = 0;
 defaults.newproperty68 = 0;
 export const effectivePropertySchema = { ...propertySchema,
+  newproperty53:{...propertySchema.newproperty53,step:.0001,precision:4},
+  newproperty60:{...propertySchema.newproperty60,text:'星系保护 / System protection'},
   newproperty39:{...propertySchema.newproperty39,text:'显示右侧双排行 / Rankings',value:true},
   audiobar:{...propertySchema.audiobar,text:'显示基础信息与排行 / Runtime overview'},
   newproperty45: {...propertySchema.newproperty45,text:'常态活动低温边界 / Active life minimum °C',value:-20},
@@ -29,6 +32,7 @@ export const effectivePropertySchema = { ...propertySchema,
   newproperty61:{...propertySchema.newproperty61,text:'鼠标视角：0 按住拖动 / 1 悬停与拖动 / 2 固定',value:1}
 };
 export function normalizeSettings(source = {}, includeExtras = true) {
+  if(source.stabilityMode==='reflect-v2')throw new Error('反射控制仍在研究分支；正式版不重放该研究配置，请使用研究分支恢复');
   const out = { ...defaults, ...(includeExtras ? extraDefaults : {}) };
   for (const [key, value] of Object.entries(source)) {
     const def = propertySchema[key];
@@ -48,9 +52,16 @@ export function normalizeSettings(source = {}, includeExtras = true) {
     else if(key==='birthDelay'&&Number.isFinite(+value))out.birthDelay=Math.max(.1,Math.min(10,+value));
     else if(key==='developmentRate'&&Number.isFinite(+value))out.developmentRate=Math.max(.1,Math.min(20,+value));
     else if(key==='centerOnSystem')out.centerOnSystem=false;
+    else if(key==='displayReference'&&['initial','barycentric'].includes(value))out.displayReference=value;
     else if(key==='civilizationLevels')out.civilizationLevels=value===true;
     else if(key==='compassOpacity'&&Number.isFinite(+value))out.compassOpacity=Math.max(0,Math.min(.5,+value));
     else if(key==='orbitalInitialization'&&['research','chaotic','balanced','original'].includes(value))out.orbitalInitialization=value;
+    else if(key==='stabilityMode'&&['off','deflect-v2'].includes(value))out.stabilityMode=value;
+    else if(key==='playbackRate'&&Number.isFinite(+value))out.playbackRate=Math.max(.25,Math.min(4,+value));
+    else if(key==='legacyPhysics'&&value&&typeof value==='object'){
+      const candidate=Object.fromEntries(legacyPhysicsKeys.filter(k=>k in value).map(k=>[k,value[k]]));
+      const clean=normalizeSettings({...candidate,stabilityMode:'off'},false);out.legacyPhysics=Object.fromEntries(legacyPhysicsKeys.map(k=>[k,clean[k]??legacyPhysicsDefaults[k]]));
+    }
     else if(key==='gravityModel'&&['newtonian','plummer','legacy'].includes(value))out.gravityModel=value;
     else if(key==='encounterAccuracy'&&Number.isFinite(+value))out.encounterAccuracy=Math.max(.001,Math.min(.03,+value));
     else if(key==='manualInitialBodies'&&value===null)out.manualInitialBodies=null;
@@ -71,13 +82,17 @@ export function normalizeSettings(source = {}, includeExtras = true) {
     }
     else if (key === 'renderQuality' && ['native','8k'].includes(value)) out.renderQuality=value;
   }
+  if(out.stabilityMode&&out.stabilityMode!=='off'){
+    if(!('newproperty60' in source))out.newproperty60=true;
+    Object.assign(out,{gravityModel:'newtonian',civilizationMode:'balanced',physicsMode:'reference',newproperty53:.1875,encounterAccuracy:.001875,timespeed:1,newproperty26:10});
+  }
   return out;
 }
 export function colorRGB(s = '1 1 1') { return s.split(/\s+/).map(Number); }
 export function colorHex(s) { return '#' + colorRGB(s).map(x => Math.round(x * 255).toString(16).padStart(2, '0')).join(''); }
 export function fromHex(s) { return [1, 3, 5].map(i => parseInt(s.slice(i, i + 2), 16) / 255).join(' '); }
 export function plainText(s = '') { return s.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' '); }
-export function algorithmId(s) { return `sykm-scene-v4-${s.physicsMode}60-civ-${s.civilizationMode}-v055-tech2-escape1-${s.gravityModel}-${s.orbitalInitialization}-eta${s.encounterAccuracy}-orbits`; }
+export function algorithmId(s) { return `${s.stabilityMode&&s.stabilityMode!=='off'?'v2-'+s.stabilityMode+'-h4-P5-':''}sykm-scene-v4-${s.physicsMode}60-civ-${s.civilizationMode}-v055-tech2-escape1-${s.gravityModel}-${s.orbitalInitialization}-eta${s.encounterAccuracy}-orbits`; }
 export function migrateSettings(saved={},version=3){
   // v0.5.1: one simulated month replaces the former default two-second window.
   if(saved.epochTimebase!=='years')saved={...saved,epochWindow:saved.epochWindow===undefined||Math.abs(saved.epochWindow-2)<1e-9?1/12:saved.epochWindow};
@@ -96,13 +111,15 @@ export function migrateSettings(saved={},version=3){
   if(!saved.physicsRevision)saved={...saved,orbitalInitialization:!saved.orbitalInitialization||saved.orbitalInitialization==='chaotic'?'research':saved.orbitalInitialization,newproperty60:false,gravityModel:'newtonian'};
   if(!saved.galaxyReturnRevision&&Math.abs((saved.newproperty51??.01)-.01)<1e-9)saved={...saved,newproperty51:.003};
   if((saved.galaxyReturnRevision??0)<2&&Math.abs((saved.newproperty51??.003)-.003)<1e-9)saved={...saved,newproperty51:.006};
+  if(!saved.stabilityMode){const old=normalizeSettings({...saved,stabilityMode:'off'});saved={...saved,legacyPhysics:Object.fromEntries(legacyPhysicsKeys.map(k=>[k,old[k]??legacyPhysicsDefaults[k]])),stabilityMode:'deflect-v2',newproperty60:true};}
   if(version<3)return normalizeSettings({...saved,newproperty45:-20,newproperty46:40,newproperty51:Math.abs(saved.newproperty51??3)>=2 ? .01 : (saved.newproperty51??.01),newproperty3:0,newproperty68:0});
   return normalizeSettings(saved);
 }
 export function seededRandom(seed) {
   let h = 2166136261;
   for (const c of String(seed)) h = Math.imul(h ^ c.charCodeAt(0), 16777619);
-  return () => { h += 0x6d2b79f5; let t = h; t = Math.imul(t ^ t >>> 15, t | 1); t ^= t + Math.imul(t ^ t >>> 7, t | 61); return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+  const random = () => { h += 0x6d2b79f5; let t = h; t = Math.imul(t ^ t >>> 15, t | 1); t ^= t + Math.imul(t ^ t >>> 7, t | 61); return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+  random.checkpoint=()=>h;random.restore=value=>{if(!Number.isFinite(value))throw new Error('Invalid RNG state');h=value;};return random;
 }
 
 export function settingsFromInitial(settings, bodies) {

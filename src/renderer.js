@@ -144,6 +144,8 @@ export class SpaceRenderer {
   updateSettings(s) {
     if (this.settings?.newproperty14 !== s.newproperty14) this.clearTrails();
     this.settings = s;
+    // Reference selection must apply even while animation is paused/throttled.
+    if(s.displayReference!=='barycentric')this.system.position.set(0,0,0);
     this.spaceScale=['chaotic','research'].includes(s.orbitalInitialization)?Math.max(1,s.brfontcoloraaaaaarandomposrange/2):1;
     const mode = String(s.newproperty17);
     this.scene.background = mode === '2' ? C(s.newproperty40).multiplyScalar(s.newproperty57) : C(s.schemecolor);
@@ -166,7 +168,7 @@ export class SpaceRenderer {
         n.glow.visible = s.newproperty18; n.light.color.copy(C(emissions[i]));
       }
       n.label.hidden = !s.newproperty65 || !s.bodyLabels;
-      this.trails[i].visible = s.newproperty14;
+      this.trails[i].visible = s.newproperty14&&this.snap?.bodies[i]?.mass!==0;
     });
     this.dustLayers.forEach((d,i)=>{d.visible=s.dust&&s[i?'_2dust2quantity':'_1dust1quantity']>0&&s[i?'_2dust1size':'_1dust1size']>0;d.geometry.setDrawRange(0,Math.round(900*s[i?'_2dust2quantity':'_1dust1quantity']));d.material.size=s[i?'_2dust1size':'_1dust1size']*(i?.6:.35);});
     this.resize();
@@ -179,10 +181,15 @@ export class SpaceRenderer {
   ingest(state) {
     if (this.snap && state.revision !== this.snap.revision) { this.clearTrails(); this.firstPosition = true; }
     if (!this.snap) this.firstPosition = true;
-    if(this.firstPosition){this.fixedFrame.reset(state.initialBodies);this.renderTime=Math.max(0,state.runtime-.05);}
+    const rate=state.playback?.rate??1;
+    if(this.firstPosition){this.fixedFrame.reset(state.initialBodies);this.renderTime=Math.max(0,state.runtime-.05*rate);}
+    const previousState=this.snap;
     this.snap = state;
-    if(state.runtime-this.renderTime>.15)this.renderTime=state.runtime-.05;
+    if(state.runtime-this.renderTime>.15*rate)this.renderTime=state.runtime-.05*rate;
     state.bodies.forEach((b, i) => {
+      if(b.mass<=0){this.nodes[i].group.visible=false;this.trails[i].visible=false;this.trailBuffers[i].clear();this.trails[i].setPath([],[],C('1 1 1'));return;}
+      this.nodes[i].group.visible=true;this.trails[i].visible=!!this.settings.newproperty14;
+      if(i===3&&previousState?.bodies[3]?.mass===0)this.trailBuffers[i].clear();
       const n = this.nodes[i],position=this.fixedFrame.position(b,this.spaceScale);n.target.set(position.x,position.y,position.z);
       if (this.firstPosition) n.group.position.copy(n.target);
       const samples=state.trailSamples?.[i];
@@ -195,7 +202,7 @@ export class SpaceRenderer {
     if (t <= -100) color.setRGB(THREE.MathUtils.clamp((t + 210) / 110, 0, 1), THREE.MathUtils.clamp((t + 210) / 110, 0, 1), 1);
     else if (t >= 10) color.setRGB(1, Math.max(0, 1 - (t - 10) / 990), Math.max(0, 1 - (t - 10) / 990));
     this.nodes[3].material.emissive.copy(color);
-    this.nodes[3].group.visible=!state.world?.planet.terminal;
+    this.nodes[3].group.visible=state.bodies[3].mass>0&&!state.world?.planet.terminal;
     this.nodes[3].label.hidden=!this.settings.newproperty65||!this.settings.bodyLabels||!!state.world?.planet.terminal;
     this.nodes.slice(0,3).forEach((n,i)=>{const radius=state.world?.stars[i]?.radius;if(radius)n.mesh.scale.setScalar(radius/this.spaceScale);});
   }
@@ -232,9 +239,15 @@ export class SpaceRenderer {
     this.compassFade=fadeMotion(this.compassFade,this.compassTarget,motionDt);this.compass.visible=this.compassFade>.002&&s.compassOpacity>0;
     for(const child of this.compass.children)child.material.opacity=s.compassOpacity*this.compassFade;
     this.world.rotation.set(this.rot.x,this.rot.y,0);
-    if(this.snap)this.renderTime=Math.min(this.snap.runtime,this.renderTime+dt);
+    if(this.snap)this.renderTime=Math.min(this.snap.runtime,this.renderTime+dt*(this.snap.playback?.rate??1));
+    const displayed=this.trailBuffers.map(h=>h.atTime(this.renderTime));
+    if(this.snap&&s.displayReference==='barycentric'){
+      const mass=this.snap.bodies.reduce((sum,b)=>sum+b.mass,0),center=[0,0,0];
+      this.snap.bodies.forEach((b,i)=>{const p=displayed[i]??this.nodes[i].group.position;for(const [k,key]of ['x','y','z'].entries())center[k]+=b.mass*p[key]/mass;});
+      this.system.position.set(-center[0],-center[1],-center[2]);
+    }else this.system.position.set(0,0,0);
     this.nodes.forEach((n, i) => {
-      const p=this.trailBuffers[i].atTime(this.renderTime);if(p)n.group.position.set(p.x,p.y,p.z);n.mesh.rotation.y += dt * .1;
+      const p=displayed[i];if(p)n.group.position.set(p.x,p.y,p.z);n.mesh.rotation.y += dt * .1;
       if (i < 3) { n.glow.material.opacity = Math.min(1, .35 + s.newproperty49 * .3 + (s.newproperty2 ? s.hdr * .09 : 0) + this.audioLevel * .12); }
       n.group.getWorldPosition(vec);vec.project(this.camera);
       n.label.style.transform = `translate(${(vec.x * .5 + .5) * innerWidth + 15}px,${(-vec.y * .5 + .5) * innerHeight - 9}px)`;
