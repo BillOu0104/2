@@ -1,0 +1,43 @@
+{
+  "format": 1,
+  "id": "minimal-chaos-v2-js-h8-launch-20261026",
+  "path": "analyses/minimal-chaos-v2-js-h8-launch-20261026",
+  "kind": "analysis",
+  "version": null,
+  "title": "同初值h8数值诊断实际启动及完整状态证据",
+  "summary": "核实排他锁、两现有worker与各至少1000年完整主+影子状态，实际积分步数不少于80/帧；保留状态副本SHA、源/配置SHA和两分支已推送读回证据。非长窗结果，原确认不改，main不改。",
+  "source_commit": "1fccaed159576ef3d7c1926ea3e968da1e642519",
+  "previous_commit": "255bbb5b51d1cd62c52381abdf16630d4a48583c",
+  "source_repository": "https://github.com/BillOu0104/2",
+  "source_subject": "research: preserve h8 launch and actual full-state checkpoint evidence",
+  "source_date": "2026-10-26T13:22:14Z",
+  "archived_at": "2026-10-26T13:22:14.592328+00:00",
+  "runtime_fingerprint": null,
+  "deleted_paths": [],
+  "files": [
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/launch-proof/V2-JS-CONFIRM-20261022-0-deflect-v2.checkpoint-1000.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/launch-proof/V2-JS-CONFIRM-20261022-0-deflect-v2.checkpoint-1000.json",
+      "sha256": "2af0ba85a34d50ec6b58b709503f762caf29acaf77bb165d771a9e38740ffaff",
+      "bytes": 60275
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/launch-proof/V2-JS-CONFIRM-20261022-1-deflect-v2.checkpoint-1000.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/launch-proof/V2-JS-CONFIRM-20261022-1-deflect-v2.checkpoint-1000.json",
+      "sha256": "209bbfa0d447423d63a44599f3f76e56758c2ca374c5489da5791aad86d5da41",
+      "bytes": 62033
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/launch-proof/launch.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/launch-proof/launch.json",
+      "sha256": "c04d0ce53e30cff3bd00e23757786a855a14218f0104938dc03b9d65afd6a3e6",
+      "bytes": 1698
+    },
+    {
+      "source_path": null,
+      "archive_path": "changes.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ]
+}
