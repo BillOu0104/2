@@ -1,0 +1,25 @@
+{
+  "designation": "JS_H8_NUMERICAL_DIAGNOSIS_V1",
+  "prefix": "V2-JS-CONFIRM-20261022",
+  "seeds": 32,
+  "precision": {
+    "maxStep": 9.375e-05,
+    "eta": 0.0009375
+  },
+  "protocol": "docs/integration-v2/JS_PRECISION_H8_PROTOCOL.md",
+  "initialRegistry": "docs/integration-v2/js-confirmation-v1/initial-state-audit.json",
+  "baseManifest": "docs/integration-v2/results/js-confirmation-v1/manifest.json",
+  "baseConfigs": [
+    "docs/integration-v2/js-confirmation-v1/b00.json",
+    "docs/integration-v2/js-confirmation-v1/b01.json",
+    "docs/integration-v2/js-confirmation-v1/b02.json",
+    "docs/integration-v2/js-confirmation-v1/b03.json"
+  ],
+  "configs": [
+    "docs/integration-v2/js-precision-h8-v1/q00.json",
+    "docs/integration-v2/js-precision-h8-v1/q01.json",
+    "docs/integration-v2/js-precision-h8-v1/q02.json",
+    "docs/integration-v2/js-precision-h8-v1/q03.json"
+  ],
+  "output": "docs/integration-v2/results/js-precision-h8-v1"
+}

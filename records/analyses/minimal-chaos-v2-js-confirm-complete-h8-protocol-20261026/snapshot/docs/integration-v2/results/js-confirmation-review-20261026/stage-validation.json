@@ -1,0 +1,19 @@
+{
+  "auditCommand": "python3 tools/v2/run-js-confirmation.py docs/integration-v2/js-confirmation-v1/study.json --audit-only",
+  "auditLog": "final-audit.log",
+  "precisionTestCommand": "node --test tests/v2-precision.test.js",
+  "precisionTestLog": "precision-tests.log",
+  "workerSmokeCommand": "node tools/v2/check-precision-worker.mjs",
+  "workerSmokeLog": "precision-worker-smoke.log",
+  "runtimeSourceModified": false,
+  "longH8ResultsAvailable": false,
+  "plotCacheWarning": "Initial Matplotlib run used temporary cache after read-only user config warning; figure generation completed successfully.",
+  "filesSHA256": {
+    "tools/v2/review-js-costs.py": "e442ea5444c7ec76ebf57d522cac89df24d0dd8068d2128f51fa1ce6d0cddfe4",
+    "tools/v2/precision-options.mjs": "a2c35d3db18877fb2cd62c603d4fc2025e743bc212e19ac8eec27596901c30c6",
+    "tools/v2/batch-precision-v2.mjs": "16398391caeca2d56bef56da6c55d352ab6462851ac639aa7674efb8e0a5bea4",
+    "tools/v2/run-js-precision.py": "e09f886b3e84f91670f4106e2cdee5062b308577d71cad1e8ca160d459e431bb",
+    "tools/v2/check-precision-worker.mjs": "a89051a9b4435129d8ba4e9cd267325ac36f941d5aa0f38e98ffb6311de36605",
+    "tests/v2-precision.test.js": "79d69ca6c8b27cd6629903d0f120dd3f15c03e68fb8ce0afacb64c8aae4fe7e1"
+  }
+}

@@ -1,0 +1,715 @@
+{
+  "timeUTC": "2026-10-26T13:11:01.549562+00:00",
+  "sourceHash": "0deca082f9b8c901fbc8036216d885f30c6dc15e422ebfa0eb5a3a0c1858e4db",
+  "auditedWindowRows": 1024,
+  "auditedLongRows": 256,
+  "UNKNOWN": 0,
+  "projectionEventAudit": "all per-event work/absoluteWork/impulse/P/L sums and peak net velocity jump agree with cumulative ledgers within recorded rounding tolerance",
+  "groups": {
+    "deflect-v2": {
+      "stellarIntact": {
+        "n": 128,
+        "mean": 1.0,
+        "min": 1.0,
+        "median": 1.0,
+        "p90": 1.0,
+        "max": 1.0
+      },
+      "joint": {
+        "n": 128,
+        "mean": 0.921875,
+        "min": 0.0,
+        "median": 1.0,
+        "p90": 1.0,
+        "max": 1.0
+      },
+      "stableFraction": {
+        "n": 128,
+        "mean": 0.34480406249999995,
+        "min": 0.0009038333333333333,
+        "median": 0.28282300000000005,
+        "p90": 0.7258994166666667,
+        "max": 0.998829
+      },
+      "matureStableFraction": {
+        "n": 128,
+        "mean": 0.3399095630787037,
+        "min": 0.0,
+        "median": 0.26892314814814816,
+        "p90": 0.7570992962962962,
+        "max": 1.0
+      },
+      "matureConditionalFTLE": {
+        "n": 128,
+        "mean": 0.014467135524048201,
+        "min": 0.0019358055427503625,
+        "median": 0.014449630996073128,
+        "p90": 0.021155873817185065,
+        "max": 0.025249536031346175
+      },
+      "tightPairChanges": {
+        "n": 128,
+        "mean": 310.7734375,
+        "min": 0.0,
+        "median": 275.0,
+        "p90": 576.3,
+        "max": 849.0
+      },
+      "longestHierarchyYears": {
+        "n": 128,
+        "mean": 689.6217447916667,
+        "min": 152.11666666666667,
+        "median": 660.4833333333333,
+        "p90": 1013.1933333333333,
+        "max": 1167.3333333333333
+      },
+      "longestDynamicalHierarchyYears": {
+        "n": 128,
+        "mean": 107.60572916666666,
+        "min": 0.0,
+        "median": 0.0,
+        "p90": 0.0,
+        "max": 5215.416666666667
+      },
+      "matureNonhierFraction": {
+        "n": 128,
+        "mean": 0.28718068287037035,
+        "min": 0.05193888888888889,
+        "median": 0.2756911111111111,
+        "p90": 0.4208911296296296,
+        "max": 0.46860833333333335
+      },
+      "planetLosses": {
+        "n": 128,
+        "mean": 45.75,
+        "min": 0.0,
+        "median": 37.0,
+        "p90": 91.49999999999999,
+        "max": 151.0
+      },
+      "planetRespawns": {
+        "n": 128,
+        "mean": 45.75,
+        "min": 0.0,
+        "median": 37.0,
+        "p90": 91.49999999999999,
+        "max": 151.0
+      },
+      "originalPlanetSurvived": {
+        "n": 128,
+        "mean": 0.0078125,
+        "min": 0.0,
+        "median": 0.0,
+        "p90": 0.0,
+        "max": 1.0
+      },
+      "originalCivilizationSurvived": {
+        "n": 128,
+        "mean": 0.0,
+        "min": 0.0,
+        "median": 0.0,
+        "p90": 0.0,
+        "max": 0.0
+      },
+      "absentFraction": {
+        "n": 128,
+        "mean": 0.0022875,
+        "min": 0.0,
+        "median": 0.00185,
+        "p90": 0.004574999999999999,
+        "max": 0.00755
+      },
+      "civilizationAliveFraction": {
+        "n": 128,
+        "mean": 0.21082380078124996,
+        "min": 0.0005586666666666666,
+        "median": 0.16455908333333333,
+        "p90": 0.44792266666666664,
+        "max": 0.9482695
+      },
+      "civilizationActiveFraction": {
+        "n": 128,
+        "mean": 0.047273078125000006,
+        "min": 0.00020833333333333335,
+        "median": 0.01794891666666667,
+        "p90": 0.11442306666666664,
+        "max": 0.44827416666666664
+      },
+      "controlObservedActiveFrameFraction": {
+        "n": 128,
+        "mean": 2.2279947916666664e-05,
+        "min": 1.6666666666666668e-07,
+        "median": 2.0333333333333334e-05,
+        "p90": 3.851666666666666e-05,
+        "max": 5.383333333333333e-05
+      },
+      "matureStablePostRespawn25Contribution": {
+        "n": 128,
+        "mean": 0.008228207465277778,
+        "min": 0.0,
+        "median": 0.00644962962962963,
+        "p90": 0.018002888888888884,
+        "max": 0.031072222222222223
+      },
+      "maxNumericalEnergyResidual": {
+        "n": 128,
+        "mean": 1.2026704498092717e-09,
+        "min": 6.600006539864723e-11,
+        "median": 7.604307924160909e-10,
+        "p90": 2.584905565870479e-09,
+        "max": 5.731142422403541e-09
+      },
+      "wallSeconds": {
+        "n": 128,
+        "mean": 2660.783558161751,
+        "min": 1790.5735673699987,
+        "median": 2613.935769237508,
+        "p90": 3515.809792796101,
+        "max": 3804.5034659119974
+      },
+      "maxRSSMiB": {
+        "n": 128,
+        "mean": 275.4811096191406,
+        "min": 204.0703125,
+        "median": 280.302734375,
+        "p90": 322.067578125,
+        "max": 366.60546875
+      },
+      "steps": {
+        "n": 128,
+        "mean": 240577722.140625,
+        "min": 240008599.0,
+        "median": 240489771.5,
+        "p90": 241006023.7,
+        "max": 241637886.0
+      },
+      "controlWorkOverE0": {
+        "n": 128,
+        "mean": 4.827546349861965e-15,
+        "min": -1.3289781189828274e-13,
+        "median": 2.1560115862818093e-15,
+        "p90": 4.93773966569593e-14,
+        "max": 1.655768222660107e-13
+      },
+      "controlAbsoluteWorkOverE0": {
+        "n": 128,
+        "mean": 47.41961759934232,
+        "min": 0.3096041156031954,
+        "median": 42.11278115897538,
+        "p90": 88.87325745309218,
+        "max": 127.25069967412911
+      },
+      "controlImpulse": {
+        "n": 128,
+        "mean": 145336796.00974414,
+        "min": 1141298.9744975308,
+        "median": 125749214.45070475,
+        "p90": 271462902.44782656,
+        "max": 375686859.13263845
+      },
+      "controlDeltaLNormOverL0": {
+        "n": 128,
+        "mean": 0.9896515683130835,
+        "min": 9.71476584664169e-18,
+        "median": 0.7133057868126205,
+        "p90": 2.058431187677024,
+        "max": 6.031300981144116
+      },
+      "controlCumulativeBodyAngularImpulseOverL0": {
+        "n": 128,
+        "mean": 3423.592573879835,
+        "min": 0.1706261230790707,
+        "median": 1270.865877992848,
+        "p90": 8905.793003101424,
+        "max": 78408.32383261996
+      },
+      "controlPeakNetVelocityJump": {
+        "n": 128,
+        "mean": 0.303554260297175,
+        "min": 0.08745510459549415,
+        "median": 0.306819483507727,
+        "p90": 0.36409107035421695,
+        "max": 0.476221366261472
+      },
+      "controlEvents": {
+        "n": 128,
+        "mean": 133.6796875,
+        "min": 1.0,
+        "median": 122.0,
+        "p90": 231.09999999999997,
+        "max": 323.0
+      },
+      "planetExternalWork": {
+        "n": 128,
+        "mean": -12947.734509377606,
+        "min": -88273.2661316056,
+        "median": -10477.53672194104,
+        "p90": 1167.268033602531,
+        "max": 13748.289776994323
+      },
+      "planetExternalAbsoluteWork": {
+        "n": 128,
+        "mean": 108057.02959265656,
+        "min": 0.0,
+        "median": 75467.03379909755,
+        "p90": 241381.3150170515,
+        "max": 434777.7803226623
+      },
+      "planetExternalImpulseMagnitudeChange": {
+        "n": 128,
+        "mean": 359903.20152112923,
+        "min": 0.0,
+        "median": 278406.0733184399,
+        "p90": 753598.8900549297,
+        "max": 1259919.0953502757
+      }
+    },
+    "reflect-v2": {
+      "stellarIntact": {
+        "n": 128,
+        "mean": 1.0,
+        "min": 1.0,
+        "median": 1.0,
+        "p90": 1.0,
+        "max": 1.0
+      },
+      "joint": {
+        "n": 128,
+        "mean": 0.96875,
+        "min": 0.0,
+        "median": 1.0,
+        "p90": 1.0,
+        "max": 1.0
+      },
+      "stableFraction": {
+        "n": 128,
+        "mean": 0.20778642057291669,
+        "min": 0.008823833333333333,
+        "median": 0.14722641666666667,
+        "p90": 0.4248901666666666,
+        "max": 0.998829
+      },
+      "matureStableFraction": {
+        "n": 128,
+        "mean": 0.19083810908564813,
+        "min": 0.0,
+        "median": 0.1388826851851852,
+        "p90": 0.4136886481481481,
+        "max": 1.0
+      },
+      "matureConditionalFTLE": {
+        "n": 128,
+        "mean": 0.026434236620079182,
+        "min": 0.004731208509103376,
+        "median": 0.025368922137432352,
+        "p90": 0.03919919101122105,
+        "max": 0.06076009588738934
+      },
+      "tightPairChanges": {
+        "n": 128,
+        "mean": 559.859375,
+        "min": 0.0,
+        "median": 494.5,
+        "p90": 988.8,
+        "max": 1620.0
+      },
+      "longestHierarchyYears": {
+        "n": 128,
+        "mean": 704.905078125,
+        "min": 152.11666666666667,
+        "median": 697.675,
+        "p90": 1004.7816666666666,
+        "max": 1253.4166666666667
+      },
+      "longestDynamicalHierarchyYears": {
+        "n": 128,
+        "mean": 80.51432291666666,
+        "min": 0.0,
+        "median": 0.0,
+        "p90": 0.0,
+        "max": 5942.566666666667
+      },
+      "matureNonhierFraction": {
+        "n": 128,
+        "mean": 0.3698489756944444,
+        "min": 0.05193888888888889,
+        "median": 0.38493222222222223,
+        "p90": 0.4567282037037037,
+        "max": 0.5264837037037037
+      },
+      "planetLosses": {
+        "n": 128,
+        "mean": 58.703125,
+        "min": 0.0,
+        "median": 47.5,
+        "p90": 108.39999999999998,
+        "max": 273.0
+      },
+      "planetRespawns": {
+        "n": 128,
+        "mean": 58.703125,
+        "min": 0.0,
+        "median": 47.5,
+        "p90": 108.39999999999998,
+        "max": 273.0
+      },
+      "originalPlanetSurvived": {
+        "n": 128,
+        "mean": 0.015625,
+        "min": 0.0,
+        "median": 0.0,
+        "p90": 0.0,
+        "max": 1.0
+      },
+      "originalCivilizationSurvived": {
+        "n": 128,
+        "mean": 0.0,
+        "min": 0.0,
+        "median": 0.0,
+        "p90": 0.0,
+        "max": 0.0
+      },
+      "absentFraction": {
+        "n": 128,
+        "mean": 0.0029351562500000003,
+        "min": 0.0,
+        "median": 0.002375,
+        "p90": 0.005419999999999999,
+        "max": 0.01365
+      },
+      "civilizationAliveFraction": {
+        "n": 128,
+        "mean": 0.15341557942708334,
+        "min": 0.019054333333333333,
+        "median": 0.1352935,
+        "p90": 0.2893143833333333,
+        "max": 0.741533
+      },
+      "civilizationActiveFraction": {
+        "n": 128,
+        "mean": 0.025297536458333332,
+        "min": 0.0009055,
+        "median": 0.014739666666666667,
+        "p90": 0.04023383333333333,
+        "max": 0.3555568333333333
+      },
+      "controlObservedActiveFrameFraction": {
+        "n": 128,
+        "mean": 8.389583333333334e-05,
+        "min": 1.6666666666666668e-07,
+        "median": 6.841666666666666e-05,
+        "p90": 0.00014838333333333333,
+        "max": 0.0002755
+      },
+      "matureStablePostRespawn25Contribution": {
+        "n": 128,
+        "mean": 0.011264701967592593,
+        "min": 0.0,
+        "median": 0.009375925925925926,
+        "p90": 0.025066537037037036,
+        "max": 0.053390185185185186
+      },
+      "maxNumericalEnergyResidual": {
+        "n": 128,
+        "mean": 1.5376993077833034e-09,
+        "min": 8.573592976312516e-11,
+        "median": 1.1106253055034587e-09,
+        "p90": 3.3921064130810506e-09,
+        "max": 1.1938086477186184e-08
+      },
+      "wallSeconds": {
+        "n": 128,
+        "mean": 2104.249643923125,
+        "min": 1485.4224106039987,
+        "median": 1880.4551860090064,
+        "p90": 2980.9671841951968,
+        "max": 3444.979165318992
+      },
+      "maxRSSMiB": {
+        "n": 128,
+        "mean": 289.9244384765625,
+        "min": 217.55859375,
+        "median": 293.87890625,
+        "p90": 338.28203125,
+        "max": 370.27734375
+      },
+      "steps": {
+        "n": 128,
+        "mean": 240583473.796875,
+        "min": 240008599.0,
+        "median": 240506925.0,
+        "p90": 240974601.2,
+        "max": 241771889.0
+      },
+      "controlWorkOverE0": {
+        "n": 128,
+        "mean": -1.2676730497599995e-13,
+        "min": -5.370060090667921e-13,
+        "median": -1.402852909090836e-13,
+        "p90": 1.718645854804475e-13,
+        "max": 4.1609319619448787e-13
+      },
+      "controlAbsoluteWorkOverE0": {
+        "n": 128,
+        "mean": 851.68166613318,
+        "min": 0.3096041156031954,
+        "median": 762.0037683118658,
+        "p90": 1428.3015665679784,
+        "max": 2318.315089186081
+      },
+      "controlImpulse": {
+        "n": 128,
+        "mean": 6482567464.986983,
+        "min": 1141298.9744975308,
+        "median": 5562354172.833982,
+        "p90": 11249314988.796412,
+        "max": 22458406637.527855
+      },
+      "controlDeltaLNormOverL0": {
+        "n": 128,
+        "mean": 0.027958945098320063,
+        "min": 9.71476584664169e-18,
+        "median": 3.1814263262468184e-13,
+        "p90": 0.03796680366310701,
+        "max": 0.9721071747088376
+      },
+      "controlCumulativeBodyAngularImpulseOverL0": {
+        "n": 128,
+        "mean": 220708.11513790523,
+        "min": 0.1706261230790707,
+        "median": 93650.42270700225,
+        "p90": 559784.518449987,
+        "max": 2870807.411638835
+      },
+      "controlPeakNetVelocityJump": {
+        "n": 128,
+        "mean": 2.2529582439601468,
+        "min": 0.08745510459549415,
+        "median": 2.297943453131475,
+        "p90": 2.320619436903591,
+        "max": 2.5648138177793394
+      },
+      "controlEvents": {
+        "n": 128,
+        "mean": 503.40625,
+        "min": 1.0,
+        "median": 410.5,
+        "p90": 890.6,
+        "max": 1653.0
+      },
+      "planetExternalWork": {
+        "n": 128,
+        "mean": -18858.038853503866,
+        "min": -79340.46861137345,
+        "median": -16663.56879735444,
+        "p90": -968.8377616764525,
+        "max": 7744.299347427586
+      },
+      "planetExternalAbsoluteWork": {
+        "n": 128,
+        "mean": 141641.58390712278,
+        "min": 0.0,
+        "median": 95466.21245219713,
+        "p90": 280161.18406241335,
+        "max": 838263.5404533518
+      },
+      "planetExternalImpulseMagnitudeChange": {
+        "n": 128,
+        "mean": 462230.57990040025,
+        "min": 0.0,
+        "median": 361629.0866041709,
+        "p90": 922988.7403854635,
+        "max": 2475832.1499279644
+      }
+    }
+  },
+  "chaosInsufficient": {
+    "deflect-v2": [
+      {
+        "seed": "V2-JS-CONFIRM-20261022-16",
+        "failedGates": [
+          "tightPairChanges"
+        ],
+        "matureStableFraction": 0,
+        "FTLE": 0.0031996384898507423,
+        "longestIsolation": 622.8833333333333,
+        "longestDynamicHierarchy": 10.233333333333333,
+        "matureNonhierFraction": 0.14682833333333334,
+        "tightPairChanges": 15
+      },
+      {
+        "seed": "V2-JS-CONFIRM-20261022-17",
+        "failedGates": [
+          "dynamicHierarchy"
+        ],
+        "matureStableFraction": 0.6766953703703704,
+        "FTLE": 0.01784228174823373,
+        "longestIsolation": 505.3333333333333,
+        "longestDynamicHierarchy": 1457.1166666666666,
+        "matureNonhierFraction": 0.2422775925925926,
+        "tightPairChanges": 357
+      },
+      {
+        "seed": "V2-JS-CONFIRM-20261022-28",
+        "failedGates": [
+          "dynamicHierarchy"
+        ],
+        "matureStableFraction": 0.605405,
+        "FTLE": 0.01623504234458123,
+        "longestIsolation": 579.5666666666667,
+        "longestDynamicHierarchy": 1202.6166666666666,
+        "matureNonhierFraction": 0.20248,
+        "tightPairChanges": 239
+      },
+      {
+        "seed": "V2-JS-CONFIRM-20261022-42",
+        "failedGates": [
+          "dynamicHierarchy"
+        ],
+        "matureStableFraction": 0.785942037037037,
+        "FTLE": 0.009052641431728178,
+        "longestIsolation": 806.0833333333334,
+        "longestDynamicHierarchy": 2897.4,
+        "matureNonhierFraction": 0.2193835185185185,
+        "tightPairChanges": 41
+      },
+      {
+        "seed": "V2-JS-CONFIRM-20261022-45",
+        "failedGates": [
+          "FTLE",
+          "tightPairChanges"
+        ],
+        "matureStableFraction": 0.9818201851851852,
+        "FTLE": 0.0019358055427503625,
+        "longestIsolation": 1056.4,
+        "longestDynamicHierarchy": 0,
+        "matureNonhierFraction": 0.2760651851851852,
+        "tightPairChanges": 11
+      },
+      {
+        "seed": "V2-JS-CONFIRM-20261022-58",
+        "failedGates": [
+          "dynamicHierarchy"
+        ],
+        "matureStableFraction": 0.7370581481481482,
+        "FTLE": 0.010352028956582583,
+        "longestIsolation": 501.78333333333336,
+        "longestDynamicHierarchy": 1084.8833333333334,
+        "matureNonhierFraction": 0.17952685185185185,
+        "tightPairChanges": 98
+      },
+      {
+        "seed": "V2-JS-CONFIRM-20261022-76",
+        "failedGates": [
+          "dynamicHierarchy"
+        ],
+        "matureStableFraction": 0.19283925925925927,
+        "FTLE": 0.008397746113325815,
+        "longestIsolation": 915.3166666666667,
+        "longestDynamicHierarchy": 5215.416666666667,
+        "matureNonhierFraction": 0.2364651851851852,
+        "tightPairChanges": 129
+      },
+      {
+        "seed": "V2-JS-CONFIRM-20261022-91",
+        "failedGates": [
+          "tightPairChanges",
+          "nonhierFraction"
+        ],
+        "matureStableFraction": 0.9962344444444444,
+        "FTLE": 0.015615742947193636,
+        "longestIsolation": 421.31666666666666,
+        "longestDynamicHierarchy": 0,
+        "matureNonhierFraction": 0.09592925925925926,
+        "tightPairChanges": 0
+      },
+      {
+        "seed": "V2-JS-CONFIRM-20261022-106",
+        "failedGates": [
+          "dynamicHierarchy",
+          "nonhierFraction"
+        ],
+        "matureStableFraction": 0.7623322222222222,
+        "FTLE": 0.010760664007547195,
+        "longestIsolation": 541,
+        "longestDynamicHierarchy": 1505.25,
+        "matureNonhierFraction": 0.09367055555555556,
+        "tightPairChanges": 127
+      },
+      {
+        "seed": "V2-JS-CONFIRM-20261022-114",
+        "failedGates": [
+          "tightPairChanges",
+          "nonhierFraction"
+        ],
+        "matureStableFraction": 1,
+        "FTLE": 0.004731208509103376,
+        "longestIsolation": 152.11666666666667,
+        "longestDynamicHierarchy": 390.56666666666666,
+        "matureNonhierFraction": 0.05193888888888889,
+        "tightPairChanges": 0
+      }
+    ],
+    "reflect-v2": [
+      {
+        "seed": "V2-JS-CONFIRM-20261022-0",
+        "failedGates": [
+          "tightPairChanges",
+          "dynamicHierarchy",
+          "nonhierFraction"
+        ],
+        "matureStableFraction": 0.9859305555555555,
+        "FTLE": 0.023723469020321908,
+        "longestIsolation": 727.5333333333333,
+        "longestDynamicHierarchy": 5942.566666666667,
+        "matureNonhierFraction": 0.07382425925925926,
+        "tightPairChanges": 13
+      },
+      {
+        "seed": "V2-JS-CONFIRM-20261022-91",
+        "failedGates": [
+          "tightPairChanges",
+          "nonhierFraction"
+        ],
+        "matureStableFraction": 0.9962344444444444,
+        "FTLE": 0.015615742947193636,
+        "longestIsolation": 421.31666666666666,
+        "longestDynamicHierarchy": 0,
+        "matureNonhierFraction": 0.09592925925925926,
+        "tightPairChanges": 0
+      },
+      {
+        "seed": "V2-JS-CONFIRM-20261022-102",
+        "failedGates": [
+          "dynamicHierarchy"
+        ],
+        "matureStableFraction": 0.7207655555555555,
+        "FTLE": 0.015644171309672113,
+        "longestIsolation": 909.2833333333333,
+        "longestDynamicHierarchy": 3972.7,
+        "matureNonhierFraction": 0.14056314814814816,
+        "tightPairChanges": 64
+      },
+      {
+        "seed": "V2-JS-CONFIRM-20261022-114",
+        "failedGates": [
+          "tightPairChanges",
+          "nonhierFraction"
+        ],
+        "matureStableFraction": 1,
+        "FTLE": 0.004731208509103376,
+        "longestIsolation": 152.11666666666667,
+        "longestDynamicHierarchy": 390.56666666666666,
+        "matureNonhierFraction": 0.05193888888888889,
+        "tightPairChanges": 0
+      }
+    ]
+  },
+  "limits": [
+    "Observed-active FRAME fraction is not physical pulse-duration duty cycle. Finite acceleration undefined without a pulse duration.",
+    "Planet external impulse is the sum of absolute changes of momentum MAGNITUDE; it is not the full vector-jump impulse and can underestimate it. Existing signed/absolute energy and deltaP/deltaL ledgers are separate. Do not relabel this quantity as complete P5 impulse.",
+    "Energy residual is yearly sampled, not a continuous bound or proof of long-term statistics convergence.",
+    "RSS is endpoint process RSS, not a measured process-wide peak; wall time includes checkpoint activity and shared-CPU execution.",
+    "Formal source/configuration frozen; post-hoc cost review does not change the preregistered outcomes."
+  ]
+}
