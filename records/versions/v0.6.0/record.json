@@ -1,0 +1,529 @@
+{
+  "format": 1,
+  "id": "v0.6.0",
+  "path": "versions/v0.6.0",
+  "kind": "version",
+  "version": "0.6.0",
+  "title": "V2转向控制正式集成与P5兼容",
+  "summary": "基于完整v0.5.5选择性移植冻结deflect-v2 h4、P5、Worker与设置；保留旧物理回退及视觉，150项自动化和13组Chromium流程通过，生产构建及短窗性能检查通过。原研究数据不进入正式树，h8仅13/256端点未完成，真实WE宿主未验证。原main已推送回滚标签，依本次明确授权准备合并。",
+  "source_commit": "e19f30d78c0bb0ab57f9932963e08261232d99b7",
+  "previous_commit": "8a8eb34224ce1a9cc0576a1615c642d90d76a146",
+  "source_repository": "https://github.com/BillOu0104/2",
+  "source_subject": "v0.6.0: integrate verified deflect-v2 and P5 into the full wallpaper",
+  "source_date": "2026-10-26T15:33:11Z",
+  "archived_at": "2026-10-26T15:33:28.649292+00:00",
+  "runtime_fingerprint": "750484cff072bb3a334e7f45b96b6dc83fb8b9e7b4c33b4ed334f14daab12a3e",
+  "deleted_paths": [],
+  "files": [
+    {
+      "source_path": ".github/workflows/physics-acceptance.yml",
+      "archive_path": "snapshot/.github/workflows/physics-acceptance.yml",
+      "sha256": "66d2b0a381806ea67fe5df152104e2e728219d1b901157da5e61e603908b61df",
+      "bytes": 546
+    },
+    {
+      "source_path": ".github/workflows/records.yml",
+      "archive_path": "snapshot/.github/workflows/records.yml",
+      "sha256": "4d93f651c855867f699394419f5b941f07d18937c2543cbeccdbe570fff9f08e",
+      "bytes": 417
+    },
+    {
+      "source_path": "README.md",
+      "archive_path": "snapshot/README.md",
+      "sha256": "c99cf45aba23684461b251a01a277ca19b291f0914930fe37871826172a00948",
+      "bytes": 12417
+    },
+    {
+      "source_path": "docs/SETTINGS-GUIDE-v0.5.md",
+      "archive_path": "snapshot/docs/SETTINGS-GUIDE-v0.5.md",
+      "sha256": "04fe2bb380d3aa29ec375ac58b00493b1cf25ccea0b3bd917a8dec805612cbc3",
+      "bytes": 57232
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/INTEGRATION.md",
+      "archive_path": "snapshot/docs/releases/v0.6.0/INTEGRATION.md",
+      "sha256": "ae0ba97875207d5f522f89ebbb155cefb788dc8f689baed1b75f59109ffd0c00",
+      "bytes": 10320
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/SOURCE_REVIEW.md",
+      "archive_path": "snapshot/docs/releases/v0.6.0/SOURCE_REVIEW.md",
+      "sha256": "dfe2c5b8ee67cacb4c89e27f0300f2d8650ad835516d8bf70747cbfbd95e0659",
+      "bytes": 3902
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/TEST_RESULTS.md",
+      "archive_path": "snapshot/docs/releases/v0.6.0/TEST_RESULTS.md",
+      "sha256": "d7695f76d86e5d454a9f3ed42da6b1c00c4edac8395a28abaae47cef760afb6a",
+      "bytes": 5222
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/browser-final.log",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/browser-final.log",
+      "sha256": "9e264b34a9c88cb686f43de73bc94bb813b267ac8b48aa73e71e0c506a18b446",
+      "bytes": 1408
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/browser-final/browser.json",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/browser-final/browser.json",
+      "sha256": "8cc359e3249f8dd708c554bc8ce36ab1c59a4995b15b3441bd63c202b5458659",
+      "bytes": 32563
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/browser-final/desktop.png",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/browser-final/desktop.png",
+      "sha256": "9954355d957f984be5fad068e49d9cd35b00a4b33e9b788df179e9b795c0d5b8",
+      "bytes": 912570
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/browser-final/planet-absent.png",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/browser-final/planet-absent.png",
+      "sha256": "d68c77e5e61030c9d17fc54e963fa7dac0aedf48a8652e83cb68fd23bfe1ceb9",
+      "bytes": 907757
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/browser-final/planet-returned.png",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/browser-final/planet-returned.png",
+      "sha256": "cf58e1555f429445126f48f93f7d14c76c2c8e8f4d0a447451cff20336370170",
+      "bytes": 915280
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/browser-r1.log",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/browser-r1.log",
+      "sha256": "43cc7721d3d2de27b19671b4397c4ce40a6241d0dd6a3c689c5dc21bb89c4150",
+      "bytes": 409
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/browser-r2.log",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/browser-r2.log",
+      "sha256": "c437de429784f6b7ac97a32fce6de85707a1812b7a8cdef3785a6457edeff489",
+      "bytes": 422
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/browser-r3.log",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/browser-r3.log",
+      "sha256": "2b09b6b22c160bb33907a1cf286e3187a2a113cd4c7b7c81329dd14cb5acbf68",
+      "bytes": 427
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/browser-r4.log",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/browser-r4.log",
+      "sha256": "f407c28fdbe3e517295b1fe75a6e0e04f5f7cf34504069545e3627effc5a7dd4",
+      "bytes": 610
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/browser-r5.log",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/browser-r5.log",
+      "sha256": "04808e35c22d3963433b0e018c03eef31bcf9a2b9b164aefee3275bdadb26a9f",
+      "bytes": 403
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/browser-r6.log",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/browser-r6.log",
+      "sha256": "9e264b34a9c88cb686f43de73bc94bb813b267ac8b48aa73e71e0c506a18b446",
+      "bytes": 1408
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/browser/browser.json",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/browser/browser.json",
+      "sha256": "929d512322254a847dfd90fdf05b789d5e23dcf105f0baec5f8ff41deedd9f8a",
+      "bytes": 32521
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/browser/failure-r1.json",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/browser/failure-r1.json",
+      "sha256": "efd58604f8df8e3bba7409f07c18fb435dcc584cbf57d1fee7cf513e6d414459",
+      "bytes": 13589
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/browser/failure-r1.png",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/browser/failure-r1.png",
+      "sha256": "b5249c000f581fa045c19f08968a08145cdd6c7f7cb7a602997b90938deb9d4f",
+      "bytes": 914817
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/browser/failure-r2.json",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/browser/failure-r2.json",
+      "sha256": "76b2489ee59beb62a307ee5161924e80ec7731e77c9ccd2afa4b758173ec83fd",
+      "bytes": 18855
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/browser/failure-r3.json",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/browser/failure-r3.json",
+      "sha256": "76b2489ee59beb62a307ee5161924e80ec7731e77c9ccd2afa4b758173ec83fd",
+      "bytes": 18855
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/browser/failure-r4.json",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/browser/failure-r4.json",
+      "sha256": "53282b50b9ac3ef8737246a8c366dedffffbacb92961201697e65daba2c7d904",
+      "bytes": 17622
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/browser/failure-r5.json",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/browser/failure-r5.json",
+      "sha256": "3ae8b3622a4bb91f548c4eb205b306f0f4224b61c2754aa1dc6c102d980c9df9",
+      "bytes": 16012
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/browser/failure.json",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/browser/failure.json",
+      "sha256": "3ae8b3622a4bb91f548c4eb205b306f0f4224b61c2754aa1dc6c102d980c9df9",
+      "bytes": 16012
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/build-final.log",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/build-final.log",
+      "sha256": "940287e7ba8946dcadb3d07ba361edb9fcebdec5677c0157b2e7ebfbadd09196",
+      "bytes": 146
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/build-initial.log",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/build-initial.log",
+      "sha256": "64a6bbe0a82c0c65d59ef1c1d7260aa78a6daa64f60a4ab826d0e7808d3b1eaf",
+      "bytes": 867
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/build-r1.log",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/build-r1.log",
+      "sha256": "940287e7ba8946dcadb3d07ba361edb9fcebdec5677c0157b2e7ebfbadd09196",
+      "bytes": 146
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/build-r10.log",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/build-r10.log",
+      "sha256": "b323436dc5f34d50bbe50fb329acebfd0ddd5322bbdc53ff8c524e9133253bd8",
+      "bytes": 354
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/build-r2.log",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/build-r2.log",
+      "sha256": "940287e7ba8946dcadb3d07ba361edb9fcebdec5677c0157b2e7ebfbadd09196",
+      "bytes": 146
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/build-r3.log",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/build-r3.log",
+      "sha256": "940287e7ba8946dcadb3d07ba361edb9fcebdec5677c0157b2e7ebfbadd09196",
+      "bytes": 146
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/build-r4.log",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/build-r4.log",
+      "sha256": "940287e7ba8946dcadb3d07ba361edb9fcebdec5677c0157b2e7ebfbadd09196",
+      "bytes": 146
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/build-r5.log",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/build-r5.log",
+      "sha256": "b323436dc5f34d50bbe50fb329acebfd0ddd5322bbdc53ff8c524e9133253bd8",
+      "bytes": 354
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/build-r6.log",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/build-r6.log",
+      "sha256": "b323436dc5f34d50bbe50fb329acebfd0ddd5322bbdc53ff8c524e9133253bd8",
+      "bytes": 354
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/build-r7.log",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/build-r7.log",
+      "sha256": "b323436dc5f34d50bbe50fb329acebfd0ddd5322bbdc53ff8c524e9133253bd8",
+      "bytes": 354
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/build-r8.log",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/build-r8.log",
+      "sha256": "940287e7ba8946dcadb3d07ba361edb9fcebdec5677c0157b2e7ebfbadd09196",
+      "bytes": 146
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/build-r9.log",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/build-r9.log",
+      "sha256": "b323436dc5f34d50bbe50fb329acebfd0ddd5322bbdc53ff8c524e9133253bd8",
+      "bytes": 354
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/compatibility-tests-r1.log",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/compatibility-tests-r1.log",
+      "sha256": "7979db243770c58315d4d49ceb0a3866511e8d390f72faff30b7736c160bfbb9",
+      "bytes": 15602
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/compatibility-tests-r2.log",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/compatibility-tests-r2.log",
+      "sha256": "80f54e3ed99e909983c390ade616afa52ab0e721627d3655abf6b2cea6eac9a4",
+      "bytes": 13754
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/default-migration-initial-tests.log",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/default-migration-initial-tests.log",
+      "sha256": "ede6f5aae1e96c0d2b1cd0efe06c314a4043f421d8ea3d4a0f7b2445237187c9",
+      "bytes": 34143
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/environment.log",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/environment.log",
+      "sha256": "7fc5ebad34c59936ead7e7c37e747eb2a0e7fdba86d6e4dcb4963e612ce0a4e5",
+      "bytes": 92
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/evidence-image-inventory.json",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/evidence-image-inventory.json",
+      "sha256": "b899968149bdc9adc35b4b478cbb40f0ab8cb91368aea223cb9f3155239db745",
+      "bytes": 3088
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/formal-tests-all-assertions.log",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/formal-tests-all-assertions.log",
+      "sha256": "1f95012d8857ee479ebe534856a86904de08d00e8057afd834b6704086928988",
+      "bytes": 35732
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/formal-tests-final-tap.log",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/formal-tests-final-tap.log",
+      "sha256": "a8b045104ba8795f7df14909c2422d220cd3219fa293d59c4ba77bd9af29a899",
+      "bytes": 2155
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/formal-tests-final.log",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/formal-tests-final.log",
+      "sha256": "542661cc031f6e5ce364ad5b7e0c54c25e2702f93e8a9f9a2cf123869b97c49e",
+      "bytes": 921
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/formal-tests-r1.log",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/formal-tests-r1.log",
+      "sha256": "81f24e7159802da7ee0553c71cd63269c9ce25405ae0478136aa648b0f226228",
+      "bytes": 14927
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/formal-tests-r2.log",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/formal-tests-r2.log",
+      "sha256": "dbf263c3f710a4283e9ad5b5c08a7a9b6f8c65c53d5996401da9492957fcdad5",
+      "bytes": 15130
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/frozen-integration-all-tests.log",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/frozen-integration-all-tests.log",
+      "sha256": "86724c9a2105582f5f5c7f2510ec5a77c054dc4942a580b926685e974ca692ea",
+      "bytes": 14231
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/h8-remote-status.json",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/h8-remote-status.json",
+      "sha256": "6280132db93f784f885329f115202887986cbf5e9f5c5420be8620b8c504e556",
+      "bytes": 1885
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/performance.json",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/performance.json",
+      "sha256": "3c3fa73ccd943ce9e6cfaf1e9457cce6dbbf34058c6bd81239e41d5d2e8eece7",
+      "bytes": 1722
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/performance.log",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/performance.log",
+      "sha256": "5419647da73490b31bea3427585c0e5ef9c852aae177cc376bfda5ef723f416b",
+      "bytes": 1351
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/prototype-port-tests.log",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/prototype-port-tests.log",
+      "sha256": "944225a4ac0570d0f79576c68eaebcfe6875e81243f089d0fda7c727efaf5ed1",
+      "bytes": 13753
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/records-before-capture.log",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/records-before-capture.log",
+      "sha256": "a7dbb90c6e894478bd08b1806019cfed1e2d30e7c7bf59ef79ba2366ca6f2e02",
+      "bytes": 100
+    },
+    {
+      "source_path": "docs/releases/v0.6.0/results/source-audit.json",
+      "archive_path": "snapshot/docs/releases/v0.6.0/results/source-audit.json",
+      "sha256": "25edf8ce2684b2479c1a05a77245664fce103862ab709d6856f75a5290c9d03c",
+      "bytes": 4190
+    },
+    {
+      "source_path": "docs/settings-guide.html",
+      "archive_path": "snapshot/docs/settings-guide.html",
+      "sha256": "de3cd657a23b5750dc130827b579646a69b8898319b1618fc48580a109507fb5",
+      "bytes": 70644
+    },
+    {
+      "source_path": "package-lock.json",
+      "archive_path": "snapshot/package-lock.json",
+      "sha256": "37f975be39c9717aff34019d8a027d74dd121b436a5d2a5031c9f4fdfa7ecc6a",
+      "bytes": 15394
+    },
+    {
+      "source_path": "package.json",
+      "archive_path": "snapshot/package.json",
+      "sha256": "046f0ad398ead387297076ae08cc72de5f5be58ebeef1f57b1a569851126d1c7",
+      "bytes": 415
+    },
+    {
+      "source_path": "tests/fixtures/deflect-v2-native-summary.json",
+      "archive_path": "snapshot/tests/fixtures/deflect-v2-native-summary.json",
+      "sha256": "2f5e6a204f7f13cacab21420b876acbb21e88215a708ba0dd24d3b73ff790a63",
+      "bytes": 61748
+    },
+    {
+      "source_path": "tests/habitability.test.js",
+      "archive_path": "snapshot/tests/habitability.test.js",
+      "sha256": "aadef180b893c4862dd1bfe1b4926e088815af0dfd637e4c0a582aeedc36aded",
+      "bytes": 6742
+    },
+    {
+      "source_path": "tests/native-v2-conformance.test.js",
+      "archive_path": "snapshot/tests/native-v2-conformance.test.js",
+      "sha256": "82c6b0564afd25bc47b1358c6270ffb40faa66133042b9e45c13c8aa413a10ba",
+      "bytes": 2351
+    },
+    {
+      "source_path": "tests/production-v2.test.js",
+      "archive_path": "snapshot/tests/production-v2.test.js",
+      "sha256": "c28a6273e5bd8651a5393727f6595c34419a295ec866ffbf7ff6326a7874b109",
+      "bytes": 6523
+    },
+    {
+      "source_path": "tests/simulation.test.js",
+      "archive_path": "snapshot/tests/simulation.test.js",
+      "sha256": "83b26a1681784134524c4e900285fbb3323acd8d49bb1aacb69a66ff7d6fd0b0",
+      "bytes": 9003
+    },
+    {
+      "source_path": "tests/support/legacy-v055.js",
+      "archive_path": "snapshot/tests/support/legacy-v055.js",
+      "sha256": "cbcbc50a4f7bb9707c387b6a6accd773d15acbfa845821c22506010bd74af02f",
+      "bytes": 859
+    },
+    {
+      "source_path": "tests/v03-adjustments.test.js",
+      "archive_path": "snapshot/tests/v03-adjustments.test.js",
+      "sha256": "5d0c7ea576ee699233e62fbb5b018e3c8685a813b425471a32d0111936d3e90c",
+      "bytes": 4381
+    },
+    {
+      "source_path": "tests/v04.test.js",
+      "archive_path": "snapshot/tests/v04.test.js",
+      "sha256": "7272a2e5fb338b92888fc8b74d14209b53b069c06213930bb1e2044461d35aad",
+      "bytes": 4778
+    },
+    {
+      "source_path": "tests/v041-hotfix.test.js",
+      "archive_path": "snapshot/tests/v041-hotfix.test.js",
+      "sha256": "b6ba65a12efeaa2d02f9608b1837dcb1dea2e84bfa5fe49c606aacf6a1cb92b1",
+      "bytes": 2857
+    },
+    {
+      "source_path": "tests/v041.test.js",
+      "archive_path": "snapshot/tests/v041.test.js",
+      "sha256": "e1fe12be6a433b493a2e12e8b397f883df251e0588ab98bce09d037a00c07b21",
+      "bytes": 6129
+    },
+    {
+      "source_path": "tests/v042.test.js",
+      "archive_path": "snapshot/tests/v042.test.js",
+      "sha256": "35542697d69bf6567f80aeb812a078308ddb2f9d22096d62380cbce136b4f9f7",
+      "bytes": 2953
+    },
+    {
+      "source_path": "tests/v05.test.js",
+      "archive_path": "snapshot/tests/v05.test.js",
+      "sha256": "2eb49b8c64fbee732856df91b254b8245455bcfbaf47b996224f618086baac3d",
+      "bytes": 6822
+    },
+    {
+      "source_path": "tests/v051.test.js",
+      "archive_path": "snapshot/tests/v051.test.js",
+      "sha256": "066a64514e26203e25b5d91790beb77fe79cd189153cbf2f0f75ccffbc0b1d3d",
+      "bytes": 2939
+    },
+    {
+      "source_path": "tests/v052-physics.test.js",
+      "archive_path": "snapshot/tests/v052-physics.test.js",
+      "sha256": "3cb7ed8fb0b4b342e38cc8cec17ee71419816e94e68acd1abaec790a01c3ff29",
+      "bytes": 8175
+    },
+    {
+      "source_path": "tests/v053.test.js",
+      "archive_path": "snapshot/tests/v053.test.js",
+      "sha256": "083eb3e24b6fe52b1b5471c6ac3d386a0d4b23ae580800c8c02544a95a2d4867",
+      "bytes": 3479
+    },
+    {
+      "source_path": "tests/v054.test.js",
+      "archive_path": "snapshot/tests/v054.test.js",
+      "sha256": "26baaa0db455e5bf3c2520efb0fa3c43d3a8df4fd04d4014d2d1c7983b078444",
+      "bytes": 4698
+    },
+    {
+      "source_path": "tests/v055.test.js",
+      "archive_path": "snapshot/tests/v055.test.js",
+      "sha256": "02e528b71259e17ee3bcf38a330a9212d4a85b2d84d074101a496ac098d77a8b",
+      "bytes": 4974
+    },
+    {
+      "source_path": "tests/v2-checkpoint.test.js",
+      "archive_path": "snapshot/tests/v2-checkpoint.test.js",
+      "sha256": "7111aa7ace2449adb20c032d393cb51df5f298d5ba4305d57a8feb0ce79918cf",
+      "bytes": 1818
+    },
+    {
+      "source_path": "tests/v2-integration.test.js",
+      "archive_path": "snapshot/tests/v2-integration.test.js",
+      "sha256": "3077b1e25bd95a5a9953aa943e4a40d191069dc89662e9b3cabb9febdaa8aed6",
+      "bytes": 6055
+    },
+    {
+      "source_path": "tools/build.mjs",
+      "archive_path": "snapshot/tools/build.mjs",
+      "sha256": "85e11725f7c9afe02a07ad52529c679843ebdaa198661e4c13c9b25b6bc126d1",
+      "bytes": 3642
+    },
+    {
+      "source_path": "tools/generate-settings-guide.mjs",
+      "archive_path": "snapshot/tools/generate-settings-guide.mjs",
+      "sha256": "36c82a5c54c7a210745760c90d753c07e9d8da6a317472aa0f7ae64a53e3ca9a",
+      "bytes": 40723
+    },
+    {
+      "source_path": "tools/orbital-audit.mjs",
+      "archive_path": "snapshot/tools/orbital-audit.mjs",
+      "sha256": "19f447ad5ab7f08519a5cff73ea06b2560d4e83bae6be965b0e0733b49efcae8",
+      "bytes": 2688
+    },
+    {
+      "source_path": "tools/release-v2/browser-check.mjs",
+      "archive_path": "snapshot/tools/release-v2/browser-check.mjs",
+      "sha256": "3bfd958c246c114350d7c41d19c9ae1c5dddf2705f7c1d94186fe491f01b9e44",
+      "bytes": 11690
+    },
+    {
+      "source_path": "tools/release-v2/performance.mjs",
+      "archive_path": "snapshot/tools/release-v2/performance.mjs",
+      "sha256": "d816ff4d559e687d89833d27280c255b354aba695e0074f34aa5f776d2759bb2",
+      "bytes": 1708
+    },
+    {
+      "source_path": "tools/v042-orbital-audit.mjs",
+      "archive_path": "snapshot/tools/v042-orbital-audit.mjs",
+      "sha256": "deecc7002ed400c74a4f3a6271cc5d6a57450365ef4cbb83a024ebd2ca9e0d19",
+      "bytes": 4064
+    },
+    {
+      "source_path": "tools/v052/benchmark-engine.mjs",
+      "archive_path": "snapshot/tools/v052/benchmark-engine.mjs",
+      "sha256": "33d7f38e0fccc28a99510a03123187cf34b8e81047563d436d35678a27e785b8",
+      "bytes": 9372
+    },
+    {
+      "source_path": null,
+      "archive_path": "changes.patch",
+      "sha256": "d9f10250836d8a32c93c426825a089d91ecedf578384ddbb79e63a244eb15dc5",
+      "bytes": 251168
+    }
+  ]
+}

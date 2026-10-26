@@ -1,0 +1,100 @@
+# v0.6.0 — V2转向控制正式集成与P5兼容
+
+基于完整v0.5.5选择性移植冻结deflect-v2 h4、P5、Worker与设置；保留旧物理回退及视觉，150项自动化和13组Chromium流程通过，生产构建及短窗性能检查通过。原研究数据不进入正式树，h8仅13/256端点未完成，真实WE宿主未验证。原main已推送回滚标签，依本次明确授权准备合并。
+
+原始提交：[e19f30d](https://github.com/BillOu0104/2/commit/e19f30d78c0bb0ab57f9932963e08261232d99b7)；提交时间：2026-10-26T15:33:11Z。
+
+这是历史文件归档，本次未重跑该版本。原始测试的环境、条件与限制以当时报告为准；没有Windows Wallpaper Engine实机证据的版本不声称已完成该宿主验收。
+
+[源码修改差异](changes.patch) · [来源及SHA256清单](record.json) · [总目录](../../README.md)
+
+## 修改、分析和说明
+
+- [README.md](snapshot/README.md)
+- [docs/SETTINGS-GUIDE-v0.5.md](snapshot/docs/SETTINGS-GUIDE-v0.5.md)
+- [docs/releases/v0.6.0/INTEGRATION.md](snapshot/docs/releases/v0.6.0/INTEGRATION.md)
+- [docs/releases/v0.6.0/SOURCE_REVIEW.md](snapshot/docs/releases/v0.6.0/SOURCE_REVIEW.md)
+- [docs/releases/v0.6.0/TEST_RESULTS.md](snapshot/docs/releases/v0.6.0/TEST_RESULTS.md)
+- [docs/settings-guide.html](snapshot/docs/settings-guide.html)
+## 测试结果、截图与实验数据
+
+- [docs/releases/v0.6.0/results/browser-final.log](snapshot/docs/releases/v0.6.0/results/browser-final.log)
+- [docs/releases/v0.6.0/results/browser-final/browser.json](snapshot/docs/releases/v0.6.0/results/browser-final/browser.json)
+- [docs/releases/v0.6.0/results/browser-final/desktop.png](snapshot/docs/releases/v0.6.0/results/browser-final/desktop.png)
+- [docs/releases/v0.6.0/results/browser-final/planet-absent.png](snapshot/docs/releases/v0.6.0/results/browser-final/planet-absent.png)
+- [docs/releases/v0.6.0/results/browser-final/planet-returned.png](snapshot/docs/releases/v0.6.0/results/browser-final/planet-returned.png)
+- [docs/releases/v0.6.0/results/browser-r1.log](snapshot/docs/releases/v0.6.0/results/browser-r1.log)
+- [docs/releases/v0.6.0/results/browser-r2.log](snapshot/docs/releases/v0.6.0/results/browser-r2.log)
+- [docs/releases/v0.6.0/results/browser-r3.log](snapshot/docs/releases/v0.6.0/results/browser-r3.log)
+- [docs/releases/v0.6.0/results/browser-r4.log](snapshot/docs/releases/v0.6.0/results/browser-r4.log)
+- [docs/releases/v0.6.0/results/browser-r5.log](snapshot/docs/releases/v0.6.0/results/browser-r5.log)
+- [docs/releases/v0.6.0/results/browser-r6.log](snapshot/docs/releases/v0.6.0/results/browser-r6.log)
+- [docs/releases/v0.6.0/results/browser/browser.json](snapshot/docs/releases/v0.6.0/results/browser/browser.json)
+- [docs/releases/v0.6.0/results/browser/failure-r1.json](snapshot/docs/releases/v0.6.0/results/browser/failure-r1.json)
+- [docs/releases/v0.6.0/results/browser/failure-r1.png](snapshot/docs/releases/v0.6.0/results/browser/failure-r1.png)
+- [docs/releases/v0.6.0/results/browser/failure-r2.json](snapshot/docs/releases/v0.6.0/results/browser/failure-r2.json)
+- [docs/releases/v0.6.0/results/browser/failure-r3.json](snapshot/docs/releases/v0.6.0/results/browser/failure-r3.json)
+- [docs/releases/v0.6.0/results/browser/failure-r4.json](snapshot/docs/releases/v0.6.0/results/browser/failure-r4.json)
+- [docs/releases/v0.6.0/results/browser/failure-r5.json](snapshot/docs/releases/v0.6.0/results/browser/failure-r5.json)
+- [docs/releases/v0.6.0/results/browser/failure.json](snapshot/docs/releases/v0.6.0/results/browser/failure.json)
+- [docs/releases/v0.6.0/results/build-final.log](snapshot/docs/releases/v0.6.0/results/build-final.log)
+- [docs/releases/v0.6.0/results/build-initial.log](snapshot/docs/releases/v0.6.0/results/build-initial.log)
+- [docs/releases/v0.6.0/results/build-r1.log](snapshot/docs/releases/v0.6.0/results/build-r1.log)
+- [docs/releases/v0.6.0/results/build-r10.log](snapshot/docs/releases/v0.6.0/results/build-r10.log)
+- [docs/releases/v0.6.0/results/build-r2.log](snapshot/docs/releases/v0.6.0/results/build-r2.log)
+- [docs/releases/v0.6.0/results/build-r3.log](snapshot/docs/releases/v0.6.0/results/build-r3.log)
+- [docs/releases/v0.6.0/results/build-r4.log](snapshot/docs/releases/v0.6.0/results/build-r4.log)
+- [docs/releases/v0.6.0/results/build-r5.log](snapshot/docs/releases/v0.6.0/results/build-r5.log)
+- [docs/releases/v0.6.0/results/build-r6.log](snapshot/docs/releases/v0.6.0/results/build-r6.log)
+- [docs/releases/v0.6.0/results/build-r7.log](snapshot/docs/releases/v0.6.0/results/build-r7.log)
+- [docs/releases/v0.6.0/results/build-r8.log](snapshot/docs/releases/v0.6.0/results/build-r8.log)
+- [docs/releases/v0.6.0/results/build-r9.log](snapshot/docs/releases/v0.6.0/results/build-r9.log)
+- [docs/releases/v0.6.0/results/compatibility-tests-r1.log](snapshot/docs/releases/v0.6.0/results/compatibility-tests-r1.log)
+- [docs/releases/v0.6.0/results/compatibility-tests-r2.log](snapshot/docs/releases/v0.6.0/results/compatibility-tests-r2.log)
+- [docs/releases/v0.6.0/results/default-migration-initial-tests.log](snapshot/docs/releases/v0.6.0/results/default-migration-initial-tests.log)
+- [docs/releases/v0.6.0/results/environment.log](snapshot/docs/releases/v0.6.0/results/environment.log)
+- [docs/releases/v0.6.0/results/evidence-image-inventory.json](snapshot/docs/releases/v0.6.0/results/evidence-image-inventory.json)
+- [docs/releases/v0.6.0/results/formal-tests-all-assertions.log](snapshot/docs/releases/v0.6.0/results/formal-tests-all-assertions.log)
+- [docs/releases/v0.6.0/results/formal-tests-final-tap.log](snapshot/docs/releases/v0.6.0/results/formal-tests-final-tap.log)
+- [docs/releases/v0.6.0/results/formal-tests-final.log](snapshot/docs/releases/v0.6.0/results/formal-tests-final.log)
+- [docs/releases/v0.6.0/results/formal-tests-r1.log](snapshot/docs/releases/v0.6.0/results/formal-tests-r1.log)
+- [docs/releases/v0.6.0/results/formal-tests-r2.log](snapshot/docs/releases/v0.6.0/results/formal-tests-r2.log)
+- [docs/releases/v0.6.0/results/frozen-integration-all-tests.log](snapshot/docs/releases/v0.6.0/results/frozen-integration-all-tests.log)
+- [docs/releases/v0.6.0/results/h8-remote-status.json](snapshot/docs/releases/v0.6.0/results/h8-remote-status.json)
+- [docs/releases/v0.6.0/results/performance.json](snapshot/docs/releases/v0.6.0/results/performance.json)
+- [docs/releases/v0.6.0/results/performance.log](snapshot/docs/releases/v0.6.0/results/performance.log)
+- [docs/releases/v0.6.0/results/prototype-port-tests.log](snapshot/docs/releases/v0.6.0/results/prototype-port-tests.log)
+- [docs/releases/v0.6.0/results/records-before-capture.log](snapshot/docs/releases/v0.6.0/results/records-before-capture.log)
+- [docs/releases/v0.6.0/results/source-audit.json](snapshot/docs/releases/v0.6.0/results/source-audit.json)
+## 测试与实验脚本
+
+- [tests/fixtures/deflect-v2-native-summary.json](snapshot/tests/fixtures/deflect-v2-native-summary.json)
+- [tests/habitability.test.js](snapshot/tests/habitability.test.js)
+- [tests/native-v2-conformance.test.js](snapshot/tests/native-v2-conformance.test.js)
+- [tests/production-v2.test.js](snapshot/tests/production-v2.test.js)
+- [tests/simulation.test.js](snapshot/tests/simulation.test.js)
+- [tests/support/legacy-v055.js](snapshot/tests/support/legacy-v055.js)
+- [tests/v03-adjustments.test.js](snapshot/tests/v03-adjustments.test.js)
+- [tests/v04.test.js](snapshot/tests/v04.test.js)
+- [tests/v041-hotfix.test.js](snapshot/tests/v041-hotfix.test.js)
+- [tests/v041.test.js](snapshot/tests/v041.test.js)
+- [tests/v042.test.js](snapshot/tests/v042.test.js)
+- [tests/v05.test.js](snapshot/tests/v05.test.js)
+- [tests/v051.test.js](snapshot/tests/v051.test.js)
+- [tests/v052-physics.test.js](snapshot/tests/v052-physics.test.js)
+- [tests/v053.test.js](snapshot/tests/v053.test.js)
+- [tests/v054.test.js](snapshot/tests/v054.test.js)
+- [tests/v055.test.js](snapshot/tests/v055.test.js)
+- [tests/v2-checkpoint.test.js](snapshot/tests/v2-checkpoint.test.js)
+- [tests/v2-integration.test.js](snapshot/tests/v2-integration.test.js)
+- [tools/build.mjs](snapshot/tools/build.mjs)
+- [tools/generate-settings-guide.mjs](snapshot/tools/generate-settings-guide.mjs)
+- [tools/orbital-audit.mjs](snapshot/tools/orbital-audit.mjs)
+- [tools/release-v2/browser-check.mjs](snapshot/tools/release-v2/browser-check.mjs)
+- [tools/release-v2/performance.mjs](snapshot/tools/release-v2/performance.mjs)
+- [tools/v042-orbital-audit.mjs](snapshot/tools/v042-orbital-audit.mjs)
+- [tools/v052/benchmark-engine.mjs](snapshot/tools/v052/benchmark-engine.mjs)
+
+其他原始文件位于snapshot，完整清单见record.json。
+
+仅归档相对 [8a8eb34](https://github.com/BillOu0104/2/commit/8a8eb34224ce1a9cc0576a1615c642d90d76a146) 新增或修改的证据；未变的历史文件沿前一版本查阅，不代表每份继承报告均在本次重跑。
