@@ -1,0 +1,922 @@
+TAP version 13
+# Subtest: only -20 through 40 C supports activity, independently of era
+ok 1 - only -20 through 40 C supports activity, independently of era
+  ---
+  duration_ms: 7.33979
+  type: 'test'
+  ...
+# Subtest: dehydration preserves the same civilization; safe rehydration resumes it
+ok 2 - dehydration preserves the same civilization; safe rehydration resumes it
+  ---
+  duration_ms: 9.467568
+  type: 'test'
+  ...
+# Subtest: unsafe fluctuating climate interrupts rehydration instead of creating new civilizations
+ok 3 - unsafe fluctuating climate interrupts rehydration instead of creating new civilizations
+  ---
+  duration_ms: 3.066348
+  type: 'test'
+  ...
+# Subtest: dry storage is finite and prolonged extreme heat or cold destroys it once
+ok 4 - dry storage is finite and prolonged extreme heat or cold destroys it once
+  ---
+  duration_ms: 124.763003
+  type: 'test'
+  ...
+# Subtest: destroyed planet permanently blocks local rebirth even with comfortable temperature
+ok 5 - destroyed planet permanently blocks local rebirth even with comfortable temperature
+  ---
+  duration_ms: 9.821592
+  type: 'test'
+  ...
+# Subtest: orbital stable era can be frozen; distant flying stars do not require cold weather
+ok 6 - orbital stable era can be frozen; distant flying stars do not require cold weather
+  ---
+  duration_ms: 7.357602
+  type: 'test'
+  ...
+# Subtest: stationary flying star requires a closing radial velocity, not zero camera motion
+ok 7 - stationary flying star requires a closing radial velocity, not zero camera motion
+  ---
+  duration_ms: 0.808275
+  type: 'test'
+  ...
+# Subtest: alignment requires three stars on the same ray; opposite directions do not count
+ok 8 - alignment requires three stars on the same ray; opposite directions do not count
+  ---
+  duration_ms: 0.324479
+  type: 'test'
+  ...
+# Subtest: differential gravity tensor is rotation invariant and combines all stellar tides
+ok 9 - differential gravity tensor is rotation invariant and combines all stellar tides
+  ---
+  duration_ms: 0.619501
+  type: 'test'
+  ...
+# Subtest: stellar contact is irreversible, and thermal inertia softens instantaneous radiative spikes
+ok 10 - stellar contact is irreversible, and thermal inertia softens instantaneous radiative spikes
+  ---
+  duration_ms: 0.503274
+  type: 'test'
+  ...
+# Subtest: climate damage depends on elapsed time instead of sampling frequency
+ok 11 - climate damage depends on elapsed time instead of sampling frequency
+  ---
+  duration_ms: 0.429626
+  type: 'test'
+  ...
+# Subtest: tail visibility and color never reset physical trajectories
+ok 12 - tail visibility and color never reset physical trajectories
+  ---
+  duration_ms: 99.717882
+  type: 'test'
+  ...
+# Subtest: previous settings migrate the requested slow rotation, activity bounds and clarity
+ok 13 - previous settings migrate the requested slow rotation, activity bounds and clarity
+  ---
+  duration_ms: 0.639198
+  type: 'test'
+  ...
+# Subtest: frozen native h4 deflect-v2: natural, 20 years
+ok 14 - frozen native h4 deflect-v2: natural, 20 years
+  ---
+  duration_ms: 434.156906
+  type: 'test'
+  ...
+# Subtest: frozen native h4 deflect-v2: deflection, 20 years
+ok 15 - frozen native h4 deflect-v2: deflection, 20 years
+  ---
+  duration_ms: 572.32658
+  type: 'test'
+  ...
+# Subtest: frozen native h4 deflect-v2: reflection, 20 years
+ok 16 - frozen native h4 deflect-v2: reflection, 20 years
+  ---
+  duration_ms: 1105.256122
+  type: 'test'
+  ...
+# Subtest: frozen native h4 deflect-v2: planet-contact, 20 years
+ok 17 - frozen native h4 deflect-v2: planet-contact, 20 years
+  ---
+  duration_ms: 369.456212
+  type: 'test'
+  ...
+# Subtest: frozen native h4 deflect-v2: capture, 20 years
+ok 18 - frozen native h4 deflect-v2: capture, 20 years
+  ---
+  duration_ms: 371.730629
+  type: 'test'
+  ...
+# Subtest: production defaults enable deflect-v2 at the frozen h4 precision
+ok 19 - production defaults enable deflect-v2 at the frozen h4 precision
+  ---
+  duration_ms: 1.328741
+  type: 'test'
+  ...
+# Subtest: old saved UI preferences survive default upgrade and the old physics profile can be restored
+ok 20 - old saved UI preferences survive default upgrade and the old physics profile can be restored
+  ---
+  duration_ms: 0.841598
+  type: 'test'
+  ...
+# Subtest: old Seed archives explicitly use old physics and reflection research archives are not silently reinterpreted
+ok 21 - old Seed archives explicitly use old physics and reflection research archives are not silently reinterpreted
+  ---
+  duration_ms: 0.60287
+  type: 'test'
+  ...
+# Subtest: protection and playback toggles preserve the universe; explicit physics/mode changes close the old run
+ok 22 - protection and playback toggles preserve the universe; explicit physics/mode changes close the old run
+  ---
+  duration_ms: 3.71305
+  type: 'test'
+  ...
+# Subtest: P5 vector impulse records a direction change that the historical magnitude-only metric misses
+ok 23 - P5 vector impulse records a direction change that the historical magnitude-only metric misses
+  ---
+  duration_ms: 0.397977
+  type: 'test'
+  ...
+# Subtest: a planet death occurring on a terminal stellar frame is archived exactly once
+ok 24 - a planet death occurring on a terminal stellar frame is archived exactly once
+  ---
+  duration_ms: 2.860401
+  type: 'test'
+  ...
+# Subtest: planet absence publishes no living planet, no stable era and a meaningful central status
+ok 25 - planet absence publishes no living planet, no stable era and a meaningful central status
+  ---
+  duration_ms: 2.99818
+  type: 'test'
+  ...
+# Subtest: playback schedules complete ticks and retains unprocessed credited time
+ok 26 - playback schedules complete ticks and retains unprocessed credited time
+  ---
+  duration_ms: 0.324778
+  type: 'test'
+  ...
+# Subtest: older checkpoints do not pretend their unmeasured P5 vector budget is complete
+ok 27 - older checkpoints do not pretend their unmeasured P5 vector budget is complete
+  ---
+  duration_ms: 4.514873
+  type: 'test'
+  ...
+# Subtest: P5 rejects a zero regeneration mass instead of reporting a nonexistent successful respawn
+ok 28 - P5 rejects a zero regeneration mass instead of reporting a nonexistent successful respawn
+  ---
+  duration_ms: 0.296095
+  type: 'test'
+  ...
+# Subtest: pending mode changes are marked until a complete accepted frame is available
+ok 29 - pending mode changes are marked until a complete accepted frame is available
+  ---
+  duration_ms: 4.326269
+  type: 'test'
+  ...
+# Subtest: ported trajectories match independently executed original SceneScript reference
+ok 30 - ported trajectories match independently executed original SceneScript reference
+  ---
+  duration_ms: 23.100209
+  type: 'test'
+  ...
+# Subtest: 183 original controls retain definitions, with the requested trails enabled by default
+ok 31 - 183 original controls retain definitions, with the requested trails enabled by default
+  ---
+  duration_ms: 1.007568
+  type: 'test'
+  ...
+# Subtest: same Seed and configuration produce identical trajectories, civilizations and events
+ok 32 - same Seed and configuration produce identical trajectories, civilizations and events
+  ---
+  duration_ms: 729.175277
+  type: 'test'
+  ...
+# Subtest: manual initial conditions override random Seed
+ok 33 - manual initial conditions override random Seed
+  ---
+  duration_ms: 17.17349
+  type: 'test'
+  ...
+# Subtest: exported actual initial conditions replay the same random orbit across generations
+ok 34 - exported actual initial conditions replay the same random orbit across generations
+  ---
+  duration_ms: 22.219248
+  type: 'test'
+  ...
+# Subtest: pairwise force conserves linear momentum when the cage is off
+ok 35 - pairwise force conserves linear momentum when the cage is off
+  ---
+  duration_ms: 284.093152
+  type: 'test'
+  ...
+# Subtest: Yoshida integration is time reversible in a smooth far-field trajectory
+ok 36 - Yoshida integration is time reversible in a smooth far-field trajectory
+  ---
+  duration_ms: 2.622565
+  type: 'test'
+  ...
+# Subtest: step-size changes recreate the integrator with the requested step
+ok 37 - step-size changes recreate the integrator with the requested step
+  ---
+  duration_ms: 1.582346
+  type: 'test'
+  ...
+# Subtest: all six measured distances are available independently of UI visibility
+ok 38 - all six measured distances are available independently of UI visibility
+  ---
+  duration_ms: 20.303948
+  type: 'test'
+  ...
+# Subtest: temperature matches radiative equilibrium including snow feedback and oscillation
+ok 39 - temperature matches radiative equilibrium including snow feedback and oscillation
+  ---
+  duration_ms: 0.42168
+  type: 'test'
+  ...
+# Subtest: legacy mode preserves original birth, thermal death and Roche priority
+ok 40 - legacy mode preserves original birth, thermal death and Roche priority
+  ---
+  duration_ms: 2.858258
+  type: 'test'
+  ...
+# Subtest: manual restart records one death and does not secretly reinitialize 120 ticks later
+ok 41 - manual restart records one death and does not secretly reinitialize 120 ticks later
+  ---
+  duration_ms: 21.675208
+  type: 'test'
+  ...
+# Subtest: zero masses and unsoftened noncoincident initial bodies remain finite
+ok 42 - zero masses and unsoftened noncoincident initial bodies remain finite
+  ---
+  duration_ms: 41.735169
+  type: 'test'
+  ...
+# Subtest: long reference run remains finite and has bounded in-memory event buffers
+ok 43 - long reference run remains finite and has bounded in-memory event buffers
+  ---
+  duration_ms: 1515.404865
+  type: 'test'
+  ...
+# Subtest: settings clamp malformed numeric values and reject invalid combo/color data
+ok 44 - settings clamp malformed numeric values and reject invalid combo/color data
+  ---
+  duration_ms: 0.256341
+  type: 'test'
+  ...
+# Subtest: planetary loss has one archive entry, no rebirth and a complete four-body snapshot through restart
+ok 45 - planetary loss has one archive entry, no rebirth and a complete four-body snapshot through restart
+  ---
+  duration_ms: 29.575146
+  type: 'test'
+  ...
+# Subtest: automatic planetary restart publishes a complete new generation on the next tick
+ok 46 - automatic planetary restart publishes a complete new generation on the next tick
+  ---
+  duration_ms: 39.701146
+  type: 'test'
+  ...
+# Subtest: 22.6 C immediately reports fully suitable climate after a cold or hot interval
+ok 47 - 22.6 C immediately reports fully suitable climate after a cold or hot interval
+  ---
+  duration_ms: 0.270938
+  type: 'test'
+  ...
+# Subtest: warm damaged planets block production without treating an old scar as continual population loss
+ok 48 - warm damaged planets block production without treating an old scar as continual population loss
+  ---
+  duration_ms: 0.210786
+  type: 'test'
+  ...
+# Subtest: tidal danger reduces suitability and blocks growth before structural failure
+ok 49 - tidal danger reduces suitability and blocks growth before structural failure
+  ---
+  duration_ms: 0.109546
+  type: 'test'
+  ...
+# Subtest: labels default off; existing v0.3 preferences migrate once, optional opt-in persists
+ok 50 - labels default off; existing v0.3 preferences migrate once, optional opt-in persists
+  ---
+  duration_ms: 0.302788
+  type: 'test'
+  ...
+# Subtest: recoverable damage no longer requests an automatic universe restart
+ok 51 - recoverable damage no longer requests an automatic universe restart
+  ---
+  duration_ms: 10.197284
+  type: 'test'
+  ...
+# Subtest: terminal planetary loss still advances to the next universe
+ok 52 - terminal planetary loss still advances to the next universe
+  ---
+  duration_ms: 19.933463
+  type: 'test'
+  ...
+# Subtest: slow and fast simple trajectories have comparable visible lengths but different history spans
+ok 53 - slow and fast simple trajectories have comparable visible lengths but different history spans
+  ---
+  duration_ms: 7.179087
+  type: 'test'
+  ...
+# Subtest: rapid turns and revisits raise complexity, plain translation does not
+ok 54 - rapid turns and revisits raise complexity, plain translation does not
+  ---
+  duration_ms: 1.996412
+  type: 'test'
+  ...
+# Subtest: complex motion shortens trails and can later restore long history without clearing samples
+ok 55 - complex motion shortens trails and can later restore long history without clearing samples
+  ---
+  duration_ms: 15.249133
+  type: 'test'
+  ...
+# Subtest: history, GPU budget and discontinuities stay bounded during long or paused runs
+ok 56 - history, GPU budget and discontinuities stay bounded during long or paused runs
+  ---
+  duration_ms: 1.513637
+  type: 'test'
+  ...
+# Subtest: total years survive universe restarts while universe age resets
+ok 57 - total years survive universe restarts while universe age resets
+  ---
+  duration_ms: 47.496227
+  type: 'test'
+  ...
+# Subtest: time factor changes preserve continuity and apply the original squared rate only to new years
+ok 58 - time factor changes preserve continuity and apply the original squared rate only to new years
+  ---
+  duration_ms: 39.586741
+  type: 'test'
+  ...
+# Subtest: both top-five rankings sort descending and include the running entries
+ok 59 - both top-five rankings sort descending and include the running entries
+  ---
+  duration_ms: 0.35694
+  type: 'test'
+  ...
+# Subtest: reload closes the checkpointed run once, preserving totals, best runs and sequential IDs
+ok 60 - reload closes the checkpointed run once, preserving totals, best runs and sequential IDs
+  ---
+  duration_ms: 0.861475
+  type: 'test'
+  ...
+# Subtest: old civilization archives retain numbers, lifetime and distinct session records
+ok 61 - old civilization archives retain numbers, lifetime and distinct session records
+  ---
+  duration_ms: 0.246712
+  type: 'test'
+  ...
+# Subtest: corrupt checkpoint fields do not break simulation startup
+ok 62 - corrupt checkpoint fields do not break simulation startup
+  ---
+  duration_ms: 0.679133
+  type: 'test'
+  ...
+# Subtest: drag accelerates promptly, allows uncapped angular speed and dissipates inertia faster
+ok 63 - drag accelerates promptly, allows uncapped angular speed and dissipates inertia faster
+  ---
+  duration_ms: 0.471003
+  type: 'test'
+  ...
+# Subtest: follow mode retains bounded acceleration without a speed cap, and pause freezes movement
+ok 64 - follow mode retains bounded acceleration without a speed cap, and pause freezes movement
+  ---
+  duration_ms: 0.432921
+  type: 'test'
+  ...
+# Subtest: inertial motion gives equal results at 30 Hz and 120 Hz
+ok 65 - inertial motion gives equal results at 30 Hz and 120 Hz
+  ---
+  duration_ms: 0.158157
+  type: 'test'
+  ...
+# Subtest: event history retains twelve log entries for the expanded central display
+ok 66 - event history retains twelve log entries for the expanded central display
+  ---
+  duration_ms: 0.385372
+  type: 'test'
+  ...
+# Subtest: existing v0.4.1 profiles regain hover follow and slow galaxy return without losing layout
+ok 67 - existing v0.4.1 profiles regain hover follow and slow galaxy return without losing layout
+  ---
+  duration_ms: 0.550411
+  type: 'test'
+  ...
+# Subtest: historical v0.4.1 balanced cage profile permits sustained development and planetary passages inside the star system
+ok 68 - historical v0.4.1 balanced cage profile permits sustained development and planetary passages inside the star system
+  ---
+  duration_ms: 2540.592468
+  type: 'test'
+  ...
+# Subtest: bound random initial conditions replay exactly through the manual initial-condition pathway
+ok 69 - bound random initial conditions replay exactly through the manual initial-condition pathway
+  ---
+  duration_ms: 21.837233
+  type: 'test'
+  ...
+# Subtest: initialization retains zero center-of-mass momentum and the original mode is reproducible
+ok 70 - initialization retains zero center-of-mass momentum and the original mode is reproducible
+  ---
+  duration_ms: 1.431393
+  type: 'test'
+  ...
+# Subtest: nonphysical gravity or zero masses leave the supplied original initialization intact
+ok 71 - nonphysical gravity or zero masses leave the supplied original initialization intact
+  ---
+  duration_ms: 0.332052
+  type: 'test'
+  ...
+# Subtest: moderate damage stays recoverable and improves after the tidal passage ends
+ok 72 - moderate damage stays recoverable and improves after the tidal passage ends
+  ---
+  duration_ms: 14.320523
+  type: 'test'
+  ...
+# Subtest: greater structural strength reduces damage without altering physical tidal force
+ok 73 - greater structural strength reduces damage without altering physical tidal force
+  ---
+  duration_ms: 1.377231
+  type: 'test'
+  ...
+# Subtest: prolonged strong tides still cause irreversible disruption and enable restart
+ok 74 - prolonged strong tides still cause irreversible disruption and enable restart
+  ---
+  duration_ms: 10.249342
+  type: 'test'
+  ...
+# Subtest: an escaped but intact system no longer causes repeated automatic universes
+ok 75 - an escaped but intact system no longer causes repeated automatic universes
+  ---
+  duration_ms: 18.076796
+  type: 'test'
+  ...
+# Subtest: ordinary flying stars, giant suns, era changes and storage transitions do not flood logs
+ok 76 - ordinary flying stars, giant suns, era changes and storage transitions do not flood logs
+  ---
+  duration_ms: 5.065405
+  type: 'test'
+  ...
+# Subtest: rare astronomy is confirmed, logged once per episode, and rate limited
+ok 77 - rare astronomy is confirmed, logged once per episode, and rate limited
+  ---
+  duration_ms: 12.956377
+  type: 'test'
+  ...
+# Subtest: civilization lifecycle and longevity records include universe and civilization IDs
+ok 78 - civilization lifecycle and longevity records include universe and civilization IDs
+  ---
+  duration_ms: 1.189169
+  type: 'test'
+  ...
+# Subtest: ranked civilizations retain their universe through death and reload
+ok 79 - ranked civilizations retain their universe through death and reload
+  ---
+  duration_ms: 0.171521
+  type: 'test'
+  ...
+# Subtest: legacy ranking origin is backfilled only when an archive identifies it
+ok 80 - legacy ranking origin is backfilled only when an archive identifies it
+  ---
+  duration_ms: 0.206928
+  type: 'test'
+  ...
+# Subtest: drag no longer saturates, horizontal gain is lower and follow acceleration is reduced
+ok 81 - drag no longer saturates, horizontal gain is lower and follow acceleration is reduced
+  ---
+  duration_ms: 0.09645
+  type: 'test'
+  ...
+# Subtest: idle return follows the nearest galaxy heading extremely slowly without overshoot
+ok 82 - idle return follows the nearest galaxy heading extremely slowly without overshoot
+  ---
+  duration_ms: 0.152857
+  type: 'test'
+  ...
+# Subtest: window settings clamp coordinates and migrate defaults without losing custom layout
+ok 83 - window settings clamp coordinates and migrate defaults without losing custom layout
+  ---
+  duration_ms: 0.345718
+  type: 'test'
+  ...
+# Subtest: v0.4.2 migrates the regular orbit default to a larger chaotic system and preserves UI preferences
+ok 84 - v0.4.2 migrates the regular orbit default to a larger chaotic system and preserves UI preferences
+  ---
+  duration_ms: 0.59235
+  type: 'test'
+  ...
+# Subtest: chaotic initial positions are irregular in 3D and exactly replayable
+ok 85 - chaotic initial positions are irregular in 3D and exactly replayable
+  ---
+  duration_ms: 21.437324
+  type: 'test'
+  ...
+# Subtest: chaotic trajectories show strong finite-time dependence on a tiny velocity change
+ok 86 - chaotic trajectories show strong finite-time dependence on a tiny velocity change
+  ---
+  duration_ms: 2051.751122
+  type: 'test'
+  ...
+# Subtest: ring fade eases both directions and remains independent of frame rate
+ok 87 - ring fade eases both directions and remains independent of frame rate
+  ---
+  duration_ms: 0.268654
+  type: 'test'
+  ...
+# Subtest: sensitivity and ring opacity are validated and survive migration without changing the orbit
+ok 88 - sensitivity and ring opacity are validated and survive migration without changing the orbit
+  ---
+  duration_ms: 18.51185
+  type: 'test'
+  ...
+# Subtest: empty worlds have no reserves; a late birth starts a fresh, healthy civilization
+ok 89 - empty worlds have no reserves; a late birth starts a fresh, healthy civilization
+  ---
+  duration_ms: 31.047198
+  type: 'test'
+  ...
+# Subtest: safe dry storage preserves population, quality, civilization identity and accumulated development
+ok 90 - safe dry storage preserves population, quality, civilization identity and accumulated development
+  ---
+  duration_ms: 65.83121
+  type: 'test'
+  ...
+# Subtest: population and dry quality measure different losses, with higher levels providing stronger climate protection
+ok 91 - population and dry quality measure different losses, with higher levels providing stronger climate protection
+  ---
+  duration_ms: 2.511438
+  type: 'test'
+  ...
+# Subtest: extended resilience remains finite in sustained extreme heat and resets only for the next civilization
+ok 92 - extended resilience remains finite in sustained extreme heat and resets only for the next civilization
+  ---
+  duration_ms: 26.627874
+  type: 'test'
+  ...
+# Subtest: only actual safe production drives all twelve technology stages, retaining maximum stage in death records
+ok 93 - only actual safe production drives all twelve technology stages, retaining maximum stage in death records
+  ---
+  duration_ms: 336.326942
+  type: 'test'
+  ...
+# Subtest: development multiplier affects progression but not lifespan or original physical trajectories
+ok 94 - development multiplier affects progression but not lifespan or original physical trajectories
+  ---
+  duration_ms: 43.512163
+  type: 'test'
+  ...
+# Subtest: v0.5 migration upgrades old defaults while retaining custom survival, view and cage preferences
+ok 95 - v0.5 migration upgrades old defaults while retaining custom survival, view and cage preferences
+  ---
+  duration_ms: 0.457888
+  type: 'test'
+  ...
+# Subtest: level metadata is retained in active rankings, death rankings and persisted checkpoints
+ok 96 - level metadata is retained in active rankings, death rankings and persisted checkpoints
+  ---
+  duration_ms: 0.179156
+  type: 'test'
+  ...
+# Subtest: ring now appears gently and disappears promptly with consistent elapsed-time integration
+ok 97 - ring now appears gently and disappears promptly with consistent elapsed-time integration
+  ---
+  duration_ms: 0.139742
+  type: 'test'
+  ...
+# Subtest: reserve failure caused by ongoing tides is not misreported as freezing or burning
+ok 98 - reserve failure caused by ongoing tides is not misreported as freezing or burning
+  ---
+  duration_ms: 0.297678
+  type: 'test'
+  ...
+# Subtest: stable-era confirmation requires one simulated month, not a two-year window
+ok 99 - stable-era confirmation requires one simulated month, not a two-year window
+  ---
+  duration_ms: 0.233608
+  type: 'test'
+  ...
+# Subtest: slow and fast clocks confirm after the same simulated month
+ok 100 - slow and fast clocks confirm after the same simulated month
+  ---
+  duration_ms: 2.22437
+  type: 'test'
+  ...
+# Subtest: no simulated time means no extra era confirmation progress
+ok 101 - no simulated time means no extra era confirmation progress
+  ---
+  duration_ms: 1.518937
+  type: 'test'
+  ...
+# Subtest: old default confirmation migrates once; user settings and other v0.5 parameters are preserved
+ok 102 - old default confirmation migrates once; user settings and other v0.5 parameters are preserved
+  ---
+  duration_ms: 1.680059
+  type: 'test'
+  ...
+# Subtest: changing only confirmation duration does not alter the physical trajectory
+ok 103 - changing only confirmation duration does not alter the physical trajectory
+  ---
+  duration_ms: 186.177652
+  type: 'test'
+  ...
+# Subtest: simulation passes actual year increments to the epoch detector when the time factor changes
+ok 104 - simulation passes actual year increments to the epoch detector when the time factor changes
+  ---
+  duration_ms: 2.378038
+  type: 'test'
+  ...
+# Subtest: Newton pair force has no former .1/.28 amplification or discontinuity and conserves momentum
+ok 105 - Newton pair force has no former .1/.28 amplification or discontinuity and conserves momentum
+  ---
+  duration_ms: 0.492995
+  type: 'test'
+  ...
+# Subtest: Plummer acceleration is continuous and is the gradient of its stated potential
+ok 106 - Plummer acceleration is continuous and is the gradient of its stated potential
+  ---
+  duration_ms: 0.306615
+  type: 'test'
+  ...
+# Subtest: softened coincident bodies remain finite without a singular artificial radius
+ok 107 - softened coincident bodies remain finite without a singular artificial radius
+  ---
+  duration_ms: 1.316929
+  type: 'test'
+  ...
+# Subtest: Yoshida conserves energy/L/P, and decreasing fixed step shows fourth order convergence
+ok 108 - Yoshida conserves energy/L/P, and decreasing fixed step shows fourth order convergence
+  ---
+  duration_ms: 25.383341
+  type: 'test'
+  ...
+# Subtest: adaptive substeps resolve close approaches without changing elapsed physical time
+ok 109 - adaptive substeps resolve close approaches without changing elapsed physical time
+  ---
+  duration_ms: 0.635762
+  type: 'test'
+  ...
+# Subtest: contact detection uses accepted segments; singularity/resource failures are explicit, never velocity corrections
+ok 110 - contact detection uses accepted segments; singularity/resource failures are explicit, never velocity corrections
+  ---
+  duration_ms: 0.482705
+  type: 'test'
+  ...
+# Subtest: cage remains available, but diagnostics label its nonisolated energy budget
+ok 111 - cage remains available, but diagnostics label its nonisolated energy budget
+  ---
+  duration_ms: 1.917524
+  type: 'test'
+  ...
+# Subtest: default research initialization matches validated candidate for predetermined seeds, with recoil, Q≈1 and retrograde circular orbit
+ok 112 - default research initialization matches validated candidate for predetermined seeds, with recoil, Q≈1 and retrograde circular orbit
+  ---
+  duration_ms: 24.342654
+  type: 'test'
+  ...
+# Subtest: exact manual initial states beyond legacy slider ranges survive UI changes and are never auto-regenerated
+ok 113 - exact manual initial states beyond legacy slider ranges survive UI changes and are never auto-regenerated
+  ---
+  duration_ms: 2.880379
+  type: 'test'
+  ...
+# Subtest: new defaults migrate even oldest profiles while explicit compatibility choices remain available
+ok 114 - new defaults migrate even oldest profiles while explicit compatibility choices remain available
+  ---
+  duration_ms: 0.700684
+  type: 'test'
+  ...
+# Subtest: production benchmark preserves research first-loss, era denominator and three-arm reference parity
+ok 115 - production benchmark preserves research first-loss, era denominator and three-arm reference parity
+  ---
+  duration_ms: 163.441911
+  type: 'test'
+  ...
+# Subtest: explicit old Seed/archive imports retain the old force and cage, while new exports retain new physics
+ok 116 - explicit old Seed/archive imports retain the old force and cage, while new exports retain new physics
+  ---
+  duration_ms: 0.398748
+  type: 'test'
+  ...
+# Subtest: tiny final remainders do not falsely signal an unresolved close encounter
+ok 117 - tiny final remainders do not falsely signal an unresolved close encounter
+  ---
+  duration_ms: 0.17624
+  type: 'test'
+  ...
+# Subtest: idle return cancels residual inertia and obeys one total angular-speed cap without overshoot
+ok 118 - idle return cancels residual inertia and obeys one total angular-speed cap without overshoot
+  ---
+  duration_ms: 0.26155
+  type: 'test'
+  ...
+# Subtest: galaxy-return migration is once-only and retains custom speeds and independent view preferences
+ok 119 - galaxy-return migration is once-only and retains custom speeds and independent view preferences
+  ---
+  duration_ms: 1.859044
+  type: 'test'
+  ...
+# Subtest: centering toggle and galaxy motion settings do not change trajectories or energy diagnostics
+ok 120 - centering toggle and galaxy motion settings do not change trajectories or energy diagnostics
+  ---
+  duration_ms: 245.939347
+  type: 'test'
+  ...
+# Subtest: technology starts at the Paleolithic age and no longer reaches a space age after 350 production years
+ok 121 - technology starts at the Paleolithic age and no longer reaches a space age after 350 production years
+  ---
+  duration_ms: 0.231134
+  type: 'test'
+  ...
+# Subtest: technology never advances during current-frame unsafe climate, dormancy or terminal destruction
+ok 122 - technology never advances during current-frame unsafe climate, dormancy or terminal destruction
+  ---
+  duration_ms: 0.536365
+  type: 'test'
+  ...
+# Subtest: galaxy default doubles slightly, migrates v0.5.3 once and preserves custom speeds
+ok 123 - galaxy default doubles slightly, migrates v0.5.3 once and preserves custom speeds
+  ---
+  duration_ms: 0.674985
+  type: 'test'
+  ...
+# Subtest: escaping planet is observed without any mutation and only confirmed after three continuous years
+ok 124 - escaping planet is observed without any mutation and only confirmed after three continuous years
+  ---
+  duration_ms: 1.070707
+  type: 'test'
+  ...
+# Subtest: bound outbound apoapsis, incoming passage and near-system high velocities are not escape
+ok 125 - bound outbound apoapsis, incoming passage and near-system high velocities are not escape
+  ---
+  duration_ms: 0.278663
+  type: 'test'
+  ...
+# Subtest: transient positive energy cannot accumulate through recapture; cage prevents escape resets
+ok 126 - transient positive energy cannot accumulate through recapture; cage prevents escape resets
+  ---
+  duration_ms: 1.082709
+  type: 'test'
+  ...
+# Subtest: unbound star and a departing host-planet cluster can be detected, including frame boosts
+ok 127 - unbound star and a departing host-planet cluster can be detected, including frame boosts
+  ---
+  duration_ms: 0.434224
+  type: 'test'
+  ...
+# Subtest: separation during a complex close interaction and marginal parabolic energy are deferred
+ok 128 - separation during a complex close interaction and marginal parabolic energy are deferred
+  ---
+  duration_ms: 0.337553
+  type: 'test'
+  ...
+# Subtest: confirmation drives one normal universe restart, preserving historical time and reason
+ok 129 - confirmation drives one normal universe restart, preserving historical time and reason
+  ---
+  duration_ms: 62.185747
+  type: 'test'
+  ...
+# Subtest: automatic restart off retains escaped bodies and emits one notification; manual restart archives escape
+ok 130 - automatic restart off retains escaped bodies and emits one notification; manual restart archives escape
+  ---
+  duration_ms: 30.987887
+  type: 'test'
+  ...
+# Subtest: disabling auto restart or enabling the cage cancels an escape queued on the preceding frame
+ok 131 - disabling auto restart or enabling the cage cancels an escape queued on the preceding frame
+  ---
+  duration_ms: 1.657567
+  type: 'test'
+  ...
+# Subtest: fixed display frame remains at the initial four-body center during stellar and planetary recoil
+ok 132 - fixed display frame remains at the initial four-body center during stellar and planetary recoil
+  ---
+  duration_ms: 0.939502
+  type: 'test'
+  ...
+# Subtest: legacy follow preferences cannot enable camera translation again
+ok 133 - legacy follow preferences cannot enable camera translation again
+  ---
+  duration_ms: 0.440395
+  type: 'test'
+  ...
+# Subtest: inertial diagnostics reveal a common velocity injection that internal energy cannot see
+ok 134 - inertial diagnostics reveal a common velocity injection that internal energy cannot see
+  ---
+  duration_ms: 0.255679
+  type: 'test'
+  ...
+# Subtest: fixed-frame COM diagnostic allows correct inertial drift from explicit nonzero initial momentum
+ok 135 - fixed-frame COM diagnostic allows correct inertial drift from explicit nonzero initial momentum
+  ---
+  duration_ms: 0.330539
+  type: 'test'
+  ...
+# Subtest: physical step observers leave every trajectory and conservation value unchanged
+ok 136 - physical step observers leave every trajectory and conservation value unchanged
+  ---
+  duration_ms: 74.768483
+  type: 'test'
+  ...
+# Subtest: fast orbit trace captures curvature between render messages and retains bounded queues
+ok 137 - fast orbit trace captures curvature between render messages and retains bounded queues
+  ---
+  duration_ms: 18.803597
+  type: 'test'
+  ...
+# Subtest: trace simplification preserves both curved positions and accelerating straight motion at their timestamps
+ok 138 - trace simplification preserves both curved positions and accelerating straight motion at their timestamps
+  ---
+  duration_ms: 12.094241
+  type: 'test'
+  ...
+# Subtest: interpolated trail head uses the same physical position as the body and never draws future samples
+ok 139 - interpolated trail head uses the same physical position as the body and never draws future samples
+  ---
+  duration_ms: 0.924954
+  type: 'test'
+  ...
+# Subtest: continuous ribbon shares join vertices, uses normal alpha blending and fades to transparency
+ok 140 - continuous ribbon shares join vertices, uses normal alpha blending and fades to transparency
+  ---
+  duration_ms: 1.629926
+  type: 'test'
+  ...
+# Subtest: the reorganized form preserves every original, extension and layout setting exactly once
+ok 141 - the reorganized form preserves every original, extension and layout setting exactly once
+  ---
+  duration_ms: 2.708557
+  type: 'test'
+  ...
+# Subtest: inactive manual inputs and fixed V2 physics explain availability without changing stored values
+ok 142 - inactive manual inputs and fixed V2 physics explain availability without changing stored values
+  ---
+  duration_ms: 0.459581
+  type: 'test'
+  ...
+# Subtest: full-state resume is bitwise through controls/civilization/planet lifecycle; checkpoint while present
+ok 143 - full-state resume is bitwise through controls/civilization/planet lifecycle; checkpoint while present
+  ---
+  duration_ms: 416.906379
+  type: 'test'
+  ...
+# Subtest: full-state resume is bitwise through controls/civilization/planet lifecycle; checkpoint while absent
+ok 144 - full-state resume is bitwise through controls/civilization/planet lifecycle; checkpoint while absent
+  ---
+  duration_ms: 381.290682
+  type: 'test'
+  ...
+# Subtest: checkpoint format guards and nonfinite diagnostics survive JSON without becoming null
+ok 145 - checkpoint format guards and nonfinite diagnostics survive JSON without becoming null
+  ---
+  duration_ms: 0.389309
+  type: 'test'
+  ...
+# Subtest: checkpoint preserves RNG state across subsequent physical reinitialization
+ok 146 - checkpoint preserves RNG state across subsequent physical reinitialization
+  ---
+  duration_ms: 5.720242
+  type: 'test'
+  ...
+# Subtest: V2 control off uses the identical Newtonian integrator with zero external control
+ok 147 - V2 control off uses the identical Newtonian integrator with zero external control
+  ---
+  duration_ms: 33.287143
+  type: 'test'
+  ...
+# Subtest: physical planet loss and P5 respawn do not reset the universe even with autorestart enabled
+ok 148 - physical planet loss and P5 respawn do not reset the universe even with autorestart enabled
+  ---
+  duration_ms: 74.206714
+  type: 'test'
+  ...
+# Subtest: stellar contact is absorbing and never becomes an automatic new universe or numerical UNKNOWN
+ok 149 - stellar contact is absorbing and never becomes an automatic new universe or numerical UNKNOWN
+  ---
+  duration_ms: 1.161467
+  type: 'test'
+  ...
+# Subtest: numerical inability remains UNKNOWN with original physical failure field empty
+ok 150 - numerical inability remains UNKNOWN with original physical failure field empty
+  ---
+  duration_ms: 0.271599
+  type: 'test'
+  ...
+# Subtest: Seed replay, physical changes and display-only changes preserve the intended boundaries
+ok 151 - Seed replay, physical changes and display-only changes preserve the intended boundaries
+  ---
+  duration_ms: 4.687337
+  type: 'test'
+  ...
+# Subtest: every capture/near-encounter projection has an explicit velocity and cost event
+ok 152 - every capture/near-encounter projection has an explicit velocity and cost event
+  ---
+  duration_ms: 825.711877
+  type: 'test'
+  ...
+1..152
+# tests 152
+# suites 0
+# pass 152
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 14034.996184

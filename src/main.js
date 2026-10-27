@@ -1,6 +1,7 @@
 import {replaySettings} from './seed-compatibility.js';
 import {controllerPatch} from './controller-settings.js';
-import {settingsDefinitions,settingsCategories} from './settings-catalog.js';
+import {settingsLayout,settingDefinition,settingLabel,settingExplanation,settingUnavailableReason} from './settings-layout.js';
+import {SettingHelp,sliderStep,paintSlider} from './setting-help.js';
 import { layoutWidgets,widgetPosition,clearLayoutStyles,applyLayout,installLayoutEditor } from './layout.js';
 import { SpaceRenderer } from './renderer.js';
 import { effectivePropertySchema as propertySchema, migrateSettings } from './settings.js';
@@ -26,7 +27,7 @@ try {
   settings=saved?migrateSettings(JSON.parse(saved),3):migrateSettings(JSON.parse(v2||v1||'{}'),2);
 } catch { settings=normalizeSettings(); }
 const store = new LocalStore();
-let state = null, userPaused = false, hostPaused = false, visibilityPaused = false, worker, renderer, lastEvent = 0, currentTab = 'settings';
+let state = null, userPaused = false, hostPaused = false, visibilityPaused = false, worker, renderer, lastEvent = 0, currentTab = 'quick';
 let sessionId = crypto.randomUUID?.() || String(Date.now());
 let customURL = null, history = [], lastTick = 0, fps = 0, fatal = false;
 const controlMap = new Map();
@@ -59,7 +60,7 @@ function setPanel(open) {
   const panel = $('#settings-panel');
   panel.classList.toggle('open', open); panel.inert = !open; panel.setAttribute('aria-hidden', String(!open));
   $('#settings-toggle').setAttribute('aria-expanded', String(open)); $('#settings-toggle').setAttribute('aria-label', open ? '关闭设置' : '打开设置');
-  if (open) setTimeout(() => $('#settings-search').focus(), 80); else $('#settings-toggle').focus();
+  if (open) setTimeout(() => $('#settings-search').focus(), 80); else { settingHelp.hide(); $('#settings-toggle').focus(); }
 }
 $('#settings-toggle').onclick = () => setPanel(!$('#settings-panel').classList.contains('open'));
 $('#settings-close').onclick = () => setPanel(false);
@@ -73,129 +74,126 @@ document.addEventListener('keydown', e => {
   }
 });
 
-const hintMap = {
-  viewSensitivity: '越小越精细，0关闭鼠标转动。悬停与拖动共用此倍率；拖动另乘拖拽倍率（默认 5）。',
-  dragSensitivity: '只放大拖动，默认是原拖动响应的 5 倍。悬停跟随不受此项影响。',
-  birthDelay: '新文明只需短暂安全窗口即可诞生；不会因诞生前的严寒被预先扣掉人口。',
-  civilizationLevels: '只累计安全环境中实际生产发展的年数。休眠保留等级，但不升级。',
-  developmentRate: '只影响科技进度，不改变物理时钟、文明寿命或轨道。',
-  compassOpacity: '数值越小越透明，0完全隐藏；出现和消失自动淡入淡出。',
-  newproperty7: '原版此项为固定值：引力指数恒为 2。保留设置定义，但不改变原算法。',
-  cnen1: '切换原版使用说明的语言；界面语言请使用快捷设置中的 Language。',
-  menuinit: '下次载入时，默认打开右下角的完整设置面板。',
-  newproperty53: '修改后立即重建物理积分器；文明历史保留。',
-  t: '原版按适温帧累计；仅原版即时判定模式使用。现代文明请调整“文明诞生安全窗口”。',
-  newproperty26: '保留原版时间因子重复相乘的算法，以匹配原版节奏。',
-  cheatingcheck: '标记引力牢笼、温度距离倍数及非默认物理参数。',
-  custombg: '选择球面全景图。文件仅保存在本机；WE 中也可使用原生背景属性。',
-  newproperty63: '原版虚构账号与密码的视觉展示，不涉及实际账号登录。',
-  stabilityMode: 'V2转向控制：危险近遇保护与外逸能量反馈。行星毁灭后至少等待5显示年再生成新行星，三星计时继续；不自动重置宇宙。旧版可在控制方案中切回。',
-  newproperty60: '现行模式使用原引力牢笼；V2中开关新控制器。关闭V2保护仍保留相同精度与行星生命周期，便于对照。',
-  civilizationMode: '纪元由轨道稳定性判断；文明脱水保存并以原编号复苏。现行模式行星毁坏后重建宇宙；V2会独立生成新行星，旧文明的毁灭仍保留。',
-  thermalGrace: '越大越耐久。文明诞生后才有人口储备与干仓质量；等级提升额外延缓损耗。持续极端灾害仍会毁灭文明。'
-};
-function makeControl(key, def, extension = false) {
-  const container = document.createElement('div'); container.className = 'control'; container.dataset.key = key;
-  const heading = document.createElement('div'); heading.className = 'control-head';
-  const label = document.createElement('label'); label.htmlFor = `setting-${key}`; label.textContent = plainText(def.text).trim(); heading.append(label); container.append(heading);
-  let input, number;
-  if (def.type === 'bool') { input = document.createElement('input'); input.type = 'checkbox'; heading.append(input); input.onchange = () => setControl(key,input.checked); }
-  else if (def.type === 'color') { input = document.createElement('input'); input.type = 'color'; heading.append(input); input.onchange = () => setControl(key,fromHex(input.value)); }
-  else if (def.type === 'slider') {
-    input = document.createElement('input'); input.type = 'range'; input.min = def.min; input.max = def.max;
-    input.step = def.fraction === false || def.integer ? 1 : def.step || (def.max - def.min > 1e5 ? 1000 : 0.001);
-    number = document.createElement('input'); number.type = 'number'; number.className = 'number-value'; number.min = def.min; number.max = def.max; number.step = input.step; number.setAttribute('aria-label', label.textContent);
-    heading.append(number); container.append(input);
-    input.oninput = () => { number.value = input.value; };
-    input.onchange = () => setControl(key,+input.value);
-    number.onchange = () => { if (number.value !== '' && Number.isFinite(+number.value)) setControl(key,+number.value); else updateControls(); };
-    if (key === 'newproperty7') input.disabled = number.disabled = true;
-  } else if (def.type === 'combo') {
-    input = document.createElement('select');
-    for (const option of def.options) { const o = document.createElement('option'); o.value = option.value; o.textContent = option.label; input.append(o); }
-    container.append(input); input.onchange = () => setControl(key,input.value);
-  } else if (def.type === 'scenetexture') {
-    input = document.createElement('input'); input.type = 'file'; input.accept = 'image/*'; container.append(input);
-    input.onchange = async () => {
-      const file = input.files[0]; if (!file) return;
-      if (file.size > 40 * 1024 * 1024) { notice('请选择小于 40 MB 的背景图片。', true); return; }
-      try {
-        const bitmap = await createImageBitmap(file); bitmap.close();
-        if (customURL) URL.revokeObjectURL(customURL); customURL = URL.createObjectURL(file); renderer.setCustomBackground(customURL);
-        const saved = await store.put('assets', file, 'background'); changeSettings({ custombg: file.name, newproperty17: '3' });
-        notice(saved ? '背景已保存在本机' : '背景已载入；当前环境不支持持久保存');
-      } catch { notice('无法读取这张图片，请选择 PNG、JPEG 或 WebP。', true); }
+const settingHelp = new SettingHelp();
+function makeControl(key,def){
+  const container=document.createElement('div');container.className='control';container.dataset.key=key;
+  const heading=document.createElement('div');heading.className='control-head';
+  const name=document.createElement('div');name.className='control-name';
+  const label=document.createElement('label');label.htmlFor=`setting-${key}`;label.textContent=settingLabel(key);
+  const help=document.createElement('button');help.type='button';help.className='setting-help';help.textContent='!';help.setAttribute('aria-label',`${label.textContent}的说明`);help.setAttribute('aria-controls','settings-help-tooltip');help.setAttribute('aria-expanded','false');
+  const description=document.createElement('span');description.className='sr-only setting-description';description.id=`description-${key}`;description.textContent=settingExplanation(key);
+  help.setAttribute('aria-describedby',description.id);name.append(label,help);heading.append(name);container.append(heading,description);
+  settingHelp.bind(help,()=>description.textContent);
+  let input,number;
+  if(def.type==='bool'){
+    input=document.createElement('input');input.type='checkbox';heading.append(input);input.onchange=()=>setControl(key,input.checked);
+  }else if(def.type==='color'){
+    input=document.createElement('input');input.type='color';heading.append(input);input.onchange=()=>setControl(key,fromHex(input.value));
+  }else if(def.type==='slider'){
+    const row=document.createElement('div');row.className='slider-row';
+    input=document.createElement('input');input.type='range';input.min=def.min;input.max=def.max;
+    // Preserve exact saved/custom values; only pointer drags quantize to the UI step.
+    const step=sliderStep(def);input.step='any';
+    number=document.createElement('input');number.type='number';number.className='number-value';number.min=def.min;number.max=def.max;number.step=step;number.inputMode='decimal';number.setAttribute('aria-label',`${label.textContent}数值`);number.setAttribute('aria-describedby',description.id);
+    row.append(input,number);container.append(row);
+    input.oninput=()=>{input.value=Number((Number(def.min)+Math.round((Number(input.value)-Number(def.min))/step)*step).toPrecision(12));number.value=input.value;paintSlider(input,number);};
+    input.onchange=()=>setControl(key,+input.value);
+    input.onkeydown=e=>{
+      const direction=({ArrowLeft:-1,ArrowDown:-1,ArrowRight:1,ArrowUp:1})[e.key];
+      if(!direction&&!['Home','End'].includes(e.key))return;
+      e.preventDefault();input.value=e.key==='Home'?def.min:e.key==='End'?def.max:Number(input.value)+direction*step*(e.shiftKey?10:1);
+      input.dispatchEvent(new Event('input'));input.dispatchEvent(new Event('change'));
     };
-  } else { input = document.createElement('input'); input.type = 'text'; container.append(input); input.onchange = () => setControl(key,input.value); }
-  input.id = `setting-${key}`;
-  const hint = hintMap[key]; if (hint) { const p = document.createElement('small'); p.className = 'control-hint'; p.textContent = hint; container.append(p); }
-  controlMap.set(key, { input, number, type: def.type, container, extension }); return container;
+    number.oninput=()=>{if(number.value!==''&&Number.isFinite(+number.value))input.value=number.value;paintSlider(input,number);};
+    number.onchange=()=>{if(number.value!==''&&Number.isFinite(+number.value))setControl(key,+number.value);else updateControls();};
+    number.onkeydown=e=>{if(e.key==='Enter'){number.dispatchEvent(new Event('change'));number.blur();}if(e.key==='Escape'){updateControls();number.blur();e.stopPropagation();}};
+  }else if(def.type==='combo'){
+    input=document.createElement('select');
+    for(const option of def.options){const o=document.createElement('option');o.value=option.value;o.textContent=option.label;input.append(o);}
+    container.append(input);input.onchange=()=>setControl(key,input.value);
+  }else if(def.type==='scenetexture'){
+    input=document.createElement('input');input.type='file';input.accept='image/*';container.append(input);
+    input.onchange=async()=>{
+      const file=input.files[0];if(!file)return;
+      if(file.size>40*1024*1024){notice('请选择小于 40 MB 的背景图片。',true);return;}
+      try{
+        const bitmap=await createImageBitmap(file);bitmap.close();
+        if(customURL)URL.revokeObjectURL(customURL);customURL=URL.createObjectURL(file);renderer.setCustomBackground(customURL);
+        const saved=await store.put('assets',file,'background');changeSettings({custombg:file.name,newproperty17:'3'});
+        notice(saved?'背景已保存在本机':'背景已载入；当前环境不支持持久保存');
+      }catch{notice('无法读取这张图片，请选择 PNG、JPEG 或 WebP。',true);}
+    };
+  }else{
+    input=document.createElement('input');input.type='text';container.append(input);input.onchange=()=>setControl(key,input.value);
+  }
+  input.id=`setting-${key}`;input.setAttribute('aria-describedby',description.id);
+  container.dataset.search=[key,label.textContent,plainText(def.text),settingExplanation(key)].join(' ').toLowerCase();
+  controlMap.set(key,{input,number,type:def.type,container,description,help});return container;
 }
-function groupElement(title, open = false) {
-  const group = document.createElement('details'); group.className = 'setting-group'; group.open = open;
-  const summary = document.createElement('summary'); summary.textContent = title; group.append(summary); return group;
-}
-function buildSettings() {
-  const definitions=settingsDefinitions,categories=settingsCategories;
-  for(const[id,title,keys]of categories){
-    const group=groupElement(title);group.dataset.category=id;
-    if(id==='layout'){
-      const buttons=document.createElement('div');buttons.className='layout-actions';buttons.innerHTML='<button id="layout-edit">拖动调整窗口</button><button id="layout-reset">恢复默认布局</button>';group.append(buttons);
-      for(const[name,label]of Object.entries({left:'左侧行星与文明',right:'右侧信息与排行',clock:'时钟与日期',logs:'中央文明与日志',years:'底部年份'}))for(const axis of ['x','y'])group.append(makeControl(`layout.${name}.${axis}`,{type:'slider',text:`${label} · ${axis==='x'?'水平':'垂直'}位置 %`,min:0,max:100,step:.1},true));
-      for(const key of ['clock','menul','audiobar','newproperty38','newproperty39'])group.append(makeControl(key,propertySchema[key]));
+function buildSettings(){
+  for(const category of settingsLayout){
+    const group=document.createElement('details');group.className='setting-group';group.dataset.category=category.id;group.dataset.area=category.area;group.open=category.area==='quick';
+    const summary=document.createElement('summary'),title=document.createElement('span'),count=document.createElement('span');title.textContent=category.title;count.className='group-count';count.textContent=category.sections.reduce((n,s)=>n+s.keys.length,0);summary.append(title,count);group.append(summary);
+    if(category.id==='layout'){
+      const actions=document.createElement('div');actions.className='layout-actions';actions.innerHTML='<button id="layout-edit">拖动调整窗口</button><button id="layout-reset">恢复默认布局</button>';group.append(actions);
     }
-    for(const key of keys)group.append(makeControl(key,definitions[key]||propertySchema[key],!!definitions[key]));
-    $('#extension-controls').append(group);
-  }
-  const root = $('#original-controls'); let group = groupElement('通用 / General'); root.append(group);
-  for (const [key, def] of Object.entries(propertySchema).sort((a, b) => a[1].index - b[1].index)) {
-    if (def.type === 'group') { group = groupElement(plainText(def.text), key === 'newproperty27'); group.dataset.group = key; root.append(group); }
-    else if (def.type) {if(!controlMap.has(key))group.append(makeControl(key, def));}
-    else {
-      const text = plainText(def.text).trim(); if (!text) continue;
-      const note = document.createElement('p'); note.className = 'setting-note';
-      if (text.length > 450) {
-        const expanded = document.createElement('details'); expanded.className = 'long-note'; expanded.dataset.note = key;
-        const summary = document.createElement('summary'); summary.textContent = settings.cnen1 ? '原版说明 / Guide' : 'Guide / 原版说明'; expanded.append(summary); note.textContent = text; expanded.append(note); group.append(expanded);
-      } else { note.textContent = text; group.append(note); }
+    for(const section of category.sections){
+      const block=document.createElement('section');block.className='settings-section';
+      if(section.title){const h=document.createElement('h3');h.className='section-title';h.textContent=section.title;block.append(h);}
+      for(const key of section.keys)block.append(makeControl(key,settingDefinition(key)));
+      group.append(block);
     }
+    $('#settings-controls').append(group);
   }
-  for (const g of root.querySelectorAll('.setting-group')) { const n = g.querySelectorAll('.control').length; const tag = document.createElement('span'); tag.textContent = String(n).padStart(2, '0'); g.querySelector(':scope > summary').append(tag); }
-  updateControls();
+  updateControls();filterSettings();
 }
-function updateControls() {
-  const locked=new Set(['gravityModel','physicsMode','civilizationMode','newproperty53','encounterAccuracy','timespeed','newproperty26','autorestart','mc','k1','k2','rc','re','expc','newproperty66','newproperty67','newproperty28','newproperty29']);
-  for (const [key, { input, number, type }] of controlMap) {
-    const disabled=key==='newproperty7'||(settings.stabilityMode!=='off'&&locked.has(key));
-    input.disabled=disabled;if(number)number.disabled=disabled;
-    input.title=disabled&&key!=='newproperty7'?'V2使用固定精度、固定显示年与独立失效；此旧设置不生效。切回现行模式后可调整。':'';
-    if (type === 'bool') input.checked = !!controlValue(key);
-    else if (type === 'color') input.value = colorHex(controlValue(key));
-    else if (type !== 'scenetexture') { input.value = controlValue(key); if (number) number.value = controlValue(key); }
+function updateControls(){
+  for(const [key,{input,number,type,container,description,help}]of controlMap){
+    const reason=settingUnavailableReason(key,settings),disabled=!!reason;
+    input.disabled=disabled;if(number)number.disabled=disabled;container.classList.toggle('is-disabled',disabled);help.dataset.unavailable=String(disabled);
+    description.textContent=[settingExplanation(key),reason].filter(Boolean).join('\n\n');
+    if(type==='bool')input.checked=!!controlValue(key);
+    else if(type==='color')input.value=colorHex(controlValue(key));
+    else if(type!=='scenetexture'){input.value=controlValue(key);if(number){number.value=controlValue(key);paintSlider(input,number);}}
   }
 }
-$('#settings-search').oninput = () => {
-  const query = $('#settings-search').value.trim().toLowerCase(); let count = 0;
-  for (const [key, { container }] of controlMap) { const match = !query || (key + container.textContent).toLowerCase().includes(query); container.hidden = !match; if (match) count++; }
-  for (const group of document.querySelectorAll('.setting-group')) {
-    const match = !query || [...group.querySelectorAll('.control')].some(c => !c.hidden) || group.querySelector('summary').textContent.toLowerCase().includes(query);
-    group.hidden = !match; if (query && match) group.open = true;
-    group.querySelectorAll('.setting-note,.long-note').forEach(el => el.hidden = !!query);
+let searching=false;
+const scrollPositions={quick:0,settings:0};
+function filterSettings(){
+  const query=$('#settings-search').value.trim().toLowerCase(),wasSearching=searching;searching=!!query;let count=0;
+  for(const [,{container}]of controlMap){const match=!query||container.dataset.search.includes(query);container.hidden=!match;if(match)count++;}
+  for(const group of document.querySelectorAll('.setting-group')){
+    if(searching&&!wasSearching)group.dataset.beforeSearch=String(group.open);
+    if(!searching&&wasSearching){group.open=group.dataset.beforeSearch==='true';delete group.dataset.beforeSearch;}
+    const match=[...group.querySelectorAll('.control')].some(c=>!c.hidden);
+    group.hidden=searching?!match:group.dataset.area!==currentTab;
+    if(searching&&match)group.open=true;
+    for(const section of group.querySelectorAll('.settings-section'))section.hidden=![...section.querySelectorAll('.control')].some(c=>!c.hidden);
+    const actions=group.querySelector('.layout-actions');if(actions)actions.hidden=searching;
   }
-  $('#search-empty').hidden = count > 0;
+  $('#search-empty').hidden=!searching||count>0;
+}
+$('#settings-search').oninput=()=>{settingHelp.hide();filterSettings();};
+for(const button of document.querySelectorAll('[data-tab]'))button.onclick=()=>{
+  if(['quick','settings'].includes(currentTab))scrollPositions[currentTab]=$('#settings-content').scrollTop;
+  currentTab=button.dataset.tab;settingHelp.hide();$('#settings-search').value='';filterSettings();
+  for(const b of document.querySelectorAll('[data-tab]')){const active=b===button;b.classList.toggle('active',active);b.setAttribute('aria-selected',String(active));b.tabIndex=active?0:-1;}
+  const controlsTab=['quick','settings'].includes(currentTab);
+  $('#settings-content').hidden=!controlsTab;$('#history-content').hidden=currentTab!=='history';$('#about-content').hidden=currentTab!=='about';
+  $('#settings-search').disabled=!controlsTab;if(controlsTab)$('#settings-content').setAttribute('aria-labelledby',`tab-${currentTab}`);if(controlsTab)$('#settings-content').scrollTop=scrollPositions[currentTab]||0;
+  if(currentTab==='history')renderHistory();
 };
-for (const button of document.querySelectorAll('[data-tab]')) button.onclick = () => {
-  currentTab = button.dataset.tab;
-  for (const b of document.querySelectorAll('[data-tab]')) b.classList.toggle('active', b === button);
-  for (const name of ['settings', 'history', 'about']) $(`#${name}-content`).hidden = name !== currentTab;
-  $('#settings-search').disabled = currentTab !== 'settings'; if (currentTab === 'history') renderHistory();
-};
+document.querySelector('.panel-tabs').addEventListener('keydown',e=>{
+ const tabs=[...document.querySelectorAll('[data-tab]')],index=tabs.indexOf(e.target);
+ if(index<0||!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;
+ e.preventDefault();const next=e.key==='Home'?0:e.key==='End'?tabs.length-1:(index+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;
+ tabs[next].click();tabs[next].focus();
+});
 
 function applyAppearance() {
   clearLayoutStyles();
   const s = settings, en = s.cnen2;
   document.documentElement.lang = en ? 'en' : 'zh-CN'; document.documentElement.style.setProperty('--accent', colorHex(s.datacolor));
-  for (const el of document.querySelectorAll('[data-note]')) { if (el.dataset.note === '_2') el.hidden = !s.cnen1; if (el.dataset.note === '_3d') el.hidden = s.cnen1; }
   document.documentElement.style.setProperty('--accent-rgb', colorRGB(s.datacolor).map(v => Math.round(v * 255)).join(','));
   for (const el of document.querySelectorAll('[data-zh]')) el.textContent = en ? el.dataset.en : el.dataset.zh;
   $('#clock-widget').hidden = !s.clock;
@@ -219,7 +217,7 @@ function applyAppearance() {
   $('#restart-button').textContent = en ? '↻ Restart' : '↻ 重启'; $('#fullscreen-button').textContent = en ? '⛶ Fullscreen' : '⛶ 全屏';
   $('#export-settings').textContent = en ? 'Export seed' : '导出种子'; $('#reset-settings').textContent = en ? 'Factory reset' : '恢复默认';
   applyLayout(s.layout);
-  const tabNames = en ? ['Settings', 'Archive', 'About'] : ['全部设置', '文明档案', '项目说明']; document.querySelectorAll('[data-tab]').forEach((b, i) => b.textContent = tabNames[i]);
+  const tabNames=en?{quick:'Quick settings',settings:'All settings',history:'Archive',about:'About'}:{quick:'快捷设置',settings:'全部设置',history:'文明档案',about:'项目说明'};document.querySelectorAll('[data-tab]').forEach(b=>b.textContent=tabNames[b.dataset.tab]);
 }
 
 function applyPause() { worker?.postMessage({ type: 'pause', value: resetting || userPaused || hostPaused || visibilityPaused }); }

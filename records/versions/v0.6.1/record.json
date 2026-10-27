@@ -1,0 +1,235 @@
+{
+  "format": 1,
+  "id": "v0.6.1",
+  "path": "versions/v0.6.1",
+  "kind": "version",
+  "version": "0.6.1",
+  "title": "快捷设置、悬停说明与同行滑条数值",
+  "summary": "保留220项设置及旧值，将17项常用设置集中到快捷页，其余203项分七类；圆形感叹号替代常驻小字，滑条与无边框数字同行且自适应宽度。152项自动化与8组真实浏览器流程通过，三种视口无横向溢出；物理/文明/Renderer等36个核心文件及场景样式前缀未改。原始失败与修复记录保留；独立分支验收，不自动合并main。",
+  "source_commit": "18c450cad5bd07c2cce2ca37622552c799c386af",
+  "previous_commit": "a7e1744172b835eacecd3d3b8201c62f1eb019aa",
+  "source_repository": "https://github.com/BillOu0104/2",
+  "source_subject": "v0.6.1: organize settings, add hover explanations and align sliders with editable values",
+  "source_date": "2026-10-27T12:40:09Z",
+  "archived_at": "2026-10-27T12:40:54.560007+00:00",
+  "runtime_fingerprint": "f92a90c58ad5fa2289df8fb18f605b80db8d65a8ac9c34d0d57043f44dd56094",
+  "deleted_paths": [],
+  "files": [
+    {
+      "source_path": "README.md",
+      "archive_path": "snapshot/README.md",
+      "sha256": "b18bfb92340d6ab2c4fa940351cc2dc3fb04035881823f6249cee022f84323bb",
+      "bytes": 12492
+    },
+    {
+      "source_path": "docs/SETTINGS-GUIDE-v0.5.md",
+      "archive_path": "snapshot/docs/SETTINGS-GUIDE-v0.5.md",
+      "sha256": "c5e8cf20e05ed46200c21e6b5fd9a4119b72fdcb3b74fa9d34a03171a4e940ee",
+      "bytes": 57300
+    },
+    {
+      "source_path": "docs/releases/v0.6.1/RELEASE.md",
+      "archive_path": "snapshot/docs/releases/v0.6.1/RELEASE.md",
+      "sha256": "a8617b261f3f732f233e064371924e6393e0eade0cb9e67001e9ee4980cc4809",
+      "bytes": 4487
+    },
+    {
+      "source_path": "docs/releases/v0.6.1/TEST_RESULTS.md",
+      "archive_path": "snapshot/docs/releases/v0.6.1/TEST_RESULTS.md",
+      "sha256": "0d6d1c088aca94377d5f1ea45f81492b719e625c322e77c32399ca835fb1c0fe",
+      "bytes": 3170
+    },
+    {
+      "source_path": "docs/releases/v0.6.1/results/browser-final.log",
+      "archive_path": "snapshot/docs/releases/v0.6.1/results/browser-final.log",
+      "sha256": "9adb154da4ce1e36325a440a69ad42f9a814c6220eb25a504c4252500319906f",
+      "bytes": 1008
+    },
+    {
+      "source_path": "docs/releases/v0.6.1/results/browser-final/browser.json",
+      "archive_path": "snapshot/docs/releases/v0.6.1/results/browser-final/browser.json",
+      "sha256": "5c39cca7344d07dc283b41e74e645883471fed414fc53aa49b5852f8a2624b82",
+      "bytes": 1661
+    },
+    {
+      "source_path": "docs/releases/v0.6.1/results/browser-r1.log",
+      "archive_path": "snapshot/docs/releases/v0.6.1/results/browser-r1.log",
+      "sha256": "74a04f49ff3f85a14295125780f8ad05853951f38ce30c75c56151d1f6efe1ed",
+      "bytes": 934
+    },
+    {
+      "source_path": "docs/releases/v0.6.1/results/browser-r1/browser.json",
+      "archive_path": "snapshot/docs/releases/v0.6.1/results/browser-r1/browser.json",
+      "sha256": "ef7ff414185d7a860f16c155330f350834c0ed68c16e75f5ad39c4da32922499",
+      "bytes": 1587
+    },
+    {
+      "source_path": "docs/releases/v0.6.1/results/browser-r1/desktop-quick.png",
+      "archive_path": "snapshot/docs/releases/v0.6.1/results/browser-r1/desktop-quick.png",
+      "sha256": "d7ec05b4616fb991fbf4fb85fd1f698e33eaf275faefaf3d28767d4b761799de",
+      "bytes": 728676
+    },
+    {
+      "source_path": "docs/releases/v0.6.1/results/browser-r3.log",
+      "archive_path": "snapshot/docs/releases/v0.6.1/results/browser-r3.log",
+      "sha256": "0f6db40bd9318ee56a6227e6069e8c9d3276d808ece9716378d9c6acd932732b",
+      "bytes": 391
+    },
+    {
+      "source_path": "docs/releases/v0.6.1/results/browser-r3/failure.json",
+      "archive_path": "snapshot/docs/releases/v0.6.1/results/browser-r3/failure.json",
+      "sha256": "fca49cfff0127414f351b5b4ea8a8c41a90e571d1178823c08a5c6ef1f11f702",
+      "bytes": 4937
+    },
+    {
+      "source_path": "docs/releases/v0.6.1/results/browser-r3/failure.png",
+      "archive_path": "snapshot/docs/releases/v0.6.1/results/browser-r3/failure.png",
+      "sha256": "866e44bb990b8c5d76444d71fd66402cdb43e77ab326dd4e830ef026fb0b5750",
+      "bytes": 732749
+    },
+    {
+      "source_path": "docs/releases/v0.6.1/results/browser-r4.log",
+      "archive_path": "snapshot/docs/releases/v0.6.1/results/browser-r4.log",
+      "sha256": "9adb154da4ce1e36325a440a69ad42f9a814c6220eb25a504c4252500319906f",
+      "bytes": 1008
+    },
+    {
+      "source_path": "docs/releases/v0.6.1/results/browser-r4/browser.json",
+      "archive_path": "snapshot/docs/releases/v0.6.1/results/browser-r4/browser.json",
+      "sha256": "5c39cca7344d07dc283b41e74e645883471fed414fc53aa49b5852f8a2624b82",
+      "bytes": 1661
+    },
+    {
+      "source_path": "docs/releases/v0.6.1/results/browser-r4/desktop-categories.png",
+      "archive_path": "snapshot/docs/releases/v0.6.1/results/browser-r4/desktop-categories.png",
+      "sha256": "2057b1184ee7f91f75ca2327f364b0f5ab414ab6bede5f1d96dd83c03576052f",
+      "bytes": 722541
+    },
+    {
+      "source_path": "docs/releases/v0.6.1/results/browser-r4/desktop-quick.png",
+      "archive_path": "snapshot/docs/releases/v0.6.1/results/browser-r4/desktop-quick.png",
+      "sha256": "11c586375b5a70566e55525e915097fe9ed587b5b4aed1729be0d8c8204617c2",
+      "bytes": 730487
+    },
+    {
+      "source_path": "docs/releases/v0.6.1/results/browser-r4/desktop-tooltip.png",
+      "archive_path": "snapshot/docs/releases/v0.6.1/results/browser-r4/desktop-tooltip.png",
+      "sha256": "de66de1b7e3cfe269cca3c1f238340925c6246cbfd6dd5e9ec5ae6cbc3a28dfe",
+      "bytes": 745840
+    },
+    {
+      "source_path": "docs/releases/v0.6.1/results/browser-r4/mobile-quick.png",
+      "archive_path": "snapshot/docs/releases/v0.6.1/results/browser-r4/mobile-quick.png",
+      "sha256": "2f74b6ca6a0c14131e9138e9be7f08e57104fc0fb0d7941974c80d0456f7f12b",
+      "bytes": 89776
+    },
+    {
+      "source_path": "docs/releases/v0.6.1/results/build-final.log",
+      "archive_path": "snapshot/docs/releases/v0.6.1/results/build-final.log",
+      "sha256": "46e42a8d152ffee524b6a83b41acc6c8a50ad0920c19108775ba44bb93e13686",
+      "bytes": 349
+    },
+    {
+      "source_path": "docs/releases/v0.6.1/results/build-first.log",
+      "archive_path": "snapshot/docs/releases/v0.6.1/results/build-first.log",
+      "sha256": "6d478d3585078daa5b3c4e90276793722f1d29f3f3b9b358d790b1f5e9ab3acd",
+      "bytes": 141
+    },
+    {
+      "source_path": "docs/releases/v0.6.1/results/build-package.log",
+      "archive_path": "snapshot/docs/releases/v0.6.1/results/build-package.log",
+      "sha256": "6d478d3585078daa5b3c4e90276793722f1d29f3f3b9b358d790b1f5e9ab3acd",
+      "bytes": 141
+    },
+    {
+      "source_path": "docs/releases/v0.6.1/results/build-r1.log",
+      "archive_path": "snapshot/docs/releases/v0.6.1/results/build-r1.log",
+      "sha256": "6d478d3585078daa5b3c4e90276793722f1d29f3f3b9b358d790b1f5e9ab3acd",
+      "bytes": 141
+    },
+    {
+      "source_path": "docs/releases/v0.6.1/results/build-r3.log",
+      "archive_path": "snapshot/docs/releases/v0.6.1/results/build-r3.log",
+      "sha256": "46e42a8d152ffee524b6a83b41acc6c8a50ad0920c19108775ba44bb93e13686",
+      "bytes": 349
+    },
+    {
+      "source_path": "docs/releases/v0.6.1/results/build-r4.log",
+      "archive_path": "snapshot/docs/releases/v0.6.1/results/build-r4.log",
+      "sha256": "46e42a8d152ffee524b6a83b41acc6c8a50ad0920c19108775ba44bb93e13686",
+      "bytes": 349
+    },
+    {
+      "source_path": "docs/releases/v0.6.1/results/environment.log",
+      "archive_path": "snapshot/docs/releases/v0.6.1/results/environment.log",
+      "sha256": "80ce9d5cb85671c56464332721c92c2b8f75756498c8ee7d27a32a2be669abb5",
+      "bytes": 70
+    },
+    {
+      "source_path": "docs/releases/v0.6.1/results/image-inventory.json",
+      "archive_path": "snapshot/docs/releases/v0.6.1/results/image-inventory.json",
+      "sha256": "d08a528849b7adf134c4254b37e408af6bcf891f96a06d007955d19a12ebcb96",
+      "bytes": 2499
+    },
+    {
+      "source_path": "docs/releases/v0.6.1/results/source-parity.json",
+      "archive_path": "snapshot/docs/releases/v0.6.1/results/source-parity.json",
+      "sha256": "311c486590bcf3a877c7547b2c36e196fa13ce062345d2ca54583d72aff59874",
+      "bytes": 5198
+    },
+    {
+      "source_path": "docs/releases/v0.6.1/results/tests-before-new-catalog-checks.log",
+      "archive_path": "snapshot/docs/releases/v0.6.1/results/tests-before-new-catalog-checks.log",
+      "sha256": "50d0c6c9dbc730a0dcc80c54da03cc944b46740ee6c0c6df01d0686e972596fb",
+      "bytes": 35728
+    },
+    {
+      "source_path": "docs/releases/v0.6.1/results/tests-final.log",
+      "archive_path": "snapshot/docs/releases/v0.6.1/results/tests-final.log",
+      "sha256": "14a6d67b1c7d6e72016b4553714d5984dd0c337c13bf4b3fc7c4cd23a5425b2f",
+      "bytes": 36242
+    },
+    {
+      "source_path": "docs/settings-guide.html",
+      "archive_path": "snapshot/docs/settings-guide.html",
+      "sha256": "92f0b6dc156ddeadbb14d87e76166389732e2bcb51ace229aa5325a4beb51f14",
+      "bytes": 71710
+    },
+    {
+      "source_path": "package-lock.json",
+      "archive_path": "snapshot/package-lock.json",
+      "sha256": "1a58a565af87cb8565619c149400003131e1f35ddc4a3ec54c77f09f56ba77a9",
+      "bytes": 15394
+    },
+    {
+      "source_path": "package.json",
+      "archive_path": "snapshot/package.json",
+      "sha256": "06b78c5ac17c810728e5369dc6674f655d08f45843740367f02efad6eb45bf15",
+      "bytes": 415
+    },
+    {
+      "source_path": "tests/v061-settings.test.js",
+      "archive_path": "snapshot/tests/v061-settings.test.js",
+      "sha256": "8b4dfbead362fa0ee6de364c460d6015d62cb94bede81740b4a6e5f4ff1a7295",
+      "bytes": 1659
+    },
+    {
+      "source_path": "tools/generate-settings-guide.mjs",
+      "archive_path": "snapshot/tools/generate-settings-guide.mjs",
+      "sha256": "72cbfd84571f105f99336e8667607b4a721041d3c6e057065103e5be952cff8f",
+      "bytes": 18241
+    },
+    {
+      "source_path": "tools/v061/settings-browser.mjs",
+      "archive_path": "snapshot/tools/v061/settings-browser.mjs",
+      "sha256": "2f11d2ff79a2232607a9832ce6acb72bc0c9677ac0cdcfa6742da778d34c0555",
+      "bytes": 10633
+    },
+    {
+      "source_path": null,
+      "archive_path": "changes.patch",
+      "sha256": "b562a6663d02e6762d22adbef1df876e700013c6bf9959ed8653850ab670f693",
+      "bytes": 176816
+    }
+  ]
+}
