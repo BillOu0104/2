@@ -22,6 +22,7 @@
 | [v0.5.4](versions/v0.5.4/README.md) | v0.5.4：松手回弹、完全重置与逃逸重建 | [de49389](https://github.com/BillOu0104/2/commit/de493891629800b8b70614f11915847a6594da9d) |
 | [v0.5.5](versions/v0.5.5/README.md) | v0.5.5：固定观察原点、守恒核查与连续尾迹 | [e62d7e8](https://github.com/BillOu0104/2/commit/e62d7e8761c1b318de23d600e121bee41907c0e2) |
 | [v0.6.0](versions/v0.6.0/README.md) | V2转向控制正式集成与P5兼容 | [e19f30d](https://github.com/BillOu0104/2/commit/e19f30d78c0bb0ab57f9932963e08261232d99b7) |
+| [v0.6.1](versions/v0.6.1/README.md) | 快捷设置、悬停说明与同行滑条数值 | [18c450c](https://github.com/BillOu0104/2/commit/18c450cad5bd07c2cce2ca37622552c799c386af) |
 | [newtonian-survival](analyses/newtonian-survival/README.md) | 无牢笼牛顿三星长期存活研究 | [c198020](https://github.com/BillOu0104/2/commit/c1980201d11c7d0968d9039bfca4ad91383b27b0) |
 | [v054-centering-conservation-review](analyses/v054-centering-conservation-review/README.md) | 星群跟随不能代替守恒排查 | [7a63ebe](https://github.com/BillOu0104/2/commit/7a63ebefae4f9fa4b2db993697221e720506ca2e) |
 
