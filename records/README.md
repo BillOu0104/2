@@ -475,6 +475,7 @@
 | [minimal-chaos-v2-js-h8-q02-e044](analyses/minimal-chaos-v2-js-h8-q02-e044/README.md) | JS同初值h8数值诊断 q02-e044 | [6dcb49a](https://github.com/BillOu0104/2/commit/6dcb49a65b87eb7cd2b7a20f33c16c69b22a53a9) |
 | [minimal-chaos-v2-js-h8-q02-e046](analyses/minimal-chaos-v2-js-h8-q02-e046/README.md) | JS同初值h8数值诊断 q02-e046 | [e45a597](https://github.com/BillOu0104/2/commit/e45a597b80d32226337853073e6f31b07775c357) |
 | [minimal-chaos-v2-js-h8-q02-e048](analyses/minimal-chaos-v2-js-h8-q02-e048/README.md) | JS同初值h8数值诊断 q02-e048 | [f12074a](https://github.com/BillOu0104/2/commit/f12074a818e4e1607548c905444b6a4b94b98216) |
+| [minimal-chaos-v2-js-h8-q02-e051](analyses/minimal-chaos-v2-js-h8-q02-e051/README.md) | JS同初值h8数值诊断 q02-e051 | [5085efa](https://github.com/BillOu0104/2/commit/5085efab60cf0ff68a9244ccef25a11c35ce678f) |
 | [minimal-chaos-v2-js128-registration](analyses/minimal-chaos-v2-js128-registration/README.md) | JS128新Seed100000年独立确认冻结注册 | [537c83c](https://github.com/BillOu0104/2/commit/537c83c5fd52eb8da5401ee06ed77389782b03f1) |
 | [minimal-chaos-v2-js128-source-push-provenance](analyses/minimal-chaos-v2-js128-source-push-provenance/README.md) | JS新确认源码远端核对与推送竞态原始记录 | [0afb911](https://github.com/BillOu0104/2/commit/0afb911993e4c900187dc8e691cb83b2ec4df1fa) |
 | [minimal-chaos-v2-js30k-review-native-registration](analyses/minimal-chaos-v2-js30k-review-native-registration/README.md) | JS30k低恒纪元诊断与同初值原生对照注册 | [897128d](https://github.com/BillOu0104/2/commit/897128d13cb2a683fdc186067b9c7e8fbdba6bc4) |
