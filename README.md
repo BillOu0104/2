@@ -1,12 +1,12 @@
 # 三体 · 实时演算
 
-当前版本 **v0.6.0 · V2 转向控制正式集成**。基于完整 v0.5.5 壁纸选择性迁移已验证的 `deflect-v2`，默认开启转向保护和弱束缚捕获；保留旧版牛顿/引力牢笼回退。详见 [正式集成报告](docs/releases/v0.6.0/INTEGRATION.md)。
+当前版本 **v0.6.1 · 设置面板整理**，独立分支 `release/v0.6.1-settings`。17个常用项集中到快捷设置，其余203项按七类整理；圆形感叹号提供悬停说明，滑条和无边框数值同行铺满。保留全部220项设置及旧值。详见 [更新说明](docs/releases/v0.6.1/RELEASE.md)。物理、文明与视觉算法沿用v0.6.0。
 
 V2 保持 h4 Yoshida 精度（最大步长0.0001875、η0.001875）；播放速度通过增加完整模拟帧改变，不放大物理步长。行星毁灭后按P5至少等待5显示年再生成新行星，旧文明死亡保留、三星继续运行；恒星系统失效则停止并提供手动重启。控制、P5外部预算和数值残差分开记录。h8长期复测尚未完成，不能宣称数值统计完全收敛。
 
 默认保留固定初始质心视图；P5确实注入外部动量，长期可能离开初始画面，可明确选择“全系统质心”显示参考系。两种视图都保留原物理坐标和诊断，不使用最近恒星对追踪。新安装和旧设置升级默认V2，旧Seed档案按旧物理重放；显式选择旧版后恢复原物理配置。
 
-本次正式集成更新GitHub main与可离线构建；私有网页发布状态独立记录，不把GitHub推送当作站点已更新。
+本次源码和记录上传独立分支，不自动合并main。默认预览仍为同一私有站点；实际部署结果单独记入records/maintenance，不把GitHub推送当作站点已更新。
 
 基于用户提供的 Wallpaper Engine《三体实时演算》Scene 工程移植。原场景作者 SYKM，音乐 Melodysheep · Ether。此工程保留原资源来源及随附非商用说明。
 
@@ -16,7 +16,7 @@ V2 保持 h4 Yoshida 精度（最大步长0.0001875、η0.001875）；播放速�
 
 历史更新、分析、测试源码/输出、截图和实验数据集中保存在 [records/](records/README.md)，以后每次交付同步维护，见 [维护规范](records/POLICY.md)。原私有站点v0.1–v0.5完整提交历史保存在 `history/sites-v0.1-v0.5` 分支。
 
-后续源码和记录上传GitHub，默认查看仍使用原私有网页：https://trisolaris-reconstruction-20261019.wittylark8.chatgpt.site/ 。GitHub Pages仅保留手动触发，推送main不再自动部署；私有预览实际更新须另行核实。本次归档没有发布或改变网页访问权限。
+后续源码和记录上传GitHub，默认查看仍使用原私有网页：https://trisolaris-reconstruction-20261019.wittylark8.chatgpt.site/ 。GitHub Pages仅保留手动触发，推送main不再自动部署；私有预览实际更新须另行核实。后续更新保留现有访问权限，部署状态以独立发布记录为准。
 
 ## 运行
 
@@ -93,9 +93,8 @@ Three.js 使用球体和圆环重建 `.mdl` 几何；纹理来自原 `.tex` 首 
 npm test
 npm run build
 python tools/records.py check
-# 另一终端启动 PORT=4180 npm start 后：
-V2_RESULT_DIR=/tmp/v2-browser-check node tools/release-v2/browser-check.mjs
-V2_RESULT_DIR=/tmp/v2-performance-check node tools/release-v2/performance.mjs
+# 另一终端启动 PORT=4181 npm start 后：
+V061_RESULT_DIR=/tmp/v061-browser-check node tools/v061/settings-browser.mjs
 ```
 
-本次150项自动化检查全部通过（124项原回退、10项移植集成/检查点、5个原生夹具、11项正式迁移回归），实际Chromium/WebGL/Worker完成13组流程。详情和全部失败/修复记录见 [v0.6.0测试报告](docs/releases/v0.6.0/TEST_RESULTS.md)。旧 `tools/v0*`、`docs/qa/` 和 `records/` 保留当时版本证据，不把旧脚本和旧成绩当作本次验收。真实Windows Wallpaper Engine、目标显卡性能及h8长期收敛尚未验证。
+本次152项自动化检查通过，实际Chromium/WebGL/Worker完成8组设置流程，覆盖220项完整性、同行输入、提示、搜索、三种屏幕宽度、保存和中英文导航。详情见 [v0.6.1测试记录](docs/releases/v0.6.1/TEST_RESULTS.md)。V2物理与其研究边界见 [v0.6.0集成报告](docs/releases/v0.6.0/INTEGRATION.md)；本次没有新增长期物理或数值收敛实验。Windows Wallpaper Engine宿主仍需实机验收。

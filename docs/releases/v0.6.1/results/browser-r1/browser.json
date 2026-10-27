@@ -1,0 +1,48 @@
+{
+  "pass": true,
+  "checks": [
+    "All 220 original/extension/layout controls remain unique; the 17 common controls are in Quick Settings, with no persistent hint paragraphs",
+    "Exact saved fractional values survive; editable numbers and keyboard/pointer sliders synchronize, persist, and use borderless number fields",
+    "Circled-exclamation help opens on hover/focus, is dismissible, and Escape closes the tooltip before the panel",
+    "Search reaches all categories from Quick Settings; disabled legacy options retain accessible, current explanations",
+    "All remaining controls are in seven categories; layout values save and manual-input availability follows the existing initialization switch",
+    "At 1280, 390 and 320px widths every visible slider/value pair shares one row, fills its width, and causes no horizontal overflow",
+    "History/About tabs and reload preserve existing settings and custom layout"
+  ],
+  "layout": [
+    {
+      "width": 1280,
+      "tab": "quick",
+      "sliders": 7
+    },
+    {
+      "width": 1280,
+      "tab": "settings",
+      "sliders": 146
+    },
+    {
+      "width": 390,
+      "tab": "quick",
+      "sliders": 7
+    },
+    {
+      "width": 390,
+      "tab": "settings",
+      "sliders": 146
+    },
+    {
+      "width": 320,
+      "tab": "quick",
+      "sliders": 7
+    },
+    {
+      "width": 320,
+      "tab": "settings",
+      "sliders": 146
+    }
+  ],
+  "errors": [],
+  "controls": 220,
+  "quick": 17,
+  "limits": "Chromium/SwiftShader browser UI check; physics rules unchanged, native Windows Wallpaper Engine unavailable."
+}
