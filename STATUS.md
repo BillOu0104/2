@@ -21,3 +21,5 @@ JS逐级诊断24窗口已完成并审计，30k小样本成熟恒纪元偏低。�
 同4初值原生30k对照亦已完成。当前唯一恢复改为集成工作树tools/v2/run-js-confirmation.py，JS全新128Seed、两候选、h4/条件影子、100000年正式确认；具体协议/哈希/守卫和命令见V2 STATUS最上方，旧队列不重启。
 
 2026-10-26：JS全新128Seed×两候选正式100000年确认已全256长期/1024窗口完成，UNKNOWN0、完整各128/128，混沌联合118/124，成熟恒纪元33.99%/19.08%。全量SHA及事件账审计PASS，完整报告在集成工作树docs/integration-v2/JS_CONFIRMATION_RESULTS.md。研究未结案，当前唯一恢复队列已转同前32初值h8数值诊断tools/v2/run-js-precision.py，具体见V2 STATUS最上方；旧确认不重复积分，main未改。
+
+2026-10-28：前32匹配h8已64长期/256窗口实测完成，重审计PASS、UNKNOWN0；固定±5百分点恒纪元诊断未通过，不宣称收敛。当前唯一恢复转为集成工作树tools/v2/run-js-precision-extension.py，补齐原确认Seed32..127的同h8匹配复测，原计算src/控制不改、旧32不重算。完整报告JS_H8_RESULTS.md及新协议/哈希/命令见V2 STATUS最上方；不增加独立确认样本，main未改。
