@@ -1,0 +1,48 @@
+{
+  "status": "JS_PRECISION_H8_COMPLETE_REVIEW_REQUIRED",
+  "researchComplete": false,
+  "scope": "32 matched numerical repeats; does not increase independent confirmation size; non-significance is not equivalence",
+  "rows": 256,
+  "UNKNOWN": 0,
+  "groups": {
+    "deflect-v2": {
+      "n": 32,
+      "h8Intact": 32,
+      "h8Joint": 32,
+      "h4MatureMean": 0.31558305555555555,
+      "h8MatureMean": 0.39654530671296295,
+      "h8MinusH4Mean": 0.08096225115740742,
+      "pairedBootstrap95": [
+        -0.0727790235821759,
+        0.22949426562499986
+      ],
+      "withinPrespecified5PercentagePointDiagnosticMargin": false,
+      "stellarWilson95": [
+        0.8928208017449293,
+        1
+      ]
+    },
+    "reflect-v2": {
+      "n": 32,
+      "h8Intact": 32,
+      "h8Joint": 31,
+      "h4MatureMean": 0.1929731076388889,
+      "h8MatureMean": 0.2095473148148148,
+      "h8MinusH4Mean": 0.016574207175925927,
+      "pairedBootstrap95": [
+        -0.06394175853587963,
+        0.09150093648726844
+      ],
+      "withinPrespecified5PercentagePointDiagnosticMargin": false,
+      "stellarWilson95": [
+        0.8928208017449293,
+        1
+      ]
+    }
+  },
+  "bootstrap": {
+    "seed": 20261026,
+    "replicates": 20000
+  },
+  "next": "Review complete cost/chaos/precision evidence. If CI does not fit fixed margin, do not declare convergence; consider remaining96 matched repeats or report resource-limited uncertainty."
+}
