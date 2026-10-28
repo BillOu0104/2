@@ -77,6 +77,7 @@
 | [minimal-chaos-v2-h4-review-20261022](analyses/minimal-chaos-v2-h4-review-20261022/README.md) | 128匹配h4完整评审与同精度基准注册 | [25bee72](https://github.com/BillOu0104/2/commit/25bee7286f1871ea9c9616f88a4bbf5bd0db208a) |
 | [minimal-chaos-v2-interim-audit](analyses/minimal-chaos-v2-interim-audit/README.md) | V2阶段证据与恢复审计 | [762eea4](https://github.com/BillOu0104/2/commit/762eea4eb4f3cf084048f00046330603841d2e1f) |
 | [minimal-chaos-v2-js-confirm-complete-h8-entry-20261026](analyses/minimal-chaos-v2-js-confirm-complete-h8-entry-20261026/README.md) | JS独立长期确认完成及h8数值诊断恢复入口 | [d2c71a8](https://github.com/BillOu0104/2/commit/d2c71a826bc5aa3fba1763cbf08adf741b956c1a) |
+| [minimal-chaos-v2-js-h8-complete-extension-entry-20261028](analyses/minimal-chaos-v2-js-h8-complete-extension-entry-20261028/README.md) | JS h8完整精度复核及扩展恢复入口 | [d22b7ae](https://github.com/BillOu0104/2/commit/d22b7aef6b78e34491a1c6dc53778a865ef34674) |
 | [minimal-chaos-v2-js30-native30-handoff](analyses/minimal-chaos-v2-js30-native30-handoff/README.md) | JS与原生30k不一致及全新128Seed确认移交 | [4885118](https://github.com/BillOu0104/2/commit/48851187847fcad97b27dca53e51c9c9102395e3) |
 | [minimal-chaos-v2-long30](analyses/minimal-chaos-v2-long30/README.md) | V2完整30000年探索与负对照校准 | [102339c](https://github.com/BillOu0104/2/commit/102339ca9efcfa3b575dab447645133cef18d59b) |
 | [minimal-chaos-v2-matched-h4-review](analyses/minimal-chaos-v2-matched-h4-review/README.md) | V2同精度基准完整审计与集成移交 | [e6955bb](https://github.com/BillOu0104/2/commit/e6955bba95861c0ebd01d0a2f905c53984e4b933) |
