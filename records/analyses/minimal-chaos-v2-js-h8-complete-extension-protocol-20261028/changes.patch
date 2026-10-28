@@ -1,0 +1,285 @@
+diff --git a/tools/v2/check-js-h8-extension.py b/tools/v2/check-js-h8-extension.py
+new file mode 100644
+index 00000000..4a00890f
+--- /dev/null
++++ b/tools/v2/check-js-h8-extension.py
+@@ -0,0 +1,33 @@
++#!/usr/bin/env python3
++"""Validate real frozen inputs and synthetic aggregation only; no physical experiments."""
++import copy,json,pathlib,runpy,tempfile
++M=runpy.run_path('tools/v2/run-js-precision-extension.py')
++s,expected=M['spec']()
++ids=[i for p in s['configs'] for c in [json.load(open(p))] for i in range(c['start'],c['start']+c['seeds'])]
++assert ids==list(range(32,128)) and len(set(ids))==96
++assert len(s['baseConfigs'])==16
++# Synthetic constant offset checks combining all32 prior and96 extension seeds,
++# sign/units/sample size, and rejection of duplicate/missing outcome keys.
++def fixture(c,offset):
++ return [dict(seed=c['prefix']+'-'+str(i),mode=mode,horizon=h,
++              matureStableFraction=.2+offset,stellarIntact=True,joint=True,numericalUNKNOWN=None)
++         for i in range(c['start'],c['start']+c['seeds']) for mode in c['modes'] for h in c['horizons']]
++G=M['review'].__globals__;original_audit=G['audit'];original_f=G['F']
++f=copy.copy(original_f);f['audit']=lambda c,*args:fixture(c,0)
++try:
++ G['audit']=lambda c,*args:fixture(c,.01);G['F']=f
++ rows=[r for p in s['configs'] for r in fixture(json.load(open(p)),.01)]
++ with tempfile.TemporaryDirectory(prefix='v2-h8-extension-review-') as td:
++  d=pathlib.Path(td);M['review'](s,copy.deepcopy(rows),d);r=json.load(open(d/'review.json'))
++  assert r['rows']==1024
++  for v in r['groups'].values():
++   assert v['n']==128 and v['h8Intact']==128 and v['h8Joint']==128
++   assert abs(v['h8MinusH4Mean']-.01)<1e-12
++   assert all(abs(x-.01)<1e-12 for x in v['pairedBootstrap95'])
++   assert v['withinPrespecified5PercentagePointDiagnosticMargin']
++  invalid=copy.deepcopy(rows);invalid[-1]=copy.deepcopy(invalid[0])
++  try:M['review'](s,invalid,d)
++  except AssertionError:pass
++  else:raise AssertionError('Duplicate key was not rejected')
++finally:G['audit']=original_audit;G['F']=original_f
++print(json.dumps({'check':'PASS','realFrozenInputs':'all original h4/h8 source/config/raw/state/initial/step audits PASS','extensionSeeds':96,'range':[32,127],'aggregationTest':'SYNTHETIC constant +1 percentage point on128 keys; duplicate rejection; NOT simulated research data','sourceHashPreview':expected['sourceHash']}))
+diff --git a/tools/v2/review-js-h8-costs.py b/tools/v2/review-js-h8-costs.py
+new file mode 100644
+index 00000000..1234753b
+--- /dev/null
++++ b/tools/v2/review-js-h8-costs.py
+@@ -0,0 +1,70 @@
++#!/usr/bin/env python3
++"""Post-confirmation review, preserving the frozen preregistered analysis."""
++import collections, csv, datetime, hashlib, json, math, pathlib, runpy, statistics
++import numpy as np
++import matplotlib
++matplotlib.use('Agg')
++import matplotlib.pyplot as plt
++ROOT=pathlib.Path(__file__).resolve().parents[2]
++H=runpy.run_path(str(ROOT/'tools/v2/run-js-precision.py'))
++F=H['F'];s,expected=H['spec']();base=pathlib.Path(s['output'])
++mf=json.load(open(base/'manifest.json'));assert all(mf[k]==v for k,v in expected.items())
++rows=[]
++for config in s['configs']:
++ c=json.load(open(config));rows+=H['audit'](c,json.load(open(pathlib.Path(c['output'])/'manifest.json')),s)
++assert len(rows)==256
++rr=sorted((r for r in rows if r['horizon']==100000),key=lambda r:(r['mode'],int(r['seed'].rsplit('-',1)[1])))
++assert len(rr)==64 and not any(r['numericalUNKNOWN'] for r in rr)
++out=pathlib.Path('docs/integration-v2/results/js-h8-review-20261028');assert not out.exists();out.mkdir()
++detail=[];gates=collections.defaultdict(list);bins=collections.defaultdict(list)
++norm=lambda a:math.sqrt(sum(x*x for x in a))
++for r in rr:
++ raw=json.load(open(r['rawFile']));cp=json.load(open(r['checkpoint']));c=cp['simulation']['controlled'];E0=abs(c['initialEnergy'])
++ L0=[sum(b['mass']*(b[a]*b[v]-b[z]*b[u]) for b in raw['initialBodies']) for a,z,u,v in [('y','z','vy','vz'),('z','x','vz','vx'),('x','y','vx','vy')]]
++ events=[e['detail'] for e in raw['metrics']['events'] if e['type'] in ['physics:capture','physics:deflect','physics:reflect']]
++ assert len(events)==r['control']['projectionEvents']
++ for key in ['work','absoluteWork','impulse']:
++  measured=math.fsum(e[key] for e in events)
++  assert abs(measured-r['control'][key])<=1e-6+1e-9*max(abs(measured),r['control']['absoluteWork']), (r['seed'],key)
++ for key in ['deltaP','deltaL']:
++  for k in range(3):
++   measured=math.fsum(e[key][k] for e in events)
++   assert abs(measured-r['control'][key][k])<=1e-6+1e-9*max(abs(measured),r['control']['cumulativeBodyAngularImpulse'])
++ assert max((e['peakNetVelocityJump'] for e in events),default=0)==r['control']['peakNetVelocityJump']
++ failed=[]
++ for label,ok in [('FTLE',r['matureConditionalFTLE']>.003),('tightPairChanges',r['tightPairChanges']>=20),('dynamicHierarchy',r['longestDynamicalHierarchyYears']<1000),('geometricIsolation',r['longestHierarchyYears']<=5000),('nonhierFraction',r['matureNonhierFraction']>=.1)]:
++  if not ok:failed.append(label)
++ assert r['joint']==(r['stellarIntact'] and not failed)
++ if failed:gates[r['mode']].append({'seed':r['seed'],'failedGates':failed,'matureStableFraction':r['matureStableFraction'],'FTLE':r['matureConditionalFTLE'],'longestIsolation':r['longestHierarchyYears'],'longestDynamicHierarchy':r['longestDynamicalHierarchyYears'],'matureNonhierFraction':r['matureNonhierFraction'],'tightPairChanges':r['tightPairChanges']})
++ row={k:r[k] for k in ['seed','mode','stellarIntact','joint','stableFraction','matureStableFraction','matureConditionalFTLE','tightPairChanges','longestHierarchyYears','longestDynamicalHierarchyYears','matureNonhierFraction','planetLosses','planetRespawns','originalPlanetSurvived','originalCivilizationSurvived','absentFraction','civilizationAliveFraction','civilizationActiveFraction','controlObservedActiveFrameFraction','matureStablePostRespawn25Contribution','maxNumericalEnergyResidual','wallSeconds','maxRSSMiB','steps']}
++ row.update(controlWorkOverE0=r['control']['work']/E0,controlAbsoluteWorkOverE0=r['control']['absoluteWork']/E0,controlImpulse=r['control']['impulse'],controlDeltaLNormOverL0=norm(r['control']['deltaL'])/max(norm(L0),1e-20),controlCumulativeBodyAngularImpulseOverL0=r['control']['cumulativeBodyAngularImpulse']/max(norm(L0),1e-20),controlPeakNetVelocityJump=r['control']['peakNetVelocityJump'],controlEvents=len(events),planetExternalWork=r['planetExternal']['work'],planetExternalAbsoluteWork=r['planetExternal']['absoluteWork'],planetExternalImpulseMagnitudeChange=r['planetExternal']['impulse'],failedGates=';'.join(failed))
++ detail.append(row)
++ previous=0
++ for b in raw['metrics']['bins']:
++  if b['year'] in [10000,30000,100000]:
++   bins[r['mode']].append({'seed':r['seed'],'endYear':b['year'],'startYear':previous,'stableFrames':b['stableFrames']})
++  previous=b['year']
++def dist(values):
++ a=np.array(values,dtype=float);return {'n':len(a),'mean':float(a.mean()),'min':float(a.min()),'median':float(np.median(a)),'p90':float(np.quantile(a,.9)),'max':float(a.max())}
++review={'timeUTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),'sourceHash':mf['sourceHash'],'auditedWindowRows':256,'auditedLongRows':64,'UNKNOWN':0,'projectionEventAudit':'all per-event work/absoluteWork/impulse/P/L sums and peak net velocity jump agree with cumulative ledgers within recorded rounding tolerance','groups':{},'chaosInsufficient':dict(gates),'limits':['Observed-active FRAME fraction is not physical pulse-duration duty cycle. Finite acceleration undefined without a pulse duration.','Planet external impulse is the sum of absolute changes of momentum MAGNITUDE; it is not the full vector-jump impulse and can underestimate it. Existing signed/absolute energy and deltaP/deltaL ledgers are separate. Do not relabel this quantity as complete P5 impulse.','Energy residual is yearly sampled, not a continuous bound or proof of long-term statistics convergence.','RSS is endpoint process RSS, not a measured process-wide peak; wall time includes checkpoint activity and shared-CPU execution.','Formal source/configuration frozen; post-hoc cost review does not change the preregistered outcomes.']}
++for mode in ['deflect-v2','reflect-v2']:
++ dr=[r for r in detail if r['mode']==mode]
++ review['groups'][mode]={k:dist([r[k] for r in dr]) for k in dr[0] if k not in ['seed','mode','failedGates']}
++F['write'](out/'review.json',review)
++with (out/'all-seeds.csv').open('w',newline='') as f:
++ w=csv.DictWriter(f,fieldnames=list(detail[0]));w.writeheader();w.writerows(detail)
++provenance={'sourceCommit':F['git']('rev-parse','HEAD'),'sourceHash':mf['sourceHash'],'audit':'PASS','rows':256,'inputs':{}}
++for p in [str(base/'manifest.json'),str(base/'review.json'),*map(str,base.rglob('endpoints/*.json'))]:provenance['inputs'][p]=F['sha'](p)
++F['write'](out/'provenance.json',provenance)
++fig,axes=plt.subplots(1,3,figsize=(14,4),layout='constrained')
++for mode,color in [('deflect-v2','#167d9a'),('reflect-v2','#cf6931')]:
++ d=[r for r in detail if r['mode']==mode]
++ axes[0].scatter([r['controlAbsoluteWorkOverE0'] for r in d],[100*r['matureStableFraction'] for r in d],label=mode,s=15,alpha=.65,color=color)
++ axes[1].scatter([r['controlDeltaLNormOverL0'] for r in d],[r['matureConditionalFTLE'] for r in d],label=mode,s=15,alpha=.65,color=color)
++ axes[2].plot(np.arange(1,33)/32,np.sort([100*r['matureStableFraction'] for r in d]),label=mode,color=color)
++axes[0].set(xscale='symlog',xlabel='Cumulative absolute control work / |E0|',ylabel='Mature stable epoch (%)')
++axes[1].set(xscale='symlog',xlabel='Norm of net control delta L / |L0|',ylabel='Conditional stellar FTLE / year');axes[1].axhline(.003,color='gray',ls=':')
++axes[2].set(xlabel='Empirical quantile',ylabel='Mature stable epoch (%)');axes[2].axhspan(10,15,color='gray',alpha=.15)
++axes[0].legend();fig.suptitle('JS h8: 32 repeated matched seeds, actual 100,000 display years; all outcomes retained')
++fig.savefig(out/'tradeoffs.png',dpi=180);fig.savefig(out/'tradeoffs.svg');plt.close(fig)
++print(json.dumps({'review':'PASS','longRows':len(rr),'UNKNOWN':0,'output':str(out),'chaosInsufficient':{k:len(v) for k,v in gates.items()}}))
+diff --git a/tools/v2/run-js-precision-extension.py b/tools/v2/run-js-precision-extension.py
+new file mode 100644
+index 00000000..5ca5363d
+--- /dev/null
++++ b/tools/v2/run-js-precision-extension.py
+@@ -0,0 +1,164 @@
++#!/usr/bin/env python3
++"""Remaining96 h8 repeats after inconclusive first32; frozen physics, combined128 review."""
++import argparse, datetime, fcntl, hashlib, json, os, pathlib, runpy, subprocess, time
++ROOT=pathlib.Path(__file__).resolve().parents[2];os.chdir(ROOT)
++F=runpy.run_path(str(ROOT/'tools/v2/run-js-confirmation.py'))
++sha,write,now=F['sha'],F['write'],F['now']
++STUDY='docs/integration-v2/js-precision-h8-extension-v1/study.json'
++BRANCH='integration/minimal-chaos-control-v2'
++def spec():
++ assert F['git']('branch','--show-current')==BRANCH
++ s=json.load(open(STUDY));assert s['designation']=='JS_H8_NUMERICAL_EXTENSION_V1' and s['seeds']==96
++ assert s['precision']=={'maxStep':.00009375,'eta':.0009375}
++ # Preserve and revalidate every frozen computing input from the completed study.
++ old=json.load(open(s['priorH8Manifest']))
++ for p,h in old['files'].items():assert sha(p)==h,('Frozen confirmation source changed',p)
++ files=list(old['files'])+[STUDY,s['protocol'],'tools/v2/run-js-precision-extension.py','tools/v2/check-js-h8-extension.py',s['priorH8Manifest'],s['priorH8Review']]
++ prior=json.load(open(s['priorH8Study']))
++ for p in prior['configs']:
++  c=json.load(open(p));m=json.load(open(pathlib.Path(c['output'])/'manifest.json'));rr=audit(c,m,prior)
++  assert len(rr)==64 and not any(r['numericalUNKNOWN'] for r in rr)
++  files+=list(map(str,F['endpoints'](c)))
++ for i,p in enumerate(s['configs']):
++  c=json.load(open(p));assert c['start']==32+8*i and c['seeds']==8 and c['precision']==s['precision']
++  assert c['modes']==['deflect-v2','reflect-v2'] and c['horizons']==[1000,10000,30000,100000]
++  assert c['prefix']==s['prefix'] and c['initialRegistry']==s['initialRegistry'];files.append(p)
++ assert len(s['configs'])==12
++ # Freeze all256 matched h4 outcomes, including failures of chaos gates.
++ for config in s['baseConfigs']:
++  c=json.load(open(config));bm=json.load(open(pathlib.Path(c['output'])/'manifest.json'))
++  rows=F['audit'](c,bm,json.load(open(s['initialRegistry'])))
++  assert len(rows)==64 and not any(r['numericalUNKNOWN'] for r in rows)
++  files+=list(map(str,F['endpoints'](c)))
++ hashes={p:sha(p) for p in files};h=hashlib.sha256()
++ for p,v in hashes.items():h.update(p.encode()+b'\0'+bytes.fromhex(v))
++ return s,{'sourceHash':h.hexdigest(),'files':hashes,'studyHash':sha(STUDY)}
++def audit(c,mf,s):
++ rows=F['audit'](c,mf,json.load(open(s['initialRegistry'])))
++ for r in rows:
++  raw=json.load(open(r['rawFile']));cp=json.load(open(r['checkpoint']))
++  assert r['precision']==raw['precision']==cp['precision']==s['precision']
++  assert r['steps']>=80*cp['simulation']['controlled']['frame']
++ return rows
++def push(d,label):
++ with (d/(label+'.push.log')).open('a') as f:
++  try:
++   r=subprocess.run(['git','-c','pack.windowMemory=128m','-c','pack.threads=1','-c','http.postBuffer=536870912','push','origin',BRANCH],stdout=f,stderr=subprocess.STDOUT,timeout=180)
++   return {'confirmed':r.returncode==0,'returncode':r.returncode,'commit':F['git']('rev-parse','HEAD'),'time':now()}
++  except Exception as e:return {'confirmed':False,'error':str(e),'time':now()}
++def archive(d,c,rows):
++ closed=F['endpoints'](c);tracked=set(F['git']('ls-files','--',str(pathlib.Path(c['output'])/'endpoints')).splitlines())
++ new=[p for p in closed if str(p) not in tracked];label=c['id']+f'-e{len(closed):03}'
++ proof=d/'archives'/(label+'.json');rid='minimal-chaos-v2-js-h8-extension-'+label;record=pathlib.Path('records/analyses')/rid
++ if not new and record.exists():
++  if not F['git']('ls-files','--',str(record/'record.json')):
++   F['run']('python3','tools/records.py','check');F['run']('git','add','records');F['run']('git','commit','-qm','records: complete interrupted h8 archive '+label);return push(d,label)
++  return None
++ if new:
++  assert subprocess.run(['git','diff','--cached','--quiet']).returncode==0,'Unexpected staged changes'
++  previous=F['git']('rev-parse','HEAD');paths=[]
++  for p in new:
++   r=json.load(open(p));paths += [str(p),r['rawFile'],r['checkpoint']]
++  write(proof,{'scope':'Matched h8 numerical diagnosis; not new independent seeds','time':now(),'sourceHash':rows[0]['sourceHash'],'previous':previous,'keys':[[r['seed'],r['mode'],r['horizon']] for r in rows]})
++  F['run']('git','add','--',*paths,str(proof));F['run']('git','commit','-qm','research: checkpoint JS h8 diagnosis '+label)
++ elif not proof.exists():return None
++ ref=F['git']('log','-1','--format=%H','--',str(proof))
++ if not record.exists():
++  previous=json.load(open(proof))['previous']
++  F['run']('python3','tools/records.py','capture','--kind','analysis','--id',rid,'--ref',ref,'--previous',previous,'--title','JS同初值h8数值诊断 '+label,'--summary','剩余96确认Seed重复精度，不作新独立确认；只收已完成端点和完整原始/主影子状态，保留全部失败UNKNOWN及成本，main未改。')
++  F['run']('python3','tools/records.py','check');F['run']('git','add','records');F['run']('git','commit','-qm','records: archive JS h8 '+label)
++ return push(d,label)
++def review(s,rows,d):
++ import numpy as np
++ prior=json.load(open(s['priorH8Study']))
++ for p in prior['configs']:
++  c=json.load(open(p));rows+=audit(c,json.load(open(pathlib.Path(c['output'])/'manifest.json')),prior)
++ assert len(rows)==1024 and len({(r['seed'],r['mode'],r['horizon']) for r in rows})==1024
++ old=[]
++ for config in s['baseConfigs']:
++  c=json.load(open(config));old+=F['audit'](c,json.load(open(pathlib.Path(c['output'])/'manifest.json')),json.load(open(s['initialRegistry'])))
++ base={(r['seed'],r['mode']):r for r in old if r['horizon']==100000}
++ idx=np.random.default_rng(20261026).integers(0,128,size=(20000,128));groups={}
++ for mode in ['deflect-v2','reflect-v2']:
++  rr=sorted([r for r in rows if r['horizon']==100000 and r['mode']==mode],key=lambda r:int(r['seed'].rsplit('-',1)[1]))
++  assert len(rr)==128 and not any(r['numericalUNKNOWN'] for r in rr)
++  delta=np.array([r['matureStableFraction']-base[(r['seed'],mode)]['matureStableFraction'] for r in rr]);ci=np.quantile(delta[idx].mean(axis=1),[.025,.975]).tolist()
++  groups[mode]={'n':128,'h8Intact':sum(r['stellarIntact'] for r in rr),'h8Joint':sum(r['joint'] for r in rr),'h4MatureMean':float(np.mean([base[(r['seed'],mode)]['matureStableFraction'] for r in rr])),'h8MatureMean':float(np.mean([r['matureStableFraction'] for r in rr])),'h8MinusH4Mean':float(delta.mean()),'pairedBootstrap95':ci,'withinPrespecified5PercentagePointDiagnosticMargin':ci[0]>=-.05 and ci[1]<=.05,'stellarWilson95':F['wilson'](sum(r['stellarIntact'] for r in rr),128)}
++ write(d/'review.json',{'status':'JS_PRECISION_H8_EXTENSION_COMPLETE_REVIEW_REQUIRED','researchComplete':False,'scope':'128 matched numerical repeats (32 original plus96 extension); does not increase independent confirmation size; non-significance is not equivalence','rows':len(rows),'UNKNOWN':0,'groups':groups,'bootstrap':{'seed':20261026,'replicates':20000},'next':'Review complete cost/chaos/precision evidence. If CI does not fit fixed margin, do not declare convergence; retain uncertainty; evaluate additional precision only with a new protocol, never relabel non-significance as equivalence.'})
++def main():
++ ap=argparse.ArgumentParser();ap.add_argument('--register',action='store_true');ap.add_argument('--audit-only',action='store_true');a=ap.parse_args()
++ s,expected=spec();d=pathlib.Path(s['output']);d.mkdir(parents=True,exist_ok=True);mp=d/'manifest.json';sp=d/'supervise.state.json'
++ if a.register:
++  F['run']('git','diff','--quiet','HEAD','--',*expected['files']);F['run']('git','ls-files','--error-unmatch','--',*expected['files'],stdout=subprocess.DEVNULL)
++  if mp.exists():assert {k:json.load(open(mp))[k] for k in expected}==expected
++  else:write(mp,{**expected,'sourceCommit':F['git']('rev-parse','HEAD'),'registered':now()})
++  registered=json.load(open(mp))
++  for p in s['configs']:
++   c=json.load(open(p));bm={**expected,'sourceCommit':registered['sourceCommit'],'configHash':sha(p)};target=pathlib.Path(c['output'])/'manifest.json'
++   if target.exists():assert json.load(open(target))==bm
++   else:write(target,bm)
++  print(json.dumps({'registration':'PASS','sourceHash':expected['sourceHash']}));return
++ assert {k:json.load(open(mp))[k] for k in expected}==expected
++ if a.audit_only:
++  rows=[]
++  for p in s['configs']:
++   c=json.load(open(p));rows+=audit(c,json.load(open(pathlib.Path(c['output'])/'manifest.json')),s)
++  print(json.dumps({'audit':'PASS','rows':len(rows),'UNKNOWN':sum(bool(r['numericalUNKNOWN']) for r in rows)}));return
++ with (d/'supervise.lock').open('a+') as lock:
++  try:fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
++  except BlockingIOError:print('already-active');return
++  for folder in ['/workspace/2/docs/research-v2/results','docs/integration-v2/results']:
++   for p in pathlib.Path(folder).rglob('*.lock'):
++    if p.resolve()==(d/'supervise.lock').resolve():continue
++    with p.open() as f:
++     try:fcntl.flock(f,fcntl.LOCK_EX|fcntl.LOCK_NB)
++     except BlockingIOError:print('other-active',p);return
++  state=json.load(open(sp)) if sp.exists() else {'started':now(),'researchComplete':False,'completed':[]}
++  if state.get('status')=='JS_PRECISION_H8_EXTENSION_COMPLETE_REVIEW_REQUIRED':print('completed; review required; no integration restarted');return
++  assert state.get('status')!='STOPPED_REVIEW_REQUIRED','Review preserved error/UNKNOWN first'
++  lock.seek(0);lock.truncate();json.dump({'pid':os.getpid(),'study':STUDY,'started':now()},lock);lock.flush();os.fsync(lock.fileno())
++  workers=[];allrows=[];c=None;bm=None
++  try:
++   state['recoveryPush']=push(d,'recovery-current')
++   for p in s['configs']:
++    assert spec()[1]==expected;c=json.load(open(p));bm=json.load(open(pathlib.Path(c['output'])/'manifest.json'));rows=audit(c,bm,s)
++    assert not any(r['numericalUNKNOWN'] for r in rows)
++    state.update(status='RUNNING',batch=c['id'],updated=now(),sourceHash=expected['sourceHash'],rows=len(allrows)+len(rows),expectedRows=768);write(sp,state)
++    if len(rows)<64:
++     for shard in range(2):
++      f=open(pathlib.Path(c['output'])/f'worker{shard}.log','a');worker=subprocess.Popen(['node','tools/v2/batch-precision-v2.mjs',p,str(shard),'2'],stdout=f,stderr=subprocess.STDOUT,pass_fds=(lock.fileno(),));workers.append((worker,f))
++     state['workers']=[w.pid for w,_ in workers];write(sp,state);last=time.monotonic()
++     while any(w.poll() is None for w,_ in workers):
++      time.sleep(10);codes=[w.poll() for w,_ in workers]
++      if any(code not in [None,0] for code in codes):
++       if any(code is not None and code<0 for code in codes):raise InterruptedError('Worker signal; complete same-version checkpoint retained')
++       raise RuntimeError('Worker error/UNKNOWN; review preserved logs '+repr(codes))
++      state.update(updated=now(),rows=len(allrows)+len(F['endpoints'](c)));write(sp,state)
++      if time.monotonic()-last>=600:
++       saved=archive(d,c,audit(c,bm,s))
++       if saved:state['lastPush']=saved;write(sp,state)
++       last=time.monotonic()
++     for _,f in workers:f.close()
++     workers=[]
++    rows=audit(c,bm,s);assert len(rows)==64 and not any(r['numericalUNKNOWN'] for r in rows)
++    saved=archive(d,c,rows);allrows+=rows
++    state.update(rows=len(allrows),updated=now());state['completed']=sorted(set(state['completed']+[c['id']]))
++    if saved:state['lastPush']=saved
++    write(sp,state)
++   review(s,allrows,d);previous=F['git']('rev-parse','HEAD');F['run']('git','add','--',str(d/'review.json'));F['run']('git','commit','-qm','research: preserve matched JS h8 diagnostic statistics')
++   F['run']('python3','tools/records.py','capture','--kind','analysis','--id','minimal-chaos-v2-js-h8-extension-final-review','--ref','HEAD','--previous',previous,'--title','JS同初值h8数值诊断统计','--summary','合计128重复Seed两候选，含固定配对区间与5个百分点诊断边界，非新确认，全部失败/UNKNOWN保留。')
++   F['run']('python3','tools/records.py','check');F['run']('git','add','records');F['run']('git','commit','-qm','records: archive JS h8 diagnostic statistics');state['lastPush']=push(d,'final-review')
++   state.update(status='JS_PRECISION_H8_EXTENSION_COMPLETE_REVIEW_REQUIRED',updated=now());write(sp,state)
++  except BaseException as e:
++   for w,f in workers:
++    if w.poll() is None:w.terminate()
++    try:w.wait(timeout=30)
++    except subprocess.TimeoutExpired:w.kill();w.wait()
++    f.close()
++   try:
++    if c is not None and spec()[1]==expected:
++     saved=archive(d,c,audit(c,bm,s))
++     if saved:state['lastPush']=saved
++   except Exception as err:state['errorArchive']=str(err)
++   state.update(status='INTERRUPTED_RESUMABLE' if isinstance(e,(KeyboardInterrupt,InterruptedError)) else 'STOPPED_REVIEW_REQUIRED',error=str(e),updated=now());write(sp,state);raise
++if __name__=='__main__':main()

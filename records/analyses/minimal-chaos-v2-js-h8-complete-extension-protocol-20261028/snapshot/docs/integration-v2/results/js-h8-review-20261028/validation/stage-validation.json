@@ -1,0 +1,30 @@
+{
+  "timeUTC": "2026-10-28T09:16:54.779183+00:00",
+  "h8Audit": {
+    "command": "python3 tools/v2/run-js-precision.py --audit-only",
+    "exitCode": 0,
+    "rows": 256,
+    "UNKNOWN": 0
+  },
+  "costAudit": {
+    "command": "MPLCONFIGDIR=/tmp/mpl-v2-h8-review python3 tools/v2/review-js-h8-costs.py",
+    "exitCode": 0,
+    "longRows": 64,
+    "projectionEventSums": "PASS",
+    "renderWarning": "Fontconfig reported No writable cache directories; both figures were nevertheless generated successfully"
+  },
+  "pairedStatisticsRecompute": "PASS exact saved95CI and means",
+  "srcChanges": "none",
+  "limits": "Synthetic aggregation test is not simulated physics; P5 vector-jump impulse and real Wallpaper Engine host remain unverified",
+  "extensionProtocolRegistration": "PASS",
+  "extensionSourceHash": "d0ff7541e9a63b0599c5eda700345524edfdf769d0bb0d451df15da781fc60bd",
+  "newComputingWorker": "unchanged tools/v2/batch-precision-v2.mjs",
+  "newDriverTests": "PASS real frozen h4/h8 audits, continuous96 partition, synthetic128 aggregation/CI sign and duplicate rejection",
+  "formatGate": "generated artifact whitespace preserved with failure log; hand-authored source/config/document whitespace check PASS",
+  "initialExtensionAudit": {
+    "audit": "PASS",
+    "rows": 0,
+    "UNKNOWN": 0,
+    "scope": "no new physical outcome yet"
+  }
+}

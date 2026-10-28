@@ -1,0 +1,1477 @@
+{
+  "format": 1,
+  "id": "minimal-chaos-v2-js-h8-complete-extension-protocol-20261028",
+  "path": "analyses/minimal-chaos-v2-js-h8-complete-extension-protocol-20261028",
+  "kind": "analysis",
+  "version": null,
+  "title": "JS h8前32完整复核及剩余96冻结协议",
+  "summary": "256窗口64真实100k源/配置/raw/state/初值审计及事件账PASS、UNKNOWN0。固定±5百分点诊断均未通过；完整成本/混沌不足/P5限制保留，新扩展96匹配初值冻结，测试/初始0端点审计PASS，不改原引擎/main。生成证据空白与首次登记失败均保留。",
+  "source_commit": "d8a08cfcd9621cf039ae2980282bb1633a11b89b",
+  "previous_commit": "2acaed74df9f8875cc201c3fbbb307fcb32a04a8",
+  "source_repository": "https://github.com/BillOu0104/2",
+  "source_subject": "research: register h8 extension frozen hashes and reviewed evidence",
+  "source_date": "2026-10-28T09:19:56Z",
+  "archived_at": "2026-10-28T09:19:57.926861+00:00",
+  "runtime_fingerprint": null,
+  "deleted_paths": [],
+  "files": [
+    {
+      "source_path": "docs/integration-v2/EXPERIMENT_LOG.md",
+      "archive_path": "snapshot/docs/integration-v2/EXPERIMENT_LOG.md",
+      "sha256": "1af4b0ce83859949c3ab16a2efbf81c7e77c9b2e248152022237d46da6c1e0e3",
+      "bytes": 1201
+    },
+    {
+      "source_path": "docs/integration-v2/INTEGRATION_REPORT.md",
+      "archive_path": "snapshot/docs/integration-v2/INTEGRATION_REPORT.md",
+      "sha256": "2990a006a66d26b9a825a5874fa9876b05376c856ac7fd754f1211039099e04c",
+      "bytes": 6811
+    },
+    {
+      "source_path": "docs/integration-v2/JS_H8_RESULTS.md",
+      "archive_path": "snapshot/docs/integration-v2/JS_H8_RESULTS.md",
+      "sha256": "f0ce0b1307e5e8ee50649530f152cb0106cad73e635796e0518eec351e3cd442",
+      "bytes": 3681
+    },
+    {
+      "source_path": "docs/integration-v2/JS_PRECISION_H8_EXTENSION_PROTOCOL.md",
+      "archive_path": "snapshot/docs/integration-v2/JS_PRECISION_H8_EXTENSION_PROTOCOL.md",
+      "sha256": "68fedaced4af1de1904ea916ffd55f63a53223156b0c587c82ba98d9ba8fd9a4",
+      "bytes": 4048
+    },
+    {
+      "source_path": "docs/integration-v2/STATUS.md",
+      "archive_path": "snapshot/docs/integration-v2/STATUS.md",
+      "sha256": "8dd2e39cfe9420360d6b9f6510654db7b4af09ccd16562cbcf49922925ac4539",
+      "bytes": 17730
+    },
+    {
+      "source_path": "docs/integration-v2/js-precision-h8-extension-v1/study.json",
+      "archive_path": "snapshot/docs/integration-v2/js-precision-h8-extension-v1/study.json",
+      "sha256": "cb5cd33e4a48f63ea76af611e0890278806524315d01934c415a201bcf514848",
+      "bytes": 2430
+    },
+    {
+      "source_path": "docs/integration-v2/js-precision-h8-extension-v1/x00.json",
+      "archive_path": "snapshot/docs/integration-v2/js-precision-h8-extension-v1/x00.json",
+      "sha256": "e552a10a6b5ff87283b22099e0b73e911569a8b0057f8e9c405e509b9ffaeed5",
+      "bytes": 484
+    },
+    {
+      "source_path": "docs/integration-v2/js-precision-h8-extension-v1/x01.json",
+      "archive_path": "snapshot/docs/integration-v2/js-precision-h8-extension-v1/x01.json",
+      "sha256": "e012705cfa1d9fd86f6c6494f023ec1f6cd24cf196e6d9138ef4dcb47de8c4f7",
+      "bytes": 484
+    },
+    {
+      "source_path": "docs/integration-v2/js-precision-h8-extension-v1/x02.json",
+      "archive_path": "snapshot/docs/integration-v2/js-precision-h8-extension-v1/x02.json",
+      "sha256": "4048bb3d18bfb2d280df1271eb0cfbf5b28f7f6656737e059cd7e624a705fdbe",
+      "bytes": 484
+    },
+    {
+      "source_path": "docs/integration-v2/js-precision-h8-extension-v1/x03.json",
+      "archive_path": "snapshot/docs/integration-v2/js-precision-h8-extension-v1/x03.json",
+      "sha256": "dde75e84f391830a8d92dd1bdf92c85af2fa23903c6133dafa05811407823c89",
+      "bytes": 484
+    },
+    {
+      "source_path": "docs/integration-v2/js-precision-h8-extension-v1/x04.json",
+      "archive_path": "snapshot/docs/integration-v2/js-precision-h8-extension-v1/x04.json",
+      "sha256": "2bfe5dc1514ae8f93e29b38c80d127d1f090ecef1a5ccfbe4765007df6879151",
+      "bytes": 484
+    },
+    {
+      "source_path": "docs/integration-v2/js-precision-h8-extension-v1/x05.json",
+      "archive_path": "snapshot/docs/integration-v2/js-precision-h8-extension-v1/x05.json",
+      "sha256": "156ddc943b44861c8a7e5389f7bc223471f0e4b40b68b7885dd0cc6feae3f6b8",
+      "bytes": 484
+    },
+    {
+      "source_path": "docs/integration-v2/js-precision-h8-extension-v1/x06.json",
+      "archive_path": "snapshot/docs/integration-v2/js-precision-h8-extension-v1/x06.json",
+      "sha256": "c0c893f71ca06084f081fd03098e56d96a5eb1e6b62a77b19225210b73e73544",
+      "bytes": 484
+    },
+    {
+      "source_path": "docs/integration-v2/js-precision-h8-extension-v1/x07.json",
+      "archive_path": "snapshot/docs/integration-v2/js-precision-h8-extension-v1/x07.json",
+      "sha256": "5f50ed6efab835838494913ca18f8bee2ef37a143b4c6c5d1b1f08cfaef11e8f",
+      "bytes": 484
+    },
+    {
+      "source_path": "docs/integration-v2/js-precision-h8-extension-v1/x08.json",
+      "archive_path": "snapshot/docs/integration-v2/js-precision-h8-extension-v1/x08.json",
+      "sha256": "833a1b21966dd787b4c03917989a5f21063211be5a262af629a7ebfbd6869474",
+      "bytes": 484
+    },
+    {
+      "source_path": "docs/integration-v2/js-precision-h8-extension-v1/x09.json",
+      "archive_path": "snapshot/docs/integration-v2/js-precision-h8-extension-v1/x09.json",
+      "sha256": "8d5596a0a8f1964907f523799da1a3371ecb2156b6cb46a0fea1e2edb2fefadc",
+      "bytes": 485
+    },
+    {
+      "source_path": "docs/integration-v2/js-precision-h8-extension-v1/x10.json",
+      "archive_path": "snapshot/docs/integration-v2/js-precision-h8-extension-v1/x10.json",
+      "sha256": "8680eede01acfe5cc3e9863f15a8ac032fc1c507efd75866ddbf37f68cba1a6a",
+      "bytes": 485
+    },
+    {
+      "source_path": "docs/integration-v2/js-precision-h8-extension-v1/x11.json",
+      "archive_path": "snapshot/docs/integration-v2/js-precision-h8-extension-v1/x11.json",
+      "sha256": "a01b9a8a9e461c4c51d315da1a9e1e2aff56960dc7f1b03bc567f21545c650cf",
+      "bytes": 485
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-h8-review-20261028/all-seeds.csv",
+      "archive_path": "snapshot/docs/integration-v2/results/js-h8-review-20261028/all-seeds.csv",
+      "sha256": "605e7d8109ee54015d82a023231236c8761e97fbaf4a7b4b7eab146508becf6f",
+      "bytes": 31575
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-h8-review-20261028/provenance.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-h8-review-20261028/provenance.json",
+      "sha256": "d35f6f290ee4cd12a2d6adb2e7fb11c9e8dd93b9e66b2f6d89fb6e513776bda5",
+      "bytes": 47495
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-h8-review-20261028/review.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-h8-review-20261028/review.json",
+      "sha256": "25331177e853e7cedece8129e9cdad59e5a9c9acbdcc243d6fbf52d1c5a3fd11",
+      "bytes": 15473
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-h8-review-20261028/tradeoffs.png",
+      "archive_path": "snapshot/docs/integration-v2/results/js-h8-review-20261028/tradeoffs.png",
+      "sha256": "c289a6719131055add659483767e0dc4a45218e355bc0c00bc6ee27b2cf1d043",
+      "bytes": 153204
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-h8-review-20261028/tradeoffs.svg",
+      "archive_path": "snapshot/docs/integration-v2/results/js-h8-review-20261028/tradeoffs.svg",
+      "sha256": "ad87f81a3dbbe5323f1ab44c273574084faa5ebe4389ef9d13f258a284ac213c",
+      "bytes": 82186
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-h8-review-20261028/validation/artifact-format-review.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-h8-review-20261028/validation/artifact-format-review.json",
+      "sha256": "4565b6d0624275b74646f827800e1f11b308a108bb85cf8c4045c4253aa44a54",
+      "bytes": 504
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-h8-review-20261028/validation/extension-audit-initial.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-h8-review-20261028/validation/extension-audit-initial.log",
+      "sha256": "0df7622bb89fd96b84266574065390e319c734fe5f91a26c4da6d266079dfc50",
+      "bytes": 43
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-h8-review-20261028/validation/extension-check.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-h8-review-20261028/validation/extension-check.log",
+      "sha256": "1cf8951790647d484c05f2284d2879da5d30f167bd188877a0980aabc497c0bd",
+      "bytes": 362
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-h8-review-20261028/validation/extension-register-before-source-commit.failure.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-h8-review-20261028/validation/extension-register-before-source-commit.failure.log",
+      "sha256": "6a7b840ca29f6c0529e8abefa60b6682bb68b2be5318750045aa5259d0172444",
+      "bytes": 148201
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-h8-review-20261028/validation/extension-register.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-h8-review-20261028/validation/extension-register.log",
+      "sha256": "6304662b30c29a3ce875bf846ab1bae576464490fe6f3d4edba2321c267f8c29",
+      "bytes": 107
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-h8-review-20261028/validation/generated-artifact-whitespace.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-h8-review-20261028/validation/generated-artifact-whitespace.log",
+      "sha256": "d86d16ba554a1151c27e9b8f8d7c85ba44bad784f1aa6d6b179a6703cd5d3b64",
+      "bytes": 146149
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-h8-review-20261028/validation/stage-validation.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-h8-review-20261028/validation/stage-validation.json",
+      "sha256": "f9c4891004b1d9d1d6b873c5d4dde326e187aa46b6d373c3a81059b68297c5c7",
+      "bytes": 1345
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-extension-v1/manifest.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-extension-v1/manifest.json",
+      "sha256": "542cf722851ddd5cc16c4493f72ac702445c4a578cec039c39bc8fe9e1394a7a",
+      "bytes": 246344
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-extension-v1/x00/manifest.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-extension-v1/x00/manifest.json",
+      "sha256": "93350424f4325d27f05e48386daf25a7504d6a02e4935bd096c9d926cfb40b13",
+      "bytes": 246376
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-extension-v1/x01/manifest.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-extension-v1/x01/manifest.json",
+      "sha256": "283f842fdf90f25e18163e4e2766b799a6e062cb3ae4053a3c5901ee29654b04",
+      "bytes": 246376
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-extension-v1/x02/manifest.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-extension-v1/x02/manifest.json",
+      "sha256": "8dcb3fb7b5117e05471c81c98cfa3aa9a9ad52e71dbb607b53bf82b54307d0e4",
+      "bytes": 246376
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-extension-v1/x03/manifest.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-extension-v1/x03/manifest.json",
+      "sha256": "0f69e01bc11293ab2cc67783e17baa499f60c6a57a25867d851e8f06207dcb91",
+      "bytes": 246376
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-extension-v1/x04/manifest.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-extension-v1/x04/manifest.json",
+      "sha256": "8dc7b75f3673588ba042396b6113a06e338f5db51358c240d234c9f4a1d34cc3",
+      "bytes": 246376
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-extension-v1/x05/manifest.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-extension-v1/x05/manifest.json",
+      "sha256": "89ad57dc8e324ec05423993691c7a13d2737a26eedc616bc6d25e1e1a194a2fb",
+      "bytes": 246376
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-extension-v1/x06/manifest.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-extension-v1/x06/manifest.json",
+      "sha256": "97b6c8fb640c9a7f1fca2d841190aab3f34586368fcf10229799fa03df6fc149",
+      "bytes": 246376
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-extension-v1/x07/manifest.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-extension-v1/x07/manifest.json",
+      "sha256": "6cc0452f63dd84fdaa9317dfa75f2529e7feaff846897fd55100c15fa05e9f8f",
+      "bytes": 246376
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-extension-v1/x08/manifest.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-extension-v1/x08/manifest.json",
+      "sha256": "754299fbb7b34e6ee7d250c868bc75c16cd722dcd6421419b7650402e3dd75fc",
+      "bytes": 246376
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-extension-v1/x09/manifest.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-extension-v1/x09/manifest.json",
+      "sha256": "6088118a2b9a27436d8e58dddbbf00d8a1a804c08e2b7a3b5322e12950ddb6c6",
+      "bytes": 246376
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-extension-v1/x10/manifest.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-extension-v1/x10/manifest.json",
+      "sha256": "25626d0ff977ee2be20ce2292084252737e79a5948e6a26d9981d4d3e6a91f5f",
+      "bytes": 246376
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-extension-v1/x11/manifest.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-extension-v1/x11/manifest.json",
+      "sha256": "b03f299c19d910fe105eb6c82dd72d00a342d7cd5150345677b80fd0c27b6203",
+      "bytes": 246376
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1-supervise.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1-supervise.log",
+      "sha256": "5ec3df3a21caca3348badbea5097e3407b40e0cd17a2bcd64cd718871c502c7d",
+      "bytes": 16758
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/final-review.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/final-review.push.log",
+      "sha256": "6fb51d8c4bd59300451c46fad53d81684328be549e4e7a218e3c576a43107ab0",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00-e002.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00-e002.push.log",
+      "sha256": "be23fe55521466ded82108185647636effe68ff4de1abbd2bff6246e666dca98",
+      "bytes": 137
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00-e004.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00-e004.push.log",
+      "sha256": "a01f40ee3f10696cd8c550c16ad0902df4e0c0cdef84bcffc940000a698ba3e4",
+      "bytes": 137
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00-e006.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00-e006.push.log",
+      "sha256": "4281bf3ba2f2b7dbd4b5351ebc4bedf21648b24cf6558f0b72f040d5ec0e7582",
+      "bytes": 137
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00-e012.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00-e012.push.log",
+      "sha256": "3d449fab4e8754d7f05c1f492e0bd071f8d8efe5998a494ecb8bb7f7a0c4ee5e",
+      "bytes": 137
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00-e013.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00-e013.push.log",
+      "sha256": "f721e4b99136798425e16b304b2f18eb0bf4f6779b6bc390c3f2e6ee3b665c8c",
+      "bytes": 137
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00-e014.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00-e014.push.log",
+      "sha256": "e7453c6dc500aaaa1021f84f9211ae0f9d8c309ea7dae88221bcde70770438f7",
+      "bytes": 83
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00-e018.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00-e018.push.log",
+      "sha256": "3c1a8fb2568fd323b2a441fd3ea403b33e7dfa72e5ef937c8eba0d465b3fd7ad",
+      "bytes": 137
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00-e020.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00-e020.push.log",
+      "sha256": "1185574cfa6f94e3e848a4be777af2660cd6bc32fae1d6c7847e76c3920ec77a",
+      "bytes": 137
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00-e022.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00-e022.push.log",
+      "sha256": "5cfd9f5ae157e30f8fada0e43acb6ea79cc55a6c7d988c52101d017dd8e3ec4c",
+      "bytes": 137
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00-e026.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00-e026.push.log",
+      "sha256": "6659a5df2feeb51d0455b025fcbf8e422aa498845047d2a640b78371f3d4a576",
+      "bytes": 137
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00-e028.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00-e028.push.log",
+      "sha256": "6ae1bef5ebb3c06dc5139254daefc552cc488900e721f4f9bf1499b2b3976d96",
+      "bytes": 137
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00-e030.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00-e030.push.log",
+      "sha256": "4a93423f308c3bbb69925f97be6950fab7504487e314e5188a965de19da3d8bf",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00-e032.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00-e032.push.log",
+      "sha256": "f25c3e50cd5649db5468d466eb5cdecf4607d46786f71477824da215dbb68204",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00-e035.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00-e035.push.log",
+      "sha256": "e04f7f77dd48cd6d7bc826cffed7a719d2c1ebaa2c04190e50e70717c8ad0f2d",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00-e036.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00-e036.push.log",
+      "sha256": "327874ddec9cf036130aa723e19f0ed48e1ac901fd927ccee007e5fafe842ce5",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00-e038.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00-e038.push.log",
+      "sha256": "d833921467e3e0e8052d25c17deaf5d8b0613dc8ff38ce69cb48c0bda4997bd6",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00-e042.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00-e042.push.log",
+      "sha256": "f71bde37cf7e152bade89b52ec6651e0f1fca057790b46a8cf35a432701ae7c4",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00-e044.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00-e044.push.log",
+      "sha256": "2ec7c8188afc90196884552e2c98156a723437630cf121b8b7388f603bbe74f6",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00-e046.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00-e046.push.log",
+      "sha256": "c0f017acc73669b6c64127f8e5f070603cbe584c58581b1736339e95db00ad7b",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00-e050.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00-e050.push.log",
+      "sha256": "477b12c0ac45b9c2ecba7a972646d9ff7948af308199fc353732b809f246be74",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00-e052.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00-e052.push.log",
+      "sha256": "da510854ac5247a01d49a28597fc9929bc0ae040eae11c08f6d4c25828664085",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00-e054.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00-e054.push.log",
+      "sha256": "2b60a38ca855e3189fbbdb0ce4f1de3dd73c6a48e20a5202c39de836f51dc03b",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00-e056.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00-e056.push.log",
+      "sha256": "6660c6d429848c6091f6749c0f94dbe276a0186cf056bce6d4230d460901924a",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00-e060.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00-e060.push.log",
+      "sha256": "38541623e318c918df0c98a833f1ecd3a284ba592735859dcfab63f29e228196",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00-e062.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00-e062.push.log",
+      "sha256": "18e71366a056aebe890dbcf57a3a269520dc26b1974425b17251c4778646589e",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00-e063.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00-e063.push.log",
+      "sha256": "277a8bbe8c5faade539b6c686d34074575f99c33e18fe19908ee557a01e4f468",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00-e064.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00-e064.push.log",
+      "sha256": "756ce01b6eb5a1a662f231b2dd4825e7051b17ae86fe9f4d11b4021d3d74f722",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00/V2-JS-CONFIRM-20261022-0-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00/V2-JS-CONFIRM-20261022-0-deflect-v2.checkpoint.json",
+      "sha256": "6e43fb85d5a51f6fe9d036c4e5fabff7c7560f0d89ba425c88d97115a10ed540",
+      "bytes": 994268
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00/V2-JS-CONFIRM-20261022-0-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00/V2-JS-CONFIRM-20261022-0-reflect-v2.checkpoint.json",
+      "sha256": "088b68b6e89b5a53eeb2d9b97b09c1c1423a8e841ec9cc86c3e5101d2ac25a2c",
+      "bytes": 1238835
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00/V2-JS-CONFIRM-20261022-1-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00/V2-JS-CONFIRM-20261022-1-deflect-v2.checkpoint.json",
+      "sha256": "317c06f9ea4b59abda643e353f29d2a09c6f5127b8fdf85a436e59221b4669ed",
+      "bytes": 1193533
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00/V2-JS-CONFIRM-20261022-1-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00/V2-JS-CONFIRM-20261022-1-reflect-v2.checkpoint.json",
+      "sha256": "cc779a5f3af08382423b8a98ee02a6e8d0f27933a927ef4441b8acda7f10ad6e",
+      "bytes": 1089398
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00/V2-JS-CONFIRM-20261022-2-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00/V2-JS-CONFIRM-20261022-2-deflect-v2.checkpoint.json",
+      "sha256": "75dc621c1accb4f0fe70d692d0f7416c566cc97dead50549ade72bbfa1ead639",
+      "bytes": 1946302
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00/V2-JS-CONFIRM-20261022-2-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00/V2-JS-CONFIRM-20261022-2-reflect-v2.checkpoint.json",
+      "sha256": "9665577926f45e28f1df613210a6bce460cf70947c44e6648a897848b04eade9",
+      "bytes": 1622271
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00/V2-JS-CONFIRM-20261022-3-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00/V2-JS-CONFIRM-20261022-3-deflect-v2.checkpoint.json",
+      "sha256": "7a97c1cf59f5e539328a67622c6cb4602fe9c23a502698d18adb40ad563fe84f",
+      "bytes": 1319395
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00/V2-JS-CONFIRM-20261022-3-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00/V2-JS-CONFIRM-20261022-3-reflect-v2.checkpoint.json",
+      "sha256": "c32f687b9e35e0f019637af4a074ae28b1a18fa4529581cc98144757befe38a0",
+      "bytes": 1404328
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00/V2-JS-CONFIRM-20261022-4-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00/V2-JS-CONFIRM-20261022-4-deflect-v2.checkpoint.json",
+      "sha256": "903f84d02880dca0aa927c5f529fef5745d57bd235af6cd84835935f3898b00f",
+      "bytes": 1129111
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00/V2-JS-CONFIRM-20261022-4-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00/V2-JS-CONFIRM-20261022-4-reflect-v2.checkpoint.json",
+      "sha256": "2b0a9400b30fcd8e027d1bb3e0e1b96379dfa785414c0519bdad86fb922079de",
+      "bytes": 846913
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00/V2-JS-CONFIRM-20261022-5-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00/V2-JS-CONFIRM-20261022-5-deflect-v2.checkpoint.json",
+      "sha256": "0d88808ff2a64f19e7b47fc4773bf707bfadda34e37510ce061583c3e28a126f",
+      "bytes": 830315
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00/V2-JS-CONFIRM-20261022-5-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00/V2-JS-CONFIRM-20261022-5-reflect-v2.checkpoint.json",
+      "sha256": "ef4445ca126f593b3078ac23560044b8b3c1ba7da2acb44c58e83f2192523a9e",
+      "bytes": 1008263
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00/V2-JS-CONFIRM-20261022-6-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00/V2-JS-CONFIRM-20261022-6-deflect-v2.checkpoint.json",
+      "sha256": "bf2a3b970645bd52d3faecf2f9b297144f10088e7f2eaf106b9e93936db8cf3a",
+      "bytes": 1016049
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00/V2-JS-CONFIRM-20261022-6-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00/V2-JS-CONFIRM-20261022-6-reflect-v2.checkpoint.json",
+      "sha256": "85227dca8fcdb80bb2b82c04d8bddc80e00671c00e9732e7c1db5d5264e12e12",
+      "bytes": 1429988
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00/V2-JS-CONFIRM-20261022-7-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00/V2-JS-CONFIRM-20261022-7-deflect-v2.checkpoint.json",
+      "sha256": "5548e06c19b472bb5f59829a4e60e8a940660864eb7d822b31df00fd8846ba4e",
+      "bytes": 996413
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00/V2-JS-CONFIRM-20261022-7-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00/V2-JS-CONFIRM-20261022-7-reflect-v2.checkpoint.json",
+      "sha256": "d5ecaddc1f498ffef28c087236e43d6a8d1769258bf2c53defd6f39e041b32c0",
+      "bytes": 1337158
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00/shard0.jsonl",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00/shard0.jsonl",
+      "sha256": "724569bcb307036b6da1636bd854a3972848de99fb64f4ce41ad79daa5b65d6c",
+      "bytes": 108725
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00/shard1.jsonl",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00/shard1.jsonl",
+      "sha256": "a71c9c6cc899a345171570a643bdf2cb7c34ae63ec80bb305a6235bbba9b9c74",
+      "bytes": 108880
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00/worker0.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00/worker0.log",
+      "sha256": "ae37b1ee105252ebb79564b51006ff9fa8559d1dfcf920a53d99deb459ecc19a",
+      "bytes": 76144
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q00/worker1.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q00/worker1.log",
+      "sha256": "c79019823f0b8f62d9e95eb7846fabb767f6647bf5323f8d6b72938b1def81cd",
+      "bytes": 76144
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01-e002.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01-e002.push.log",
+      "sha256": "8b114a2dd086c41f6bf44782f020e9108fba82a4df50b00d377badc6c9fe2b02",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01-e004.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01-e004.push.log",
+      "sha256": "c942f6bdec531fd82dad2f52f72d49eab39a4b919cf315f68e00801f24913c49",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01-e006.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01-e006.push.log",
+      "sha256": "b43184cad277a75e9333ce0f38981e7f42041adfcf227abc459c1924a145fcde",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01-e011.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01-e011.push.log",
+      "sha256": "3ee25b124dc04bd88a4d2b81e2bda9dee824a58f6f2ead719ac5742dc2d3cb19",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01-e013.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01-e013.push.log",
+      "sha256": "49832cb7ffeafa7e812466549737418d3903e994a05b16e1869f23ae647609d7",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01-e014.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01-e014.push.log",
+      "sha256": "e1c93672147b15b9593e4b18a36f71aa9d0a37b80d533dd95182830a3a411afd",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01-e016.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01-e016.push.log",
+      "sha256": "2259239bfbe14a4dff1f6295e85f0015297e3883340a48ffa6321b09e9262148",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01-e019.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01-e019.push.log",
+      "sha256": "d3616cafdc9a460bfe75799fe5bd233a005a5b7b3c44bde5d7bf3741eccbcc53",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01-e021.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01-e021.push.log",
+      "sha256": "2cffd10675a556650f453266513896c1d5780842f4dbf44748637f3c08b15c30",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01-e022.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01-e022.push.log",
+      "sha256": "0fc3b75cf5ad2eca30b4dac085e9a85f9b6b946162769ff5b8c64be1d1676f67",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01-e023.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01-e023.push.log",
+      "sha256": "25d61fc60719f32a516a1a4857501be61345727c9eef082a3c786c6e2b5901db",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01-e028.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01-e028.push.log",
+      "sha256": "a45601a072f7f02823f68d843ba847b046edbed230b00f2ce4583145394121c5",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01-e029.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01-e029.push.log",
+      "sha256": "6ade789312c2d456c095605210a5e00a352df25fca87becac188f991a5a40d71",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01-e030.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01-e030.push.log",
+      "sha256": "afcb8904536492568432b5c73d255fcfc73e0e4c61963424c32ef00ec0e2456c",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01-e032.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01-e032.push.log",
+      "sha256": "303a010d3eafb80640f2dd5ebd41185737ead6e8450a49c5660ab2e6150263cb",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01-e035.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01-e035.push.log",
+      "sha256": "7477f869efbec7db5a5183b7037beb74d90201ee05ee8a5bb3b6ae114845d3a0",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01-e036.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01-e036.push.log",
+      "sha256": "73dde98a7a6d3923e1e7d62965ed97304f73b06df3841749052f806001366432",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01-e038.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01-e038.push.log",
+      "sha256": "1b8483dca32641ca239099a7f83dd8fcd0f432c42e960f6f7b5fa5c1006c337f",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01-e042.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01-e042.push.log",
+      "sha256": "2d1662fce80face66d22f1bdf8646e991b2da5a87f87c3fcddc8625f308eda70",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01-e044.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01-e044.push.log",
+      "sha256": "eeed440e6a130c8b4e3c27e8664f842efb7311ac98c4af1f9ceab1dadc8e1bb5",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01-e045.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01-e045.push.log",
+      "sha256": "97d698e144ddd1d780158c5fd983f15ac82ae99bab511b4f38168154fc9f52c5",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01-e046.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01-e046.push.log",
+      "sha256": "1d940994a5e87917e6b9ba2ca57fe1a6ce7c133abdf97e62d1228b8c5e4c34ba",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01-e050.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01-e050.push.log",
+      "sha256": "b937844829531776842a36fb4d619c8e833c7596612ad066afa5f869d6050020",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01-e052.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01-e052.push.log",
+      "sha256": "f97f950379351f3fa17ad018eaa8383474a144df6d5fe5cdc38701e7ab309ac5",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01-e054.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01-e054.push.log",
+      "sha256": "e00b9d4b508936e5b9e4bc22be6041f3d13aada51a5a328140554f67f63799cf",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01-e058.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01-e058.push.log",
+      "sha256": "6ab81c29e80f96575d750fa35abbe7de9b08adb6601d1d05bd5ccf6cd8e76ed3",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01-e060.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01-e060.push.log",
+      "sha256": "40a5f6eed3295a51dca222112888ef06b45bc8f353bdaf581eb0c1166f3811fc",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01-e062.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01-e062.push.log",
+      "sha256": "9e9fcda8a956d32c7abd1d31364426134ef10ec963619721c1d4648b3f466d99",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01-e064.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01-e064.push.log",
+      "sha256": "f0998b30aa65fc377dac862b44101a51cda2130bc6c4f83f7a0c269d7947bfda",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01/V2-JS-CONFIRM-20261022-10-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01/V2-JS-CONFIRM-20261022-10-deflect-v2.checkpoint.json",
+      "sha256": "fa4535a355d8d96e0310f00a2c12be07e68a37b512370d419a10e88bab8371ff",
+      "bytes": 851360
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01/V2-JS-CONFIRM-20261022-10-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01/V2-JS-CONFIRM-20261022-10-reflect-v2.checkpoint.json",
+      "sha256": "0b0fd79c1940b995a71ab10037cc5cad3e6e591fee6abca439451fc66013ff6c",
+      "bytes": 1820258
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01/V2-JS-CONFIRM-20261022-11-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01/V2-JS-CONFIRM-20261022-11-deflect-v2.checkpoint.json",
+      "sha256": "e4a4d5d2fda80cdc28c87b4122a51db79f80cf6978ec7b5347f89a03ed0d72a8",
+      "bytes": 1360628
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01/V2-JS-CONFIRM-20261022-11-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01/V2-JS-CONFIRM-20261022-11-reflect-v2.checkpoint.json",
+      "sha256": "3736198ee2a4a67cb9cb0211edba8b082c2c8b19fdea4adbdd24e0ce3c5615d9",
+      "bytes": 1132175
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01/V2-JS-CONFIRM-20261022-12-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01/V2-JS-CONFIRM-20261022-12-deflect-v2.checkpoint.json",
+      "sha256": "596e95984d6dfbf7b32840802ce14f727a98d243c6827d0e0ac55a35132eb0f3",
+      "bytes": 985401
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01/V2-JS-CONFIRM-20261022-12-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01/V2-JS-CONFIRM-20261022-12-reflect-v2.checkpoint.json",
+      "sha256": "89f2f7a19c13cb02ab92efc12e1df755165703b088e575585e6c29b1a1d7e476",
+      "bytes": 1237558
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01/V2-JS-CONFIRM-20261022-13-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01/V2-JS-CONFIRM-20261022-13-deflect-v2.checkpoint.json",
+      "sha256": "1ebb8672dc2d4919d69418ce4c1a79f197e1ecb06890453c4f164b6f42d2c783",
+      "bytes": 797777
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01/V2-JS-CONFIRM-20261022-13-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01/V2-JS-CONFIRM-20261022-13-reflect-v2.checkpoint.json",
+      "sha256": "e4fe5e5d12cf606dba84733f40f247218f81b7a5fe5deb068cba05820e276cd0",
+      "bytes": 1224001
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01/V2-JS-CONFIRM-20261022-14-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01/V2-JS-CONFIRM-20261022-14-deflect-v2.checkpoint.json",
+      "sha256": "630f756bb749358ff0d03ff87ae9921a729781310522b9d344be287e04d6caf4",
+      "bytes": 1841979
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01/V2-JS-CONFIRM-20261022-14-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01/V2-JS-CONFIRM-20261022-14-reflect-v2.checkpoint.json",
+      "sha256": "7d432311b48f98640b924fc87ca09b4752c1537e82ac952cc625ae282061aa68",
+      "bytes": 1470672
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01/V2-JS-CONFIRM-20261022-15-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01/V2-JS-CONFIRM-20261022-15-deflect-v2.checkpoint.json",
+      "sha256": "f2496fdb3f9d848a1706460ba125b4c17b539971bc1fbee861eb337dd845f975",
+      "bytes": 1055843
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01/V2-JS-CONFIRM-20261022-15-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01/V2-JS-CONFIRM-20261022-15-reflect-v2.checkpoint.json",
+      "sha256": "c79fba89a67fafaefb9bc5fe85827d334c8d4d58eb72686a05840d04a0783e6a",
+      "bytes": 1199483
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01/V2-JS-CONFIRM-20261022-8-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01/V2-JS-CONFIRM-20261022-8-deflect-v2.checkpoint.json",
+      "sha256": "e66e460dad2ed367c5c883f04f39ef881ca8f6c30aa23599af31984dd9b61f3b",
+      "bytes": 677893
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01/V2-JS-CONFIRM-20261022-8-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01/V2-JS-CONFIRM-20261022-8-reflect-v2.checkpoint.json",
+      "sha256": "6c5384311adea296f60f247e80f85bcf3c6eea2139761b4feb054c209a7b9b06",
+      "bytes": 1097549
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01/V2-JS-CONFIRM-20261022-9-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01/V2-JS-CONFIRM-20261022-9-deflect-v2.checkpoint.json",
+      "sha256": "f6957f0285be95f1c203307d2b0b327a750691136e0b201d98ad24c0d1db6e22",
+      "bytes": 855553
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01/V2-JS-CONFIRM-20261022-9-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01/V2-JS-CONFIRM-20261022-9-reflect-v2.checkpoint.json",
+      "sha256": "503f282ca67497f6474685a890af8ec5d0478b4e261af24fcc6913966a6da628",
+      "bytes": 1579421
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01/shard0.jsonl",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01/shard0.jsonl",
+      "sha256": "a5a9dc8a601d525a4d9d39ff0b4b3eeb2429dcb886a39a14137de1c8e604f6e3",
+      "bytes": 109072
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01/shard1.jsonl",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01/shard1.jsonl",
+      "sha256": "916f0ba77e04979acc946db92ab9cce4c37142c01cd116682a47f9fedd4f4819",
+      "bytes": 108967
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01/worker0.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01/worker0.log",
+      "sha256": "c378d55c187a02275b2ba74cd383cab561944b312c6ad055b265c8f470693057",
+      "bytes": 76768
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q01/worker1.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q01/worker1.log",
+      "sha256": "dc696a85ae65f9855a830ff9e06bf38f36faee81977f3bc0585f8e164d369a64",
+      "bytes": 76768
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02-e004.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02-e004.push.log",
+      "sha256": "d41247099dd1045f8faa827d81c9fa6128182fe77eda72a9166b571dbb9bdfde",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02-e006.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02-e006.push.log",
+      "sha256": "da9b1212cdadf968a23316630ac19b3be8bb62ad91928c1b30154a7ff52b06e2",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02-e008.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02-e008.push.log",
+      "sha256": "d5b1cd628e70171d797407596842802debbc7436a3f28a9f4889f36fc2a8164b",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02-e011.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02-e011.push.log",
+      "sha256": "ad78dc4740041c3f8f6ed1d64bf9a58310a7b85da3ac03d6f46a8d4adb67738f",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02-e012.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02-e012.push.log",
+      "sha256": "ff778b6b4a4e439d800ede70b34e971958da5b089ef79c6e07c25910063da81c",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02-e014.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02-e014.push.log",
+      "sha256": "e2516072de2efc68390716017ced526d40a7cf5a5d50e60649a4b948a4b69850",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02-e018.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02-e018.push.log",
+      "sha256": "c65455becf024930a0bccbdac899f3abcc81eb4c24a84a825935b235c36ed10f",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02-e020.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02-e020.push.log",
+      "sha256": "740dd805be3cd3f877b30b458fe14a8382611749cc137dfff869318baf449bfe",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02-e021.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02-e021.push.log",
+      "sha256": "21f55314516bcf02134b41518c9ae5123e7fd515eb0e6728dec663ed314d5cf8",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02-e022.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02-e022.push.log",
+      "sha256": "a388057f7b492d6f003d3c6e26d256c16d2b3b8e276cd106e7843bb6d499fda5",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02-e028.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02-e028.push.log",
+      "sha256": "12c02970ce3cec6160e0605878abbde663379693efb9444f45c3b1ea38de1e2c",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02-e030.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02-e030.push.log",
+      "sha256": "c103578c030fea82ec497eaff3378bb223a271a27f499ddee3fea339af3eadae",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02-e032.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02-e032.push.log",
+      "sha256": "70a0870682edd0d3f1d027fbc14358dc2d22e2c10aa93c9b30012cc5619b51b6",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02-e034.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02-e034.push.log",
+      "sha256": "b0aea3fa8dd2652e76e1b0f7bfbe9023cac51a575172e94b4d3a7804516ef208",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02-e036.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02-e036.push.log",
+      "sha256": "23cf829cfe75619f1a57f5a94f1cab65861747fdc33064c810c2da802754f24c",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02-e038.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02-e038.push.log",
+      "sha256": "04c1105f34b279fdf970cc15414a028ade6c7c7c4fd45828f4226721c38516e1",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02-e042.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02-e042.push.log",
+      "sha256": "2b5d62aa3e487ca2d2e0b3449f8ed7f34480b586f8fab5025744a2c30c7c0ad6",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02-e044.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02-e044.push.log",
+      "sha256": "48c7fea35d48b8fd67a5f0320f09c205a35c9df548d1ce5ab3d2fa7b825755aa",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02-e046.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02-e046.push.log",
+      "sha256": "8f46e88255e8482ed537ea9047a1228949441111064cd21440db539f2e879e86",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02-e048.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02-e048.push.log",
+      "sha256": "25b708ae15108060a1944b155eb6d0bdecf083c2a1d2b8f743ca1a3fe0294acc",
+      "bytes": 262
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02-e051.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02-e051.push.log",
+      "sha256": "f9fcfa5bae8b6f65e32310070593e974066e423053acf02f513ba02122705cf5",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02-e052.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02-e052.push.log",
+      "sha256": "25814ae4bd9d2d74abf8fc88a58ecba5f318b64b4548dbfe0aa8d7ca2fee93c1",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02-e054.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02-e054.push.log",
+      "sha256": "f97d820dfbae4dd7b0aad79f48537fb46dbd952d3fe02783fd994dfa0791c15a",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02-e058.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02-e058.push.log",
+      "sha256": "6f4b1d6df169ea97b0069709d14afcf4d809379a5ce873df4fe9b65b6fd06ee2",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02-e060.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02-e060.push.log",
+      "sha256": "6b599f62f647005541be47f11162cf4a0fac1582231e7a29a7622fbc8d26290f",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02-e062.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02-e062.push.log",
+      "sha256": "37bfca61fcd4033d13fe366d2cd65b5e39285f3273941cf1f8b50fc630469ddf",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02-e064.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02-e064.push.log",
+      "sha256": "b939f1d5eacbd685dc1af5db0638a15e1ccc1fb02bcd91572364aa431ef71f7f",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02/V2-JS-CONFIRM-20261022-16-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02/V2-JS-CONFIRM-20261022-16-deflect-v2.checkpoint.json",
+      "sha256": "c14a8112ba09be850935f95ebdc39e1435fee93b4e06476de0f47504f26b0ce6",
+      "bytes": 685954
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02/V2-JS-CONFIRM-20261022-16-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02/V2-JS-CONFIRM-20261022-16-reflect-v2.checkpoint.json",
+      "sha256": "50de93fef48b82816e12f0e25d711d4b33716b1eca1a743c21f9ecc69c686cda",
+      "bytes": 1620237
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02/V2-JS-CONFIRM-20261022-17-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02/V2-JS-CONFIRM-20261022-17-deflect-v2.checkpoint.json",
+      "sha256": "3caa16640b3e3e099c8fcbb9d4fc2ceeb3805b668d30761810409a69d53abf75",
+      "bytes": 1343326
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02/V2-JS-CONFIRM-20261022-17-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02/V2-JS-CONFIRM-20261022-17-reflect-v2.checkpoint.json",
+      "sha256": "0118e1dea6ec8bcb16e0f5c4a4f7b22b73ea5e9d5f54d834aa5dddb9a40a3f75",
+      "bytes": 1133094
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02/V2-JS-CONFIRM-20261022-18-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02/V2-JS-CONFIRM-20261022-18-deflect-v2.checkpoint.json",
+      "sha256": "67d3355d474f00107abb8d84b8ca53470519575d18e1015617d15063d0a9686b",
+      "bytes": 1348509
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02/V2-JS-CONFIRM-20261022-18-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02/V2-JS-CONFIRM-20261022-18-reflect-v2.checkpoint.json",
+      "sha256": "891d0c43b1cfed8bdffb53d5454729a0cc360f13d270b5179671599d1fa3e336",
+      "bytes": 2145614
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02/V2-JS-CONFIRM-20261022-19-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02/V2-JS-CONFIRM-20261022-19-deflect-v2.checkpoint.json",
+      "sha256": "c4c663cacda44188760e80ac37ca6a5975c0fea8ed19c874eb33606ad54c8a92",
+      "bytes": 2182860
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02/V2-JS-CONFIRM-20261022-19-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02/V2-JS-CONFIRM-20261022-19-reflect-v2.checkpoint.json",
+      "sha256": "b2de22df030d48975ea4df9dcfa63364438fd44ad012ba7e20461c423545ae69",
+      "bytes": 1369120
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02/V2-JS-CONFIRM-20261022-20-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02/V2-JS-CONFIRM-20261022-20-deflect-v2.checkpoint.json",
+      "sha256": "56add939b2e1f082c85b1c339f77e1c244aa6e40bc6fc07b50191482006ca56a",
+      "bytes": 717499
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02/V2-JS-CONFIRM-20261022-20-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02/V2-JS-CONFIRM-20261022-20-reflect-v2.checkpoint.json",
+      "sha256": "2f005f4b75363538fa2f3ef65effd386426945712da6f3af15a2064dc9caeeb9",
+      "bytes": 1302261
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02/V2-JS-CONFIRM-20261022-21-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02/V2-JS-CONFIRM-20261022-21-deflect-v2.checkpoint.json",
+      "sha256": "67c8939867a9f4370a6ce03518625c49ab40adf2b94a4ef04baa2f2bdc5e8835",
+      "bytes": 1206536
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02/V2-JS-CONFIRM-20261022-21-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02/V2-JS-CONFIRM-20261022-21-reflect-v2.checkpoint.json",
+      "sha256": "dc8eb2e7fa07e33a4d93330275aa016e38572963c7fd203308e7b4d8246c1838",
+      "bytes": 1028401
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02/V2-JS-CONFIRM-20261022-22-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02/V2-JS-CONFIRM-20261022-22-deflect-v2.checkpoint.json",
+      "sha256": "d2c810bfee690f572f485c188dfd1147f36d75bdd1f5f64e0b23112f9f86137e",
+      "bytes": 843748
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02/V2-JS-CONFIRM-20261022-22-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02/V2-JS-CONFIRM-20261022-22-reflect-v2.checkpoint.json",
+      "sha256": "a112b5e37ec42ba95caaf74f4d435860d71c54a409b4b1038deacaa3dc0a22c8",
+      "bytes": 1115303
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02/V2-JS-CONFIRM-20261022-23-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02/V2-JS-CONFIRM-20261022-23-deflect-v2.checkpoint.json",
+      "sha256": "1976ac76c0e86c6df340cdbebe31a685d1067777049bfd1b718b9d26726e5dff",
+      "bytes": 1027943
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02/V2-JS-CONFIRM-20261022-23-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02/V2-JS-CONFIRM-20261022-23-reflect-v2.checkpoint.json",
+      "sha256": "62b3f293624fc55fcd8e2c085db73901659e044f4f3629509804dabadeb46630",
+      "bytes": 1502110
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02/shard0.jsonl",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02/shard0.jsonl",
+      "sha256": "bbf65f8066a143df5ccb906518ce578d9e1aa4fb77b024eb7e13a7d8c78bafa9",
+      "bytes": 108894
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02/shard1.jsonl",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02/shard1.jsonl",
+      "sha256": "a48a3d046723646afbbe4dc151d7a51b273e0cc3805aea7c151034f629c26c3a",
+      "bytes": 109298
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02/worker0.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02/worker0.log",
+      "sha256": "74714426fddae8525e232215e352758625bf0997257f8df939e9ca899b8fa141",
+      "bytes": 76976
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q02/worker1.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q02/worker1.log",
+      "sha256": "6b0e9736414f4189b7055e87a96a059539e8892dab0466581fe39ea0f35e2e88",
+      "bytes": 76976
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03-e004.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03-e004.push.log",
+      "sha256": "d5333dcbd990ff9613a879172826ab9acd1547a187b070fbe609a5a5ead2eb15",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03-e006.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03-e006.push.log",
+      "sha256": "e997ba3ad91ca9bff456030580617779f0c864aab231e7030bab4d3ac211b749",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03-e010.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03-e010.push.log",
+      "sha256": "25ab9685899d33a8887dc87b01aaa60befbed081d1ad4174c67f4062960155b3",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03-e012.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03-e012.push.log",
+      "sha256": "5db40fbeaea566fe22df5646e3300c00fbf9c40ca2542b4348eeb90bdb9e0603",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03-e014.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03-e014.push.log",
+      "sha256": "60337cc413dbdef81d98609c7b7cba09f733ae6a170057462f98048a96e0eb07",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03-e019.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03-e019.push.log",
+      "sha256": "a457b7e39ce6485106b984dcecba7a112fb8921cc35affdf60d4880693e194b5",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03-e020.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03-e020.push.log",
+      "sha256": "f9abb154cae21442bd8d8b31ebfa5b3818b5516a0b71634c00cbb7e9131807bf",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03-e022.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03-e022.push.log",
+      "sha256": "86377d95e8c3abbcffe554c3065ff5f3ce57c907f5129b379a225684bde0ba4d",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03-e025.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03-e025.push.log",
+      "sha256": "bda66a8a40a7bf4bc55a8d8244743a4b165ea237c18186a0da61eecd264d775e",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03-e028.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03-e028.push.log",
+      "sha256": "0d66bff19c4a5b814d630b806d4981bd88cfa4a81f948a0be9b2c3f8ff2ebeb0",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03-e030.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03-e030.push.log",
+      "sha256": "0567d104e764488a9d58518312c2755f4a63b35b7f38359adc159afc3cff445c",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03-e034.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03-e034.push.log",
+      "sha256": "0b683e21c2175dde1810b3709818261783080dc2f8ff71ab554bf68b9a7bf7c4",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03-e036.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03-e036.push.log",
+      "sha256": "964b5cf6125e3905a4520144ee6d85864626ed04366b3ca42f1de875f8ff7156",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03-e037.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03-e037.push.log",
+      "sha256": "4e6376704bfcb7784d9da7e0c1b3cae29fc8d2d3adf557b2ae2d819cd85d3551",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03-e038.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03-e038.push.log",
+      "sha256": "9e3b2655b453c36f8ad7ec71262cbe9c0b7d4102531b88dea4aeca21771110d9",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03-e042.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03-e042.push.log",
+      "sha256": "951c45f753e7c0c52c0df46fe839f0dc031889cd9dd5dbd596a7ef06416f4b16",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03-e044.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03-e044.push.log",
+      "sha256": "5de3a026247db8200af9fef98c97983a75aba6b68cbbac587fa5ffb584b0d15a",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03-e045.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03-e045.push.log",
+      "sha256": "b73817327d7d4a9bfefec46c058ac06b2402a0b251f9908d5fa3903b5e31cadf",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03-e046.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03-e046.push.log",
+      "sha256": "91c020616ff67c2b52866b3427796ebf029b16ead02cfa9ca08a0f0da80f0ce9",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03-e048.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03-e048.push.log",
+      "sha256": "4c8976c2e79a70cd949b7f83cad703be8f6b2c996f306849779adb74c9fd130a",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03-e051.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03-e051.push.log",
+      "sha256": "5d5be1c2cd6eafdf1e9ec4b6dd01f232ce026d5700781450d390b6b912ac2d50",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03-e052.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03-e052.push.log",
+      "sha256": "173894f683d26c1c9166f1eb21ea53591c6cda8022fde50911b3ce5b9f3748f4",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03-e053.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03-e053.push.log",
+      "sha256": "e9dc0b2d53be4cbbe2822ac7bb3845d97e60df32e4499160532d9ebb595f4ea7",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03-e054.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03-e054.push.log",
+      "sha256": "22f2625b9f008698477ec952cad343f9fa351d10ce31e3eeab19e3e73bab961d",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03-e056.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03-e056.push.log",
+      "sha256": "62ac381252bf5cdf0de48066e670a051438172adef411a56639424db2cd84ff4",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03-e059.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03-e059.push.log",
+      "sha256": "28677c94306c2d1926dd8ff76b21af28ddd6b3ade9688b359b46b59f9001dd89",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03-e061.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03-e061.push.log",
+      "sha256": "34cb24107b6dadff40dd1cb0c211d88f85dc1e4e0ec308d8a6c87af0f6d8484e",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03-e062.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03-e062.push.log",
+      "sha256": "b42113d4a52f1cca6686b2d234495ff7cf43dac1d2972a6a5e4938a0577efbf2",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03-e064.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03-e064.push.log",
+      "sha256": "f89e93a72549f9f99691442c5992f0f907d0f0e1a5690024b07b1260e2bb5f62",
+      "bytes": 139
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03/V2-JS-CONFIRM-20261022-24-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03/V2-JS-CONFIRM-20261022-24-deflect-v2.checkpoint.json",
+      "sha256": "309650a56ca7b2e4a1f19cc83bc8cc96389761606fee2fc9b6dd306332d0cec1",
+      "bytes": 1330693
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03/V2-JS-CONFIRM-20261022-24-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03/V2-JS-CONFIRM-20261022-24-reflect-v2.checkpoint.json",
+      "sha256": "22107d0d3e8d000c25e5959fc4303a2228e0f306c5e53c9cc1efb17d37df17ad",
+      "bytes": 1571580
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03/V2-JS-CONFIRM-20261022-25-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03/V2-JS-CONFIRM-20261022-25-deflect-v2.checkpoint.json",
+      "sha256": "d08eb0973a5f66b1417e4c624c9ceac56f1959e2bc24edb7435e78fff51e383f",
+      "bytes": 971256
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03/V2-JS-CONFIRM-20261022-25-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03/V2-JS-CONFIRM-20261022-25-reflect-v2.checkpoint.json",
+      "sha256": "3ada16124701b85969e825ce587b7a448726f84daa6e55ac15c48c00c4e34851",
+      "bytes": 994697
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03/V2-JS-CONFIRM-20261022-26-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03/V2-JS-CONFIRM-20261022-26-deflect-v2.checkpoint.json",
+      "sha256": "6863135e103434a03f2779c9bbf0667ff2429d50e12593a4caa1d232db2bc371",
+      "bytes": 753643
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03/V2-JS-CONFIRM-20261022-26-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03/V2-JS-CONFIRM-20261022-26-reflect-v2.checkpoint.json",
+      "sha256": "090166b6c783419c593c99debfbc1ac169fb0bcde90f9c956d74db1b76d6b2ab",
+      "bytes": 748688
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03/V2-JS-CONFIRM-20261022-27-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03/V2-JS-CONFIRM-20261022-27-deflect-v2.checkpoint.json",
+      "sha256": "7ebe5022d2bbccbdffe701c852a1843b820ffe9fc8fec72f9e7cb7998fa43d83",
+      "bytes": 1140977
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03/V2-JS-CONFIRM-20261022-27-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03/V2-JS-CONFIRM-20261022-27-reflect-v2.checkpoint.json",
+      "sha256": "a251246a8fbf1937204b2af582d4ffe530bd8480ee829402e5484b4cc3b9f4be",
+      "bytes": 1464105
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03/V2-JS-CONFIRM-20261022-28-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03/V2-JS-CONFIRM-20261022-28-deflect-v2.checkpoint.json",
+      "sha256": "95e8405b00ef4ae7aed16efac70643e377d054182924cdf1220570cd3de6a00f",
+      "bytes": 910517
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03/V2-JS-CONFIRM-20261022-28-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03/V2-JS-CONFIRM-20261022-28-reflect-v2.checkpoint.json",
+      "sha256": "c35829b62e0c97bf215c69257cc00d38196167073236a9d69511b5924c0ae0fb",
+      "bytes": 1567972
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03/V2-JS-CONFIRM-20261022-29-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03/V2-JS-CONFIRM-20261022-29-deflect-v2.checkpoint.json",
+      "sha256": "9833a8b888cca921a5fc8ce710ae0ec58d8d60d1be2b851a2dc2866c300916ab",
+      "bytes": 1122218
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03/V2-JS-CONFIRM-20261022-29-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03/V2-JS-CONFIRM-20261022-29-reflect-v2.checkpoint.json",
+      "sha256": "8d2e61fb9ce7f8d7e287d8eea73b7b5c3ef8ab08784ef721f8256a981e627d60",
+      "bytes": 1602120
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03/V2-JS-CONFIRM-20261022-30-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03/V2-JS-CONFIRM-20261022-30-deflect-v2.checkpoint.json",
+      "sha256": "bc2abcf43e723196be53afcf0eaec1e6e4a3922f0cd30c672700c82a5814d014",
+      "bytes": 890676
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03/V2-JS-CONFIRM-20261022-30-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03/V2-JS-CONFIRM-20261022-30-reflect-v2.checkpoint.json",
+      "sha256": "b3ba990a1605bd40fa4308e6ad4bc8f4aca75183cdfdd25efa471cc364ce5375",
+      "bytes": 1762980
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03/V2-JS-CONFIRM-20261022-31-deflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03/V2-JS-CONFIRM-20261022-31-deflect-v2.checkpoint.json",
+      "sha256": "151a1a42805e9614626569e509ee6a24c40fdb767ea41532b8db83ceb4d56eee",
+      "bytes": 841971
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03/V2-JS-CONFIRM-20261022-31-reflect-v2.checkpoint.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03/V2-JS-CONFIRM-20261022-31-reflect-v2.checkpoint.json",
+      "sha256": "df0f2c3ff16daf4e475a89161770e2900fea101ca9444ce6380f95851f79882d",
+      "bytes": 1126593
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03/shard0.jsonl",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03/shard0.jsonl",
+      "sha256": "935a6620102153e261cc1295c32819acd7c9bb7b487a749a057c1c7900b79cd2",
+      "bytes": 109099
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03/shard1.jsonl",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03/shard1.jsonl",
+      "sha256": "584c86de1b8f4653a25637b9c2328f33c2aa94369816b980bc0d139da94bef66",
+      "bytes": 109479
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03/worker0.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03/worker0.log",
+      "sha256": "b87ce049233f1f9c11146503465f03fa3b28f5dbeafaa3ba995b34831e217900",
+      "bytes": 76976
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/q03/worker1.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/q03/worker1.log",
+      "sha256": "63a61cf28eced6458b6d31a2818db3504a5c3e9ba72022c33d633bd0c0f33a90",
+      "bytes": 76976
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/recovery-current.push.log",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/recovery-current.push.log",
+      "sha256": "47e930bfa8547af0e275fdc8f30ee4b5eded740e9615307434258197298b0ea5",
+      "bytes": 22
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-v1/supervise.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-v1/supervise.state.json",
+      "sha256": "474421d6ec25763f2eb97407e858752d84361fc9f51f18700154fc058759a9f5",
+      "bytes": 776
+    },
+    {
+      "source_path": "tools/v2/check-js-h8-extension.py",
+      "archive_path": "snapshot/tools/v2/check-js-h8-extension.py",
+      "sha256": "a666390bb05c25b3f2f362e1bbb753500d8e3256e05fbc5ebe4ef21974adbf93",
+      "bytes": 2172
+    },
+    {
+      "source_path": "tools/v2/review-js-h8-costs.py",
+      "archive_path": "snapshot/tools/v2/review-js-h8-costs.py",
+      "sha256": "3b38633c1191148dede594befa57c47bfe515a2958b65f41dd5386b2f1917dd0",
+      "bytes": 7561
+    },
+    {
+      "source_path": "tools/v2/run-js-precision-extension.py",
+      "archive_path": "snapshot/tools/v2/run-js-precision-extension.py",
+      "sha256": "14fefd5263bacb53375dc32226f281d4a7d48c8ee8f4f12592ec4b55f81d63e6",
+      "bytes": 12718
+    },
+    {
+      "source_path": null,
+      "archive_path": "changes.patch",
+      "sha256": "fbf7f54c6fa76013043049b5c061088b79a9a7221ffecd8c82bde7c6fb90f2a3",
+      "bytes": 23325
+    }
+  ]
+}
