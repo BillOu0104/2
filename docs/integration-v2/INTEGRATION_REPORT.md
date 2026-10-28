@@ -35,3 +35,7 @@ DIAGNOSTICS_PROTOCOL.md和diagnostics-v1.json在新积分前冻结，两个现�
 ## 2026-10-26正式JS100000年确认
 
 JS128新Seed×两候选完整256长期结局，来源/配置/注册初值/原始/主影子状态审计PASS、UNKNOWN0；完整结果与限制以JS_CONFIRMATION_RESULTS.md为准，取代上文历史“尚未JS长期验证”的状态，不覆盖原短窗差异。转向/反射完整128/128，混沌联合118/124，成熟恒纪元33.99%/19.08%。新32Seed同初值h8为数值诊断，见当前STATUS，不调控制、不将它冒充新确认。真实Wallpaper Engine宿主和完整P5矢量冲量仍未验证；main替换未授权实施。
+
+## 2026-10-28 h8匹配精度复核
+
+前32 h8完整64条真正100k结局/256窗口审计PASS、UNKNOWN0；混沌联合转向32/32、反射31/32，成熟39.6545%/20.9547%。对匹配h4的固定95%差区间均未完全位于±5百分点内，不能据此验收收敛。JS_H8_RESULTS.md和results/js-h8-review-20261028保存全部逐Seed、控制成本、行星文明与不足Seed16。按独立新协议补齐剩余96匹配初值，当前恢复见STATUS；计算src与原worker不改，不覆盖main，真实Wallpaper Engine宿主与完整P5矢量跳变冲量仍未验证。

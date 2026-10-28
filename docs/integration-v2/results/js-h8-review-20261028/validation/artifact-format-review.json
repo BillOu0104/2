@@ -1,0 +1,4 @@
+{
+  "issue": "Full git diff --check also inspected generated CSV CRLF, matplotlib SVG spaces and preserved worker/push logs. Such whitespace is not a computational failure. Initial commit gate stopped before committing; subsequent register rejected uncommitted frozen inputs as intended. No new physical run occurred.",
+  "action": "Keep generated evidence and original logs byte-for-byte; scope whitespace check to newly authored source/config/protocol/report files, then commit before registration."
+}

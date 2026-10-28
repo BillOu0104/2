@@ -1,3 +1,23 @@
+# 当前恢复：h8前32复测完成，补齐剩余96同初值精度复测
+
+2026-10-28：前32 h8共256窗口/64长期完成，重新按冻结源/配置/原始/state/初值/真实步数审计PASS，UNKNOWN0；逐事件控制账PASS。转向/反射各32/32三星完整、严格混沌联合32/31；成熟39.6545%/20.9547%，对匹配h4的差+8.0962/+1.6574百分点，固定95%配对区间[-7.2779,+22.9494]/[-6.3942,+9.1501]均未通过事前±5百分点标准。报告JS_H8_RESULTS.md及results/js-h8-review-20261028/，全部原始/混沌不足/成本/P5限制保留；不宣称统计收敛。
+
+研究未完成。当前唯一新队列在/workspace/2-integration、integration/minimal-chaos-control-v2：JS_PRECISION_H8_EXTENSION_PROTOCOL.md、js-precision-h8-extension-v1/study.json、results/js-precision-h8-extension-v1/manifest.json/supervise.state.json。原128确认Seed中的连续32..127、两候选，从登记0步用同一个冻结h8 worker、最大步长.00009375/eta.0009375重新积分；原前32不重算、原h4不改。12批×8Seed×2=192个实际100k结局/768窗口，最终与前32合并为128匹配样本，不增加独立确认样本数。src/算法/控制/P5/纪元/真实半径/时钟与失败规则不变，不混入P5冲量修复。
+
+先查双方活跃supervise锁/native/JS worker及近20分钟研究更新；任一活跃/近期更新则安静退出，不编辑计算源、不启动重复工作。工作区/身份/版本无法确认则报告真实阻碍。无活跃且过期后，核对源/配置/原始/完整状态/登记初值SHA，在集成工作树运行：
+
+```sh
+python3 tools/v2/run-js-precision-extension.py --audit-only
+python3 tools/v2/run-js-precision-extension.py
+```
+
+新manifest冻结旧h8所有计算文件/完整256端点、全部原h4端点、新驱动/12配置/协议。每1000年保存完整主/影子/RNG/世界/文明/事件预算，完成键去重、仅同版h8检查点续算；每有新端点至多10分钟Git/records/check/push。仅已有2CPU/两worker，无新付费资源；预计5–6墙钟日是容量估计，不是假装实验已完成。中断根因不可确认时明确未知，不保证额度重置后自动继续。
+
+STOPPED_REVIEW_REQUIRED先读error/日志/UNKNOWN/哈希，不改旗标绕过；无活跃的旧RUNNING或INTERRUPTED_RESUMABLE可同版恢复。JS_PRECISION_H8_EXTENSION_COMPLETE_REVIEW_REQUIRED只表示此队列完成，仍需全部128配对统计/混沌/成本审查，固定±5百分点门槛不变，不能以含0证明等价。旧全部原生、JS确认、前32h8队列均已完成，不重新积分。整个研究未结案，恢复检查保持开启；main不改、不合并，网页不发布，正式替换等待用户验收。P5完整矢量冲量和真实Wallpaper Engine宿主仍未验证。
+
+---
+以下为已完成阶段的历史恢复记录，以上述新队列为准。
+
 # 当前恢复：JS正式确认完成，32Seed同初值h8数值诊断
 
 2026-10-26：原JS128新Seed×两候选×100000年全部256长期结局完成，四窗口1024条，pending0、UNKNOWN0；冻结恢复驱动全量来源/配置/原始/主影子状态/登记初值SHA审计PASS。已完成队列状态JS_CONFIRMATION_COMPLETE_REVIEW_REQUIRED，勿重启积分。预定统计05b3cc1已推送，结果见JS_CONFIRMATION_RESULTS.md及results/js-confirmation-v1/final-review.json。

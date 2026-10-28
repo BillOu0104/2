@@ -1,0 +1,19 @@
+{
+  "timeUTC": "2026-10-28T09:16:54.779183+00:00",
+  "h8Audit": {
+    "command": "python3 tools/v2/run-js-precision.py --audit-only",
+    "exitCode": 0,
+    "rows": 256,
+    "UNKNOWN": 0
+  },
+  "costAudit": {
+    "command": "MPLCONFIGDIR=/tmp/mpl-v2-h8-review python3 tools/v2/review-js-h8-costs.py",
+    "exitCode": 0,
+    "longRows": 64,
+    "projectionEventSums": "PASS",
+    "renderWarning": "Fontconfig reported No writable cache directories; both figures were nevertheless generated successfully"
+  },
+  "pairedStatisticsRecompute": "PASS exact saved95CI and means",
+  "srcChanges": "none",
+  "limits": "Synthetic aggregation test is not simulated physics; P5 vector-jump impulse and real Wallpaper Engine host remain unverified"
+}
