@@ -2,6 +2,8 @@
 
 2026-10-28：前32 h8共256窗口/64长期完成，重新按冻结源/配置/原始/state/初值/真实步数审计PASS，UNKNOWN0；逐事件控制账PASS。转向/反射各32/32三星完整、严格混沌联合32/31；成熟39.6545%/20.9547%，对匹配h4的差+8.0962/+1.6574百分点，固定95%配对区间[-7.2779,+22.9494]/[-6.3942,+9.1501]均未通过事前±5百分点标准。报告JS_H8_RESULTS.md及results/js-h8-review-20261028/，全部原始/混沌不足/成本/P5限制保留；不宣称统计收敛。
 
+扩展源集合SHA `d0ff7541e9a63b0599c5eda700345524edfdf769d0bb0d451df15da781fc60bd`，注册源提交`90db5982a802132d92a6c73d0f43c6152098e762`；manifest关联旧/新代码与初值证据。
+
 研究未完成。当前唯一新队列在/workspace/2-integration、integration/minimal-chaos-control-v2：JS_PRECISION_H8_EXTENSION_PROTOCOL.md、js-precision-h8-extension-v1/study.json、results/js-precision-h8-extension-v1/manifest.json/supervise.state.json。原128确认Seed中的连续32..127、两候选，从登记0步用同一个冻结h8 worker、最大步长.00009375/eta.0009375重新积分；原前32不重算、原h4不改。12批×8Seed×2=192个实际100k结局/768窗口，最终与前32合并为128匹配样本，不增加独立确认样本数。src/算法/控制/P5/纪元/真实半径/时钟与失败规则不变，不混入P5冲量修复。
 
 先查双方活跃supervise锁/native/JS worker及近20分钟研究更新；任一活跃/近期更新则安静退出，不编辑计算源、不启动重复工作。工作区/身份/版本无法确认则报告真实阻碍。无活跃且过期后，核对源/配置/原始/完整状态/登记初值SHA，在集成工作树运行：

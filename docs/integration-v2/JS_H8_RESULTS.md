@@ -31,3 +31,8 @@
 两个差区间都很宽，均未完全包含在固定±5百分点内；不能把含0当等价，也不能仅根据点估计宣称显著变化。结果未证明恒纪元精确收敛。按新冻结`JS_PRECISION_H8_EXTENSION_PROTOCOL.md`补齐余下96匹配初值，从0以同h8重算，参数和控制不变；最终全128重新配对评审。不是再调控制参数，不增加独立确认样本数，不覆盖main，不发布网页。真实Wallpaper Engine宿主仍未验证。
 
 复现：`python3 tools/v2/run-js-precision.py --audit-only`只读审计旧队列；新复核脚本`tools/v2/review-js-h8-costs.py`拒绝覆盖已有输出。图`results/js-h8-review-20261028/tradeoffs.png`和SVG均提供；provenance保存全部256端点哈希。原报告和失败推送日志完整保留。
+
+补充统计（固定20000次Seed bootstrap，随机种子20261026；事后描述，不替换原固定配对诊断）：
+
+- deflect-v2：成熟均值bootstrap95% [30.3856%, 48.8487%]，混沌联合条件均值39.6545%（n=32）；三星完整Wilson95% [89.2821%,100%]。
+- reflect-v2：成熟均值bootstrap95% [15.2219%, 27.5618%]，混沌联合条件均值18.7275%（n=31）；三星完整Wilson95% [89.2821%,100%]。
