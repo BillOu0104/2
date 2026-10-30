@@ -507,6 +507,7 @@
 | [minimal-chaos-v2-js-h8-extension-x03-e061](analyses/minimal-chaos-v2-js-h8-extension-x03-e061/README.md) | JS同初值h8数值诊断 x03-e061 | [f0eeb78](https://github.com/BillOu0104/2/commit/f0eeb78be1f937771a8f53a3ef11be0cf0077029) |
 | [minimal-chaos-v2-js-h8-extension-x03-e062](analyses/minimal-chaos-v2-js-h8-extension-x03-e062/README.md) | JS同初值h8数值诊断 x03-e062 | [78806a3](https://github.com/BillOu0104/2/commit/78806a3267b206465e80060238e89b0d6538a5d3) |
 | [minimal-chaos-v2-js-h8-extension-x03-e063](analyses/minimal-chaos-v2-js-h8-extension-x03-e063/README.md) | JS同初值h8数值诊断 x03-e063 | [f78087c](https://github.com/BillOu0104/2/commit/f78087ce4a37d872d86225c3e454e54bf823969d) |
+| [minimal-chaos-v2-js-h8-extension-x03-e064](analyses/minimal-chaos-v2-js-h8-extension-x03-e064/README.md) | JS同初值h8数值诊断 x03-e064 | [20247f9](https://github.com/BillOu0104/2/commit/20247f9c7507252ff4717b72e6506ddf1a883dd6) |
 | [minimal-chaos-v2-js-h8-final-review](analyses/minimal-chaos-v2-js-h8-final-review/README.md) | JS同初值h8数值诊断统计 | [8bf0f9e](https://github.com/BillOu0104/2/commit/8bf0f9e4edcc466fbfebdebdc05e06b508b8dc34) |
 | [minimal-chaos-v2-js-h8-launch-20261026](analyses/minimal-chaos-v2-js-h8-launch-20261026/README.md) | 同初值h8数值诊断实际启动及完整状态证据 | [1fccaed](https://github.com/BillOu0104/2/commit/1fccaed159576ef3d7c1926ea3e968da1e642519) |
 | [minimal-chaos-v2-js-h8-q00-e002](analyses/minimal-chaos-v2-js-h8-q00-e002/README.md) | JS同初值h8数值诊断 q00-e002 | [68e17f8](https://github.com/BillOu0104/2/commit/68e17f865ef8dd880a2cb58a831517aef89773e6) |
