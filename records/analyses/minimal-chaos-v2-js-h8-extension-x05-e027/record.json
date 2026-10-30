@@ -1,0 +1,121 @@
+{
+  "format": 1,
+  "id": "minimal-chaos-v2-js-h8-extension-x05-e027",
+  "path": "analyses/minimal-chaos-v2-js-h8-extension-x05-e027",
+  "kind": "analysis",
+  "version": null,
+  "title": "JS同初值h8数值诊断 x05-e027",
+  "summary": "剩余96确认Seed重复精度，不作新独立确认；只收已完成端点和完整原始/主影子状态，保留全部失败UNKNOWN及成本，main未改。",
+  "source_commit": "d543be33dd49b4fe99352ef3974098facea19684",
+  "previous_commit": "20ea3fa1e489615fffe74e7b5a70d7a76b9e14f6",
+  "source_repository": "https://github.com/BillOu0104/2",
+  "source_subject": "research: checkpoint JS h8 diagnosis x05-e027",
+  "source_date": "2026-10-30T15:14:10Z",
+  "archived_at": "2026-10-30T15:14:11.094002+00:00",
+  "runtime_fingerprint": null,
+  "deleted_paths": [],
+  "files": [
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-extension-v1/archives/x05-e027.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-extension-v1/archives/x05-e027.json",
+      "sha256": "7aafdab6ba584b187f1f8b1360e9948864820cb745546d50b3a97947d92a2080",
+      "bytes": 2437
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-extension-v1/x05/V2-JS-CONFIRM-20261022-74-deflect-v2-100000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-extension-v1/x05/V2-JS-CONFIRM-20261022-74-deflect-v2-100000.raw.json",
+      "sha256": "db037a33326eed400fa319522a6eb0c934e0a3e81a66187d8b4530111f6b905f",
+      "bytes": 802481
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-extension-v1/x05/V2-JS-CONFIRM-20261022-74-deflect-v2-100000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-extension-v1/x05/V2-JS-CONFIRM-20261022-74-deflect-v2-100000.state.json",
+      "sha256": "aafa6a360343675a302993c0f59020ee6e2e30d6da68df6ce5e3312d0ef76b3a",
+      "bytes": 864929
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-extension-v1/x05/V2-JS-CONFIRM-20261022-74-reflect-v2-1000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-extension-v1/x05/V2-JS-CONFIRM-20261022-74-reflect-v2-1000.raw.json",
+      "sha256": "2ad834387f4c244a833aab46a4be6713c3831338370657487ec0150f334b653e",
+      "bytes": 15099
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-extension-v1/x05/V2-JS-CONFIRM-20261022-74-reflect-v2-1000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-extension-v1/x05/V2-JS-CONFIRM-20261022-74-reflect-v2-1000.state.json",
+      "sha256": "c8b3211ea95332cfa0d61b23a56d243a238a87a3f1272b565c07d82736384c77",
+      "bytes": 33700
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-extension-v1/x05/V2-JS-CONFIRM-20261022-75-deflect-v2-100000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-extension-v1/x05/V2-JS-CONFIRM-20261022-75-deflect-v2-100000.raw.json",
+      "sha256": "bfa8d09b7b6d085cd9e466dd162a2145e39b888eac517b679fe8af26f6f2bf00",
+      "bytes": 783806
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-extension-v1/x05/V2-JS-CONFIRM-20261022-75-deflect-v2-100000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-extension-v1/x05/V2-JS-CONFIRM-20261022-75-deflect-v2-100000.state.json",
+      "sha256": "777d008a2b25b22266e357cd58ae0c20c69a094883bc86df82937c6759bc4f15",
+      "bytes": 843993
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-extension-v1/x05/V2-JS-CONFIRM-20261022-75-reflect-v2-1000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-extension-v1/x05/V2-JS-CONFIRM-20261022-75-reflect-v2-1000.raw.json",
+      "sha256": "5cf2e19fd53b8da246ae57d255893cebd0b7eb8222a465b40ed6cba41a9f8539",
+      "bytes": 23934
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-extension-v1/x05/V2-JS-CONFIRM-20261022-75-reflect-v2-1000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-extension-v1/x05/V2-JS-CONFIRM-20261022-75-reflect-v2-1000.state.json",
+      "sha256": "f9bf0d8687970f7824d590f5c24b24e958321f12a82706052d4e81b5f96593be",
+      "bytes": 51305
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-extension-v1/x05/V2-JS-CONFIRM-20261022-75-reflect-v2-10000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-extension-v1/x05/V2-JS-CONFIRM-20261022-75-reflect-v2-10000.raw.json",
+      "sha256": "0ef7bf7b4a29f5c799ee06899ffb7004045f76bd083a8e49d0af8dbbc2e5ce0d",
+      "bytes": 92111
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-extension-v1/x05/V2-JS-CONFIRM-20261022-75-reflect-v2-10000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-extension-v1/x05/V2-JS-CONFIRM-20261022-75-reflect-v2-10000.state.json",
+      "sha256": "3c2f49aef974228ed0ba3032621a590a0666e37db5d7b5eae578eb50bbf0136f",
+      "bytes": 142298
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-extension-v1/x05/endpoints/V2-JS-CONFIRM-20261022-74-deflect-v2-100000.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-extension-v1/x05/endpoints/V2-JS-CONFIRM-20261022-74-deflect-v2-100000.json",
+      "sha256": "91d815b74d5c01d743f12c9a3634b7fecc8827d3df9a0a26f10d18296200ca76",
+      "bytes": 3492
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-extension-v1/x05/endpoints/V2-JS-CONFIRM-20261022-74-reflect-v2-1000.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-extension-v1/x05/endpoints/V2-JS-CONFIRM-20261022-74-reflect-v2-1000.json",
+      "sha256": "52d17b1c6818b3f59e0d85561113ef150e488cf5367170cae6c38419788e4faa",
+      "bytes": 3176
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-extension-v1/x05/endpoints/V2-JS-CONFIRM-20261022-75-deflect-v2-100000.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-extension-v1/x05/endpoints/V2-JS-CONFIRM-20261022-75-deflect-v2-100000.json",
+      "sha256": "3a6479124e780f3e7588df8c8acd1cdadb20e6259cee94fbf7b64c835089bef9",
+      "bytes": 3465
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-extension-v1/x05/endpoints/V2-JS-CONFIRM-20261022-75-reflect-v2-1000.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-extension-v1/x05/endpoints/V2-JS-CONFIRM-20261022-75-reflect-v2-1000.json",
+      "sha256": "ec819177a3dc78224f62f8db0cfd4ce05d809d8c43c3747c4927eb6d5c8bde24",
+      "bytes": 3165
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-extension-v1/x05/endpoints/V2-JS-CONFIRM-20261022-75-reflect-v2-10000.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-extension-v1/x05/endpoints/V2-JS-CONFIRM-20261022-75-reflect-v2-10000.json",
+      "sha256": "e89e1c1baa151d67bdc8b0da475c384a7c5be60ae8aab426aab13b029d264a6b",
+      "bytes": 3377
+    },
+    {
+      "source_path": null,
+      "archive_path": "changes.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ]
+}
