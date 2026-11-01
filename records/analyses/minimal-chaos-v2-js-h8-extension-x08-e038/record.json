@@ -1,0 +1,49 @@
+{
+  "format": 1,
+  "id": "minimal-chaos-v2-js-h8-extension-x08-e038",
+  "path": "analyses/minimal-chaos-v2-js-h8-extension-x08-e038",
+  "kind": "analysis",
+  "version": null,
+  "title": "JS同初值h8数值诊断 x08-e038",
+  "summary": "剩余96确认Seed重复精度，不作新独立确认；只收已完成端点和完整原始/主影子状态，保留全部失败UNKNOWN及成本，main未改。",
+  "source_commit": "c050be8dd60af26046cf172f100482dfd767bd30",
+  "previous_commit": "66f96680ecc8d98c485373b3ccdc72fb624dc53e",
+  "source_repository": "https://github.com/BillOu0104/2",
+  "source_subject": "research: checkpoint JS h8 diagnosis x08-e038",
+  "source_date": "2026-11-01T00:39:58Z",
+  "archived_at": "2026-11-01T00:39:58.782853+00:00",
+  "runtime_fingerprint": null,
+  "deleted_paths": [],
+  "files": [
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-extension-v1/archives/x08-e038.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-extension-v1/archives/x08-e038.json",
+      "sha256": "0f1d6ae74d00cb5d0ed331975001a1f6b09dd3ff9a4b008c29a6fbad9d55eb41",
+      "bytes": 3323
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-extension-v1/x08/V2-JS-CONFIRM-20261022-100-deflect-v2-30000.raw.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-extension-v1/x08/V2-JS-CONFIRM-20261022-100-deflect-v2-30000.raw.json",
+      "sha256": "18af184b7fc8a3efabf89c263a54365c7a84cf8b6e8ea884766752958f1ead9d",
+      "bytes": 248473
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-extension-v1/x08/V2-JS-CONFIRM-20261022-100-deflect-v2-30000.state.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-extension-v1/x08/V2-JS-CONFIRM-20261022-100-deflect-v2-30000.state.json",
+      "sha256": "6b8388f9f5bb0aafa41f17323c46fff0f4af2c312e5178c36ca7bb4207c1b33f",
+      "bytes": 313450
+    },
+    {
+      "source_path": "docs/integration-v2/results/js-precision-h8-extension-v1/x08/endpoints/V2-JS-CONFIRM-20261022-100-deflect-v2-30000.json",
+      "archive_path": "snapshot/docs/integration-v2/results/js-precision-h8-extension-v1/x08/endpoints/V2-JS-CONFIRM-20261022-100-deflect-v2-30000.json",
+      "sha256": "7b367673b9e6c1bad64348d13e9a95251153a6a9f5e29cab300cfa1133c40895",
+      "bytes": 3473
+    },
+    {
+      "source_path": null,
+      "archive_path": "changes.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ]
+}
