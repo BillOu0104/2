@@ -1,3 +1,13 @@
+# V2长期研究已按用户要求结案
+
+状态：CLOSED_BY_USER_PARTIAL_H8（2026-11-02，北京时间）。用户终止剩余h8复测，不再自动恢复或启动worker。
+
+最终报告见[docs/integration-v2/FINAL_REPORT_20261102.md](docs/integration-v2/FINAL_REPORT_20261102.md)，完整入口见[集成STATUS](docs/integration-v2/STATUS.md)。h8已归档104/128匹配Seed、208/256长期结局；剩余24Seed的远端证据缺失，不当作物理失败或成功。数值收敛仍未通过，研究结案不等于正式产品验收。
+
+原自动恢复任务已暂停；旧环境后台进程及未上传检查点状态未知，取回后先核查保存并安全停止。全部历史数据保留，计算源码/main不改，不发布网页。以下为历史入口，禁止据此自动重启。
+
+---
+
 # 当前研究恢复入口
 
 进行中的任务是V2最小干预混沌三星控制研究。读 [docs/research-v2/STATUS.md](docs/research-v2/STATUS.md)。
