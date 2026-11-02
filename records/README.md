@@ -6,6 +6,7 @@
 
 | 版本 / 分析 | 内容 | 原始提交 |
 |---|---|---|
+| [minimal-chaos-v2-final-report-20261102](analyses/minimal-chaos-v2-final-report-20261102/README.md) | V2长期研究最终报告：用户终止剩余h8复测 | [8aa4f16](https://github.com/BillOu0104/2/commit/8aa4f16aeeb86c66f2dbe8bc945ae4f4a61142a6) |
 | [v0.1.0](versions/v0.1.0/README.md) | 原版解包、源码审计与首版移植 | [c7f0db5](https://github.com/BillOu0104/2/commit/c7f0db5e62d141db51fde5fa5e222985bc47354e) |
 | [v0.2.0](versions/v0.2.0/README.md) | 文明韧性、旋转背景与圆形天体 | [a08d2a8](https://github.com/BillOu0104/2/commit/a08d2a897682eea5965f7e8b8654ea77d00a90c6) |
 | [v0.2.0-tail-fix](versions/v0.2.0-tail-fix/README.md) | 尾迹GPU容量与像素验证 | [46a852c](https://github.com/BillOu0104/2/commit/46a852c2adb3cff5c470b62be49c0b32864205bf) |
