@@ -6,6 +6,7 @@
 
 | 版本 / 分析 | 内容 | 原始提交 |
 |---|---|---|
+| [minimal-chaos-v2-final-closure-entry-20261102](analyses/minimal-chaos-v2-final-closure-entry-20261102/README.md) | V2最终报告与停止自动恢复入口 | [d9509f3](https://github.com/BillOu0104/2/commit/d9509f3fae102ade36e2a75d506cb2ca37eea45b) |
 | [v0.1.0](versions/v0.1.0/README.md) | 原版解包、源码审计与首版移植 | [c7f0db5](https://github.com/BillOu0104/2/commit/c7f0db5e62d141db51fde5fa5e222985bc47354e) |
 | [v0.2.0](versions/v0.2.0/README.md) | 文明韧性、旋转背景与圆形天体 | [a08d2a8](https://github.com/BillOu0104/2/commit/a08d2a897682eea5965f7e8b8654ea77d00a90c6) |
 | [v0.2.0-tail-fix](versions/v0.2.0-tail-fix/README.md) | 尾迹GPU容量与像素验证 | [46a852c](https://github.com/BillOu0104/2/commit/46a852c2adb3cff5c470b62be49c0b32864205bf) |
