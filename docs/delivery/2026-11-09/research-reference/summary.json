@@ -1,0 +1,98 @@
+{
+  "status": "CLOSED_BY_USER_PARTIAL_H8",
+  "administrativelyClosed": true,
+  "plannedH8ExperimentComplete": false,
+  "independentConfirmationSeeds": 128,
+  "h8MatchedSeeds": 104,
+  "h8MissingSeeds": 24,
+  "h8LongOutcomes": 208,
+  "h8ExpectedLongOutcomes": 256,
+  "h8WindowsInGit": 832,
+  "h8ExpectedWindows": 1024,
+  "extensionCompletedBatches": [
+    "x00",
+    "x01",
+    "x02",
+    "x03",
+    "x04",
+    "x05",
+    "x06",
+    "x07",
+    "x08"
+  ],
+  "extensionMissingBatches": [
+    "x09",
+    "x10",
+    "x11"
+  ],
+  "missingSeedRange": [
+    104,
+    127
+  ],
+  "statisticsScope": "Post hoc descriptive summary at user-requested stop; no full128 paired convergence inference.",
+  "groups": {
+    "deflect-v2": {
+      "n": 104,
+      "stellarIntact": 104,
+      "joint": 103,
+      "numericalUNKNOWN": 0,
+      "fullStableMean": 0.37730184294871794,
+      "matureStableMean": 0.37882834579772084,
+      "matchedH4MatureMean": 0.329292808048433,
+      "h8MinusMatchedH4MatureMean": 0.049535537749287754,
+      "planetLossesMean": 46.05769230769231,
+      "planetAbsentFractionMean": 0.0023028846153846155,
+      "originalPlanetSurvived": 0,
+      "originalCivilizationSurvived": 0,
+      "controlImpulseMean": 138974585.52200434,
+      "controlActiveFrameFractionMean": 0.00002125801282051282,
+      "jointFailures": [
+        {
+          "seed": "V2-JS-CONFIRM-20261022-32",
+          "FTLE": 0.016025531915425207,
+          "tightPairChanges": 42,
+          "longestDynamicHierarchy": 0,
+          "longestGeometricHierarchy": 640.1,
+          "matureNonhier": 0.09637166666666666,
+          "matureStableFraction": 0.9279937037037037
+        }
+      ]
+    },
+    "reflect-v2": {
+      "n": 104,
+      "stellarIntact": 104,
+      "joint": 102,
+      "numericalUNKNOWN": 0,
+      "fullStableMean": 0.20466637019230766,
+      "matureStableMean": 0.18706020299145293,
+      "matchedH4MatureMean": 0.19390528311965818,
+      "h8MinusMatchedH4MatureMean": -0.006845080128205131,
+      "planetLossesMean": 61.35576923076923,
+      "planetAbsentFractionMean": 0.0030677884615384625,
+      "originalPlanetSurvived": 0,
+      "originalCivilizationSurvived": 0,
+      "controlImpulseMean": 6833740545.243392,
+      "controlActiveFrameFractionMean": 0.00008769391025641025,
+      "jointFailures": [
+        {
+          "seed": "V2-JS-CONFIRM-20261022-16",
+          "FTLE": 0.030829030197754254,
+          "tightPairChanges": 83,
+          "longestDynamicHierarchy": 3497.983333333333,
+          "longestGeometricHierarchy": 574.8833333333333,
+          "matureNonhier": 0.1731301851851852,
+          "matureStableFraction": 0.8999742592592592
+        },
+        {
+          "seed": "V2-JS-CONFIRM-20261022-96",
+          "FTLE": 0.016305361336314567,
+          "tightPairChanges": 74,
+          "longestDynamicHierarchy": 5179.1,
+          "longestGeometricHierarchy": 1033.1833333333334,
+          "matureNonhier": 0.15295407407407408,
+          "matureStableFraction": 0.7091937037037037
+        }
+      ]
+    }
+  }
+}

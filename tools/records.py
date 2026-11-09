@@ -6,7 +6,7 @@ ARCHIVE=ROOT/'records'
 def git(*args):return subprocess.check_output(['git','-c','core.quotePath=false',*args],cwd=ROOT)
 def sha(data):return hashlib.sha256(data).hexdigest()
 def revision(ref):return git('rev-parse','--verify',f'{ref}^{{commit}}').decode().strip()
-def selected(path):return path.startswith(('docs/','tests/','tools/','.github/')) or path in ['README.md','FINAL_REPORT.md','STATUS.md','package.json','package-lock.json']
+def selected(path):return path.startswith(('docs/','tests/','tools/','.github/')) or path in ['README.md','HANDOFF.md','FINAL_REPORT.md','STATUS.md','package.json','package-lock.json']
 def runtime_fingerprint(ref=None):
  if ref:
   entries=git('ls-tree','-r',ref,'--','src','assets','index.html').decode().splitlines()

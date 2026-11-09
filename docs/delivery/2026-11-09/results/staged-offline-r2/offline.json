@@ -1,0 +1,240 @@
+{
+  "checks": [
+    "Offline HTTP boot, real Blob Worker, finite V2 state, 8K local textures and all native Web properties",
+    "Wallpaper Engine pause/resume and FPS callback, audio registration and 128-band callback",
+    "Bundled FLAC decodes and plays through a real user gesture without external network",
+    "16:9 and 21:9 responsive render"
+  ],
+  "errors": [],
+  "externalRequests": [],
+  "failedResources": [],
+  "fileURL": {
+    "pass": false,
+    "blocker": "page.goto: net::ERR_BLOCKED_BY_ADMINISTRATOR at file:///workspace/deliverables/trisolaris-20261109/wallpaper-project/index.html\nCall log:\n\u001b[2m  - navigating to \"file:///workspace/deliverables/trisolaris-20261109/wallpaper-project/index.html\", waiting until \"load\"\u001b[22m\n",
+    "errors": []
+  },
+  "diagnostics": {
+    "ready": true,
+    "tick": 646,
+    "fps": 4,
+    "paused": false,
+    "controls": 220,
+    "history": 0,
+    "worker": true,
+    "scene": {
+      "canvas": [
+        1280,
+        540
+      ],
+      "drawingBuffer": [
+        1280,
+        540
+      ],
+      "renderedFrames": 33,
+      "viewVelocity": [
+        0,
+        0
+      ],
+      "speedLimited": false,
+      "compassOpacity": [
+        0,
+        0,
+        0
+      ],
+      "idleYaw": 0,
+      "returningToGalaxy": true,
+      "systemOffset": [
+        0,
+        0,
+        0
+      ],
+      "displayOrigin": {
+        "x": 3.485234611925583e-17,
+        "y": 4.0792398153494216e-17,
+        "z": -8.21303112897246e-18
+      },
+      "cameraPosition": [
+        0,
+        0.25,
+        5.2
+      ],
+      "renderTime": 10.666666666666666,
+      "trailStyle": "continuous-ribbon",
+      "trailHeads": [
+        [
+          -0.841486930847168,
+          -0.14182806015014648,
+          0.03161393105983734
+        ],
+        [
+          0.39349451661109924,
+          0.18510010838508606,
+          -0.004169944673776627
+        ],
+        [
+          0.4476417303085327,
+          -0.043273914605379105,
+          -0.027493242174386978
+        ],
+        [
+          0.3506705164909363,
+          0.0018615078879520297,
+          0.04925553500652313
+        ]
+      ],
+      "bodyVisible": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "trailVisible": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "bodyLocalPositions": [
+        [
+          -0.8414869211343347,
+          -0.14182805885444985,
+          0.03161393146779337
+        ],
+        [
+          0.39349453112973254,
+          0.18510011312562002,
+          -0.004169944735262178
+        ],
+        [
+          0.44764171948017933,
+          -0.043273915779033285,
+          -0.027493242267154553
+        ],
+        [
+          0.35067052441915236,
+          0.0018615078973705694,
+          0.04925553463600918
+        ]
+      ],
+      "bodyWorldPositions": [
+        [
+          -0.8414869211343347,
+          -0.14182805885444985,
+          0.03161393146779337
+        ],
+        [
+          0.39349453112973254,
+          0.18510011312562002,
+          -0.004169944735262178
+        ],
+        [
+          0.44764171948017933,
+          -0.043273915779033285,
+          -0.027493242267154553
+        ],
+        [
+          0.35067052441915236,
+          0.0018615078973705694,
+          0.04925553463600918
+        ]
+      ],
+      "compassScale": 0.3,
+      "compassTarget": false,
+      "compassFade": 0,
+      "viewSensitivity": 0.12,
+      "dragSensitivity": 5,
+      "dustLayers": [
+        {
+          "visible": true,
+          "count": 450,
+          "size": 0.034999999999999996,
+          "opacity": 0.5,
+          "blending": 1,
+          "alphaTest": 0.1
+        },
+        {
+          "visible": true,
+          "count": 900,
+          "size": 0.042,
+          "opacity": 0.42,
+          "blending": 1,
+          "alphaTest": 0.1
+        }
+      ],
+      "pointerMode": 1,
+      "galaxyCoreScreen": [
+        1.0128108799762785e-16,
+        -1.9380948937817673e-17,
+        0.9998899237158909
+      ],
+      "layoutEditing": false,
+      "compassVisible": false,
+      "maxTextureSize": 8192,
+      "backgroundSizes": {
+        "1": [
+          8192,
+          4096
+        ],
+        "4": [
+          8192,
+          4096
+        ]
+      },
+      "backgroundFollowsView": true,
+      "viewRotation": [
+        0,
+        0,
+        0
+      ],
+      "skyRotation": [
+        -0.02500852314609401,
+        0.7931443785621235,
+        -0.038131941277025176,
+        0.607324068006365
+      ],
+      "bodyShapes": [
+        "SphereGeometry",
+        "SphereGeometry",
+        "SphereGeometry",
+        "SphereGeometry"
+      ],
+      "glowShape": "radial-circle",
+      "bodyLabelsVisible": false,
+      "trailSamples": [
+        306,
+        306,
+        306,
+        306
+      ],
+      "trailComplexity": 0.22234058880094362,
+      "trailMetrics": [
+        {
+          "arcPixels": 85.99632434341443,
+          "seconds": 10.583333333333332,
+          "budget": 538.6891007417694,
+          "segments": 61
+        },
+        {
+          "arcPixels": 122.50587438815495,
+          "seconds": 10.649999999999999,
+          "budget": 538.6891007417694,
+          "segments": 80
+        },
+        {
+          "arcPixels": 211.66693731759253,
+          "seconds": 10.649999999999999,
+          "budget": 538.6891007417694,
+          "segments": 127
+        },
+        {
+          "arcPixels": 344.7235639902587,
+          "seconds": 10.649999999999999,
+          "budget": 538.6891007417694,
+          "segments": 191
+        }
+      ],
+      "trailsVisible": true
+    }
+  },
+  "pass": true
+}
