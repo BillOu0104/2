@@ -1,0 +1,217 @@
+{
+  "format": 1,
+  "id": "we-handoff-20261109",
+  "path": "analyses/we-handoff-20261109",
+  "kind": "analysis",
+  "version": null,
+  "title": "v0.6.1 Wallpaper Engine最终打包与交接",
+  "summary": "2026-11-09新交付：运行代码与已发布v0.6.1一致；22文件离线包、完整HANDOFF、152测试/解压包离线与8组设置回归；保留file策略拦截和初始沙箱失败。Windows WE未实测；h8按用户结项于104/128，仍需数值评审。本次不修改物理或研究结果。",
+  "source_commit": "aa744bb53b7a99556c406f9c410f76b74db880c4",
+  "previous_commit": "ea50c8075aeb2275897098baf356eff5312bb6e9",
+  "source_repository": "https://github.com/BillOu0104/2",
+  "source_subject": "docs: package v0.6.1 Wallpaper Engine delivery and complete handoff",
+  "source_date": "2026-11-09T11:14:54Z",
+  "archived_at": "2026-11-09T11:14:54.720083+00:00",
+  "runtime_fingerprint": null,
+  "deleted_paths": [],
+  "files": [
+    {
+      "source_path": "HANDOFF.md",
+      "archive_path": "snapshot/HANDOFF.md",
+      "sha256": "5a63fac0cb08434edaec9292a67216a0c4814a696b76316a2e4f06226be1652d",
+      "bytes": 38153
+    },
+    {
+      "source_path": "README.md",
+      "archive_path": "snapshot/README.md",
+      "sha256": "4c011e0af22ede2a30e198fc6bdd0b1896ef8fd32a79b594e282e1fcacddd0f1",
+      "bytes": 12767
+    },
+    {
+      "source_path": "docs/delivery/2026-11-09/MANIFEST.json",
+      "archive_path": "snapshot/docs/delivery/2026-11-09/MANIFEST.json",
+      "sha256": "9726d9225f2d75deed9780c0c656585d94361154ad3627c79e0cda97987c0e6f",
+      "bytes": 3674
+    },
+    {
+      "source_path": "docs/delivery/2026-11-09/README-Wallpaper-Engine.md",
+      "archive_path": "snapshot/docs/delivery/2026-11-09/README-Wallpaper-Engine.md",
+      "sha256": "cf0c5686e9fb4b54cdd218e5b6968da4263976eaea8fd2c2a93510bb0cd0b7df",
+      "bytes": 5262
+    },
+    {
+      "source_path": "docs/delivery/2026-11-09/SHA256SUMS.txt",
+      "archive_path": "snapshot/docs/delivery/2026-11-09/SHA256SUMS.txt",
+      "sha256": "de10053985532aa17db918044fcb365fa2db9d23d64679fd6a8d567a7fa848d8",
+      "bytes": 437
+    },
+    {
+      "source_path": "docs/delivery/2026-11-09/TEST_RESULTS.md",
+      "archive_path": "snapshot/docs/delivery/2026-11-09/TEST_RESULTS.md",
+      "sha256": "317d7d16bf042bc8a1181b7b914b298b7ebce85238175cfa15baf8deed41cc70",
+      "bytes": 4428
+    },
+    {
+      "source_path": "docs/delivery/2026-11-09/research-reference/FINAL_REPORT_20261102.md",
+      "archive_path": "snapshot/docs/delivery/2026-11-09/research-reference/FINAL_REPORT_20261102.md",
+      "sha256": "e5bc8a6183f6968a480dcf843b93c019d8e1f38f63a25c6e7679033d825fb89a",
+      "bytes": 12509
+    },
+    {
+      "source_path": "docs/delivery/2026-11-09/research-reference/PROVENANCE.md",
+      "archive_path": "snapshot/docs/delivery/2026-11-09/research-reference/PROVENANCE.md",
+      "sha256": "1be98f00085310b237d11bceb3e45e5204324db1380353e655597ff9b082bb09",
+      "bytes": 956
+    },
+    {
+      "source_path": "docs/delivery/2026-11-09/research-reference/summary.json",
+      "archive_path": "snapshot/docs/delivery/2026-11-09/research-reference/summary.json",
+      "sha256": "c7025bb5c49931dcb1f520c1ed9fd2c8ce26a3fc3866c8f46867ae75def1d34e",
+      "bytes": 3018
+    },
+    {
+      "source_path": "docs/delivery/2026-11-09/results/archive.json",
+      "archive_path": "snapshot/docs/delivery/2026-11-09/results/archive.json",
+      "sha256": "d0fc5479b605765a29ebbc9114ee0a0ef4f3f24f14b7fb98cb56f0d46f88451b",
+      "bytes": 111
+    },
+    {
+      "source_path": "docs/delivery/2026-11-09/results/build.log",
+      "archive_path": "snapshot/docs/delivery/2026-11-09/results/build.log",
+      "sha256": "8d27c862ba78f44e16a8d00f5d4be59a9d4a4c0a83000fcf36a9f61dfcd4ac7d",
+      "bytes": 145
+    },
+    {
+      "source_path": "docs/delivery/2026-11-09/results/environment.json",
+      "archive_path": "snapshot/docs/delivery/2026-11-09/results/environment.json",
+      "sha256": "d33a8ab87f481d316002507ba7ad40987ca8c800d1c28a36dcb8fc3f1d865c8c",
+      "bytes": 282
+    },
+    {
+      "source_path": "docs/delivery/2026-11-09/results/extracted-offline.log",
+      "archive_path": "snapshot/docs/delivery/2026-11-09/results/extracted-offline.log",
+      "sha256": "7a6584d0ac7f583b1ac23859938e819bf3bc94c5472502d606b23d1da302acd1",
+      "bytes": 735
+    },
+    {
+      "source_path": "docs/delivery/2026-11-09/results/extracted-offline/offline-desktop.jpg",
+      "archive_path": "snapshot/docs/delivery/2026-11-09/results/extracted-offline/offline-desktop.jpg",
+      "sha256": "9db3936eb57c54fc42f89154179835a4a0fc416103b5a4637593ba281c55f626",
+      "bytes": 69236
+    },
+    {
+      "source_path": "docs/delivery/2026-11-09/results/extracted-offline/offline.json",
+      "archive_path": "snapshot/docs/delivery/2026-11-09/results/extracted-offline/offline.json",
+      "sha256": "8786fde3355f851c1390909d6e0e6f1ca839e4964de2b09403dc6ff927804d2c",
+      "bytes": 5565
+    },
+    {
+      "source_path": "docs/delivery/2026-11-09/results/extracted-settings.log",
+      "archive_path": "snapshot/docs/delivery/2026-11-09/results/extracted-settings.log",
+      "sha256": "9adb154da4ce1e36325a440a69ad42f9a814c6220eb25a504c4252500319906f",
+      "bytes": 1008
+    },
+    {
+      "source_path": "docs/delivery/2026-11-09/results/extracted-settings/browser.json",
+      "archive_path": "snapshot/docs/delivery/2026-11-09/results/extracted-settings/browser.json",
+      "sha256": "5c39cca7344d07dc283b41e74e645883471fed414fc53aa49b5852f8a2624b82",
+      "bytes": 1661
+    },
+    {
+      "source_path": "docs/delivery/2026-11-09/results/extracted-settings/desktop-categories.png",
+      "archive_path": "snapshot/docs/delivery/2026-11-09/results/extracted-settings/desktop-categories.png",
+      "sha256": "96eb26a0bbee452c6ca5d528edbd2c3b5d1760e2c5a4f7e042328c1a6c727b73",
+      "bytes": 721884
+    },
+    {
+      "source_path": "docs/delivery/2026-11-09/results/extracted-settings/desktop-quick.png",
+      "archive_path": "snapshot/docs/delivery/2026-11-09/results/extracted-settings/desktop-quick.png",
+      "sha256": "fca6fcd897e82b2efe3d38e184434c62309f11d5ddced5235a54ea3de4a0e28e",
+      "bytes": 729115
+    },
+    {
+      "source_path": "docs/delivery/2026-11-09/results/extracted-settings/desktop-tooltip.png",
+      "archive_path": "snapshot/docs/delivery/2026-11-09/results/extracted-settings/desktop-tooltip.png",
+      "sha256": "8ce47ebf1fa6d6f813524579c286a1164b5bc95bd5f948937cfc80f33fd14759",
+      "bytes": 744662
+    },
+    {
+      "source_path": "docs/delivery/2026-11-09/results/extracted-settings/mobile-quick.png",
+      "archive_path": "snapshot/docs/delivery/2026-11-09/results/extracted-settings/mobile-quick.png",
+      "sha256": "b5d196ecaaa6da11fc65e5e2b4417bc781bcfefed0cef9689bf965e84ce68bb5",
+      "bytes": 89763
+    },
+    {
+      "source_path": "docs/delivery/2026-11-09/results/npm-test.log",
+      "archive_path": "snapshot/docs/delivery/2026-11-09/results/npm-test.log",
+      "sha256": "7f84254e4ed5e1b2733552549c856e0139ff2715b42243992bd81e006d56f372",
+      "bytes": 968
+    },
+    {
+      "source_path": "docs/delivery/2026-11-09/results/package-prepare.json",
+      "archive_path": "snapshot/docs/delivery/2026-11-09/results/package-prepare.json",
+      "sha256": "647136a537ab96faf8657a625f51d0e8e3471b177c5e9a6f4772652c52ad7cfc",
+      "bytes": 863
+    },
+    {
+      "source_path": "docs/delivery/2026-11-09/results/remote-refs.log",
+      "archive_path": "snapshot/docs/delivery/2026-11-09/results/remote-refs.log",
+      "sha256": "a0e2ee8ca656b722d314c8a18422c833a3f328c41208748739fa37558c79c7f6",
+      "bytes": 427
+    },
+    {
+      "source_path": "docs/delivery/2026-11-09/results/source-and-package-parity.json",
+      "archive_path": "snapshot/docs/delivery/2026-11-09/results/source-and-package-parity.json",
+      "sha256": "e32df8d74a9266ab73dbc90327944f604d9fa40021079b93e9fd1451afc3cd1b",
+      "bytes": 421
+    },
+    {
+      "source_path": "docs/delivery/2026-11-09/results/staged-offline-r2.log",
+      "archive_path": "snapshot/docs/delivery/2026-11-09/results/staged-offline-r2.log",
+      "sha256": "4c28cc7116cd802d6336fb4e9146d647e8749d7fa2cf414663212b053caa67b2",
+      "bytes": 733
+    },
+    {
+      "source_path": "docs/delivery/2026-11-09/results/staged-offline-r2/offline-desktop.jpg",
+      "archive_path": "snapshot/docs/delivery/2026-11-09/results/staged-offline-r2/offline-desktop.jpg",
+      "sha256": "47b67cc6e3a78bd5a79d3589b582ce14db00ad0bc3dd1dbf9047c7d16f7e89bf",
+      "bytes": 69486
+    },
+    {
+      "source_path": "docs/delivery/2026-11-09/results/staged-offline-r2/offline.json",
+      "archive_path": "snapshot/docs/delivery/2026-11-09/results/staged-offline-r2/offline.json",
+      "sha256": "6d1dc63f4f80acfec2c07ffbbc84ae10662855d0d581f92b95a6222a55f4a2f2",
+      "bytes": 5588
+    },
+    {
+      "source_path": "docs/delivery/2026-11-09/results/staged-offline.log",
+      "archive_path": "snapshot/docs/delivery/2026-11-09/results/staged-offline.log",
+      "sha256": "fa2bd546cf85fef351bd6207e9f55ba4465f7b99455f9357429f999dbd452211",
+      "bytes": 1055
+    },
+    {
+      "source_path": "docs/delivery/2026-11-09/results/tests-152.log",
+      "archive_path": "snapshot/docs/delivery/2026-11-09/results/tests-152.log",
+      "sha256": "2bd8b2b0229fa5e5b151f1334e2a7ea5cab613a20da61d0db3ccd793b7a1250b",
+      "bytes": 36227
+    },
+    {
+      "source_path": "tools/delivery/package-we.py",
+      "archive_path": "snapshot/tools/delivery/package-we.py",
+      "sha256": "355497f91e2050a2eefbc6fd6706d0c1d167c24c844ecf4ad17cebaf4224b02b",
+      "bytes": 4744
+    },
+    {
+      "source_path": "tools/delivery/verify-offline.mjs",
+      "archive_path": "snapshot/tools/delivery/verify-offline.mjs",
+      "sha256": "44586702ea7cb7c4d1af7d7e026ea82909100033cfc575d3caa8db582af19a25",
+      "bytes": 7053
+    },
+    {
+      "source_path": null,
+      "archive_path": "changes.patch",
+      "sha256": "1dd976d5d333e10d278c0f584844a70800f8f759c39522b871ba37cba9d2ccad",
+      "bytes": 13165
+    }
+  ]
+}

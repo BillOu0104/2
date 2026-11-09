@@ -1,0 +1,14 @@
+{
+  "pass": true,
+  "checks": [
+    "Offline HTTP boot, real Blob Worker, finite V2 state, 8K local textures and all native Web properties",
+    "Wallpaper Engine pause/resume and FPS callback, audio registration and 128-band callback",
+    "Bundled FLAC decodes and plays through a real user gesture without external network",
+    "16:9 and 21:9 responsive render"
+  ],
+  "fileURL": {
+    "pass": false,
+    "blocker": "page.goto: net::ERR_BLOCKED_BY_ADMINISTRATOR at file:///workspace/deliverables/trisolaris-20261109/wallpaper-project/index.html\nCall log:\n\u001b[2m  - navigating to \"file:///workspace/deliverables/trisolaris-20261109/wallpaper-project/index.html\", waiting until \"load\"\u001b[22m\n",
+    "errors": []
+  }
+}

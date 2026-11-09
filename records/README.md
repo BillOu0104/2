@@ -25,6 +25,7 @@
 | [v0.6.1](versions/v0.6.1/README.md) | 快捷设置、悬停说明与同行滑条数值 | [18c450c](https://github.com/BillOu0104/2/commit/18c450cad5bd07c2cce2ca37622552c799c386af) |
 | [newtonian-survival](analyses/newtonian-survival/README.md) | 无牢笼牛顿三星长期存活研究 | [c198020](https://github.com/BillOu0104/2/commit/c1980201d11c7d0968d9039bfca4ad91383b27b0) |
 | [v054-centering-conservation-review](analyses/v054-centering-conservation-review/README.md) | 星群跟随不能代替守恒排查 | [7a63ebe](https://github.com/BillOu0104/2/commit/7a63ebefae4f9fa4b2db993697221e720506ca2e) |
+| [we-handoff-20261109](analyses/we-handoff-20261109/README.md) | v0.6.1 Wallpaper Engine最终打包与交接 | [aa744bb](https://github.com/BillOu0104/2/commit/aa744bb53b7a99556c406f9c410f76b74db880c4) |
 
 ## 怎么查看
 

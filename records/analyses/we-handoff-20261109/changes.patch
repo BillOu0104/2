@@ -1,0 +1,108 @@
+diff --git a/tools/delivery/package-we.py b/tools/delivery/package-we.py
+new file mode 100644
+index 0000000..c48835f
+--- /dev/null
++++ b/tools/delivery/package-we.py
+@@ -0,0 +1,45 @@
++#!/usr/bin/env python3
++"""Package an unchanged production build as a clean Web wallpaper project."""
++import argparse,datetime,hashlib,json,pathlib,shutil,subprocess,zipfile
++ROOT=pathlib.Path(__file__).resolve().parents[2]
++sha=lambda b:hashlib.sha256(b).hexdigest()
++def prepare(target):
++    if target.exists():raise SystemExit('Refusing to overwrite an existing staging directory')
++    shutil.copytree(ROOT/'dist',target)
++    shutil.rmtree(target/'.openai',ignore_errors=True)
++    # Build-only Scene source metadata is not needed by the browser runtime.
++    (target/'assets/original-project.json').unlink(missing_ok=True)
++    p=json.loads((target/'project.json').read_text())
++    allowed={'slider','bool','combo','color','textinput','file','directory'}
++    original=p['general']['properties'];properties={k:v for k,v in original.items()if v.get('type')in allowed}
++    p['general']={'properties':properties,'supportsaudioprocessing':True}
++    p.update(title='三体 · 实时演算 v0.6.1',preview='preview.jpg',type='web',file='index.html',contentrating='Everyone',description='SYKM原版资源基础上的Web重建。v0.6.1设置界面、V2转向控制与P5行星重生。Three.js + Worker，全部资源离线。原场景：SYKM；音乐：Melodysheep — Ether。保留原资源非商用声明，再发布须核实授权。')
++    for key in ['workshopid','workshopId','id','workshopurl']:p.pop(key,None)
++    (target/'project.json').write_text(json.dumps(p,ensure_ascii=False,indent=2)+'\n')
++    info={'applicationVersion':'0.6.1','sourceCommit':'ea50c8075aeb2275897098baf356eff5312bb6e9','releaseTag':'v0.6.1','releaseTagCommit':'e9a3b3ee6451e3554517a5bad0e3529a65b428a8','packagedOn':'2026-11-09','sourceRepository':'https://github.com/BillOu0104/2','nativeActionableProperties':len(properties),'omittedNativeSceneOnlyGroupsAndNotes':len(original)-len(properties),'runtimeSourceChanged':False,'metadataOnlyAdaptations':['Local preview image reference','Version/title/attribution metadata','Only documented Web property types; Scene groups/notes omitted from native metadata; all in-page 220 settings retained','Removed private-hosting configuration and build-only Scene project JSON'],'notes':['Main is still v0.6.0; latest published tag/private release is v0.6.1, PR5 remains draft','Native Windows Wallpaper Engine/Steam publishing not executed in this Linux environment']}
++    (target/'RELEASE-INFO.json').write_text(json.dumps(info,ensure_ascii=False,indent=2)+'\n');print(json.dumps(info,ensure_ascii=False))
++def archive(target,out):
++    p=json.loads((target/'project.json').read_text());assert p['type']=='web'
++    for key in ['file','preview']:assert (target/p[key]).is_file()
++    files=sorted(x for x in target.rglob('*')if x.is_file())
++    forbidden={'node_modules','.git','.openai','src','tools','tests','records','research'}
++    assert all(not (set(x.relative_to(target).parts)&forbidden)and not x.is_symlink()for x in files)
++    for path in files:
++        if path.name in ['app.js','app.css','style.css','index.html']:
++            assert path.read_bytes()==(ROOT/'dist'/path.name).read_bytes(),path
++    original=json.loads((ROOT/'assets/original/manifest.json').read_text())
++    for item in original['assets']:
++        if 'outputSha256'in item:assert sha((target/'assets/original'/item['output']).read_bytes())==item['outputSha256']
++    manifest={'format':1,'package':'three-body-v0.6.1-wallpaper-engine.zip','sourceCommit':'ea50c8075aeb2275897098baf356eff5312bb6e9','files':[{'path':x.relative_to(target).as_posix(),'bytes':x.stat().st_size,'sha256':sha(x.read_bytes())}for x in files]}
++    if out.exists():raise SystemExit('Refusing to overwrite an existing archive')
++    with zipfile.ZipFile(out,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=9)as z:
++        for path in files:
++            i=zipfile.ZipInfo(path.relative_to(target).as_posix(),(2026,11,9,0,0,0));i.compress_type=zipfile.ZIP_DEFLATED;i.external_attr=0o100644<<16;z.writestr(i,path.read_bytes())
++    with zipfile.ZipFile(out)as z:assert z.testzip()is None
++    manifest['archiveBytes']=out.stat().st_size;manifest['archiveSHA256']=sha(out.read_bytes())
++    (out.parent/'MANIFEST.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n');print(json.dumps({'files':len(files),'bytes':manifest['archiveBytes'],'sha256':manifest['archiveSHA256']}))
++if __name__=='__main__':
++    a=argparse.ArgumentParser();a.add_argument('--prepare',type=pathlib.Path);a.add_argument('--project',type=pathlib.Path);a.add_argument('--zip',type=pathlib.Path);v=a.parse_args()
++    if v.prepare:prepare(v.prepare.resolve())
++    elif v.project and v.zip:archive(v.project.resolve(),v.zip.resolve())
++    else:a.error('Use --prepare DIR, or --project DIR --zip ARCHIVE')
+diff --git a/tools/delivery/verify-offline.mjs b/tools/delivery/verify-offline.mjs
+new file mode 100644
+index 0000000..2eb15bb
+--- /dev/null
++++ b/tools/delivery/verify-offline.mjs
+@@ -0,0 +1,38 @@
++import {chromium}from'playwright-core';
++import {createServer}from'node:http';
++import {readFile,stat,writeFile,mkdir}from'node:fs/promises';
++import path from'node:path';
++import {pathToFileURL}from'node:url';
++import assert from'node:assert/strict';
++const root=path.resolve(process.env.WE_PROJECT),result=path.resolve(process.env.WE_QA_RESULTS),preview=process.env.WE_PREVIEW==='1';await mkdir(result,{recursive:true});
++const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.webp':'image/webp','.jpg':'image/jpeg','.flac':'audio/flac','.otf':'font/otf','.ttf':'font/ttf'};
++const server=createServer(async(req,res)=>{try{const file=path.resolve(root,'.'+new URL(req.url,'http://localhost').pathname);assert.ok(file.startsWith(root+path.sep)||file===root);const p=(await stat(file)).isDirectory()?path.join(file,'index.html'):file;res.writeHead(200,{'Content-Type':mime[path.extname(p)]??'application/octet-stream','Cache-Control':'no-store'});res.end(await readFile(p));}catch{res.writeHead(404);res.end();}});await new Promise(ok=>server.listen(4184,'127.0.0.1',ok));
++const browser=await chromium.launch({executablePath:'/usr/bin/chromium',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader','--allow-file-access-from-files']});
++const report={checks:[],errors:[],externalRequests:[],failedResources:[],fileURL:null};
++const pageInit=()=>{
++ const NativeAudio=window.Audio;window.Audio=function(...args){const a=new NativeAudio(...args);window.__deliveryAudio=a;return a;};window.Audio.prototype=NativeAudio.prototype;
++ window.__audioRegistrations=0;window.wallpaperRegisterAudioListener=fn=>{window.__deliveryAudioListener=fn;window.__audioRegistrations++;};
++ localStorage.setItem('three-body.settings.v3',JSON.stringify({presentationRevision:6,physicsRevision:1,galaxyReturnRevision:2,pixelRatio:.5,newproperty63:false,newproperty64:false,newproperty2:false}));window.__wallpaperFPS=20;
++};
++try{
++ const context=await browser.newContext({viewport:{width:1280,height:720},timezoneId:'Asia/Shanghai'});await context.addInitScript(pageInit);
++ await context.route('**/*',route=>{const url=route.request().url();if(url.startsWith('http')&&!url.startsWith('http://127.0.0.1:4184/')){report.externalRequests.push(url);return route.abort();}return route.continue();});
++ const page=await context.newPage();page.on('pageerror',e=>report.errors.push(e.message));page.on('console',m=>{if(m.type()==='error')report.errors.push(m.text());});page.on('response',r=>{if(r.status()>=400&&!r.url().endsWith('/favicon.ico'))report.failedResources.push({url:r.url(),status:r.status()});});
++ await page.goto('http://127.0.0.1:4184/index.html',{waitUntil:'networkidle'});await page.waitForFunction(()=>window.__threeBodyDiagnostics?.().ready,{timeout:30000});assert.equal(await page.evaluate(()=>window.threeBody.version),'0.6.1');
++ const p=JSON.parse(await readFile(path.join(root,'project.json'),'utf8'));const props=Object.fromEntries(Object.entries(p.general.properties).map(([k,v])=>[k,{value:v.value}]));
++ props.newproperty63={value:false};props.newproperty64={value:false};props.newproperty2={value:false};
++ await page.evaluate(props=>{window.wallpaperPropertyListener.applyUserProperties(props);window.wallpaperPropertyListener.applyGeneralProperties({fps:30});window.threeBody.applySettings({pixelRatio:.5});window.__deliveryAudioListener(new Array(128).fill(.5));},props);
++ await page.waitForFunction(()=>window.threeBody.getState()?.bodies.length===4&&window.__threeBodyDiagnostics().scene.backgroundSizes['4'][0]===8192);
++ assert.equal(await page.evaluate(()=>window.__audioRegistrations),1);assert.equal(await page.evaluate(()=>window.__wallpaperFPS),30);assert.equal(await page.evaluate(()=>window.threeBody.wallpaper),true);
++ const state=await page.evaluate(()=>window.threeBody.getState());assert.ok(state.algorithm.startsWith('v2-deflect-v2-h4-P5'));assert.equal(state.physics.model,'newtonian');assert.ok(state.bodies.every(b=>Object.values(b).every(Number.isFinite)));report.checks.push('Offline HTTP boot, real Blob Worker, finite V2 state, 8K local textures and all native Web properties');
++ await page.evaluate(()=>window.wallpaperPropertyListener.setPaused(true));await page.waitForTimeout(250);const paused=await page.evaluate(()=>window.threeBody.getState().year);await page.waitForTimeout(300);assert.equal(await page.evaluate(()=>window.threeBody.getState().year),paused);await page.evaluate(()=>window.wallpaperPropertyListener.setPaused(false));await page.waitForFunction(y=>window.threeBody.getState().year>y,paused);report.checks.push('Wallpaper Engine pause/resume and FPS callback, audio registration and 128-band callback');
++ await page.locator('#settings-toggle').click();await page.locator('#setting-music').check();await page.waitForFunction(()=>window.__deliveryAudio&&!window.__deliveryAudio.paused&&window.__deliveryAudio.readyState>=2);const audioStart=await page.evaluate(()=>window.__deliveryAudio.currentTime);await page.waitForTimeout(250);assert.ok(await page.evaluate(t=>window.__deliveryAudio.currentTime>t,audioStart));await page.locator('#setting-music').uncheck();report.checks.push('Bundled FLAC decodes and plays through a real user gesture without external network');
++ await page.locator('#settings-close').click();await page.waitForTimeout(400);if(preview)await page.screenshot({path:path.join(root,'preview.jpg'),type:'jpeg',quality:85});await page.screenshot({path:path.join(result,'offline-desktop.jpg'),type:'jpeg',quality:80});
++ await page.setViewportSize({width:2560,height:1080});await page.waitForTimeout(200);assert.equal(await page.locator('#universe').evaluate(n=>n.width>0&&n.height>0),true);report.checks.push('16:9 and 21:9 responsive render');
++ report.diagnostics=await page.evaluate(()=>window.__threeBodyDiagnostics());
++ // file:// support is a CEF-like probe using explicit local-file access, not a native host claim.
++ const files=await browser.newContext({viewport:{width:1280,height:720},timezoneId:'Asia/Shanghai'});await files.addInitScript(pageInit);const fp=await files.newPage();const fe=[];fp.on('pageerror',e=>fe.push(e.message));
++ try{await fp.goto(pathToFileURL(path.join(root,'index.html')).href);await fp.waitForFunction(()=>window.__threeBodyDiagnostics?.().ready,{timeout:20000});report.fileURL={pass:true,version:await fp.evaluate(()=>window.threeBody.version),errors:fe};assert.equal(report.fileURL.version,'0.6.1');assert.deepEqual(fe,[]);}catch(e){report.fileURL={pass:false,blocker:e.message,errors:fe};}
++ await files.close();assert.deepEqual(report.externalRequests,[]);assert.deepEqual(report.failedResources,[]);assert.deepEqual(report.errors,[]);report.pass=true;
++}catch(e){report.pass=false;report.failure=e.stack;throw e;}
++finally{await writeFile(path.join(result,'offline.json'),JSON.stringify(report,null,2)+'\n');await browser.close();await new Promise(ok=>server.close(ok));console.log(JSON.stringify({pass:report.pass,checks:report.checks,fileURL:report.fileURL},null,2));}
+diff --git a/tools/records.py b/tools/records.py
+index 9eb8563..e5b1a01 100644
+--- a/tools/records.py
++++ b/tools/records.py
+@@ -6,7 +6,7 @@ ARCHIVE=ROOT/'records'
+ def git(*args):return subprocess.check_output(['git','-c','core.quotePath=false',*args],cwd=ROOT)
+ def sha(data):return hashlib.sha256(data).hexdigest()
+ def revision(ref):return git('rev-parse','--verify',f'{ref}^{{commit}}').decode().strip()
+-def selected(path):return path.startswith(('docs/','tests/','tools/','.github/')) or path in ['README.md','FINAL_REPORT.md','STATUS.md','package.json','package-lock.json']
++def selected(path):return path.startswith(('docs/','tests/','tools/','.github/')) or path in ['README.md','HANDOFF.md','FINAL_REPORT.md','STATUS.md','package.json','package-lock.json']
+ def runtime_fingerprint(ref=None):
+  if ref:
+   entries=git('ls-tree','-r',ref,'--','src','assets','index.html').decode().splitlines()
