@@ -1,0 +1,39 @@
+{
+  "date": "2026-11-09",
+  "kind": "private-site-access-diagnosis",
+  "project_id": "appgprj_6ad60b784fa08191b7ac5c78832eb2d7",
+  "url": "https://trisolaris-reconstruction-20261019.wittylark8.chatgpt.site",
+  "siteVersion": 14,
+  "applicationVersion": "0.6.1",
+  "userEvidence": "Screenshot displays Cloudflare 'Sorry, you have been blocked' / unable to access chatgpt.site, before wallpaper UI.",
+  "verified": {
+    "siteStatus": "active",
+    "disabledBy": null,
+    "accessMode": "custom",
+    "accessRoles": [
+      "owner"
+    ],
+    "recentAppErrorQuery": {
+      "since_minutes": 120,
+      "errors_only": true,
+      "events": []
+    }
+  },
+  "diagnosticFailure": "Initial worker-log query used an invalid project identifier and returned INVALID_ARGUMENT. Corrected query used exact get_site.id and returned no events.",
+  "conclusion": "Deployment success alone does not prove this user's browser can reach the site. Screenshot indicates an edge security block; empty application logs do not identify the specific blocking rule.",
+  "limitations": [
+    "No Cloudflare firewall / unblock capability exposed by Sites tools.",
+    "Ray ID and client browser context requested; not yet provided.",
+    "No claim of a successful authenticated browser visit."
+  ],
+  "changes": {
+    "source": false,
+    "deployment": false,
+    "accessPolicy": false,
+    "bypassCredential": false
+  },
+  "nextSteps": [
+    "Collect page-bottom Cloudflare Ray ID and browser context for platform support.",
+    "Use existing offline runtime package via loopback-only HTTP for immediate private testing."
+  ]
+}
