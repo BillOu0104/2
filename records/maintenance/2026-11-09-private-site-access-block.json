@@ -23,7 +23,7 @@
   "conclusion": "Deployment success alone does not prove this user's browser can reach the site. Screenshot indicates an edge security block; empty application logs do not identify the specific blocking rule.",
   "limitations": [
     "No Cloudflare firewall / unblock capability exposed by Sites tools.",
-    "Ray ID and client browser context requested; not yet provided.",
+    "Cloudflare Ray ID received in follow-up; browser context not yet provided.",
     "No claim of a successful authenticated browser visit."
   ],
   "changes": {
@@ -33,7 +33,14 @@
     "bypassCredential": false
   },
   "nextSteps": [
-    "Collect page-bottom Cloudflare Ray ID and browser context for platform support.",
+    "Provide Ray ID a57ccd5c2a387152, affected URL and client details to platform support for edge-rule diagnosis.",
     "Use existing offline runtime package via loopback-only HTTP for immediate private testing."
-  ]
+  ],
+  "followUp": {
+    "cloudflareRayID": "a57ccd5c2a387152",
+    "source": "User-supplied screenshot of block page footer; IP remains hidden.",
+    "browserContext": "not yet provided",
+    "action": "Retain for platform support; no firewall management or Ray-ID lookup available in exposed tools.",
+    "supportURL": "https://help.openai.com/"
+  }
 }
